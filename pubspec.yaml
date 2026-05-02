@@ -1,0 +1,61 @@
+name: jose_landing_page
+publish_to: none
+
+environment:
+  sdk: ">=3.10.0-0 <4.0.0"
+  flutter: ">=3.38.0"
+
+workspace:
+  - apps/landing
+  - packages/core
+  - packages/design_system
+  - packages/animations
+  - packages/feature_hero
+  - packages/feature_services
+  - packages/feature_showcase
+  - packages/feature_about
+  - packages/feature_contact
+  - packages/feature_labs
+
+dev_dependencies:
+  melos: ^7.3.0
+  very_good_analysis: ^6.0.0
+
+melos:
+  scripts:
+    analyze:
+      run: dart analyze .
+      description: Analise estatica em todos os pacotes
+      exec:
+        concurrency: 5
+        failFast: true
+
+    test:
+      run: flutter test
+      description: Roda testes em todos os pacotes Flutter
+      exec:
+        concurrency: 3
+        failFast: true
+
+    format:
+      run: dart format .
+      description: Formata todos os pacotes
+      exec:
+        concurrency: 5
+
+    gen:
+      run: dart run build_runner build --delete-conflicting-outputs
+      description: Roda codegen onde aplicavel
+      exec:
+        concurrency: 1
+        failFast: true
+      packageFilters:
+        dependsOn: build_runner
+
+    run:web:
+      run: cd apps/landing && flutter run -d chrome --wasm
+      description: Roda landing em Chrome com renderer WASM
+
+    build:web:
+      run: cd apps/landing && flutter build web --wasm --release
+      description: Build de producao PWA com WASM

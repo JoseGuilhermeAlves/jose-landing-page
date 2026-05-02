@@ -1,0 +1,20 @@
+name: core
+description: Tipos base compartilhados (Failure, Result, UseCase, extensions).
+publish_to: none
+version: 0.0.1
+
+environment:
+  sdk: ">=3.10.0-0 <4.0.0"
+
+resolution: workspace
+
+dependencies:
+  equatable: ^2.0.7
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:

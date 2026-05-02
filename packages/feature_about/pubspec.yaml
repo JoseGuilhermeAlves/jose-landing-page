@@ -1,0 +1,19 @@
+name: feature_about
+description: Bio, timeline de experiencia e badges de stack.
+publish_to: none
+version: 0.0.1
+
+environment:
+  sdk: ">=3.10.0-0 <4.0.0"
+
+resolution: workspace
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:

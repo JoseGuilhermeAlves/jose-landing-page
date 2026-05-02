@@ -1,0 +1,19 @@
+include: package:very_good_analysis/analysis_options.yaml
+
+analyzer:
+  exclude:
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
+    - "**/*.config.dart"
+    - "**/*.gen.dart"
+    - "**/*.gr.dart"
+    - "**/build/**"
+    - "**/.dart_tool/**"
+
+linter:
+  rules:
+    public_member_api_docs: false
+    lines_longer_than_80_chars: false
+    # UseCase, Repository abstrato sao padroes de Clean Arch — single-method
+    # interfaces sao intencionais aqui, nao callbacks disfarcados.
+    one_member_abstracts: false

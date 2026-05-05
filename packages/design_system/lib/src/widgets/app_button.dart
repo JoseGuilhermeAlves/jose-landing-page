@@ -92,10 +92,17 @@ class _AppButtonState extends State<AppButton> {
             ),
             const SizedBox(width: 8),
           ],
-          Text(
-            widget.label,
-            style: textStyle?.copyWith(
-              color: _disabled ? colors.onSurfaceMuted : foreground,
+          // Flexible permite o label encolher ou usar ellipsis quando o
+          // botao esta numa constraint apertada (ex.: CTA expandido em
+          // viewport mobile estreita) — sem isso a Row estoura.
+          Flexible(
+            child: Text(
+              widget.label,
+              style: textStyle?.copyWith(
+                color: _disabled ? colors.onSurfaceMuted : foreground,
+              ),
+              overflow: TextOverflow.ellipsis,
+              softWrap: false,
             ),
           ),
         ],
@@ -112,6 +119,8 @@ class _AppButtonState extends State<AppButton> {
           button: true,
           enabled: !_disabled,
           label: widget.label,
+          onTap: widget.onPressed,
+          excludeSemantics: true,
           child: button,
         ),
       ),

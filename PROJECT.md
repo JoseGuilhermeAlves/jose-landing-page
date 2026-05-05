@@ -154,9 +154,10 @@ Cada um vira um modal/route com 1–2 telas representativas. **Não precisa ter 
 
 ### 4.4 About (feature_about)
 - Foto + bio curta
-- Timeline de experiência (com Custom Painter desenhando a linha)
-- Projetos reais que pode mencionar publicamente: TJBA Zela (genérico, "app de governo do TJ-BA"), PocketLab Sabesp (genérico, "app de campo para concessionária de saneamento"), Passaporte Solutis, TaqTaq.
-- Stack badges (Flutter, Dart, Bloc, Clean Arch, etc)
+- **Grid de domínios em que já atuei** (varejo B2B, plataforma interna, saneamento/operação de campo, setor público, fintech). Cards categóricos — não é timeline cronológica.
+- **Nota de escopo** honesta: apps de varejo B2B foram construídos por ele ponta a ponta; nos demais domínios atua em time de produto, com escopo de feature/arquitetura.
+- Stack badges (Flutter, Dart, Bloc, Clean Arch, etc).
+- **Não nomear empresas nem produtos.** Detalhe nominal fica no LinkedIn — `https://www.linkedin.com/in/jos%C3%A9-guilherme-alves-10a17b138/`. Ver `MEMORY.md` (`copy_no_named_clients`) para a regra completa.
 
 ### 4.5 Contact (feature_contact)
 - Formulário com Bloc completo: name, email, message, tipo de projeto (dropdown)

@@ -1,5 +1,12 @@
-/// A Calculator.
-class Calculator {
-  /// Returns [value] plus 1.
-  int addOne(int value) => value + 1;
-}
+/// Custom Painters, controllers e widgets de animacao reutilizaveis pelo
+/// app. Os painters sao o coracao tecnico do projeto — manter
+/// `shouldRepaint` correto, `Paint` cacheado em campos e hints de
+/// `isComplex`/`willChange` quando aplicavel.
+library;
+
+export 'src/painters/animated_border_painter.dart';
+export 'src/painters/animated_timeline_painter.dart';
+export 'src/painters/loading_spinner_painter.dart';
+export 'src/painters/particle_field_painter.dart';
+export 'src/widgets/loading_spinner.dart';
+export 'src/widgets/particle_field.dart';

@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(fvm flutter *)",
+      "Bash(flutter test *)",
+      "Bash(dart analyze *)",
+      "Bash(flutter pub *)",
+      "Bash(rm apps/landing/test/widget_test.dart)",
+      "Bash(mkdir -p apps/landing/test/router apps/landing/test/app apps/landing/lib/router apps/landing/lib/features)",
+      "Bash(mkdir -p packages/feature_showcase/lib/src/presentation/delivery packages/feature_showcase/test/presentation/delivery)",
+      "Read(//c/c/jose-landing-page/packages/feature_showcase/lib/src/**)"
+    ]
+  }
+}

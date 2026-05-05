@@ -15,11 +15,11 @@ Workspace Pub + Melos já configurado (PROJECT.md §6 aplicado). O shell de `app
 - **Setup raiz:** `pubspec.yaml` workspace, `analysis_options.yaml`, `.gitignore` raiz — feitos.
 - **`packages/core`:** `failures/`, `exceptions/`, `result/`, `usecase/` — feitos.
 - **`packages/design_system`:** `theme/`, `tokens/`, `typography/`, `spacing/`, `breakpoints/`, `responsive/`, `widgets/` — feitos.
-- **`packages/animations`:** **os 7 painters** prescritos pelo PROJECT.md §5 (mais um) estão presentes: `ParticleFieldPainter`, `AnimatedTimelinePainter`, `LoadingSpinnerPainter`, `AnimatedBorderPainter`, `MorphingShapePainter`, `RippleHoverPainter`, `WaveDividerPainter`. Os três últimos foram criados sem widget wrapper — quem consome (hero, dividers, hover de cards) instancia o `CustomPaint` direto, alimentando `progress`/`phase` com `AnimationController`. Se algum repetir muito, vale extrair um wrapper como o `LoadingSpinner`.
+- **`packages/animations`:** **os 7 painters** prescritos pelo PROJECT.md §5 (mais um) estão presentes: `ParticleFieldPainter`, `AnimatedTimelinePainter`, `LoadingSpinnerPainter`, `AnimatedBorderPainter`, `MorphingShapePainter`, `RippleHoverPainter`, `WaveDividerPainter`. Os três últimos foram criados sem widget wrapper — quem consome (hero, dividers, hover de cards, playgrounds em `feature_labs`) instancia o `CustomPaint` direto, alimentando `progress`/`phase` com `AnimationController`. Se algum repetir muito, vale extrair um wrapper como o `LoadingSpinner`.
 - **`apps/landing` shell:** `main.dart` → `bootstrap()` (com `runZonedGuarded` + `FlutterError.onError` + `PlatformDispatcher.onError`) → `LandingApp` (MaterialApp.router, dark-only por enquanto). Router em `lib/router/app_router.dart`, paths em `lib/router/route_paths.dart`.
 - **`feature_hero`, `feature_services`, `feature_about`, `feature_contact`:** plugados na `HomePage` (`apps/landing/lib/features/home_page.dart`).
 - **`feature_showcase`:** plugado na home com **os 5 templates canônicos** (e-commerce, delivery, scheduling, fitness, imobiliária). Cada template é um `Bloc` próprio com mocks estáticos em `data/`; nenhum tem backend real. Tap em qualquer card abre o demo em `MaterialPageRoute(fullscreenDialog: true)`.
-- **`feature_labs`:** ainda é stub gerado pelo `flutter create` (classe `Calculator`). Não é dependência de `apps/landing`. A rota `/labs` carrega `apps/landing/lib/features/labs_page.dart` (também placeholder) via `deferred as labs`. Quando construir o playground real, mover o conteúdo para `packages/feature_labs` e ajustar o deferred import no `app_router.dart`.
+- **`feature_labs`:** playground real, dependência de `apps/landing`. Expõe `LabsPage` (index do `/labs` com cards pros 7 playgrounds + seção de decisões arquiteturais + slot opcional de link pro GitHub) e os 7 widgets de playground (`ParticleFieldPlayground`, `AnimatedTimelinePlayground`, `AnimatedBorderPlayground`, `LoadingSpinnerPlayground`, `MorphingShapePlayground`, `RippleHoverPlayground`, `WaveDividerPlayground`), cada um com sliders/toggles ao vivo no `PlaygroundScaffold` compartilhado. As paths das sub-rotas vivem em `LabsRoutePaths` dentro do pacote.
 
 ### Divergências da especificação que **ainda não foram adotadas**
 
@@ -28,7 +28,6 @@ São decisões deliberadas (ou pelo menos não revogadas). Não introduza essas 
 - **`freezed` / `freezed_annotation` / `json_serializable` / `build_runner`** — não usados. Modelos imutáveis hoje usam classes plain Dart com `Equatable`.
 - **`get_it` / `injectable`** — não usados. Cada feature recebe configuração via construtor; o shell passa o que a feature precisa direto na composição da `HomePage`. Não há container DI.
 - **Bloc events em `feature_about`** — `feature_about/pubspec.yaml` não traz `flutter_bloc`. About hoje é puramente declarativo.
-- **`feature_labs` como pacote real** — ver acima.
 
 PROJECT.md §2.3 lista esses pacotes como "principais", mas ainda não entraram. Se for puxar `freezed` ou `injectable`, faça em PR isolado e atualize a seção `gen` do `pubspec.yaml` raiz.
 
@@ -94,9 +93,11 @@ Toda Bloc/Cubit nasce com seu `bloc_test` na mesma sessão (PROJECT.md §15). Ve
 
 ### Routing e deferred loading
 
-`go_router` declarativo em `apps/landing/lib/router/app_router.dart`. Rotas: `/` (HomePage), `/labs` (deferred), `/404` (NotFoundPage), com `errorBuilder` caindo em NotFoundPage também.
+`go_router` declarativo em `apps/landing/lib/router/app_router.dart`. Rotas: `/` (HomePage), `/labs` + 7 sub-rotas (`/labs/particles`, `/labs/timeline`, `/labs/border`, `/labs/spinner`, `/labs/morphing`, `/labs/ripple`, `/labs/wave`), `/404` (NotFoundPage), com `errorBuilder` caindo em NotFoundPage também.
 
-A rota `/labs` é **deferred-loaded** — o import é `import 'package:landing/features/labs_page.dart' deferred as labs;` e um `_DeferredLabs` interno chama `labs.loadLibrary()` no primeiro build. Em VM/teste resolve imediatamente; em web vira bundle separado. Enquanto carrega, mostra `LoadingSpinner` do `package:animations`. **Preserve essa propriedade** — qualquer mudança no router que torne `/labs` eager-loaded mata a otimização principal de bundle.
+`/labs` e suas sub-rotas são **deferred-loaded** — o widget bundle (`feature_labs.dart`) é importado como `deferred as labs;` e um `_DeferredLabs` interno chama `labs.loadLibrary()` no primeiro build de qualquer rota dentro de `/labs`. Em VM/teste resolve imediatamente; em web vira bundle separado. Enquanto carrega, mostra `LoadingSpinner` do `package:animations`. **Preserve essa propriedade** — qualquer mudança no router que torne `/labs/*` eager-loaded mata a otimização principal de bundle.
+
+As **constantes de rota** (`LabsRoutePaths.index`, `.particles`, ...) vivem em `package:feature_labs/labs_route_paths.dart` — uma library separada do barrel, importada *eager* pelo shell. Esse split mantém os strings de path no main bundle (necessários pra registrar rotas no `GoRouter`) sem materializar os widgets pesados antes de o usuário chegar em `/labs`. Não re-exportar `labs_route_paths.dart` do barrel `feature_labs.dart` — quebraria o split.
 
 ### Imutabilidade
 
@@ -157,5 +158,5 @@ Se uma decisão de produto ou arquitetura **não estiver clara em PROJECT.md**, 
 - Paleta exata de cores e tokens finais do design system.
 - Copy final das seções comerciais.
 - Escopo dos templates restantes do showcase (fitness, imobiliária).
-- Conteúdo concreto do `/labs` quando for sair do placeholder.
+- URL real do GitHub a passar pra `LabsPage(githubUrl: ...)` e como abrir o link no web (hoje o callback é injetável; faltam `url_launcher` ou `dart:html` na composição do shell).
 - Adoção (ou não) de `freezed`/`get_it`/`injectable` — são prescritos por PROJECT.md mas o repo escolheu seguir sem por enquanto. Não puxar essas deps unilateralmente.

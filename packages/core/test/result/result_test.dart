@@ -105,6 +105,22 @@ void main() {
       });
     });
 
+    group('props (forca acesso ao Equatable.props)', () {
+      // Equatable usa identical() antes de comparar props; com instancias
+      // const canonicalizadas isso curto-circuita. Aqui forcamos o acesso
+      // direto a `.props` pra cobrir os getters das duas variantes.
+      test('Success expoe [value]', () {
+        const result = Result<int>.success(42);
+        expect(result.props, [42]);
+      });
+
+      test('FailureResult expoe [failure]', () {
+        const failure = NetworkFailure(message: 'x');
+        const result = Result<int>.failure(failure);
+        expect(result.props, [failure]);
+      });
+    });
+
     test('switch exaustivo nas variantes', () {
       String describe(Result<int> r) => switch (r) {
             Success(:final value) => 'ok:$value',

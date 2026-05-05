@@ -40,17 +40,19 @@ void main() {
     });
 
     test('toString das 5 variantes exibe o runtimeType correto', () {
-      const cases = <Failure, String>{
-        NetworkFailure(message: 'x'): 'NetworkFailure',
-        ServerFailure(message: 'x'): 'ServerFailure',
-        CacheFailure(message: 'x'): 'CacheFailure',
-        ValidationFailure(message: 'x'): 'ValidationFailure',
-        UnknownFailure(message: 'x'): 'UnknownFailure',
-      };
-      cases.forEach((failure, expectedPrefix) {
+      // Lista de pares em vez de Map: Equatable sobrescreve ==,
+      // o que impede uso como chave em const Map.
+      const cases = <(Failure, String)>[
+        (NetworkFailure(message: 'x'), 'NetworkFailure'),
+        (ServerFailure(message: 'x'), 'ServerFailure'),
+        (CacheFailure(message: 'x'), 'CacheFailure'),
+        (ValidationFailure(message: 'x'), 'ValidationFailure'),
+        (UnknownFailure(message: 'x'), 'UnknownFailure'),
+      ];
+      for (final (failure, expectedPrefix) in cases) {
         expect(failure.toString(), contains(expectedPrefix));
         expect(failure.toString(), contains('x'));
-      });
+      }
     });
 
     test('toString sem cause continua incluindo message e tipo', () {

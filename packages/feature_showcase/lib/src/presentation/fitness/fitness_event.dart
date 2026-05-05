@@ -18,7 +18,8 @@ class FitnessDaySelected extends FitnessEvent {
 }
 
 /// Marca um set a mais como concluido pro exercicio dado, no dia
-/// dado. Limita ao [WorkoutExercise.targetSets].
+/// dado. Limita ao `targetSets` do exercicio (valor vem do dominio
+/// `WorkoutExercise`).
 class FitnessSetCompleted extends FitnessEvent {
   const FitnessSetCompleted({required this.weekday, required this.exerciseId});
   final int weekday;

@@ -2,7 +2,7 @@ import 'package:feature_showcase/src/presentation/scheduling/scheduling_event.da
 import 'package:feature_showcase/src/presentation/scheduling/scheduling_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-/// Bloc do mock de agendamento. Aceita [today] injetavel —
+/// Bloc do mock de agendamento. Aceita `today` injetavel —
 /// produto usa `DateTime.now()`, testes passam data fixa.
 ///
 /// Pre-booked slots padrao: regra deterministica baseada em

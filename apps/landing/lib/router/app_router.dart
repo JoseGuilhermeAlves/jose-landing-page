@@ -1,11 +1,15 @@
+import 'dart:async';
+
 import 'package:animations/animations.dart';
 import 'package:feature_labs/feature_labs.dart' deferred as labs;
 import 'package:feature_labs/labs_route_paths.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:landing/config/app_config.dart';
 import 'package:landing/features/home_page.dart';
 import 'package:landing/features/not_found_page.dart';
 import 'package:landing/router/route_paths.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 /// Configuracao centralizada do GoRouter. Mantem `/labs` (e todas as
 /// suas sub-rotas) como **deferred import** — em build web, o codigo
@@ -32,7 +36,12 @@ abstract final class AppRouter {
         GoRoute(
           path: LabsRoutePaths.index,
           pageBuilder: (_, _) => NoTransitionPage(
-            child: _DeferredLabs(builder: () => labs.LabsPage()),
+            child: _DeferredLabs(
+              builder: () => labs.LabsPage(
+                githubUrl: AppConfig.githubRepoUrl,
+                onOpenGithub: _openExternalUrl,
+              ),
+            ),
           ),
         ),
         GoRoute(
@@ -100,6 +109,16 @@ abstract final class AppRouter {
       ],
     );
   }
+}
+
+/// Abre uma URL externa no navegador/app padrao do SO. Usado pelo
+/// `LabsPage` ao tap do botao de GitHub. Falha silenciosa quando o
+/// parse da URI nao bate — sem dialog de erro pra nao poluir UX por
+/// uma feature de side-channel.
+void _openExternalUrl(String url) {
+  final uri = Uri.tryParse(url);
+  if (uri == null) return;
+  unawaited(launchUrl(uri, mode: LaunchMode.externalApplication));
 }
 
 /// Wrapper que dispara `loadLibrary()` no primeiro build. Em VM (testes)

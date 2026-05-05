@@ -18,9 +18,14 @@ void main() {
       );
     });
 
-    test('ecommerce vem como hasDemo=true (Pass A)', () {
-      final ecommerce = ShowcaseCatalog.all.firstWhere((t) => t.id == 'ecommerce');
-      expect(ecommerce.hasDemo, isTrue);
+    test('todos os 5 nichos canonicos vem com hasDemo=true', () {
+      for (final t in ShowcaseCatalog.all) {
+        expect(
+          t.hasDemo,
+          isTrue,
+          reason: '${t.id} deveria estar com demo plugada',
+        );
+      }
     });
 
     test('todos os templates tem label e descricao nao-vazios', () {

@@ -203,7 +203,7 @@ class _DayBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ratio = target == 0 ? 0.0 : (completed / target).clamp(0.0, 1.0);
-    final maxBarHeight = 32.0;
+    const maxBarHeight = 32.0;
     final barHeight = isRest ? 2.0 : (4 + ratio * (maxBarHeight - 4));
     final barColor = isRest
         ? colors.surfaceMuted

@@ -5,7 +5,7 @@ import 'package:feature_showcase/src/presentation/fitness/fitness_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 /// Bloc do mock de fitness. Mantem progresso de sets por (dia,
-/// exercicio) na semana inteira. Aceita [today] injetavel pro foco
+/// exercicio) na semana inteira. Aceita `today` injetavel pro foco
 /// inicial cair no dia atual; testes passam data fixa.
 class FitnessBloc extends Bloc<FitnessEvent, FitnessState> {
   FitnessBloc({

@@ -5,6 +5,8 @@ import 'package:feature_showcase/src/data/showcase_catalog.dart';
 import 'package:feature_showcase/src/domain/showcase_template.dart';
 import 'package:feature_showcase/src/presentation/delivery/delivery_demo.dart';
 import 'package:feature_showcase/src/presentation/ecommerce/ecommerce_demo.dart';
+import 'package:feature_showcase/src/presentation/fitness/fitness_demo.dart';
+import 'package:feature_showcase/src/presentation/realestate/realestate_demo.dart';
 import 'package:feature_showcase/src/presentation/scheduling/scheduling_demo.dart';
 import 'package:feature_showcase/src/presentation/showcase_grid.dart';
 import 'package:flutter/material.dart';
@@ -72,6 +74,8 @@ class ShowcaseSection extends StatelessWidget {
           ticker: Stream<void>.periodic(const Duration(seconds: 2)),
         ),
       'scheduling' => SchedulingDemo(today: DateTime.now()),
+      'fitness' => FitnessDemo(today: DateTime.now().weekday),
+      'realestate' => const RealEstateDemo(),
       _ => null,
     };
   }

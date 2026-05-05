@@ -21,15 +21,14 @@ void main() {
       );
     });
 
-    testWidgets('templates sem demo mostram badge "em breve"', (tester) async {
+    testWidgets('todos os templates do catalogo tem demo plugada',
+        (tester) async {
       await tester.pumpWidget(wrap(const ShowcaseSection()));
       await tester.pump(const Duration(milliseconds: 16));
 
-      // 2 dos 5 templates ainda sem demo (fitness, imobiliaria).
-      expect(
-        find.textContaining('em breve'),
-        findsNWidgets(2),
-      );
+      // Os 5 nichos canonicos ja estao todos com hasDemo=true; nao
+      // existe mais badge "em breve" na home.
+      expect(find.textContaining('em breve'), findsNothing);
     });
 
     testWidgets('tap no card de e-commerce abre o EcommerceDemo em modal',
@@ -70,7 +69,7 @@ void main() {
       expect(find.byType(SchedulingDemo), findsOneWidget);
     });
 
-    testWidgets('tap em card sem demo (fitness) nao abre modal',
+    testWidgets('tap no card de fitness abre o FitnessDemo em modal',
         (tester) async {
       await tester.pumpWidget(wrap(const ShowcaseSection()));
       await tester.pump(const Duration(milliseconds: 16));
@@ -81,9 +80,21 @@ void main() {
       await tester.tap(card);
       await tester.pumpAndSettle();
 
-      expect(find.byType(EcommerceDemo), findsNothing);
-      expect(find.byType(DeliveryDemo), findsNothing);
-      expect(find.byType(SchedulingDemo), findsNothing);
+      expect(find.byType(FitnessDemo), findsOneWidget);
+    });
+
+    testWidgets('tap no card de imobiliaria abre o RealEstateDemo em modal',
+        (tester) async {
+      await tester.pumpWidget(wrap(const ShowcaseSection()));
+      await tester.pump(const Duration(milliseconds: 16));
+
+      final card = find.byKey(const Key('showcase-card-realestate'));
+      await tester.ensureVisible(card);
+      await tester.pumpAndSettle();
+      await tester.tap(card);
+      await tester.pumpAndSettle();
+
+      expect(find.byType(RealEstateDemo), findsOneWidget);
     });
   });
 }

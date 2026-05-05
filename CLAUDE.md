@@ -4,32 +4,50 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Fonte de verdade
 
-`PROJECT.md` na raiz é a especificação canônica deste projeto. **Releia antes de qualquer decisão estrutural** (stack, arquitetura, conteúdo, roadmap, critérios de aceite). Este CLAUDE.md é um resumo operacional — em caso de conflito, PROJECT.md vence.
+`PROJECT.md` na raiz é a especificação canônica. **Releia antes de qualquer decisão estrutural** (stack, arquitetura, conteúdo, roadmap, critérios de aceite). Em conflito com este arquivo, PROJECT.md vence.
+
+Este CLAUDE.md descreve o **estado real** do repo + regras operacionais. PROJECT.md descreve o **alvo**. Quando o estado real diverge da especificação, isso é mencionado explicitamente abaixo — não tratar a divergência como bug a corrigir sem antes confirmar com o José.
 
 ## Estado atual do repo
 
-O monorepo ainda está em **scaffolding inicial**: apps/landing e cada packages/* foram criados via `flutter create` e ainda contêm os stubs default. Nada do que está em PROJECT.md §6 (Pub Workspaces + Melos) foi aplicado ainda — não existe `pubspec.yaml` na raiz, `analysis_options.yaml` raiz, nem `.gitignore` raiz. As dependências internas entre pacotes (path:) também não foram declaradas. Antes de implementar features, siga o roadmap §12 a partir do passo 1 (setup raiz).
+Workspace Pub + Melos já configurado (PROJECT.md §6 aplicado). O shell de `apps/landing` está montado e compõe a maioria das features no scroll da home. Resumo do que **existe versus o que PROJECT.md prescreve**:
 
-Por isso, os comandos `melos run *` listados abaixo **só funcionam depois** que o `pubspec.yaml` raiz com a config Melos for criado e `melos bs` rodar com sucesso.
+- **Setup raiz:** `pubspec.yaml` workspace, `analysis_options.yaml`, `.gitignore` raiz — feitos.
+- **`packages/core`:** `failures/`, `exceptions/`, `result/`, `usecase/` — feitos.
+- **`packages/design_system`:** `theme/`, `tokens/`, `typography/`, `spacing/`, `breakpoints/`, `responsive/`, `widgets/` — feitos.
+- **`packages/animations`:** **os 7 painters** prescritos pelo PROJECT.md §5 (mais um) estão presentes: `ParticleFieldPainter`, `AnimatedTimelinePainter`, `LoadingSpinnerPainter`, `AnimatedBorderPainter`, `MorphingShapePainter`, `RippleHoverPainter`, `WaveDividerPainter`. Os três últimos foram criados sem widget wrapper — quem consome (hero, dividers, hover de cards) instancia o `CustomPaint` direto, alimentando `progress`/`phase` com `AnimationController`. Se algum repetir muito, vale extrair um wrapper como o `LoadingSpinner`.
+- **`apps/landing` shell:** `main.dart` → `bootstrap()` (com `runZonedGuarded` + `FlutterError.onError` + `PlatformDispatcher.onError`) → `LandingApp` (MaterialApp.router, dark-only por enquanto). Router em `lib/router/app_router.dart`, paths em `lib/router/route_paths.dart`.
+- **`feature_hero`, `feature_services`, `feature_about`, `feature_contact`:** plugados na `HomePage` (`apps/landing/lib/features/home_page.dart`).
+- **`feature_showcase`:** plugado na home com **os 5 templates canônicos** (e-commerce, delivery, scheduling, fitness, imobiliária). Cada template é um `Bloc` próprio com mocks estáticos em `data/`; nenhum tem backend real. Tap em qualquer card abre o demo em `MaterialPageRoute(fullscreenDialog: true)`.
+- **`feature_labs`:** ainda é stub gerado pelo `flutter create` (classe `Calculator`). Não é dependência de `apps/landing`. A rota `/labs` carrega `apps/landing/lib/features/labs_page.dart` (também placeholder) via `deferred as labs`. Quando construir o playground real, mover o conteúdo para `packages/feature_labs` e ajustar o deferred import no `app_router.dart`.
+
+### Divergências da especificação que **ainda não foram adotadas**
+
+São decisões deliberadas (ou pelo menos não revogadas). Não introduza essas dependências sem alinhar:
+
+- **`freezed` / `freezed_annotation` / `json_serializable` / `build_runner`** — não usados. Modelos imutáveis hoje usam classes plain Dart com `Equatable`.
+- **`get_it` / `injectable`** — não usados. Cada feature recebe configuração via construtor; o shell passa o que a feature precisa direto na composição da `HomePage`. Não há container DI.
+- **Bloc events em `feature_about`** — `feature_about/pubspec.yaml` não traz `flutter_bloc`. About hoje é puramente declarativo.
+- **`feature_labs` como pacote real** — ver acima.
+
+PROJECT.md §2.3 lista esses pacotes como "principais", mas ainda não entraram. Se for puxar `freezed` ou `injectable`, faça em PR isolado e atualize a seção `gen` do `pubspec.yaml` raiz.
 
 ## Comandos
 
-Após o setup do workspace estar concluído (PROJECT.md §6):
+`bs` (= `melos bootstrap`) e `clean` (= `flutter clean` em todos os pacotes) são **builtins do Melos**, não scripts declarados — não os recrie no `pubspec.yaml` raiz, Melos rejeita override de builtin com `Duplicate command`.
 
 ```bash
-melos bs                  # builtin — bootstrap do workspace (alias de melos bootstrap)
+melos bs                  # builtin — bootstrap do workspace
 melos clean               # builtin — flutter clean em todos os pacotes
-melos run analyze         # análise estática em todos os pacotes (very_good_analysis)
-melos run test            # flutter test em todos os pacotes
+melos run analyze         # análise estática (very_good_analysis), failFast
+melos run test            # flutter test em todos os pacotes Flutter
 melos run format          # dart format em todos os pacotes
-melos run gen             # build_runner build --delete-conflicting-outputs (freezed, injectable, json_serializable)
+melos run gen             # build_runner build --delete-conflicting-outputs (só roda em pacotes que dependem de build_runner — hoje, nenhum)
 melos run run:web         # roda apps/landing em Chrome com --wasm
 melos run build:web       # build PWA de produção (--wasm --release)
 ```
 
-> `bs` e `clean` são **comandos builtin** do Melos, não scripts. Não declare scripts com esses nomes — Melos rejeita override de builtins com `Duplicate command`.
-
-**Rodar um teste único** (dentro do diretório do pacote alvo, ex.: `packages/feature_contact`):
+**Rodar um teste único** (a partir do diretório do pacote alvo):
 
 ```bash
 flutter test test/path/to/file_test.dart
@@ -37,6 +55,8 @@ flutter test test/path/to/file_test.dart --plain-name "nome do teste"
 ```
 
 **Web build é sempre `--wasm`** (skwasm + fallback CanvasKit). Não fazer build sem essa flag.
+
+> Nota Windows/PowerShell: o shell padrão deste ambiente é PowerShell 5.1, sem `&&` ou `||`. Para rodar dois comandos em sequência condicional, use `;` + `if ($?) { ... }`. Se passar comandos copiáveis pro José, evite `&&`. Os scripts Melos acima são interpretados pelo Melos, não pelo shell, então `cd ... && flutter ...` dentro de `run:web` funciona normalmente.
 
 ## Arquitetura — o que requer ler vários arquivos pra entender
 
@@ -50,39 +70,41 @@ feature_*        → core, design_system, animations (opcional)
 apps/landing     → tudo
 ```
 
-**Features não dependem umas das outras.** Comunicação entre features acontece pelo shell em `apps/landing` (router + DI). Violar isso é o erro mais fácil de cometer e o mais caro de desfazer.
+**Features não dependem umas das outras.** Comunicação entre features acontece pelo shell em `apps/landing` (router + composição direta). Violar isso é o erro mais fácil de cometer e o mais caro de desfazer.
+
+### Composição na home
+
+`apps/landing/lib/features/home_page.dart` é o ponto onde o shell decide a ordem do scroll e os parâmetros que cada feature recebe (ex.: `ContactSection` recebe `whatsappNumber`, `email`, `linkedinUrl`, `githubUrl` por construtor). Cada feature exporta widgets prontos via `package:feature_<nome>/feature_<nome>.dart`. Para acrescentar uma seção nova ao scroll, adicione um `SliverPadding` ali.
 
 ### Camadas dentro de cada `feature_*`
 
-Feature-First + Clean Architecture, com três pastas:
-- `data/` — datasources, repository impls, DTOs
-- `domain/` — entities (freezed), repository abstracts, usecases (contrato base em `core/usecase`)
-- `presentation/` — Bloc/Cubit, pages, widgets
+Feature-First + Clean Architecture, três pastas:
+- `data/` — datasources, repository impls, catálogos estáticos (ex.: `services_catalog.dart`, `domains_catalog.dart`)
+- `domain/` — entities (Equatable), repository abstracts, usecases (contrato base em `core/usecase`)
+- `presentation/` — Bloc/Cubit, sections, widgets
 
-Erros sobem como subclasses da sealed `Failure` definida em `core/failures` (NetworkFailure, ValidationFailure, etc.). Use `Result<T>` ou Either-style de `core/result` para retornos que podem falhar — não lance exceção atravessando camadas.
+Erros sobem como subclasses da sealed `Failure` em `core/failures` (NetworkFailure, ValidationFailure, etc.). Use `Result<T>` ou Either-style de `core/result` para retornos que podem falhar — não lance exceção atravessando camadas.
 
 ### State management — quando Cubit, quando Bloc
 
 - **Cubit** para estado simples sem fluxo de eventos: theme toggle, navegação, scroll position.
-- **Bloc** para fluxos com eventos: form de contato, orquestração de animações, qualquer coisa com transições não-triviais.
+- **Bloc** para fluxos com eventos: form de contato, demos do showcase (cart, delivery, scheduling), orquestração de animações.
 
-Toda Bloc/Cubit nasce com seu `bloc_test` na mesma sessão (PROJECT.md §15).
+Toda Bloc/Cubit nasce com seu `bloc_test` na mesma sessão (PROJECT.md §15). Veja `packages/feature_contact/test/presentation/bloc/contact_bloc_test.dart` como referência.
 
-### DI
+### Routing e deferred loading
 
-`get_it` + `injectable`. Cada feature **registra suas próprias dependências** — não centralizar registro no app shell. Codegen via `melos run gen`.
+`go_router` declarativo em `apps/landing/lib/router/app_router.dart`. Rotas: `/` (HomePage), `/labs` (deferred), `/404` (NotFoundPage), com `errorBuilder` caindo em NotFoundPage também.
+
+A rota `/labs` é **deferred-loaded** — o import é `import 'package:landing/features/labs_page.dart' deferred as labs;` e um `_DeferredLabs` interno chama `labs.loadLibrary()` no primeiro build. Em VM/teste resolve imediatamente; em web vira bundle separado. Enquanto carrega, mostra `LoadingSpinner` do `package:animations`. **Preserve essa propriedade** — qualquer mudança no router que torne `/labs` eager-loaded mata a otimização principal de bundle.
 
 ### Imutabilidade
 
-`freezed` para entities, states e events. `json_serializable` para DTOs. Re-rodar `melos run gen` depois de qualquer mudança nessas classes.
-
-### Routing
-
-`go_router` declarativo. `/labs` é **deferred-loaded** (não baixa se o usuário não acessar) — preservar essa propriedade ao mexer no router.
+Hoje: `Equatable` + classes plain Dart imutáveis. Não há codegen. Se você decidir adotar `freezed`/`json_serializable`, precisa adicionar `build_runner` ao pacote, e aí o filtro `dependsOn: build_runner` do script `gen` passa a captá-lo.
 
 ## Custom Painters — coração técnico do projeto
 
-Os painters em `packages/animations/lib/src/painters/` são o que prova maturidade técnica. PROJECT.md §5 lista os 6 mínimos. Regras invioláveis:
+Os painters em `packages/animations/lib/src/painters/` são o que prova maturidade técnica. Regras invioláveis (valem para qualquer painter novo):
 
 - `shouldRepaint` correto (só repinta quando o valor animado muda).
 - `Paint` cacheados como campos — **nunca** instanciados dentro de `paint()`.
@@ -90,18 +112,26 @@ Os painters em `packages/animations/lib/src/painters/` são o que prova maturida
 - Throttle de eventos de mouse no web (especialmente `ParticleFieldPainter`).
 - **Não substituir Custom Painter por Lottie nas animações de destaque.** Lottie só para vetoriais ilustrativos secundários, caso a caso.
 
+Painters existentes seguem essas regras; replique o padrão deles ao adicionar `MorphingShapePainter`, `RippleHoverPainter`, `WaveDividerPainter`.
+
+### Testar widgets que usam hover/MouseRegion
+
+Animações disparadas por `MouseRegion.onEnter` precisam de **dois pumps** depois do `gesture.moveTo`: um `pump()` para o frame que registra o evento e um `pump(Duration)` para o Ticker rodar. Sem o segundo pump o teste falha intermitentemente (ver memória `testing_mouseregion_animations`).
+
 ## Convenções de linguagem
 
 - **UI / strings exibidas:** português brasileiro.
 - **Comentários no código:** português.
 - **Nomes de classes, métodos, variáveis, arquivos:** inglês.
 - Nada de emoji em textos comerciais (Hero, Services, About, Contact). `/labs` pode ter tom mais técnico mas continua sem emoji.
+- **Não nomear empregadores, clientes ou produtos** nas seções da landing — descrever por domínio/setor (varejo B2B, setor público, fintech, etc.). O LinkedIn carrega o registro nominal. Ver memória `copy_no_named_clients`.
 
 ## Web / PWA — não esquecer
 
 - Loading screen customizado em `apps/landing/web/index.html` (HTML/CSS puro) que some quando `appRunner.runApp()` dispara. Sem ele o usuário vê tela branca por 2–4s no primeiro acesso.
 - Meta tags SEO completas (title, description, og:image, twitter:card) e `Semantics` em headlines/CTAs — Flutter Web não indexa bem por padrão.
-- Manifest PWA com ícones 192/512 + maskable, `display: standalone`.
+- Manifest PWA em `apps/landing/web/manifest.json` com ícones 192/512 + maskable, `display: standalone`.
+- `robots.txt` e `sitemap.xml` já existem em `apps/landing/web/`; mantenha sincronizados quando adicionar rotas indexáveis.
 
 ## Hard NO-DOs (PROJECT.md §13)
 
@@ -109,16 +139,23 @@ Os painters em `packages/animations/lib/src/painters/` são o que prova maturida
 - ❌ `flutter pub get` manual em cada pacote — sempre `melos bootstrap`.
 - ❌ Dependência cruzada entre features.
 - ❌ `setState` para fluxos não-triviais — use Cubit ou Bloc.
-- ❌ Acoplar UI a classes de domain — sempre via Bloc/Cubit.
+- ❌ Acoplar UI a classes de domain — sempre via Bloc/Cubit ou parâmetros do shell.
 - ❌ Build sem `--wasm`.
 - ❌ Imagens não otimizadas (use WebP + lazy load).
 - ❌ Esquecer `Semantics` nos pontos-chave de acessibilidade.
 - ❌ Esquecer o loading customizado no `index.html`.
+- ❌ Tornar `/labs` eager-loaded.
 
 ## Commits
 
-Conventional Commits (`feat:`, `fix:`, `chore:`, `docs:`, `refactor:`, `test:`). Melos pode usar isso para versionamento futuro.
+Conventional Commits (`feat:`, `fix:`, `chore:`, `docs:`, `refactor:`, `test:`).
 
 ## Quando perguntar antes de codar
 
-Se uma decisão de produto ou arquitetura **não estiver clara em PROJECT.md**, pergunte ao José antes de implementar. Não assuma. Áreas tipicamente ambíguas: paleta exata de cores, copy final das seções, escopo dos templates de showcase, conteúdo da timeline About.
+Se uma decisão de produto ou arquitetura **não estiver clara em PROJECT.md**, pergunte ao José antes de implementar. Não assuma. Áreas tipicamente ambíguas:
+
+- Paleta exata de cores e tokens finais do design system.
+- Copy final das seções comerciais.
+- Escopo dos templates restantes do showcase (fitness, imobiliária).
+- Conteúdo concreto do `/labs` quando for sair do placeholder.
+- Adoção (ou não) de `freezed`/`get_it`/`injectable` — são prescritos por PROJECT.md mas o repo escolheu seguir sem por enquanto. Não puxar essas deps unilateralmente.

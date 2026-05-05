@@ -40,7 +40,7 @@ abstract final class ShowcaseCatalog {
           'Tracker de treino com graficos — series, evolucao, plano '
           'da semana.',
       icon: Icons.fitness_center_outlined,
-      hasDemo: false,
+      hasDemo: true,
     ),
     ShowcaseTemplate(
       id: 'realestate',
@@ -49,7 +49,7 @@ abstract final class ShowcaseCatalog {
           'Listagem de imoveis com filtros por bairro, faixa de preco '
           'e numero de quartos.',
       icon: Icons.home_work_outlined,
-      hasDemo: false,
+      hasDemo: true,
     ),
   ];
 }

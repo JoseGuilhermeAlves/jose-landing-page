@@ -1,38 +1,125 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
-  <!--
-    If you are serving your web app in a path other than the root, change the
-    href value below to reflect the base path you are serving from.
-
-    The path provided below has to start and end with a slash "/" in order for
-    it to work correctly.
-
-    For more details:
-    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
-
-    This is a placeholder for base href that will be replaced by the value of
-    the `--base-href` argument provided to `flutter build`.
-  -->
   <base href="$FLUTTER_BASE_HREF">
 
   <meta charset="UTF-8">
-  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="Landing page de José Guilherme Alves - Flutter Developer">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0A0A0F">
+  <meta name="color-scheme" content="dark">
 
-  <!-- iOS meta tags & icons -->
+  <!-- SEO -->
+  <title>José Guilherme Alves — Flutter Developer (mobile, web, PWA)</title>
+  <meta name="description" content="Desenvolvedor Flutter com 7+ anos construindo apps mobile e web. Do MVP ao app em produção — Android, iOS, Web/PWA, integrações e consultoria técnica.">
+  <meta name="author" content="José Guilherme Alves">
+  <meta name="keywords" content="Flutter, Dart, desenvolvedor mobile, freelancer Flutter, app Android, PWA, Bloc, Clean Architecture, Brasil">
+  <meta name="robots" content="index,follow">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:title" content="José Guilherme Alves — Flutter Developer">
+  <meta property="og:description" content="Aplicativos Flutter de qualidade — do MVP ao app em produção. 7+ anos.">
+  <meta property="og:image" content="icons/Icon-512.png">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="José Guilherme Alves — Flutter Developer">
+  <meta name="twitter:description" content="Aplicativos Flutter de qualidade — do MVP ao app em produção.">
+  <meta name="twitter:image" content="icons/Icon-512.png">
+
+  <!-- iOS / PWA -->
   <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="landing">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="José G. Alves">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png"/>
-
-  <title>landing</title>
+  <!-- Icons / manifest -->
+  <link rel="icon" type="image/png" href="favicon.png">
   <link rel="manifest" href="manifest.json">
+
+  <!--
+    Loading screen em HTML/CSS puro. Aparece imediatamente (sem esperar
+    o WASM/CanvasKit baixar) e some quando o Flutter dispara
+    `appRunner.runApp()`. Sem isso, o usuário vê tela branca por 2-4s
+    no primeiro acesso.
+  -->
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background-color: #0A0A0F;
+      color: #E8E8F0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      overscroll-behavior: none;
+    }
+
+    #loading {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      background: radial-gradient(circle at 50% 35%, #14141B 0%, #0A0A0F 60%);
+      z-index: 9999;
+      transition: opacity 320ms ease-out;
+    }
+
+    #loading.fade-out {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    #loading-spinner {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 2.5px solid #1F1F2A;
+      border-top-color: #7C6BFF;
+      animation: spin 900ms cubic-bezier(0.6, 0.05, 0.4, 0.95) infinite;
+    }
+
+    #loading-text {
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #9A9AAB;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #loading-spinner {
+        animation: none;
+        border-top-color: #7C6BFF;
+      }
+    }
+  </style>
 </head>
 <body>
+  <div id="loading" role="status" aria-live="polite" aria-label="Carregando aplicação">
+    <div id="loading-spinner"></div>
+    <div id="loading-text">Carregando</div>
+  </div>
+
+  <script>
+    // Some assim que o Flutter sinalizar que o primeiro frame renderizou.
+    // O hook `flutter-first-frame` e disparado pelo runtime.
+    window.addEventListener('flutter-first-frame', function () {
+      var el = document.getElementById('loading');
+      if (!el) return;
+      el.classList.add('fade-out');
+      setTimeout(function () { el.remove(); }, 360);
+    });
+  </script>
+
   <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>

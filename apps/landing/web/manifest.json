@@ -1,12 +1,15 @@
 {
-    "name": "landing",
-    "short_name": "landing",
-    "start_url": ".",
+    "name": "José Guilherme Alves — Flutter Developer",
+    "short_name": "José G. Alves",
+    "start_url": "/",
+    "scope": "/",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "Landing page de José Guilherme Alves - Flutter Developer",
-    "orientation": "portrait-primary",
+    "orientation": "any",
+    "background_color": "#0A0A0F",
+    "theme_color": "#0A0A0F",
+    "description": "Desenvolvedor Flutter com 7+ anos. Apps mobile, web/PWA, integrações e consultoria técnica.",
+    "lang": "pt-BR",
+    "dir": "ltr",
     "prefer_related_applications": false,
     "icons": [
         {

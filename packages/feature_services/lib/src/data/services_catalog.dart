@@ -7,37 +7,37 @@ abstract final class ServicesCatalog {
   static const List<Service> all = [
     Service(
       id: 'mobile',
-      title: 'Apps mobile',
-      description: 'Android nativo via Flutter — performance e UX '
-          'consistentes em devices reais.',
+      title: 'Front end mobile',
+      description: 'Android nativo via Flutter — performance e '
+          'consistencia de UX em devices reais.',
       icon: Icons.phone_android,
     ),
     Service(
       id: 'web',
       title: 'Web Apps & PWA',
-      description: 'Apps web com Flutter — instalaveis como PWA, '
-          'rapidos e responsivos.',
+      description: 'O mesmo codigo Flutter como app web — '
+          'instalavel como PWA, rapido e responsivo.',
       icon: Icons.public,
     ),
     Service(
       id: 'integrations',
-      title: 'Integracoes',
-      description: 'APIs REST, Bluetooth, NFC, OAuth — conecto seu app '
-          'ao que ele precisa falar.',
+      title: 'Integracao com APIs',
+      description: 'REST, OAuth, Bluetooth e NFC — integro o app '
+          'mobile a APIs e perifericos ja existentes.',
       icon: Icons.hub_outlined,
     ),
     Service(
       id: 'maintenance',
       title: 'Manutencao e evolucao',
-      description: 'Estabilizacao, refator e novas features em apps '
-          'que ja estao em producao.',
+      description: 'Refator, estabilizacao e novas features no front '
+          'end de apps ja em producao.',
       icon: Icons.build_outlined,
     ),
     Service(
       id: 'consulting',
-      title: 'Consultoria tecnica',
-      description: 'Arquitetura, code review e direcionamento — antes '
-          'do bug virar dor cronica.',
+      title: 'Consultoria mobile',
+      description: 'Arquitetura, code review e definicao de stack — '
+          'apoio tecnico antes da feature virar debito.',
       icon: Icons.lightbulb_outline,
     ),
   ];

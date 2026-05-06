@@ -78,7 +78,7 @@ class DomainCard extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(AppSpacing.sm),
             decoration: BoxDecoration(
-              color: colors.primary.withValues(alpha: 0.12),
+              gradient: AppGradients.brandSoft(colors),
               borderRadius: BorderRadius.circular(AppRadius.md),
             ),
             child: Icon(
@@ -134,7 +134,7 @@ class _EndToEndBadge extends StatelessWidget {
         borderRadius: BorderRadius.circular(AppRadius.full),
       ),
       child: Text(
-        'ponta a ponta',
+        'front end inteiro',
         style: textTheme.labelSmall?.copyWith(
           color: colors.primary,
           letterSpacing: 0.4,

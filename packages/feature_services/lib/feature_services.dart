@@ -7,3 +7,4 @@ export 'src/data/services_catalog.dart';
 export 'src/domain/service.dart';
 export 'src/presentation/service_card.dart';
 export 'src/presentation/services_grid.dart';
+export 'src/presentation/services_section.dart';

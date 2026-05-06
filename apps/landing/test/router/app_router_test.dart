@@ -38,6 +38,10 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.byKey(const Key('labs-page')), findsOneWidget);
+      // Shell injeta githubUrl + onOpenGithub (via AppConfig +
+      // url_launcher). Botao precisa aparecer — se sumir, alguem
+      // quebrou a wiring no app_router.dart.
+      expect(find.byKey(const Key('labs-github-button')), findsOneWidget);
 
       await tester.pumpWidget(const SizedBox());
     });

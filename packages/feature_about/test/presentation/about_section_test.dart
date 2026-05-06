@@ -40,15 +40,17 @@ void main() {
     });
 
     testWidgets(
-      'inclui nota de escopo honesta (varejo end-to-end + demais em time)',
+      'inclui nota de escopo honesta (varejo full-FE + demais em time)',
       (tester) async {
         await tester.pumpWidget(wrap(const AboutSection()));
         await tester.pump(const Duration(milliseconds: 16));
 
-        // Nota de escopo deve mencionar tanto "ponta a ponta"
-        // (varejo) quanto "time" (demais).
-        expect(find.textContaining('ponta a ponta'), findsWidgets);
+        // Nota de escopo separa varejo (front end inteiro) dos demais
+        // dominios (em time de produto). Tambem deixa explicito que
+        // backend nao compoe o escopo de atuacao.
+        expect(find.textContaining('front end mobile inteiro'), findsWidgets);
         expect(find.textContaining('time'), findsWidgets);
+        expect(find.textContaining('Backend'), findsWidgets);
 
         await tester.pumpWidget(const SizedBox());
       },

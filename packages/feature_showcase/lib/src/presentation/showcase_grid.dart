@@ -49,7 +49,9 @@ class ShowcaseGrid extends StatelessWidget {
   }
 }
 
-class ShowcaseCard extends StatelessWidget {
+/// Card de um template do showcase. Hover lift + glow shadow + icone
+/// em gradient — segue o mesmo padrao visual do `ServiceCard`.
+class ShowcaseCard extends StatefulWidget {
   const ShowcaseCard({
     required this.template,
     required this.onTap,
@@ -60,30 +62,62 @@ class ShowcaseCard extends StatelessWidget {
   final VoidCallback onTap;
 
   @override
+  State<ShowcaseCard> createState() => _ShowcaseCardState();
+}
+
+class _ShowcaseCardState extends State<ShowcaseCard>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller = AnimationController(
+    vsync: this,
+    duration: AppDuration.base,
+  );
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  void _setHovered({required bool hovered}) {
+    if (hovered) {
+      _controller.forward();
+    } else {
+      _controller.reverse();
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     final colors = context.colors;
     final textTheme = Theme.of(context).textTheme;
-    final disabled = !template.hasDemo;
+    final disabled = !widget.template.hasDemo;
 
-    return Semantics(
-      button: true,
-      enabled: !disabled,
-      label: template.label,
-      onTap: disabled ? null : onTap,
-      excludeSemantics: true,
-      child: MouseRegion(
-        cursor: disabled
-            ? SystemMouseCursors.basic
-            : SystemMouseCursors.click,
-        child: GestureDetector(
-          key: Key('showcase-card-${template.id}'),
-          onTap: disabled ? null : onTap,
+    final card = AnimatedBuilder(
+      animation: _controller,
+      builder: (_, _) {
+        final t = disabled ? 0.0 : _controller.value;
+        return Transform.translate(
+          offset: Offset(0, -4 * t),
           child: Container(
             padding: const EdgeInsets.all(AppSpacing.lg),
             decoration: BoxDecoration(
               color: colors.surface,
               borderRadius: BorderRadius.circular(AppRadius.lg),
-              border: Border.all(color: colors.border),
+              border: Border.all(
+                color: t > 0
+                    ? Color.lerp(colors.border, colors.primary, t * 0.6)!
+                    : colors.border,
+              ),
+              boxShadow: t > 0
+                  ? [
+                      BoxShadow(
+                        color: colors.primary.withValues(alpha: 0.22 * t),
+                        blurRadius: 28,
+                        spreadRadius: -6,
+                        offset: const Offset(0, 12),
+                      ),
+                    ]
+                  : null,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -92,11 +126,11 @@ class ShowcaseCard extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(AppSpacing.sm),
                   decoration: BoxDecoration(
-                    color: colors.primary.withValues(alpha: 0.12),
+                    gradient: AppGradients.brandSoft(colors),
                     borderRadius: BorderRadius.circular(AppRadius.md),
                   ),
                   child: Icon(
-                    template.icon,
+                    widget.template.icon,
                     color: colors.primary,
                     size: 22,
                   ),
@@ -108,7 +142,7 @@ class ShowcaseCard extends StatelessWidget {
                   crossAxisAlignment: WrapCrossAlignment.center,
                   children: [
                     Text(
-                      template.label,
+                      widget.template.label,
                       style: textTheme.titleLarge?.copyWith(
                         color: disabled
                             ? colors.onSurfaceMuted
@@ -120,7 +154,7 @@ class ShowcaseCard extends StatelessWidget {
                 ),
                 const SizedBox(height: AppSpacing.sm),
                 Text(
-                  template.description,
+                  widget.template.description,
                   style: textTheme.bodyMedium?.copyWith(
                     color: colors.onSurfaceMuted,
                     height: 1.5,
@@ -149,6 +183,26 @@ class ShowcaseCard extends StatelessWidget {
               ],
             ),
           ),
+        );
+      },
+    );
+
+    return Semantics(
+      button: true,
+      enabled: !disabled,
+      label: widget.template.label,
+      onTap: disabled ? null : widget.onTap,
+      excludeSemantics: true,
+      child: MouseRegion(
+        cursor: disabled
+            ? SystemMouseCursors.basic
+            : SystemMouseCursors.click,
+        onEnter: disabled ? null : (_) => _setHovered(hovered: true),
+        onExit: disabled ? null : (_) => _setHovered(hovered: false),
+        child: GestureDetector(
+          key: Key('showcase-card-${widget.template.id}'),
+          onTap: disabled ? null : widget.onTap,
+          child: card,
         ),
       ),
     );

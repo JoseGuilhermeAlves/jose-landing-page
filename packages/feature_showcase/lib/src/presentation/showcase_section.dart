@@ -19,32 +19,19 @@ class ShowcaseSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.colors;
-    final textTheme = Theme.of(context).textTheme;
-    final isMobile = context.isMobile;
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Semantics(
-          header: true,
-          child: Text(
-            'Templates demonstraveis',
-            style: (isMobile ? textTheme.headlineMedium : textTheme.headlineLarge)
-                ?.copyWith(color: colors.onSurface),
-          ),
+        const SectionHeader(
+          eyebrow: 'Showcase',
+          title: 'Cinco nichos,',
+          titleAccent: 'cinco prototipos.',
+          subtitle:
+              'Mocks funcionais por nicho — toque num card pra abrir. '
+              'Sem backend de verdade; demonstram o tipo de produto que '
+              'consigo entregar.',
         ),
-        const SizedBox(height: AppSpacing.md),
-        Text(
-          'Toque num card pra abrir um mock funcional. Sem backend de '
-          'verdade — sao demos pra mostrar o tipo de produto que '
-          'consigo entregar.',
-          style: textTheme.bodyLarge?.copyWith(
-            color: colors.onSurfaceMuted,
-            height: 1.5,
-          ),
-        ),
-        const SizedBox(height: AppSpacing.xl),
+        const SizedBox(height: AppSpacing.xxl),
         ShowcaseGrid(
           templates: ShowcaseCatalog.all,
           onTemplateTapped: (t) => _openDemo(context, t),

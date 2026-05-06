@@ -2,13 +2,17 @@ import 'package:animations/animations.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 
-/// Topo da landing. Layout responsivo:
-/// - mobile (< 600px): coluna unica, CTAs empilhados;
-/// - tablet+: coluna unica de texto centralizada, CTAs lado-a-lado.
+/// Topo da landing. Composicao em camadas:
+/// 1. glow radial sutil atras do texto (depth);
+/// 2. ParticleField como background (custom painter §5.1) — particulas
+///    com alpha reduzido pra nao competir com headline;
+/// 3. fade-out gradient no rodape — particulas escorregam pro
+///    background da proxima secao em vez de cortar abrupto;
+/// 4. conteudo centralizado: eyebrow chip, headline em 2 linhas (a
+///    segunda em gradient brand), subhead, CTAs e trust strip.
 ///
-/// O fundo usa [ParticleField] (custom painter §5.1) — coracao tecnico
-/// do projeto. Callbacks de CTA sobem para o app shell, que decide
-/// como abrir WhatsApp / scrollar para a secao de projetos.
+/// Layout responsivo: tudo center-aligned em desktop, start-aligned
+/// em mobile.
 class HeroSection extends StatelessWidget {
   const HeroSection({
     this.onContactPressed,
@@ -36,70 +40,122 @@ class HeroSection extends StatelessWidget {
         ?.copyWith(
       color: colors.onSurface,
       height: 1.05,
+      letterSpacing: -1.2,
     );
 
-    final subheadlineStyle = textTheme.titleMedium?.copyWith(
-      color: colors.onSurfaceMuted,
-      height: 1.4,
-    );
+    final crossAxisAlignment =
+        isMobile ? CrossAxisAlignment.start : CrossAxisAlignment.center;
+    final textAlign = isMobile ? TextAlign.start : TextAlign.center;
 
     final content = Padding(
       padding: EdgeInsets.symmetric(
         horizontal: isMobile ? AppSpacing.lg : AppSpacing.huge,
         vertical: AppSpacing.huge,
       ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: isMobile
-            ? CrossAxisAlignment.start
-            : CrossAxisAlignment.center,
-        children: [
-          ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 880),
-            child: Semantics(
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 920),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: crossAxisAlignment,
+          children: [
+            const EyebrowBadge(label: 'Disponivel pra freelas'),
+            SizedBox(height: isMobile ? AppSpacing.lg : AppSpacing.xl),
+            Semantics(
               header: true,
-              child: Text(
-                'Aplicativos Flutter de qualidade — do MVP ao app em '
-                'producao',
-                style: headlineStyle,
-                textAlign: isMobile ? TextAlign.start : TextAlign.center,
+              child: Column(
+                crossAxisAlignment: crossAxisAlignment,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    'Front end mobile com Flutter.',
+                    style: headlineStyle,
+                    textAlign: textAlign,
+                  ),
+                  GradientText(
+                    text: 'Do MVP ao app em producao.',
+                    gradient: AppGradients.brand(colors),
+                    style: headlineStyle,
+                    textAlign: textAlign,
+                  ),
+                ],
               ),
             ),
-          ),
-          const SizedBox(height: AppSpacing.lg),
-          ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 720),
-            child: Text(
-              '7+ anos construindo apps mobile e web — de operacao '
-              'varejista a produto fintech em escala.',
-              style: subheadlineStyle,
-              textAlign: isMobile ? TextAlign.start : TextAlign.center,
+            const SizedBox(height: AppSpacing.lg),
+            ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 680),
+              child: Text(
+                '7+ anos construindo o front end de apps mobile (e web '
+                'quando faz sentido) — atuando do varejo B2B a produto '
+                'fintech em escala.',
+                style: textTheme.titleMedium?.copyWith(
+                  color: colors.onSurfaceMuted,
+                  height: 1.5,
+                  fontWeight: FontWeight.w400,
+                ),
+                textAlign: textAlign,
+              ),
             ),
-          ),
-          const SizedBox(height: AppSpacing.xl),
-          _CtaRow(
-            isMobile: isMobile,
-            onContactPressed: onContactPressed,
-            onSeeProjectsPressed: onSeeProjectsPressed,
-          ),
-        ],
+            const SizedBox(height: AppSpacing.xl),
+            _CtaRow(
+              isMobile: isMobile,
+              onContactPressed: onContactPressed,
+              onSeeProjectsPressed: onSeeProjectsPressed,
+            ),
+            const SizedBox(height: AppSpacing.xxl),
+            _TrustStrip(isMobile: isMobile),
+          ],
+        ),
       ),
     );
 
     return Stack(
       fit: StackFit.expand,
       children: [
-        // Fundo animado. `IgnorePointer` deixa o mouse passar para os
-        // CTAs sem que o ParticleField roube hover.
-        const Positioned.fill(
+        // Glow radial atras do headline — sumindo pras bordas.
+        Positioned.fill(
+          child: IgnorePointer(
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: AppGradients.glow(
+                  colors.primary,
+                  opacity: 0.16,
+                  radius: 0.55,
+                ),
+              ),
+            ),
+          ),
+        ),
+        // ParticleField com alphas reduzidos pra nao competir com texto.
+        Positioned.fill(
           child: IgnorePointer(
             ignoring: false,
             child: ParticleField(
               particleCount: 48,
+              particleColor: colors.primary.withValues(alpha: 0.55),
+              linkColor: colors.primary.withValues(alpha: 0.12),
             ),
           ),
         ),
+        // Fade-out no rodape — particulas escorregam pro background.
+        Positioned(
+          left: 0,
+          right: 0,
+          bottom: 0,
+          height: 160,
+          child: IgnorePointer(
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [Colors.transparent, colors.background],
+                ),
+              ),
+            ),
+          ),
+        ),
+        // Conteudo.
         Center(
           child: SingleChildScrollView(
             padding: EdgeInsets.zero,
@@ -164,6 +220,80 @@ class _CtaRow extends StatelessWidget {
       alignment: WrapAlignment.center,
       crossAxisAlignment: WrapCrossAlignment.center,
       children: [whatsapp, projects],
+    );
+  }
+}
+
+/// Strip de prova social abaixo dos CTAs. Cada chip e vertical
+/// (valor em destaque, label uppercase abaixo) — formato compacto
+/// que cabe ate em viewport mobile estreito sem overflow.
+class _TrustStrip extends StatelessWidget {
+  const _TrustStrip({required this.isMobile});
+  final bool isMobile;
+
+  static const List<_TrustStat> _stats = [
+    _TrustStat(value: '7+', label: 'anos de Flutter'),
+    _TrustStat(value: '5+', label: 'dominios atuados'),
+    _TrustStat(value: 'Mobile · Web', label: 'plataformas-alvo'),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    final crossAxisAlign =
+        isMobile ? CrossAxisAlignment.start : CrossAxisAlignment.center;
+
+    return Wrap(
+      spacing: AppSpacing.xl,
+      runSpacing: AppSpacing.lg,
+      alignment: isMobile ? WrapAlignment.start : WrapAlignment.center,
+      crossAxisAlignment: WrapCrossAlignment.start,
+      children: [
+        for (final stat in _stats)
+          _TrustStatChip(stat: stat, crossAxisAlignment: crossAxisAlign),
+      ],
+    );
+  }
+}
+
+class _TrustStat {
+  const _TrustStat({required this.value, required this.label});
+  final String value;
+  final String label;
+}
+
+class _TrustStatChip extends StatelessWidget {
+  const _TrustStatChip({
+    required this.stat,
+    required this.crossAxisAlignment,
+  });
+  final _TrustStat stat;
+  final CrossAxisAlignment crossAxisAlignment;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+    final textTheme = Theme.of(context).textTheme;
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: crossAxisAlignment,
+      children: [
+        Text(
+          stat.value,
+          style: textTheme.titleMedium?.copyWith(
+            color: colors.onSurface,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+        const SizedBox(height: 2),
+        Text(
+          stat.label.toUpperCase(),
+          style: textTheme.labelSmall?.copyWith(
+            color: colors.onSurfaceMuted,
+            letterSpacing: 0.8,
+          ),
+        ),
+      ],
     );
   }
 }

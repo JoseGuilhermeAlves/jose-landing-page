@@ -10,7 +10,9 @@
       "Bash(mkdir -p packages/feature_showcase/lib/src/presentation/delivery packages/feature_showcase/test/presentation/delivery)",
       "Read(//c/c/jose-landing-page/packages/feature_showcase/lib/src/**)",
       "Bash(melos run *)",
-      "PowerShell(Get-ChildItem -Path C:\\\\jose-landing-page\\\\apps\\\\landing\\\\web -Recurse -File | ForEach-Object { \"{0,-50} {1,8} bytes\" -f $_.FullName.Replace\\(\"C:\\\\jose-landing-page\\\\apps\\\\landing\\\\web\\\\\",\"\"\\), $_.Length })"
+      "PowerShell(Get-ChildItem -Path C:\\\\jose-landing-page\\\\apps\\\\landing\\\\web -Recurse -File | ForEach-Object { \"{0,-50} {1,8} bytes\" -f $_.FullName.Replace\\(\"C:\\\\jose-landing-page\\\\apps\\\\landing\\\\web\\\\\",\"\"\\), $_.Length })",
+      "Bash(gh auth *)",
+      "PowerShell(gh auth status)"
     ]
   }
 }

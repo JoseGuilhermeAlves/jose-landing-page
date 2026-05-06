@@ -127,15 +127,24 @@ class HeroSection extends StatelessWidget {
           ),
         ),
         // ParticleField com alphas reduzidos pra nao competir com texto.
+        // Densidade aumentada (72) pra reforcar a sensacao de "ceu
+        // estrelado" — sem ofuscar o texto nem o trabalho do
+        // ConstellationField acima.
         Positioned.fill(
           child: IgnorePointer(
             ignoring: false,
             child: ParticleField(
-              particleCount: 48,
+              particleCount: 72,
               particleColor: colors.primary.withValues(alpha: 0.55),
               linkColor: colors.primary.withValues(alpha: 0.12),
             ),
           ),
+        ),
+        // Constelacoes com flare em cruz e twinkle — pontos
+        // reconheciveis (Cruzeiro do Sul, Orion, Triangulo de Verao).
+        // Vai por cima das particulas pra que as estrelas dominem.
+        const Positioned.fill(
+          child: IgnorePointer(child: ConstellationField()),
         ),
         // Fade-out no rodape — particulas escorregam pro background.
         Positioned(
@@ -162,7 +171,76 @@ class HeroSection extends StatelessWidget {
             child: content,
           ),
         ),
+        // Scroll cue. Posicionado dentro do fade-out gradient pra que
+        // se misture com a transicao — atmosfera, nao destaque
+        // gritante. Indica que tem conteudo abaixo, sem competir com
+        // os CTAs do hero.
+        const Positioned(
+          left: 0,
+          right: 0,
+          bottom: AppSpacing.lg,
+          child: Center(child: _ScrollHint()),
+        ),
       ],
+    );
+  }
+}
+
+/// Indicador "role para baixo" no rodape do hero. Chevron + label
+/// muted bouncing devagar — afirmacao discreta de que tem mais conteudo
+/// abaixo do fold.
+class _ScrollHint extends StatefulWidget {
+  const _ScrollHint();
+
+  @override
+  State<_ScrollHint> createState() => _ScrollHintState();
+}
+
+class _ScrollHintState extends State<_ScrollHint>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _bounce = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 1600),
+  )..repeat(reverse: true);
+
+  @override
+  void dispose() {
+    _bounce.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+    final textTheme = Theme.of(context).textTheme;
+
+    return AnimatedBuilder(
+      animation: _bounce,
+      builder: (_, _) {
+        // Curva sutil de easeInOut — Tween linear daria stop-and-go.
+        final t = Curves.easeInOut.transform(_bounce.value);
+        return Transform.translate(
+          offset: Offset(0, 4 * t),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                'role para continuar'.toUpperCase(),
+                style: textTheme.labelSmall?.copyWith(
+                  color: colors.onSurfaceMuted,
+                  letterSpacing: 1.2,
+                ),
+              ),
+              const SizedBox(height: 6),
+              Icon(
+                Icons.keyboard_arrow_down_rounded,
+                size: 22,
+                color: colors.onSurfaceMuted,
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }
@@ -246,7 +324,6 @@ class _TrustStrip extends StatelessWidget {
       spacing: AppSpacing.xl,
       runSpacing: AppSpacing.lg,
       alignment: isMobile ? WrapAlignment.start : WrapAlignment.center,
-      crossAxisAlignment: WrapCrossAlignment.start,
       children: [
         for (final stat in _stats)
           _TrustStatChip(stat: stat, crossAxisAlignment: crossAxisAlign),

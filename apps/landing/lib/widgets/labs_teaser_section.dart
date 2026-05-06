@@ -95,7 +95,6 @@ class _LabsTeaserSectionState extends State<LabsTeaserSection>
             ],
           )
         : Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Expanded(flex: 3, child: copyBlock),
               const SizedBox(width: AppSpacing.huge),
@@ -197,7 +196,6 @@ class _MorphingPreview extends StatelessWidget {
                 gradient: AppGradients.glow(
                   colors.primary,
                   opacity: 0.32,
-                  radius: 0.6,
                 ),
                 color: colors.surface,
               ),

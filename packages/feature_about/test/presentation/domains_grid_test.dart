@@ -46,13 +46,13 @@ void main() {
     });
 
     testWidgets(
-      'sinaliza visualmente o card end-to-end com badge "ponta a ponta"',
+      'sinaliza visualmente o card end-to-end com badge "front end inteiro"',
       (tester) async {
         await tester.pumpWidget(wrap(const DomainsGrid(domains: domains)));
         await tester.pump(const Duration(milliseconds: 16));
 
-        // Badge so aparece no card de varejo
-        expect(find.textContaining('ponta a ponta'), findsOneWidget);
+        // Badge so aparece no card de varejo (DomainScope.endToEnd)
+        expect(find.textContaining('front end inteiro'), findsOneWidget);
       },
     );
 

@@ -4,8 +4,9 @@ import 'package:feature_about/src/presentation/domains_grid.dart';
 import 'package:feature_about/src/presentation/stack_badges.dart';
 import 'package:flutter/material.dart';
 
-/// Secao "Sobre" — bio + grade de dominios em que atuou + nota de
-/// escopo + stack badges (PROJECT.md §4.4).
+/// Secao "Sobre" — eyebrow + headline em gradiente, card com avatar +
+/// nome + bio, grade de dominios em que atuou, nota de escopo e
+/// stack badges (PROJECT.md §4.4).
 ///
 /// **Sem timeline cronologica** e **sem nomear** empresas/produtos —
 /// detalhe nominal fica no LinkedIn. Aqui descrevemos por dominio
@@ -18,43 +19,6 @@ class AboutSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = context.colors;
     final textTheme = Theme.of(context).textTheme;
-    final isMobile = context.isMobile;
-
-    final intro = Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Row(
-          children: [
-            _Avatar(initials: 'JG', colors: colors, textTheme: textTheme),
-            const SizedBox(width: AppSpacing.lg),
-            Expanded(
-              child: Semantics(
-                header: true,
-                child: Text(
-                  'José Guilherme Alves',
-                  style: (isMobile
-                          ? textTheme.headlineMedium
-                          : textTheme.headlineLarge)
-                      ?.copyWith(color: colors.onSurface),
-                ),
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: AppSpacing.lg),
-        Text(
-          'Desenvolvedor mobile/web ha 7+ anos. Comecei construindo '
-          'apps de operacao varejista de ponta a ponta, depois fui '
-          'pra times de produto em dominios maiores — incluindo o '
-          'que faco hoje, em produto fintech em escala.',
-          style: textTheme.bodyLarge?.copyWith(
-            color: colors.onSurfaceMuted,
-            height: 1.6,
-          ),
-        ),
-      ],
-    );
 
     final scopeNote = Container(
       padding: const EdgeInsets.all(AppSpacing.lg),
@@ -73,12 +37,14 @@ class AboutSection extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.sm),
           Text(
-            'Apps de varejo B2B foram construidos por mim ponta a ponta '
-            '— produto, arquitetura, codigo e suporte direto a operacao. '
-            'Nos demais dominios atuo em time de produto, com escopo '
-            'de feature, arquitetura ou stewardship conforme o '
-            'contexto. Detalhe nominal de empresas e produtos fica '
-            'no LinkedIn.',
+            'No varejo B2B atuei como front end mobile inteiro — '
+            'design, arquitetura, codigo e suporte direto a operacao, '
+            'em time pequeno, durante 5 anos. Nos demais dominios entro '
+            'como mobile dev em time de produto, com escopo de feature '
+            'ou arquitetura mobile conforme o contexto. Backend nao '
+            'compoe meu escopo de atuacao: integro com APIs ja '
+            'existentes, nao construo. Detalhe nominal de empresas e '
+            'produtos fica no LinkedIn.',
             style: textTheme.bodyMedium?.copyWith(
               color: colors.onSurfaceMuted,
               height: 1.55,
@@ -91,7 +57,17 @@ class AboutSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        intro,
+        const SectionHeader(
+          eyebrow: 'Sobre',
+          title: 'Quem te',
+          titleAccent: 'atende.',
+          subtitle:
+              'Front end mobile com Flutter ha 7+ anos. Foco em '
+              'entregar app robusto, com escopo claro e expectativa '
+              'alinhada desde o kickoff.',
+        ),
+        const SizedBox(height: AppSpacing.xxl),
+        const _BioCard(),
         const SizedBox(height: AppSpacing.xxl),
         Text(
           'Onde ja atuei',
@@ -113,6 +89,83 @@ class AboutSection extends StatelessWidget {
   }
 }
 
+/// Card "minha bio". Avatar + nome em destaque + paragrafo. Substituir
+/// o avatar de iniciais por foto real quando o Jose enviar.
+class _BioCard extends StatelessWidget {
+  const _BioCard();
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+    final textTheme = Theme.of(context).textTheme;
+    final isMobile = context.isMobile;
+
+    final avatar = _Avatar(initials: 'JG', colors: colors, textTheme: textTheme);
+
+    final textBlock = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(
+          'José Guilherme Alves',
+          style: textTheme.titleLarge?.copyWith(color: colors.onSurface),
+        ),
+        const SizedBox(height: AppSpacing.xs),
+        Text(
+          'Front end mobile · Flutter Developer · Brasil',
+          style: textTheme.labelMedium?.copyWith(
+            color: colors.primary,
+            letterSpacing: 0.4,
+          ),
+        ),
+        const SizedBox(height: AppSpacing.md),
+        Text(
+          'A carreira comecou em apps mobile de operacao varejista — '
+          'front end Flutter do design ao deploy, em time pequeno, '
+          'durante 5 anos. Em seguida, atuacao em times de produto em '
+          'dominios maiores: setor publico, plataforma interna, '
+          'operacao em campo e, atualmente, fintech em escala. Sempre '
+          'no front end mobile, com Flutter web quando o produto '
+          'demandou. Foco constante em arquitetura, performance e '
+          'consistencia de UX em devices reais.',
+          style: textTheme.bodyMedium?.copyWith(
+            color: colors.onSurfaceMuted,
+            height: 1.6,
+          ),
+        ),
+      ],
+    );
+
+    final inner = isMobile
+        ? Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              avatar,
+              const SizedBox(height: AppSpacing.lg),
+              textBlock,
+            ],
+          )
+        : Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              avatar,
+              const SizedBox(width: AppSpacing.xl),
+              Expanded(child: textBlock),
+            ],
+          );
+
+    return Container(
+      padding: const EdgeInsets.all(AppSpacing.xl),
+      decoration: BoxDecoration(
+        color: colors.surface,
+        borderRadius: BorderRadius.circular(AppRadius.lg),
+        border: Border.all(color: colors.border),
+      ),
+      child: inner,
+    );
+  }
+}
+
 class _Avatar extends StatelessWidget {
   const _Avatar({
     required this.initials,
@@ -126,24 +179,26 @@ class _Avatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Avatar com gradiente — substituir por foto real quando o Jose
-    // enviar.
+    // Avatar em gradiente brand, com glow externo. Substituir por foto
+    // real quando o Jose enviar.
     return Container(
-      width: 80,
-      height: 80,
+      width: 96,
+      height: 96,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [colors.primary, colors.accent],
-        ),
-        border: Border.all(color: colors.border, width: 2),
+        gradient: AppGradients.brand(colors),
+        boxShadow: [
+          BoxShadow(
+            color: colors.primary.withValues(alpha: 0.4),
+            blurRadius: 28,
+            spreadRadius: -4,
+          ),
+        ],
       ),
       alignment: Alignment.center,
       child: Text(
         initials,
-        style: textTheme.titleLarge?.copyWith(
+        style: textTheme.headlineMedium?.copyWith(
           color: colors.onPrimary,
           fontWeight: FontWeight.w700,
         ),

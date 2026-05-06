@@ -47,8 +47,9 @@ abstract final class DomainsCatalog {
       id: 'retail',
       label: 'Varejo B2B',
       blurb:
-          'Apps de operacao de loja, controle de estoque, inventario '
-          'e pedidos. Construidos ponta a ponta ao longo de 5 anos.',
+          'Apps mobile de operacao de loja, controle de estoque, '
+          'inventario e pedidos. Front end Flutter inteiro, em time '
+          'pequeno, ao longo de 5 anos.',
       icon: Icons.storefront_outlined,
       scope: DomainScope.endToEnd,
     ),

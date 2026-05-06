@@ -14,7 +14,7 @@ Workspace Pub + Melos já configurado (PROJECT.md §6 aplicado). O shell de `app
 
 - **Setup raiz:** `pubspec.yaml` workspace, `analysis_options.yaml`, `.gitignore` raiz — feitos.
 - **`packages/core`:** `failures/`, `exceptions/`, `result/`, `usecase/` — feitos.
-- **`packages/design_system`:** `theme/`, `tokens/`, `typography/`, `spacing/`, `breakpoints/`, `responsive/`, `widgets/` — feitos.
+- **`packages/design_system`:** `theme/`, `tokens/` (incluindo `app_gradients.dart` — `brand`, `brandSoft`, `glow`), `typography/`, `spacing/`, `breakpoints/`, `responsive/`, `widgets/` — feitos. Primitives visuais: `EyebrowBadge` (chip uppercase com dot pulsante), `GradientText` (ShaderMask com `BlendMode.srcIn`), `SectionHeader` (eyebrow + headline com palavra-chave em gradient + subtitle), `GlowBackdrop` (radial gradient atrás do child). **Use o `SectionHeader` em qualquer seção nova** — ele é o que padroniza o ritmo visual da landing (Linear/Vercel/Stripe-style).
 - **`packages/animations`:** **os 7 painters** prescritos pelo PROJECT.md §5 (mais um) estão presentes: `ParticleFieldPainter`, `AnimatedTimelinePainter`, `LoadingSpinnerPainter`, `AnimatedBorderPainter`, `MorphingShapePainter`, `RippleHoverPainter`, `WaveDividerPainter`. Os três últimos foram criados sem widget wrapper — quem consome (hero, dividers, hover de cards, playgrounds em `feature_labs`) instancia o `CustomPaint` direto, alimentando `progress`/`phase` com `AnimationController`. Se algum repetir muito, vale extrair um wrapper como o `LoadingSpinner`.
 - **`apps/landing` shell:** `main.dart` → `bootstrap()` (com `runZonedGuarded` + `FlutterError.onError` + `PlatformDispatcher.onError`) → `LandingApp` (MaterialApp.router, dark-only por enquanto). Router em `lib/router/app_router.dart`, paths em `lib/router/route_paths.dart`.
 - **`feature_hero`, `feature_services`, `feature_about`, `feature_contact`:** plugados na `HomePage` (`apps/landing/lib/features/home_page.dart`).
@@ -73,7 +73,9 @@ apps/landing     → tudo
 
 ### Composição na home
 
-`apps/landing/lib/features/home_page.dart` é o ponto onde o shell decide a ordem do scroll e os parâmetros que cada feature recebe (ex.: `ContactSection` recebe `whatsappNumber`, `email`, `linkedinUrl`, `githubUrl` por construtor). Cada feature exporta widgets prontos via `package:feature_<nome>/feature_<nome>.dart`. Para acrescentar uma seção nova ao scroll, adicione um `SliverPadding` ali.
+`apps/landing/lib/features/home_page.dart` é o ponto onde o shell decide a ordem do scroll e os parâmetros que cada feature recebe (ex.: `ContactSection` recebe `whatsappNumber`, `email`, `linkedinUrl`, `githubUrl` por construtor). Cada feature exporta widgets prontos via `package:feature_<nome>/feature_<nome>.dart`. Para acrescentar uma seção nova ao scroll, adicione um `_SectionSlot` ali.
+
+**Pattern de seção:** todas as seções da home seguem o mesmo molde — `SectionHeader` (eyebrow chip + título com palavra-chave em gradient + subtitle), depois o conteúdo, separadas por `SectionWaveDivider` (em `apps/landing/lib/widgets/`, anima `WaveDividerPainter` em loop) e envolvidas pelo `_SectionSlot` da própria home (que adiciona `GlowBackdrop` sutil + `maxWidth: 1180` pra evitar paragraph stretch em viewport ultrawide). O Hero é especial — não usa `SectionHeader` mas tem o mesmo grammar (eyebrow + 2-line headline com gradient na linha de baixo + trust strip de stats abaixo dos CTAs).
 
 ### Camadas dentro de cada `feature_*`
 
@@ -125,6 +127,8 @@ Animações disparadas por `MouseRegion.onEnter` precisam de **dois pumps** depo
 - **Comentários no código:** português.
 - **Nomes de classes, métodos, variáveis, arquivos:** inglês.
 - Nada de emoji em textos comerciais (Hero, Services, About, Contact). `/labs` pode ter tom mais técnico mas continua sem emoji.
+- **Tom da copy:** formal, direto e sucinto. Sem coloquialismos ("sem enrolação", "prata-de-casa", "dor crônica"), sem "pra" no lugar de "para", sem expressões internas de dev. Pense portfólio sênior, não meme.
+- **Posicionamento canônico:** José é **front end mobile** (Flutter). Não é fullstack. Toda copy deve respeitar esse recorte — backend é integração com APIs já existentes, nunca construção. Evitar "ponta a ponta" sem qualificar (use "front end inteiro", "front end mobile inteiro", "front end Flutter inteiro").
 - **Não nomear empregadores, clientes ou produtos** nas seções da landing — descrever por domínio/setor (varejo B2B, setor público, fintech, etc.). O LinkedIn carrega o registro nominal. Ver memória `copy_no_named_clients`.
 
 ## Web / PWA — não esquecer
@@ -158,5 +162,6 @@ Se uma decisão de produto ou arquitetura **não estiver clara em PROJECT.md**, 
 - Paleta exata de cores e tokens finais do design system.
 - Copy final das seções comerciais.
 - Escopo dos templates restantes do showcase (fitness, imobiliária).
-- URL real do GitHub a passar pra `LabsPage(githubUrl: ...)` e como abrir o link no web (hoje o callback é injetável; faltam `url_launcher` ou `dart:html` na composição do shell).
+- Domínio final do deploy — `apps/landing/web/index.html` (`og:url`, `<link rel="canonical">`), `apps/landing/web/sitemap.xml` (`<loc>`) e `apps/landing/web/robots.txt` (`Sitemap:`) estão hoje com `https://example.invalid/` ou paths relativas como TODO. Trocar tudo por URL absoluta no momento do deploy.
+- Repo URL do GitHub: `apps/landing/lib/config/app_config.dart` declara `AppConfig.githubRepoUrl = 'https://github.com/JoseGuilhermeAlves/jose-landing-page'` (chute baseado no git user). Confirme/ajuste quando o remote for criado — a `LabsPage` lê daí via `app_router.dart`.
 - Adoção (ou não) de `freezed`/`get_it`/`injectable` — são prescritos por PROJECT.md mas o repo escolheu seguir sem por enquanto. Não puxar essas deps unilateralmente.

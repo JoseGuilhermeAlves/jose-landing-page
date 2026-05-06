@@ -1,5 +1,6 @@
 import 'package:design_system/src/theme/app_colors.dart';
 import 'package:design_system/src/tokens/app_duration.dart';
+import 'package:design_system/src/tokens/app_gradients.dart';
 import 'package:design_system/src/tokens/app_radius.dart';
 import 'package:flutter/material.dart';
 
@@ -43,9 +44,16 @@ class _AppButtonState extends State<AppButton> {
     final colors = context.colors;
     final theme = Theme.of(context);
 
+    // Primary fica em gradiente brand (primary -> accent) com glow no
+    // hover. Secondary/ghost continuam em cor solida — primary e o
+    // unico que precisa "pular da pagina".
+    final isPrimary = widget.variant == AppButtonVariant.primary;
+    final usesGradient = isPrimary && !_disabled;
+
     final (Color background, Color foreground, Color? border) = switch (widget.variant) {
       AppButtonVariant.primary => (
-          _hovering && !_disabled ? colors.primaryHover : colors.primary,
+          // Cor de fundo so importa quando NAO usa gradient (disabled).
+          colors.surfaceMuted,
           colors.onPrimary,
           null,
         ),
@@ -60,6 +68,17 @@ class _AppButtonState extends State<AppButton> {
           null,
         ),
     };
+
+    final shadows = isPrimary && _hovering && !_disabled
+        ? [
+            BoxShadow(
+              color: colors.primary.withValues(alpha: 0.45),
+              blurRadius: 24,
+              spreadRadius: -4,
+              offset: const Offset(0, 8),
+            ),
+          ]
+        : <BoxShadow>[];
 
     final padding = switch (widget.size) {
       AppButtonSize.medium => const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
@@ -76,9 +95,13 @@ class _AppButtonState extends State<AppButton> {
       curve: Curves.easeOut,
       padding: padding,
       decoration: BoxDecoration(
-        color: _disabled ? colors.surfaceMuted : background,
+        gradient: usesGradient ? AppGradients.brand(colors) : null,
+        color: _disabled
+            ? colors.surfaceMuted
+            : (usesGradient ? null : background),
         borderRadius: BorderRadius.circular(AppRadius.md),
         border: border != null ? Border.all(color: border) : null,
+        boxShadow: shadows,
       ),
       child: Row(
         mainAxisSize: widget.expand ? MainAxisSize.max : MainAxisSize.min,

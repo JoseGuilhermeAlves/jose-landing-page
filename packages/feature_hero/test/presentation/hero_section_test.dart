@@ -29,7 +29,9 @@ void main() {
       await tester.pumpWidget(wrap(const HeroSection()));
       await tester.pump(const Duration(milliseconds: 16));
 
-      expect(find.textContaining('Aplicativos Flutter'), findsOneWidget);
+      // Headline em duas linhas; primeira deixa explicito o lado de
+      // atuacao (front end mobile). Subhead tem o "7+ anos" como ancora.
+      expect(find.textContaining('Front end mobile'), findsOneWidget);
       expect(find.textContaining('7+ anos'), findsOneWidget);
 
       await tester.pumpWidget(const SizedBox());

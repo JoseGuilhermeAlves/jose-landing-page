@@ -30,27 +30,7 @@ class ContactSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.colors;
-    final textTheme = Theme.of(context).textTheme;
     final isMobile = context.isMobile;
-
-    final headline = Semantics(
-      header: true,
-      child: Text(
-        'Vamos conversar sobre o seu projeto?',
-        style: (isMobile ? textTheme.headlineMedium : textTheme.headlineLarge)
-            ?.copyWith(color: colors.onSurface),
-      ),
-    );
-
-    final subhead = Text(
-      'Manda uma mensagem por aqui ou pelos canais abaixo. Respondo '
-      'rapido durante a semana.',
-      style: textTheme.bodyLarge?.copyWith(
-        color: colors.onSurfaceMuted,
-        height: 1.5,
-      ),
-    );
 
     final form = BlocProvider(
       create: (_) => ContactBloc(whatsappNumber: whatsappNumber),
@@ -70,10 +50,15 @@ class ContactSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        headline,
-        const SizedBox(height: AppSpacing.md),
-        subhead,
-        const SizedBox(height: AppSpacing.xl),
+        const SectionHeader(
+          eyebrow: 'Contato',
+          title: 'Vamos',
+          titleAccent: 'conversar?',
+          subtitle:
+              'Manda uma mensagem por aqui ou direto pelos canais '
+              'abaixo. Respondo rapido durante a semana.',
+        ),
+        const SizedBox(height: AppSpacing.xxl),
         if (isMobile) ...[
           form,
           const SizedBox(height: AppSpacing.xl),

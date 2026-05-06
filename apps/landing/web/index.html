@@ -16,9 +16,16 @@
   <meta name="keywords" content="Flutter, Dart, desenvolvedor mobile, freelancer Flutter, app Android, PWA, Bloc, Clean Architecture, Brasil">
   <meta name="robots" content="index,follow">
 
-  <!-- Open Graph -->
+  <!--
+    Open Graph. TODO ao publicar:
+    - trocar og:url e canonical pelo dominio final;
+    - trocar og:image / twitter:image por uma URL ABSOLUTA do hero
+      (ex.: https://dominio/og-card.png), 1200x630 idealmente;
+    - confirmar que o servidor serve o icone com `Cache-Control: public`.
+  -->
   <meta property="og:type" content="website">
   <meta property="og:locale" content="pt_BR">
+  <meta property="og:url" content="https://example.invalid/">
   <meta property="og:title" content="José Guilherme Alves — Flutter Developer">
   <meta property="og:description" content="Aplicativos Flutter de qualidade — do MVP ao app em produção. 7+ anos.">
   <meta property="og:image" content="icons/Icon-512.png">
@@ -39,6 +46,9 @@
   <!-- Icons / manifest -->
   <link rel="icon" type="image/png" href="favicon.png">
   <link rel="manifest" href="manifest.json">
+
+  <!-- Canonical: troque pelo dominio final ao publicar. -->
+  <link rel="canonical" href="https://example.invalid/">
 
   <!--
     Loading screen em HTML/CSS puro. Aparece imediatamente (sem esperar

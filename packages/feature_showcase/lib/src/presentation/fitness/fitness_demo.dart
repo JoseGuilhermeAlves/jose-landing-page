@@ -3,15 +3,23 @@ import 'package:feature_showcase/src/data/workout_plan_catalog.dart';
 import 'package:feature_showcase/src/domain/workout_day.dart';
 import 'package:feature_showcase/src/domain/workout_exercise.dart';
 import 'package:feature_showcase/src/presentation/fitness/fitness_bloc.dart';
+import 'package:feature_showcase/src/presentation/fitness/fitness_brand.dart';
 import 'package:feature_showcase/src/presentation/fitness/fitness_event.dart';
 import 'package:feature_showcase/src/presentation/fitness/fitness_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-/// Tela do mock de fitness. Strip de 7 dias da semana + lista de
-/// exercicios do dia + barra de progresso semanal e mini-grafico
-/// dia-a-dia. Tap no dot de set marca/desmarca.
-class FitnessDemo extends StatelessWidget {
+/// Demo de fitness — mock multi-tela com identidade visual propria
+/// (marca ficticia "Pulso", paleta lime/navy). Substitui a tela unica
+/// original por 3 abas que comunicam o produto como um app real:
+/// - **Hoje**: greeting + treino do dia em destaque + stats rapidos;
+/// - **Semana**: plano semanal e marcacao de sets (a tela original);
+/// - **Progresso**: volume total, sequencia e barras por dia.
+///
+/// Theme override aplica a `FitnessBrand.palette` localmente — todos
+/// os widgets internos que leem `context.colors` ja recebem a paleta
+/// da marca sem propagacao manual.
+class FitnessDemo extends StatefulWidget {
   const FitnessDemo({
     required this.today,
     this.plan,
@@ -26,44 +34,586 @@ class FitnessDemo extends StatelessWidget {
   final List<WorkoutDay>? plan;
 
   @override
+  State<FitnessDemo> createState() => _FitnessDemoState();
+}
+
+class _FitnessDemoState extends State<FitnessDemo>
+    with SingleTickerProviderStateMixin {
+  late final TabController _tabController = TabController(
+    length: 3,
+    vsync: this,
+  );
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Theme(
+      data: FitnessBrand.buildTheme(context),
+      child: BlocProvider(
+        create: (_) => FitnessBloc(
+          plan: widget.plan ?? WorkoutPlanCatalog.week,
+          today: widget.today,
+        ),
+        child: Builder(
+          builder: (context) {
+            final colors = context.colors;
+            final textTheme = Theme.of(context).textTheme;
+
+            return Scaffold(
+              backgroundColor: colors.background,
+              appBar: AppBar(
+                backgroundColor: colors.background,
+                surfaceTintColor: colors.background,
+                elevation: 0,
+                title: _BrandTitle(colors: colors, textTheme: textTheme),
+                actions: [
+                  IconButton(
+                    key: const Key('fitness-reset-button'),
+                    tooltip: 'Zerar semana',
+                    icon: const Icon(Icons.refresh),
+                    onPressed: () => context
+                        .read<FitnessBloc>()
+                        .add(const FitnessReset()),
+                  ),
+                  const SizedBox(width: AppSpacing.xs),
+                ],
+                bottom: TabBar(
+                  controller: _tabController,
+                  tabs: const [
+                    Tab(text: 'Hoje'),
+                    Tab(text: 'Semana'),
+                    Tab(text: 'Progresso'),
+                  ],
+                ),
+              ),
+              body: SafeArea(
+                top: false,
+                child: TabBarView(
+                  controller: _tabController,
+                  children: [
+                    _TodayTab(
+                      today: widget.today,
+                      onStartWorkout: () => _tabController.animateTo(1),
+                    ),
+                    const _WeekTab(),
+                    const _ProgressTab(),
+                  ],
+                ),
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+}
+
+class _BrandTitle extends StatelessWidget {
+  const _BrandTitle({required this.colors, required this.textTheme});
+  final AppColorScheme colors;
+  final TextTheme textTheme;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          width: 32,
+          height: 32,
+          decoration: BoxDecoration(
+            color: colors.primary,
+            borderRadius: BorderRadius.circular(AppRadius.sm),
+            boxShadow: [
+              BoxShadow(
+                color: colors.primary.withValues(alpha: 0.45),
+                blurRadius: 14,
+                spreadRadius: -2,
+              ),
+            ],
+          ),
+          alignment: Alignment.center,
+          child: Icon(
+            Icons.bolt,
+            size: 18,
+            color: colors.onPrimary,
+          ),
+        ),
+        const SizedBox(width: AppSpacing.sm),
+        Text(
+          FitnessBrand.name,
+          style: textTheme.titleLarge?.copyWith(
+            color: colors.onSurface,
+            fontWeight: FontWeight.w700,
+            letterSpacing: -0.2,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+// =============================================================================
+// HOJE
+// =============================================================================
+
+class _TodayTab extends StatelessWidget {
+  const _TodayTab({required this.today, required this.onStartWorkout});
+
+  final int today;
+  final VoidCallback onStartWorkout;
+
+  static const List<String> _weekdayNames = [
+    '',
+    'segunda',
+    'terca',
+    'quarta',
+    'quinta',
+    'sexta',
+    'sabado',
+    'domingo',
+  ];
+
+  @override
   Widget build(BuildContext context) {
     final colors = context.colors;
     final textTheme = Theme.of(context).textTheme;
 
-    return BlocProvider(
-      create: (_) => FitnessBloc(
-        plan: plan ?? WorkoutPlanCatalog.week,
-        today: today,
+    return BlocBuilder<FitnessBloc, FitnessState>(
+      builder: (context, state) {
+        final day = state.plan.firstWhere(
+          (d) => d.weekday == today,
+          orElse: () => state.selectedDay,
+        );
+        final dayLabel = _weekdayNames[day.weekday];
+        final completedToday = state.totalCompletedOn(day.weekday);
+        final targetToday = day.totalTargetSets;
+
+        return SingleChildScrollView(
+          padding: const EdgeInsets.all(AppSpacing.lg),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Bom treino, atleta'.toUpperCase(),
+                style: textTheme.labelSmall?.copyWith(
+                  color: colors.primary,
+                  letterSpacing: 1.2,
+                ),
+              ),
+              const SizedBox(height: AppSpacing.xs),
+              Text(
+                'Hoje, $dayLabel.',
+                style: textTheme.headlineSmall?.copyWith(
+                  color: colors.onSurface,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              const SizedBox(height: AppSpacing.lg),
+              _TodayHeroCard(
+                day: day,
+                completed: completedToday,
+                target: targetToday,
+                onStart: onStartWorkout,
+                colors: colors,
+                textTheme: textTheme,
+              ),
+              const SizedBox(height: AppSpacing.lg),
+              _QuickStatsRow(state: state),
+              if (day.exercises.isNotEmpty) ...[
+                const SizedBox(height: AppSpacing.xl),
+                Text(
+                  'No plano de hoje',
+                  style: textTheme.titleMedium?.copyWith(
+                    color: colors.onSurface,
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.md),
+                for (var i = 0; i < day.exercises.length; i++) ...[
+                  if (i > 0) const SizedBox(height: AppSpacing.sm),
+                  _CompactExerciseRow(exercise: day.exercises[i]),
+                ],
+              ],
+            ],
+          ),
+        );
+      },
+    );
+  }
+}
+
+class _TodayHeroCard extends StatelessWidget {
+  const _TodayHeroCard({
+    required this.day,
+    required this.completed,
+    required this.target,
+    required this.onStart,
+    required this.colors,
+    required this.textTheme,
+  });
+
+  final WorkoutDay day;
+  final int completed;
+  final int target;
+  final VoidCallback onStart;
+  final AppColorScheme colors;
+  final TextTheme textTheme;
+
+  @override
+  Widget build(BuildContext context) {
+    final isRest = day.isRestDay;
+    final estimatedMinutes = (day.exercises.length * 8 + 5).clamp(15, 90);
+
+    return Container(
+      key: const Key('fitness-today-hero-card'),
+      padding: const EdgeInsets.all(AppSpacing.xl),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            colors.primary.withValues(alpha: 0.16),
+            colors.surface,
+          ],
+        ),
+        border: Border.all(color: colors.primary.withValues(alpha: 0.4)),
+        borderRadius: BorderRadius.circular(AppRadius.lg),
+        boxShadow: [
+          BoxShadow(
+            color: colors.primary.withValues(alpha: 0.15),
+            blurRadius: 32,
+            spreadRadius: -8,
+            offset: const Offset(0, 12),
+          ),
+        ],
       ),
-      child: Builder(
-        builder: (context) {
-          return Scaffold(
-            backgroundColor: colors.background,
-            appBar: AppBar(
-              backgroundColor: colors.background,
-              title: Text('Treino da semana', style: textTheme.titleLarge),
-              actions: [
-                IconButton(
-                  key: const Key('fitness-reset-button'),
-                  tooltip: 'Zerar semana',
-                  icon: const Icon(Icons.refresh),
-                  onPressed: () =>
-                      context.read<FitnessBloc>().add(const FitnessReset()),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: AppSpacing.sm,
+                  vertical: AppSpacing.xxs,
+                ),
+                decoration: BoxDecoration(
+                  color: isRest
+                      ? colors.surfaceMuted
+                      : colors.primary.withValues(alpha: 0.18),
+                  borderRadius: BorderRadius.circular(AppRadius.full),
+                ),
+                child: Text(
+                  isRest ? 'descanso' : 'treino do dia',
+                  style: textTheme.labelSmall?.copyWith(
+                    color: isRest ? colors.onSurfaceMuted : colors.primary,
+                    letterSpacing: 0.6,
+                  ),
+                ),
+              ),
+              const Spacer(),
+              if (!isRest)
+                Text(
+                  '$completed / $target sets',
+                  key: const Key('fitness-today-progress-counter'),
+                  style: textTheme.labelMedium?.copyWith(
+                    color: colors.onSurfaceMuted,
+                  ),
+                ),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.md),
+          Text(
+            isRest ? 'Dia de recuperacao' : day.label,
+            style: textTheme.headlineMedium?.copyWith(
+              color: colors.onSurface,
+              fontWeight: FontWeight.w700,
+              letterSpacing: -0.4,
+            ),
+          ),
+          const SizedBox(height: AppSpacing.sm),
+          if (!isRest)
+            Wrap(
+              spacing: AppSpacing.lg,
+              runSpacing: AppSpacing.xs,
+              children: [
+                _MetaChip(
+                  icon: Icons.fitness_center_outlined,
+                  label: '${day.exercises.length} exercicios',
+                  colors: colors,
+                  textTheme: textTheme,
+                ),
+                _MetaChip(
+                  icon: Icons.schedule_outlined,
+                  label: '~$estimatedMinutes min',
+                  colors: colors,
+                  textTheme: textTheme,
+                ),
+              ],
+            )
+          else
+            Text(
+              'Recuperacao tambem faz parte do plano. Volte amanha.',
+              style: textTheme.bodyMedium?.copyWith(
+                color: colors.onSurfaceMuted,
+                height: 1.5,
+              ),
+            ),
+          const SizedBox(height: AppSpacing.xl),
+          SizedBox(
+            width: double.infinity,
+            child: AppButton(
+              key: const Key('fitness-today-start-button'),
+              label: isRest ? 'Ver plano da semana' : 'Iniciar treino',
+              icon: isRest ? Icons.calendar_view_week : Icons.play_arrow_rounded,
+              size: AppButtonSize.large,
+              expand: true,
+              onPressed: onStart,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _MetaChip extends StatelessWidget {
+  const _MetaChip({
+    required this.icon,
+    required this.label,
+    required this.colors,
+    required this.textTheme,
+  });
+
+  final IconData icon;
+  final String label;
+  final AppColorScheme colors;
+  final TextTheme textTheme;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(icon, size: 14, color: colors.onSurfaceMuted),
+        const SizedBox(width: AppSpacing.xs),
+        Text(
+          label,
+          style: textTheme.labelMedium?.copyWith(
+            color: colors.onSurfaceMuted,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _QuickStatsRow extends StatelessWidget {
+  const _QuickStatsRow({required this.state});
+  final FitnessState state;
+
+  // Sequencia mockada (em produto real viria do historico). Estatica
+  // pra dar a impressao do MVP — nao e o foco do demo.
+  static const int _streakDays = 12;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+    final textTheme = Theme.of(context).textTheme;
+
+    final volumeKg = state.totalVolumeKg;
+    final volumeLabel = volumeKg >= 1000
+        ? '${(volumeKg / 1000).toStringAsFixed(1)}t'
+        : '${volumeKg.round()} kg';
+
+    return Row(
+      children: [
+        Expanded(
+          child: _StatBlock(
+            label: 'Sequencia',
+            value: '$_streakDays dias',
+            icon: Icons.local_fire_department_outlined,
+            highlight: true,
+            colors: colors,
+            textTheme: textTheme,
+          ),
+        ),
+        const SizedBox(width: AppSpacing.sm),
+        Expanded(
+          child: _StatBlock(
+            label: 'Sets',
+            value: '${state.weeklyCompletedSets}/${state.weeklyTargetSets}',
+            icon: Icons.check_circle_outline,
+            highlight: false,
+            colors: colors,
+            textTheme: textTheme,
+          ),
+        ),
+        const SizedBox(width: AppSpacing.sm),
+        Expanded(
+          child: _StatBlock(
+            label: 'Volume',
+            value: volumeLabel,
+            icon: Icons.trending_up,
+            highlight: false,
+            colors: colors,
+            textTheme: textTheme,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _StatBlock extends StatelessWidget {
+  const _StatBlock({
+    required this.label,
+    required this.value,
+    required this.icon,
+    required this.highlight,
+    required this.colors,
+    required this.textTheme,
+  });
+
+  final String label;
+  final String value;
+  final IconData icon;
+  final bool highlight;
+  final AppColorScheme colors;
+  final TextTheme textTheme;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(AppSpacing.md),
+      decoration: BoxDecoration(
+        color: colors.surface,
+        border: Border.all(color: colors.border),
+        borderRadius: BorderRadius.circular(AppRadius.md),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(
+            icon,
+            size: 16,
+            color: highlight ? colors.primary : colors.onSurfaceMuted,
+          ),
+          const SizedBox(height: AppSpacing.sm),
+          Text(
+            value,
+            style: textTheme.titleMedium?.copyWith(
+              color: colors.onSurface,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          Text(
+            label.toUpperCase(),
+            style: textTheme.labelSmall?.copyWith(
+              color: colors.onSurfaceMuted,
+              letterSpacing: 0.6,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _CompactExerciseRow extends StatelessWidget {
+  const _CompactExerciseRow({required this.exercise});
+  final WorkoutExercise exercise;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+    final textTheme = Theme.of(context).textTheme;
+
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.md,
+        vertical: AppSpacing.sm,
+      ),
+      decoration: BoxDecoration(
+        color: colors.surface,
+        border: Border.all(color: colors.border),
+        borderRadius: BorderRadius.circular(AppRadius.md),
+      ),
+      child: Row(
+        children: [
+          Container(
+            width: 32,
+            height: 32,
+            decoration: BoxDecoration(
+              color: colors.primary.withValues(alpha: 0.16),
+              borderRadius: BorderRadius.circular(AppRadius.sm),
+            ),
+            alignment: Alignment.center,
+            child: Icon(
+              Icons.fitness_center,
+              size: 16,
+              color: colors.primary,
+            ),
+          ),
+          const SizedBox(width: AppSpacing.md),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  exercise.name,
+                  style: textTheme.titleSmall?.copyWith(
+                    color: colors.onSurface,
+                  ),
+                ),
+                Text(
+                  _exerciseSubtitle(exercise),
+                  style: textTheme.labelSmall?.copyWith(
+                    color: colors.onSurfaceMuted,
+                  ),
                 ),
               ],
             ),
-            body: const SafeArea(
-              child: Column(
-                children: [
-                  _WeeklyProgressCard(),
-                  _DayStrip(),
-                  Expanded(child: _ExercisesList()),
-                ],
-              ),
-            ),
-          );
-        },
+          ),
+        ],
       ),
+    );
+  }
+
+  static String _exerciseSubtitle(WorkoutExercise e) {
+    final reps = e.reps == 1 ? 'serie' : '${e.reps} reps';
+    if (e.weightKg <= 0) return '${e.targetSets} x $reps';
+    final weight = _formatWeight(e.weightKg);
+    return '${e.targetSets} x $reps · $weight';
+  }
+
+  static String _formatWeight(double kg) {
+    if (kg == kg.roundToDouble()) return '${kg.toInt()} kg';
+    return '${kg.toStringAsFixed(1)} kg';
+  }
+}
+
+// =============================================================================
+// SEMANA
+// =============================================================================
+
+class _WeekTab extends StatelessWidget {
+  const _WeekTab();
+
+  @override
+  Widget build(BuildContext context) {
+    return const Column(
+      children: [
+        _WeeklyProgressCard(),
+        _DayStrip(),
+        Expanded(child: _ExercisesList()),
+      ],
     );
   }
 }
@@ -139,9 +689,6 @@ class _WeeklyProgressCard extends StatelessWidget {
   }
 }
 
-/// Mini-grafico dia-a-dia: barra vertical por dia com altura
-/// proporcional aos sets concluidos. Usa AnimatedContainer pra
-/// transicionar suavemente quando o usuario marca/desmarca um set.
 class _DayBars extends StatelessWidget {
   const _DayBars();
 
@@ -228,9 +775,7 @@ class _DayBar extends StatelessWidget {
           Text(
             label,
             style: textTheme.labelSmall?.copyWith(
-              color: isSelected
-                  ? colors.onSurface
-                  : colors.onSurfaceMuted,
+              color: isSelected ? colors.onSurface : colors.onSurfaceMuted,
               letterSpacing: 0.4,
             ),
           ),
@@ -254,8 +799,6 @@ class _DayStrip extends StatelessWidget {
 
     return BlocBuilder<FitnessBloc, FitnessState>(
       builder: (context, state) {
-        // 7 itens — eager Row dentro de SingleChildScrollView garante
-        // que o tester veja todos sem scroll.
         return SizedBox(
           height: 84,
           child: SingleChildScrollView(
@@ -542,6 +1085,243 @@ class _SetDot extends StatelessWidget {
         child: filled
             ? Icon(Icons.check, size: 16, color: colors.onPrimary)
             : null,
+      ),
+    );
+  }
+}
+
+// =============================================================================
+// PROGRESSO
+// =============================================================================
+
+class _ProgressTab extends StatelessWidget {
+  const _ProgressTab();
+
+  static const int _streakDays = 12;
+  static const List<String> _shortDays = [
+    'seg', 'ter', 'qua', 'qui', 'sex', 'sab', 'dom',
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+    final textTheme = Theme.of(context).textTheme;
+
+    return BlocBuilder<FitnessBloc, FitnessState>(
+      builder: (context, state) {
+        final progress = state.weeklyProgress.clamp(0.0, 1.0);
+        final pct = (progress * 100).round();
+        final volume = state.totalVolumeKg;
+        final volumeLabel = volume >= 1000
+            ? '${(volume / 1000).toStringAsFixed(1)}t'
+            : '${volume.round()} kg';
+        final activeDays = state.plan.where((d) => !d.isRestDay).length;
+        final avgPerDay = activeDays == 0
+            ? 0
+            : (state.weeklyCompletedSets / activeDays);
+
+        return SingleChildScrollView(
+          padding: const EdgeInsets.all(AppSpacing.lg),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'esta semana'.toUpperCase(),
+                style: textTheme.labelSmall?.copyWith(
+                  color: colors.primary,
+                  letterSpacing: 1.2,
+                ),
+              ),
+              const SizedBox(height: AppSpacing.xs),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.baseline,
+                textBaseline: TextBaseline.alphabetic,
+                children: [
+                  Text(
+                    '$pct%',
+                    key: const Key('fitness-progress-percent'),
+                    style: textTheme.displaySmall?.copyWith(
+                      color: colors.onSurface,
+                      fontWeight: FontWeight.w800,
+                      letterSpacing: -1.4,
+                    ),
+                  ),
+                  const SizedBox(width: AppSpacing.sm),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: AppSpacing.sm),
+                    child: Text(
+                      '${state.weeklyCompletedSets} / ${state.weeklyTargetSets} sets',
+                      style: textTheme.bodyMedium?.copyWith(
+                        color: colors.onSurfaceMuted,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: AppSpacing.md),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(AppRadius.full),
+                child: TweenAnimationBuilder<double>(
+                  duration: AppDuration.base,
+                  curve: AppCurves.standard,
+                  tween: Tween(begin: 0, end: progress),
+                  builder: (_, value, _) => LinearProgressIndicator(
+                    value: value,
+                    minHeight: 10,
+                    backgroundColor: colors.surfaceMuted,
+                    valueColor: AlwaysStoppedAnimation(colors.primary),
+                  ),
+                ),
+              ),
+              const SizedBox(height: AppSpacing.xl),
+              Row(
+                children: [
+                  Expanded(
+                    child: _StatBlock(
+                      label: 'Sequencia',
+                      value: '$_streakDays dias',
+                      icon: Icons.local_fire_department_outlined,
+                      highlight: true,
+                      colors: colors,
+                      textTheme: textTheme,
+                    ),
+                  ),
+                  const SizedBox(width: AppSpacing.sm),
+                  Expanded(
+                    child: _StatBlock(
+                      label: 'Volume',
+                      value: volumeLabel,
+                      icon: Icons.trending_up,
+                      highlight: false,
+                      colors: colors,
+                      textTheme: textTheme,
+                    ),
+                  ),
+                  const SizedBox(width: AppSpacing.sm),
+                  Expanded(
+                    child: _StatBlock(
+                      label: 'Sets/dia',
+                      value: avgPerDay.toStringAsFixed(1),
+                      icon: Icons.show_chart,
+                      highlight: false,
+                      colors: colors,
+                      textTheme: textTheme,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: AppSpacing.xl),
+              Text(
+                'por dia',
+                style: textTheme.titleMedium?.copyWith(
+                  color: colors.onSurface,
+                ),
+              ),
+              const SizedBox(height: AppSpacing.md),
+              Container(
+                padding: const EdgeInsets.all(AppSpacing.lg),
+                decoration: BoxDecoration(
+                  color: colors.surface,
+                  borderRadius: BorderRadius.circular(AppRadius.lg),
+                  border: Border.all(color: colors.border),
+                ),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 140,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          for (final day in state.plan)
+                            Expanded(
+                              child: _ProgressDayBar(
+                                label: _shortDays[day.weekday - 1],
+                                completed:
+                                    state.totalCompletedOn(day.weekday),
+                                target: day.totalTargetSets,
+                                isRest: day.isRestDay,
+                                colors: colors,
+                                textTheme: textTheme,
+                              ),
+                            ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+}
+
+class _ProgressDayBar extends StatelessWidget {
+  const _ProgressDayBar({
+    required this.label,
+    required this.completed,
+    required this.target,
+    required this.isRest,
+    required this.colors,
+    required this.textTheme,
+  });
+
+  final String label;
+  final int completed;
+  final int target;
+  final bool isRest;
+  final AppColorScheme colors;
+  final TextTheme textTheme;
+
+  @override
+  Widget build(BuildContext context) {
+    final ratio = target == 0 ? 0.0 : (completed / target).clamp(0.0, 1.0);
+    const maxBarHeight = 96.0;
+    final barHeight = isRest ? 4.0 : (8 + ratio * (maxBarHeight - 8));
+    final barColor = isRest
+        ? colors.surfaceMuted
+        : Color.lerp(
+            colors.primary.withValues(alpha: 0.3),
+            colors.primary,
+            ratio,
+          )!;
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 4),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          if (!isRest && target > 0)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 4),
+              child: Text(
+                '$completed',
+                style: textTheme.labelSmall?.copyWith(
+                  color: colors.onSurfaceMuted,
+                ),
+              ),
+            ),
+          AnimatedContainer(
+            duration: AppDuration.base,
+            curve: AppCurves.standard,
+            height: barHeight,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: barColor,
+              borderRadius: BorderRadius.circular(AppRadius.sm),
+            ),
+          ),
+          const SizedBox(height: AppSpacing.xs),
+          Text(
+            label,
+            style: textTheme.labelSmall?.copyWith(
+              color: colors.onSurfaceMuted,
+              letterSpacing: 0.4,
+            ),
+          ),
+        ],
       ),
     );
   }

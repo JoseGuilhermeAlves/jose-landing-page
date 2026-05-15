@@ -188,12 +188,23 @@ Cada um dos 5 templates é uma **experiência mockada quase completa** — não 
 - **Catálogo:** `ProductsCatalog.all` com 12 produtos curados em café/papelaria/livraria/mesa. `ProductsCatalog.featured` expõe 4 destaques pra home. `ProductsCatalog.byCategory(c)` filtra no catálogo.
 - **Status:** completo — 5 telas navegáveis + identidade dedicada + 4 painters + checkout funcional.
 
-#### 4.3.3 [marca-tbd] (Delivery)
+#### 4.3.3 Aurora (Delivery) — hortifruti / empório
 
-- **Marca:** TBD. **Paleta:** TBD — proposta: laranja/preto ou amarelo de alerta.
-- **Telas (planejadas):** Home (pedido ativo + categorias rápidas), Lista de restaurantes/lojas, Detalhe do pedido em andamento (timeline + mapa ilustrado), Histórico.
-- **Custom Painters dedicados (planejados):** **mapa abstrato com rota animada** (destaque técnico), timeline de status com ícones desenhados, marker do entregador.
-- **Status:** lista de pedidos com status animado existente é o ponto de partida; falta marca, mapa-painter e telas de home/detalhe.
+- **Marca:** Aurora · "Da feira ate sua mesa." Marketplace de hortifruti/empório com entrega no dia, conectando bancas e padarias de bairro com o cliente. Tom caloroso, sazonal, cuidado com produto. **Paleta:** verde `#2F6B3F` (primary), creme `#F5EDDE` (background), ocre `#C9883A` (accent), surface branco. **Tipografia:** display em `fontFamily: 'serif'`, body em sans. **Referência visual:** Daki, Cornershop, mas com cara de empório de bairro.
+- **Telas (todas entregues):**
+  - **Home** — hero com backdrop animado (`AuroraHeroBackdrop`: ondulações verdes + folhas flutuantes), card de pedido ativo com mini-mapa (`AuroraDeliveryMap` em altura reduzida) + ETA + CTA "Acompanhar", strip de categorias com glifos desenhados (`AuroraCategoryIcon`), lista de bancas em destaque com ilustração da categoria principal + ETA + frete, bloco "Sobre a Aurora".
+  - **Lojas/Bancas** — `AuroraStoreListPage` com chips horizontais de filtro por `MarketCategory` (Frutas, Verduras, Padaria, Laticínios, Mercearia) e lista de `AuroraVendorCard`.
+  - **Detalhe do pedido** — `AuroraOrderDetailPage` com **mapa em altura cheia no topo** (destaque técnico) + header do vendor + ETA card + `AuroraStatusTimeline` vertical com 4 passos e check progressivo + lista de items com ilustração por categoria + sumário subtotal/frete/total. Lê o pedido do `DeliveryBloc` em tempo real, então o status acompanha o ticker.
+  - **Histórico** — `AuroraHistoryPage` com lista dos pedidos `delivered`, cada card mostrando vendor + total + data; tap reabre o detalhe.
+- **Custom Painters dedicados (em `lib/src/presentation/delivery/`):**
+  - `AuroraDeliveryMap` — quarteirões geométricos como pano de fundo, rota Bezier ligando origem (banca) ao destino (cliente), halo + linha tracejada acompanhando o progresso via `PathMetrics.extractPath`, courier em transito posicionado via `getTangentForOffset` com halo pulsante. **Destaque técnico do mock**; painter usa `super(repaint: controller)` direto pra pular build e layout a cada tick.
+  - `AuroraStatusTimeline` — 4 steps verticais com `_StepDotPainter` (check progressivo + ponto branco no atual + halo).
+  - `AuroraProductIllustration` — silhuetas por `MarketCategory`: maçã (com folha em accent), folha com nervuras, pão inclinado com riscos diagonais, roda de queijo com setor + furos, pote/jar com rótulo.
+  - `AuroraCategoryIcon` — versão leve em stroke pros chips e strip da home.
+  - `AuroraHeroBackdrop` — duas senoides empilhadas (ondas do campo) + folhas com rotação e bob vertical.
+- **Domain:** `MarketCategory` (5 categorias), `MarketUnit` (kg/un/pct/mac), `MarketItem` (preço formatado por unidade), `Vendor` (nome, tagline, categorias atendidas, ETA, frete, rating), `OrderTimelineStep`. `DeliveryOrder` foi estendido aditivamente com `vendorId`, `lineItems` (`OrderLineItem` com qty + unitShort + unitPriceCents), `totalCents`, `addressLine`, `placedAtLabel` — todos opcionais com default vazio, preservando 100% compat com os testes legados.
+- **Bloc:** `DeliveryBloc` preservou a máquina round-robin via ticker existente (sem mudança). `DeliveryState` ganhou getters `activeOrder` (primeiro não-final), `historyOrders` (delivered) e `findById(id)` (lookup pro detalhe). Catálogos: `AuroraVendorsCatalog` (6 bancas) + `AuroraItemsCatalog` (14 items vinculados aos vendors).
+- **Status:** completo — 4 telas navegáveis + identidade dedicada + 5 painters + tracking ao vivo via ticker preservado.
 
 #### 4.3.4 [marca-tbd] (Agendamento)
 
@@ -209,7 +220,7 @@ Cada um dos 5 templates é uma **experiência mockada quase completa** — não 
 - **Custom Painters dedicados (planejados):** **planta baixa esquemática** (destaque técnico), silhueta de edifício/casa, mapa de bairro abstrato, ícones de feature (vaga, varanda, piscina).
 - **Status:** listagem com filtros existente é o ponto de partida; falta marca, detalhe com planta baixa e painters de mapa.
 
-> **Ordem de execução:** Pulso (fitness) → Garoa (e-commerce) — ambos completos — → delivery → agendamento → imobiliária. Cada mock é um PR médio-grande; não fundir dois numa só passagem.
+> **Ordem de execução:** Pulso (fitness) → Garoa (e-commerce) → Aurora (delivery) — os três completos — → agendamento → imobiliária. Cada mock é um PR médio-grande; não fundir dois numa só passagem.
 
 ### 4.4 About (feature_about)
 - Foto + bio curta

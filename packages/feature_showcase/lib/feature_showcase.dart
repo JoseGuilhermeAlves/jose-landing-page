@@ -3,6 +3,8 @@
 /// e-commerce, delivery, agendamento, fitness e imobiliaria.
 library;
 
+export 'src/data/aurora_items_catalog.dart';
+export 'src/data/aurora_vendors_catalog.dart';
 export 'src/data/delivery_orders_catalog.dart';
 export 'src/data/products_catalog.dart';
 export 'src/data/properties_catalog.dart';
@@ -10,13 +12,17 @@ export 'src/data/showcase_catalog.dart';
 export 'src/data/workout_plan_catalog.dart';
 export 'src/domain/delivery_order.dart';
 export 'src/domain/delivery_status.dart';
+export 'src/domain/market_category.dart';
+export 'src/domain/market_item.dart';
 export 'src/domain/order_summary.dart';
+export 'src/domain/order_timeline_step.dart';
 export 'src/domain/product.dart';
 export 'src/domain/product_category.dart';
 export 'src/domain/product_variant.dart';
 export 'src/domain/property.dart';
 export 'src/domain/property_type.dart';
 export 'src/domain/showcase_template.dart';
+export 'src/domain/vendor.dart';
 export 'src/domain/workout_day.dart';
 export 'src/domain/workout_exercise.dart';
 export 'src/presentation/delivery/delivery_bloc.dart';

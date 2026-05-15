@@ -53,7 +53,12 @@ void main() {
       await tester.pump(const Duration(milliseconds: 16));
 
       await tester.tap(find.byKey(const Key('showcase-card-delivery')));
-      await tester.pumpAndSettle();
+      // pumpAndSettle nao serve aqui porque o `AuroraHeroBackdrop` e o
+      // mapa do DeliveryDemo rodam em loop infinito. Pumpamos frames
+      // fixos pra a route de modal terminar de abrir.
+      for (var i = 0; i < 20; i++) {
+        await tester.pump(const Duration(milliseconds: 50));
+      }
 
       expect(find.byType(DeliveryDemo), findsOneWidget);
     });

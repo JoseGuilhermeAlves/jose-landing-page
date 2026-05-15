@@ -10,8 +10,8 @@ abstract final class ShowcaseCatalog {
       id: 'ecommerce',
       label: 'E-commerce',
       description:
-          'Catalogo navegavel com carrinho — adicionar, remover e ver '
-          'total em tempo real.',
+          'Loja Garoa — home da marca, catalogo com filtros, detalhe '
+          'do produto e checkout com resumo de pedido.',
       icon: Icons.shopping_bag_outlined,
       hasDemo: true,
     ),

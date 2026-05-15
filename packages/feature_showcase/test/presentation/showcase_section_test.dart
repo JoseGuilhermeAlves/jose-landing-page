@@ -37,7 +37,12 @@ void main() {
       await tester.pump(const Duration(milliseconds: 16));
 
       await tester.tap(find.byKey(const Key('showcase-card-ecommerce')));
-      await tester.pumpAndSettle();
+      // pumpAndSettle nao serve aqui porque o `GaroaHeroBackdrop` do
+      // EcommerceDemo roda em loop infinito. Pumpamos frames fixos pra
+      // a route de modal terminar de abrir.
+      for (var i = 0; i < 20; i++) {
+        await tester.pump(const Duration(milliseconds: 50));
+      }
 
       expect(find.byType(EcommerceDemo), findsOneWidget);
     });

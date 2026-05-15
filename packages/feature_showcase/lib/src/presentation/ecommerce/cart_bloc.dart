@@ -1,3 +1,4 @@
+import 'package:feature_showcase/src/domain/order_summary.dart';
 import 'package:feature_showcase/src/domain/product.dart';
 import 'package:feature_showcase/src/presentation/ecommerce/cart_event.dart';
 import 'package:feature_showcase/src/presentation/ecommerce/cart_state.dart';
@@ -9,10 +10,19 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     on<CartRemoveProduct>(_onRemove);
     on<CartSetQuantity>(_onSetQuantity);
     on<CartCleared>(_onCleared);
+    on<CartCheckoutRequested>(_onCheckout);
   }
 
+  /// Contador sequencial pro numero de pedido — incrementa por sessao.
+  /// Estatico pra resetar entre testes via [CartBloc.resetOrderCounter].
+  static int _orderCounter = 0;
+
+  /// Utilidade pra testes — zera o contador entre cenarios.
+  static void resetOrderCounter() => _orderCounter = 0;
+
   void _onAdd(CartAddProduct event, Emitter<CartState> emit) {
-    final updated = _applyDelta(state.items, event.product, 1);
+    final delta = event.quantity <= 0 ? 1 : event.quantity;
+    final updated = _applyDelta(state.items, event.product, delta);
     emit(state.copyWith(items: updated));
   }
 
@@ -31,7 +41,24 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   }
 
   void _onCleared(CartCleared event, Emitter<CartState> emit) {
-    emit(const CartState());
+    emit(state.copyWith(items: const [], clearLastOrder: true));
+  }
+
+  void _onCheckout(CartCheckoutRequested event, Emitter<CartState> emit) {
+    if (state.items.isEmpty) return;
+    final subtotal = state.totalCents;
+    // Frete gratis acima de R\$ 150 (15000 cents); abaixo, R\$ 15.
+    final shipping = subtotal >= 15000 ? 0.0 : 1500.0;
+    _orderCounter += 1;
+    final order = OrderSummary(
+      orderNumber: 'GAR-${_orderCounter.toString().padLeft(4, '0')}',
+      itemsCount: state.totalQuantity,
+      subtotalCents: subtotal,
+      shippingCents: shipping,
+      address: MockAddress.garoaDefault,
+      etaLabel: '3 a 5 dias uteis',
+    );
+    emit(state.copyWith(items: const [], lastOrder: order));
   }
 
   static CartLine? _findById(List<CartLine> lines, String id) {

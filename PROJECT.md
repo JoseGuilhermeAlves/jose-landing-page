@@ -174,12 +174,19 @@ Cada um dos 5 templates é uma **experiência mockada quase completa** — não 
   - Anel de rest timer (painter privado dentro de `rest_timer_sheet.dart`).
 - **Status:** completo — 3 abas + home dashboard + detalhe de exercício + rest timer + 7 painters dedicados.
 
-#### 4.3.2 [marca-tbd] (E-commerce)
+#### 4.3.2 Garoa (E-commerce) — café-livraria
 
-- **Marca:** TBD (confirmar com José). **Paleta:** TBD — proposta: tons quentes/minimalistas tipo boutique.
-- **Telas (planejadas):** Home (hero da marca + categorias + featured), Catálogo (grid com filtros), Detalhe do produto (galeria ilustrada + variantes), Carrinho, Resumo de pedido.
-- **Custom Painters dedicados (planejados):** ilustrações abstratas de produto (silhuetas categóricas — vestuário, decoração), ícones de categoria, banner do hero da marca.
-- **Status:** carrinho funcional existente é o ponto de partida; falta marca, home, expansão de telas e painters.
+- **Marca:** Garoa · "Café que rende uma conversa." Café-livraria urbana, tom caseiro/brasileiro/ritual. Catálogo curado em café/livraria/papelaria/objetos de mesa (não confundir com loja eclética). **Paleta:** café `#2B1A12` (primary), creme `#F6EFE0` (background), musgo `#5C6E47` (accent), surface branco. **Tipografia:** display em `fontFamily: 'serif'` (sem dep externa — Flutter resolve pro serif do sistema), body em sans. **Referência visual:** Blue Bottle, café-livrarias paulistanas/curitibanas, MUJI.
+- **Telas (todas entregues):**
+  - **Home** — hero da marca com backdrop animado (`GaroaHeroBackdrop`: grãos flutuando + plumas de vapor), strip de categorias (`GaroaCategoryIcon` em cada chip), grid de produtos em destaque, bloco "Sobre a Garoa".
+  - **Catálogo** — grid responsivo 2/3/4 colunas com filtro por categoria (chips com glifos) e ordenação por preço (popup menu). Estado local via `StatefulWidget` (não justifica Cubit).
+  - **Detalhe do produto** — galeria com 3 "ângulos" via cores/backgrounds variantes da mesma ilustração, headline em serif, origem, descrição editorial, variantes selecionáveis (`ProductVariant` com `deltaCents` opcional), stepper de quantidade, CTA "Adicionar" com snackbar de feedback + ação "Ver".
+  - **Carrinho** (modal bottom sheet) — `GaroaCartSheet` com linhas tematizadas (ilustração via painter), stepper inline, breakdown subtotal/frete/total e CTA "Finalizar pedido".
+  - **Resumo de pedido** — `GaroaOrderSummaryPage` com badge animado de check (`super(repaint: controller)` direto no painter, sem `AnimatedBuilder`), breakdown final, endereço mock fixo, ETA de entrega, CTA "Voltar à loja" (`popUntil(isFirst)`).
+- **Custom Painters dedicados:** `GaroaHeroBackdrop` (grãos + vapor animado em loop), `GaroaProductIllustration` (silhueta categórica por `ProductCategory`: saquinho de café, caneca, caderno, livro), `GaroaCategoryIcon` (glifos pros chips), painter privado do badge de confirmação na tela de resumo.
+- **Bloc:** `CartBloc` estendido com evento `CartCheckoutRequested` → snapshota `CartState` em `OrderSummary`, esvazia items e emite com `lastOrder` preenchido. Regra de frete: grátis acima de R$ 150,00, senão R$ 15,00 fixo. Número de pedido sequencial por sessão (`GAR-XXXX`). Helper `CartBloc.resetOrderCounter` para isolar testes.
+- **Catálogo:** `ProductsCatalog.all` com 12 produtos curados em café/papelaria/livraria/mesa. `ProductsCatalog.featured` expõe 4 destaques pra home. `ProductsCatalog.byCategory(c)` filtra no catálogo.
+- **Status:** completo — 5 telas navegáveis + identidade dedicada + 4 painters + checkout funcional.
 
 #### 4.3.3 [marca-tbd] (Delivery)
 
@@ -202,7 +209,7 @@ Cada um dos 5 templates é uma **experiência mockada quase completa** — não 
 - **Custom Painters dedicados (planejados):** **planta baixa esquemática** (destaque técnico), silhueta de edifício/casa, mapa de bairro abstrato, ícones de feature (vaga, varanda, piscina).
 - **Status:** listagem com filtros existente é o ponto de partida; falta marca, detalhe com planta baixa e painters de mapa.
 
-> **Ordem de execução:** Pulso (fitness, canônico) → e-commerce → delivery → agendamento → imobiliária. Cada mock é um PR médio-grande; não fundir dois numa só passagem.
+> **Ordem de execução:** Pulso (fitness) → Garoa (e-commerce) — ambos completos — → delivery → agendamento → imobiliária. Cada mock é um PR médio-grande; não fundir dois numa só passagem.
 
 ### 4.4 About (feature_about)
 - Foto + bio curta

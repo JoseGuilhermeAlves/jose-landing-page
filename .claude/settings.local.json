@@ -16,7 +16,8 @@
       "PowerShell(melos run *)",
       "PowerShell(dart format *)",
       "PowerShell(flutter *)",
-      "Bash(flutter analyze *)"
+      "Bash(flutter analyze *)",
+      "WebFetch(domain:api.flutter.dev)"
     ]
   }
 }

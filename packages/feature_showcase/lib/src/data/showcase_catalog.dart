@@ -10,8 +10,8 @@ abstract final class ShowcaseCatalog {
       id: 'ecommerce',
       label: 'E-commerce',
       description:
-          'Catalogo navegavel com carrinho — adicionar, remover e ver '
-          'total em tempo real.',
+          'Loja Garoa — home da marca, catalogo com filtros, detalhe '
+          'do produto e checkout com resumo de pedido.',
       icon: Icons.shopping_bag_outlined,
       hasDemo: true,
     ),
@@ -19,8 +19,8 @@ abstract final class ShowcaseCatalog {
       id: 'delivery',
       label: 'Delivery',
       description:
-          'Lista de pedidos com status animado — em preparo, saiu pra '
-          'entrega, entregue.',
+          'Aurora — marketplace de hortifruti com mapa animado, '
+          'timeline do pedido e historico.',
       icon: Icons.delivery_dining_outlined,
       hasDemo: true,
     ),

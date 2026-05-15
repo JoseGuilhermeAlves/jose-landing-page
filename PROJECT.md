@@ -143,14 +143,84 @@ Grid de cards do que José entrega:
 Cada card com micro-animação de hover (Custom Painter desenhando borda).
 
 ### 4.3 Showcase (feature_showcase)
-Templates demonstráveis pra cliente leigo entender. Para esta versão:
-- **E-commerce** — catálogo + carrinho mock
-- **Delivery** — lista de pedidos com status animado
-- **Agendamento** (serviços/salão) — calendário interativo
-- **Fitness** — tracker de treino com gráficos
-- **Imobiliária** — listagem de imóveis com filtros
 
-Cada um vira um modal/route com 1–2 telas representativas. **Não precisa ter backend real** — mocks funcionais bastam. Cada template é um sub-flow dentro da feature, com Bloc próprio gerenciando o estado.
+Cada um dos 5 templates é uma **experiência mockada quase completa** — não um esboço de uma tela só. Cada mock prova um eixo do que José pode entregar end-to-end no front, com identidade visual própria e múltiplas telas navegáveis dentro do `MaterialPageRoute(fullscreenDialog: true)`.
+
+#### Princípios (valem pros 5 mocks)
+
+1. **Identidade visual dedicada por mock.** Marca fictícia (nome curto + tagline), paleta dedicada via `Theme` override local (não toca a landing), micro-decisões tipográficas (peso, letter-spacing) que reforçam a marca. **Pulso** (fitness) é o template canônico — veja `packages/feature_showcase/lib/src/presentation/fitness/fitness_brand.dart` e replique o padrão ao introduzir marca nos demais.
+2. **Múltiplas telas com navegação interna.** Cada mock tem 3–5 telas (home/dashboard, lista/catálogo, detalhe, ação/confirmação), conectadas por `TabBar`, `Navigator.push` ou `PageView`. Demo de uma tela só não é mais aceitável.
+3. **Custom Painters para ilustrações.** Sem stock photos, sem bitmaps placeholder. Mascotes, silhuetas, gráficos, plantas baixas, mapas, banners de marca e ícones de categoria são todos desenhados via `CustomPaint`. **Esses painters vivem dentro do diretório do próprio mock**, não em `packages/animations` — que reserva-se aos painters reusáveis pela landing. Regras de performance (Paint cacheados, `shouldRepaint` correto) valem igualmente.
+4. **Mocks funcionais.** Bloc/Cubit por template gerenciando estado real (carrinho, progresso, filtros), dados estáticos em `data/`. Zero backend.
+5. **Tom da marca, não da landing.** A copy dentro do mock pode (e deve) ter personalidade própria — informal, técnica, lúdica — desde que coerente com o nicho. Não confundir com a regra "formal, direto, sucinto" que vale para o copy comercial da landing (Hero, Services, About, Contact).
+
+#### 4.3.1 Pulso (Fitness) — **referência canônica**
+
+- **Marca:** Pulso · "Treino sem fricção". **Paleta:** cream/laranja (light, oposta ao dark da landing) — laranja vibrante como primary, cream como background, slate escuro pro texto. **Referência visual:** Strava, Nike Run Club, Apple Fitness.
+- **Telas:**
+  - **Home (dashboard)** — entrada padrão do mock, com greeting, hero card do treino do dia (silhueta de atleta animada), activity rings (sets/minutos/exercícios), diagrama corporal destacando músculos do dia e resumo da semana.
+  - **Hoje** (aba 1 do scaffold) — greeting + hero card com backdrop EKG, stats rápidos (sequência, sets, volume) e preview do plano.
+  - **Semana** (aba 2) — strip horizontal de dias, progresso semanal com mini-barras, lista de exercícios com set dots tocáveis; **tap no card empurra `ExerciseDetailPage`**.
+  - **Progresso** (aba 3) — % grande, barras por dia, gráfico de volume de 8 semanas.
+  - **Detalhe de exercício** (push) — sumário sets/reps/carga, set tiles tocáveis, histórico de carga das 8 últimas semanas (painter dedicado), grupos musculares ativados (reusa body diagram) e notas técnicas inferidas do exercício.
+  - **Rest timer sheet** (modal bottom sheet) — cronômetro com anel de progresso, ajuste ±15s, "Pular descanso".
+- **Custom Painters dedicados:**
+  - `VolumeHistoryChart` — line chart com Catmull-Rom smoothing, gradient fill e halo no ponto da semana atual.
+  - `ExerciseLoadHistoryChart` — bar chart de carga por semana, barra atual destacada com halo + label flutuante.
+  - `PulsoHeroBackdrop` — EKG-line scrollando atrás do hero card da aba Hoje; cadência mais calma no modo "descanso".
+  - `PulsoActivityRings` — três anéis concêntricos estilo Apple Fitness; cada um anima de 0 até o progresso final.
+  - `PulsoAthleteFigure` — silhueta geométrica de atleta em pose de levantamento com leve "respiração" sinusoidal.
+  - `PulsoBodyDiagram` — diagrama anatômico estilizado com grupos musculares preencháveis.
+  - Anel de rest timer (painter privado dentro de `rest_timer_sheet.dart`).
+- **Status:** completo — 3 abas + home dashboard + detalhe de exercício + rest timer + 7 painters dedicados.
+
+#### 4.3.2 Garoa (E-commerce) — café-livraria
+
+- **Marca:** Garoa · "Café que rende uma conversa." Café-livraria urbana, tom caseiro/brasileiro/ritual. Catálogo curado em café/livraria/papelaria/objetos de mesa (não confundir com loja eclética). **Paleta:** café `#2B1A12` (primary), creme `#F6EFE0` (background), musgo `#5C6E47` (accent), surface branco. **Tipografia:** display em `fontFamily: 'serif'` (sem dep externa — Flutter resolve pro serif do sistema), body em sans. **Referência visual:** Blue Bottle, café-livrarias paulistanas/curitibanas, MUJI.
+- **Telas (todas entregues):**
+  - **Home** — hero da marca com backdrop animado (`GaroaHeroBackdrop`: grãos flutuando + plumas de vapor), strip de categorias (`GaroaCategoryIcon` em cada chip), grid de produtos em destaque, bloco "Sobre a Garoa".
+  - **Catálogo** — grid responsivo 2/3/4 colunas com filtro por categoria (chips com glifos) e ordenação por preço (popup menu). Estado local via `StatefulWidget` (não justifica Cubit).
+  - **Detalhe do produto** — galeria com 3 "ângulos" via cores/backgrounds variantes da mesma ilustração, headline em serif, origem, descrição editorial, variantes selecionáveis (`ProductVariant` com `deltaCents` opcional), stepper de quantidade, CTA "Adicionar" com snackbar de feedback + ação "Ver".
+  - **Carrinho** (modal bottom sheet) — `GaroaCartSheet` com linhas tematizadas (ilustração via painter), stepper inline, breakdown subtotal/frete/total e CTA "Finalizar pedido".
+  - **Resumo de pedido** — `GaroaOrderSummaryPage` com badge animado de check (`super(repaint: controller)` direto no painter, sem `AnimatedBuilder`), breakdown final, endereço mock fixo, ETA de entrega, CTA "Voltar à loja" (`popUntil(isFirst)`).
+- **Custom Painters dedicados:** `GaroaHeroBackdrop` (grãos + vapor animado em loop), `GaroaProductIllustration` (silhueta categórica por `ProductCategory`: saquinho de café, caneca, caderno, livro), `GaroaCategoryIcon` (glifos pros chips), painter privado do badge de confirmação na tela de resumo.
+- **Bloc:** `CartBloc` estendido com evento `CartCheckoutRequested` → snapshota `CartState` em `OrderSummary`, esvazia items e emite com `lastOrder` preenchido. Regra de frete: grátis acima de R$ 150,00, senão R$ 15,00 fixo. Número de pedido sequencial por sessão (`GAR-XXXX`). Helper `CartBloc.resetOrderCounter` para isolar testes.
+- **Catálogo:** `ProductsCatalog.all` com 12 produtos curados em café/papelaria/livraria/mesa. `ProductsCatalog.featured` expõe 4 destaques pra home. `ProductsCatalog.byCategory(c)` filtra no catálogo.
+- **Status:** completo — 5 telas navegáveis + identidade dedicada + 4 painters + checkout funcional.
+
+#### 4.3.3 Aurora (Delivery) — hortifruti / empório
+
+- **Marca:** Aurora · "Da feira ate sua mesa." Marketplace de hortifruti/empório com entrega no dia, conectando bancas e padarias de bairro com o cliente. Tom caloroso, sazonal, cuidado com produto. **Paleta:** verde `#2F6B3F` (primary), creme `#F5EDDE` (background), ocre `#C9883A` (accent), surface branco. **Tipografia:** display em `fontFamily: 'serif'`, body em sans. **Referência visual:** Daki, Cornershop, mas com cara de empório de bairro.
+- **Telas (todas entregues):**
+  - **Home** — hero com backdrop animado (`AuroraHeroBackdrop`: ondulações verdes + folhas flutuantes), card de pedido ativo com mini-mapa (`AuroraDeliveryMap` em altura reduzida) + ETA + CTA "Acompanhar", strip de categorias com glifos desenhados (`AuroraCategoryIcon`), lista de bancas em destaque com ilustração da categoria principal + ETA + frete, bloco "Sobre a Aurora".
+  - **Lojas/Bancas** — `AuroraStoreListPage` com chips horizontais de filtro por `MarketCategory` (Frutas, Verduras, Padaria, Laticínios, Mercearia) e lista de `AuroraVendorCard`.
+  - **Detalhe do pedido** — `AuroraOrderDetailPage` com **mapa em altura cheia no topo** (destaque técnico) + header do vendor + ETA card + `AuroraStatusTimeline` vertical com 4 passos e check progressivo + lista de items com ilustração por categoria + sumário subtotal/frete/total. Lê o pedido do `DeliveryBloc` em tempo real, então o status acompanha o ticker.
+  - **Histórico** — `AuroraHistoryPage` com lista dos pedidos `delivered`, cada card mostrando vendor + total + data; tap reabre o detalhe.
+- **Custom Painters dedicados (em `lib/src/presentation/delivery/`):**
+  - `AuroraDeliveryMap` — quarteirões geométricos como pano de fundo, rota Bezier ligando origem (banca) ao destino (cliente), halo + linha tracejada acompanhando o progresso via `PathMetrics.extractPath`, courier em transito posicionado via `getTangentForOffset` com halo pulsante. **Destaque técnico do mock**; painter usa `super(repaint: controller)` direto pra pular build e layout a cada tick.
+  - `AuroraStatusTimeline` — 4 steps verticais com `_StepDotPainter` (check progressivo + ponto branco no atual + halo).
+  - `AuroraProductIllustration` — silhuetas por `MarketCategory`: maçã (com folha em accent), folha com nervuras, pão inclinado com riscos diagonais, roda de queijo com setor + furos, pote/jar com rótulo.
+  - `AuroraCategoryIcon` — versão leve em stroke pros chips e strip da home.
+  - `AuroraHeroBackdrop` — duas senoides empilhadas (ondas do campo) + folhas com rotação e bob vertical.
+- **Domain:** `MarketCategory` (5 categorias), `MarketUnit` (kg/un/pct/mac), `MarketItem` (preço formatado por unidade), `Vendor` (nome, tagline, categorias atendidas, ETA, frete, rating), `OrderTimelineStep`. `DeliveryOrder` foi estendido aditivamente com `vendorId`, `lineItems` (`OrderLineItem` com qty + unitShort + unitPriceCents), `totalCents`, `addressLine`, `placedAtLabel` — todos opcionais com default vazio, preservando 100% compat com os testes legados.
+- **Bloc:** `DeliveryBloc` preservou a máquina round-robin via ticker existente (sem mudança). `DeliveryState` ganhou getters `activeOrder` (primeiro não-final), `historyOrders` (delivered) e `findById(id)` (lookup pro detalhe). Catálogos: `AuroraVendorsCatalog` (6 bancas) + `AuroraItemsCatalog` (14 items vinculados aos vendors).
+- **Status:** completo — 4 telas navegáveis + identidade dedicada + 5 painters + tracking ao vivo via ticker preservado.
+
+#### 4.3.4 [marca-tbd] (Agendamento)
+
+- **Marca:** TBD. **Paleta:** TBD — proposta: pastel ou minimalist wellness.
+- **Telas (planejadas):** Home (próximo agendamento + grid de serviços), Catálogo de serviços, Calendário interativo de horários, Confirmação com resumo ilustrado.
+- **Custom Painters dedicados (planejados):** ilustração de relógio/calendário decorativo na home, ícones dos serviços (corte, manicure, massagem etc.), confirmation badge com check animado.
+- **Status:** calendário interativo existente é o ponto de partida; falta marca, home, catálogo e confirmação com painters.
+
+#### 4.3.5 [marca-tbd] (Imobiliária)
+
+- **Marca:** TBD. **Paleta:** TBD — proposta: navy/cream architectural ou earth tones.
+- **Telas (planejadas):** Home (featured + busca por bairro/preço), Listagem com filtros, Detalhe do imóvel (galeria ilustrada + **planta baixa** + mapa de localização), Contato com corretor.
+- **Custom Painters dedicados (planejados):** **planta baixa esquemática** (destaque técnico), silhueta de edifício/casa, mapa de bairro abstrato, ícones de feature (vaga, varanda, piscina).
+- **Status:** listagem com filtros existente é o ponto de partida; falta marca, detalhe com planta baixa e painters de mapa.
+
+> **Ordem de execução:** Pulso (fitness) → Garoa (e-commerce) → Aurora (delivery) — os três completos — → agendamento → imobiliária. Cada mock é um PR médio-grande; não fundir dois numa só passagem.
 
 ### 4.4 About (feature_about)
 - Foto + bio curta
@@ -408,7 +478,7 @@ Execute nesta ordem para evitar retrabalho:
 7. **`feature_services`:** grid simples com cards animados
 8. **`feature_about`:** timeline com `AnimatedTimelinePainter`
 9. **`feature_contact`:** form com Bloc completo + validações
-10. **`feature_showcase`:** os 5 templates de nicho — pode ser o maior módulo, abordar incrementalmente (E-commerce → Delivery → Agendamento → Fitness → Imobiliária)
+10. **`feature_showcase` — expansão dos 5 mocks (§4.3):** com baselines de cada nicho já entregues (carrinho, lista de pedidos, calendário, tracker de fitness, listagem de imóveis), cada template agora ganha marca/paleta/tipografia dedicada, múltiplas telas e Custom Painters de ilustração. Ordem: Pulso (fitness, canônico) → e-commerce → delivery → agendamento → imobiliária. Tratar cada mock como sub-projeto de PR médio-grande.
 11. **`feature_labs`:** playground técnico, deferred-loaded
 12. **Testes:** cobrir core, blocs e usecases
 13. **Polish:** SEO, manifest icons, lighthouse audit, ajustes finais
@@ -441,8 +511,8 @@ O projeto está pronto quando:
 - [ ] Landing carrega em < 4s no 4G simulado
 - [ ] Lighthouse Performance ≥ 80, Accessibility ≥ 90, PWA ≥ 90
 - [ ] Manifest PWA válido (instalável em Android)
-- [ ] Pelo menos 6 Custom Painters implementados
-- [ ] Os 5 templates de showcase navegáveis
+- [ ] Pelo menos 6 Custom Painters implementados no `packages/animations` (reusáveis pela landing) + painters dedicados dentro de cada mock do showcase
+- [ ] Os 5 templates de showcase com identidade visual dedicada (marca + paleta + tipografia) e ≥ 3 telas cada (§4.3)
 - [ ] Form de contato funcional com Bloc
 - [ ] `/labs` deferred-loaded
 - [ ] README público completo

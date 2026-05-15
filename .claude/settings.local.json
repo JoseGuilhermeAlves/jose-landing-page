@@ -12,7 +12,12 @@
       "Bash(melos run *)",
       "PowerShell(Get-ChildItem -Path C:\\\\jose-landing-page\\\\apps\\\\landing\\\\web -Recurse -File | ForEach-Object { \"{0,-50} {1,8} bytes\" -f $_.FullName.Replace\\(\"C:\\\\jose-landing-page\\\\apps\\\\landing\\\\web\\\\\",\"\"\\), $_.Length })",
       "Bash(gh auth *)",
-      "PowerShell(gh auth status)"
+      "PowerShell(gh auth status)",
+      "PowerShell(melos run *)",
+      "PowerShell(dart format *)",
+      "PowerShell(flutter *)",
+      "Bash(flutter analyze *)",
+      "WebFetch(domain:api.flutter.dev)"
     ]
   }
 }

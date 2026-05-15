@@ -37,7 +37,12 @@ void main() {
       await tester.pump(const Duration(milliseconds: 16));
 
       await tester.tap(find.byKey(const Key('showcase-card-ecommerce')));
-      await tester.pumpAndSettle();
+      // pumpAndSettle nao serve aqui porque o `GaroaHeroBackdrop` do
+      // EcommerceDemo roda em loop infinito. Pumpamos frames fixos pra
+      // a route de modal terminar de abrir.
+      for (var i = 0; i < 20; i++) {
+        await tester.pump(const Duration(milliseconds: 50));
+      }
 
       expect(find.byType(EcommerceDemo), findsOneWidget);
     });
@@ -48,7 +53,12 @@ void main() {
       await tester.pump(const Duration(milliseconds: 16));
 
       await tester.tap(find.byKey(const Key('showcase-card-delivery')));
-      await tester.pumpAndSettle();
+      // pumpAndSettle nao serve aqui porque o `AuroraHeroBackdrop` e o
+      // mapa do DeliveryDemo rodam em loop infinito. Pumpamos frames
+      // fixos pra a route de modal terminar de abrir.
+      for (var i = 0; i < 20; i++) {
+        await tester.pump(const Duration(milliseconds: 50));
+      }
 
       expect(find.byType(DeliveryDemo), findsOneWidget);
     });
@@ -78,7 +88,12 @@ void main() {
       await tester.ensureVisible(card);
       await tester.pumpAndSettle();
       await tester.tap(card);
-      await tester.pumpAndSettle();
+      // PulsoHomePage tem painters animando em loop infinito (athlete
+      // figure, activity rings); pumpAndSettle nao termina. Pumps
+      // explicitos cobrem o push da MaterialPageRoute + um frame extra
+      // pra o Theme/Bloc montarem.
+      await tester.pump(const Duration(milliseconds: 100));
+      await tester.pump(const Duration(milliseconds: 400));
 
       expect(find.byType(FitnessDemo), findsOneWidget);
     });

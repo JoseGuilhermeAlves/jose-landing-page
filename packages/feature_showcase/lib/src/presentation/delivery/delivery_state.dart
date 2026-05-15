@@ -14,6 +14,29 @@ class DeliveryState extends Equatable {
   bool get allDelivered =>
       orders.isNotEmpty && orders.every((o) => o.status.isFinal);
 
+  /// Primeiro pedido nao final — usado pela home Aurora como "pedido
+  /// ativo" do cliente. Null quando todos foram entregues.
+  DeliveryOrder? get activeOrder {
+    for (final o in orders) {
+      if (!o.status.isFinal) return o;
+    }
+    return null;
+  }
+
+  /// Pedidos ja entregues — alimentam a tela de Historico.
+  List<DeliveryOrder> get historyOrders =>
+      [for (final o in orders) if (o.status.isFinal) o];
+
+  /// Lookup por id — null quando o pedido foi removido (nao ocorre no
+  /// mock atual, mas e necessario pra rotas que recebem o id como
+  /// argumento).
+  DeliveryOrder? findById(String id) {
+    for (final o in orders) {
+      if (o.id == id) return o;
+    }
+    return null;
+  }
+
   DeliveryState copyWith({List<DeliveryOrder>? orders, int? cursor}) {
     return DeliveryState(
       orders: orders ?? this.orders,

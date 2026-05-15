@@ -115,7 +115,7 @@ void main() {
       );
 
       blocTest<CartBloc, CartState>(
-        'subtotal < 150,00: aplica frete de R\$ 15,00',
+        r'subtotal < 150,00: aplica frete de R$ 15,00',
         build: CartBloc.new,
         seed: () => const CartState(
           items: [CartLine(product: a, quantity: 1)],

@@ -19,8 +19,8 @@ abstract final class ShowcaseCatalog {
       id: 'delivery',
       label: 'Delivery',
       description:
-          'Lista de pedidos com status animado — em preparo, saiu pra '
-          'entrega, entregue.',
+          'Aurora — marketplace de hortifruti com mapa animado, '
+          'timeline do pedido e historico.',
       icon: Icons.delivery_dining_outlined,
       hasDemo: true,
     ),

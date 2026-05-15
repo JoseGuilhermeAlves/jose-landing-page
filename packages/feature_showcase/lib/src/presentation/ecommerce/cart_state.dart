@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:feature_showcase/src/domain/order_summary.dart';
 import 'package:feature_showcase/src/domain/product.dart';
 import 'package:flutter/foundation.dart';
 
@@ -20,9 +21,14 @@ class CartLine extends Equatable {
 
 @immutable
 class CartState extends Equatable {
-  const CartState({this.items = const []});
+  const CartState({this.items = const [], this.lastOrder});
 
   final List<CartLine> items;
+
+  /// Pedido mais recente concluido (preenchido por
+  /// `CartCheckoutRequested`). Quando null, ainda nao houve checkout
+  /// na sessao. A UI usa esse campo pra navegar pra tela de Resumo.
+  final OrderSummary? lastOrder;
 
   double get totalCents =>
       items.fold(0, (acc, line) => acc + line.subtotalCents);
@@ -37,21 +43,20 @@ class CartState extends Equatable {
     return 0;
   }
 
-  /// Formatado como BRL — reaproveita o formatador do Product passando
-  /// um produto sintetico com priceCents = totalCents.
-  String get formattedTotal {
-    final synthetic = Product(
-      id: '__total__',
-      name: 'total',
-      priceCents: totalCents,
-      emoji: '',
+  /// Formatado como BRL — delega no formatador de [Product].
+  String get formattedTotal => Product.formatBrl(totalCents);
+
+  CartState copyWith({
+    List<CartLine>? items,
+    OrderSummary? lastOrder,
+    bool clearLastOrder = false,
+  }) {
+    return CartState(
+      items: items ?? this.items,
+      lastOrder: clearLastOrder ? null : (lastOrder ?? this.lastOrder),
     );
-    return synthetic.formattedPrice;
   }
 
-  CartState copyWith({List<CartLine>? items}) =>
-      CartState(items: items ?? this.items);
-
   @override
-  List<Object?> get props => [items];
+  List<Object?> get props => [items, lastOrder];
 }

@@ -64,6 +64,20 @@ class FitnessState extends Equatable {
     return weeklyCompletedSets / target;
   }
 
+  /// Volume total movimentado na semana, em kg. Definicao classica de
+  /// fitness: soma de (sets concluidos x reps x carga) por exercicio.
+  /// Exibido no Progress tab do demo.
+  double get totalVolumeKg {
+    var total = 0.0;
+    for (final day in plan) {
+      for (final ex in day.exercises) {
+        final completed = completedFor(weekday: day.weekday, exerciseId: ex.id);
+        total += completed * ex.reps * ex.weightKg;
+      }
+    }
+    return total;
+  }
+
   FitnessState copyWith({
     int? selectedWeekday,
     CompletedSetsMap? completedSets,

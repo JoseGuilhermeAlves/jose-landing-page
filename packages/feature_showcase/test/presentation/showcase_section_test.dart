@@ -78,7 +78,12 @@ void main() {
       await tester.ensureVisible(card);
       await tester.pumpAndSettle();
       await tester.tap(card);
-      await tester.pumpAndSettle();
+      // PulsoHomePage tem painters animando em loop infinito (athlete
+      // figure, activity rings); pumpAndSettle nao termina. Pumps
+      // explicitos cobrem o push da MaterialPageRoute + um frame extra
+      // pra o Theme/Bloc montarem.
+      await tester.pump(const Duration(milliseconds: 100));
+      await tester.pump(const Duration(milliseconds: 400));
 
       expect(find.byType(FitnessDemo), findsOneWidget);
     });

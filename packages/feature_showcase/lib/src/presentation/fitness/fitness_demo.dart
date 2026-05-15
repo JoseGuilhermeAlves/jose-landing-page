@@ -2,10 +2,15 @@ import 'package:design_system/design_system.dart';
 import 'package:feature_showcase/src/data/workout_plan_catalog.dart';
 import 'package:feature_showcase/src/domain/workout_day.dart';
 import 'package:feature_showcase/src/domain/workout_exercise.dart';
+import 'package:feature_showcase/src/presentation/fitness/exercise_detail_page.dart';
 import 'package:feature_showcase/src/presentation/fitness/fitness_bloc.dart';
 import 'package:feature_showcase/src/presentation/fitness/fitness_brand.dart';
 import 'package:feature_showcase/src/presentation/fitness/fitness_event.dart';
 import 'package:feature_showcase/src/presentation/fitness/fitness_state.dart';
+import 'package:feature_showcase/src/presentation/fitness/pulso_hero_backdrop.dart';
+import 'package:feature_showcase/src/presentation/fitness/pulso_home_page.dart';
+import 'package:feature_showcase/src/presentation/fitness/rest_timer_sheet.dart';
+import 'package:feature_showcase/src/presentation/fitness/volume_history_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -23,6 +28,7 @@ class FitnessDemo extends StatefulWidget {
   const FitnessDemo({
     required this.today,
     this.plan,
+    this.skipHome = false,
     super.key,
   });
 
@@ -33,16 +39,33 @@ class FitnessDemo extends StatefulWidget {
   /// Override do plano. Quando null, usa [WorkoutPlanCatalog.week].
   final List<WorkoutDay>? plan;
 
+  /// Pula a [PulsoHomePage] e abre direto na TabBar — usado pelos
+  /// widget tests pra nao ter que tocar no CTA em cada caso.
+  final bool skipHome;
+
   @override
   State<FitnessDemo> createState() => _FitnessDemoState();
 }
 
 class _FitnessDemoState extends State<FitnessDemo>
     with SingleTickerProviderStateMixin {
-  late final TabController _tabController = TabController(
-    length: 3,
-    vsync: this,
-  );
+  late final TabController _tabController;
+  late bool _showHome;
+
+  @override
+  void initState() {
+    super.initState();
+    // Construir em initState (e nao via `late final` no campo) pra que
+    // o `vsync: this` seja resolvido enquanto o State esta ativo. Se
+    // o usuario nunca chega a abrir a TabBar (fica no home), o lazy
+    // init dispararia createTicker dentro de dispose() — que falha
+    // com "Looking up a deactivated widget's ancestor".
+    _tabController = TabController(length: 3, vsync: this);
+    _showHome = !widget.skipHome;
+  }
+
+  void _enterApp() => setState(() => _showHome = false);
+  void _backToHome() => setState(() => _showHome = true);
 
   @override
   void dispose() {
@@ -61,52 +84,84 @@ class _FitnessDemoState extends State<FitnessDemo>
         ),
         child: Builder(
           builder: (context) {
-            final colors = context.colors;
-            final textTheme = Theme.of(context).textTheme;
-
-            return Scaffold(
-              backgroundColor: colors.background,
-              appBar: AppBar(
-                backgroundColor: colors.background,
-                surfaceTintColor: colors.background,
-                elevation: 0,
-                title: _BrandTitle(colors: colors, textTheme: textTheme),
-                actions: [
-                  IconButton(
-                    key: const Key('fitness-reset-button'),
-                    tooltip: 'Zerar semana',
-                    icon: const Icon(Icons.refresh),
-                    onPressed: () => context
-                        .read<FitnessBloc>()
-                        .add(const FitnessReset()),
-                  ),
-                  const SizedBox(width: AppSpacing.xs),
-                ],
-                bottom: TabBar(
-                  controller: _tabController,
-                  tabs: const [
-                    Tab(text: 'Hoje'),
-                    Tab(text: 'Semana'),
-                    Tab(text: 'Progresso'),
-                  ],
-                ),
-              ),
-              body: SafeArea(
-                top: false,
-                child: TabBarView(
-                  controller: _tabController,
-                  children: [
-                    _TodayTab(
-                      today: widget.today,
-                      onStartWorkout: () => _tabController.animateTo(1),
-                    ),
-                    const _WeekTab(),
-                    const _ProgressTab(),
-                  ],
-                ),
-              ),
+            if (_showHome) {
+              return PulsoHomePage(onEnterApp: _enterApp);
+            }
+            return _PulsoMainScaffold(
+              tabController: _tabController,
+              today: widget.today,
+              onBackToHome: _backToHome,
             );
           },
+        ),
+      ),
+    );
+  }
+}
+
+/// Scaffold "interno" do Pulso — extraido do `build` original do
+/// [FitnessDemo] sem alteracao de comportamento. A unica adicao e o
+/// leading [IconButton] que volta pra [PulsoHomePage].
+class _PulsoMainScaffold extends StatelessWidget {
+  const _PulsoMainScaffold({
+    required this.tabController,
+    required this.today,
+    required this.onBackToHome,
+  });
+
+  final TabController tabController;
+  final int today;
+  final VoidCallback onBackToHome;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+    final textTheme = Theme.of(context).textTheme;
+
+    return Scaffold(
+      backgroundColor: colors.background,
+      appBar: AppBar(
+        backgroundColor: colors.background,
+        surfaceTintColor: colors.background,
+        elevation: 0,
+        leading: IconButton(
+          key: const Key('fitness-back-to-home'),
+          tooltip: 'Voltar ao inicio',
+          icon: const Icon(Icons.arrow_back_rounded),
+          onPressed: onBackToHome,
+        ),
+        title: _BrandTitle(colors: colors, textTheme: textTheme),
+        actions: [
+          IconButton(
+            key: const Key('fitness-reset-button'),
+            tooltip: 'Zerar semana',
+            icon: const Icon(Icons.refresh),
+            onPressed: () =>
+                context.read<FitnessBloc>().add(const FitnessReset()),
+          ),
+          const SizedBox(width: AppSpacing.xs),
+        ],
+        bottom: TabBar(
+          controller: tabController,
+          tabs: const [
+            Tab(text: 'Hoje'),
+            Tab(text: 'Semana'),
+            Tab(text: 'Progresso'),
+          ],
+        ),
+      ),
+      body: SafeArea(
+        top: false,
+        child: TabBarView(
+          controller: tabController,
+          children: [
+            _TodayTab(
+              today: today,
+              onStartWorkout: () => tabController.animateTo(1),
+            ),
+            const _WeekTab(),
+            const _ProgressTab(),
+          ],
         ),
       ),
     );
@@ -138,11 +193,7 @@ class _BrandTitle extends StatelessWidget {
             ],
           ),
           alignment: Alignment.center,
-          child: Icon(
-            Icons.bolt,
-            size: 18,
-            color: colors.onPrimary,
-          ),
+          child: Icon(Icons.bolt, size: 18, color: colors.onPrimary),
         ),
         const SizedBox(width: AppSpacing.sm),
         Text(
@@ -269,17 +320,13 @@ class _TodayHeroCard extends StatelessWidget {
     final isRest = day.isRestDay;
     final estimatedMinutes = (day.exercises.length * 8 + 5).clamp(15, 90);
 
-    return Container(
+    return DecoratedBox(
       key: const Key('fitness-today-hero-card'),
-      padding: const EdgeInsets.all(AppSpacing.xl),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [
-            colors.primary.withValues(alpha: 0.16),
-            colors.surface,
-          ],
+          colors: [colors.primary.withValues(alpha: 0.16), colors.surface],
         ),
         border: Border.all(color: colors.primary.withValues(alpha: 0.4)),
         borderRadius: BorderRadius.circular(AppRadius.lg),
@@ -292,91 +339,108 @@ class _TodayHeroCard extends StatelessWidget {
           ),
         ],
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: AppSpacing.sm,
-                  vertical: AppSpacing.xxs,
-                ),
-                decoration: BoxDecoration(
-                  color: isRest
-                      ? colors.surfaceMuted
-                      : colors.primary.withValues(alpha: 0.18),
-                  borderRadius: BorderRadius.circular(AppRadius.full),
-                ),
-                child: Text(
-                  isRest ? 'descanso' : 'treino do dia',
-                  style: textTheme.labelSmall?.copyWith(
-                    color: isRest ? colors.onSurfaceMuted : colors.primary,
-                    letterSpacing: 0.6,
+      // ClipRRect recorta o backdrop nos cantos arredondados sem
+      // afetar a sombra externa (que fica no DecoratedBox de fora).
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(AppRadius.lg),
+        child: Stack(
+          children: [
+            Positioned.fill(child: PulsoHeroBackdrop(isRest: isRest)),
+            Padding(
+              padding: const EdgeInsets.all(AppSpacing.xl),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: AppSpacing.sm,
+                          vertical: AppSpacing.xxs,
+                        ),
+                        decoration: BoxDecoration(
+                          color: isRest
+                              ? colors.surfaceMuted
+                              : colors.primary.withValues(alpha: 0.18),
+                          borderRadius: BorderRadius.circular(AppRadius.full),
+                        ),
+                        child: Text(
+                          isRest ? 'descanso' : 'treino do dia',
+                          style: textTheme.labelSmall?.copyWith(
+                            color: isRest
+                                ? colors.onSurfaceMuted
+                                : colors.primary,
+                            letterSpacing: 0.6,
+                          ),
+                        ),
+                      ),
+                      const Spacer(),
+                      if (!isRest)
+                        Text(
+                          '$completed / $target sets',
+                          key: const Key('fitness-today-progress-counter'),
+                          style: textTheme.labelMedium?.copyWith(
+                            color: colors.onSurfaceMuted,
+                          ),
+                        ),
+                    ],
                   ),
-                ),
-              ),
-              const Spacer(),
-              if (!isRest)
-                Text(
-                  '$completed / $target sets',
-                  key: const Key('fitness-today-progress-counter'),
-                  style: textTheme.labelMedium?.copyWith(
-                    color: colors.onSurfaceMuted,
+                  const SizedBox(height: AppSpacing.md),
+                  Text(
+                    isRest ? 'Dia de recuperacao' : day.label,
+                    style: textTheme.headlineMedium?.copyWith(
+                      color: colors.onSurface,
+                      fontWeight: FontWeight.w700,
+                      letterSpacing: -0.4,
+                    ),
                   ),
-                ),
-            ],
-          ),
-          const SizedBox(height: AppSpacing.md),
-          Text(
-            isRest ? 'Dia de recuperacao' : day.label,
-            style: textTheme.headlineMedium?.copyWith(
-              color: colors.onSurface,
-              fontWeight: FontWeight.w700,
-              letterSpacing: -0.4,
-            ),
-          ),
-          const SizedBox(height: AppSpacing.sm),
-          if (!isRest)
-            Wrap(
-              spacing: AppSpacing.lg,
-              runSpacing: AppSpacing.xs,
-              children: [
-                _MetaChip(
-                  icon: Icons.fitness_center_outlined,
-                  label: '${day.exercises.length} exercicios',
-                  colors: colors,
-                  textTheme: textTheme,
-                ),
-                _MetaChip(
-                  icon: Icons.schedule_outlined,
-                  label: '~$estimatedMinutes min',
-                  colors: colors,
-                  textTheme: textTheme,
-                ),
-              ],
-            )
-          else
-            Text(
-              'Recuperacao tambem faz parte do plano. Volte amanha.',
-              style: textTheme.bodyMedium?.copyWith(
-                color: colors.onSurfaceMuted,
-                height: 1.5,
+                  const SizedBox(height: AppSpacing.sm),
+                  if (!isRest)
+                    Wrap(
+                      spacing: AppSpacing.lg,
+                      runSpacing: AppSpacing.xs,
+                      children: [
+                        _MetaChip(
+                          icon: Icons.fitness_center_outlined,
+                          label: '${day.exercises.length} exercicios',
+                          colors: colors,
+                          textTheme: textTheme,
+                        ),
+                        _MetaChip(
+                          icon: Icons.schedule_outlined,
+                          label: '~$estimatedMinutes min',
+                          colors: colors,
+                          textTheme: textTheme,
+                        ),
+                      ],
+                    )
+                  else
+                    Text(
+                      'Recuperacao tambem faz parte do plano. Volte amanha.',
+                      style: textTheme.bodyMedium?.copyWith(
+                        color: colors.onSurfaceMuted,
+                        height: 1.5,
+                      ),
+                    ),
+                  const SizedBox(height: AppSpacing.xl),
+                  SizedBox(
+                    width: double.infinity,
+                    child: AppButton(
+                      key: const Key('fitness-today-start-button'),
+                      label: isRest ? 'Ver plano da semana' : 'Iniciar treino',
+                      icon: isRest
+                          ? Icons.calendar_view_week
+                          : Icons.play_arrow_rounded,
+                      size: AppButtonSize.large,
+                      expand: true,
+                      onPressed: onStart,
+                    ),
+                  ),
+                ],
               ),
             ),
-          const SizedBox(height: AppSpacing.xl),
-          SizedBox(
-            width: double.infinity,
-            child: AppButton(
-              key: const Key('fitness-today-start-button'),
-              label: isRest ? 'Ver plano da semana' : 'Iniciar treino',
-              icon: isRest ? Icons.calendar_view_week : Icons.play_arrow_rounded,
-              size: AppButtonSize.large,
-              expand: true,
-              onPressed: onStart,
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -404,9 +468,7 @@ class _MetaChip extends StatelessWidget {
         const SizedBox(width: AppSpacing.xs),
         Text(
           label,
-          style: textTheme.labelMedium?.copyWith(
-            color: colors.onSurfaceMuted,
-          ),
+          style: textTheme.labelMedium?.copyWith(color: colors.onSurfaceMuted),
         ),
       ],
     );
@@ -554,11 +616,7 @@ class _CompactExerciseRow extends StatelessWidget {
               borderRadius: BorderRadius.circular(AppRadius.sm),
             ),
             alignment: Alignment.center,
-            child: Icon(
-              Icons.fitness_center,
-              size: 16,
-              color: colors.primary,
-            ),
+            child: Icon(Icons.fitness_center, size: 16, color: colors.primary),
           ),
           const SizedBox(width: AppSpacing.md),
           Expanded(
@@ -651,8 +709,9 @@ class _WeeklyProgressCard extends StatelessWidget {
                 children: [
                   Text(
                     'Progresso semanal',
-                    style: textTheme.titleMedium
-                        ?.copyWith(color: colors.onSurface),
+                    style: textTheme.titleMedium?.copyWith(
+                      color: colors.onSurface,
+                    ),
                   ),
                   const Spacer(),
                   Text(
@@ -693,7 +752,13 @@ class _DayBars extends StatelessWidget {
   const _DayBars();
 
   static const List<String> _weekdayLabels = [
-    'seg', 'ter', 'qua', 'qui', 'sex', 'sab', 'dom',
+    'seg',
+    'ter',
+    'qua',
+    'qui',
+    'sex',
+    'sab',
+    'dom',
   ];
 
   @override
@@ -789,7 +854,13 @@ class _DayStrip extends StatelessWidget {
   const _DayStrip();
 
   static const List<String> _weekdayLabels = [
-    'segunda', 'terca', 'quarta', 'quinta', 'sexta', 'sabado', 'domingo',
+    'segunda',
+    'terca',
+    'quarta',
+    'quinta',
+    'sexta',
+    'sabado',
+    'domingo',
   ];
 
   @override
@@ -858,9 +929,7 @@ class _DayChip extends StatelessWidget {
         decoration: BoxDecoration(
           color: selected ? colors.primary : colors.surface,
           borderRadius: BorderRadius.circular(AppRadius.md),
-          border: Border.all(
-            color: selected ? colors.primary : colors.border,
-          ),
+          border: Border.all(color: selected ? colors.primary : colors.border),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -911,8 +980,9 @@ class _ExercisesList extends StatelessWidget {
                   const SizedBox(height: AppSpacing.md),
                   Text(
                     'Dia de descanso',
-                    style: textTheme.titleMedium
-                        ?.copyWith(color: colors.onSurface),
+                    style: textTheme.titleMedium?.copyWith(
+                      color: colors.onSurface,
+                    ),
                   ),
                   const SizedBox(height: AppSpacing.xs),
                   Text(
@@ -968,76 +1038,92 @@ class _ExerciseCard extends StatelessWidget {
     final bloc = context.read<FitnessBloc>();
     final isDone = completed >= exercise.targetSets;
 
-    return Container(
+    return Material(
       key: const Key('fitness-exercise-card'),
-      padding: const EdgeInsets.all(AppSpacing.lg),
-      decoration: BoxDecoration(
-        color: colors.surface,
+      color: colors.surface,
+      shape: RoundedRectangleBorder(
+        side: BorderSide(color: isDone ? colors.success : colors.border),
         borderRadius: BorderRadius.circular(AppRadius.lg),
-        border: Border.all(
-          color: isDone ? colors.success : colors.border,
-        ),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
+      child: InkWell(
+        key: const Key('fitness-exercise-card-tap'),
+        borderRadius: BorderRadius.circular(AppRadius.lg),
+        onTap: () => ExerciseDetailPage.open(
+          context,
+          weekday: weekday,
+          exercise: exercise,
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(AppSpacing.lg),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded(
-                child: Text(
-                  exercise.name,
-                  style: textTheme.titleMedium?.copyWith(
-                    color: colors.onSurface,
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      exercise.name,
+                      style: textTheme.titleMedium?.copyWith(
+                        color: colors.onSurface,
+                      ),
+                    ),
                   ),
-                ),
+                  Icon(
+                    isDone
+                        ? Icons.check_circle_outline
+                        : Icons.chevron_right_rounded,
+                    color: isDone ? colors.success : colors.onSurfaceMuted,
+                    size: 20,
+                  ),
+                ],
               ),
-              if (isDone)
-                Icon(
-                  Icons.check_circle_outline,
-                  color: colors.success,
-                  size: 20,
-                ),
-            ],
-          ),
-          const SizedBox(height: AppSpacing.xs),
-          Text(
-            _exerciseSubtitle(exercise),
-            style: textTheme.bodySmall?.copyWith(
-              color: colors.onSurfaceMuted,
-            ),
-          ),
-          const SizedBox(height: AppSpacing.md),
-          Row(
-            children: [
-              for (var i = 0; i < exercise.targetSets; i++) ...[
-                if (i > 0) const SizedBox(width: AppSpacing.sm),
-                _SetDot(
-                  filled: i < completed,
-                  onTap: () {
-                    if (i < completed) {
-                      bloc.add(FitnessSetUndone(
-                        weekday: weekday,
-                        exerciseId: exercise.id,
-                      ));
-                    } else {
-                      bloc.add(FitnessSetCompleted(
-                        weekday: weekday,
-                        exerciseId: exercise.id,
-                      ));
-                    }
-                  },
-                ),
-              ],
-              const Spacer(),
+              const SizedBox(height: AppSpacing.xs),
               Text(
-                '$completed / ${exercise.targetSets}',
-                style: textTheme.labelMedium?.copyWith(
+                _exerciseSubtitle(exercise),
+                style: textTheme.bodySmall?.copyWith(
                   color: colors.onSurfaceMuted,
                 ),
               ),
+              const SizedBox(height: AppSpacing.md),
+              Row(
+                children: [
+                  for (var i = 0; i < exercise.targetSets; i++) ...[
+                    if (i > 0) const SizedBox(width: AppSpacing.sm),
+                    _SetDot(
+                      filled: i < completed,
+                      onTap: () {
+                        if (i < completed) {
+                          bloc.add(
+                            FitnessSetUndone(
+                              weekday: weekday,
+                              exerciseId: exercise.id,
+                            ),
+                          );
+                        } else {
+                          bloc.add(
+                            FitnessSetCompleted(
+                              weekday: weekday,
+                              exerciseId: exercise.id,
+                            ),
+                          );
+                        }
+                      },
+                    ),
+                  ],
+                  const Spacer(),
+                  Text(
+                    '$completed / ${exercise.targetSets}',
+                    style: textTheme.labelMedium?.copyWith(
+                      color: colors.onSurfaceMuted,
+                    ),
+                  ),
+                  const SizedBox(width: AppSpacing.sm),
+                  _RestChip(exercise: exercise),
+                ],
+              ),
             ],
           ),
-        ],
+        ),
       ),
     );
   }
@@ -1052,6 +1138,85 @@ class _ExerciseCard extends StatelessWidget {
   static String _formatWeight(double kg) {
     if (kg == kg.roundToDouble()) return '${kg.toInt()} kg';
     return '${kg.toStringAsFixed(1)} kg';
+  }
+}
+
+/// Chip pequeno na linha de set dots que abre o [RestTimerSheet]. A
+/// duracao padrao deriva das reps: <=8 (forca) -> 120s, >8 -> 90s.
+class _RestChip extends StatelessWidget {
+  const _RestChip({required this.exercise});
+
+  final WorkoutExercise exercise;
+
+  static int _restSecondsFor(WorkoutExercise e) => e.reps <= 8 ? 120 : 90;
+
+  static String _formatLabel(int seconds) {
+    if (seconds < 60) return '${seconds}s';
+    final mm = seconds ~/ 60;
+    final ss = (seconds % 60).toString().padLeft(2, '0');
+    return '$mm:$ss';
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+    final textTheme = Theme.of(context).textTheme;
+    final seconds = _restSecondsFor(exercise);
+
+    return Material(
+      color: colors.surfaceMuted,
+      shape: RoundedRectangleBorder(
+        side: BorderSide(color: colors.border),
+        borderRadius: BorderRadius.circular(AppRadius.full),
+      ),
+      child: InkWell(
+        key: const Key('fitness-rest-chip'),
+        onTap: () => _open(context, seconds),
+        borderRadius: BorderRadius.circular(AppRadius.full),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppSpacing.sm,
+            vertical: AppSpacing.xxs + 2,
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(Icons.timer_outlined, size: 14, color: colors.primary),
+              const SizedBox(width: AppSpacing.xs),
+              Text(
+                _formatLabel(seconds),
+                style: textTheme.labelSmall?.copyWith(
+                  color: colors.onSurface,
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: 0.4,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _open(BuildContext context, int seconds) {
+    final colors = context.colors;
+    showModalBottomSheet<void>(
+      context: context,
+      backgroundColor: colors.surface,
+      // Sheet tem cantos arredondados no topo pra continuar a marca
+      // visual do card. `useSafeArea: true` evita colidir com a barra
+      // de gestos em Android e o notch em iOS. `isScrollControlled`
+      // permite o sheet crescer alem de 50% da viewport — necessario
+      // pra acomodar o ring de 220px + textos + botoes em telas
+      // pequenas ou no viewport reduzido dos testes.
+      useSafeArea: true,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(AppRadius.xl)),
+      ),
+      builder: (_) =>
+          RestTimerSheet(initialSeconds: seconds, exerciseName: exercise.name),
+    );
   }
 }
 
@@ -1099,7 +1264,13 @@ class _ProgressTab extends StatelessWidget {
 
   static const int _streakDays = 12;
   static const List<String> _shortDays = [
-    'seg', 'ter', 'qua', 'qui', 'sex', 'sab', 'dom',
+    'seg',
+    'ter',
+    'qua',
+    'qui',
+    'sex',
+    'sab',
+    'dom',
   ];
 
   @override
@@ -1213,9 +1384,7 @@ class _ProgressTab extends StatelessWidget {
               const SizedBox(height: AppSpacing.xl),
               Text(
                 'por dia',
-                style: textTheme.titleMedium?.copyWith(
-                  color: colors.onSurface,
-                ),
+                style: textTheme.titleMedium?.copyWith(color: colors.onSurface),
               ),
               const SizedBox(height: AppSpacing.md),
               Container(
@@ -1236,8 +1405,7 @@ class _ProgressTab extends StatelessWidget {
                             Expanded(
                               child: _ProgressDayBar(
                                 label: _shortDays[day.weekday - 1],
-                                completed:
-                                    state.totalCompletedOn(day.weekday),
+                                completed: state.totalCompletedOn(day.weekday),
                                 target: day.totalTargetSets,
                                 isRest: day.isRestDay,
                                 colors: colors,
@@ -1250,6 +1418,8 @@ class _ProgressTab extends StatelessWidget {
                   ],
                 ),
               ),
+              const SizedBox(height: AppSpacing.xl),
+              VolumeHistoryChart(currentVolumeKg: volume),
             ],
           ),
         );

@@ -143,14 +143,66 @@ Grid de cards do que José entrega:
 Cada card com micro-animação de hover (Custom Painter desenhando borda).
 
 ### 4.3 Showcase (feature_showcase)
-Templates demonstráveis pra cliente leigo entender. Para esta versão:
-- **E-commerce** — catálogo + carrinho mock
-- **Delivery** — lista de pedidos com status animado
-- **Agendamento** (serviços/salão) — calendário interativo
-- **Fitness** — tracker de treino com gráficos
-- **Imobiliária** — listagem de imóveis com filtros
 
-Cada um vira um modal/route com 1–2 telas representativas. **Não precisa ter backend real** — mocks funcionais bastam. Cada template é um sub-flow dentro da feature, com Bloc próprio gerenciando o estado.
+Cada um dos 5 templates é uma **experiência mockada quase completa** — não um esboço de uma tela só. Cada mock prova um eixo do que José pode entregar end-to-end no front, com identidade visual própria e múltiplas telas navegáveis dentro do `MaterialPageRoute(fullscreenDialog: true)`.
+
+#### Princípios (valem pros 5 mocks)
+
+1. **Identidade visual dedicada por mock.** Marca fictícia (nome curto + tagline), paleta dedicada via `Theme` override local (não toca a landing), micro-decisões tipográficas (peso, letter-spacing) que reforçam a marca. **Pulso** (fitness) é o template canônico — veja `packages/feature_showcase/lib/src/presentation/fitness/fitness_brand.dart` e replique o padrão ao introduzir marca nos demais.
+2. **Múltiplas telas com navegação interna.** Cada mock tem 3–5 telas (home/dashboard, lista/catálogo, detalhe, ação/confirmação), conectadas por `TabBar`, `Navigator.push` ou `PageView`. Demo de uma tela só não é mais aceitável.
+3. **Custom Painters para ilustrações.** Sem stock photos, sem bitmaps placeholder. Mascotes, silhuetas, gráficos, plantas baixas, mapas, banners de marca e ícones de categoria são todos desenhados via `CustomPaint`. **Esses painters vivem dentro do diretório do próprio mock**, não em `packages/animations` — que reserva-se aos painters reusáveis pela landing. Regras de performance (Paint cacheados, `shouldRepaint` correto) valem igualmente.
+4. **Mocks funcionais.** Bloc/Cubit por template gerenciando estado real (carrinho, progresso, filtros), dados estáticos em `data/`. Zero backend.
+5. **Tom da marca, não da landing.** A copy dentro do mock pode (e deve) ter personalidade própria — informal, técnica, lúdica — desde que coerente com o nicho. Não confundir com a regra "formal, direto, sucinto" que vale para o copy comercial da landing (Hero, Services, About, Contact).
+
+#### 4.3.1 Pulso (Fitness) — **referência canônica**
+
+- **Marca:** Pulso · "Treino sem fricção". **Paleta:** cream/laranja (light, oposta ao dark da landing) — laranja vibrante como primary, cream como background, slate escuro pro texto. **Referência visual:** Strava, Nike Run Club, Apple Fitness.
+- **Telas:**
+  - **Home (dashboard)** — entrada padrão do mock, com greeting, hero card do treino do dia (silhueta de atleta animada), activity rings (sets/minutos/exercícios), diagrama corporal destacando músculos do dia e resumo da semana.
+  - **Hoje** (aba 1 do scaffold) — greeting + hero card com backdrop EKG, stats rápidos (sequência, sets, volume) e preview do plano.
+  - **Semana** (aba 2) — strip horizontal de dias, progresso semanal com mini-barras, lista de exercícios com set dots tocáveis; **tap no card empurra `ExerciseDetailPage`**.
+  - **Progresso** (aba 3) — % grande, barras por dia, gráfico de volume de 8 semanas.
+  - **Detalhe de exercício** (push) — sumário sets/reps/carga, set tiles tocáveis, histórico de carga das 8 últimas semanas (painter dedicado), grupos musculares ativados (reusa body diagram) e notas técnicas inferidas do exercício.
+  - **Rest timer sheet** (modal bottom sheet) — cronômetro com anel de progresso, ajuste ±15s, "Pular descanso".
+- **Custom Painters dedicados:**
+  - `VolumeHistoryChart` — line chart com Catmull-Rom smoothing, gradient fill e halo no ponto da semana atual.
+  - `ExerciseLoadHistoryChart` — bar chart de carga por semana, barra atual destacada com halo + label flutuante.
+  - `PulsoHeroBackdrop` — EKG-line scrollando atrás do hero card da aba Hoje; cadência mais calma no modo "descanso".
+  - `PulsoActivityRings` — três anéis concêntricos estilo Apple Fitness; cada um anima de 0 até o progresso final.
+  - `PulsoAthleteFigure` — silhueta geométrica de atleta em pose de levantamento com leve "respiração" sinusoidal.
+  - `PulsoBodyDiagram` — diagrama anatômico estilizado com grupos musculares preencháveis.
+  - Anel de rest timer (painter privado dentro de `rest_timer_sheet.dart`).
+- **Status:** completo — 3 abas + home dashboard + detalhe de exercício + rest timer + 7 painters dedicados.
+
+#### 4.3.2 [marca-tbd] (E-commerce)
+
+- **Marca:** TBD (confirmar com José). **Paleta:** TBD — proposta: tons quentes/minimalistas tipo boutique.
+- **Telas (planejadas):** Home (hero da marca + categorias + featured), Catálogo (grid com filtros), Detalhe do produto (galeria ilustrada + variantes), Carrinho, Resumo de pedido.
+- **Custom Painters dedicados (planejados):** ilustrações abstratas de produto (silhuetas categóricas — vestuário, decoração), ícones de categoria, banner do hero da marca.
+- **Status:** carrinho funcional existente é o ponto de partida; falta marca, home, expansão de telas e painters.
+
+#### 4.3.3 [marca-tbd] (Delivery)
+
+- **Marca:** TBD. **Paleta:** TBD — proposta: laranja/preto ou amarelo de alerta.
+- **Telas (planejadas):** Home (pedido ativo + categorias rápidas), Lista de restaurantes/lojas, Detalhe do pedido em andamento (timeline + mapa ilustrado), Histórico.
+- **Custom Painters dedicados (planejados):** **mapa abstrato com rota animada** (destaque técnico), timeline de status com ícones desenhados, marker do entregador.
+- **Status:** lista de pedidos com status animado existente é o ponto de partida; falta marca, mapa-painter e telas de home/detalhe.
+
+#### 4.3.4 [marca-tbd] (Agendamento)
+
+- **Marca:** TBD. **Paleta:** TBD — proposta: pastel ou minimalist wellness.
+- **Telas (planejadas):** Home (próximo agendamento + grid de serviços), Catálogo de serviços, Calendário interativo de horários, Confirmação com resumo ilustrado.
+- **Custom Painters dedicados (planejados):** ilustração de relógio/calendário decorativo na home, ícones dos serviços (corte, manicure, massagem etc.), confirmation badge com check animado.
+- **Status:** calendário interativo existente é o ponto de partida; falta marca, home, catálogo e confirmação com painters.
+
+#### 4.3.5 [marca-tbd] (Imobiliária)
+
+- **Marca:** TBD. **Paleta:** TBD — proposta: navy/cream architectural ou earth tones.
+- **Telas (planejadas):** Home (featured + busca por bairro/preço), Listagem com filtros, Detalhe do imóvel (galeria ilustrada + **planta baixa** + mapa de localização), Contato com corretor.
+- **Custom Painters dedicados (planejados):** **planta baixa esquemática** (destaque técnico), silhueta de edifício/casa, mapa de bairro abstrato, ícones de feature (vaga, varanda, piscina).
+- **Status:** listagem com filtros existente é o ponto de partida; falta marca, detalhe com planta baixa e painters de mapa.
+
+> **Ordem de execução:** Pulso (fitness, canônico) → e-commerce → delivery → agendamento → imobiliária. Cada mock é um PR médio-grande; não fundir dois numa só passagem.
 
 ### 4.4 About (feature_about)
 - Foto + bio curta
@@ -408,7 +460,7 @@ Execute nesta ordem para evitar retrabalho:
 7. **`feature_services`:** grid simples com cards animados
 8. **`feature_about`:** timeline com `AnimatedTimelinePainter`
 9. **`feature_contact`:** form com Bloc completo + validações
-10. **`feature_showcase`:** os 5 templates de nicho — pode ser o maior módulo, abordar incrementalmente (E-commerce → Delivery → Agendamento → Fitness → Imobiliária)
+10. **`feature_showcase` — expansão dos 5 mocks (§4.3):** com baselines de cada nicho já entregues (carrinho, lista de pedidos, calendário, tracker de fitness, listagem de imóveis), cada template agora ganha marca/paleta/tipografia dedicada, múltiplas telas e Custom Painters de ilustração. Ordem: Pulso (fitness, canônico) → e-commerce → delivery → agendamento → imobiliária. Tratar cada mock como sub-projeto de PR médio-grande.
 11. **`feature_labs`:** playground técnico, deferred-loaded
 12. **Testes:** cobrir core, blocs e usecases
 13. **Polish:** SEO, manifest icons, lighthouse audit, ajustes finais
@@ -441,8 +493,8 @@ O projeto está pronto quando:
 - [ ] Landing carrega em < 4s no 4G simulado
 - [ ] Lighthouse Performance ≥ 80, Accessibility ≥ 90, PWA ≥ 90
 - [ ] Manifest PWA válido (instalável em Android)
-- [ ] Pelo menos 6 Custom Painters implementados
-- [ ] Os 5 templates de showcase navegáveis
+- [ ] Pelo menos 6 Custom Painters implementados no `packages/animations` (reusáveis pela landing) + painters dedicados dentro de cada mock do showcase
+- [ ] Os 5 templates de showcase com identidade visual dedicada (marca + paleta + tipografia) e ≥ 3 telas cada (§4.3)
 - [ ] Form de contato funcional com Bloc
 - [ ] `/labs` deferred-loaded
 - [ ] README público completo

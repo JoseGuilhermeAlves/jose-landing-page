@@ -4,7 +4,8 @@ import 'package:feature_showcase/src/presentation/realestate/realestate_state.da
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 /// Bloc do mock de imobiliaria. Filtros sao toggles — re-emitir o
-/// mesmo valor limpa o filtro.
+/// mesmo valor limpa o filtro. Favoritos e contato sao eventos
+/// aditivos do mock Solar.
 class RealEstateBloc extends Bloc<RealEstateEvent, RealEstateState> {
   RealEstateBloc({required List<Property> initialProperties})
       : super(RealEstateState(allProperties: initialProperties)) {
@@ -12,6 +13,8 @@ class RealEstateBloc extends Bloc<RealEstateEvent, RealEstateState> {
     on<RealEstateBedroomsSelected>(_onBedrooms);
     on<RealEstateMaxPriceChanged>(_onMaxPrice);
     on<RealEstateFiltersCleared>(_onCleared);
+    on<RealEstateFavoriteToggled>(_onFavoriteToggled);
+    on<RealEstateContactSent>(_onContactSent);
   }
 
   void _onNeighborhood(
@@ -66,6 +69,37 @@ class RealEstateBloc extends Bloc<RealEstateEvent, RealEstateState> {
         clearNeighborhood: true,
         clearBedrooms: true,
         clearMaxPrice: true,
+      ),
+    );
+  }
+
+  void _onFavoriteToggled(
+    RealEstateFavoriteToggled event,
+    Emitter<RealEstateState> emit,
+  ) {
+    final id = event.propertyId;
+    if (state.favoriteIds.contains(id)) {
+      emit(
+        state.copyWith(
+          favoriteIds: {
+            for (final f in state.favoriteIds)
+              if (f != id) f,
+          },
+        ),
+      );
+    } else {
+      emit(state.copyWith(favoriteIds: {...state.favoriteIds, id}));
+    }
+  }
+
+  void _onContactSent(
+    RealEstateContactSent event,
+    Emitter<RealEstateState> emit,
+  ) {
+    if (state.sentContactIds.contains(event.propertyId)) return;
+    emit(
+      state.copyWith(
+        sentContactIds: {...state.sentContactIds, event.propertyId},
       ),
     );
   }

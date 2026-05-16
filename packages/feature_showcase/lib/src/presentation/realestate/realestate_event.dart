@@ -39,3 +39,24 @@ class RealEstateMaxPriceChanged extends RealEstateEvent {
 class RealEstateFiltersCleared extends RealEstateEvent {
   const RealEstateFiltersCleared();
 }
+
+/// Toggle de favorito no card/detalhe — adiciona ou remove de
+/// `favoriteIds`. Mock sem persistencia.
+class RealEstateFavoriteToggled extends RealEstateEvent {
+  const RealEstateFavoriteToggled(this.propertyId);
+  final String propertyId;
+
+  @override
+  List<Object?> get props => [propertyId];
+}
+
+/// Marca um imovel como "contato ja enviado" — disparado no submit
+/// do formulario da `SolarContactPage`. A tela troca pra estado de
+/// sucesso depois desse evento.
+class RealEstateContactSent extends RealEstateEvent {
+  const RealEstateContactSent(this.propertyId);
+  final String propertyId;
+
+  @override
+  List<Object?> get props => [propertyId];
+}

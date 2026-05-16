@@ -9,6 +9,8 @@ class RealEstateState extends Equatable {
     this.selectedNeighborhood,
     this.selectedBedrooms,
     this.maxPriceCents,
+    this.favoriteIds = const {},
+    this.sentContactIds = const {},
   });
 
   /// Catalogo completo — filtros nao mutam, derivam.
@@ -23,6 +25,15 @@ class RealEstateState extends Equatable {
   /// Filtro de preco maximo em centavos. Null = sem teto.
   final int? maxPriceCents;
 
+  /// Ids dos imoveis favoritados nesta sessao. Mock — sem
+  /// persistencia.
+  final Set<String> favoriteIds;
+
+  /// Ids dos imoveis com pedido de contato ja enviado nesta sessao.
+  /// A tela de contato consulta pra mostrar success state em vez do
+  /// formulario novamente.
+  final Set<String> sentContactIds;
+
   /// Lista filtrada — derivada dos filtros atuais.
   List<Property> get filtered {
     return [
@@ -35,6 +46,10 @@ class RealEstateState extends Equatable {
       selectedNeighborhood != null ||
       selectedBedrooms != null ||
       maxPriceCents != null;
+
+  bool isFavorite(String id) => favoriteIds.contains(id);
+
+  bool hasSentContact(String id) => sentContactIds.contains(id);
 
   bool _matches(Property p) {
     if (selectedNeighborhood != null && p.neighborhood != selectedNeighborhood) {
@@ -59,6 +74,8 @@ class RealEstateState extends Equatable {
     bool clearBedrooms = false,
     int? maxPriceCents,
     bool clearMaxPrice = false,
+    Set<String>? favoriteIds,
+    Set<String>? sentContactIds,
   }) {
     return RealEstateState(
       allProperties: allProperties,
@@ -69,6 +86,8 @@ class RealEstateState extends Equatable {
           clearBedrooms ? null : (selectedBedrooms ?? this.selectedBedrooms),
       maxPriceCents:
           clearMaxPrice ? null : (maxPriceCents ?? this.maxPriceCents),
+      favoriteIds: favoriteIds ?? this.favoriteIds,
+      sentContactIds: sentContactIds ?? this.sentContactIds,
     );
   }
 
@@ -78,5 +97,7 @@ class RealEstateState extends Equatable {
         selectedNeighborhood,
         selectedBedrooms,
         maxPriceCents,
+        favoriteIds,
+        sentContactIds,
       ];
 }

@@ -17,7 +17,10 @@
       "PowerShell(dart format *)",
       "PowerShell(flutter *)",
       "Bash(flutter analyze *)",
-      "WebFetch(domain:api.flutter.dev)"
+      "WebFetch(domain:api.flutter.dev)",
+      "Bash(git fetch *)",
+      "Bash(git worktree *)",
+      "Bash(git branch *)"
     ]
   }
 }

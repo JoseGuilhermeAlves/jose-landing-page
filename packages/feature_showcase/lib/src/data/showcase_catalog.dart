@@ -28,8 +28,8 @@ abstract final class ShowcaseCatalog {
       id: 'scheduling',
       label: 'Agendamento',
       description:
-          'Calendario interativo de horarios para servicos (salao, '
-          'consultorio, oficina).',
+          'Vitral — estudio de servicos com calendario interativo, '
+          'relogio animado e confirmacao com badge.',
       icon: Icons.calendar_month_outlined,
       hasDemo: true,
     ),

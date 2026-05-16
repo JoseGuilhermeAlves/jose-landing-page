@@ -75,5 +75,74 @@ void main() {
       expect(bloc.state.userBookedSlots, contains(morning));
       await bloc.close();
     });
+
+    group('SchedulingAppointmentConfirmed', () {
+      final appointment = Appointment(
+        id: 'VIT-0001',
+        serviceId: 'sv-discovery',
+        serviceName: 'Discovery 1h',
+        specialistId: 's-sofia',
+        specialistName: 'Sofia A.',
+        slot: morning,
+        durationMinutes: 60,
+        priceCents: 28000,
+      );
+
+      blocTest<SchedulingBloc, SchedulingState>(
+        'adiciona ao confirmedAppointments e ao userBookedSlots',
+        build: makeBloc,
+        act: (bloc) =>
+            bloc.add(SchedulingAppointmentConfirmed(appointment)),
+        verify: (bloc) {
+          expect(bloc.state.confirmedAppointments, hasLength(1));
+          expect(bloc.state.confirmedAppointments.first.id, 'VIT-0001');
+          expect(bloc.state.userBookedSlots, contains(morning));
+        },
+      );
+
+      blocTest<SchedulingBloc, SchedulingState>(
+        'idempotente: confirmar o mesmo id duas vezes nao duplica',
+        build: makeBloc,
+        act: (bloc) => bloc
+          ..add(SchedulingAppointmentConfirmed(appointment))
+          ..add(SchedulingAppointmentConfirmed(appointment)),
+        verify: (bloc) {
+          expect(bloc.state.confirmedAppointments, hasLength(1));
+        },
+      );
+
+      blocTest<SchedulingBloc, SchedulingState>(
+        'ignora confirmacao se slot ja esta em preBookedSlots',
+        build: () => makeBloc(preBooked: {morning}),
+        act: (bloc) =>
+            bloc.add(SchedulingAppointmentConfirmed(appointment)),
+        verify: (bloc) {
+          expect(bloc.state.confirmedAppointments, isEmpty);
+          expect(bloc.state.userBookedSlots, isEmpty);
+        },
+      );
+
+      test(
+        'nextAppointment retorna o mais cedo entre varios confirmados',
+        () async {
+          final later = Appointment(
+            id: 'VIT-0002',
+            serviceId: 'sv-foto-produto',
+            serviceName: 'Sessao de produto em estudio',
+            specialistId: 's-lucas',
+            specialistName: 'Lucas M.',
+            slot: afternoon,
+            durationMinutes: 120,
+            priceCents: 89000,
+          );
+          final bloc = makeBloc()
+            ..add(SchedulingAppointmentConfirmed(later))
+            ..add(SchedulingAppointmentConfirmed(appointment));
+          await Future<void>.delayed(Duration.zero);
+          expect(bloc.state.nextAppointment?.slot, morning);
+          await bloc.close();
+        },
+      );
+    });
   });
 }

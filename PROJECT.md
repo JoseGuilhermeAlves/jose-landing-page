@@ -206,12 +206,23 @@ Cada um dos 5 templates é uma **experiência mockada quase completa** — não 
 - **Bloc:** `DeliveryBloc` preservou a máquina round-robin via ticker existente (sem mudança). `DeliveryState` ganhou getters `activeOrder` (primeiro não-final), `historyOrders` (delivered) e `findById(id)` (lookup pro detalhe). Catálogos: `AuroraVendorsCatalog` (6 bancas) + `AuroraItemsCatalog` (14 items vinculados aos vendors).
 - **Status:** completo — 4 telas navegáveis + identidade dedicada + 5 painters + tracking ao vivo via ticker preservado.
 
-#### 4.3.4 [marca-tbd] (Agendamento)
+#### 4.3.4 Vitral (Agendamento) — estúdio de serviços por hora
 
-- **Marca:** TBD. **Paleta:** TBD — proposta: pastel ou minimalist wellness.
-- **Telas (planejadas):** Home (próximo agendamento + grid de serviços), Catálogo de serviços, Calendário interativo de horários, Confirmação com resumo ilustrado.
-- **Custom Painters dedicados (planejados):** ilustração de relógio/calendário decorativo na home, ícones dos serviços (corte, manicure, massagem etc.), confirmation badge com check animado.
-- **Status:** calendário interativo existente é o ponto de partida; falta marca, home, catálogo e confirmação com painters.
+- **Marca:** Vitral · "Sua agenda, organizada." Estúdio que vende horas de profissionais técnicos (consultoria, fotografia, design, marketing). Tom profissional, organizado, claro. **Paleta:** indigo `#2A3B70` (primary), pão `#F2DDB6` (background), surface branco-quente, ocre `#B07A2C` (accent), cinza `#6B6F75` para muted. **Tipografia:** sans em todos os níveis (display + body); **monospace pontual** nos timestamps, códigos de pedido e durações via `VitralBrand.monoFontFamily` (fontFamily inline, sem dep externa). **Referência visual:** ferramentas de produtividade técnica (Linear, Notion Cal) com aço de planilha.
+- **Telas (todas entregues):**
+  - **Home** — hero com backdrop animado (`VitralHeroBackdrop`: grid de horas + cursor varrendo verticalmente) e **relógio analógico real** ao lado (`VitralClockPainter`, ponteiro de segundos animado em loop de 60s). Card de próximo agendamento (quando há). Strip de categorias com ilustrações (`VitralCategoryIllustration`). Lista de profissionais em destaque com avatar monograma.
+  - **Catálogo de serviços** — `VitralServiceListPage` com chips horizontais de filtro por `ServiceCategory` (Consultoria, Fotografia, Design, Marketing) e cards (categoria + nome + profissional + duração + preço).
+  - **Calendário** — `VitralCalendarPage` com header do serviço + duração/preço em mini-chips mono, strip horizontal de 14 dias, grid responsivo de slots horários (9h–17:30, 18 janelas de 30min) com tipografia mono. Selecionado fica em estado local; CTA "Continuar" dispara `SchedulingSlotBooked` no bloc e empurra a confirmação.
+  - **Confirmação** — `VitralConfirmationPage` com `VitralConfirmationBadge` animado, headline "Confirmar agendamento?", breakdown completo (serviço, profissional, data, horário em mono, duração, total), card de endereço mock do estúdio, CTA "Confirmar" que dispara `SchedulingAppointmentConfirmed` e desempilha até a home (`popUntil(isFirst)`).
+- **Custom Painters dedicados (em `lib/src/presentation/scheduling/`):**
+  - `VitralClockPainter` — mostrador analógico real com ponteiros de hora/minuto fixos e ponteiro de segundos animado em loop de 60s; 60 ticks calculados via trig (12 principais + 48 auxiliares); painter usa `super(repaint: controller)` direto pra pular build/layout. **Destaque técnico do mock**.
+  - `VitralHeroBackdrop` — grid de linhas horizontais (linhas-marca a cada 5 ticks) + verticais por coluna de dia + cursor varrendo verticalmente + marcador pulsante na interseção.
+  - `VitralCategoryIllustration` — silhuetas por `ServiceCategory`: bolhas de fala sobrepostas (consultoria), corpo de câmera com lente concêntrica (fotografia), paleta com furo do dedo + pinceladas circulares e pincel inclinado (design), barras ascendentes com seta de tendência (marketing).
+  - `VitralSpecialistAvatar` — círculo monograma com iniciais renderizadas via `TextPainter` para evitar Material `Text` aninhado.
+  - `VitralConfirmationBadge` — selo de check animado com pulse `easeOutBack` + check em duas linhas crescendo de 30% a 100%.
+- **Domain:** `ServiceCategory` (4 categorias), `Specialist` (id, name, role, bio, categorias, rating, reviewCount; getter `monogram` para o avatar), `Service` (id, name, specialistId, category, durationMinutes, priceCents, description; getters `formattedDuration` e `formattedPrice`), `Appointment` (id sequencial `VIT-XXXX` + snapshot completo de serviço/profissional/slot/preço, getter `endsAt`).
+- **Bloc:** `SchedulingBloc` preservou os 3 eventos legados (`SchedulingDateSelected`, `SchedulingSlotBooked`, `SchedulingSlotCancelled`) e ganhou `SchedulingAppointmentConfirmed(Appointment)` — promove o slot a appointment completo (idempotente por id; ignora se o slot está em `preBookedSlots`). `SchedulingState` ganhou `confirmedAppointments: List<Appointment>` + getter `nextAppointment` (mais cedo no futuro). `VitralConfirmationPage._orderCounter` gera id sequencial por sessão com `resetOrderCounter()` pra testes.
+- **Status:** completo — 4 telas navegáveis + identidade dedicada + 5 painters + relógio animado real + fluxo end-to-end com snapshot persistente.
 
 #### 4.3.5 [marca-tbd] (Imobiliária)
 
@@ -220,7 +231,7 @@ Cada um dos 5 templates é uma **experiência mockada quase completa** — não 
 - **Custom Painters dedicados (planejados):** **planta baixa esquemática** (destaque técnico), silhueta de edifício/casa, mapa de bairro abstrato, ícones de feature (vaga, varanda, piscina).
 - **Status:** listagem com filtros existente é o ponto de partida; falta marca, detalhe com planta baixa e painters de mapa.
 
-> **Ordem de execução:** Pulso (fitness) → Garoa (e-commerce) → Aurora (delivery) — os três completos — → agendamento → imobiliária. Cada mock é um PR médio-grande; não fundir dois numa só passagem.
+> **Ordem de execução:** Pulso (fitness) → Garoa (e-commerce) → Aurora (delivery) → Vitral (agendamento) — os quatro completos — → imobiliária. Cada mock é um PR médio-grande; não fundir dois numa só passagem.
 
 ### 4.4 About (feature_about)
 - Foto + bio curta

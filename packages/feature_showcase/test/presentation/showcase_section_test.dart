@@ -72,9 +72,14 @@ void main() {
       // entao precisa rolar pra ficar dentro da hit area antes do tap.
       final card = find.byKey(const Key('showcase-card-scheduling'));
       await tester.ensureVisible(card);
-      await tester.pumpAndSettle();
+      await tester.pump(const Duration(milliseconds: 50));
       await tester.tap(card);
-      await tester.pumpAndSettle();
+      // pumpAndSettle nao serve aqui porque o `VitralHeroBackdrop` e o
+      // relogio do SchedulingDemo rodam em loop infinito. Pumpamos
+      // frames fixos pra a route de modal terminar de abrir.
+      for (var i = 0; i < 20; i++) {
+        await tester.pump(const Duration(milliseconds: 50));
+      }
 
       expect(find.byType(SchedulingDemo), findsOneWidget);
     });

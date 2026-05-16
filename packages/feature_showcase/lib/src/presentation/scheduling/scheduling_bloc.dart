@@ -23,6 +23,7 @@ class SchedulingBloc extends Bloc<SchedulingEvent, SchedulingState> {
     on<SchedulingDateSelected>(_onDateSelected);
     on<SchedulingSlotBooked>(_onSlotBooked);
     on<SchedulingSlotCancelled>(_onSlotCancelled);
+    on<SchedulingAppointmentConfirmed>(_onAppointmentConfirmed);
   }
 
   void _onDateSelected(
@@ -54,6 +55,22 @@ class SchedulingBloc extends Bloc<SchedulingEvent, SchedulingState> {
           for (final s in state.userBookedSlots)
             if (s != event.slot) s,
         },
+      ),
+    );
+  }
+
+  void _onAppointmentConfirmed(
+    SchedulingAppointmentConfirmed event,
+    Emitter<SchedulingState> emit,
+  ) {
+    final appt = event.appointment;
+    // Idempotente: se ja existe agendamento com mesmo id, no-op.
+    if (state.confirmedAppointments.any((a) => a.id == appt.id)) return;
+    if (state.preBookedSlots.contains(appt.slot)) return;
+    emit(
+      state.copyWith(
+        userBookedSlots: {...state.userBookedSlots, appt.slot},
+        confirmedAppointments: [...state.confirmedAppointments, appt],
       ),
     );
   }

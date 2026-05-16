@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:feature_showcase/src/domain/appointment.dart';
 
 sealed class SchedulingEvent extends Equatable {
   const SchedulingEvent();
@@ -29,4 +30,16 @@ class SchedulingSlotCancelled extends SchedulingEvent {
 
   @override
   List<Object?> get props => [slot];
+}
+
+/// Confirmacao final de um agendamento no fluxo Vitral — promove o
+/// slot reservado para um `Appointment` completo (com servico +
+/// profissional). Adicionado a `confirmedAppointments` da state e
+/// tambem reservado em `userBookedSlots` (idempotente).
+class SchedulingAppointmentConfirmed extends SchedulingEvent {
+  const SchedulingAppointmentConfirmed(this.appointment);
+  final Appointment appointment;
+
+  @override
+  List<Object?> get props => [appointment];
 }

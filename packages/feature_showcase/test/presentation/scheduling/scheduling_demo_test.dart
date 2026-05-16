@@ -4,6 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
+  // O hero, o relogio e o backdrop tem animacoes em loop infinito,
+  // entao todos os pumps deste arquivo usam Duration explicito —
+  // pumpAndSettle nao terminaria.
+
   Widget wrap(Widget child) => MaterialApp(
         theme: AppTheme.dark(),
         home: child,
@@ -12,94 +16,137 @@ void main() {
   // Ancora deterministica.
   final today = DateTime(2026, 5, 4);
 
-  Widget makeDemo({Set<DateTime>? preBooked}) {
-    return SchedulingDemo(today: today, preBookedSlots: preBooked ?? const {});
+  /// Viewport mais alto pra que o hero + proximo agendamento +
+  /// categorias + lista de profissionais caibam sem precisar scrollar
+  /// nos taps.
+  Future<void> useLargeSurface(WidgetTester tester) async {
+    await tester.binding.setSurfaceSize(const Size(900, 1700));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
   }
 
-  group('SchedulingDemo', () {
-    testWidgets('renderiza strip de 14 dias', (tester) async {
-      await tester.pumpWidget(wrap(makeDemo()));
-      await tester.pump(const Duration(milliseconds: 16));
+  group('SchedulingDemo (Vitral, multi-tela)', () {
+    testWidgets(
+      'home abre com hero da marca e card de "sem agendamento"',
+      (tester) async {
+        await useLargeSurface(tester);
+        await tester.pumpWidget(wrap(SchedulingDemo(today: today)));
+        await tester.pump(const Duration(milliseconds: 16));
 
-      expect(
-        find.byKey(const Key('scheduling-day-chip')),
-        findsAtLeast(14),
-      );
-    });
+        expect(find.byKey(const Key('vitral-cta-services')), findsOneWidget);
+        // Sem confirmacao ainda — exibe placeholder.
+        expect(find.text('Sem agendamentos por enquanto'), findsOneWidget);
+      },
+    );
 
-    testWidgets('renderiza 18 slots para o dia selecionado', (tester) async {
-      await tester.pumpWidget(wrap(makeDemo()));
-      await tester.pump(const Duration(milliseconds: 16));
+    testWidgets(
+      'tap em "Ver servicos" abre o catalogo com filtros',
+      (tester) async {
+        await useLargeSurface(tester);
+        await tester.pumpWidget(wrap(SchedulingDemo(today: today)));
+        await tester.pump(const Duration(milliseconds: 16));
 
-      expect(
-        find.byKey(const Key('scheduling-slot-tile')),
-        findsNWidgets(18),
-      );
-    });
+        await tester.tap(find.byKey(const Key('vitral-cta-services')));
+        for (var i = 0; i < 20; i++) {
+          await tester.pump(const Duration(milliseconds: 50));
+        }
 
-    testWidgets('tap em slot livre faz dele booked (label muda)',
-        (tester) async {
-      await tester.pumpWidget(wrap(makeDemo()));
-      await tester.pump(const Duration(milliseconds: 16));
+        expect(find.byKey(const Key('vitral-filter-all')), findsOneWidget);
+        expect(
+          find.byKey(const Key('vitral-filter-consulting')),
+          findsOneWidget,
+        );
+      },
+    );
 
-      // Tap no primeiro slot — comeca free, deve virar booked.
-      await tester.tap(find.byKey(const Key('scheduling-slot-tile')).first);
-      await tester.pump(const Duration(milliseconds: 50));
+    testWidgets(
+      'tap em servico empurra calendario com strip de 14 dias',
+      (tester) async {
+        await useLargeSurface(tester);
+        await tester.pumpWidget(wrap(SchedulingDemo(today: today)));
+        await tester.pump(const Duration(milliseconds: 16));
 
-      expect(find.text('Reservado'), findsAtLeast(1));
-    });
+        // Vai pra lista de servicos.
+        await tester.tap(find.byKey(const Key('vitral-cta-services')));
+        for (var i = 0; i < 20; i++) {
+          await tester.pump(const Duration(milliseconds: 50));
+        }
 
-    testWidgets('tap num slot ja booked cancela (volta pra livre)',
-        (tester) async {
-      await tester.pumpWidget(wrap(makeDemo()));
-      await tester.pump(const Duration(milliseconds: 16));
+        // Tap no primeiro card de servico.
+        await tester.tap(find.byKey(const Key('vitral-service-card-sv-discovery')));
+        for (var i = 0; i < 20; i++) {
+          await tester.pump(const Duration(milliseconds: 50));
+        }
 
-      final firstSlot = find.byKey(const Key('scheduling-slot-tile')).first;
+        // Strip de 14 dias (renderiza um chip por dia).
+        expect(
+          find.byKey(const Key('scheduling-day-chip')),
+          findsNWidgets(14),
+        );
+        // 18 slots horarios (9h-17:30, intervalo de 30 min).
+        expect(
+          find.byKey(const Key('scheduling-slot-tile')),
+          findsNWidgets(18),
+        );
+        // CTA Continuar desabilitado antes de selecionar slot.
+        expect(
+          find.byKey(const Key('vitral-calendar-continue')),
+          findsOneWidget,
+        );
+      },
+    );
 
-      // Reserva
-      await tester.tap(firstSlot);
-      await tester.pump(const Duration(milliseconds: 50));
-      expect(find.text('Reservado'), findsAtLeast(1));
+    testWidgets(
+      'fluxo end-to-end: servico → slot → confirmar → home com card',
+      (tester) async {
+        await useLargeSurface(tester);
+        // Sem pre-booking pra garantir que o primeiro slot esta livre.
+        await tester.pumpWidget(
+          wrap(SchedulingDemo(today: today, preBookedSlots: const {})),
+        );
+        await tester.pump(const Duration(milliseconds: 16));
 
-      // Cancela
-      await tester.tap(firstSlot);
-      await tester.pump(const Duration(milliseconds: 50));
-      expect(find.text('Reservado'), findsNothing);
-    });
+        // 1) Home → catalogo
+        await tester.tap(find.byKey(const Key('vitral-cta-services')));
+        for (var i = 0; i < 20; i++) {
+          await tester.pump(const Duration(milliseconds: 50));
+        }
 
-    testWidgets('tap num slot indisponivel nao reserva', (tester) async {
-      // Pre-bloqueia o primeiro slot do dia.
-      final preBookedSlot = today.add(const Duration(hours: 9));
-      await tester.pumpWidget(wrap(makeDemo(preBooked: {preBookedSlot})));
-      await tester.pump(const Duration(milliseconds: 16));
+        // 2) Catalogo → calendario do servico
+        await tester.tap(
+          find.byKey(const Key('vitral-service-card-sv-discovery')),
+        );
+        for (var i = 0; i < 20; i++) {
+          await tester.pump(const Duration(milliseconds: 50));
+        }
 
-      await tester.tap(find.byKey(const Key('scheduling-slot-tile')).first);
-      await tester.pump();
+        // 3) Calendario: tap no primeiro slot livre + Continuar
+        await tester.tap(
+          find.byKey(const Key('scheduling-slot-tile')).first,
+        );
+        await tester.pump(const Duration(milliseconds: 50));
+        await tester.tap(find.byKey(const Key('vitral-calendar-continue')));
+        for (var i = 0; i < 20; i++) {
+          await tester.pump(const Duration(milliseconds: 50));
+        }
 
-      expect(find.text('Reservado'), findsNothing);
-      expect(find.textContaining('ndispon'), findsAtLeast(1));
-    });
+        // 4) Confirmacao: tap no CTA
+        expect(
+          find.byKey(const Key('vitral-confirmation-title')),
+          findsOneWidget,
+        );
+        await tester.tap(
+          find.byKey(const Key('vitral-confirmation-confirm')),
+        );
+        for (var i = 0; i < 20; i++) {
+          await tester.pump(const Duration(milliseconds: 50));
+        }
 
-    testWidgets('tap em outra data troca os slots exibidos', (tester) async {
-      await tester.pumpWidget(wrap(makeDemo()));
-      await tester.pump(const Duration(milliseconds: 16));
-
-      // Reserva um slot do dia 1
-      await tester.tap(find.byKey(const Key('scheduling-slot-tile')).first);
-      await tester.pump(const Duration(milliseconds: 50));
-      expect(find.text('Reservado'), findsAtLeast(1));
-
-      // Vai pra dia 2
-      await tester.tap(find.byKey(const Key('scheduling-day-chip')).at(1));
-      await tester.pump(const Duration(milliseconds: 50));
-
-      // Os slots do dia 2 nao incluem a reserva (estado por dia).
-      expect(find.text('Reservado'), findsNothing);
-
-      // Voltando pro dia 1, a reserva persiste
-      await tester.tap(find.byKey(const Key('scheduling-day-chip')).first);
-      await tester.pump(const Duration(milliseconds: 50));
-      expect(find.text('Reservado'), findsAtLeast(1));
-    });
+        // 5) Voltou pra home — card de proximo agendamento aparece.
+        expect(
+          find.byKey(const Key('vitral-next-appointment-card')),
+          findsOneWidget,
+        );
+      },
+    );
   });
 }

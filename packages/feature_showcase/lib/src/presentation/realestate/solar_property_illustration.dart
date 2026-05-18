@@ -78,10 +78,6 @@ class _SolarPropertyIllustrationPainter extends CustomPainter {
     ..color = accentColor
     ..style = PaintingStyle.fill;
 
-  late final Paint _bgFill = Paint()
-    ..color = backgroundColor
-    ..style = PaintingStyle.fill;
-
   late final Paint _shadeFill = Paint()
     ..color = foregroundColor.withValues(alpha: 0.75)
     ..style = PaintingStyle.fill;
@@ -163,10 +159,9 @@ class _SolarPropertyIllustrationPainter extends CustomPainter {
 
     // Porta.
     final door = Rect.fromLTWH(w * 0.38, h * 0.60, w * 0.10, h * 0.18);
-    canvas.drawRect(door, _accentFill);
-
     // Janelas.
     canvas
+      ..drawRect(door, _accentFill)
       ..drawRect(
         Rect.fromLTWH(w * 0.22, h * 0.52, w * 0.10, h * 0.10),
         _windowFill,
@@ -190,29 +185,27 @@ class _SolarPropertyIllustrationPainter extends CustomPainter {
       ..lineTo(w, h)
       ..lineTo(0, h)
       ..close();
-    canvas.drawPath(hill, _shadeFill);
-
-    // Chao.
-    canvas.drawRect(
-      Rect.fromLTWH(0, h * 0.85, w, h * 0.15),
-      Paint()..color = accentColor.withValues(alpha: 0.85),
-    );
 
     // Sol.
     final sunCx = variant == 1 ? w * 0.20 : w * 0.78;
-    canvas.drawCircle(Offset(sunCx, h * 0.20), h * 0.05, _accentFill);
-
     // Casa central pequena.
     final bodyX = variant == 1 ? w * 0.40 : w * 0.30;
     final body = Rect.fromLTWH(bodyX, h * 0.55, w * 0.30, h * 0.30);
-    canvas.drawRect(body, _fill);
     final roof = Path()
       ..moveTo(bodyX - w * 0.04, h * 0.55)
       ..lineTo(bodyX + w * 0.15, h * 0.36)
       ..lineTo(bodyX + w * 0.34, h * 0.55)
       ..close();
-    canvas.drawPath(roof, _accentFill);
     canvas
+      ..drawPath(hill, _shadeFill)
+      // Chao.
+      ..drawRect(
+        Rect.fromLTWH(0, h * 0.85, w, h * 0.15),
+        Paint()..color = accentColor.withValues(alpha: 0.85),
+      )
+      ..drawCircle(Offset(sunCx, h * 0.20), h * 0.05, _accentFill)
+      ..drawRect(body, _fill)
+      ..drawPath(roof, _accentFill)
       ..drawRect(
         Rect.fromLTWH(bodyX + w * 0.04, h * 0.62, w * 0.08, h * 0.08),
         _windowFill,
@@ -244,16 +237,15 @@ class _SolarPropertyIllustrationPainter extends CustomPainter {
       ..lineTo(w, h * 0.65)
       ..lineTo(0, h * 0.65)
       ..close();
-    canvas.drawPath(mata, _shadeFill);
-
-    // Chao em accent.
-    canvas.drawRect(
-      Rect.fromLTWH(0, h * 0.65, w, h * 0.35),
-      Paint()..color = accentColor.withValues(alpha: 0.75),
-    );
-
-    // Sol.
-    canvas.drawCircle(Offset(w * 0.78, h * 0.22), h * 0.05, _accentFill);
+    canvas
+      ..drawPath(mata, _shadeFill)
+      // Chao em accent.
+      ..drawRect(
+        Rect.fromLTWH(0, h * 0.65, w, h * 0.35),
+        Paint()..color = accentColor.withValues(alpha: 0.75),
+      )
+      // Sol.
+      ..drawCircle(Offset(w * 0.78, h * 0.22), h * 0.05, _accentFill);
 
     // Cerca esquemática — postes e duas linhas horizontais.
     final fencePaint = Paint()
@@ -305,17 +297,16 @@ class _SolarPropertyIllustrationPainter extends CustomPainter {
 
     // Sol.
     final sunCx = variant == 1 ? w * 0.18 : w * 0.82;
-    canvas.drawCircle(Offset(sunCx, h * 0.20), h * 0.05, _accentFill);
-
     // Corpo do predio.
     final body = Rect.fromLTWH(w * 0.25, h * 0.18, w * 0.50, h * 0.64);
-    canvas.drawRect(body, _fill);
-
-    // Cobertura — faixa accent no topo.
-    canvas.drawRect(
-      Rect.fromLTWH(w * 0.22, h * 0.18, w * 0.56, h * 0.04),
-      _accentFill,
-    );
+    canvas
+      ..drawCircle(Offset(sunCx, h * 0.20), h * 0.05, _accentFill)
+      ..drawRect(body, _fill)
+      // Cobertura — faixa accent no topo.
+      ..drawRect(
+        Rect.fromLTWH(w * 0.22, h * 0.18, w * 0.56, h * 0.04),
+        _accentFill,
+      );
 
     // Janelas em grade 4 colunas x 6 linhas; pula linha do meio
     // pra simular varanda.

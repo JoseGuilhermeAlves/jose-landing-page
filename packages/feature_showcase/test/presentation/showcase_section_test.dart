@@ -112,7 +112,10 @@ void main() {
       await tester.ensureVisible(card);
       await tester.pumpAndSettle();
       await tester.tap(card);
-      await tester.pumpAndSettle();
+      // SolarHomePage tem SolarHeroBackdrop animando em loop;
+      // pumpAndSettle nao termina. Pumps explicitos cobrem o push.
+      await tester.pump(const Duration(milliseconds: 100));
+      await tester.pump(const Duration(milliseconds: 400));
 
       expect(find.byType(RealEstateDemo), findsOneWidget);
     });

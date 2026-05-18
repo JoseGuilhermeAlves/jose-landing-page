@@ -157,5 +157,54 @@ void main() {
         ..add(const RealEstateBedroomsSelected(4)),
       verify: (bloc) => expect(bloc.state.filtered, isEmpty),
     );
+
+    blocTest<RealEstateBloc, RealEstateState>(
+      'FavoriteToggled adiciona id ao set de favoritos',
+      build: makeBloc,
+      act: (bloc) => bloc.add(const RealEstateFavoriteToggled('a')),
+      verify: (bloc) {
+        expect(bloc.state.favoriteIds, {'a'});
+        expect(bloc.state.isFavorite('a'), isTrue);
+      },
+    );
+
+    blocTest<RealEstateBloc, RealEstateState>(
+      'FavoriteToggled re-emitido remove id (toggle)',
+      build: makeBloc,
+      act: (bloc) => bloc
+        ..add(const RealEstateFavoriteToggled('a'))
+        ..add(const RealEstateFavoriteToggled('a')),
+      verify: (bloc) {
+        expect(bloc.state.favoriteIds, isEmpty);
+        expect(bloc.state.isFavorite('a'), isFalse);
+      },
+    );
+
+    blocTest<RealEstateBloc, RealEstateState>(
+      'ContactSent marca o imovel como contatado',
+      build: makeBloc,
+      act: (bloc) => bloc.add(const RealEstateContactSent('a')),
+      verify: (bloc) {
+        expect(bloc.state.sentContactIds, {'a'});
+        expect(bloc.state.hasSentContact('a'), isTrue);
+      },
+    );
+
+    blocTest<RealEstateBloc, RealEstateState>(
+      'ContactSent e idempotente — nao re-emite estado',
+      build: makeBloc,
+      act: (bloc) => bloc
+        ..add(const RealEstateContactSent('a'))
+        ..add(const RealEstateContactSent('a')),
+      // O primeiro emit gera um state com o id; o segundo nao deve
+      // emitir nada novo (mesmo id ja presente).
+      expect: () => [
+        isA<RealEstateState>().having(
+          (s) => s.sentContactIds,
+          'sentContactIds',
+          equals({'a'}),
+        ),
+      ],
+    );
   });
 }

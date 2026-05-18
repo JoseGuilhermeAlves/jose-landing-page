@@ -4,12 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  Widget wrap(Widget child) => MaterialApp(
-        theme: AppTheme.dark(),
-        home: child,
-      );
-
-  // Catalogo deterministico pros widget tests.
+  // Catalogo deterministico pros widget tests. Catalogo legado (sem
+  // headline/city/features) — testa que o demo aguenta o caso minimo.
   const sample = [
     Property(
       id: 'a',
@@ -40,124 +36,162 @@ void main() {
     ),
   ];
 
-  group('RealEstateDemo', () {
-    testWidgets('renderiza um card pra cada imovel sem filtro',
-        (tester) async {
-      // Largura grande pra todos os 3 cards caberem na tela do tester.
-      tester.view.physicalSize = const Size(900, 1600);
+  Widget wrap(Widget child) => MaterialApp(
+        theme: AppTheme.dark(),
+        home: child,
+      );
+
+  // Helper — abre o demo na home e empurra a listagem pelo CTA do hero.
+  Future<void> openListings(WidgetTester tester) async {
+    await tester.pumpWidget(wrap(const RealEstateDemo(properties: sample)));
+    await tester.pump(const Duration(milliseconds: 16));
+    await tester.tap(find.byKey(const Key('solar-cta-listings')));
+    await tester.pumpAndSettle();
+  }
+
+  group('RealEstateDemo · home', () {
+    testWidgets('renderiza hero da marca Solar', (tester) async {
+      tester.view.physicalSize = const Size(900, 1800);
       tester.view.devicePixelRatio = 1;
       addTearDown(tester.view.resetPhysicalSize);
 
       await tester.pumpWidget(wrap(const RealEstateDemo(properties: sample)));
       await tester.pump(const Duration(milliseconds: 16));
 
-      expect(
-        find.byKey(const Key('realestate-property-card')),
-        findsNWidgets(3),
-      );
+      // Tagline da marca aparece + chip de bairros + CTA visivel.
+      expect(find.text('Sua nova casa cabe aqui.'), findsOneWidget);
+      expect(find.byKey(const Key('solar-cta-listings')), findsOneWidget);
+      expect(find.byKey(const Key('solar-home-neighborhood-Centro')), findsOneWidget);
+    });
+
+    testWidgets('tap em chip de bairro abre listagem ja filtrada',
+        (tester) async {
+      tester.view.physicalSize = const Size(900, 2400);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.resetPhysicalSize);
+
+      await tester.pumpWidget(wrap(const RealEstateDemo(properties: sample)));
+      await tester.pump(const Duration(milliseconds: 16));
+
+      await tester.tap(find.byKey(const Key('solar-home-neighborhood-Centro')));
+      await tester.pumpAndSettle();
+
+      // Listagem aberta com filtro Centro aplicado — so as duas
+      // propriedades do bairro.
+      expect(find.text('2 imoveis encontrados'), findsOneWidget);
+    });
+  });
+
+  group('SolarListingsPage', () {
+    testWidgets('lista todos os imoveis sem filtro', (tester) async {
+      tester.view.physicalSize = const Size(900, 3200);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.resetPhysicalSize);
+
+      await openListings(tester);
+
+      // Header de contagem.
+      expect(find.text('3 imoveis encontrados'), findsOneWidget);
+      expect(find.byKey(const Key('solar-property-card-a')), findsOneWidget);
+      expect(find.byKey(const Key('solar-property-card-b')), findsOneWidget);
+      expect(find.byKey(const Key('solar-property-card-c')), findsOneWidget);
     });
 
     testWidgets('chip de bairro filtra a lista', (tester) async {
-      tester.view.physicalSize = const Size(900, 1600);
+      tester.view.physicalSize = const Size(900, 3200);
       tester.view.devicePixelRatio = 1;
       addTearDown(tester.view.resetPhysicalSize);
 
-      await tester.pumpWidget(wrap(const RealEstateDemo(properties: sample)));
-      await tester.pump(const Duration(milliseconds: 16));
+      await openListings(tester);
 
-      await tester.tap(
-        find.byKey(const Key('realestate-neighborhood-chip-Centro')),
-      );
+      await tester.tap(find.byKey(const Key('solar-neighborhood-chip-Centro')));
       await tester.pump(const Duration(milliseconds: 50));
 
-      expect(
-        find.byKey(const Key('realestate-property-card')),
-        findsNWidgets(2),
-      );
-      expect(find.text('2 imoveis'), findsOneWidget);
+      expect(find.text('2 imoveis encontrados'), findsOneWidget);
+      expect(find.byKey(const Key('solar-property-card-c')), findsNothing);
     });
 
     testWidgets('chip de quartos 4+ casa imoveis com 4 ou mais',
         (tester) async {
-      tester.view.physicalSize = const Size(900, 1600);
+      tester.view.physicalSize = const Size(900, 3200);
       tester.view.devicePixelRatio = 1;
       addTearDown(tester.view.resetPhysicalSize);
 
-      await tester.pumpWidget(wrap(const RealEstateDemo(properties: sample)));
-      await tester.pump(const Duration(milliseconds: 16));
+      await openListings(tester);
 
-      await tester
-          .tap(find.byKey(const Key('realestate-bedroom-chip-4')));
+      await tester.tap(find.byKey(const Key('solar-bedroom-chip-4')));
       await tester.pump(const Duration(milliseconds: 50));
 
-      expect(
-        find.byKey(const Key('realestate-property-card')),
-        findsOneWidget,
-      );
-      expect(find.text('1 imovel'), findsOneWidget);
+      expect(find.text('1 imovel encontrado'), findsOneWidget);
+      expect(find.byKey(const Key('solar-property-card-c')), findsOneWidget);
     });
 
-    testWidgets('botao "Limpar filtros" reaparece e zera a selecao',
+    testWidgets('botao "Limpar filtros" zera selecao e some',
         (tester) async {
-      tester.view.physicalSize = const Size(900, 1600);
+      tester.view.physicalSize = const Size(900, 3200);
       tester.view.devicePixelRatio = 1;
       addTearDown(tester.view.resetPhysicalSize);
 
-      await tester.pumpWidget(wrap(const RealEstateDemo(properties: sample)));
-      await tester.pump(const Duration(milliseconds: 16));
+      await openListings(tester);
+      expect(find.byKey(const Key('solar-clear-filters')), findsNothing);
 
-      // Sem filtros, botao nao existe ainda.
-      expect(
-        find.byKey(const Key('realestate-clear-filters')),
-        findsNothing,
-      );
+      await tester.tap(find.byKey(const Key('solar-neighborhood-chip-Centro')));
+      await tester.pump(const Duration(milliseconds: 50));
+      expect(find.byKey(const Key('solar-clear-filters')), findsOneWidget);
 
-      await tester.tap(
-        find.byKey(const Key('realestate-neighborhood-chip-Centro')),
-      );
+      await tester.tap(find.byKey(const Key('solar-clear-filters')));
       await tester.pump(const Duration(milliseconds: 50));
 
-      expect(
-        find.byKey(const Key('realestate-clear-filters')),
-        findsOneWidget,
-      );
-
-      await tester.tap(find.byKey(const Key('realestate-clear-filters')));
-      await tester.pump(const Duration(milliseconds: 50));
-
-      // Tudo de volta.
-      expect(
-        find.byKey(const Key('realestate-property-card')),
-        findsNWidgets(3),
-      );
-      expect(
-        find.byKey(const Key('realestate-clear-filters')),
-        findsNothing,
-      );
+      expect(find.text('3 imoveis encontrados'), findsOneWidget);
+      expect(find.byKey(const Key('solar-clear-filters')), findsNothing);
     });
 
     testWidgets('combinacao impossivel mostra empty state', (tester) async {
-      tester.view.physicalSize = const Size(900, 1600);
+      tester.view.physicalSize = const Size(900, 3200);
       tester.view.devicePixelRatio = 1;
       addTearDown(tester.view.resetPhysicalSize);
 
-      await tester.pumpWidget(wrap(const RealEstateDemo(properties: sample)));
-      await tester.pump(const Duration(milliseconds: 16));
+      await openListings(tester);
 
       // Centro tem 1 e 3 quartos no sample — pedir 4+ zera resultado.
-      await tester.tap(
-        find.byKey(const Key('realestate-neighborhood-chip-Centro')),
-      );
+      await tester.tap(find.byKey(const Key('solar-neighborhood-chip-Centro')));
       await tester.pump(const Duration(milliseconds: 16));
-      await tester
-          .tap(find.byKey(const Key('realestate-bedroom-chip-4')));
+      await tester.tap(find.byKey(const Key('solar-bedroom-chip-4')));
       await tester.pump(const Duration(milliseconds: 50));
 
       expect(
-        find.byKey(const Key('realestate-property-card')),
+        find.byKey(const Key('solar-property-card-a')),
         findsNothing,
       );
       expect(find.text('Nenhum imovel com esses filtros'), findsOneWidget);
+    });
+  });
+
+  group('SolarPropertyDetailPage', () {
+    testWidgets('abre detalhe via tap no card e mostra headline + preco',
+        (tester) async {
+      tester.view.physicalSize = const Size(900, 3200);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.resetPhysicalSize);
+
+      // Usa o catalogo canonico (com headline) — o sample minimo
+      // nao tem headline pra checar.
+      await tester.pumpWidget(wrap(const RealEstateDemo()));
+      await tester.pump(const Duration(milliseconds: 16));
+      await tester.tap(find.byKey(const Key('solar-cta-listings')));
+      await tester.pumpAndSettle();
+
+      // Tap no primeiro card do catalogo canonico (p-1001).
+      await tester.tap(find.byKey(const Key('solar-property-card-p-1001')));
+      // SolarNeighborhoodMap na detalhe roda em loop infinito —
+      // pumpAndSettle nao termina. Pumps explicitos cobrem o push.
+      await tester.pump(const Duration(milliseconds: 100));
+      await tester.pump(const Duration(milliseconds: 400));
+
+      expect(find.byKey(const Key('solar-detail-headline')), findsOneWidget);
+      expect(find.byKey(const Key('solar-detail-price')), findsOneWidget);
+      // CTA pro corretor.
+      expect(find.byKey(const Key('solar-detail-contact-cta')), findsOneWidget);
     });
   });
 }

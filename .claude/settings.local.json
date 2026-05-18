@@ -20,7 +20,8 @@
       "WebFetch(domain:api.flutter.dev)",
       "Bash(git fetch *)",
       "Bash(git worktree *)",
-      "Bash(git branch *)"
+      "Bash(git branch *)",
+      "PowerShell(dart analyze *)"
     ]
   }
 }

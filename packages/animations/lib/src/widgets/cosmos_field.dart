@@ -62,28 +62,35 @@ class CosmosField extends StatefulWidget {
   /// deterministas espalhadas longe das ancoras dos planetas.
   final List<Offset> pixelStars;
 
-  /// Pixel stars default — 36 posicoes deterministas. Distribuicao
-  /// espalhada por bandas de altura, evitando colidir com as ancoras dos
-  /// planetas e densificando regioes "vazias" (centro-esquerda e canto
-  /// inferior). Constante pra nao re-alocar por build.
+  /// Pixel stars default — 60 posicoes deterministas jitteradas em bandas
+  /// de altura. Maior densidade pra cosmos populado mas sem grid uniforme.
   static const List<Offset> defaultPixelStars = [
-    // Banda superior — densidade media, evita o canto direito (red giant).
-    Offset(0.04, 0.06), Offset(0.10, 0.14), Offset(0.18, 0.04),
-    Offset(0.26, 0.10), Offset(0.34, 0.18), Offset(0.40, 0.06),
-    Offset(0.48, 0.12), Offset(0.56, 0.04), Offset(0.62, 0.10),
+    // Banda superior.
+    Offset(0.03, 0.05), Offset(0.08, 0.12), Offset(0.13, 0.04),
+    Offset(0.19, 0.09), Offset(0.25, 0.15), Offset(0.31, 0.06),
+    Offset(0.37, 0.13), Offset(0.43, 0.05), Offset(0.49, 0.11),
+    Offset(0.55, 0.03), Offset(0.61, 0.09), Offset(0.67, 0.14),
     // Upper mid.
-    Offset(0.06, 0.22), Offset(0.30, 0.26), Offset(0.42, 0.30),
-    Offset(0.58, 0.24), Offset(0.66, 0.32), Offset(0.78, 0.36),
-    Offset(0.94, 0.42),
+    Offset(0.05, 0.22), Offset(0.11, 0.28), Offset(0.18, 0.20),
+    Offset(0.24, 0.27), Offset(0.32, 0.24), Offset(0.39, 0.30),
+    Offset(0.46, 0.22), Offset(0.53, 0.28), Offset(0.60, 0.21),
+    Offset(0.68, 0.27), Offset(0.78, 0.35), Offset(0.88, 0.40),
+    Offset(0.96, 0.30),
+    // Mid.
+    Offset(0.04, 0.42), Offset(0.10, 0.48), Offset(0.17, 0.40),
+    Offset(0.26, 0.50), Offset(0.33, 0.42), Offset(0.40, 0.47),
+    Offset(0.47, 0.40), Offset(0.54, 0.50), Offset(0.61, 0.43),
+    Offset(0.68, 0.55), Offset(0.81, 0.46), Offset(0.92, 0.55),
     // Lower mid.
-    Offset(0.08, 0.50), Offset(0.20, 0.46), Offset(0.28, 0.54),
-    Offset(0.44, 0.58), Offset(0.62, 0.52), Offset(0.74, 0.60),
-    Offset(0.86, 0.52), Offset(0.96, 0.62),
+    Offset(0.06, 0.62), Offset(0.13, 0.58), Offset(0.21, 0.66),
+    Offset(0.28, 0.60), Offset(0.36, 0.68), Offset(0.43, 0.61),
+    Offset(0.50, 0.66), Offset(0.58, 0.60), Offset(0.66, 0.66),
+    Offset(0.74, 0.62), Offset(0.83, 0.68), Offset(0.94, 0.62),
     // Banda inferior.
-    Offset(0.04, 0.74), Offset(0.14, 0.86), Offset(0.24, 0.70),
-    Offset(0.32, 0.92), Offset(0.40, 0.80), Offset(0.50, 0.92),
-    Offset(0.66, 0.88), Offset(0.78, 0.78), Offset(0.86, 0.94),
-    Offset(0.96, 0.80), Offset(0.58, 0.68), Offset(0.16, 0.62),
+    Offset(0.04, 0.78), Offset(0.11, 0.86), Offset(0.19, 0.74),
+    Offset(0.27, 0.88), Offset(0.35, 0.80), Offset(0.43, 0.92),
+    Offset(0.51, 0.82), Offset(0.59, 0.94), Offset(0.67, 0.78),
+    Offset(0.75, 0.88), Offset(0.85, 0.94), Offset(0.95, 0.82),
   ];
 
   /// Cor das estrelas 8-bit. Default = `colors.onSurface`.
@@ -104,136 +111,193 @@ class CosmosField extends StatefulWidget {
   /// 5. **Green distant** — mundinho verde sutil, far left.
   static List<CosmosPlanet> defaultPlanets(AppColorScheme colors) {
     return [
-      // 1. RED GIANT — paleta 5-stop em rampa vermelha. Painter
-      // dithera as transicoes via Bayer 4x4 — sem gradient smooth.
+      // 1. RED GIANT — gigante vermelho neon, focal point dominante.
+      // Anchor mais perto da borda visivel pra mostrar ~80% do disco.
       const CosmosPlanet(
         id: 'red-giant',
-        canvasAnchor: Offset(1.05, -0.12),
-        radiusPixels: 260,
+        canvasAnchor: Offset(0.96, -0.06),
+        radiusPixels: 150,
         pattern: PlanetPattern.speckled,
         seed: 7,
         palette: [
-          Color(0xFF240307), // shadow (terminator quase preto)
-          Color(0xFF7A1A13), // mid-dark vermelho profundo
-          Color(0xFFC9341F), // mid vermelho coral
-          Color(0xFFF06A3A), // mid-light laranja queimado
-          Color(0xFFFFC270), // highlight creme dourado
+          Color(0xFF1A0008), // shadow quase preto
+          Color(0xFF7A0E2A), // mid-dark dark red
+          Color(0xFFFF1F44), // mid NEON RED solido
+          Color(0xFFFF6679), // mid-light pink-red
+          Color(0xFFFFDADE), // highlight blush
         ],
       ),
-      // 2. GAS GIANT — bandas Jupiter + vortex spot. 5 stops.
+      // 2. ICE WORLD — neon cyan ringed, mid-left.
       const CosmosPlanet(
-        id: 'gas-giant',
-        canvasAnchor: Offset(0.18, 0.32),
-        radiusPixels: 36,
-        pattern: PlanetPattern.bands,
-        seed: 13,
-        palette: [
-          Color(0xFF311607), // shadow marrom escuro
-          Color(0xFF6B3210), // mid-dark
-          Color(0xFFB46A22), // mid laranja queimado
-          Color(0xFFE8A14C), // mid-light laranja claro
-          Color(0xFFFFE6A3), // highlight cream
-        ],
-        ring: PlanetRing(
-          innerRadiusPixels: 48,
-          outerRadiusPixels: 68,
-          color: Color(0xFFE8D5A8),
-          tiltY: 0.30,
-        ),
-      ),
-      // 3. TEAL RINGED — hemisferios ciano com polar caps + lua.
-      CosmosPlanet(
-        id: 'teal-ringed',
-        canvasAnchor: const Offset(0.52, 0.74),
-        radiusPixels: 26,
+        id: 'ice-world',
+        canvasAnchor: Offset(0.10, 0.34),
+        radiusPixels: 40,
         pattern: PlanetPattern.hemispheres,
         seed: 9,
-        palette: const [
-          Color(0xFF051A2E), // shadow azul-noite
-          Color(0xFF114269), // mid-dark teal escuro
-          Color(0xFF2D7DA8), // mid ciano oceano
-          Color(0xFF6FC9E8), // mid-light ciano claro
-          Color(0xFFD4F2FF), // highlight gelo
+        palette: [
+          Color(0xFF010E1A), // shadow azul-noite profundo
+          Color(0xFF0A446A), // mid-dark teal
+          Color(0xFF0AC4FF), // mid NEON CYAN solido
+          Color(0xFF7FE9FF), // mid-light ciano-claro
+          Color(0xFFE8FBFF), // highlight gelo
         ],
-        ring: const PlanetRing(
-          innerRadiusPixels: 36,
-          outerRadiusPixels: 52,
-          color: Color(0xCC9FD8E8),
-          tiltY: 0.26,
+        ring: PlanetRing(
+          innerRadiusPixels: 54,
+          outerRadiusPixels: 76,
+          color: Color(0xEE0AE0FF),
+          tiltY: 0.28,
         ),
+      ),
+      // 3. MAGENTA GIANT — neon magenta bands com vortex + lua.
+      CosmosPlanet(
+        id: 'magenta-giant',
+        canvasAnchor: const Offset(0.42, 0.74),
+        radiusPixels: 34,
+        pattern: PlanetPattern.bands,
+        seed: 13,
+        palette: const [
+          Color(0xFF1A0524), // shadow ultra-violet
+          Color(0xFF5C0F7A), // mid-dark
+          Color(0xFFE020F2), // mid NEON MAGENTA
+          Color(0xFFFF66F5), // mid-light pink-magenta
+          Color(0xFFFFCFF8), // highlight rosa-claro
+        ],
         moon: PlanetMoon(
-          orbitRadiusPixels: 32,
-          moonRadiusPixels: 4,
-          color: colors.onSurface.withValues(alpha: 0.88),
+          orbitRadiusPixels: 46,
+          moonRadiusPixels: 5,
+          color: Color(0xFFFFFFFF),
           phaseOffset: 0.15,
         ),
       ),
-      // 4. VIOLET ROCKY — pequeno mas detalhado, crateras dithered.
+      // 4. LIME ROCKY — neon lime brilhante, mid-bottom-left.
       const CosmosPlanet(
-        id: 'violet-rocky',
-        canvasAnchor: Offset(0.74, 0.48),
-        radiusPixels: 14,
+        id: 'lime-rocky',
+        canvasAnchor: Offset(0.22, 0.74),
+        radiusPixels: 18,
         pattern: PlanetPattern.speckled,
         seed: 3,
         palette: [
-          Color(0xFF120628), // shadow ultra-violeta
-          Color(0xFF3D1B70), // mid-dark indigo
-          Color(0xFF7240C2), // mid violeta saturado
-          Color(0xFFB68BFF), // mid-light lilas
-          Color(0xFFEADCFF), // highlight branco-violaceo
+          Color(0xFF020F08),
+          Color(0xFF0A4023),
+          Color(0xFF1FFF6E), // mid NEON LIME
+          Color(0xFFA5FFC1),
+          Color(0xFFE9FFEC),
         ],
         moon: PlanetMoon(
-          orbitRadiusPixels: 22,
+          orbitRadiusPixels: 28,
           moonRadiusPixels: 2,
-          color: Color(0xFFE0D4FF),
+          color: Color(0xFFE6FFD9),
           phaseOffset: 0.55,
         ),
       ),
-      // 5. GREEN DISTANT — mundo bandado verde, far-left.
+      // 5. VIOLET ROCKY — neon roxo, mid-center.
       const CosmosPlanet(
-        id: 'green-distant',
-        canvasAnchor: Offset(0.34, 0.62),
+        id: 'violet-rocky',
+        canvasAnchor: Offset(0.36, 0.46),
+        radiusPixels: 15,
+        pattern: PlanetPattern.speckled,
+        seed: 17,
+        palette: [
+          Color(0xFF120428),
+          Color(0xFF391066),
+          Color(0xFF9D3FFF), // mid NEON VIOLET
+          Color(0xFFD58BFF),
+          Color(0xFFF0DCFF),
+        ],
+      ),
+      // 6. GOLD DWARF — gold neon brilhante, bottom-center.
+      const CosmosPlanet(
+        id: 'gold-dwarf',
+        canvasAnchor: Offset(0.56, 0.92),
         radiusPixels: 12,
         pattern: PlanetPattern.bands,
-        seed: 2,
+        seed: 23,
         palette: [
-          Color(0xFF0A2618), // shadow forest-deep
-          Color(0xFF1F5A3A), // mid-dark verde mata
-          Color(0xFF3F9B6C), // mid verde clareira
-          Color(0xFF8AE2B0), // mid-light verde lima
-          Color(0xFFE4FFEC), // highlight gelo-verde
+          Color(0xFF2E1A02),
+          Color(0xFF7A4A0A),
+          Color(0xFFFFB81F), // mid NEON GOLD
+          Color(0xFFFFE066),
+          Color(0xFFFFF8C8),
+        ],
+      ),
+      // 7. ELECTRIC BLUE — top-center, distant.
+      const CosmosPlanet(
+        id: 'electric-blue',
+        canvasAnchor: Offset(0.58, 0.20),
+        radiusPixels: 10,
+        pattern: PlanetPattern.hemispheres,
+        seed: 19,
+        palette: [
+          Color(0xFF020B26),
+          Color(0xFF0A2B70),
+          Color(0xFF2D7FFF), // mid electric blue
+          Color(0xFF7CB8FF),
+          Color(0xFFE0EEFF),
+        ],
+      ),
+      // 8. CORAL ROCKY — neon coral, mid-right-bottom (mais central).
+      const CosmosPlanet(
+        id: 'coral-rocky',
+        canvasAnchor: Offset(0.74, 0.62),
+        radiusPixels: 17,
+        pattern: PlanetPattern.speckled,
+        seed: 29,
+        palette: [
+          Color(0xFF2A0A00),
+          Color(0xFF7A2308),
+          Color(0xFFFF5520), // mid NEON CORAL
+          Color(0xFFFFA579),
+          Color(0xFFFFE5D6),
         ],
       ),
     ];
   }
 
-  /// Conjunto default de nebulosas — 3 manchas em cores complementares
-  /// pra adicionar profundidade sem competir com as estrelas.
-  /// - Magenta no canto superior direito, amplifica o calor do red giant;
-  /// - Brand purple no centro-esquerda, atras do gas giant;
-  /// - Ciano sutil no centro-baixo, atras do teal ringed.
+  /// Nebulosas default — 5 manchas vibrantes em neon distribuidas pra
+  /// criar atmosfera cosmica colorida. Cada uma com cor saturada
+  /// distinta (magenta, cyan, violet, hot pink, electric blue) e
+  /// densidade variavel.
   static List<CosmosNebula> defaultNebulas(AppColorScheme colors) {
-    return [
-      const CosmosNebula(
-        canvasAnchor: Offset(0.80, 0.10),
-        radiusPixels: 60,
-        color: Color(0xFFCE4FB8),
-        density: 0.40,
+    return const [
+      // 1. Magenta + warm tones atras do red giant — amplifica o calor.
+      CosmosNebula(
+        canvasAnchor: Offset(0.78, 0.05),
+        radiusPixels: 110,
+        color: Color(0xFFFF1F8B),
+        density: 0.78,
         seed: 4,
       ),
+      // 2. Cyan atras do ice world.
       CosmosNebula(
-        canvasAnchor: const Offset(0.22, 0.36),
-        radiusPixels: 44,
-        color: colors.primary.withValues(alpha: 0.45),
-        density: 0.50,
+        canvasAnchor: Offset(0.14, 0.38),
+        radiusPixels: 84,
+        color: Color(0xFF0AC4FF),
+        density: 0.72,
         seed: 1,
       ),
+      // 3. Violet centro.
       CosmosNebula(
-        canvasAnchor: const Offset(0.58, 0.80),
-        radiusPixels: 36,
-        color: colors.accent.withValues(alpha: 0.40),
-        density: 0.45,
+        canvasAnchor: Offset(0.42, 0.38),
+        radiusPixels: 88,
+        color: Color(0xFF9D3FFF),
+        density: 0.68,
+        seed: 6,
+      ),
+      // 4. Neon magenta atras do magenta giant.
+      CosmosNebula(
+        canvasAnchor: Offset(0.46, 0.80),
+        radiusPixels: 76,
+        color: Color(0xFFE020F2),
+        density: 0.70,
         seed: 5,
+      ),
+      // 5. Electric blue top-center.
+      CosmosNebula(
+        canvasAnchor: Offset(0.62, 0.24),
+        radiusPixels: 58,
+        color: Color(0xFF2D7FFF),
+        density: 0.62,
+        seed: 11,
       ),
     ];
   }

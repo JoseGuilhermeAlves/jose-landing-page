@@ -72,9 +72,8 @@ class HeroSection extends StatelessWidget {
                     style: headlineStyle,
                     textAlign: textAlign,
                   ),
-                  GradientText(
+                  _AnimatedNeonHeadline(
                     text: 'Do MVP ao app em producao.',
-                    gradient: AppGradients.brand(colors),
                     style: headlineStyle,
                     textAlign: textAlign,
                   ),
@@ -192,6 +191,86 @@ class HeroSection extends StatelessWidget {
           child: Center(child: _ScrollHint()),
         ),
       ],
+    );
+  }
+}
+
+/// Headline animado com gradient neon deslizando — combina com o tema
+/// cosmos (cores hot-pink, magenta, violet, cyan e electric-blue sao as
+/// mesmas dos planetas e nebulosas no fundo). Sweep horizontal em loop
+/// de 8s com `TileMode.mirror` pra repeticao seamless.
+class _AnimatedNeonHeadline extends StatefulWidget {
+  const _AnimatedNeonHeadline({
+    required this.text,
+    required this.style,
+    required this.textAlign,
+  });
+
+  final String text;
+  final TextStyle? style;
+  final TextAlign? textAlign;
+
+  @override
+  State<_AnimatedNeonHeadline> createState() => _AnimatedNeonHeadlineState();
+}
+
+class _AnimatedNeonHeadlineState extends State<_AnimatedNeonHeadline>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller = AnimationController(
+    vsync: this,
+    duration: const Duration(seconds: 8),
+  )..repeat();
+
+  /// Paleta neon — mesma familia das nebulosas do cosmos.
+  /// Color stops sao distribuidos pra dar fluxo: pink -> magenta ->
+  /// violet -> cyan -> blue -> magenta -> pink (loop seamless).
+  static const List<Color> _neonColors = [
+    Color(0xFFFF2D95),
+    Color(0xFFD946EF),
+    Color(0xFF8B5CF6),
+    Color(0xFF06D4FF),
+    Color(0xFF2D7FFF),
+    Color(0xFFD946EF),
+    Color(0xFFFF2D95),
+  ];
+
+  static const List<double> _neonStops = [
+    0.00,
+    0.16,
+    0.34,
+    0.50,
+    0.66,
+    0.84,
+    1.00,
+  ];
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _controller,
+      builder: (_, _) {
+        // Slide horizontal — gradient axis se move 4 alignment units por
+        // loop, com tileMode mirror pra repetir seamless.
+        final shift = _controller.value * 4;
+        return GradientText(
+          text: widget.text,
+          style: widget.style,
+          textAlign: widget.textAlign,
+          gradient: LinearGradient(
+            begin: Alignment(-3 + shift, 0),
+            end: Alignment(3 + shift, 0),
+            colors: _neonColors,
+            stops: _neonStops,
+            tileMode: TileMode.mirror,
+          ),
+        );
+      },
     );
   }
 }

@@ -1,32 +1,34 @@
 import 'dart:math' as math;
-import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 
-/// Cosmos pixel-art 32-bit — paletas 9-stop interpoladas + Bayer 8x8 pra
-/// dithering fino (transicoes suaves mas ainda stippled), planetas e
-/// nebulosas pre-renderizados pra `ui.Image` cacheada (1 blit/frame em
-/// vez de 2-10k drawRect).
+/// Cosmos hero — estetica Kurzgesagt + neon. Planetas smooth com
+/// multiplas camadas (bloom -> atmosfera -> corpo + surface -> rim ->
+/// highlight -> terminator), nebulosas vibrantes em radial gradient,
+/// estrelas circulares anti-aliased em 3 tiers e estrelas cadentes com
+/// tail gradient.
 ///
-/// Performance strategy:
-/// - **Bitmap caching**: cada planeta (corpo + atmosfera) renderiza UMA
-///   vez no primeiro frame, vira `ui.Image`, depois e blit via
-///   `drawImageRect`. Cache estatica sobrevive a recriacao do painter
-///   (AnimatedBuilder reconstroi o painter por frame).
-/// - **Per-frame**: so estrelas (twinkle), luas (orbita), cometa (janela).
-///   Tudo cheap em count.
-/// - **Single mutable `_paint`** com AA off pros draws per-frame.
-/// - **`shouldRepaint`** campo a campo.
+/// Light direction: top-left consistente em todos os corpos. Cores
+/// neon-saturadas (hot pink, cyan, magenta, lime) dao o "punch" pra
+/// uma landing page que precisa capturar atencao em 5s.
+///
+/// Performance:
+/// - Sem pixel iteration. Tudo via `drawCircle`/`drawOval` + radial
+///   gradients (Skia GPU otimizado);
+/// - ~100-150 draw calls/frame total (8 planetas x 4-6 layers + 5
+///   nebulosas + 50 estrelas + cometa);
+/// - `_paint` mutable reusado. Shaders criados inline (allocacao pequena,
+///   tradeoff vs. cache complexity — Skia compila shaders rapido).
 
 /// Padrao da superficie do planeta.
 enum PlanetPattern {
-  /// Faixas horizontais — gas giant com vortex spot.
+  /// Faixas horizontais com vortex spot — gas giant.
   bands,
 
-  /// Crateras pseudo-aleatorias — planeta rochoso.
+  /// Manchas / "continentes" pseudo-aleatorios — planeta rochoso.
   speckled,
 
-  /// Hemisferio inferior mais escuro + polar caps.
+  /// Hemisferio inferior mais escuro + polar caps brilhantes.
   hemispheres,
 }
 
@@ -79,8 +81,9 @@ class CosmosPlanet {
   final Offset canvasAnchor;
   final int radiusPixels;
 
-  /// Palette base (3-9 cores). O painter interpola pra rampa fixa de 9
-  /// stops, dando dither fino estilo 32-bit.
+  /// Palette ideal 4-5 cores: [shadow, mid-dark, mid, mid-light, highlight].
+  /// O painter usa palette[0] como base do corpo, palette.last como rim/glow,
+  /// e os intermediarios pra surface detail.
   final List<Color> palette;
 
   final PlanetPattern pattern;
@@ -125,7 +128,7 @@ class CosmosComet {
   final double windowEnd;
 }
 
-/// Painter pixel-art com caching agressivo.
+/// Painter smooth + neon.
 class CosmosPainter extends CustomPainter {
   CosmosPainter({
     required this.tick,
@@ -140,88 +143,39 @@ class CosmosPainter extends CustomPainter {
 
   final double tick;
   final Color starColor;
+
+  /// Fator de escala "unidade -> logical px". radiusPixels * pixelSize
+  /// e o raio visual final em logical px.
   final double pixelSize;
+
   final List<CosmosPlanet> planets;
   final List<CosmosNebula> nebulas;
   final CosmosComet? comet;
-
-  /// Estrelas cadentes (multiple comets). Cada uma com janela propria de
-  /// visibilidade — distribuir as janelas pelo ciclo da animacao da
-  /// sensacao de eventos cosmicos esparsos.
   final List<CosmosComet> shootingStars;
-
   final List<Offset> pixelStars;
 
-  /// Mutable paint pros draws per-frame (stars/moons/comet). AA off,
-  /// FilterQuality none — pixel-perfect mesmo em scale.
-  final Paint _paint = Paint()
-    ..isAntiAlias = false
-    ..filterQuality = FilterQuality.none
-    ..style = PaintingStyle.fill;
+  /// Paint mutavel reusado. AA on (default), fill.
+  final Paint _paint = Paint()..style = PaintingStyle.fill;
 
-  /// Cache estatica de imagens — sobrevive recriacao do painter.
-  /// Key = hash determinista das props que afetam pixel output.
-  static final Map<int, ui.Image> _planetCache = {};
-  static final Map<int, ui.Image> _ringCache = {};
-  static final Map<int, ui.Image> _nebulaCache = {};
-
-  /// Util pra testes / hot reload — limpa todas as imagens cacheadas.
-  static void clearCache() {
-    for (final img in _planetCache.values) {
-      img.dispose();
-    }
-    for (final img in _ringCache.values) {
-      img.dispose();
-    }
-    for (final img in _nebulaCache.values) {
-      img.dispose();
-    }
-    _planetCache.clear();
-    _ringCache.clear();
-    _nebulaCache.clear();
-  }
-
-  /// Bayer 8x8 / 64 — thresholds 0..1 pra dithering ordenado fino.
-  /// 64 niveis de threshold espalham transicoes em padroes mais sutis
-  /// que o 4x4, dando feel 32-bit em vez de 16-bit.
-  static const List<List<double>> _bayer8 = [
-    [0 / 64, 32 / 64, 8 / 64, 40 / 64, 2 / 64, 34 / 64, 10 / 64, 42 / 64],
-    [48 / 64, 16 / 64, 56 / 64, 24 / 64, 50 / 64, 18 / 64, 58 / 64, 26 / 64],
-    [12 / 64, 44 / 64, 4 / 64, 36 / 64, 14 / 64, 46 / 64, 6 / 64, 38 / 64],
-    [60 / 64, 28 / 64, 52 / 64, 20 / 64, 62 / 64, 30 / 64, 54 / 64, 22 / 64],
-    [3 / 64, 35 / 64, 11 / 64, 43 / 64, 1 / 64, 33 / 64, 9 / 64, 41 / 64],
-    [51 / 64, 19 / 64, 59 / 64, 27 / 64, 49 / 64, 17 / 64, 57 / 64, 25 / 64],
-    [15 / 64, 47 / 64, 7 / 64, 39 / 64, 13 / 64, 45 / 64, 5 / 64, 37 / 64],
-    [63 / 64, 31 / 64, 55 / 64, 23 / 64, 61 / 64, 29 / 64, 53 / 64, 21 / 64],
-  ];
-
-  /// Quantidade de stops na rampa de cor — 9 ja da banded suficientemente
-  /// fino pra parecer 32-bit (mais que isso vira gradient indistinguivel
-  /// de smooth).
-  static const int _rampStops = 9;
-
-  /// Aneis atmosfericos por planeta. Renderizados dentro da imagem
-  /// cacheada (mais barato que repintar fora dela todo frame).
-  static const int _atmosRings = 4;
+  /// Stub pra compat com versao pixel-art anterior — sem cache em smooth.
+  static void clearCache() {}
 
   @override
   void paint(Canvas canvas, Size size) {
     if (size.isEmpty) return;
 
-    // Ordem: nebulosas → estrelas → anel-tras → planeta(corpo+atmos)
-    // → anel-frente → luas → cometa.
     for (final n in nebulas) {
-      _blitNebula(canvas, size, n);
+      _paintNebula(canvas, size, n);
     }
     _paintStars(canvas, size);
     for (final p in planets) {
-      if (p.ring != null) _blitRingHalf(canvas, size, p, front: false);
+      if (p.ring != null) _paintRingHalf(canvas, size, p, front: false);
     }
     for (final p in planets) {
-      _blitPlanet(canvas, size, p);
+      _paintPlanet(canvas, size, p);
     }
     for (final p in planets) {
-      if (p.ring != null) _blitRingHalf(canvas, size, p, front: true);
+      if (p.ring != null) _paintRingHalf(canvas, size, p, front: true);
     }
     for (final p in planets) {
       if (p.moon != null) _paintMoon(canvas, size, p);
@@ -233,275 +187,321 @@ class CosmosPainter extends CustomPainter {
   }
 
   // ===========================================================================
-  // PLANETA — cache + blit
+  // PLANETA — multi-layer smooth render
   // ===========================================================================
 
-  void _blitPlanet(Canvas canvas, Size size, CosmosPlanet planet) {
+  void _paintPlanet(Canvas canvas, Size size, CosmosPlanet planet) {
     if (planet.palette.isEmpty || planet.radiusPixels <= 0) return;
-    final img = _getOrRenderPlanet(planet);
+
     final center = _planetCenter(planet, size);
-    final hw = img.width / 2.0;
-    final hh = img.height / 2.0;
-    canvas.drawImageRect(
-      img,
-      Rect.fromLTWH(0, 0, img.width.toDouble(), img.height.toDouble()),
-      Rect.fromLTRB(
-        center.dx - hw,
-        center.dy - hh,
-        center.dx + hw,
-        center.dy + hh,
+    final r = planet.radiusPixels * pixelSize;
+    final ramp = _resolveRamp(planet.palette);
+
+    // 1. Outer bloom — neon halo difuso, 2.6x raio.
+    _paintBloom(canvas, center, r, ramp);
+
+    // 2. Atmospheric outer rim — 1.05x raio, brighter color.
+    _paintAtmosphereRim(canvas, center, r, ramp);
+
+    // 3. Body + surface (clipped to disc).
+    canvas.save();
+    canvas.clipPath(
+      Path()..addOval(Rect.fromCircle(center: center, radius: r)),
+    );
+    _paintBody(canvas, center, r, planet, ramp);
+    _paintSurface(canvas, center, r, planet, ramp);
+    _paintTerminator(canvas, center, r, ramp);
+    _paintHighlight(canvas, center, r, ramp);
+    canvas.restore();
+  }
+
+  void _paintBloom(
+    Canvas canvas,
+    Offset center,
+    double r,
+    List<Color> ramp,
+  ) {
+    // Glow tighter pra nao lavar a cor solida do corpo.
+    final glow = ramp[math.min(2, ramp.length - 1)];
+    final bloomR = r * 1.65;
+
+    final shader = RadialGradient(
+      colors: [
+        glow.withValues(alpha: 0.30),
+        glow.withValues(alpha: 0.12),
+        glow.withValues(alpha: 0),
+      ],
+      stops: const [0.45, 0.72, 1.0],
+    ).createShader(Rect.fromCircle(center: center, radius: bloomR));
+    _paint
+      ..shader = shader
+      ..colorFilter = null;
+    canvas.drawCircle(center, bloomR, _paint);
+    _paint.shader = null;
+  }
+
+  void _paintAtmosphereRim(
+    Canvas canvas,
+    Offset center,
+    double r,
+    List<Color> ramp,
+  ) {
+    final rim = ramp.last;
+    final rimR = r * 1.06;
+
+    // Anel atmosferico fino — desenhado como circulo cheio com
+    // gradient que so destaca a borda.
+    final shader = RadialGradient(
+      colors: [
+        rim.withValues(alpha: 0),
+        rim.withValues(alpha: 0),
+        rim.withValues(alpha: 0.55),
+        rim.withValues(alpha: 0),
+      ],
+      stops: const [0.0, 0.92, 0.97, 1.0],
+    ).createShader(Rect.fromCircle(center: center, radius: rimR));
+    _paint.shader = shader;
+    canvas.drawCircle(center, rimR, _paint);
+    _paint.shader = null;
+  }
+
+  void _paintBody(
+    Canvas canvas,
+    Offset center,
+    double r,
+    CosmosPlanet planet,
+    List<Color> ramp,
+  ) {
+    // Solid neon block — mid color quase uniforme com fade pra
+    // shadow so na borda externa. Cor fica vibrante e legivel.
+    final mid = ramp[(ramp.length * 0.6).floor().clamp(0, ramp.length - 1)];
+    final shadow = ramp.first;
+
+    final shader = RadialGradient(
+      colors: [mid, mid, shadow],
+      stops: const [0.0, 0.85, 1.0],
+    ).createShader(Rect.fromCircle(center: center, radius: r));
+    _paint.shader = shader;
+    canvas.drawCircle(center, r, _paint);
+    _paint.shader = null;
+  }
+
+  void _paintSurface(
+    Canvas canvas,
+    Offset center,
+    double r,
+    CosmosPlanet planet,
+    List<Color> ramp,
+  ) {
+    switch (planet.pattern) {
+      case PlanetPattern.bands:
+        _paintBands(canvas, center, r, ramp, planet.seed);
+      case PlanetPattern.speckled:
+        _paintSpeckle(canvas, center, r, ramp, planet.seed);
+      case PlanetPattern.hemispheres:
+        _paintHemispheres(canvas, center, r, ramp);
+    }
+  }
+
+  void _paintBands(
+    Canvas canvas,
+    Offset center,
+    double r,
+    List<Color> ramp,
+    int seed,
+  ) {
+    // 5-7 faixas horizontais com alphas variados pra simular atmosfera
+    // turbulenta. Cores alternam entre dois stops da rampa.
+    final rng = math.Random(seed);
+    const bandHeights = [0.18, 0.12, 0.20, 0.14, 0.22, 0.14];
+    final bandColors = [
+      ramp[1].withValues(alpha: 0.85),
+      ramp[3].withValues(alpha: 0.78),
+      ramp[0].withValues(alpha: 0.70),
+      ramp[2].withValues(alpha: 0.65),
+      ramp[4].withValues(alpha: 0.55),
+      ramp[1].withValues(alpha: 0.82),
+    ];
+
+    var y = center.dy - r;
+    for (var i = 0; i < bandHeights.length; i++) {
+      final h = bandHeights[i] * 2 * r;
+      _paint.color = bandColors[i % bandColors.length];
+      canvas.drawRect(
+        Rect.fromLTWH(center.dx - r - 4, y, 2 * r + 8, h),
+        _paint,
+      );
+      y += h;
+    }
+
+    // Vortex spot (mancha estilo Jupiter) — oval offset do equador
+    // com gradient interno pra parecer ciclonico.
+    final vx = center.dx + (rng.nextDouble() * 0.5 - 0.25) * r;
+    final vy = center.dy + (0.05 + rng.nextDouble() * 0.2) * r;
+    final vrx = r * 0.22;
+    final vry = vrx * 0.55;
+    final vortexShader = RadialGradient(
+      colors: [
+        ramp.first.withValues(alpha: 0.85),
+        ramp[1].withValues(alpha: 0.60),
+        Colors.transparent,
+      ],
+      stops: const [0.0, 0.55, 1.0],
+    ).createShader(Rect.fromCenter(
+      center: Offset(vx, vy),
+      width: vrx * 2,
+      height: vry * 2,
+    ));
+    _paint.shader = vortexShader;
+    canvas.drawOval(
+      Rect.fromCenter(
+        center: Offset(vx, vy),
+        width: vrx * 2,
+        height: vry * 2,
       ),
       _paint,
     );
+    _paint.shader = null;
   }
 
-  ui.Image _getOrRenderPlanet(CosmosPlanet planet) {
-    final key = Object.hash(
-      planet.id,
-      planet.radiusPixels,
-      planet.pattern.index,
-      planet.seed,
-      pixelSize,
-      Object.hashAll(planet.palette),
-    );
-    return _planetCache.putIfAbsent(key, () => _renderPlanetImage(planet));
-  }
-
-  ui.Image _renderPlanetImage(CosmosPlanet planet) {
-    final r = planet.radiusPixels;
-    final unitSize = 2 * (r + _atmosRings + 1);
-    final pxSize = (unitSize * pixelSize).ceil();
-
-    final recorder = ui.PictureRecorder();
-    final canvas = Canvas(
-      recorder,
-      Rect.fromLTWH(0, 0, pxSize.toDouble(), pxSize.toDouble()),
-    );
-
-    final cx = pxSize / 2.0;
-    final cy = pxSize / 2.0;
-
-    final ramp = _resolveRamp(planet.palette);
-    final craters = planet.pattern == PlanetPattern.speckled
-        ? _craterList(planet.seed, r)
-        : const <_Crater>[];
-    final vortex = planet.pattern == PlanetPattern.bands
-        ? _Vortex.forPlanet(r, planet.seed)
-        : null;
-
-    // Atmosfera primeiro (atras do corpo).
-    _renderAtmosphereTo(canvas, ramp.last, r, cx, cy);
-    // Corpo.
-    _renderPlanetBodyTo(
-      canvas,
-      ramp: ramp,
-      craters: craters,
-      vortex: vortex,
-      pattern: planet.pattern,
-      r: r,
-      cx: cx,
-      cy: cy,
-    );
-
-    final picture = recorder.endRecording();
-    final img = picture.toImageSync(pxSize, pxSize);
-    picture.dispose();
-    return img;
-  }
-
-  void _renderAtmosphereTo(
+  void _paintSpeckle(
     Canvas canvas,
-    Color rim,
-    int r,
-    double cx,
-    double cy,
+    Offset center,
+    double r,
+    List<Color> ramp,
+    int seed,
   ) {
-    const alphas = [0.45, 0.28, 0.16, 0.08];
-    final paint = Paint()
-      ..isAntiAlias = false
-      ..filterQuality = FilterQuality.none
-      ..style = PaintingStyle.fill;
-    for (var step = 0; step < _atmosRings; step++) {
-      final ringR = r + 1 + step;
-      paint.color =
-          rim.withValues(alpha: (rim.a * alphas[step]).clamp(0.0, 1.0));
-      _drawPixelRingTo(canvas, paint, cx, cy, ringR);
+    // 8-14 "continentes" como soft ovals scatterados. Cor dark do palette
+    // com alpha pra deixar misturar com a base radial.
+    final rng = math.Random(seed * 101 + 7);
+    final count = 8 + rng.nextInt(7);
+    final patchColor = ramp[1];
+
+    for (var i = 0; i < count; i++) {
+      final ang = rng.nextDouble() * 2 * math.pi;
+      final dist = rng.nextDouble() * r * 0.78;
+      final ex = center.dx + math.cos(ang) * dist;
+      final ey = center.dy + math.sin(ang) * dist;
+      final ew = r * (0.16 + rng.nextDouble() * 0.20);
+      final eh = ew * (0.50 + rng.nextDouble() * 0.45);
+      final rot = rng.nextDouble() * math.pi;
+
+      canvas.save();
+      canvas.translate(ex, ey);
+      canvas.rotate(rot);
+      // Continente solido — alpha alta no nucleo, fade so na borda.
+      final shader = RadialGradient(
+        colors: [
+          patchColor.withValues(alpha: 0.92),
+          patchColor.withValues(alpha: 0.65),
+          patchColor.withValues(alpha: 0),
+        ],
+        stops: const [0.0, 0.70, 1.0],
+      ).createShader(
+        Rect.fromCenter(center: Offset.zero, width: ew * 2, height: eh * 2),
+      );
+      _paint.shader = shader;
+      canvas.drawOval(
+        Rect.fromCenter(center: Offset.zero, width: ew * 2, height: eh * 2),
+        _paint,
+      );
+      _paint.shader = null;
+      canvas.restore();
     }
   }
 
-  void _drawPixelRingTo(
+  void _paintHemispheres(
     Canvas canvas,
-    Paint paint,
-    double cx,
-    double cy,
-    int radius,
+    Offset center,
+    double r,
+    List<Color> ramp,
   ) {
-    if (radius <= 0) return;
-    final r2 = radius * radius;
-    final r2Inner = (radius - 1) * (radius - 1);
-    for (var py = -radius; py <= radius; py++) {
-      final ymag = py * py;
-      if (ymag > r2) continue;
-      final hwOuter = math.sqrt(r2 - ymag).floor();
-      final hwInner =
-          ymag <= r2Inner ? math.sqrt(r2Inner - ymag).floor() : -1;
-      if (hwInner < 0) {
-        // Linha cheia (topo/fundo do anel).
-        canvas.drawRect(
-          Rect.fromLTWH(
-            cx + (-hwOuter) * pixelSize,
-            cy + py * pixelSize,
-            (2 * hwOuter + 1) * pixelSize,
-            pixelSize,
-          ),
-          paint,
-        );
-      } else {
-        final segWidth = hwOuter - hwInner;
-        if (segWidth > 0) {
-          canvas
-            ..drawRect(
-              Rect.fromLTWH(
-                cx + (-hwOuter) * pixelSize,
-                cy + py * pixelSize,
-                segWidth * pixelSize,
-                pixelSize,
-              ),
-              paint,
-            )
-            ..drawRect(
-              Rect.fromLTWH(
-                cx + (hwInner + 1) * pixelSize,
-                cy + py * pixelSize,
-                segWidth * pixelSize,
-                pixelSize,
-              ),
-              paint,
-            );
-        }
-      }
-    }
+    // Hemisferio inferior em palette[1] (mid-dark) solido.
+    final lower = ramp[1];
+    final shader = LinearGradient(
+      begin: const Alignment(0, -0.05),
+      end: const Alignment(0, 0.5),
+      colors: [
+        Colors.transparent,
+        lower.withValues(alpha: 0.92),
+      ],
+      stops: const [0.0, 1.0],
+    ).createShader(Rect.fromCircle(center: center, radius: r));
+    _paint.shader = shader;
+    canvas.drawCircle(center, r, _paint);
+    _paint.shader = null;
+
+    // Polar caps brilhantes — palette[4].
+    final highlight = ramp.last;
+    final capShader = LinearGradient(
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+      colors: [
+        highlight.withValues(alpha: 0.92),
+        highlight.withValues(alpha: 0),
+        highlight.withValues(alpha: 0),
+        highlight.withValues(alpha: 0.75),
+      ],
+      stops: const [0.0, 0.20, 0.80, 1.0],
+    ).createShader(Rect.fromCircle(center: center, radius: r));
+    _paint.shader = capShader;
+    canvas.drawCircle(center, r, _paint);
+    _paint.shader = null;
   }
 
-  void _renderPlanetBodyTo(
-    Canvas canvas, {
-    required List<Color> ramp,
-    required List<_Crater> craters,
-    required _Vortex? vortex,
-    required PlanetPattern pattern,
-    required int r,
-    required double cx,
-    required double cy,
-  }) {
-    final paint = Paint()
-      ..isAntiAlias = false
-      ..filterQuality = FilterQuality.none
-      ..style = PaintingStyle.fill;
-
-    for (var py = -r; py <= r; py++) {
-      final ymag = py * py;
-      if (ymag > r * r) continue;
-      final hw = math.sqrt(r * r - ymag).floor();
-
-      // Run-batching horizontal: agrupa pixels adjacentes do mesmo idx.
-      int? runStart;
-      int? runIdx;
-
-      for (var px = -hw; px <= hw + 1; px++) {
-        int? idx;
-        if (px <= hw) {
-          idx = _paletteIndex(
-            px: px,
-            py: py,
-            r: r,
-            pattern: pattern,
-            craters: craters,
-            vortex: vortex,
-            rampLen: ramp.length,
-          );
-        }
-        if (idx != runIdx) {
-          if (runIdx != null && runStart != null) {
-            paint.color = ramp[runIdx];
-            canvas.drawRect(
-              Rect.fromLTWH(
-                cx + runStart * pixelSize,
-                cy + py * pixelSize,
-                (px - runStart) * pixelSize,
-                pixelSize,
-              ),
-              paint,
-            );
-          }
-          runStart = px;
-          runIdx = idx;
-        }
-      }
-    }
+  void _paintTerminator(
+    Canvas canvas,
+    Offset center,
+    double r,
+    List<Color> ramp,
+  ) {
+    // Sombra concentrada no bottom-right edge — preserva cor solida no
+    // centro mas mantem dica 3D.
+    final shadow = ramp.first;
+    final shader = RadialGradient(
+      center: const Alignment(0.55, 0.55),
+      radius: 1.05,
+      colors: [
+        shadow.withValues(alpha: 0),
+        shadow.withValues(alpha: 0),
+        shadow.withValues(alpha: 0.55),
+      ],
+      stops: const [0.55, 0.75, 1.0],
+    ).createShader(Rect.fromCircle(center: center, radius: r));
+    _paint.shader = shader;
+    canvas.drawCircle(center, r, _paint);
+    _paint.shader = null;
   }
 
-  int _paletteIndex({
-    required int px,
-    required int py,
-    required int r,
-    required PlanetPattern pattern,
-    required List<_Crater> craters,
-    required _Vortex? vortex,
-    required int rampLen,
-  }) {
-    final nx = (px + 0.5) / r;
-    final ny = (py + 0.5) / r;
-    final nz2 = 1 - nx * nx - ny * ny;
-    final nz = nz2 > 0 ? math.sqrt(nz2) : 0.0;
-
-    // Luz top-left, ligeiramente pra frente do disco.
-    const lx = -0.50;
-    const ly = -0.50;
-    const lz = 0.71;
-    var lambert = (nx * lx + ny * ly + nz * lz).clamp(-0.15, 1.0);
-
-    // Pattern modifier.
-    switch (pattern) {
-      case PlanetPattern.bands:
-        // Bandas mais largas (5 unidades) com mods sutis.
-        final band = (((py + r) ~/ 5) % 5);
-        const bandMods = [0.10, -0.04, 0.06, -0.12, 0.02];
-        lambert += bandMods[band];
-        if (vortex != null && vortex.contains(px, py)) {
-          lambert -= 0.30;
-          if (vortex.isRim(px, py)) lambert += 0.55;
-        }
-      case PlanetPattern.speckled:
-        for (final c in craters) {
-          final dx = px - c.dx;
-          final dy = py - c.dy;
-          final d2 = dx * dx + dy * dy;
-          if (d2 <= c.r2) {
-            lambert -= 0.35;
-            // Crater rim NW highlight.
-            if (d2 > c.r2 * 0.55 && dx + dy < 0) lambert += 0.55;
-            break;
-          }
-        }
-      case PlanetPattern.hemispheres:
-        if (py > 0) lambert -= 0.18;
-        if (py < -r * 0.72 || py > r * 0.72) lambert += 0.35;
-    }
-
-    // Bayer 8x8 dither — width pequeno (0.10) pra dither sutil, transicoes
-    // ficam stippled mas nao "ruidosas".
-    final bayer = _bayer8[py & 7][px & 7];
-    final dithered = lambert + (bayer - 0.5) * 0.10;
-
-    final idx = (dithered * (rampLen - 1)).round();
-    return idx.clamp(0, rampLen - 1);
+  void _paintHighlight(
+    Canvas canvas,
+    Offset center,
+    double r,
+    List<Color> ramp,
+  ) {
+    // Highlight concentrado top-left — pequeno e intenso pra nao
+    // lavar o block de cor.
+    final highlight = ramp.last;
+    final shader = RadialGradient(
+      center: const Alignment(-0.50, -0.55),
+      radius: 0.40,
+      colors: [
+        highlight.withValues(alpha: 0.65),
+        highlight.withValues(alpha: 0.20),
+        highlight.withValues(alpha: 0),
+      ],
+      stops: const [0.0, 0.55, 1.0],
+    ).createShader(Rect.fromCircle(center: center, radius: r));
+    _paint.shader = shader;
+    canvas.drawCircle(center, r, _paint);
+    _paint.shader = null;
   }
 
   // ===========================================================================
-  // ANEL — cache + blit (front/back halves via clipRect)
+  // ANEL — half-ellipses com gradient + glow
   // ===========================================================================
 
-  void _blitRingHalf(
+  void _paintRingHalf(
     Canvas canvas,
     Size size,
     CosmosPlanet planet, {
@@ -510,10 +510,12 @@ class CosmosPainter extends CustomPainter {
     final ring = planet.ring!;
     if (ring.outerRadiusPixels <= ring.innerRadiusPixels) return;
 
-    final img = _getOrRenderRing(ring);
     final center = _planetCenter(planet, size);
-    final hw = img.width / 2.0;
-    final hh = img.height / 2.0;
+    final outerR = ring.outerRadiusPixels * pixelSize;
+    final innerR = ring.innerRadiusPixels * pixelSize;
+    final tiltY = ring.tiltY.clamp(0.05, 1.0);
+    final outerH = outerR * tiltY;
+    final innerH = innerR * tiltY;
 
     canvas.save();
     if (front) {
@@ -523,306 +525,38 @@ class CosmosPainter extends CustomPainter {
     } else {
       canvas.clipRect(Rect.fromLTWH(0, 0, size.width, center.dy));
     }
-    canvas.drawImageRect(
-      img,
-      Rect.fromLTWH(0, 0, img.width.toDouble(), img.height.toDouble()),
-      Rect.fromLTRB(
-        center.dx - hw,
-        center.dy - hh,
-        center.dx + hw,
-        center.dy + hh,
-      ),
-      _paint,
+
+    // Donut ellipse path: outer minus inner.
+    final donut = Path()
+      ..addOval(
+        Rect.fromCenter(center: center, width: outerR * 2, height: outerH * 2),
+      )
+      ..addOval(
+        Rect.fromCenter(center: center, width: innerR * 2, height: innerH * 2),
+      )
+      ..fillType = PathFillType.evenOdd;
+
+    // Gradient horizontal — bordas (limbos) mais brilhantes simulando
+    // espessura do anel.
+    final shader = LinearGradient(
+      colors: [
+        ring.color.withValues(alpha: (ring.color.a * 0.95).clamp(0.0, 1.0)),
+        ring.color.withValues(alpha: (ring.color.a * 0.55).clamp(0.0, 1.0)),
+        ring.color.withValues(alpha: (ring.color.a * 0.95).clamp(0.0, 1.0)),
+      ],
+      stops: const [0.0, 0.5, 1.0],
+    ).createShader(
+      Rect.fromCenter(center: center, width: outerR * 2, height: outerH * 2),
     );
+    _paint.shader = shader;
+    canvas.drawPath(donut, _paint);
+    _paint.shader = null;
+
     canvas.restore();
   }
 
-  ui.Image _getOrRenderRing(PlanetRing ring) {
-    final key = Object.hash(
-      ring.innerRadiusPixels,
-      ring.outerRadiusPixels,
-      ring.color.toARGB32(),
-      ring.tiltY,
-      pixelSize,
-    );
-    return _ringCache.putIfAbsent(key, () => _renderRingImage(ring));
-  }
-
-  ui.Image _renderRingImage(PlanetRing ring) {
-    final outerR = ring.outerRadiusPixels;
-    final tiltY = ring.tiltY.clamp(0.05, 1.0);
-    final outerH = (outerR * tiltY).ceil();
-    final pxW = ((2 * outerR + 1) * pixelSize).ceil();
-    final pxH = ((2 * outerH + 1) * pixelSize).ceil();
-    if (pxW <= 0 || pxH <= 0) {
-      return _emptyImage();
-    }
-
-    final recorder = ui.PictureRecorder();
-    final canvas = Canvas(
-      recorder,
-      Rect.fromLTWH(0, 0, pxW.toDouble(), pxH.toDouble()),
-    );
-    final cx = pxW / 2.0;
-    final cy = pxH / 2.0;
-
-    final ramp = _ringRamp(ring.color);
-    final paint = Paint()
-      ..isAntiAlias = false
-      ..filterQuality = FilterQuality.none
-      ..style = PaintingStyle.fill;
-    final innerR = ring.innerRadiusPixels;
-    final ringSpan = math.max(1, outerR - innerR);
-
-    for (var py = -outerH; py <= outerH; py++) {
-      for (var px = -outerR; px <= outerR; px++) {
-        final nx = px / outerR;
-        final ny = py / (outerR * tiltY);
-        final outerN = nx * nx + ny * ny;
-        if (outerN > 1) continue;
-        final nxi = innerR == 0 ? 2.0 : px / innerR;
-        final nyi = innerR == 0 ? 2.0 : py / (innerR * tiltY);
-        if (nxi * nxi + nyi * nyi < 1) continue;
-
-        final tNorm =
-            (math.sqrt(px * px + py * py) - innerR) / ringSpan;
-        final bandIdx =
-            (tNorm * ramp.length).floor().clamp(0, ramp.length - 1);
-
-        final bayer = _bayer8[py & 7][px & 7];
-        if (bayer < 0.10 && bandIdx.isOdd) continue;
-
-        paint.color = ramp[bandIdx];
-        canvas.drawRect(
-          Rect.fromLTWH(
-            cx + px * pixelSize,
-            cy + py * pixelSize,
-            pixelSize,
-            pixelSize,
-          ),
-          paint,
-        );
-      }
-    }
-
-    final picture = recorder.endRecording();
-    final img = picture.toImageSync(pxW, pxH);
-    picture.dispose();
-    return img;
-  }
-
-  List<Color> _ringRamp(Color base) {
-    return [
-      base.withValues(alpha: (base.a * 0.55).clamp(0.0, 1.0)),
-      base.withValues(alpha: (base.a * 0.80).clamp(0.0, 1.0)),
-      base.withValues(alpha: (base.a * 1.00).clamp(0.0, 1.0)),
-      base.withValues(alpha: (base.a * 0.72).clamp(0.0, 1.0)),
-    ];
-  }
-
   // ===========================================================================
-  // NEBULOSA — cache + blit
-  // ===========================================================================
-
-  void _blitNebula(Canvas canvas, Size size, CosmosNebula n) {
-    if (n.radiusPixels <= 0) return;
-    final img = _getOrRenderNebula(n);
-    final cx = _snap(n.canvasAnchor.dx * size.width);
-    final cy = _snap(n.canvasAnchor.dy * size.height);
-    final hw = img.width / 2.0;
-    final hh = img.height / 2.0;
-
-    // Pulsacao por palette cycle stepped — 2 estados via alpha.
-    final phase = ((tick + n.seed * 0.1) * 4).floor() & 1;
-    final pulseAlpha = phase == 0 ? 1.0 : 0.78;
-    _paint.colorFilter = ColorFilter.mode(
-      Colors.white.withValues(alpha: pulseAlpha),
-      BlendMode.modulate,
-    );
-    canvas.drawImageRect(
-      img,
-      Rect.fromLTWH(0, 0, img.width.toDouble(), img.height.toDouble()),
-      Rect.fromLTRB(cx - hw, cy - hh, cx + hw, cy + hh),
-      _paint,
-    );
-    _paint.colorFilter = null;
-  }
-
-  ui.Image _getOrRenderNebula(CosmosNebula n) {
-    final key = Object.hash(
-      n.radiusPixels,
-      n.color.toARGB32(),
-      n.density,
-      n.seed,
-      pixelSize,
-    );
-    return _nebulaCache.putIfAbsent(key, () => _renderNebulaImage(n));
-  }
-
-  ui.Image _renderNebulaImage(CosmosNebula n) {
-    final r = n.radiusPixels;
-    final pxSize = ((2 * r + 1) * pixelSize).ceil();
-    if (pxSize <= 0) return _emptyImage();
-
-    final recorder = ui.PictureRecorder();
-    final canvas = Canvas(
-      recorder,
-      Rect.fromLTWH(0, 0, pxSize.toDouble(), pxSize.toDouble()),
-    );
-    final cx = pxSize / 2.0;
-    final cy = pxSize / 2.0;
-
-    final paint = Paint()
-      ..isAntiAlias = false
-      ..filterQuality = FilterQuality.none
-      ..style = PaintingStyle.fill;
-    final rng = math.Random(n.seed * 31 + 17);
-
-    for (var py = -r; py <= r; py++) {
-      final ymag = py * py;
-      if (ymag > r * r) continue;
-      final hw = math.sqrt(r * r - ymag).floor();
-      for (var px = -hw; px <= hw; px++) {
-        final d2 = px * px + py * py;
-        final tNorm = math.sqrt(d2) / r;
-        final localDensity = n.density * (1 - tNorm) * (1 - tNorm);
-        final bayer = _bayer8[py & 7][px & 7];
-        if (bayer > localDensity) continue;
-        if (rng.nextDouble() > localDensity * 1.4) continue;
-
-        final alpha = (n.color.a * (1 - tNorm * 0.85)).clamp(0.0, 1.0);
-        paint.color = n.color.withValues(alpha: alpha);
-        canvas.drawRect(
-          Rect.fromLTWH(
-            cx + px * pixelSize,
-            cy + py * pixelSize,
-            pixelSize,
-            pixelSize,
-          ),
-          paint,
-        );
-      }
-    }
-
-    final picture = recorder.endRecording();
-    final img = picture.toImageSync(pxSize, pxSize);
-    picture.dispose();
-    return img;
-  }
-
-  // ===========================================================================
-  // STARS — per-frame, cheap
-  // ===========================================================================
-
-  void _paintStars(Canvas canvas, Size size) {
-    const coolTint = Color(0xFFBFD4FF);
-    const warmTint = Color(0xFFFFD8A0);
-
-    for (var i = 0; i < pixelStars.length; i++) {
-      final s = pixelStars[i];
-      final cx = _snap(s.dx * size.width);
-      final cy = _snap(s.dy * size.height);
-
-      final isFeatured = i % 6 == 0;
-      final isDistant = !isFeatured && i % 3 == 1;
-
-      // Stars NAO piscam mais — alpha estavel por tier. So as featured
-      // tem um sine pulse muito sutil (0.85-1.0) — imperceptivel como
-      // "blink", percebido so como "vida".
-      final featuredPulse = isFeatured
-          ? 0.925 + 0.075 * math.sin(tick * 2 * math.pi + i * 0.4)
-          : 1.0;
-
-      Color baseColor;
-      double tierAlpha;
-      if (isFeatured) {
-        baseColor = (i % 12 == 0) ? warmTint : coolTint;
-        tierAlpha = 1.0;
-      } else if (isDistant) {
-        baseColor = starColor;
-        tierAlpha = 0.50;
-      } else {
-        baseColor = starColor;
-        tierAlpha = 0.85;
-      }
-      final alpha = (baseColor.a * featuredPulse * tierAlpha).clamp(0.0, 1.0);
-      _paint.color = baseColor.withValues(alpha: alpha);
-
-      if (isFeatured) {
-        _drawFeaturedStar(canvas, cx, cy);
-      } else if (isDistant) {
-        canvas.drawRect(
-          Rect.fromLTWH(
-            cx + pixelSize * 0.25,
-            cy + pixelSize * 0.25,
-            pixelSize * 0.5,
-            pixelSize * 0.5,
-          ),
-          _paint,
-        );
-      } else {
-        canvas.drawRect(
-          Rect.fromLTWH(cx, cy, pixelSize, pixelSize),
-          _paint,
-        );
-      }
-    }
-  }
-
-  void _drawFeaturedStar(Canvas canvas, double cx, double cy) {
-    final p = pixelSize;
-    // Diamond 3x3:
-    //   .X.
-    //   XXX
-    //   .X.
-    canvas
-      ..drawRect(Rect.fromLTWH(cx, cy - p, p, p), _paint)
-      ..drawRect(Rect.fromLTWH(cx - p, cy, p * 3, p), _paint)
-      ..drawRect(Rect.fromLTWH(cx, cy + p, p, p), _paint);
-
-    // Halo 4-corners (5x5 diamond extremes) com alpha reduzida — agora
-    // sempre desenhado (sem condicao "atPeak" que causava blink).
-    final original = _paint.color;
-    _paint.color = original.withValues(
-      alpha: (original.a * 0.35).clamp(0.0, 1.0),
-    );
-    canvas
-      ..drawRect(Rect.fromLTWH(cx, cy - 2 * p, p, p), _paint)
-      ..drawRect(Rect.fromLTWH(cx - 2 * p, cy, p, p), _paint)
-      ..drawRect(Rect.fromLTWH(cx + 2 * p, cy, p, p), _paint)
-      ..drawRect(Rect.fromLTWH(cx, cy + 2 * p, p, p), _paint);
-    _paint.color = original;
-  }
-
-  // ===========================================================================
-  // PLANET DRIFT — movimento sutil estilo parallax
-  // ===========================================================================
-
-  /// Centro efetivo do planeta no canvas, com drift aplicado.
-  /// Drift e snapped a multiplos de `pixelSize` pra preservar pixel
-  /// grid alignment.
-  Offset _planetCenter(CosmosPlanet planet, Size size) {
-    final drift = _planetDrift(planet);
-    return Offset(
-      _snap(planet.canvasAnchor.dx * size.width + drift.dx),
-      _snap(planet.canvasAnchor.dy * size.height + drift.dy),
-    );
-  }
-
-  Offset _planetDrift(CosmosPlanet planet) {
-    // Range escala com sqrt(radius) — gigantes drift mais, pequenos
-    // menos (sensacao parallax: maior = mais perto = move mais).
-    final rangeX = math.sqrt(planet.radiusPixels.toDouble()) * 1.4;
-    final rangeY = math.sqrt(planet.radiusPixels.toDouble()) * 0.5;
-    final phase = planet.seed * 0.31;
-    return Offset(
-      math.sin(tick * 2 * math.pi + phase) * rangeX,
-      math.cos(tick * 2 * math.pi * 0.7 + phase + 1.5) * rangeY,
-    );
-  }
-
-  // ===========================================================================
-  // LUA — per-frame, cheap (raio pequeno)
+  // LUA — disco com glow + terminator
   // ===========================================================================
 
   void _paintMoon(Canvas canvas, Size size, CosmosPlanet planet) {
@@ -833,59 +567,167 @@ class CosmosPainter extends CustomPainter {
     final angle = t * 2 * math.pi;
 
     final center = _planetCenter(planet, size);
-    final orbitR = moon.orbitRadiusPixels;
-    final mx = _snap(center.dx + math.cos(angle) * orbitR * pixelSize);
-    final my =
-        _snap(center.dy + math.sin(angle) * orbitR * pixelSize * 0.45);
-
-    final mr = moon.moonRadiusPixels;
+    final orbitR = moon.orbitRadiusPixels * pixelSize;
+    final mx = center.dx + math.cos(angle) * orbitR;
+    final my = center.dy + math.sin(angle) * orbitR * 0.45;
+    final mr = moon.moonRadiusPixels * pixelSize;
     if (mr <= 0) return;
+    final moonCenter = Offset(mx, my);
 
-    final ramp = _moonRamp(moon.color);
-    for (var py = -mr; py <= mr; py++) {
-      final ymag = py * py;
-      if (ymag > mr * mr) continue;
-      final hw = math.sqrt(mr * mr - ymag).floor();
-      for (var px = -hw; px <= hw; px++) {
-        final nx = (px + 0.5) / mr;
-        final ny = (py + 0.5) / mr;
-        final nz2 = 1 - nx * nx - ny * ny;
-        final nz = nz2 > 0 ? math.sqrt(nz2) : 0.0;
-        const lx = -0.5;
-        const ly = -0.5;
-        const lz = 0.71;
-        final lambert = (nx * lx + ny * ly + nz * lz).clamp(-0.15, 1.0);
-        final bayer = _bayer8[py & 7][px & 7];
-        final dithered = lambert + (bayer - 0.5) * 0.10;
-        final idx = (dithered * (ramp.length - 1))
-            .round()
-            .clamp(0, ramp.length - 1);
-        _paint.color = ramp[idx];
-        canvas.drawRect(
-          Rect.fromLTWH(
-            mx + px * pixelSize,
-            my + py * pixelSize,
-            pixelSize,
-            pixelSize,
-          ),
-          _paint,
+    // Glow.
+    final glowR = mr * 2.4;
+    final glowShader = RadialGradient(
+      colors: [
+        moon.color.withValues(alpha: 0.50),
+        moon.color.withValues(alpha: 0),
+      ],
+    ).createShader(Rect.fromCircle(center: moonCenter, radius: glowR));
+    _paint.shader = glowShader;
+    canvas.drawCircle(moonCenter, glowR, _paint);
+    _paint.shader = null;
+
+    // Body.
+    _paint.color = moon.color;
+    canvas.drawCircle(moonCenter, mr, _paint);
+
+    // Terminator sutil.
+    final terminator = RadialGradient(
+      center: const Alignment(0.5, 0.5),
+      radius: 1.0,
+      colors: [
+        Colors.transparent,
+        const Color.from(alpha: 0.5, red: 0, green: 0, blue: 0),
+      ],
+      stops: const [0.35, 1.0],
+    ).createShader(Rect.fromCircle(center: moonCenter, radius: mr));
+    canvas.save();
+    canvas.clipPath(
+      Path()..addOval(Rect.fromCircle(center: moonCenter, radius: mr)),
+    );
+    _paint.shader = terminator;
+    canvas.drawCircle(moonCenter, mr, _paint);
+    _paint.shader = null;
+    canvas.restore();
+  }
+
+  // ===========================================================================
+  // NEBULOSA — radial gradient multi-stop, smooth
+  // ===========================================================================
+
+  void _paintNebula(Canvas canvas, Size size, CosmosNebula n) {
+    if (n.radiusPixels <= 0) return;
+    final cx = n.canvasAnchor.dx * size.width;
+    final cy = n.canvasAnchor.dy * size.height;
+    final r = n.radiusPixels * pixelSize;
+
+    // Breath sutil — alpha pulsando entre 0.85-1.0 com fase por seed.
+    final breath = 0.92 +
+        0.08 * math.sin(tick * 2 * math.pi + n.seed.toDouble() * 0.7);
+    final coreAlpha = (n.color.a * n.density * breath).clamp(0.0, 1.0);
+
+    // Core mais opaco + falloff mais sharp — nebulosa parece "block"
+    // de cor neon ao inves de gradient washy.
+    final shader = RadialGradient(
+      colors: [
+        n.color.withValues(alpha: coreAlpha),
+        n.color.withValues(alpha: coreAlpha * 0.78),
+        n.color.withValues(alpha: coreAlpha * 0.28),
+        n.color.withValues(alpha: 0),
+      ],
+      stops: const [0.0, 0.30, 0.65, 1.0],
+    ).createShader(Rect.fromCircle(center: Offset(cx, cy), radius: r));
+    _paint.shader = shader;
+    canvas.drawCircle(Offset(cx, cy), r, _paint);
+    _paint.shader = null;
+  }
+
+  // ===========================================================================
+  // ESTRELAS — dots smooth com halo nas featured
+  // ===========================================================================
+
+  void _paintStars(Canvas canvas, Size size) {
+    const coolTint = Color(0xFFBFD4FF);
+    const warmTint = Color(0xFFFFD8A0);
+    const neonPink = Color(0xFFFF99D6);
+    const neonCyan = Color(0xFF99FFEC);
+
+    for (var i = 0; i < pixelStars.length; i++) {
+      final s = pixelStars[i];
+      final cx = s.dx * size.width;
+      final cy = s.dy * size.height;
+
+      final isFeatured = i % 6 == 0;
+      final isDistant = !isFeatured && i % 3 == 1;
+
+      // Pulse sutil so nas featured — sine wave 0.92-1.0.
+      final featuredPulse = isFeatured
+          ? 0.92 + 0.08 * math.sin(tick * 2 * math.pi + i * 0.4)
+          : 1.0;
+
+      Color color;
+      double radius;
+      double tierAlpha;
+      if (isFeatured) {
+        // Featured podem ter tint neon ocasional.
+        if (i % 24 == 0) {
+          color = neonPink;
+        } else if (i % 18 == 0) {
+          color = neonCyan;
+        } else if (i % 12 == 0) {
+          color = warmTint;
+        } else {
+          color = coolTint;
+        }
+        radius = pixelSize * 1.35;
+        tierAlpha = 0.95;
+      } else if (isDistant) {
+        color = starColor;
+        radius = pixelSize * 0.35;
+        tierAlpha = 0.55;
+      } else {
+        color = starColor;
+        radius = pixelSize * 0.65;
+        tierAlpha = 0.85;
+      }
+
+      final alpha =
+          (color.a * featuredPulse * tierAlpha).clamp(0.0, 1.0);
+
+      if (isFeatured) {
+        // Halo difuso 3.5x raio.
+        final haloR = radius * 3.8;
+        final haloShader = RadialGradient(
+          colors: [
+            color.withValues(alpha: (alpha * 0.42).clamp(0.0, 1.0)),
+            color.withValues(alpha: (alpha * 0.18).clamp(0.0, 1.0)),
+            color.withValues(alpha: 0),
+          ],
+          stops: const [0.0, 0.45, 1.0],
+        ).createShader(
+          Rect.fromCircle(center: Offset(cx, cy), radius: haloR),
         );
+        _paint.shader = haloShader;
+        canvas.drawCircle(Offset(cx, cy), haloR, _paint);
+        _paint.shader = null;
+
+        // Core brilhante.
+        _paint.color = color.withValues(alpha: alpha);
+        canvas.drawCircle(Offset(cx, cy), radius, _paint);
+
+        // Inner highlight (mini white core).
+        _paint.color = Colors.white.withValues(
+          alpha: (alpha * 0.6).clamp(0.0, 1.0),
+        );
+        canvas.drawCircle(Offset(cx, cy), radius * 0.4, _paint);
+      } else {
+        _paint.color = color.withValues(alpha: alpha);
+        canvas.drawCircle(Offset(cx, cy), radius, _paint);
       }
     }
   }
 
-  List<Color> _moonRamp(Color base) {
-    return [
-      _darker(base, 0.70),
-      _darker(base, 0.45),
-      _darker(base, 0.20),
-      base,
-      _lighter(base, 0.20),
-    ];
-  }
-
   // ===========================================================================
-  // COMETA — per-frame, cheap (so ativo na janela)
+  // COMETA / SHOOTING STAR — gradient tail + bright head com glow
   // ===========================================================================
 
   void _paintComet(Canvas canvas, Size size, CosmosComet c) {
@@ -894,14 +736,12 @@ class CosmosPainter extends CustomPainter {
     if (windowSpan <= 0) return;
 
     final progress = (tick - c.windowStart) / windowSpan;
-    final headX = _snap(
-      (c.startAnchor.dx + (c.endAnchor.dx - c.startAnchor.dx) * progress) *
-          size.width,
-    );
-    final headY = _snap(
-      (c.startAnchor.dy + (c.endAnchor.dy - c.startAnchor.dy) * progress) *
-          size.height,
-    );
+    final headX =
+        (c.startAnchor.dx + (c.endAnchor.dx - c.startAnchor.dx) * progress) *
+            size.width;
+    final headY =
+        (c.startAnchor.dy + (c.endAnchor.dy - c.startAnchor.dy) * progress) *
+            size.height;
 
     final dirX = (c.startAnchor.dx - c.endAnchor.dx) * size.width;
     final dirY = (c.startAnchor.dy - c.endAnchor.dy) * size.height;
@@ -910,43 +750,82 @@ class CosmosPainter extends CustomPainter {
     final ux = dirX / len;
     final uy = dirY / len;
 
-    for (var i = c.tailLengthPixels; i >= 1; i--) {
-      final tt = i / c.tailLengthPixels;
-      final alpha = (c.color.a * (1 - tt) * 0.9).clamp(0.0, 1.0);
-      _paint.color = c.color.withValues(alpha: alpha);
-      final tx = _snap(headX + ux * i * pixelSize);
-      final ty = _snap(headY + uy * i * pixelSize);
-      canvas.drawRect(
-        Rect.fromLTWH(tx, ty, pixelSize, pixelSize),
-        _paint,
-      );
-    }
+    final tailLen = c.tailLengthPixels * pixelSize * 2.5;
+    final tailEnd = Offset(headX + ux * tailLen, headY + uy * tailLen);
+    final head = Offset(headX, headY);
 
-    _paint.color = c.color;
-    final p = pixelSize;
-    canvas
-      ..drawRect(Rect.fromLTWH(headX, headY - p, p, p), _paint)
-      ..drawRect(Rect.fromLTWH(headX - p, headY, p * 3, p), _paint)
-      ..drawRect(Rect.fromLTWH(headX, headY + p, p, p), _paint);
+    // Tail: linha grossa com gradient linear.
+    final tailShader = LinearGradient(
+      colors: [
+        c.color.withValues(alpha: 0),
+        c.color.withValues(alpha: (c.color.a * 0.85).clamp(0.0, 1.0)),
+      ],
+    ).createShader(Rect.fromPoints(tailEnd, head));
+    _paint
+      ..shader = tailShader
+      ..strokeCap = StrokeCap.round
+      ..strokeWidth = pixelSize * 2.0
+      ..style = PaintingStyle.stroke;
+    canvas.drawLine(tailEnd, head, _paint);
+    _paint
+      ..style = PaintingStyle.fill
+      ..shader = null;
+
+    // Head glow.
+    final headR = pixelSize * 2.0;
+    final glowR = headR * 3.2;
+    final glowShader = RadialGradient(
+      colors: [
+        c.color.withValues(alpha: 0.90),
+        c.color.withValues(alpha: 0.35),
+        c.color.withValues(alpha: 0),
+      ],
+      stops: const [0.0, 0.4, 1.0],
+    ).createShader(Rect.fromCircle(center: head, radius: glowR));
+    _paint.shader = glowShader;
+    canvas.drawCircle(head, glowR, _paint);
+    _paint.shader = null;
+
+    // Head core.
+    _paint.color = Colors.white.withValues(alpha: c.color.a);
+    canvas.drawCircle(head, headR, _paint);
   }
 
   // ===========================================================================
   // HELPERS
   // ===========================================================================
 
-  double _snap(double v) => (v / pixelSize).roundToDouble() * pixelSize;
+  /// Centro efetivo do planeta com drift sutil aplicado (parallax).
+  Offset _planetCenter(CosmosPlanet planet, Size size) {
+    final drift = _planetDrift(planet);
+    return Offset(
+      planet.canvasAnchor.dx * size.width + drift.dx,
+      planet.canvasAnchor.dy * size.height + drift.dy,
+    );
+  }
 
-  /// Interpola palette de input (1-N cores) pra rampa fixa de 9 stops.
+  Offset _planetDrift(CosmosPlanet planet) {
+    final rangeX = math.sqrt(planet.radiusPixels.toDouble()) * 1.6;
+    final rangeY = math.sqrt(planet.radiusPixels.toDouble()) * 0.6;
+    final phase = planet.seed * 0.31;
+    return Offset(
+      math.sin(tick * 2 * math.pi + phase) * rangeX,
+      math.cos(tick * 2 * math.pi * 0.7 + phase + 1.5) * rangeY,
+    );
+  }
+
+  /// Interpola palette (1-N cores) pra rampa 5-stop (shadow → highlight).
   List<Color> _resolveRamp(List<Color> palette) {
     if (palette.isEmpty) {
-      return List<Color>.filled(_rampStops, const Color(0xFF000000));
+      return List<Color>.filled(5, const Color(0xFF000000));
     }
     if (palette.length == 1) {
-      return List<Color>.filled(_rampStops, palette.first);
+      return List<Color>.filled(5, palette.first);
     }
+    if (palette.length >= 5) return palette;
     final result = <Color>[];
-    for (var i = 0; i < _rampStops; i++) {
-      final t = i / (_rampStops - 1);
+    for (var i = 0; i < 5; i++) {
+      final t = i / 4;
       final pos = t * (palette.length - 1);
       final lo = pos.floor().clamp(0, palette.length - 1);
       final hi = (lo + 1).clamp(0, palette.length - 1);
@@ -954,19 +833,6 @@ class CosmosPainter extends CustomPainter {
       result.add(_mix(palette[lo], palette[hi], f));
     }
     return result;
-  }
-
-  ui.Image _emptyImage() {
-    final recorder = ui.PictureRecorder();
-    final canvas = Canvas(recorder, Rect.fromLTWH(0, 0, 1, 1));
-    canvas.drawRect(
-      const Rect.fromLTWH(0, 0, 1, 1),
-      Paint()..color = const Color(0x00000000),
-    );
-    final pic = recorder.endRecording();
-    final img = pic.toImageSync(1, 1);
-    pic.dispose();
-    return img;
   }
 
   @override
@@ -986,78 +852,8 @@ class CosmosPainter extends CustomPainter {
 }
 
 // =============================================================================
-// SURFACE FEATURES — internal helpers
-// =============================================================================
-
-class _Crater {
-  const _Crater(this.dx, this.dy, this.r2);
-  final double dx;
-  final double dy;
-  final double r2;
-}
-
-List<_Crater> _craterList(int seed, int r) {
-  final rng = math.Random(seed * 101 + 7);
-  final sizeBonus = (r ~/ 50).clamp(0, 12);
-  final count = 6 + rng.nextInt(4) + sizeBonus;
-  return List<_Crater>.generate(count, (_) {
-    final ang = rng.nextDouble() * 2 * math.pi;
-    final dist = rng.nextDouble() * r * 0.78;
-    final cdx = math.cos(ang) * dist;
-    final cdy = math.sin(ang) * dist;
-    final crad = 1.5 + rng.nextDouble() * (r * 0.06 + 1.5);
-    return _Crater(cdx, cdy, crad * crad);
-  });
-}
-
-class _Vortex {
-  const _Vortex(this.cx, this.cy, this.rx, this.ry);
-  final double cx;
-  final double cy;
-  final double rx;
-  final double ry;
-
-  static _Vortex forPlanet(int r, int seed) {
-    final rng = math.Random(seed * 53 + 11);
-    final dx = (rng.nextDouble() * 0.6 - 0.3) * r;
-    final dy = (0.1 + rng.nextDouble() * 0.25) * r;
-    final rx = r * (0.18 + rng.nextDouble() * 0.08);
-    final ry = rx * (0.5 + rng.nextDouble() * 0.2);
-    return _Vortex(dx, dy, rx, ry);
-  }
-
-  bool contains(int px, int py) {
-    final dx = px - cx;
-    final dy = py - cy;
-    return (dx * dx) / (rx * rx) + (dy * dy) / (ry * ry) < 1;
-  }
-
-  bool isRim(int px, int py) {
-    final dx = px - cx;
-    final dy = py - cy;
-    final n = (dx * dx) / (rx * rx) + (dy * dy) / (ry * ry);
-    return n > 0.65 && n < 1.0;
-  }
-}
-
-// =============================================================================
 // COLOR HELPERS
 // =============================================================================
-
-Color _darker(Color c, double factor) {
-  final k = (1 - factor).clamp(0.0, 1.0);
-  return Color.from(alpha: c.a, red: c.r * k, green: c.g * k, blue: c.b * k);
-}
-
-Color _lighter(Color c, double factor) {
-  final k = factor.clamp(0.0, 1.0);
-  return Color.from(
-    alpha: c.a,
-    red: (c.r * (1 - k) + k).clamp(0.0, 1.0),
-    green: (c.g * (1 - k) + k).clamp(0.0, 1.0),
-    blue: (c.b * (1 - k) + k).clamp(0.0, 1.0),
-  );
-}
 
 Color _mix(Color a, Color b, double t) {
   final s = 1 - t;

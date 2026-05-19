@@ -28,15 +28,22 @@ void main() {
 
       expect(find.byType(CosmosField), findsOneWidget);
       final painter = currentPainter(tester);
-      expect(painter.planets, hasLength(3));
-      expect(painter.nebulas, hasLength(2));
+      expect(painter.planets, hasLength(5));
+      expect(painter.nebulas, hasLength(3));
       expect(painter.comet, isNotNull);
-      expect(painter.pixelStars, hasLength(18));
+      expect(painter.pixelStars, hasLength(36));
 
       // Defaults da paleta: pelo menos um planeta tem ring, pelo menos
       // um tem moon. Sem isso o "cosmos" perde a graca.
       expect(painter.planets.any((p) => p.ring != null), isTrue);
       expect(painter.planets.any((p) => p.moon != null), isTrue);
+
+      // Red giant: centro off-screen no canto superior direito,
+      // garantindo o "1/3 visivel" como focal point dramatico.
+      final redGiant = painter.planets.firstWhere((p) => p.id == 'red-giant');
+      expect(redGiant.canvasAnchor.dx, greaterThan(1.0));
+      expect(redGiant.canvasAnchor.dy, lessThan(0));
+      expect(redGiant.radiusPixels, greaterThanOrEqualTo(110));
 
       await tester.pumpWidget(const SizedBox());
     });

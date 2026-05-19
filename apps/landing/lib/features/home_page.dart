@@ -10,6 +10,7 @@ import 'package:landing/widgets/home_footer.dart';
 import 'package:landing/widgets/home_nav.dart';
 import 'package:landing/widgets/labs_teaser_section.dart';
 import 'package:landing/widgets/section_wave_divider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 /// Home da landing — composta pelas feature_* na ordem do scroll.
 /// Plugadas: Hero (§12.6) + Services (§12.7) + Showcase (§12.10) +
@@ -83,6 +84,27 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  /// Abre a [uri] no app externo apropriado (browser, mail client,
+  /// WhatsApp). No web, [LaunchMode.externalApplication] equivale a
+  /// `window.open(_blank)`. Engole falhas silenciosamente — falhar
+  /// um CTA nao deve quebrar o resto da sessao.
+  Future<void> _openExternalUri(Uri uri) async {
+    try {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    } on Object catch (error, stack) {
+      // Reporta no console em debug; em release o usuario apenas nao
+      // ve o app externo abrir — sem crash.
+      FlutterError.reportError(
+        FlutterErrorDetails(
+          exception: error,
+          stack: stack,
+          library: 'apps/landing',
+          context: ErrorDescription('opening external uri $uri'),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
@@ -135,7 +157,10 @@ class _HomePageState extends State<HomePage> {
               SliverToBoxAdapter(
                 child: SizedBox(
                   height: heroHeight,
-                  child: const HeroSection(),
+                  child: HeroSection(
+                    onContactPressed: () => _scrollToKey(_contactKey),
+                    onSeeProjectsPressed: () => _scrollToKey(_showcaseKey),
+                  ),
                 ),
               ),
               SliverToBoxAdapter(
@@ -188,14 +213,14 @@ class _HomePageState extends State<HomePage> {
                   child: _SectionSlot(
                     horizontalPadding: horizontalPadding,
                     glowAlignment: Alignment.centerLeft,
-                    child: const ContactSection(
-                      // TODO(jose): trocar pelo numero do WhatsApp real
-                      // e plugar url_launcher pra abrir as Uris emitidas.
+                    child: ContactSection(
+                      // TODO(jose): trocar pelo numero do WhatsApp real.
                       whatsappNumber: '5571999990000',
                       email: 'contato.joseguilhermealves@gmail.com',
                       linkedinUrl:
                           'https://www.linkedin.com/in/jos%C3%A9-guilherme-alves-10a17b138/',
                       githubUrl: 'https://github.com/JoseGuilhermeAlves',
+                      onOpenUri: _openExternalUri,
                     ),
                   ),
                 ),

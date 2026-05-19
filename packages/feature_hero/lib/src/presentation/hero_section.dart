@@ -140,9 +140,19 @@ class HeroSection extends StatelessWidget {
             ),
           ),
         ),
+        // Cosmos 8-bit — nebulosas, planetas com anel, lua orbitando
+        // stepped e cometa cruzando o canvas. Vai *acima* das particulas
+        // (pra que planetas dominem visualmente) e *abaixo* das
+        // constelacoes (pra que estrelas nomeadas continuem dialogando
+        // com o headline). Pixel-art rasterizado a 4 logical px por
+        // 8-bit pixel.
+        const Positioned.fill(
+          child: IgnorePointer(child: CosmosField()),
+        ),
         // Constelacoes com flare em cruz e twinkle — pontos
         // reconheciveis (Cruzeiro do Sul, Orion, Triangulo de Verao).
-        // Vai por cima das particulas pra que as estrelas dominem.
+        // Vai por cima do cosmos pra que estrelas e linhas dialoguem
+        // direto com o texto.
         const Positioned.fill(
           child: IgnorePointer(child: ConstellationField()),
         ),

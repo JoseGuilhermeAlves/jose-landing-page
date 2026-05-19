@@ -21,7 +21,14 @@
       "Bash(git fetch *)",
       "Bash(git worktree *)",
       "Bash(git branch *)",
-      "PowerShell(dart analyze *)"
+      "PowerShell(dart analyze *)",
+      "Bash(mkdir -p lib/src/shared/data lib/src/shared/domain lib/src/shared/presentation lib/src/shared/util)",
+      "Bash(mkdir -p lib/src/ecommerce/data lib/src/ecommerce/domain lib/src/ecommerce/presentation)",
+      "Bash(mkdir -p lib/src/delivery/data lib/src/delivery/domain lib/src/delivery/presentation)",
+      "Bash(mkdir -p lib/src/fitness/data lib/src/fitness/domain lib/src/fitness/presentation)",
+      "Bash(mkdir -p lib/src/scheduling/data lib/src/scheduling/domain lib/src/scheduling/presentation)",
+      "Bash(git mv *)",
+      "Bash(xargs -0 sed -i -f /tmp/showcase_rewrite.sed)"
     ]
   }
 }

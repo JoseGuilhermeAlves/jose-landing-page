@@ -134,10 +134,25 @@ class VitralConfirmationPage extends StatelessWidget {
                 expand: true,
                 onPressed: () {
                   final appt = _buildAppointment();
+                  final navigator = Navigator.of(context);
+                  final messenger = ScaffoldMessenger.of(context);
                   context
                       .read<SchedulingBloc>()
                       .add(SchedulingAppointmentConfirmed(appt));
-                  Navigator.of(context).popUntil((r) => r.isFirst);
+                  navigator.popUntil((r) => r.isFirst);
+                  messenger.showSnackBar(
+                    SnackBar(
+                      key: const Key('vitral-confirmation-snackbar'),
+                      behavior: SnackBarBehavior.floating,
+                      backgroundColor: colors.primary,
+                      content: Text(
+                        'Agendamento ${appt.id} confirmado. '
+                        'Lembrete por e-mail na vespera.',
+                        style: TextStyle(color: colors.onPrimary),
+                      ),
+                      duration: const Duration(seconds: 4),
+                    ),
+                  );
                 },
               ),
             ],

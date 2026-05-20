@@ -1,0 +1,26 @@
+name: feature_tech
+description: Secao "Arquitetura & Stack" — decisoes, tech stack e painters do projeto.
+publish_to: none
+version: 0.0.1
+
+environment:
+  sdk: ">=3.10.0-0 <4.0.0"
+
+resolution: workspace
+
+dependencies:
+  animations:
+    path: ../animations
+  core:
+    path: ../core
+  design_system:
+    path: ../design_system
+  equatable: ^2.0.7
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:

@@ -15,7 +15,15 @@ class AuroraStatusTimeline extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = context.colors;
     final textTheme = Theme.of(context).textTheme;
-    const all = DeliveryStatus.values;
+    // `cancelled` e estado paralelo — nao entra na linha do tempo de 4
+    // passos. A UI host decide trocar este widget por banner dedicado
+    // quando o pedido foi cancelado.
+    const all = [
+      DeliveryStatus.received,
+      DeliveryStatus.preparing,
+      DeliveryStatus.outForDelivery,
+      DeliveryStatus.delivered,
+    ];
     final activeIndex = all.indexOf(activeStatus);
 
     return Column(
@@ -41,6 +49,7 @@ class AuroraStatusTimeline extends StatelessWidget {
       DeliveryStatus.preparing => 'Banca separando e embalando.',
       DeliveryStatus.outForDelivery => 'A caminho do seu endereco.',
       DeliveryStatus.delivered => 'Entregue. Bom proveito.',
+      DeliveryStatus.cancelled => 'Pedido cancelado.',
     };
   }
 }

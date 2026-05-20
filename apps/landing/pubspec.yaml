@@ -28,6 +28,8 @@ dependencies:
     path: ../../packages/feature_services
   feature_showcase:
     path: ../../packages/feature_showcase
+  feature_tech:
+    path: ../../packages/feature_tech
   flutter:
     sdk: flutter
   go_router: ^16.2.4

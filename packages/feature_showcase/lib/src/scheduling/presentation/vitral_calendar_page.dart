@@ -135,6 +135,14 @@ class _VitralCalendarPageState extends State<VitralCalendarPage> {
                           selectedSlot: _selectedSlot,
                           onPicked: (slot) =>
                               setState(() => _selectedSlot = slot),
+                          onCancel: (slot) {
+                            if (_selectedSlot == slot) {
+                              setState(() => _selectedSlot = null);
+                            }
+                            context
+                                .read<SchedulingBloc>()
+                                .add(SchedulingSlotCancelled(slot));
+                          },
                           colors: colors,
                           textTheme: textTheme,
                         ),
@@ -378,6 +386,7 @@ class _SlotsGrid extends StatelessWidget {
     required this.slots,
     required this.selectedSlot,
     required this.onPicked,
+    required this.onCancel,
     required this.colors,
     required this.textTheme,
   });
@@ -385,6 +394,7 @@ class _SlotsGrid extends StatelessWidget {
   final List<AppointmentSlot> slots;
   final DateTime? selectedSlot;
   final ValueChanged<DateTime> onPicked;
+  final ValueChanged<DateTime> onCancel;
   final AppColorScheme colors;
   final TextTheme textTheme;
 
@@ -413,6 +423,7 @@ class _SlotsGrid extends StatelessWidget {
                   slot: slot,
                   selected: selectedSlot == slot.start,
                   onPicked: onPicked,
+                  onCancel: onCancel,
                   colors: colors,
                   textTheme: textTheme,
                 ),
@@ -429,6 +440,7 @@ class _SlotTile extends StatelessWidget {
     required this.slot,
     required this.selected,
     required this.onPicked,
+    required this.onCancel,
     required this.colors,
     required this.textTheme,
   });
@@ -436,6 +448,7 @@ class _SlotTile extends StatelessWidget {
   final AppointmentSlot slot;
   final bool selected;
   final ValueChanged<DateTime> onPicked;
+  final ValueChanged<DateTime> onCancel;
   final AppColorScheme colors;
   final TextTheme textTheme;
 
@@ -468,6 +481,8 @@ class _SlotTile extends StatelessWidget {
 
     final disabled = slot.status != SlotStatus.free;
 
+    final isBooked = slot.status == SlotStatus.booked;
+
     return AnimatedContainer(
       key: const Key('scheduling-slot-tile'),
       duration: AppDuration.fast,
@@ -476,40 +491,67 @@ class _SlotTile extends StatelessWidget {
         borderRadius: BorderRadius.circular(AppRadius.md),
         border: Border.all(color: palette.border),
       ),
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          borderRadius: BorderRadius.circular(AppRadius.md),
-          onTap: disabled ? null : () => onPicked(slot.start),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.md,
-              vertical: AppSpacing.sm,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  _formatTime(slot.start),
-                  style: textTheme.titleMedium?.copyWith(
-                    color: palette.text,
-                    fontFamily: VitralBrand.monoFontFamily,
-                    fontWeight: FontWeight.w800,
-                    letterSpacing: 0.4,
-                  ),
+      child: Stack(
+        children: [
+          Material(
+            color: Colors.transparent,
+            child: InkWell(
+              borderRadius: BorderRadius.circular(AppRadius.md),
+              onTap: disabled ? null : () => onPicked(slot.start),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: AppSpacing.md,
+                  vertical: AppSpacing.sm,
                 ),
-                const SizedBox(height: AppSpacing.xxs),
-                Text(
-                  palette.label,
-                  style: textTheme.labelSmall?.copyWith(
-                    color: palette.labelColor,
-                  ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      _formatTime(slot.start),
+                      style: textTheme.titleMedium?.copyWith(
+                        color: palette.text,
+                        fontFamily: VitralBrand.monoFontFamily,
+                        fontWeight: FontWeight.w800,
+                        letterSpacing: 0.4,
+                      ),
+                    ),
+                    const SizedBox(height: AppSpacing.xxs),
+                    Text(
+                      palette.label,
+                      style: textTheme.labelSmall?.copyWith(
+                        color: palette.labelColor,
+                      ),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
-        ),
+          // Botao "X" so aparece em slots reservados pelo usuario —
+          // dispara `SchedulingSlotCancelled` no bloc.
+          if (isBooked)
+            Positioned(
+              top: 2,
+              right: 2,
+              child: IconButton(
+                key: const Key('scheduling-slot-cancel-button'),
+                visualDensity: VisualDensity.compact,
+                padding: EdgeInsets.zero,
+                constraints: const BoxConstraints.tightFor(
+                  width: 28,
+                  height: 28,
+                ),
+                tooltip: 'Cancelar reserva',
+                icon: Icon(
+                  Icons.close_rounded,
+                  size: 16,
+                  color: colors.primary,
+                ),
+                onPressed: () => onCancel(slot.start),
+              ),
+            ),
+        ],
       ),
     );
   }

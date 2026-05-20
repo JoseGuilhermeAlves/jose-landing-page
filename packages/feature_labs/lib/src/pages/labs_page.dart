@@ -1,28 +1,15 @@
 import 'package:design_system/design_system.dart';
 import 'package:feature_labs/src/data/playgrounds_catalog.dart';
 import 'package:feature_labs/src/domain/playground_descriptor.dart';
-import 'package:feature_labs/src/sections/architecture_section.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-/// Home do `/labs`. Mostra:
-/// - cards clicaveis pros 7 playgrounds (cada um abre uma sub-rota);
-/// - secao de decisoes arquiteturais;
-/// - link pro repo no GitHub (configuravel via [githubUrl]).
+/// Home do `/labs`. Vitrine interativa pura dos Custom Painters — cada
+/// card abre uma sub-rota com sliders ao vivo. Decisoes arquiteturais
+/// e tech stack moraram aqui ate maio/2026; agora vivem na secao
+/// "Arquitetura & Stack" da landing (feature_tech).
 class LabsPage extends StatelessWidget {
-  const LabsPage({
-    this.githubUrl,
-    this.onOpenGithub,
-    super.key = const Key('labs-page'),
-  });
-
-  /// URL do repositorio. Quando fornecida, [onOpenGithub] e chamado
-  /// no tap do botao com ela. Sem URL, o botao some.
-  final String? githubUrl;
-
-  /// Hook de side-effect pra navegar pro repo (url_launcher seria a
-  /// implementacao real; mantemos injetavel pra teste).
-  final void Function(String url)? onOpenGithub;
+  const LabsPage({super.key = const Key('labs-page')});
 
   @override
   Widget build(BuildContext context) {
@@ -69,20 +56,8 @@ class LabsPage extends StatelessWidget {
                   height: 1.5,
                 ),
               ),
-              if (githubUrl != null) ...[
-                const SizedBox(height: AppSpacing.lg),
-                AppButton(
-                  key: const Key('labs-github-button'),
-                  label: 'Ver repo no GitHub',
-                  variant: AppButtonVariant.secondary,
-                  icon: Icons.open_in_new,
-                  onPressed: () => onOpenGithub?.call(githubUrl!),
-                ),
-              ],
               const SizedBox(height: AppSpacing.xxl),
               const _PlaygroundsGrid(playgrounds: PlaygroundsCatalog.all),
-              const SizedBox(height: AppSpacing.xxl),
-              const ArchitectureSection(),
             ],
           ),
         ),

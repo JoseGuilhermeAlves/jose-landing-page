@@ -30,7 +30,9 @@
       "Bash(git mv *)",
       "Bash(xargs -0 sed -i -f /tmp/showcase_rewrite.sed)",
       "Bash(git add *)",
-      "Bash(git commit -m ' *)"
+      "Bash(git commit -m ' *)",
+      "Bash(melos bs *)",
+      "Bash(Get-ChildItem *)"
     ]
   }
 }

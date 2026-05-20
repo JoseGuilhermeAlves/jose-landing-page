@@ -4,8 +4,10 @@ import 'package:feature_contact/feature_contact.dart';
 import 'package:feature_hero/feature_hero.dart';
 import 'package:feature_services/feature_services.dart';
 import 'package:feature_showcase/feature_showcase.dart';
+import 'package:feature_tech/feature_tech.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:landing/config/app_config.dart';
 import 'package:landing/widgets/home_footer.dart';
 import 'package:landing/widgets/home_nav.dart';
 import 'package:landing/widgets/labs_teaser_section.dart';
@@ -14,10 +16,10 @@ import 'package:url_launcher/url_launcher.dart';
 
 /// Home da landing — composta pelas feature_* na ordem do scroll.
 /// Plugadas: Hero (§12.6) + Services (§12.7) + Showcase (§12.10) +
-/// About (§12.8) + Labs teaser + Contact (§12.9), separadas por
-/// `SectionWaveDivider` e envoltas em `GlowBackdrop` alternados.
+/// Tech + About (§12.8) + Labs teaser + Contact (§12.9), separadas
+/// por `SectionWaveDivider` e envoltas em `GlowBackdrop` alternados.
 ///
-/// O `HomeNav` flutua no topo via Stack overlay, com 5 ancoras que
+/// O `HomeNav` flutua no topo via Stack overlay, com 6 ancoras que
 /// rolam a posicao via `ScrollController.animateTo`. O calculo do
 /// offset usa `RenderAbstractViewport.getOffsetToReveal` menos a
 /// altura do nav, pra que o eyebrow chip da secao destino fique
@@ -37,10 +39,12 @@ class _HomePageState extends State<HomePage> {
   final _scrollController = ScrollController();
 
   // Uma `GlobalKey` por secao navegavel — ancorada na arvore via
-  // `KeyedSubtree`. As 5 ancoras do `HomeNav` (servicos, showcase,
-  // sobre, labs, contato) usam estas pra calcular offset de scroll.
+  // `KeyedSubtree`. As 6 ancoras do `HomeNav` (servicos, showcase,
+  // arquitetura, sobre, labs, contato) usam estas pra calcular offset
+  // de scroll.
   final _servicesKey = GlobalKey(debugLabel: 'home-anchor-services');
   final _showcaseKey = GlobalKey(debugLabel: 'home-anchor-showcase');
+  final _techKey = GlobalKey(debugLabel: 'home-anchor-tech');
   final _aboutKey = GlobalKey(debugLabel: 'home-anchor-about');
   final _labsKey = GlobalKey(debugLabel: 'home-anchor-labs');
   final _contactKey = GlobalKey(debugLabel: 'home-anchor-contact');
@@ -131,6 +135,11 @@ class _HomePageState extends State<HomePage> {
         onTap: () => _scrollToKey(_showcaseKey),
       ),
       HomeNavAnchor(
+        id: 'arquitetura',
+        label: 'Arquitetura',
+        onTap: () => _scrollToKey(_techKey),
+      ),
+      HomeNavAnchor(
         id: 'sobre',
         label: 'Sobre',
         onTap: () => _scrollToKey(_aboutKey),
@@ -187,6 +196,20 @@ class _HomePageState extends State<HomePage> {
               const SliverToBoxAdapter(child: SectionWaveDivider()),
               SliverToBoxAdapter(
                 child: KeyedSubtree(
+                  key: _techKey,
+                  child: _SectionSlot(
+                    horizontalPadding: horizontalPadding,
+                    glowAlignment: Alignment.bottomLeft,
+                    child: TechSection(
+                      githubUrl: AppConfig.githubRepoUrl,
+                      onOpenGithub: (url) => _openExternalUri(Uri.parse(url)),
+                    ),
+                  ),
+                ),
+              ),
+              const SliverToBoxAdapter(child: SectionWaveDivider()),
+              SliverToBoxAdapter(
+                child: KeyedSubtree(
                   key: _aboutKey,
                   child: _SectionSlot(
                     horizontalPadding: horizontalPadding,
@@ -214,8 +237,7 @@ class _HomePageState extends State<HomePage> {
                     horizontalPadding: horizontalPadding,
                     glowAlignment: Alignment.centerLeft,
                     child: ContactSection(
-                      // TODO(jose): trocar pelo numero do WhatsApp real.
-                      whatsappNumber: '5571999990000',
+                      whatsappNumber: '5514991163009',
                       email: 'contato.joseguilhermealves@gmail.com',
                       linkedinUrl:
                           'https://www.linkedin.com/in/jos%C3%A9-guilherme-alves-10a17b138/',

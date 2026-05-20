@@ -14,6 +14,7 @@ import 'package:feature_showcase/src/delivery/presentation/aurora_order_detail_p
 import 'package:feature_showcase/src/delivery/presentation/aurora_product_illustration.dart';
 import 'package:feature_showcase/src/delivery/presentation/aurora_store_list_page.dart';
 import 'package:feature_showcase/src/delivery/presentation/delivery_bloc.dart';
+import 'package:feature_showcase/src/delivery/presentation/delivery_event.dart';
 import 'package:feature_showcase/src/delivery/presentation/delivery_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -43,6 +44,13 @@ class AuroraHomePage extends StatelessWidget {
           onPressed: () => Navigator.of(context).maybePop(),
         ),
         actions: [
+          IconButton(
+            key: const Key('aurora-reset-icon'),
+            tooltip: 'Reiniciar demo',
+            icon: const Icon(Icons.refresh_rounded),
+            onPressed: () =>
+                context.read<DeliveryBloc>().add(const DeliveryReset()),
+          ),
           IconButton(
             key: const Key('aurora-history-icon'),
             tooltip: 'Historico de pedidos',

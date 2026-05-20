@@ -17,5 +17,4 @@ export 'src/playgrounds/morphing_shape_playground.dart';
 export 'src/playgrounds/particle_field_playground.dart';
 export 'src/playgrounds/ripple_hover_playground.dart';
 export 'src/playgrounds/wave_divider_playground.dart';
-export 'src/sections/architecture_section.dart';
 export 'src/widgets/playground_scaffold.dart';

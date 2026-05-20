@@ -24,48 +24,6 @@ void main() {
       }
     });
 
-    testWidgets('renderiza secao de decisoes arquiteturais', (tester) async {
-      tester.view.physicalSize = const Size(1200, 1600);
-      tester.view.devicePixelRatio = 1;
-      addTearDown(tester.view.resetPhysicalSize);
-
-      await pumpLabsHarness(tester, const LabsPage());
-      await tester.pumpAndSettle();
-
-      expect(find.text('Decisoes arquiteturais'), findsOneWidget);
-      // Pelo menos 5 cards de decisao (PROJECT.md tem 7 atualmente,
-      // mas teste fica resiliente a adicao/remocao).
-      expect(
-        find.byKey(const Key('architecture-decision-card')),
-        findsAtLeast(5),
-      );
-    });
-
-    testWidgets(
-      'botao de GitHub aparece so quando githubUrl e fornecido',
-      (tester) async {
-        await pumpLabsHarness(tester, const LabsPage());
-        await tester.pumpAndSettle();
-
-        expect(find.byKey(const Key('labs-github-button')), findsNothing);
-
-        var clicked = '';
-        await pumpLabsHarness(
-          tester,
-          LabsPage(
-            githubUrl: 'https://github.com/example/repo',
-            onOpenGithub: (url) => clicked = url,
-          ),
-        );
-        await tester.pumpAndSettle();
-
-        expect(find.byKey(const Key('labs-github-button')), findsOneWidget);
-        await tester.tap(find.byKey(const Key('labs-github-button')));
-        await tester.pumpAndSettle();
-        expect(clicked, 'https://github.com/example/repo');
-      },
-    );
-
     testWidgets('tap em card navega pra sub-rota correspondente',
         (tester) async {
       tester.view.physicalSize = const Size(1200, 1600);

@@ -16,3 +16,14 @@ class DeliveryTickRequested extends DeliveryEvent {
 class DeliveryReset extends DeliveryEvent {
   const DeliveryReset();
 }
+
+/// Cancela o pedido com `orderId`. Marca status como `cancelled` (que
+/// e terminal) — pedido sai do round-robin e migra pro historico.
+class DeliveryOrderCancelled extends DeliveryEvent {
+  const DeliveryOrderCancelled(this.orderId);
+
+  final String orderId;
+
+  @override
+  List<Object?> get props => [orderId];
+}

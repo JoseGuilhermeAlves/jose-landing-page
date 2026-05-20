@@ -1,6 +1,7 @@
 import 'package:design_system/design_system.dart';
 import 'package:feature_showcase/src/delivery/data/aurora_vendors_catalog.dart';
 import 'package:feature_showcase/src/delivery/domain/delivery_order.dart';
+import 'package:feature_showcase/src/delivery/domain/delivery_status.dart';
 import 'package:feature_showcase/src/delivery/domain/vendor.dart';
 import 'package:feature_showcase/src/delivery/presentation/aurora_app_bar.dart';
 import 'package:feature_showcase/src/delivery/presentation/aurora_brand.dart';
@@ -8,6 +9,7 @@ import 'package:feature_showcase/src/delivery/presentation/aurora_delivery_map.d
 import 'package:feature_showcase/src/delivery/presentation/aurora_product_illustration.dart';
 import 'package:feature_showcase/src/delivery/presentation/aurora_status_timeline.dart';
 import 'package:feature_showcase/src/delivery/presentation/delivery_bloc.dart';
+import 'package:feature_showcase/src/delivery/presentation/delivery_event.dart';
 import 'package:feature_showcase/src/delivery/presentation/delivery_state.dart';
 import 'package:feature_showcase/src/shared/util/money_format.dart';
 import 'package:flutter/material.dart';
@@ -85,7 +87,13 @@ class AuroraOrderDetailPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: AppSpacing.md),
-                  AuroraStatusTimeline(activeStatus: order.status),
+                  if (order.status == DeliveryStatus.cancelled)
+                    _CancelledBanner(colors: colors, textTheme: textTheme)
+                  else ...[
+                    AuroraStatusTimeline(activeStatus: order.status),
+                    const SizedBox(height: AppSpacing.lg),
+                    _CancelOrderButton(order: order),
+                  ],
                   const SizedBox(height: AppSpacing.xl),
                   Text(
                     'Itens',
@@ -213,7 +221,24 @@ class _DeliveryEtaCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDelivered = order.status.isFinal;
+    final isDelivered = order.status == DeliveryStatus.delivered;
+    final isCancelled = order.status == DeliveryStatus.cancelled;
+    final accent = isCancelled
+        ? colors.onSurfaceMuted
+        : colors.primary;
+    final iconData = isCancelled
+        ? Icons.cancel_outlined
+        : isDelivered
+            ? Icons.check_circle_outline
+            : Icons.location_on_outlined;
+    final headline = isCancelled
+        ? 'Pedido cancelado'
+        : isDelivered
+            ? 'Entregue em'
+            : order.etaMinutes > 0
+                ? 'Chega em ~${order.etaMinutes} min'
+                : 'A caminho';
+
     return Container(
       padding: const EdgeInsets.all(AppSpacing.lg),
       decoration: BoxDecoration(
@@ -227,17 +252,11 @@ class _DeliveryEtaCard extends StatelessWidget {
             width: 40,
             height: 40,
             decoration: BoxDecoration(
-              color: colors.primary.withValues(alpha: 0.10),
+              color: accent.withValues(alpha: 0.10),
               borderRadius: BorderRadius.circular(AppRadius.sm),
             ),
             alignment: Alignment.center,
-            child: Icon(
-              isDelivered
-                  ? Icons.check_circle_outline
-                  : Icons.location_on_outlined,
-              color: colors.primary,
-              size: 20,
-            ),
+            child: Icon(iconData, color: accent, size: 20),
           ),
           const SizedBox(width: AppSpacing.md),
           Expanded(
@@ -245,11 +264,7 @@ class _DeliveryEtaCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  isDelivered
-                      ? 'Entregue em'
-                      : order.etaMinutes > 0
-                          ? 'Chega em ~${order.etaMinutes} min'
-                          : 'A caminho',
+                  headline,
                   style: textTheme.titleSmall?.copyWith(
                     color: colors.onSurface,
                     fontFamily: AuroraBrand.displayFontFamily,
@@ -261,6 +276,118 @@ class _DeliveryEtaCard extends StatelessWidget {
                   order.addressLine.isEmpty
                       ? 'Endereco nao informado'
                       : order.addressLine,
+                  style: textTheme.bodySmall?.copyWith(
+                    color: colors.onSurfaceMuted,
+                    height: 1.4,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Botao "Cancelar pedido" exibido quando o pedido ainda nao foi
+/// entregue. Abre dialog de confirmacao — evita cancel acidental por
+/// tap. Confirmacao dispara `DeliveryOrderCancelled` no bloc.
+class _CancelOrderButton extends StatelessWidget {
+  const _CancelOrderButton({required this.order});
+
+  final DeliveryOrder order;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: double.infinity,
+      child: AppButton(
+        key: const Key('aurora-cancel-order-cta'),
+        label: 'Cancelar pedido',
+        variant: AppButtonVariant.ghost,
+        icon: Icons.cancel_outlined,
+        expand: true,
+        onPressed: () => _confirm(context),
+      ),
+    );
+  }
+
+  Future<void> _confirm(BuildContext context) async {
+    final bloc = context.read<DeliveryBloc>();
+    final colors = context.colors;
+    final ok = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Cancelar este pedido?'),
+        content: Text(
+          'O pedido ${order.id} sera marcado como cancelado e movido '
+          'pro historico.',
+          style: TextStyle(color: colors.onSurfaceMuted),
+        ),
+        actions: [
+          TextButton(
+            key: const Key('aurora-cancel-dialog-back'),
+            onPressed: () => Navigator.of(ctx).pop(false),
+            child: const Text('Voltar'),
+          ),
+          TextButton(
+            key: const Key('aurora-cancel-dialog-confirm'),
+            onPressed: () => Navigator.of(ctx).pop(true),
+            style: TextButton.styleFrom(foregroundColor: colors.error),
+            child: const Text('Cancelar pedido'),
+          ),
+        ],
+      ),
+    );
+    if (ok ?? false) {
+      bloc.add(DeliveryOrderCancelled(order.id));
+    }
+  }
+}
+
+/// Banner exibido quando o pedido foi cancelado — substitui a timeline
+/// vertical (que assume fluxo linear) por um aviso terminal.
+class _CancelledBanner extends StatelessWidget {
+  const _CancelledBanner({required this.colors, required this.textTheme});
+
+  final AppColorScheme colors;
+  final TextTheme textTheme;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      key: const Key('aurora-cancelled-banner'),
+      padding: const EdgeInsets.all(AppSpacing.lg),
+      decoration: BoxDecoration(
+        color: colors.surface,
+        borderRadius: BorderRadius.circular(AppRadius.lg),
+        border: Border.all(
+          color: colors.onSurfaceMuted.withValues(alpha: 0.35),
+        ),
+      ),
+      child: Row(
+        children: [
+          Icon(
+            Icons.block_rounded,
+            color: colors.onSurfaceMuted,
+            size: 22,
+          ),
+          const SizedBox(width: AppSpacing.md),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Pedido cancelado',
+                  style: textTheme.titleSmall?.copyWith(
+                    color: colors.onSurface,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  'A banca foi avisada e o cartao nao sera cobrado.',
                   style: textTheme.bodySmall?.copyWith(
                     color: colors.onSurfaceMuted,
                     height: 1.4,

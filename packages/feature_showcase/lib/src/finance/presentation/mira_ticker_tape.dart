@@ -50,29 +50,28 @@ class _MiraTickerTapeState extends State<MiraTickerTape>
         ),
       ),
       child: ClipRect(
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            return AnimatedBuilder(
-              animation: _controller,
-              builder: (context, child) {
-                // Estimativa de largura total — calculada pelo
-                // numero de tickers e largura media de 130px cada.
-                // Como duplicamos, basta scrollar ate metade pra
-                // looping sem pulo visivel.
-                final cycleWidth = (assets.length / 2) * 130.0;
-                final offset = -_controller.value * cycleWidth;
+        child: AnimatedBuilder(
+          animation: _controller,
+          builder: (context, child) {
+            // Estimativa de largura total — calculada pelo numero de
+            // tickers e largura media de 130px cada. Como duplicamos,
+            // basta scrollar ate metade pra loop sem pulo visivel.
+            final cycleWidth = (assets.length / 2) * 130.0;
+            final offset = -_controller.value * cycleWidth;
 
-                return Transform.translate(
-                  offset: Offset(offset, 0),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      for (final asset in assets)
-                        _TickerChip(asset: asset),
-                    ],
-                  ),
-                );
-              },
+            return OverflowBox(
+              alignment: Alignment.centerLeft,
+              maxWidth: double.infinity,
+              child: Transform.translate(
+                offset: Offset(offset, 0),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    for (final asset in assets)
+                      _TickerChip(asset: asset),
+                  ],
+                ),
+              ),
             );
           },
         ),

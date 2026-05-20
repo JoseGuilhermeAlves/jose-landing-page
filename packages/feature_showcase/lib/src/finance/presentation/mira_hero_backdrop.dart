@@ -260,8 +260,6 @@ class _MiraHeroBackdropPainter extends CustomPainter {
   void _paintFadeOverlay(Canvas canvas, Size size) {
     final rect = Offset.zero & size;
     final overlay = LinearGradient(
-      begin: Alignment.centerLeft,
-      end: Alignment.centerRight,
       colors: [
         background.withValues(alpha: 0.6),
         Colors.transparent,

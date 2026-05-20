@@ -355,7 +355,7 @@ class _SectionHeader extends StatelessWidget {
           children: [
             Text(
               eyebrow,
-              style: TextStyle(
+              style: const TextStyle(
                 color: MiraBrand.neonMint,
                 fontSize: 10,
                 letterSpacing: 1.8,
@@ -551,7 +551,6 @@ class _SectorBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.colors;
     final label = asset.symbol.substring(0, 2);
     final tone = _toneForSector(asset);
     return Container(
@@ -608,7 +607,7 @@ class _BrandFootnote extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(
+          const Icon(
             Icons.show_chart_rounded,
             color: MiraBrand.neonMint,
             size: 14,

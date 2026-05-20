@@ -21,10 +21,10 @@ void main() {
     blocTest<FinanceBloc, FinanceState>(
       'favorite toggle: adiciona quando ausente',
       build: build,
-      seed: () => FinanceState(
-        holdings: const [],
-        trades: const [],
-        favoriteIds: const {'PETR4'},
+      seed: () => const FinanceState(
+        holdings: [],
+        trades: [],
+        favoriteIds: {'PETR4'},
       ),
       act: (bloc) => bloc.add(const FinanceFavoriteToggled('VALE3')),
       expect: () => [
@@ -39,10 +39,10 @@ void main() {
     blocTest<FinanceBloc, FinanceState>(
       'favorite toggle: remove quando presente',
       build: build,
-      seed: () => FinanceState(
-        holdings: const [],
-        trades: const [],
-        favoriteIds: const {'PETR4', 'VALE3'},
+      seed: () => const FinanceState(
+        holdings: [],
+        trades: [],
+        favoriteIds: {'PETR4', 'VALE3'},
       ),
       act: (bloc) => bloc.add(const FinanceFavoriteToggled('VALE3')),
       expect: () => [

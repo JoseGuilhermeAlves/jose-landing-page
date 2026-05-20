@@ -1,20 +1,10 @@
 import 'package:feature_showcase/src/shared/domain/showcase_template.dart';
 import 'package:flutter/material.dart';
 
-/// Catalogo dos 5 nichos do PROJECT.md §4.3. Pass A entrega
-/// e-commerce funcional; demais ficam `hasDemo: false` ate cada
-/// turno seguinte.
+/// Catalogo dos nichos da vitrine. Cada entry com `hasDemo: true`
+/// resolve um widget de demo em `showcase_section.dart`.
 abstract final class ShowcaseCatalog {
   static const List<ShowcaseTemplate> all = [
-    ShowcaseTemplate(
-      id: 'ecommerce',
-      label: 'E-commerce',
-      description:
-          'Loja Garoa — home da marca, catalogo com filtros, detalhe '
-          'do produto e checkout com resumo de pedido.',
-      icon: Icons.shopping_bag_outlined,
-      hasDemo: true,
-    ),
     ShowcaseTemplate(
       id: 'delivery',
       label: 'Delivery',
@@ -49,6 +39,15 @@ abstract final class ShowcaseCatalog {
           'Listagem de imoveis com filtros por bairro, faixa de preco '
           'e numero de quartos.',
       icon: Icons.home_work_outlined,
+      hasDemo: true,
+    ),
+    ShowcaseTemplate(
+      id: 'finance',
+      label: 'Investimentos',
+      description:
+          'Mira — watchlist, candlestick interativo com crosshair, '
+          'envio de ordem e portfolio com donut de alocacao.',
+      icon: Icons.show_chart_rounded,
       hasDemo: true,
     ),
   ];

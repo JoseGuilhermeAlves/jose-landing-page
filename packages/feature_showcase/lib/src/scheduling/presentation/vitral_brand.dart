@@ -5,30 +5,35 @@ import 'package:flutter/material.dart';
 /// servicos tecnicos por hora (consultoria, fotografia, design,
 /// marketing). Tom profissional, organizado, claro — sem floreio.
 ///
-/// Paleta indigo / pao / cinza, light, pra contrastar com o dark da
-/// landing. Indigo como primary (autoridade, plano, profissional),
-/// pao como background (calor, leitura agradavel), cinza como
-/// neutro de suporte. Toda a paleta e tema sao locais ao demo via
-/// `Theme` widget; widgets internos que leem `context.colors`
-/// recebem a paleta da marca sem propagacao manual.
+/// Paleta indigo / off-white frio / cinza, light, pra contrastar com
+/// o dark da landing **e** com os demais mocks creme da vitrine
+/// (Aurora, Solar). Indigo como primary (autoridade, plano,
+/// profissional), off-white frio como background (ar de papel
+/// reciclado de escritorio), cinza como neutro de suporte. O tom de
+/// pao `#F2DDB6` agora aparece **so** como `onPrimary` — vira o beijo
+/// de marca nos CTAs indigo, sem dominar a tela. Toda a paleta e
+/// tema sao locais ao demo via `Theme` widget; widgets internos que
+/// leem `context.colors` recebem a paleta da marca sem propagacao
+/// manual.
 abstract final class VitralBrand {
   static const String name = 'Vitral';
   static const String tagline = 'Sua agenda, organizada.';
 
-  /// Paleta indigo / pao / cinza. Indigo escuro como primary (CTAs,
-  /// destaque), pao claro como background (acolhedor), cinza neutro
-  /// pro texto secundario e bordas. Ocre quente como accent para os
-  /// timestamps e detalhes editoriais.
+  /// Paleta indigo / off-white / cinza. Indigo escuro como primary
+  /// (CTAs, destaque), off-white frio como background, cinza neutro
+  /// pro texto secundario e bordas. Ocre quente como accent para
+  /// timestamps e detalhes editoriais. Pao `#F2DDB6` resta apenas em
+  /// `onPrimary` — toque de marca no texto sobre CTA indigo.
   static const AppColorScheme palette = AppColorScheme(
     primary: Color(0xFF2A3B70),
     primaryHover: Color(0xFF3A4D8C),
     onPrimary: Color(0xFFF2DDB6),
     accent: Color(0xFFB07A2C),
     onAccent: Color(0xFFFFFFFF),
-    background: Color(0xFFF2DDB6),
-    surface: Color(0xFFFBF3DF),
-    surfaceMuted: Color(0xFFE6CFA1),
-    border: Color(0xFFCBB58A),
+    background: Color(0xFFF4F1EA),
+    surface: Color(0xFFFBFAF6),
+    surfaceMuted: Color(0xFFE7E1D2),
+    border: Color(0xFFD2CCBC),
     onSurface: Color(0xFF1F243A),
     onSurfaceMuted: Color(0xFF6B6F75),
     success: Color(0xFF2F6B3F),

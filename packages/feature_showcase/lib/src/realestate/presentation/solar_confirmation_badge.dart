@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 
 /// Badge animado da tela de contato Solar — circulo preenchido com
 /// check em duas linhas crescendo de 30% a 100% da animacao. Mesma
-/// estrutura do VitralConfirmationBadge / GaroaOrderBadge: painter
-/// recebe controller direto via `super(repaint:)` pra pular build e
-/// layout no pipeline (ver CLAUDE.md).
+/// estrutura do VitralConfirmationBadge: painter recebe controller
+/// direto via `super(repaint:)` pra pular build e layout no pipeline
+/// (ver CLAUDE.md).
 class SolarConfirmationBadge extends StatefulWidget {
   const SolarConfirmationBadge({
     required this.fillColor,

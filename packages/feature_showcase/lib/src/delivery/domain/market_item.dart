@@ -2,9 +2,8 @@ import 'package:equatable/equatable.dart';
 import 'package:feature_showcase/src/delivery/domain/market_category.dart';
 import 'package:flutter/foundation.dart';
 
-/// Unidade de medida do produto vendido pela Aurora. Diferente do
-/// e-commerce Garoa, hortifruti precisa diferenciar entre venda por
-/// peso (kg), unidade (un) e pacote (pct).
+/// Unidade de medida do produto vendido pela Aurora — hortifruti
+/// diferencia entre venda por peso (kg), unidade (un) e pacote (pct).
 enum MarketUnit {
   kg('kg'),
   unit('un'),

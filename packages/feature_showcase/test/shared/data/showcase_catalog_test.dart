@@ -3,22 +3,22 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('ShowcaseCatalog', () {
-    test('expoe os 5 nichos canonicos do PROJECT.md §4.3', () {
+    test('expoe os 5 nichos da vitrine', () {
       final ids = ShowcaseCatalog.all.map((t) => t.id).toList();
       expect(ids, hasLength(5));
       expect(
         ids,
         containsAll([
-          'ecommerce',
           'delivery',
           'scheduling',
           'fitness',
           'realestate',
+          'finance',
         ]),
       );
     });
 
-    test('todos os 5 nichos canonicos vem com hasDemo=true', () {
+    test('todos os nichos vem com hasDemo=true', () {
       for (final t in ShowcaseCatalog.all) {
         expect(
           t.hasDemo,

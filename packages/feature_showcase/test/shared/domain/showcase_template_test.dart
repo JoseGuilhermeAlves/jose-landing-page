@@ -5,10 +5,10 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   group('ShowcaseTemplate', () {
     ShowcaseTemplate make({
-      String id = 'ecommerce',
-      String label = 'E-commerce',
-      String description = 'Catalogo + carrinho.',
-      IconData icon = Icons.shopping_bag_outlined,
+      String id = 'demo',
+      String label = 'Demo',
+      String description = 'Demo qualquer.',
+      IconData icon = Icons.widgets_outlined,
       bool hasDemo = true,
     }) {
       return ShowcaseTemplate(
@@ -30,7 +30,7 @@ void main() {
     });
 
     test('toString debug-friendly', () {
-      expect(make().toString(), contains('ecommerce'));
+      expect(make().toString(), contains('demo'));
     });
   });
 }

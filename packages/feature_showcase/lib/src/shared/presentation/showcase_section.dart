@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:design_system/design_system.dart';
 import 'package:feature_showcase/src/delivery/presentation/delivery_demo.dart';
-import 'package:feature_showcase/src/ecommerce/presentation/ecommerce_demo.dart';
+import 'package:feature_showcase/src/finance/presentation/finance_demo.dart';
 import 'package:feature_showcase/src/fitness/presentation/fitness_demo.dart';
 import 'package:feature_showcase/src/realestate/presentation/realestate_demo.dart';
 import 'package:feature_showcase/src/scheduling/presentation/scheduling_demo.dart';
@@ -27,7 +27,8 @@ class ShowcaseSection extends StatelessWidget {
           title: 'Cinco nichos,',
           titleAccent: 'cinco prototipos.',
           subtitle:
-              'Mocks funcionais por nicho — toque num card pra abrir. '
+              'Mocks funcionais por nicho — delivery, agendamento, fitness, '
+              'imobiliaria e investimentos. Toque num card pra abrir. '
               'Sem backend de verdade; demonstram o tipo de produto que '
               'consigo entregar.',
         ),
@@ -56,13 +57,13 @@ class ShowcaseSection extends StatelessWidget {
   /// demo (cards ficam desabilitados pelo `hasDemo` do catalogo).
   Widget? _demoFor(String id) {
     return switch (id) {
-      'ecommerce' => const EcommerceDemo(),
       'delivery' => DeliveryDemo(
           ticker: Stream<void>.periodic(const Duration(seconds: 2)),
         ),
       'scheduling' => SchedulingDemo(today: DateTime.now()),
       'fitness' => FitnessDemo(today: DateTime.now().weekday),
       'realestate' => const RealEstateDemo(),
+      'finance' => const FinanceDemo(),
       _ => null,
     };
   }

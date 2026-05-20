@@ -1,7 +1,7 @@
 /// Feature "Showcase" — templates demonstraveis por nicho
-/// (PROJECT.md §4.3). Os 5 nichos canonicos sao sub-features
-/// (e-commerce, delivery, agendamento, fitness, imobiliaria), cada
-/// um com seu proprio triangulo `data/domain/presentation` dentro de
+/// (PROJECT.md §4.3). Os 5 nichos sao sub-features (delivery,
+/// agendamento, fitness, imobiliaria, finance), cada um com seu
+/// proprio triangulo `data/domain/presentation` dentro de
 /// `lib/src/<mock>/`. O `shared/` carrega o indice cross-cutting
 /// (catalogo dos cards, grid, secao) e utilitarios comuns.
 library;
@@ -19,15 +19,20 @@ export 'src/delivery/presentation/delivery_bloc.dart';
 export 'src/delivery/presentation/delivery_demo.dart';
 export 'src/delivery/presentation/delivery_event.dart';
 export 'src/delivery/presentation/delivery_state.dart';
-export 'src/ecommerce/data/products_catalog.dart';
-export 'src/ecommerce/domain/order_summary.dart';
-export 'src/ecommerce/domain/product.dart';
-export 'src/ecommerce/domain/product_category.dart';
-export 'src/ecommerce/domain/product_variant.dart';
-export 'src/ecommerce/presentation/cart_bloc.dart';
-export 'src/ecommerce/presentation/cart_event.dart';
-export 'src/ecommerce/presentation/cart_state.dart';
-export 'src/ecommerce/presentation/ecommerce_demo.dart';
+export 'src/finance/data/mira_assets_catalog.dart';
+export 'src/finance/data/mira_candles_catalog.dart';
+export 'src/finance/data/mira_portfolio_catalog.dart';
+export 'src/finance/data/mira_trades_catalog.dart';
+export 'src/finance/domain/asset.dart';
+export 'src/finance/domain/asset_sector.dart';
+export 'src/finance/domain/candle.dart';
+export 'src/finance/domain/order_side.dart';
+export 'src/finance/domain/portfolio_holding.dart';
+export 'src/finance/domain/trade.dart';
+export 'src/finance/presentation/finance_bloc.dart';
+export 'src/finance/presentation/finance_demo.dart';
+export 'src/finance/presentation/finance_event.dart';
+export 'src/finance/presentation/finance_state.dart';
 export 'src/fitness/data/workout_plan_catalog.dart';
 export 'src/fitness/domain/workout_day.dart';
 export 'src/fitness/domain/workout_exercise.dart';

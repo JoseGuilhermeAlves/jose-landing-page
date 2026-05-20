@@ -26,25 +26,9 @@ void main() {
       await tester.pumpWidget(wrap(const ShowcaseSection()));
       await tester.pump(const Duration(milliseconds: 16));
 
-      // Os 5 nichos canonicos ja estao todos com hasDemo=true; nao
+      // Todos os nichos da vitrine ja estao com hasDemo=true; nao
       // existe mais badge "em breve" na home.
       expect(find.textContaining('em breve'), findsNothing);
-    });
-
-    testWidgets('tap no card de e-commerce abre o EcommerceDemo em modal',
-        (tester) async {
-      await tester.pumpWidget(wrap(const ShowcaseSection()));
-      await tester.pump(const Duration(milliseconds: 16));
-
-      await tester.tap(find.byKey(const Key('showcase-card-ecommerce')));
-      // pumpAndSettle nao serve aqui porque o `GaroaHeroBackdrop` do
-      // EcommerceDemo roda em loop infinito. Pumpamos frames fixos pra
-      // a route de modal terminar de abrir.
-      for (var i = 0; i < 20; i++) {
-        await tester.pump(const Duration(milliseconds: 50));
-      }
-
-      expect(find.byType(EcommerceDemo), findsOneWidget);
     });
 
     testWidgets('tap no card de delivery abre o DeliveryDemo em modal',
@@ -118,6 +102,21 @@ void main() {
       await tester.pump(const Duration(milliseconds: 400));
 
       expect(find.byType(RealEstateDemo), findsOneWidget);
+    });
+
+    testWidgets('tap no card de finance abre o FinanceDemo em modal',
+        (tester) async {
+      await tester.pumpWidget(wrap(const ShowcaseSection()));
+      await tester.pump(const Duration(milliseconds: 16));
+
+      final card = find.byKey(const Key('showcase-card-finance'));
+      await tester.ensureVisible(card);
+      await tester.pumpAndSettle();
+      await tester.tap(card);
+      await tester.pump(const Duration(milliseconds: 100));
+      await tester.pump(const Duration(milliseconds: 400));
+
+      expect(find.byType(FinanceDemo), findsOneWidget);
     });
   });
 }

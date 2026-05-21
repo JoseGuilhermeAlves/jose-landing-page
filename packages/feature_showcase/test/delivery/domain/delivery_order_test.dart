@@ -3,12 +3,13 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('DeliveryStatus', () {
-    test('expoe os 4 status canonicos na ordem certa', () {
+    test('expoe os 4 status lineares + o terminal cancelled', () {
       expect(DeliveryStatus.values, [
         DeliveryStatus.received,
         DeliveryStatus.preparing,
         DeliveryStatus.outForDelivery,
         DeliveryStatus.delivered,
+        DeliveryStatus.cancelled,
       ]);
     });
 
@@ -19,18 +20,20 @@ void main() {
       }
     });
 
-    test('isFinal=true so para delivered', () {
+    test('isFinal=true para delivered e cancelled', () {
       expect(DeliveryStatus.received.isFinal, isFalse);
       expect(DeliveryStatus.preparing.isFinal, isFalse);
       expect(DeliveryStatus.outForDelivery.isFinal, isFalse);
       expect(DeliveryStatus.delivered.isFinal, isTrue);
+      expect(DeliveryStatus.cancelled.isFinal, isTrue);
     });
 
-    test('next: avanca um passo; em delivered fica em delivered', () {
+    test('next: avanca pelo fluxo linear; terminais ficam fixos', () {
       expect(DeliveryStatus.received.next, DeliveryStatus.preparing);
       expect(DeliveryStatus.preparing.next, DeliveryStatus.outForDelivery);
       expect(DeliveryStatus.outForDelivery.next, DeliveryStatus.delivered);
       expect(DeliveryStatus.delivered.next, DeliveryStatus.delivered);
+      expect(DeliveryStatus.cancelled.next, DeliveryStatus.cancelled);
     });
   });
 

@@ -102,6 +102,46 @@ void main() {
       },
     );
 
+    blocTest<DeliveryBloc, DeliveryState>(
+      'tick decrementa etaMinutes de pedidos em andamento',
+      build: () => DeliveryBloc(initialOrders: orders),
+      act: (bloc) => bloc.add(const DeliveryTickRequested()),
+      verify: (bloc) {
+        expect(bloc.state.orders[0].etaMinutes, 19); // 20 - 1
+        expect(bloc.state.orders[1].etaMinutes, 29); // 30 - 1
+      },
+    );
+
+    blocTest<DeliveryBloc, DeliveryState>(
+      'cancel marca pedido como cancelled, zera ETA e migra pro historico',
+      build: () => DeliveryBloc(initialOrders: orders),
+      act: (bloc) => bloc.add(const DeliveryOrderCancelled('a')),
+      verify: (bloc) {
+        final cancelled = bloc.state.orders.firstWhere((o) => o.id == 'a');
+        expect(cancelled.status, DeliveryStatus.cancelled);
+        expect(cancelled.etaMinutes, 0);
+        expect(bloc.state.historyOrders.map((o) => o.id), contains('a'));
+        expect(bloc.state.activeOrder?.id, 'b');
+      },
+    );
+
+    blocTest<DeliveryBloc, DeliveryState>(
+      'cancel em pedido final eh idempotente',
+      build: () => DeliveryBloc(
+        initialOrders: const [
+          DeliveryOrder(
+            id: 'a',
+            customerName: 'A',
+            items: 1,
+            status: DeliveryStatus.delivered,
+            etaMinutes: 0,
+          ),
+        ],
+      ),
+      act: (bloc) => bloc.add(const DeliveryOrderCancelled('a')),
+      expect: () => <DeliveryState>[],
+    );
+
     test('ticker stream dispara ticks automaticamente', () async {
       final controller = StreamController<void>.broadcast();
       final bloc = DeliveryBloc(

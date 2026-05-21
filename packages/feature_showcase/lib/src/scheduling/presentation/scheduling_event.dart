@@ -43,3 +43,13 @@ class SchedulingAppointmentConfirmed extends SchedulingEvent {
   @override
   List<Object?> get props => [appointment];
 }
+
+/// Cancela um agendamento confirmado. Remove de `confirmedAppointments`
+/// e libera o slot em `userBookedSlots`. No-op quando o id nao bate.
+class SchedulingAppointmentCancelled extends SchedulingEvent {
+  const SchedulingAppointmentCancelled(this.appointmentId);
+  final String appointmentId;
+
+  @override
+  List<Object?> get props => [appointmentId];
+}

@@ -143,6 +143,29 @@ void main() {
           await bloc.close();
         },
       );
+
+      blocTest<SchedulingBloc, SchedulingState>(
+        'SchedulingAppointmentCancelled remove appt + libera slot',
+        build: makeBloc,
+        act: (bloc) => bloc
+          ..add(SchedulingAppointmentConfirmed(appointment))
+          ..add(const SchedulingAppointmentCancelled('VIT-0001')),
+        verify: (bloc) {
+          expect(bloc.state.confirmedAppointments, isEmpty);
+          expect(bloc.state.userBookedSlots, isEmpty);
+        },
+      );
+
+      blocTest<SchedulingBloc, SchedulingState>(
+        'cancelar id desconhecido eh no-op',
+        build: makeBloc,
+        act: (bloc) => bloc
+          ..add(SchedulingAppointmentConfirmed(appointment))
+          ..add(const SchedulingAppointmentCancelled('VIT-9999')),
+        verify: (bloc) {
+          expect(bloc.state.confirmedAppointments, hasLength(1));
+        },
+      );
     });
   });
 }

@@ -150,7 +150,6 @@ class VitralConfirmationPage extends StatelessWidget {
                         'Lembrete por e-mail na vespera.',
                         style: TextStyle(color: colors.onPrimary),
                       ),
-                      duration: const Duration(seconds: 4),
                     ),
                   );
                 },

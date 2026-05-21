@@ -1,3 +1,4 @@
+import 'package:feature_showcase/src/scheduling/domain/appointment.dart';
 import 'package:feature_showcase/src/scheduling/presentation/scheduling_event.dart';
 import 'package:feature_showcase/src/scheduling/presentation/scheduling_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,6 +25,7 @@ class SchedulingBloc extends Bloc<SchedulingEvent, SchedulingState> {
     on<SchedulingSlotBooked>(_onSlotBooked);
     on<SchedulingSlotCancelled>(_onSlotCancelled);
     on<SchedulingAppointmentConfirmed>(_onAppointmentConfirmed);
+    on<SchedulingAppointmentCancelled>(_onAppointmentCancelled);
   }
 
   void _onDateSelected(
@@ -71,6 +73,29 @@ class SchedulingBloc extends Bloc<SchedulingEvent, SchedulingState> {
       state.copyWith(
         userBookedSlots: {...state.userBookedSlots, appt.slot},
         confirmedAppointments: [...state.confirmedAppointments, appt],
+      ),
+    );
+  }
+
+  void _onAppointmentCancelled(
+    SchedulingAppointmentCancelled event,
+    Emitter<SchedulingState> emit,
+  ) {
+    final appt = state.confirmedAppointments
+        .where((a) => a.id == event.appointmentId)
+        .cast<Appointment?>()
+        .firstWhere((a) => true, orElse: () => null);
+    if (appt == null) return;
+    emit(
+      state.copyWith(
+        confirmedAppointments: [
+          for (final a in state.confirmedAppointments)
+            if (a.id != event.appointmentId) a,
+        ],
+        userBookedSlots: {
+          for (final s in state.userBookedSlots)
+            if (s != appt.slot) s,
+        },
       ),
     );
   }

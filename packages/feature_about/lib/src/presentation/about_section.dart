@@ -13,7 +13,10 @@ import 'package:flutter/material.dart';
 /// (varejo B2B, fintech, etc.) e separamos honestamente o que foi
 /// feito ponta a ponta do que foi em time de produto.
 class AboutSection extends StatelessWidget {
-  const AboutSection({super.key});
+  const AboutSection({this.photo, super.key});
+
+  /// Foto do perfil — quando nula, mostra iniciais em gradiente.
+  final ImageProvider? photo;
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +70,7 @@ class AboutSection extends StatelessWidget {
               'alinhada desde o kickoff.',
         ),
         const SizedBox(height: AppSpacing.xxl),
-        const _BioCard(),
+        _BioCard(photo: photo),
         const SizedBox(height: AppSpacing.xxl),
         Text(
           'Onde ja atuei',
@@ -92,7 +95,9 @@ class AboutSection extends StatelessWidget {
 /// Card "minha bio". Avatar + nome em destaque + paragrafo. Substituir
 /// o avatar de iniciais por foto real quando o Jose enviar.
 class _BioCard extends StatelessWidget {
-  const _BioCard();
+  const _BioCard({this.photo});
+
+  final ImageProvider? photo;
 
   @override
   Widget build(BuildContext context) {
@@ -100,7 +105,12 @@ class _BioCard extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     final isMobile = context.isMobile;
 
-    final avatar = _Avatar(initials: 'JG', colors: colors, textTheme: textTheme);
+    final avatar = _Avatar(
+      initials: 'JG',
+      photo: photo,
+      colors: colors,
+      textTheme: textTheme,
+    );
 
     final textBlock = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -171,22 +181,22 @@ class _Avatar extends StatelessWidget {
     required this.initials,
     required this.colors,
     required this.textTheme,
+    this.photo,
   });
 
   final String initials;
+  final ImageProvider? photo;
   final AppColorScheme colors;
   final TextTheme textTheme;
 
   @override
   Widget build(BuildContext context) {
-    // Avatar em gradiente brand, com glow externo. Substituir por foto
-    // real quando o Jose enviar.
     return Container(
       width: 96,
       height: 96,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        gradient: AppGradients.brand(colors),
+        gradient: photo == null ? AppGradients.brand(colors) : null,
         boxShadow: [
           BoxShadow(
             color: colors.primary.withValues(alpha: 0.4),
@@ -195,14 +205,23 @@ class _Avatar extends StatelessWidget {
           ),
         ],
       ),
-      alignment: Alignment.center,
-      child: Text(
-        initials,
-        style: textTheme.headlineMedium?.copyWith(
-          color: colors.onPrimary,
-          fontWeight: FontWeight.w700,
-        ),
-      ),
+      clipBehavior: Clip.antiAlias,
+      child: photo != null
+          ? Image(
+              image: photo!,
+              width: 96,
+              height: 96,
+              fit: BoxFit.cover,
+            )
+          : Center(
+              child: Text(
+                initials,
+                style: textTheme.headlineMedium?.copyWith(
+                  color: colors.onPrimary,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ),
     );
   }
 }

@@ -214,7 +214,9 @@ class _HomePageState extends State<HomePage> {
                   child: _SectionSlot(
                     horizontalPadding: horizontalPadding,
                     glowAlignment: Alignment.centerRight,
-                    child: const AboutSection(),
+                    child: const AboutSection(
+                      photo: AssetImage('assets/images/foto_jose.png'),
+                    ),
                   ),
                 ),
               ),

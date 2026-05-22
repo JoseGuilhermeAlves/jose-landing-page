@@ -117,13 +117,12 @@ class _Logo extends StatelessWidget {
           ),
         ],
       ),
-      alignment: Alignment.center,
-      child: Text(
-        'JG',
-        style: textTheme.labelLarge?.copyWith(
-          color: colors.onPrimary,
-          fontWeight: FontWeight.w700,
-        ),
+      clipBehavior: Clip.antiAlias,
+      child: Image.asset(
+        'assets/images/foto_jose.png',
+        width: 36,
+        height: 36,
+        fit: BoxFit.cover,
       ),
     );
 

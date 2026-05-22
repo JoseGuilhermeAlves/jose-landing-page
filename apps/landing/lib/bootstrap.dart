@@ -11,20 +11,20 @@ import 'package:flutter/widgets.dart';
 ///
 /// Em release, plug aqui o sink de telemetria (Sentry/Crashlytics).
 Future<void> bootstrap(Widget Function() builder) async {
-  WidgetsFlutterBinding.ensureInitialized();
-
-  FlutterError.onError = (details) {
-    FlutterError.presentError(details);
-    // TODO(jose): integrar com Sentry/Crashlytics em release.
-  };
-
-  PlatformDispatcher.instance.onError = (error, stack) {
-    debugPrint('[bootstrap] uncaught: $error\n$stack');
-    return true;
-  };
-
   await runZonedGuarded(
     () async {
+      WidgetsFlutterBinding.ensureInitialized();
+
+      FlutterError.onError = (details) {
+        FlutterError.presentError(details);
+        // TODO(jose): integrar com Sentry/Crashlytics em release.
+      };
+
+      PlatformDispatcher.instance.onError = (error, stack) {
+        debugPrint('[bootstrap] uncaught: $error\n$stack');
+        return true;
+      };
+
       runApp(builder());
     },
     (error, stack) {

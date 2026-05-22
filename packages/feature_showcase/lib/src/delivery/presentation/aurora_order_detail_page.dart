@@ -59,10 +59,18 @@ class AuroraOrderDetailPage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Mapa — destaque tecnico no topo.
                   ClipRRect(
                     borderRadius: BorderRadius.circular(AppRadius.lg),
-                    child: const AuroraDeliveryMap(height: 220),
+                    child: Stack(
+                      children: [
+                        const AuroraDeliveryMap(height: 220),
+                        Positioned(
+                          left: AppSpacing.sm,
+                          bottom: AppSpacing.sm,
+                          child: _MapDisclaimer(colors: colors),
+                        ),
+                      ],
+                    ),
                   ),
                   const SizedBox(height: AppSpacing.lg),
                   _VendorHeader(
@@ -626,6 +634,34 @@ class _NotFound extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _MapDisclaimer extends StatelessWidget {
+  const _MapDisclaimer({required this.colors});
+
+  final AppColorScheme colors;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.sm,
+        vertical: AppSpacing.xxs,
+      ),
+      decoration: BoxDecoration(
+        color: colors.surface.withValues(alpha: 0.85),
+        borderRadius: BorderRadius.circular(AppRadius.sm),
+      ),
+      child: Text(
+        'Mapa ilustrativo · Em producao: Google Maps SDK + tracking real-time',
+        style: Theme.of(context).textTheme.labelSmall?.copyWith(
+              color: colors.onSurfaceMuted,
+              fontSize: 9,
+              letterSpacing: 0.1,
+            ),
       ),
     );
   }

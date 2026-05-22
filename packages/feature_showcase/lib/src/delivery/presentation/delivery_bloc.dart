@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:feature_showcase/src/delivery/data/aurora_items_catalog.dart';
+import 'package:feature_showcase/src/delivery/data/aurora_vendors_catalog.dart';
 import 'package:feature_showcase/src/delivery/domain/delivery_order.dart';
 import 'package:feature_showcase/src/delivery/domain/delivery_status.dart';
 import 'package:feature_showcase/src/delivery/presentation/delivery_event.dart';
@@ -19,6 +21,7 @@ class DeliveryBloc extends Bloc<DeliveryEvent, DeliveryState> {
         super(DeliveryState(orders: initialOrders)) {
     on<DeliveryTickRequested>(_onTick);
     on<DeliveryReset>(_onReset);
+    on<DeliveryOrderPlaced>(_onOrderPlaced);
     on<DeliveryOrderCancelled>(_onOrderCancelled);
 
     if (ticker != null) {
@@ -64,6 +67,55 @@ class DeliveryBloc extends Bloc<DeliveryEvent, DeliveryState> {
 
   void _onReset(DeliveryReset event, Emitter<DeliveryState> emit) {
     emit(DeliveryState(orders: _initial));
+  }
+
+  static int _orderCounter = 1050;
+
+  /// Retorna o id do proximo pedido sem incrementar.
+  static String peekNextOrderId() => '#A-$_orderCounter';
+
+  /// Reseta o contador de pedidos — util pra isolar testes.
+  static void resetOrderCounter() => _orderCounter = 1050;
+
+  void _onOrderPlaced(
+    DeliveryOrderPlaced event,
+    Emitter<DeliveryState> emit,
+  ) {
+    final vendor = AuroraVendorsCatalog.byId(event.vendorId);
+    if (vendor == null) return;
+
+    final catalogItems = AuroraItemsCatalog.byVendor(vendor.id);
+    final lineItems = [
+      for (final item in catalogItems)
+        OrderLineItem(
+          itemId: item.id,
+          name: item.name,
+          quantity: 1,
+          unitShort: item.unit.shortLabel,
+          unitPriceCents: item.priceCents,
+        ),
+    ];
+
+    final subtotalCents = lineItems.fold<double>(
+      0,
+      (sum, li) => sum + li.subtotalCents,
+    );
+
+    final orderId = '#A-${_orderCounter++}';
+    final order = DeliveryOrder(
+      id: orderId,
+      customerName: 'Voce',
+      items: lineItems.length,
+      status: DeliveryStatus.received,
+      etaMinutes: vendor.etaMinutes,
+      vendorId: vendor.id,
+      lineItems: lineItems,
+      totalCents: subtotalCents + vendor.deliveryFeeCents,
+      addressLine: 'Rua das Palmeiras, 240 · Pinheiros · SP',
+      placedAtLabel: 'Agora',
+    );
+
+    emit(state.copyWith(orders: [order, ...state.orders]));
   }
 
   void _onOrderCancelled(

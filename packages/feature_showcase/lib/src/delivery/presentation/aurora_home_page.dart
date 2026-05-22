@@ -528,9 +528,10 @@ class _VendorsList extends StatelessWidget {
 /// Tap empurra a lista de lojas com a categoria selecionada (proxy pro
 /// detalhe sem flow completo de produto).
 class AuroraVendorCard extends StatelessWidget {
-  const AuroraVendorCard({required this.vendor, super.key});
+  const AuroraVendorCard({required this.vendor, this.onTap, super.key});
 
   final Vendor vendor;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -542,14 +543,16 @@ class AuroraVendorCard extends StatelessWidget {
       child: InkWell(
         key: Key('aurora-vendor-card-${vendor.id}'),
         borderRadius: BorderRadius.circular(AppRadius.lg),
-        onTap: () => Navigator.of(context).push(
-          MaterialPageRoute<void>(
-            builder: (_) => auroraWithDemoBloc(
-              context,
-              AuroraStoreListPage(initialCategory: vendor.primaryCategory),
-            ),
-          ),
-        ),
+        onTap: onTap ??
+            () => Navigator.of(context).push(
+                  MaterialPageRoute<void>(
+                    builder: (_) => auroraWithDemoBloc(
+                      context,
+                      AuroraStoreListPage(
+                          initialCategory: vendor.primaryCategory),
+                    ),
+                  ),
+                ),
         child: Container(
           padding: const EdgeInsets.all(AppSpacing.md),
           decoration: BoxDecoration(

@@ -7,7 +7,12 @@ import 'package:feature_showcase/src/delivery/presentation/aurora_brand.dart';
 import 'package:feature_showcase/src/delivery/presentation/aurora_category_icon.dart';
 import 'package:feature_showcase/src/delivery/presentation/aurora_home_page.dart'
     show AuroraVendorCard;
+import 'package:feature_showcase/src/delivery/presentation/aurora_navigation.dart';
+import 'package:feature_showcase/src/delivery/presentation/aurora_order_detail_page.dart';
+import 'package:feature_showcase/src/delivery/presentation/delivery_bloc.dart';
+import 'package:feature_showcase/src/delivery/presentation/delivery_event.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 /// Lista de bancas/lojas filtravel por categoria. Reaproveita o
 /// `AuroraVendorCard` da home como item da lista.
@@ -29,6 +34,20 @@ class _AuroraStoreListPageState extends State<AuroraStoreListPage> {
   void initState() {
     super.initState();
     _category = widget.initialCategory;
+  }
+
+  void _placeOrder(BuildContext context, Vendor vendor) {
+    final bloc = context.read<DeliveryBloc>();
+    final orderId = DeliveryBloc.peekNextOrderId();
+    bloc.add(DeliveryOrderPlaced(vendor.id));
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        builder: (_) => auroraWithDemoBloc(
+          context,
+          AuroraOrderDetailPage(orderId: orderId),
+        ),
+      ),
+    );
   }
 
   List<Vendor> _visibleVendors() {
@@ -96,7 +115,10 @@ class _AuroraStoreListPageState extends State<AuroraStoreListPage> {
               const SizedBox(height: AppSpacing.md),
               for (var i = 0; i < vendors.length; i++) ...[
                 if (i > 0) const SizedBox(height: AppSpacing.sm),
-                AuroraVendorCard(vendor: vendors[i]),
+                AuroraVendorCard(
+                  vendor: vendors[i],
+                  onTap: () => _placeOrder(context, vendors[i]),
+                ),
               ],
               if (vendors.isEmpty) ...[
                 const SizedBox(height: AppSpacing.xl),

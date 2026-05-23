@@ -1,4 +1,5 @@
 import 'package:design_system/design_system.dart';
+import 'package:feature_showcase/src/shared/presentation/mock_body_constraint.dart';
 import 'package:feature_showcase/src/delivery/data/aurora_vendors_catalog.dart';
 import 'package:feature_showcase/src/delivery/domain/market_category.dart';
 import 'package:feature_showcase/src/delivery/domain/vendor.dart';
@@ -8,11 +9,8 @@ import 'package:feature_showcase/src/delivery/presentation/aurora_category_icon.
 import 'package:feature_showcase/src/delivery/presentation/aurora_home_page.dart'
     show AuroraVendorCard;
 import 'package:feature_showcase/src/delivery/presentation/aurora_navigation.dart';
-import 'package:feature_showcase/src/delivery/presentation/aurora_order_detail_page.dart';
-import 'package:feature_showcase/src/delivery/presentation/delivery_bloc.dart';
-import 'package:feature_showcase/src/delivery/presentation/delivery_event.dart';
+import 'package:feature_showcase/src/delivery/presentation/aurora_vendor_detail_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 /// Lista de bancas/lojas filtravel por categoria. Reaproveita o
 /// `AuroraVendorCard` da home como item da lista.
@@ -36,16 +34,11 @@ class _AuroraStoreListPageState extends State<AuroraStoreListPage> {
     _category = widget.initialCategory;
   }
 
-  void _placeOrder(BuildContext context, Vendor vendor) {
-    final bloc = context.read<DeliveryBloc>();
-    final orderId = DeliveryBloc.peekNextOrderId();
-    bloc.add(DeliveryOrderPlaced(vendor.id));
+  void _openVendorDetail(BuildContext context, Vendor vendor) {
     Navigator.of(context).push(
       MaterialPageRoute<void>(
-        builder: (_) => auroraWithDemoBloc(
-          context,
-          AuroraOrderDetailPage(orderId: orderId),
-        ),
+        builder: (_) =>
+            auroraWithDemoBloc(context, AuroraVendorDetailPage(vendor: vendor)),
       ),
     );
   }
@@ -64,74 +57,74 @@ class _AuroraStoreListPageState extends State<AuroraStoreListPage> {
     return Scaffold(
       backgroundColor: colors.background,
       appBar: const AuroraAppBar(),
-      body: SafeArea(
-        top: false,
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(
-            AppSpacing.lg,
-            AppSpacing.md,
-            AppSpacing.lg,
-            AppSpacing.xxl,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'bancas'.toUpperCase(),
-                style: textTheme.labelSmall?.copyWith(
-                  color: colors.accent,
-                  letterSpacing: 1.2,
-                ),
-              ),
-              const SizedBox(height: AppSpacing.xxs),
-              Text(
-                _category == null
-                    ? 'Todas as bancas'
-                    : 'Em ${_category!.label.toLowerCase()}',
-                style: textTheme.headlineMedium?.copyWith(
-                  color: colors.onSurface,
-                  fontFamily: AuroraBrand.displayFontFamily,
-                  fontWeight: FontWeight.w600,
-                  letterSpacing: -0.4,
-                ),
-              ),
-              const SizedBox(height: AppSpacing.md),
-              _FilterChips(
-                selected: _category,
-                onChanged: (c) => setState(() => _category = c),
-                colors: colors,
-                textTheme: textTheme,
-              ),
-              const SizedBox(height: AppSpacing.md),
-              Text(
-                vendors.length == 1
-                    ? '1 banca'
-                    : '${vendors.length} bancas',
-                style: textTheme.labelMedium?.copyWith(
-                  color: colors.onSurfaceMuted,
-                  letterSpacing: 0.2,
-                ),
-              ),
-              const SizedBox(height: AppSpacing.md),
-              for (var i = 0; i < vendors.length; i++) ...[
-                if (i > 0) const SizedBox(height: AppSpacing.sm),
-                AuroraVendorCard(
-                  vendor: vendors[i],
-                  onTap: () => _placeOrder(context, vendors[i]),
-                ),
-              ],
-              if (vendors.isEmpty) ...[
-                const SizedBox(height: AppSpacing.xl),
-                Center(
-                  child: Text(
-                    'Nenhuma banca nessa categoria por enquanto.',
-                    style: textTheme.bodyMedium?.copyWith(
-                      color: colors.onSurfaceMuted,
-                    ),
+      body: MockBodyConstraint(
+        child: SafeArea(
+          top: false,
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.fromLTRB(
+              AppSpacing.lg,
+              AppSpacing.md,
+              AppSpacing.lg,
+              AppSpacing.xxl,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'bancas'.toUpperCase(),
+                  style: textTheme.labelSmall?.copyWith(
+                    color: colors.accent,
+                    letterSpacing: 1.2,
                   ),
                 ),
+                const SizedBox(height: AppSpacing.xxs),
+                Text(
+                  _category == null
+                      ? 'Todas as bancas'
+                      : 'Em ${_category!.label.toLowerCase()}',
+                  style: textTheme.headlineMedium?.copyWith(
+                    color: colors.onSurface,
+                    fontFamily: AuroraBrand.displayFontFamily,
+                    fontWeight: FontWeight.w600,
+                    letterSpacing: -0.4,
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.md),
+                _FilterChips(
+                  selected: _category,
+                  onChanged: (c) => setState(() => _category = c),
+                  colors: colors,
+                  textTheme: textTheme,
+                ),
+                const SizedBox(height: AppSpacing.md),
+                Text(
+                  vendors.length == 1 ? '1 banca' : '${vendors.length} bancas',
+                  style: textTheme.labelMedium?.copyWith(
+                    color: colors.onSurfaceMuted,
+                    letterSpacing: 0.2,
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.md),
+                for (var i = 0; i < vendors.length; i++) ...[
+                  if (i > 0) const SizedBox(height: AppSpacing.sm),
+                  AuroraVendorCard(
+                    vendor: vendors[i],
+                    onTap: () => _openVendorDetail(context, vendors[i]),
+                  ),
+                ],
+                if (vendors.isEmpty) ...[
+                  const SizedBox(height: AppSpacing.xl),
+                  Center(
+                    child: Text(
+                      'Nenhuma banca nessa categoria por enquanto.',
+                      style: textTheme.bodyMedium?.copyWith(
+                        color: colors.onSurfaceMuted,
+                      ),
+                    ),
+                  ),
+                ],
               ],
-            ],
+            ),
           ),
         ),
       ),

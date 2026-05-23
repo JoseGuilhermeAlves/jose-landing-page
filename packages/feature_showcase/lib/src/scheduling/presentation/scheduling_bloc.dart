@@ -10,17 +10,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 /// dia da semana + indice de slot, pra demo nunca parecer "vazia
 /// demais" em viewport novo.
 class SchedulingBloc extends Bloc<SchedulingEvent, SchedulingState> {
-  SchedulingBloc({
-    required DateTime today,
-    Set<DateTime>? preBookedSlots,
-  }) : super(
-          SchedulingState(
-            today: _stripTime(today),
-            selectedDate: _stripTime(today),
-            preBookedSlots: preBookedSlots ?? _defaultPreBookings(today),
-            userBookedSlots: const {},
-          ),
-        ) {
+  SchedulingBloc({required DateTime today, Set<DateTime>? preBookedSlots})
+    : super(
+        SchedulingState(
+          today: _stripTime(today),
+          selectedDate: _stripTime(today),
+          preBookedSlots: preBookedSlots ?? _defaultPreBookings(today),
+          userBookedSlots: const {},
+        ),
+      ) {
     on<SchedulingDateSelected>(_onDateSelected);
     on<SchedulingSlotBooked>(_onSlotBooked);
     on<SchedulingSlotCancelled>(_onSlotCancelled);
@@ -100,8 +98,7 @@ class SchedulingBloc extends Bloc<SchedulingEvent, SchedulingState> {
     );
   }
 
-  static DateTime _stripTime(DateTime d) =>
-      DateTime(d.year, d.month, d.day);
+  static DateTime _stripTime(DateTime d) => DateTime(d.year, d.month, d.day);
 
   /// Pre-booked padrao — pra cada dia dos proximos 14, marca slots
   /// nos indices `(weekday + i) % 7 == 0` (entre 0 e 17). Resultado:
@@ -115,9 +112,12 @@ class SchedulingBloc extends Bloc<SchedulingEvent, SchedulingState> {
       for (var slot = 0; slot < 18; slot++) {
         if ((day.weekday + slot * 3) % 7 == 0) {
           result.add(
-            DateTime(day.year, day.month, day.day, 9).add(
-              Duration(minutes: 30 * slot),
-            ),
+            DateTime(
+              day.year,
+              day.month,
+              day.day,
+              9,
+            ).add(Duration(minutes: 30 * slot)),
           );
         }
       }

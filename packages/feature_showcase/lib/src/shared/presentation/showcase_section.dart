@@ -46,10 +46,7 @@ class ShowcaseSection extends StatelessWidget {
     if (demo == null) return;
 
     Navigator.of(context).push(
-      MaterialPageRoute<void>(
-        builder: (_) => demo,
-        fullscreenDialog: true,
-      ),
+      MaterialPageRoute<void>(builder: (_) => demo, fullscreenDialog: true),
     );
   }
 
@@ -58,8 +55,8 @@ class ShowcaseSection extends StatelessWidget {
   Widget? _demoFor(String id) {
     return switch (id) {
       'delivery' => DeliveryDemo(
-          ticker: Stream<void>.periodic(const Duration(seconds: 2)),
-        ),
+        ticker: Stream<void>.periodic(const Duration(seconds: 2)),
+      ),
       'scheduling' => SchedulingDemo(today: DateTime.now()),
       'fitness' => FitnessDemo(today: DateTime.now().weekday),
       'realestate' => const RealEstateDemo(),

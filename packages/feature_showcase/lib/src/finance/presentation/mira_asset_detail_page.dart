@@ -1,4 +1,5 @@
 import 'package:design_system/design_system.dart';
+import 'package:feature_showcase/src/shared/presentation/mock_body_constraint.dart';
 import 'package:feature_showcase/src/finance/data/mira_assets_catalog.dart';
 import 'package:feature_showcase/src/finance/data/mira_candles_catalog.dart';
 import 'package:feature_showcase/src/finance/domain/asset.dart';
@@ -37,39 +38,41 @@ class MiraAssetDetailPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: colors.background,
       appBar: MiraAppBar(title: asset.symbol),
-      body: BlocBuilder<FinanceBloc, FinanceState>(
-        builder: (context, state) {
-          final holding = state.holdingOf(assetId);
-          return Column(
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  padding: const EdgeInsets.fromLTRB(
-                    AppSpacing.lg,
-                    AppSpacing.lg,
-                    AppSpacing.lg,
-                    AppSpacing.xl,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _AssetHeader(asset: asset),
-                      const SizedBox(height: AppSpacing.xl),
-                      _ChartCard(candles: candles),
-                      const SizedBox(height: AppSpacing.xl),
-                      _StatsGrid(asset: asset),
-                      if (holding != null) ...[
+      body: MockBodyConstraint(
+        child: BlocBuilder<FinanceBloc, FinanceState>(
+          builder: (context, state) {
+            final holding = state.holdingOf(assetId);
+            return Column(
+              children: [
+                Expanded(
+                  child: SingleChildScrollView(
+                    padding: const EdgeInsets.fromLTRB(
+                      AppSpacing.lg,
+                      AppSpacing.lg,
+                      AppSpacing.lg,
+                      AppSpacing.xl,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _AssetHeader(asset: asset),
                         const SizedBox(height: AppSpacing.xl),
-                        _MyPositionCard(asset: asset, state: state),
+                        _ChartCard(candles: candles),
+                        const SizedBox(height: AppSpacing.xl),
+                        _StatsGrid(asset: asset),
+                        if (holding != null) ...[
+                          const SizedBox(height: AppSpacing.xl),
+                          _MyPositionCard(asset: asset, state: state),
+                        ],
                       ],
-                    ],
+                    ),
                   ),
                 ),
-              ),
-              _BottomCtaBar(asset: asset),
-            ],
-          );
-        },
+                _BottomCtaBar(asset: asset),
+              ],
+            );
+          },
+        ),
       ),
     );
   }
@@ -90,10 +93,7 @@ class _AssetHeader extends StatelessWidget {
         Row(
           children: [
             Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 10,
-                vertical: 4,
-              ),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
               decoration: BoxDecoration(
                 color: colors.surfaceMuted,
                 borderRadius: BorderRadius.circular(6),
@@ -145,9 +145,7 @@ class _AssetHeader extends StatelessWidget {
           padding: const EdgeInsets.only(top: 2),
           child: Text(
             'Cotacao em tempo real · ${formatMiraVolume(_simulatedTodayVolume(asset))} negociados hoje',
-            style: textTheme.bodySmall?.copyWith(
-              color: colors.onSurfaceMuted,
-            ),
+            style: textTheme.bodySmall?.copyWith(color: colors.onSurfaceMuted),
           ),
         ),
       ],
@@ -209,10 +207,7 @@ class _ChartCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: AppSpacing.sm),
-          MiraCandlestickChart(
-            candles: candles,
-            height: 260,
-          ),
+          MiraCandlestickChart(candles: candles, height: 260),
         ],
       ),
     );

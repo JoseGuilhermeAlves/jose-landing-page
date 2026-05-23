@@ -44,9 +44,7 @@ abstract final class AppTheme {
         ),
         margin: EdgeInsets.zero,
       ),
-      extensions: <ThemeExtension<dynamic>>[
-        AppColorsExtension(scheme),
-      ],
+      extensions: <ThemeExtension<dynamic>>[AppColorsExtension(scheme)],
     );
   }
 }

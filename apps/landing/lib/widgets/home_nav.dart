@@ -59,9 +59,7 @@ class HomeNav extends StatelessWidget {
           decoration: BoxDecoration(
             color: colors.background.withValues(alpha: 0.72),
             border: Border(
-              bottom: BorderSide(
-                color: colors.border.withValues(alpha: 0.6),
-              ),
+              bottom: BorderSide(color: colors.border.withValues(alpha: 0.6)),
             ),
           ),
           child: SafeArea(
@@ -161,9 +159,7 @@ class _Anchors extends StatelessWidget {
     return Wrap(
       spacing: AppSpacing.md,
       crossAxisAlignment: WrapCrossAlignment.center,
-      children: [
-        for (final a in anchors) _AnchorButton(anchor: a),
-      ],
+      children: [for (final a in anchors) _AnchorButton(anchor: a)],
     );
   }
 }

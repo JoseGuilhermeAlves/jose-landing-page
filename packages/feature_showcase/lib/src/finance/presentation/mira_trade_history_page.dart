@@ -1,4 +1,5 @@
 import 'package:design_system/design_system.dart';
+import 'package:feature_showcase/src/shared/presentation/mock_body_constraint.dart';
 import 'package:feature_showcase/src/finance/data/mira_assets_catalog.dart';
 import 'package:feature_showcase/src/finance/domain/order_side.dart';
 import 'package:feature_showcase/src/finance/domain/trade.dart';
@@ -22,35 +23,38 @@ class MiraTradeHistoryPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: colors.background,
       appBar: const MiraAppBar(title: 'Historico'),
-      body: BlocBuilder<FinanceBloc, FinanceState>(
-        builder: (context, state) {
-          if (state.trades.isEmpty) {
-            return Center(
-              child: Padding(
-                padding: const EdgeInsets.all(AppSpacing.xl),
-                child: Text(
-                  'Sem ordens ainda. Tente comprar ou vender um ativo.',
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: colors.onSurfaceMuted,
-                      ),
+      body: MockBodyConstraint(
+        child: BlocBuilder<FinanceBloc, FinanceState>(
+          builder: (context, state) {
+            if (state.trades.isEmpty) {
+              return Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(AppSpacing.xl),
+                  child: Text(
+                    'Sem ordens ainda. Tente comprar ou vender um ativo.',
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: colors.onSurfaceMuted,
+                    ),
+                  ),
                 ),
-              ),
-            );
-          }
+              );
+            }
 
-          return ListView.separated(
-            padding: const EdgeInsets.fromLTRB(
-              AppSpacing.lg,
-              AppSpacing.lg,
-              AppSpacing.lg,
-              AppSpacing.xxl,
-            ),
-            itemCount: state.trades.length,
-            separatorBuilder: (_, __) => const SizedBox(height: AppSpacing.xs),
-            itemBuilder: (context, i) => _TradeRow(trade: state.trades[i]),
-          );
-        },
+            return ListView.separated(
+              padding: const EdgeInsets.fromLTRB(
+                AppSpacing.lg,
+                AppSpacing.lg,
+                AppSpacing.lg,
+                AppSpacing.xxl,
+              ),
+              itemCount: state.trades.length,
+              separatorBuilder: (_, __) =>
+                  const SizedBox(height: AppSpacing.xs),
+              itemBuilder: (context, i) => _TradeRow(trade: state.trades[i]),
+            );
+          },
+        ),
       ),
     );
   }

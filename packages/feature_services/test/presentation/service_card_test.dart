@@ -7,9 +7,9 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   Widget wrap(Widget child) => MaterialApp(
-        theme: AppTheme.dark(),
-        home: Scaffold(body: Center(child: child)),
-      );
+    theme: AppTheme.dark(),
+    home: Scaffold(body: Center(child: child)),
+  );
 
   const service = Service(
     id: 'mobile',
@@ -31,10 +31,17 @@ void main() {
   }
 
   group('ServiceCard', () {
-    testWidgets('renderiza titulo, descricao e icone do Service',
-        (tester) async {
+    testWidgets('renderiza titulo, descricao e icone do Service', (
+      tester,
+    ) async {
       await tester.pumpWidget(
-        wrap(const SizedBox(width: 320, height: 220, child: ServiceCard(service: service))),
+        wrap(
+          const SizedBox(
+            width: 320,
+            height: 220,
+            child: ServiceCard(service: service),
+          ),
+        ),
       );
       await tester.pump(const Duration(milliseconds: 16));
 
@@ -45,10 +52,17 @@ void main() {
       await tester.pumpWidget(const SizedBox());
     });
 
-    testWidgets('hover sobe progress da borda animada de 0 ate 1',
-        (tester) async {
+    testWidgets('hover sobe progress da borda animada de 0 ate 1', (
+      tester,
+    ) async {
       await tester.pumpWidget(
-        wrap(const SizedBox(width: 320, height: 220, child: ServiceCard(service: service))),
+        wrap(
+          const SizedBox(
+            width: 320,
+            height: 220,
+            child: ServiceCard(service: service),
+          ),
+        ),
       );
       await tester.pump(const Duration(milliseconds: 16));
 
@@ -80,8 +94,9 @@ void main() {
       await tester.pumpWidget(const SizedBox());
     });
 
-    testWidgets('expoe Semantics como botao com label do servico',
-        (tester) async {
+    testWidgets('expoe Semantics como botao com label do servico', (
+      tester,
+    ) async {
       final handle = tester.ensureSemantics();
       try {
         await tester.pumpWidget(
@@ -117,10 +132,7 @@ void main() {
         wrap(
           SizedBox(
             width: 320,
-            child: ServiceCard(
-              service: service,
-              onPressed: () => taps++,
-            ),
+            child: ServiceCard(service: service, onPressed: () => taps++),
           ),
         ),
       );

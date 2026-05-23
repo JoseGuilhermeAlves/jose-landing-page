@@ -1,4 +1,5 @@
 import 'package:design_system/design_system.dart';
+import 'package:feature_showcase/src/shared/presentation/mock_body_constraint.dart';
 import 'package:feature_showcase/src/finance/data/mira_assets_catalog.dart';
 import 'package:feature_showcase/src/finance/domain/asset.dart';
 import 'package:feature_showcase/src/finance/presentation/finance_bloc.dart';
@@ -51,10 +52,8 @@ class MiraHomePage extends StatelessWidget {
             icon: const Icon(Icons.pie_chart_outline_rounded),
             onPressed: () => Navigator.of(context).push(
               MaterialPageRoute<void>(
-                builder: (_) => miraWithDemoBloc(
-                  context,
-                  const MiraPortfolioPage(),
-                ),
+                builder: (_) =>
+                    miraWithDemoBloc(context, const MiraPortfolioPage()),
               ),
             ),
           ),
@@ -64,78 +63,78 @@ class MiraHomePage extends StatelessWidget {
             icon: const Icon(Icons.history_rounded),
             onPressed: () => Navigator.of(context).push(
               MaterialPageRoute<void>(
-                builder: (_) => miraWithDemoBloc(
-                  context,
-                  const MiraTradeHistoryPage(),
-                ),
+                builder: (_) =>
+                    miraWithDemoBloc(context, const MiraTradeHistoryPage()),
               ),
             ),
           ),
           const SizedBox(width: AppSpacing.xs),
         ],
       ),
-      body: BlocBuilder<FinanceBloc, FinanceState>(
-        builder: (context, state) {
-          final favoriteIds = state.favoriteIds;
-          final watchlist = MiraAssetsCatalog.all
-              .where((a) => favoriteIds.contains(a.id))
-              .toList();
-          final others = MiraAssetsCatalog.all
-              .where((a) => !favoriteIds.contains(a.id))
-              .toList();
+      body: MockBodyConstraint(
+        child: BlocBuilder<FinanceBloc, FinanceState>(
+          builder: (context, state) {
+            final favoriteIds = state.favoriteIds;
+            final watchlist = MiraAssetsCatalog.all
+                .where((a) => favoriteIds.contains(a.id))
+                .toList();
+            final others = MiraAssetsCatalog.all
+                .where((a) => !favoriteIds.contains(a.id))
+                .toList();
 
-          return Column(
-            children: [
-              const MiraTickerTape(),
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      _PortfolioHero(state: state),
-                      const SizedBox(height: AppSpacing.xxl),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: AppSpacing.lg,
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            const _SectionHeader(
-                              eyebrow: 'WATCHLIST',
-                              title: 'Acompanhando',
-                              count: null,
-                            ),
-                            const SizedBox(height: AppSpacing.md),
-                            if (watchlist.isEmpty)
-                              const _EmptyFavoritesNote()
-                            else
-                              ...watchlist.map(
-                                (a) => _AssetRow(asset: a, isFavorite: true),
+            return Column(
+              children: [
+                const MiraTickerTape(),
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        _PortfolioHero(state: state),
+                        const SizedBox(height: AppSpacing.xxl),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: AppSpacing.lg,
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              const _SectionHeader(
+                                eyebrow: 'WATCHLIST',
+                                title: 'Acompanhando',
+                                count: null,
                               ),
-                            const SizedBox(height: AppSpacing.xxl),
-                            _SectionHeader(
-                              eyebrow: 'CATALOGO',
-                              title: 'Outros ativos',
-                              count: others.length,
-                            ),
-                            const SizedBox(height: AppSpacing.md),
-                            ...others.map(
-                              (a) => _AssetRow(asset: a, isFavorite: false),
-                            ),
-                            const SizedBox(height: AppSpacing.xxl),
-                            const _BrandFootnote(),
-                            const SizedBox(height: AppSpacing.xl),
-                          ],
+                              const SizedBox(height: AppSpacing.md),
+                              if (watchlist.isEmpty)
+                                const _EmptyFavoritesNote()
+                              else
+                                ...watchlist.map(
+                                  (a) => _AssetRow(asset: a, isFavorite: true),
+                                ),
+                              const SizedBox(height: AppSpacing.xxl),
+                              _SectionHeader(
+                                eyebrow: 'CATALOGO',
+                                title: 'Outros ativos',
+                                count: others.length,
+                              ),
+                              const SizedBox(height: AppSpacing.md),
+                              ...others.map(
+                                (a) => _AssetRow(asset: a, isFavorite: false),
+                              ),
+                              const SizedBox(height: AppSpacing.xxl),
+                              const _BrandFootnote(),
+                              const SizedBox(height: AppSpacing.xl),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
-          );
-        },
+              ],
+            );
+          },
+        ),
       ),
     );
   }
@@ -305,8 +304,9 @@ class _MarketStatusChipState extends State<_MarketStatusChip>
                 shape: BoxShape.circle,
                 boxShadow: [
                   BoxShadow(
-                    color: colors.success
-                        .withValues(alpha: 0.4 + _pulse.value * 0.4),
+                    color: colors.success.withValues(
+                      alpha: 0.4 + _pulse.value * 0.4,
+                    ),
                     blurRadius: 4 + _pulse.value * 6,
                     spreadRadius: _pulse.value * 1.5,
                   ),
@@ -426,9 +426,9 @@ class _EmptyFavoritesNote extends StatelessWidget {
       child: Text(
         'Toque na estrela de qualquer ativo abaixo pra adicionar a sua '
         'watchlist.',
-        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              color: colors.onSurfaceMuted,
-            ),
+        style: Theme.of(
+          context,
+        ).textTheme.bodyMedium?.copyWith(color: colors.onSurfaceMuted),
       ),
     );
   }
@@ -522,13 +522,11 @@ class _AssetRow extends StatelessWidget {
                   key: Key('mira-favorite-toggle-${asset.id}'),
                   tooltip: isFavorite ? 'Remover dos favoritos' : 'Favoritar',
                   visualDensity: VisualDensity.compact,
-                  onPressed: () => context
-                      .read<FinanceBloc>()
-                      .add(FinanceFavoriteToggled(asset.id)),
+                  onPressed: () => context.read<FinanceBloc>().add(
+                    FinanceFavoriteToggled(asset.id),
+                  ),
                   icon: Icon(
-                    isFavorite
-                        ? Icons.star_rounded
-                        : Icons.star_border_rounded,
+                    isFavorite ? Icons.star_rounded : Icons.star_border_rounded,
                     color: isFavorite ? colors.accent : colors.onSurfaceMuted,
                     size: 22,
                   ),

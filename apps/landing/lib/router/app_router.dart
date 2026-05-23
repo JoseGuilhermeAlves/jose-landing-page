@@ -25,24 +25,18 @@ abstract final class AppRouter {
       routes: [
         GoRoute(
           path: RoutePaths.home,
-          pageBuilder: (_, state) => const NoTransitionPage(
-            child: HomePage(),
-          ),
+          pageBuilder: (_, state) => const NoTransitionPage(child: HomePage()),
         ),
         GoRoute(
           path: LabsRoutePaths.index,
           pageBuilder: (_, _) => NoTransitionPage(
-            child: _DeferredLabs(
-              builder: () => labs.LabsPage(),
-            ),
+            child: _DeferredLabs(builder: () => labs.LabsPage()),
           ),
         ),
         GoRoute(
           path: LabsRoutePaths.particles,
           pageBuilder: (_, _) => NoTransitionPage(
-            child: _DeferredLabs(
-              builder: () => labs.ParticleFieldPlayground(),
-            ),
+            child: _DeferredLabs(builder: () => labs.ParticleFieldPlayground()),
           ),
         ),
         GoRoute(
@@ -72,32 +66,24 @@ abstract final class AppRouter {
         GoRoute(
           path: LabsRoutePaths.morphing,
           pageBuilder: (_, _) => NoTransitionPage(
-            child: _DeferredLabs(
-              builder: () => labs.MorphingShapePlayground(),
-            ),
+            child: _DeferredLabs(builder: () => labs.MorphingShapePlayground()),
           ),
         ),
         GoRoute(
           path: LabsRoutePaths.ripple,
           pageBuilder: (_, _) => NoTransitionPage(
-            child: _DeferredLabs(
-              builder: () => labs.RippleHoverPlayground(),
-            ),
+            child: _DeferredLabs(builder: () => labs.RippleHoverPlayground()),
           ),
         ),
         GoRoute(
           path: LabsRoutePaths.wave,
           pageBuilder: (_, _) => NoTransitionPage(
-            child: _DeferredLabs(
-              builder: () => labs.WaveDividerPlayground(),
-            ),
+            child: _DeferredLabs(builder: () => labs.WaveDividerPlayground()),
           ),
         ),
         GoRoute(
           path: RoutePaths.notFoundFallback,
-          pageBuilder: (_, _) => const NoTransitionPage(
-            child: NotFoundPage(),
-          ),
+          pageBuilder: (_, _) => const NoTransitionPage(child: NotFoundPage()),
         ),
       ],
     );
@@ -129,9 +115,7 @@ class _DeferredLabsState extends State<_DeferredLabs> {
           return const NotFoundPage();
         }
         if (snapshot.connectionState != ConnectionState.done) {
-          return const Scaffold(
-            body: Center(child: LoadingSpinner()),
-          );
+          return const Scaffold(body: Center(child: LoadingSpinner()));
         }
         return widget.builder();
       },

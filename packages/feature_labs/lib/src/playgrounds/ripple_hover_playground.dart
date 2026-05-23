@@ -63,9 +63,7 @@ class _RippleHoverPlaygroundState extends State<RippleHoverPlayground>
           },
           child: Stack(
             children: [
-              Positioned.fill(
-                child: ColoredBox(color: colors.surfaceMuted),
-              ),
+              Positioned.fill(child: ColoredBox(color: colors.surfaceMuted)),
               Positioned.fill(
                 child: AnimatedBuilder(
                   animation: _controller,

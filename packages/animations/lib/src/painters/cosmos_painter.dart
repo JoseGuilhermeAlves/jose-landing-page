@@ -215,12 +215,7 @@ class CosmosPainter extends CustomPainter {
     canvas.restore();
   }
 
-  void _paintBloom(
-    Canvas canvas,
-    Offset center,
-    double r,
-    List<Color> ramp,
-  ) {
+  void _paintBloom(Canvas canvas, Offset center, double r, List<Color> ramp) {
     // Glow tighter pra nao lavar a cor solida do corpo.
     final glow = ramp[math.min(2, ramp.length - 1)];
     final bloomR = r * 1.65;
@@ -340,25 +335,24 @@ class CosmosPainter extends CustomPainter {
     final vy = center.dy + (0.05 + rng.nextDouble() * 0.2) * r;
     final vrx = r * 0.22;
     final vry = vrx * 0.55;
-    final vortexShader = RadialGradient(
-      colors: [
-        ramp.first.withValues(alpha: 0.85),
-        ramp[1].withValues(alpha: 0.60),
-        Colors.transparent,
-      ],
-      stops: const [0.0, 0.55, 1.0],
-    ).createShader(Rect.fromCenter(
-      center: Offset(vx, vy),
-      width: vrx * 2,
-      height: vry * 2,
-    ));
+    final vortexShader =
+        RadialGradient(
+          colors: [
+            ramp.first.withValues(alpha: 0.85),
+            ramp[1].withValues(alpha: 0.60),
+            Colors.transparent,
+          ],
+          stops: const [0.0, 0.55, 1.0],
+        ).createShader(
+          Rect.fromCenter(
+            center: Offset(vx, vy),
+            width: vrx * 2,
+            height: vry * 2,
+          ),
+        );
     _paint.shader = vortexShader;
     canvas.drawOval(
-      Rect.fromCenter(
-        center: Offset(vx, vy),
-        width: vrx * 2,
-        height: vry * 2,
-      ),
+      Rect.fromCenter(center: Offset(vx, vy), width: vrx * 2, height: vry * 2),
       _paint,
     );
     _paint.shader = null;
@@ -390,16 +384,17 @@ class CosmosPainter extends CustomPainter {
       canvas.translate(ex, ey);
       canvas.rotate(rot);
       // Continente solido — alpha alta no nucleo, fade so na borda.
-      final shader = RadialGradient(
-        colors: [
-          patchColor.withValues(alpha: 0.92),
-          patchColor.withValues(alpha: 0.65),
-          patchColor.withValues(alpha: 0),
-        ],
-        stops: const [0.0, 0.70, 1.0],
-      ).createShader(
-        Rect.fromCenter(center: Offset.zero, width: ew * 2, height: eh * 2),
-      );
+      final shader =
+          RadialGradient(
+            colors: [
+              patchColor.withValues(alpha: 0.92),
+              patchColor.withValues(alpha: 0.65),
+              patchColor.withValues(alpha: 0),
+            ],
+            stops: const [0.0, 0.70, 1.0],
+          ).createShader(
+            Rect.fromCenter(center: Offset.zero, width: ew * 2, height: eh * 2),
+          );
       _paint.shader = shader;
       canvas.drawOval(
         Rect.fromCenter(center: Offset.zero, width: ew * 2, height: eh * 2),
@@ -421,10 +416,7 @@ class CosmosPainter extends CustomPainter {
     final shader = LinearGradient(
       begin: const Alignment(0, -0.05),
       end: const Alignment(0, 0.5),
-      colors: [
-        Colors.transparent,
-        lower.withValues(alpha: 0.92),
-      ],
+      colors: [Colors.transparent, lower.withValues(alpha: 0.92)],
       stops: const [0.0, 1.0],
     ).createShader(Rect.fromCircle(center: center, radius: r));
     _paint.shader = shader;
@@ -538,16 +530,21 @@ class CosmosPainter extends CustomPainter {
 
     // Gradient horizontal — bordas (limbos) mais brilhantes simulando
     // espessura do anel.
-    final shader = LinearGradient(
-      colors: [
-        ring.color.withValues(alpha: (ring.color.a * 0.95).clamp(0.0, 1.0)),
-        ring.color.withValues(alpha: (ring.color.a * 0.55).clamp(0.0, 1.0)),
-        ring.color.withValues(alpha: (ring.color.a * 0.95).clamp(0.0, 1.0)),
-      ],
-      stops: const [0.0, 0.5, 1.0],
-    ).createShader(
-      Rect.fromCenter(center: center, width: outerR * 2, height: outerH * 2),
-    );
+    final shader =
+        LinearGradient(
+          colors: [
+            ring.color.withValues(alpha: (ring.color.a * 0.95).clamp(0.0, 1.0)),
+            ring.color.withValues(alpha: (ring.color.a * 0.55).clamp(0.0, 1.0)),
+            ring.color.withValues(alpha: (ring.color.a * 0.95).clamp(0.0, 1.0)),
+          ],
+          stops: const [0.0, 0.5, 1.0],
+        ).createShader(
+          Rect.fromCenter(
+            center: center,
+            width: outerR * 2,
+            height: outerH * 2,
+          ),
+        );
     _paint.shader = shader;
     canvas.drawPath(donut, _paint);
     _paint.shader = null;
@@ -562,8 +559,7 @@ class CosmosPainter extends CustomPainter {
   void _paintMoon(Canvas canvas, Size size, CosmosPlanet planet) {
     final moon = planet.moon!;
     final raw = (tick + moon.phaseOffset) % 1.0;
-    final t =
-        moon.steps > 0 ? (raw * moon.steps).floor() / moon.steps : raw;
+    final t = moon.steps > 0 ? (raw * moon.steps).floor() / moon.steps : raw;
     final angle = t * 2 * math.pi;
 
     final center = _planetCenter(planet, size);
@@ -621,8 +617,8 @@ class CosmosPainter extends CustomPainter {
     final r = n.radiusPixels * pixelSize;
 
     // Breath sutil — alpha pulsando entre 0.85-1.0 com fase por seed.
-    final breath = 0.92 +
-        0.08 * math.sin(tick * 2 * math.pi + n.seed.toDouble() * 0.7);
+    final breath =
+        0.92 + 0.08 * math.sin(tick * 2 * math.pi + n.seed.toDouble() * 0.7);
     final coreAlpha = (n.color.a * n.density * breath).clamp(0.0, 1.0);
 
     // Core mais opaco + falloff mais sharp — nebulosa parece "block"
@@ -690,8 +686,7 @@ class CosmosPainter extends CustomPainter {
         tierAlpha = 0.85;
       }
 
-      final alpha =
-          (color.a * featuredPulse * tierAlpha).clamp(0.0, 1.0);
+      final alpha = (color.a * featuredPulse * tierAlpha).clamp(0.0, 1.0);
 
       if (isFeatured) {
         // Halo difuso 3.5x raio.
@@ -703,9 +698,7 @@ class CosmosPainter extends CustomPainter {
             color.withValues(alpha: 0),
           ],
           stops: const [0.0, 0.45, 1.0],
-        ).createShader(
-          Rect.fromCircle(center: Offset(cx, cy), radius: haloR),
-        );
+        ).createShader(Rect.fromCircle(center: Offset(cx, cy), radius: haloR));
         _paint.shader = haloShader;
         canvas.drawCircle(Offset(cx, cy), haloR, _paint);
         _paint.shader = null;
@@ -738,10 +731,10 @@ class CosmosPainter extends CustomPainter {
     final progress = (tick - c.windowStart) / windowSpan;
     final headX =
         (c.startAnchor.dx + (c.endAnchor.dx - c.startAnchor.dx) * progress) *
-            size.width;
+        size.width;
     final headY =
         (c.startAnchor.dy + (c.endAnchor.dy - c.startAnchor.dy) * progress) *
-            size.height;
+        size.height;
 
     final dirX = (c.startAnchor.dx - c.endAnchor.dx) * size.width;
     final dirY = (c.startAnchor.dy - c.endAnchor.dy) * size.height;

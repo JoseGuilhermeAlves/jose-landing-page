@@ -348,15 +348,9 @@ void main() {
           findsOneWidget,
         );
         // Botao de voltar do detail no AppBar.
-        expect(
-          find.byKey(const Key('exercise-detail-back')),
-          findsOneWidget,
-        );
+        expect(find.byKey(const Key('exercise-detail-back')), findsOneWidget);
         // Body diagram do exercicio.
-        expect(
-          find.byKey(const Key('pulso-body-diagram')),
-          findsOneWidget,
-        );
+        expect(find.byKey(const Key('pulso-body-diagram')), findsOneWidget);
       },
     );
 

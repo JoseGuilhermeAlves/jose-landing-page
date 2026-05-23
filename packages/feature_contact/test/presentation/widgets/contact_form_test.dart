@@ -30,15 +30,19 @@ void main() {
   }
 
   group('ContactForm', () {
-    testWidgets('renderiza campos canonicos: nome, email, mensagem, dropdown',
-        (tester) async {
+    testWidgets('renderiza campos canonicos: nome, email, mensagem, dropdown', (
+      tester,
+    ) async {
       await tester.pumpWidget(pumpForm());
       await tester.pump(const Duration(milliseconds: 16));
 
       expect(find.byKey(const Key('contact-form-name')), findsOneWidget);
       expect(find.byKey(const Key('contact-form-email')), findsOneWidget);
       expect(find.byKey(const Key('contact-form-message')), findsOneWidget);
-      expect(find.byKey(const Key('contact-form-project-type')), findsOneWidget);
+      expect(
+        find.byKey(const Key('contact-form-project-type')),
+        findsOneWidget,
+      );
       expect(find.byKey(const Key('contact-form-submit')), findsOneWidget);
     });
 
@@ -58,36 +62,38 @@ void main() {
       },
     );
 
-    testWidgets('preencher e submeter chama onSubmissionSuccess com Uri wa.me',
-        (tester) async {
-      Uri? captured;
-      await tester.pumpWidget(pumpForm(onSuccess: (uri) => captured = uri));
-      await tester.pump(const Duration(milliseconds: 16));
+    testWidgets(
+      'preencher e submeter chama onSubmissionSuccess com Uri wa.me',
+      (tester) async {
+        Uri? captured;
+        await tester.pumpWidget(pumpForm(onSuccess: (uri) => captured = uri));
+        await tester.pump(const Duration(milliseconds: 16));
 
-      await tester.enterText(
-        find.byKey(const Key('contact-form-name')),
-        'Cliente Teste',
-      );
-      await tester.enterText(
-        find.byKey(const Key('contact-form-email')),
-        'cliente@teste.com',
-      );
-      await tester.enterText(
-        find.byKey(const Key('contact-form-message')),
-        'Mensagem suficientemente longa pra passar.',
-      );
+        await tester.enterText(
+          find.byKey(const Key('contact-form-name')),
+          'Cliente Teste',
+        );
+        await tester.enterText(
+          find.byKey(const Key('contact-form-email')),
+          'cliente@teste.com',
+        );
+        await tester.enterText(
+          find.byKey(const Key('contact-form-message')),
+          'Mensagem suficientemente longa pra passar.',
+        );
 
-      // Seleciona o projectType abrindo o dropdown e tocando na opcao.
-      await tester.tap(find.byKey(const Key('contact-form-project-type')));
-      await tester.pumpAndSettle();
-      await tester.tap(find.text(ProjectType.newApp.label).last);
-      await tester.pumpAndSettle();
+        // Seleciona o projectType abrindo o dropdown e tocando na opcao.
+        await tester.tap(find.byKey(const Key('contact-form-project-type')));
+        await tester.pumpAndSettle();
+        await tester.tap(find.text(ProjectType.newApp.label).last);
+        await tester.pumpAndSettle();
 
-      await tester.tap(find.byKey(const Key('contact-form-submit')));
-      await tester.pumpAndSettle();
+        await tester.tap(find.byKey(const Key('contact-form-submit')));
+        await tester.pumpAndSettle();
 
-      expect(captured, isNotNull);
-      expect(captured!.toString(), contains('wa.me/5571999990000'));
-    });
+        expect(captured, isNotNull);
+        expect(captured!.toString(), contains('wa.me/5571999990000'));
+      },
+    );
   });
 }

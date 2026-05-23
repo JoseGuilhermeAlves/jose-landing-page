@@ -1,4 +1,5 @@
 import 'package:design_system/design_system.dart';
+import 'package:feature_showcase/src/shared/presentation/mock_body_constraint.dart';
 import 'package:feature_showcase/src/realestate/presentation/realestate_bloc.dart';
 import 'package:feature_showcase/src/realestate/presentation/realestate_event.dart';
 import 'package:feature_showcase/src/realestate/presentation/realestate_state.dart';
@@ -33,40 +34,42 @@ class SolarHomePage extends StatelessWidget {
           onPressed: () => Navigator.of(context).maybePop(),
         ),
       ),
-      body: SafeArea(
-        top: false,
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(
-            AppSpacing.lg,
-            AppSpacing.md,
-            AppSpacing.lg,
-            AppSpacing.xl,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _HeroCard(colors: colors, textTheme: textTheme),
-              const SizedBox(height: AppSpacing.xl),
-              _SectionLabel(
-                eyebrow: 'Bairros',
-                title: 'Por onde voce procura',
-                colors: colors,
-                textTheme: textTheme,
-              ),
-              const SizedBox(height: AppSpacing.md),
-              const _NeighborhoodStrip(),
-              const SizedBox(height: AppSpacing.xl),
-              _SectionLabel(
-                eyebrow: 'Em destaque',
-                title: 'Selecionados a mao',
-                colors: colors,
-                textTheme: textTheme,
-              ),
-              const SizedBox(height: AppSpacing.md),
-              const _FeaturedList(),
-              const SizedBox(height: AppSpacing.xxl),
-              _AboutBlock(colors: colors, textTheme: textTheme),
-            ],
+      body: MockBodyConstraint(
+        child: SafeArea(
+          top: false,
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.fromLTRB(
+              AppSpacing.lg,
+              AppSpacing.md,
+              AppSpacing.lg,
+              AppSpacing.xl,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _HeroCard(colors: colors, textTheme: textTheme),
+                const SizedBox(height: AppSpacing.xl),
+                _SectionLabel(
+                  eyebrow: 'Bairros',
+                  title: 'Por onde voce procura',
+                  colors: colors,
+                  textTheme: textTheme,
+                ),
+                const SizedBox(height: AppSpacing.md),
+                const _NeighborhoodStrip(),
+                const SizedBox(height: AppSpacing.xl),
+                _SectionLabel(
+                  eyebrow: 'Em destaque',
+                  title: 'Selecionados a mao',
+                  colors: colors,
+                  textTheme: textTheme,
+                ),
+                const SizedBox(height: AppSpacing.md),
+                const _FeaturedList(),
+                const SizedBox(height: AppSpacing.xxl),
+                _AboutBlock(colors: colors, textTheme: textTheme),
+              ],
+            ),
           ),
         ),
       ),
@@ -233,15 +236,13 @@ class _NeighborhoodChip extends StatelessWidget {
     return GestureDetector(
       key: Key('solar-home-neighborhood-$name'),
       onTap: () {
-        context
-            .read<RealEstateBloc>()
-            .add(RealEstateNeighborhoodSelected(name));
+        context.read<RealEstateBloc>().add(
+          RealEstateNeighborhoodSelected(name),
+        );
         Navigator.of(context).push(
           MaterialPageRoute<void>(
-            builder: (_) => solarWithDemoBloc(
-              context,
-              const SolarListingsPage(),
-            ),
+            builder: (_) =>
+                solarWithDemoBloc(context, const SolarListingsPage()),
           ),
         );
       },
@@ -253,9 +254,7 @@ class _NeighborhoodChip extends StatelessWidget {
         decoration: BoxDecoration(
           color: selected ? colors.primary : colors.surface,
           borderRadius: BorderRadius.circular(AppRadius.full),
-          border: Border.all(
-            color: selected ? colors.primary : colors.border,
-          ),
+          border: Border.all(color: selected ? colors.primary : colors.border),
         ),
         child: Text(
           name,

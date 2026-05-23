@@ -79,16 +79,22 @@ class _MiraCandlestickChartState extends State<MiraCandlestickChart>
           return GestureDetector(
             behavior: HitTestBehavior.opaque,
             onTapDown: (d) => setState(() {
-              _crosshairIndex =
-                  _indexFromLocal(d.localPosition, constraints.biggest);
+              _crosshairIndex = _indexFromLocal(
+                d.localPosition,
+                constraints.biggest,
+              );
             }),
             onPanStart: (d) => setState(() {
-              _crosshairIndex =
-                  _indexFromLocal(d.localPosition, constraints.biggest);
+              _crosshairIndex = _indexFromLocal(
+                d.localPosition,
+                constraints.biggest,
+              );
             }),
             onPanUpdate: (d) => setState(() {
-              _crosshairIndex =
-                  _indexFromLocal(d.localPosition, constraints.biggest);
+              _crosshairIndex = _indexFromLocal(
+                d.localPosition,
+                constraints.biggest,
+              );
             }),
             onPanCancel: () => setState(() => _crosshairIndex = null),
             child: RepaintBoundary(
@@ -243,11 +249,7 @@ class _MiraCandlestickPainter extends CustomPainter {
     for (var i = 0; i < gridLineCount; i++) {
       final t = i / (gridLineCount - 1);
       final y = plot.top + plot.height * t;
-      canvas.drawLine(
-        Offset(plot.left, y),
-        Offset(plot.right, y),
-        _gridPaint,
-      );
+      canvas.drawLine(Offset(plot.left, y), Offset(plot.right, y), _gridPaint);
 
       final price = (maxPrice - (maxPrice - minPrice) * t).round();
       final tp = TextPainter(
@@ -292,12 +294,7 @@ class _MiraCandlestickPainter extends CustomPainter {
     }
   }
 
-  void _paintCandles(
-    Canvas canvas,
-    Rect plot,
-    double minPrice,
-    num priceSpan,
-  ) {
+  void _paintCandles(Canvas canvas, Rect plot, double minPrice, num priceSpan) {
     final slot = plot.width / candles.length;
     final bodyWidth = math.max(1.6, slot * 0.62);
 
@@ -521,10 +518,7 @@ class _MiraCandlestickPainter extends CustomPainter {
       final leading = pair.$1;
       final trailing = pair.$2;
       final rowHeight = math.max(leading.size.height, trailing.size.height);
-      leading.paint(
-        canvas,
-        Offset(boxRect.left + padX, cursorY),
-      );
+      leading.paint(canvas, Offset(boxRect.left + padX, cursorY));
       trailing.paint(
         canvas,
         Offset(

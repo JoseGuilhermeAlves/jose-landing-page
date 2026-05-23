@@ -27,8 +27,7 @@ void main() {
       );
     });
 
-    test(
-        'inclui o dominio "retail" como o unico end-to-end '
+    test('inclui o dominio "retail" como o unico end-to-end '
         '— alinhado com o que Jose construiu sozinho', () {
       final endToEnd = DomainsCatalog.all
           .where((d) => d.scope == DomainScope.endToEnd)
@@ -37,47 +36,41 @@ void main() {
       expect(endToEnd.first.id, 'retail');
     });
 
-    test(
-      'NUNCA cita nominalmente empresas/produtos com que o Jose '
-      'trabalhou — quem quiser detalhe abre o LinkedIn',
-      () {
-        const banned = [
-          'Solutis',
-          'Serasa',
-          'TJ-BA',
-          'TJBA',
-          'Sabesp',
-          'PocketLab',
-          'Pocket Lab',
-          'Passaporte',
-          'TaqTaq',
-          'Taq Taq',
-          'Sumire',
-          'Sumirê',
-        ];
-        for (final d in DomainsCatalog.all) {
-          for (final term in banned) {
-            for (final field in [d.label, d.blurb]) {
-              expect(
-                field.toLowerCase().contains(term.toLowerCase()),
-                isFalse,
-                reason: 'Encontrou "$term" em "$field" da entry $d',
-              );
-            }
+    test('NUNCA cita nominalmente empresas/produtos com que o Jose '
+        'trabalhou — quem quiser detalhe abre o LinkedIn', () {
+      const banned = [
+        'Solutis',
+        'Serasa',
+        'TJ-BA',
+        'TJBA',
+        'Sabesp',
+        'PocketLab',
+        'Pocket Lab',
+        'Passaporte',
+        'TaqTaq',
+        'Taq Taq',
+        'Sumire',
+        'Sumirê',
+      ];
+      for (final d in DomainsCatalog.all) {
+        for (final term in banned) {
+          for (final field in [d.label, d.blurb]) {
+            expect(
+              field.toLowerCase().contains(term.toLowerCase()),
+              isFalse,
+              reason: 'Encontrou "$term" em "$field" da entry $d',
+            );
           }
         }
-      },
-    );
+      }
+    });
   });
 
   group('StackCatalog', () {
-    test(
-      'expoe stack com pelo menos 5 itens (Flutter, Dart, Bloc, Clean '
-      'Architecture, etc.)',
-      () {
-        expect(StackCatalog.all.length, greaterThanOrEqualTo(5));
-      },
-    );
+    test('expoe stack com pelo menos 5 itens (Flutter, Dart, Bloc, Clean '
+        'Architecture, etc.)', () {
+      expect(StackCatalog.all.length, greaterThanOrEqualTo(5));
+    });
 
     test('contem ao menos Flutter e Dart (nao-negociavel)', () {
       expect(StackCatalog.all, contains('Flutter'));
@@ -85,10 +78,7 @@ void main() {
     });
 
     test('lista e imutavel (nao aceita add)', () {
-      expect(
-        () => StackCatalog.all.add('foo'),
-        throwsUnsupportedError,
-      );
+      expect(() => StackCatalog.all.add('foo'), throwsUnsupportedError);
     });
   });
 }

@@ -14,8 +14,7 @@ void main() {
       await pumpLabsHarness(tester, const AnimatedTimelinePlayground());
       await tester.pump(const Duration(milliseconds: 16));
 
-      final switchFinder =
-          find.byKey(const Key('timeline-autocycle-switch'));
+      final switchFinder = find.byKey(const Key('timeline-autocycle-switch'));
       expect(switchFinder, findsOneWidget);
 
       await tester.tap(switchFinder);

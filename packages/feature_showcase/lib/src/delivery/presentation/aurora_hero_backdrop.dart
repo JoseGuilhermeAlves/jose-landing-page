@@ -97,8 +97,24 @@ class _AuroraHeroBackdropPainter extends CustomPainter {
     final phase = controller.value;
 
     // Duas senoides empilhadas pra dar "ondas do campo".
-    _paintWave(canvas, size, baselineRatio: 0.65, amplitude: 18, wavelength: size.width * 0.6, phase: phase, paint: _waveLightPaint);
-    _paintWave(canvas, size, baselineRatio: 0.78, amplitude: 26, wavelength: size.width * 0.8, phase: phase + 0.3, paint: _waveMidPaint);
+    _paintWave(
+      canvas,
+      size,
+      baselineRatio: 0.65,
+      amplitude: 18,
+      wavelength: size.width * 0.6,
+      phase: phase,
+      paint: _waveLightPaint,
+    );
+    _paintWave(
+      canvas,
+      size,
+      baselineRatio: 0.78,
+      amplitude: 26,
+      wavelength: size.width * 0.8,
+      phase: phase + 0.3,
+      paint: _waveMidPaint,
+    );
 
     _paintLeaves(canvas, size, phase);
   }

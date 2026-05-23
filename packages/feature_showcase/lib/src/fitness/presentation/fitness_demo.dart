@@ -1,4 +1,5 @@
 import 'package:design_system/design_system.dart';
+import 'package:feature_showcase/src/shared/presentation/mock_body_constraint.dart';
 import 'package:feature_showcase/src/fitness/data/workout_plan_catalog.dart';
 import 'package:feature_showcase/src/fitness/domain/workout_day.dart';
 import 'package:feature_showcase/src/fitness/domain/workout_exercise.dart';
@@ -150,18 +151,20 @@ class _PulsoMainScaffold extends StatelessWidget {
           ],
         ),
       ),
-      body: SafeArea(
-        top: false,
-        child: TabBarView(
-          controller: tabController,
-          children: [
-            _TodayTab(
-              today: today,
-              onStartWorkout: () => tabController.animateTo(1),
-            ),
-            const _WeekTab(),
-            const _ProgressTab(),
-          ],
+      body: MockBodyConstraint(
+        child: SafeArea(
+          top: false,
+          child: TabBarView(
+            controller: tabController,
+            children: [
+              _TodayTab(
+                today: today,
+                onStartWorkout: () => tabController.animateTo(1),
+              ),
+              const _WeekTab(),
+              const _ProgressTab(),
+            ],
+          ),
         ),
       ),
     );

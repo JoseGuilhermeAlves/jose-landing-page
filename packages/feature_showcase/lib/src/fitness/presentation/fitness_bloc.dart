@@ -8,16 +8,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 /// exercicio) na semana inteira. Aceita `today` injetavel pro foco
 /// inicial cair no dia atual; testes passam data fixa.
 class FitnessBloc extends Bloc<FitnessEvent, FitnessState> {
-  FitnessBloc({
-    required List<WorkoutDay> plan,
-    required int today,
-  }) : super(
-          FitnessState(
-            plan: plan,
-            selectedWeekday: _resolveInitialDay(plan, today),
-            completedSets: const <String, int>{},
-          ),
-        ) {
+  FitnessBloc({required List<WorkoutDay> plan, required int today})
+    : super(
+        FitnessState(
+          plan: plan,
+          selectedWeekday: _resolveInitialDay(plan, today),
+          completedSets: const <String, int>{},
+        ),
+      ) {
     on<FitnessDaySelected>(_onDaySelected);
     on<FitnessSetCompleted>(_onSetCompleted);
     on<FitnessSetUndone>(_onSetUndone);
@@ -43,10 +41,7 @@ class FitnessBloc extends Bloc<FitnessEvent, FitnessState> {
     emit(state.copyWith(selectedWeekday: event.weekday));
   }
 
-  void _onSetCompleted(
-    FitnessSetCompleted event,
-    Emitter<FitnessState> emit,
-  ) {
+  void _onSetCompleted(FitnessSetCompleted event, Emitter<FitnessState> emit) {
     final exercise = _findExercise(event.weekday, event.exerciseId);
     if (exercise == null) return;
 
@@ -55,9 +50,7 @@ class FitnessBloc extends Bloc<FitnessEvent, FitnessState> {
     if (current >= exercise.targetSets) return;
 
     emit(
-      state.copyWith(
-        completedSets: {...state.completedSets, key: current + 1},
-      ),
+      state.copyWith(completedSets: {...state.completedSets, key: current + 1}),
     );
   }
 

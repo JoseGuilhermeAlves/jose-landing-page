@@ -85,16 +85,13 @@ void main() {
       expect(ids, hasLength(DeliveryOrdersCatalog.all.length));
     });
 
-    test(
-      'catalogo Aurora abre com pelo menos um pedido nao final '
-      '(habilita o card de pedido ativo na home)',
-      () {
-        final nonFinal = DeliveryOrdersCatalog.all
-            .where((o) => !o.status.isFinal)
-            .toList();
-        expect(nonFinal, isNotEmpty);
-      },
-    );
+    test('catalogo Aurora abre com pelo menos um pedido nao final '
+        '(habilita o card de pedido ativo na home)', () {
+      final nonFinal = DeliveryOrdersCatalog.all
+          .where((o) => !o.status.isFinal)
+          .toList();
+      expect(nonFinal, isNotEmpty);
+    });
 
     test(
       'catalogo Aurora inclui pedidos delivered (alimentam o historico)',
@@ -108,11 +105,7 @@ void main() {
 
     test('cada pedido Aurora referencia um vendor', () {
       for (final o in DeliveryOrdersCatalog.all) {
-        expect(
-          o.vendorId,
-          isNotEmpty,
-          reason: 'pedido ${o.id} sem vendorId',
-        );
+        expect(o.vendorId, isNotEmpty, reason: 'pedido ${o.id} sem vendorId');
       }
     });
   });

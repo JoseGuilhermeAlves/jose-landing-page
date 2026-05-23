@@ -32,9 +32,7 @@ void main() {
 
     test('lista e imutavel — nao aceita adds em runtime', () {
       expect(
-        () => ServicesCatalog.all.add(
-          ServicesCatalog.all.first,
-        ),
+        () => ServicesCatalog.all.add(ServicesCatalog.all.first),
         throwsUnsupportedError,
       );
     });

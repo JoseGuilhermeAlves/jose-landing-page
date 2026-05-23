@@ -79,10 +79,7 @@ abstract final class AuroraBrand {
       ),
       iconTheme: IconThemeData(color: palette.onSurface),
       textTheme: baseText
-          .apply(
-            bodyColor: palette.onSurface,
-            displayColor: palette.onSurface,
-          )
+          .apply(bodyColor: palette.onSurface, displayColor: palette.onSurface)
           .copyWith(
             // Display em serif pra dar ar editorial; body fica sans.
             displayLarge: baseText.displayLarge?.copyWith(

@@ -72,10 +72,10 @@ class Property extends Equatable {
   String get formattedPrice {
     final reais = priceCents / 100;
     final intPart = reais.truncate();
-    final centPart = ((reais - intPart) * 100)
-        .round()
-        .toString()
-        .padLeft(2, '0');
+    final centPart = ((reais - intPart) * 100).round().toString().padLeft(
+      2,
+      '0',
+    );
     final intStr = _withThousands(intPart);
     return 'R\$ $intStr,$centPart';
   }
@@ -92,22 +92,22 @@ class Property extends Equatable {
 
   @override
   List<Object?> get props => [
-        id,
-        neighborhood,
-        type,
-        bedrooms,
-        areaM2,
-        parkingSpots,
-        priceCents,
-        suites,
-        areaLandM2,
-        headline,
-        description,
-        features,
-        brokerId,
-        city,
-        photosCount,
-      ];
+    id,
+    neighborhood,
+    type,
+    bedrooms,
+    areaM2,
+    parkingSpots,
+    priceCents,
+    suites,
+    areaLandM2,
+    headline,
+    description,
+    features,
+    brokerId,
+    city,
+    photosCount,
+  ];
 
   @override
   String toString() =>

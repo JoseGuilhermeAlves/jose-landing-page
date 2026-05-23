@@ -65,16 +65,14 @@ void main() {
     });
 
     test('todas as sub-paths sao distintas', () {
-      final all = {
-        LabsRoutePaths.index,
-        ...LabsRoutePaths.playgroundPaths,
-      };
+      final all = {LabsRoutePaths.index, ...LabsRoutePaths.playgroundPaths};
       expect(all.length, 8);
     });
 
     test('playgroundPaths bate com os ids do catalogo (em ordem)', () {
-      final fromCatalog =
-          PlaygroundsCatalog.all.map((p) => p.routePath).toList();
+      final fromCatalog = PlaygroundsCatalog.all
+          .map((p) => p.routePath)
+          .toList();
       expect(LabsRoutePaths.playgroundPaths, fromCatalog);
     });
   });

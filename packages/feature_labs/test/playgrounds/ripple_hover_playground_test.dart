@@ -6,15 +6,14 @@ import '../test_helpers.dart';
 
 void main() {
   group('RippleHoverPlayground', () {
-    testWidgets(
-      'estado inicial mostra cta "tap ou passe o mouse"',
-      (tester) async {
-        await pumpLabsHarness(tester, const RippleHoverPlayground());
-        await tester.pump(const Duration(milliseconds: 16));
+    testWidgets('estado inicial mostra cta "tap ou passe o mouse"', (
+      tester,
+    ) async {
+      await pumpLabsHarness(tester, const RippleHoverPlayground());
+      await tester.pump(const Duration(milliseconds: 16));
 
-        expect(find.textContaining('Tap ou passe o mouse'), findsOneWidget);
-      },
-    );
+      expect(find.textContaining('Tap ou passe o mouse'), findsOneWidget);
+    });
 
     testWidgets('tap no painel inicia o ripple', (tester) async {
       await pumpLabsHarness(tester, const RippleHoverPlayground());

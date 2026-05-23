@@ -18,25 +18,25 @@ void main() {
       'ContactNameChanged atualiza name preservando outros campos',
       build: makeBloc,
       act: (bloc) => bloc.add(const ContactNameChanged('Jose')),
-      expect: () => [
-        const ContactState(name: 'Jose', email: '', message: ''),
-      ],
+      expect: () => [const ContactState(name: 'Jose', email: '', message: '')],
     );
 
     blocTest<ContactBloc, ContactState>(
       'ContactEmailChanged atualiza email',
       build: makeBloc,
       act: (bloc) => bloc.add(const ContactEmailChanged('a@b.com')),
-      expect: () =>
-          [const ContactState(name: '', email: 'a@b.com', message: '')],
+      expect: () => [
+        const ContactState(name: '', email: 'a@b.com', message: ''),
+      ],
     );
 
     blocTest<ContactBloc, ContactState>(
       'ContactMessageChanged atualiza message',
       build: makeBloc,
       act: (bloc) => bloc.add(const ContactMessageChanged('oi mundo')),
-      expect: () =>
-          [const ContactState(name: '', email: '', message: 'oi mundo')],
+      expect: () => [
+        const ContactState(name: '', email: '', message: 'oi mundo'),
+      ],
     );
 
     blocTest<ContactBloc, ContactState>(
@@ -92,10 +92,7 @@ void main() {
           isA<ContactSubmissionSuccess>().having(
             (sub) => sub.target.toString(),
             'target',
-            allOf(
-              contains('wa.me/$whatsappNumber'),
-              contains('text='),
-            ),
+            allOf(contains('wa.me/$whatsappNumber'), contains('text=')),
           ),
         ),
       ],

@@ -6,11 +6,7 @@ import 'package:flutter/material.dart';
 /// Card de um servico individual. Em hover desenha uma borda animada
 /// progressivamente (PROJECT.md §4.2) usando o [AnimatedBorderPainter].
 class ServiceCard extends StatefulWidget {
-  const ServiceCard({
-    required this.service,
-    this.onPressed,
-    super.key,
-  });
+  const ServiceCard({required this.service, this.onPressed, super.key});
 
   final Service service;
   final VoidCallback? onPressed;

@@ -10,10 +10,7 @@ void main() {
   // entao todos os pumps deste arquivo usam Duration explicito —
   // pumpAndSettle nunca terminaria.
 
-  Widget wrap(Widget child) => MaterialApp(
-        theme: AppTheme.dark(),
-        home: child,
-      );
+  Widget wrap(Widget child) => MaterialApp(theme: AppTheme.dark(), home: child);
 
   /// Viewport mais alto pra que o hero + active card + categorias +
   /// vendors caibam sem precisar scrollar nos taps.
@@ -23,20 +20,16 @@ void main() {
   }
 
   group('DeliveryDemo (Aurora, multi-tela)', () {
-    testWidgets(
-      'home abre com card de pedido ativo e CTA de bancas',
-      (tester) async {
-        await useLargeSurface(tester);
-        await tester.pumpWidget(wrap(const DeliveryDemo()));
-        await tester.pump(const Duration(milliseconds: 16));
+    testWidgets('home abre com card de pedido ativo e CTA de bancas', (
+      tester,
+    ) async {
+      await useLargeSurface(tester);
+      await tester.pumpWidget(wrap(const DeliveryDemo()));
+      await tester.pump(const Duration(milliseconds: 16));
 
-        expect(
-          find.byKey(const Key('aurora-active-order-card')),
-          findsOneWidget,
-        );
-        expect(find.byKey(const Key('aurora-cta-stores')), findsOneWidget);
-      },
-    );
+      expect(find.byKey(const Key('aurora-active-order-card')), findsOneWidget);
+      expect(find.byKey(const Key('aurora-cta-stores')), findsOneWidget);
+    });
 
     testWidgets(
       'CTA "Ver bancas" empurra AuroraStoreListPage com chips de filtro',
@@ -51,10 +44,7 @@ void main() {
         }
 
         expect(find.byKey(const Key('aurora-filter-all')), findsOneWidget);
-        expect(
-          find.byKey(const Key('aurora-filter-fruits')),
-          findsOneWidget,
-        );
+        expect(find.byKey(const Key('aurora-filter-fruits')), findsOneWidget);
       },
     );
 
@@ -104,31 +94,30 @@ void main() {
       },
     );
 
-    testWidgets(
-      'ticker injetado avanca o status do pedido ativo na home',
-      (tester) async {
-        await useLargeSurface(tester);
-        final controller = StreamController<void>.broadcast();
-        addTearDown(controller.close);
+    testWidgets('ticker injetado avanca o status do pedido ativo na home', (
+      tester,
+    ) async {
+      await useLargeSurface(tester);
+      final controller = StreamController<void>.broadcast();
+      addTearDown(controller.close);
 
-        await tester.pumpWidget(wrap(DeliveryDemo(ticker: controller.stream)));
+      await tester.pumpWidget(wrap(DeliveryDemo(ticker: controller.stream)));
+      await tester.pump(const Duration(milliseconds: 16));
+
+      // O primeiro pedido comeca em preparing. Tres ticks avancam ele
+      // pelos demais estados (round-robin entre 4 pedidos nao-finais).
+      for (var i = 0; i < 16; i++) {
+        controller.add(null);
         await tester.pump(const Duration(milliseconds: 16));
+      }
 
-        // O primeiro pedido comeca em preparing. Tres ticks avancam ele
-        // pelos demais estados (round-robin entre 4 pedidos nao-finais).
-        for (var i = 0; i < 16; i++) {
-          controller.add(null);
-          await tester.pump(const Duration(milliseconds: 16));
-        }
-
-        // Apos varios ticks, ja deve existir pelo menos um pedido novo
-        // em delivered no historico (alem dos 2 iniciais).
-        await tester.tap(find.byKey(const Key('aurora-history-icon')));
-        for (var i = 0; i < 20; i++) {
-          await tester.pump(const Duration(milliseconds: 50));
-        }
-        expect(find.text('Pedidos anteriores'), findsOneWidget);
-      },
-    );
+      // Apos varios ticks, ja deve existir pelo menos um pedido novo
+      // em delivered no historico (alem dos 2 iniciais).
+      await tester.tap(find.byKey(const Key('aurora-history-icon')));
+      for (var i = 0; i < 20; i++) {
+        await tester.pump(const Duration(milliseconds: 50));
+      }
+      expect(find.text('Pedidos anteriores'), findsOneWidget);
+    });
   });
 }

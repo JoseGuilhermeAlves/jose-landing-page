@@ -5,9 +5,9 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   Widget wrap(Widget child) => MaterialApp(
-        theme: AppTheme.dark(),
-        home: Scaffold(body: Center(child: child)),
-      );
+    theme: AppTheme.dark(),
+    home: Scaffold(body: Center(child: child)),
+  );
 
   group('LoadingSpinner', () {
     testWidgets('respeita o size pedido', (tester) async {
@@ -16,8 +16,9 @@ void main() {
       expect(size, const Size(64, 64));
     });
 
-    testWidgets('expoe Semantics liveRegion com label "Carregando"',
-        (tester) async {
+    testWidgets('expoe Semantics liveRegion com label "Carregando"', (
+      tester,
+    ) async {
       final handle = tester.ensureSemantics();
       try {
         await tester.pumpWidget(wrap(const LoadingSpinner()));
@@ -25,18 +26,16 @@ void main() {
 
         expect(
           tester.getSemantics(find.bySemanticsLabel('Carregando')),
-          matchesSemantics(
-            label: 'Carregando',
-            isLiveRegion: true,
-          ),
+          matchesSemantics(label: 'Carregando', isLiveRegion: true),
         );
       } finally {
         handle.dispose();
       }
     });
 
-    testWidgets('avanca o progresso entre frames (animacao em loop)',
-        (tester) async {
+    testWidgets('avanca o progresso entre frames (animacao em loop)', (
+      tester,
+    ) async {
       await tester.pumpWidget(wrap(const LoadingSpinner()));
       await tester.pump(const Duration(milliseconds: 16));
 

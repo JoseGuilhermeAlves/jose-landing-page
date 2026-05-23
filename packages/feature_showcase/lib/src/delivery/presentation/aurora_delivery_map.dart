@@ -33,10 +33,7 @@ import 'package:flutter/material.dart';
 /// sao cacheados como campos. `shouldRepaint` so dispara quando o
 /// progresso ou as cores mudam.
 class AuroraDeliveryMap extends StatefulWidget {
-  const AuroraDeliveryMap({
-    required this.height,
-    super.key,
-  });
+  const AuroraDeliveryMap({required this.height, super.key});
 
   /// Altura do canvas; a largura sai do parent.
   final double height;
@@ -123,9 +120,18 @@ class _AuroraDeliveryMapPainter extends CustomPainter {
   // Celulas (col, row) com flag de variacao tonal. Coordenada (0,0)
   // e o canto superior esquerdo do grid.
   static const List<(int, int, bool)> _blockCells = [
-    (0, 0, false), (1, 0, true), (2, 0, false), (3, 0, true),
-    (0, 1, true), (1, 1, false), (2, 1, true), (3, 1, false),
-    (0, 2, false), (1, 2, true), (2, 2, false), (3, 2, true),
+    (0, 0, false),
+    (1, 0, true),
+    (2, 0, false),
+    (3, 0, true),
+    (0, 1, true),
+    (1, 1, false),
+    (2, 1, true),
+    (3, 1, false),
+    (0, 2, false),
+    (1, 2, true),
+    (2, 2, false),
+    (3, 2, true),
   ];
 
   // Celula que vira parque (em vez de quarteirao normal).
@@ -258,10 +264,7 @@ class _AuroraDeliveryMapPainter extends CustomPainter {
     canvas
       ..save()
       ..clipRRect(
-        RRect.fromRectAndRadius(
-          Offset.zero & size,
-          const Radius.circular(20),
-        ),
+        RRect.fromRectAndRadius(Offset.zero & size, const Radius.circular(20)),
       )
       ..drawRect(Offset.zero & size, _basePaint);
 
@@ -344,8 +347,16 @@ class _AuroraDeliveryMapPainter extends CustomPainter {
   /// anterior) ate o limite seguinte, com inset interno pra o asfalto
   /// da avenida vazar nos cantos.
   void _paintBlocks(Canvas canvas, Size size) {
-    final hStops = <double>[0, ..._hLines.map((n) => n * size.height), size.height];
-    final vStops = <double>[0, ..._vLines.map((n) => n * size.width), size.width];
+    final hStops = <double>[
+      0,
+      ..._hLines.map((n) => n * size.height),
+      size.height,
+    ];
+    final vStops = <double>[
+      0,
+      ..._vLines.map((n) => n * size.width),
+      size.width,
+    ];
 
     const inset = 9.0;
 

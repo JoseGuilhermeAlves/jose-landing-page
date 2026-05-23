@@ -1,4 +1,5 @@
 import 'package:design_system/design_system.dart';
+import 'package:feature_showcase/src/shared/presentation/mock_body_constraint.dart';
 import 'package:feature_showcase/src/scheduling/data/vitral_specialists_catalog.dart';
 import 'package:feature_showcase/src/scheduling/domain/appointment.dart';
 import 'package:feature_showcase/src/scheduling/domain/service_category.dart';
@@ -42,81 +43,83 @@ class VitralHomePage extends StatelessWidget {
           onPressed: () => Navigator.of(context).maybePop(),
         ),
       ),
-      body: SafeArea(
-        top: false,
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(
-            AppSpacing.lg,
-            AppSpacing.md,
-            AppSpacing.lg,
-            AppSpacing.xl,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _HeroCard(colors: colors, textTheme: textTheme),
-              const SizedBox(height: AppSpacing.xl),
-              BlocBuilder<SchedulingBloc, SchedulingState>(
-                builder: (context, state) {
-                  final next = state.nextAppointment;
-                  if (next == null) {
-                    return _NoAppointmentCard(
-                      colors: colors,
-                      textTheme: textTheme,
-                    );
-                  }
-                  final others = [
-                    for (final a in state.confirmedAppointments)
-                      if (a.id != next.id) a,
-                  ]..sort((a, b) => a.slot.compareTo(b.slot));
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _NextAppointmentCard(
-                        appointment: next,
+      body: MockBodyConstraint(
+        child: SafeArea(
+          top: false,
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.fromLTRB(
+              AppSpacing.lg,
+              AppSpacing.md,
+              AppSpacing.lg,
+              AppSpacing.xl,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _HeroCard(colors: colors, textTheme: textTheme),
+                const SizedBox(height: AppSpacing.xl),
+                BlocBuilder<SchedulingBloc, SchedulingState>(
+                  builder: (context, state) {
+                    final next = state.nextAppointment;
+                    if (next == null) {
+                      return _NoAppointmentCard(
                         colors: colors,
                         textTheme: textTheme,
-                        onCancel: () => _confirmCancelAppointment(
-                          context,
-                          next.id,
-                          next.serviceName,
-                        ),
-                      ),
-                      if (others.isNotEmpty) ...[
-                        const SizedBox(height: AppSpacing.md),
-                        _OtherAppointmentsList(
-                          appointments: others,
+                      );
+                    }
+                    final others = [
+                      for (final a in state.confirmedAppointments)
+                        if (a.id != next.id) a,
+                    ]..sort((a, b) => a.slot.compareTo(b.slot));
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _NextAppointmentCard(
+                          appointment: next,
                           colors: colors,
                           textTheme: textTheme,
-                          onCancel: (id, label) =>
-                              _confirmCancelAppointment(context, id, label),
+                          onCancel: () => _confirmCancelAppointment(
+                            context,
+                            next.id,
+                            next.serviceName,
+                          ),
                         ),
+                        if (others.isNotEmpty) ...[
+                          const SizedBox(height: AppSpacing.md),
+                          _OtherAppointmentsList(
+                            appointments: others,
+                            colors: colors,
+                            textTheme: textTheme,
+                            onCancel: (id, label) =>
+                                _confirmCancelAppointment(context, id, label),
+                          ),
+                        ],
                       ],
-                    ],
-                  );
-                },
-              ),
-              const SizedBox(height: AppSpacing.xl),
-              _SectionLabel(
-                eyebrow: 'Categorias',
-                title: 'O que voce precisa hoje',
-                colors: colors,
-                textTheme: textTheme,
-              ),
-              const SizedBox(height: AppSpacing.md),
-              _CategoriesStrip(colors: colors, textTheme: textTheme),
-              const SizedBox(height: AppSpacing.xl),
-              _SectionLabel(
-                eyebrow: 'Profissionais',
-                title: 'Quem esta na agenda',
-                colors: colors,
-                textTheme: textTheme,
-              ),
-              const SizedBox(height: AppSpacing.md),
-              _SpecialistsList(colors: colors, textTheme: textTheme),
-              const SizedBox(height: AppSpacing.xxl),
-              _AboutBlock(colors: colors, textTheme: textTheme),
-            ],
+                    );
+                  },
+                ),
+                const SizedBox(height: AppSpacing.xl),
+                _SectionLabel(
+                  eyebrow: 'Categorias',
+                  title: 'O que voce precisa hoje',
+                  colors: colors,
+                  textTheme: textTheme,
+                ),
+                const SizedBox(height: AppSpacing.md),
+                _CategoriesStrip(colors: colors, textTheme: textTheme),
+                const SizedBox(height: AppSpacing.xl),
+                _SectionLabel(
+                  eyebrow: 'Profissionais',
+                  title: 'Quem esta na agenda',
+                  colors: colors,
+                  textTheme: textTheme,
+                ),
+                const SizedBox(height: AppSpacing.md),
+                _SpecialistsList(colors: colors, textTheme: textTheme),
+                const SizedBox(height: AppSpacing.xxl),
+                _AboutBlock(colors: colors, textTheme: textTheme),
+              ],
+            ),
           ),
         ),
       ),
@@ -173,8 +176,7 @@ class _HeroCard extends StatelessWidget {
                           ),
                           decoration: BoxDecoration(
                             color: colors.primary.withValues(alpha: 0.12),
-                            borderRadius:
-                                BorderRadius.circular(AppRadius.full),
+                            borderRadius: BorderRadius.circular(AppRadius.full),
                           ),
                           child: Text(
                             'estudio de servicos · sao paulo',
@@ -224,11 +226,7 @@ class _HeroCard extends StatelessWidget {
                   // Relogio analogico na lateral direita do hero.
                   const Padding(
                     padding: EdgeInsets.only(left: AppSpacing.lg),
-                    child: VitralClockPainter(
-                      hour: 10,
-                      minute: 8,
-                      size: 96,
-                    ),
+                    child: VitralClockPainter(hour: 10, minute: 8, size: 96),
                   ),
                 ],
               ),
@@ -395,9 +393,7 @@ class _NextAppointmentCard extends StatelessWidget {
           const SizedBox(height: 2),
           Text(
             'com ${appointment.specialistName}',
-            style: textTheme.bodyMedium?.copyWith(
-              color: colors.onSurfaceMuted,
-            ),
+            style: textTheme.bodyMedium?.copyWith(color: colors.onSurfaceMuted),
           ),
           const SizedBox(height: AppSpacing.md),
           Row(
@@ -547,9 +543,7 @@ class _OtherAppointmentsList extends StatelessWidget {
                     ),
                   ),
                   IconButton(
-                    key: Key(
-                      'vitral-other-cancel-${appointments[i].id}',
-                    ),
+                    key: Key('vitral-other-cancel-${appointments[i].id}'),
                     visualDensity: VisualDensity.compact,
                     padding: EdgeInsets.zero,
                     constraints: const BoxConstraints.tightFor(
@@ -593,7 +587,11 @@ class _NoAppointmentCard extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Icon(Icons.calendar_today_outlined, color: colors.onSurfaceMuted, size: 28),
+          Icon(
+            Icons.calendar_today_outlined,
+            color: colors.onSurfaceMuted,
+            size: 28,
+          ),
           const SizedBox(width: AppSpacing.md),
           Expanded(
             child: Column(

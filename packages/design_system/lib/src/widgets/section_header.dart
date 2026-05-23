@@ -39,14 +39,13 @@ class SectionHeader extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     final isMobile = context.isMobile;
 
-    final headlineStyle = (isMobile
-            ? textTheme.headlineMedium
-            : textTheme.displaySmall)
-        ?.copyWith(
-      color: colors.onSurface,
-      height: 1.1,
-      letterSpacing: -0.6,
-    );
+    final headlineStyle =
+        (isMobile ? textTheme.headlineMedium : textTheme.displaySmall)
+            ?.copyWith(
+              color: colors.onSurface,
+              height: 1.1,
+              letterSpacing: -0.6,
+            );
 
     final textAlign = switch (alignment) {
       CrossAxisAlignment.center => TextAlign.center,

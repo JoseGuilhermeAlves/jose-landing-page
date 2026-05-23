@@ -89,8 +89,12 @@ class ParticleFieldPainter extends CustomPainter {
   @visibleForTesting
   List<Offset> debugInitialPositions(Size size) {
     return _seeds
-        .map((s) => Offset(s.anchorXFraction * size.width,
-            s.anchorYFraction * size.height))
+        .map(
+          (s) => Offset(
+            s.anchorXFraction * size.width,
+            s.anchorYFraction * size.height,
+          ),
+        )
         .toList(growable: false);
   }
 
@@ -124,10 +128,7 @@ class ParticleFieldPainter extends CustomPainter {
       }
 
       // Clamp final dentro dos bounds.
-      p = Offset(
-        p.dx.clamp(0, size.width),
-        p.dy.clamp(0, size.height),
-      );
+      p = Offset(p.dx.clamp(0, size.width), p.dy.clamp(0, size.height));
       result[i] = p;
     }
 
@@ -145,8 +146,7 @@ class ParticleFieldPainter extends CustomPainter {
       for (var i = 0; i < positions.length; i++) {
         for (var j = i + 1; j < positions.length; j++) {
           final delta = positions[i] - positions[j];
-          final dSqr =
-              delta.dx * delta.dx + delta.dy * delta.dy;
+          final dSqr = delta.dx * delta.dx + delta.dy * delta.dy;
           if (dSqr <= linkSqr) {
             canvas.drawLine(positions[i], positions[j], _linkPaint);
           }

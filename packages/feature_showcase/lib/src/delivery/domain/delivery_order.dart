@@ -31,12 +31,12 @@ class OrderLineItem extends Equatable {
 
   @override
   List<Object?> get props => [
-        itemId,
-        name,
-        quantity,
-        unitShort,
-        unitPriceCents,
-      ];
+    itemId,
+    name,
+    quantity,
+    unitShort,
+    unitPriceCents,
+  ];
 }
 
 /// Pedido do mock de delivery. Campos basicos (cliente, status, ETA)
@@ -114,17 +114,17 @@ class DeliveryOrder extends Equatable {
 
   @override
   List<Object?> get props => [
-        id,
-        customerName,
-        items,
-        status,
-        etaMinutes,
-        vendorId,
-        lineItems,
-        totalCents,
-        addressLine,
-        placedAtLabel,
-      ];
+    id,
+    customerName,
+    items,
+    status,
+    etaMinutes,
+    vendorId,
+    lineItems,
+    totalCents,
+    addressLine,
+    placedAtLabel,
+  ];
 
   @override
   String toString() =>

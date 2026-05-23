@@ -39,14 +39,8 @@ void main() {
     });
 
     test('shouldRepaint volta true ao trocar strokeWidth ou borderRadius', () {
-      expect(
-        make(strokeWidth: 2).shouldRepaint(make()),
-        isTrue,
-      );
-      expect(
-        make(borderRadius: 20).shouldRepaint(make()),
-        isTrue,
-      );
+      expect(make(strokeWidth: 2).shouldRepaint(make()), isTrue);
+      expect(make(borderRadius: 20).shouldRepaint(make()), isTrue);
     });
 
     test('progress fica clampeado em [0,1]', () {

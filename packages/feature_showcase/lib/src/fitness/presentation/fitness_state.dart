@@ -54,8 +54,7 @@ class FitnessState extends Equatable {
   }
 
   /// Total de sets-alvo da semana (ignora dias de descanso).
-  int get weeklyTargetSets =>
-      plan.fold(0, (acc, d) => acc + d.totalTargetSets);
+  int get weeklyTargetSets => plan.fold(0, (acc, d) => acc + d.totalTargetSets);
 
   /// Progresso semanal em [0, 1]. Retorna 0 se nao houver alvo.
   double get weeklyProgress {
@@ -89,8 +88,7 @@ class FitnessState extends Equatable {
     );
   }
 
-  static String _key(int weekday, String exerciseId) =>
-      '$weekday|$exerciseId';
+  static String _key(int weekday, String exerciseId) => '$weekday|$exerciseId';
 
   /// Helper estatico — usado pelo bloc pra montar mapas novos.
   static String composeKey(int weekday, String exerciseId) =>

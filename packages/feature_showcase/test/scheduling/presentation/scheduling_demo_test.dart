@@ -8,10 +8,7 @@ void main() {
   // entao todos os pumps deste arquivo usam Duration explicito —
   // pumpAndSettle nao terminaria.
 
-  Widget wrap(Widget child) => MaterialApp(
-        theme: AppTheme.dark(),
-        home: child,
-      );
+  Widget wrap(Widget child) => MaterialApp(theme: AppTheme.dark(), home: child);
 
   // Ancora deterministica.
   final today = DateTime(2026, 5, 4);
@@ -25,75 +22,62 @@ void main() {
   }
 
   group('SchedulingDemo (Vitral, multi-tela)', () {
-    testWidgets(
-      'home abre com hero da marca e card de "sem agendamento"',
-      (tester) async {
-        await useLargeSurface(tester);
-        await tester.pumpWidget(wrap(SchedulingDemo(today: today)));
-        await tester.pump(const Duration(milliseconds: 16));
+    testWidgets('home abre com hero da marca e card de "sem agendamento"', (
+      tester,
+    ) async {
+      await useLargeSurface(tester);
+      await tester.pumpWidget(wrap(SchedulingDemo(today: today)));
+      await tester.pump(const Duration(milliseconds: 16));
 
-        expect(find.byKey(const Key('vitral-cta-services')), findsOneWidget);
-        // Sem confirmacao ainda — exibe placeholder.
-        expect(find.text('Sem agendamentos por enquanto'), findsOneWidget);
-      },
-    );
+      expect(find.byKey(const Key('vitral-cta-services')), findsOneWidget);
+      // Sem confirmacao ainda — exibe placeholder.
+      expect(find.text('Sem agendamentos por enquanto'), findsOneWidget);
+    });
 
-    testWidgets(
-      'tap em "Ver servicos" abre o catalogo com filtros',
-      (tester) async {
-        await useLargeSurface(tester);
-        await tester.pumpWidget(wrap(SchedulingDemo(today: today)));
-        await tester.pump(const Duration(milliseconds: 16));
+    testWidgets('tap em "Ver servicos" abre o catalogo com filtros', (
+      tester,
+    ) async {
+      await useLargeSurface(tester);
+      await tester.pumpWidget(wrap(SchedulingDemo(today: today)));
+      await tester.pump(const Duration(milliseconds: 16));
 
-        await tester.tap(find.byKey(const Key('vitral-cta-services')));
-        for (var i = 0; i < 20; i++) {
-          await tester.pump(const Duration(milliseconds: 50));
-        }
+      await tester.tap(find.byKey(const Key('vitral-cta-services')));
+      for (var i = 0; i < 20; i++) {
+        await tester.pump(const Duration(milliseconds: 50));
+      }
 
-        expect(find.byKey(const Key('vitral-filter-all')), findsOneWidget);
-        expect(
-          find.byKey(const Key('vitral-filter-consulting')),
-          findsOneWidget,
-        );
-      },
-    );
+      expect(find.byKey(const Key('vitral-filter-all')), findsOneWidget);
+      expect(find.byKey(const Key('vitral-filter-consulting')), findsOneWidget);
+    });
 
-    testWidgets(
-      'tap em servico empurra calendario com strip de 14 dias',
-      (tester) async {
-        await useLargeSurface(tester);
-        await tester.pumpWidget(wrap(SchedulingDemo(today: today)));
-        await tester.pump(const Duration(milliseconds: 16));
+    testWidgets('tap em servico empurra calendario com strip de 14 dias', (
+      tester,
+    ) async {
+      await useLargeSurface(tester);
+      await tester.pumpWidget(wrap(SchedulingDemo(today: today)));
+      await tester.pump(const Duration(milliseconds: 16));
 
-        // Vai pra lista de servicos.
-        await tester.tap(find.byKey(const Key('vitral-cta-services')));
-        for (var i = 0; i < 20; i++) {
-          await tester.pump(const Duration(milliseconds: 50));
-        }
+      // Vai pra lista de servicos.
+      await tester.tap(find.byKey(const Key('vitral-cta-services')));
+      for (var i = 0; i < 20; i++) {
+        await tester.pump(const Duration(milliseconds: 50));
+      }
 
-        // Tap no primeiro card de servico.
-        await tester.tap(find.byKey(const Key('vitral-service-card-sv-discovery')));
-        for (var i = 0; i < 20; i++) {
-          await tester.pump(const Duration(milliseconds: 50));
-        }
+      // Tap no primeiro card de servico.
+      await tester.tap(
+        find.byKey(const Key('vitral-service-card-sv-discovery')),
+      );
+      for (var i = 0; i < 20; i++) {
+        await tester.pump(const Duration(milliseconds: 50));
+      }
 
-        // Strip de 14 dias (renderiza um chip por dia).
-        expect(
-          find.byKey(const Key('scheduling-day-chip')),
-          findsNWidgets(14),
-        );
-        // 18 slots horarios (9h-17:30, intervalo de 30 min).
-        expect(
-          find.byKey(const Key('scheduling-slot-tile')),
-          findsNWidgets(18),
-        );
-        // CTA Continuar desabilitado antes de selecionar slot.
-        expect(
-          find.byKey(const Key('vitral-calendar-continue')),
-          findsOneWidget,
-        );
-      },
-    );
+      // Strip de 14 dias (renderiza um chip por dia).
+      expect(find.byKey(const Key('scheduling-day-chip')), findsNWidgets(14));
+      // 18 slots horarios (9h-17:30, intervalo de 30 min).
+      expect(find.byKey(const Key('scheduling-slot-tile')), findsNWidgets(18));
+      // CTA Continuar desabilitado antes de selecionar slot.
+      expect(find.byKey(const Key('vitral-calendar-continue')), findsOneWidget);
+    });
 
     testWidgets(
       'fluxo end-to-end: servico → slot → confirmar → home com card',
@@ -120,9 +104,7 @@ void main() {
         }
 
         // 3) Calendario: tap no primeiro slot livre + Continuar
-        await tester.tap(
-          find.byKey(const Key('scheduling-slot-tile')).first,
-        );
+        await tester.tap(find.byKey(const Key('scheduling-slot-tile')).first);
         await tester.pump(const Duration(milliseconds: 50));
         await tester.tap(find.byKey(const Key('vitral-calendar-continue')));
         for (var i = 0; i < 20; i++) {
@@ -134,9 +116,7 @@ void main() {
           find.byKey(const Key('vitral-confirmation-title')),
           findsOneWidget,
         );
-        await tester.tap(
-          find.byKey(const Key('vitral-confirmation-confirm')),
-        );
+        await tester.tap(find.byKey(const Key('vitral-confirmation-confirm')));
         for (var i = 0; i < 20; i++) {
           await tester.pump(const Duration(milliseconds: 50));
         }

@@ -21,11 +21,7 @@ import 'package:flutter/material.dart';
 /// Conteudo migrado da home do `/labs` (que permanece como vitrine
 /// interativa pura dos painters).
 class TechSection extends StatelessWidget {
-  const TechSection({
-    this.githubUrl,
-    this.onOpenGithub,
-    super.key,
-  });
+  const TechSection({this.githubUrl, this.onOpenGithub, super.key});
 
   /// URL do repositorio. Quando fornecida, [onOpenGithub] e chamado
   /// no tap do botao. Sem URL, o CTA some.
@@ -57,7 +53,8 @@ class TechSection extends StatelessWidget {
         const SizedBox(height: AppSpacing.xxl),
         _Subhead(
           label: 'Stack que sustenta',
-          hint: 'Libs principais, agrupadas por papel. Versoes alinhadas '
+          hint:
+              'Libs principais, agrupadas por papel. Versoes alinhadas '
               'com o pubspec.',
           textTheme: textTheme,
           colors: colors,
@@ -67,7 +64,8 @@ class TechSection extends StatelessWidget {
         const SizedBox(height: AppSpacing.xxl),
         _Subhead(
           label: 'Constelacoes de pixels',
-          hint: 'Painters de maior densidade tecnica. Quem quiser brincar '
+          hint:
+              'Painters de maior densidade tecnica. Quem quiser brincar '
               'com sliders ao vivo, abre o /labs.',
           textTheme: textTheme,
           colors: colors,
@@ -240,8 +238,7 @@ class _StatStrip extends StatelessWidget {
               spacing: AppSpacing.xl,
               runSpacing: AppSpacing.lg,
               children: [
-                for (final s in _stats)
-                  _StatCell(value: s.$1, label: s.$2),
+                for (final s in _stats) _StatCell(value: s.$1, label: s.$2),
               ],
             )
           : Row(

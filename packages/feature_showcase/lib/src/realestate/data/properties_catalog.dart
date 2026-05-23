@@ -100,10 +100,7 @@ abstract final class PropertiesCatalog {
           'Lote plano com nascente registrada e mata nativa em parte '
           'do fundo. Topografia favoravel pra construir — sem '
           'restricao de uso residencial.',
-      features: [
-        PropertyFeature.borehole,
-        PropertyFeature.garden,
-      ],
+      features: [PropertyFeature.borehole, PropertyFeature.garden],
       brokerId: 'b-maria',
       photosCount: 8,
     ),
@@ -225,9 +222,7 @@ abstract final class PropertiesCatalog {
           'Lote de 1.200 m2 em condominio fechado com infra completa '
           '(rua asfaltada, agua, luz). Topografia leve, vista pra '
           'serra da Mantiqueira.',
-      features: [
-        PropertyFeature.garden,
-      ],
+      features: [PropertyFeature.garden],
       brokerId: 'b-carlos',
       photosCount: 6,
     ),
@@ -245,9 +240,7 @@ abstract final class PropertiesCatalog {
           'Studio integrado de 42 m2 num predio antigo com elevador, '
           'janela panoramica pra rua arborizada. Sem garagem, mas '
           'com bicicletario coletivo no terreo.',
-      features: [
-        PropertyFeature.balcony,
-      ],
+      features: [PropertyFeature.balcony],
       brokerId: 'b-maria',
       photosCount: 9,
     ),

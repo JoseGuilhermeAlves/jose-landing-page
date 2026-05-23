@@ -11,46 +11,19 @@ void main() {
     // ficam em testes proprios; este so confirma que a montagem nao
     // quebrou e o back button esta presente.
     final cases = <(String, Widget, String)>[
-      (
-        'particles',
-        const ParticleFieldPlayground(),
-        'Campo de particulas',
-      ),
-      (
-        'timeline',
-        const AnimatedTimelinePlayground(),
-        'Timeline animada',
-      ),
-      (
-        'border',
-        const AnimatedBorderPlayground(),
-        'Borda animada',
-      ),
-      (
-        'spinner',
-        const LoadingSpinnerPlayground(),
-        'Spinner customizado',
-      ),
-      (
-        'morphing',
-        const MorphingShapePlayground(),
-        'Forma morphando',
-      ),
-      (
-        'ripple',
-        const RippleHoverPlayground(),
-        'Ripple no hover',
-      ),
-      (
-        'wave',
-        const WaveDividerPlayground(),
-        'Onda divisora',
-      ),
+      ('particles', const ParticleFieldPlayground(), 'Campo de particulas'),
+      ('timeline', const AnimatedTimelinePlayground(), 'Timeline animada'),
+      ('border', const AnimatedBorderPlayground(), 'Borda animada'),
+      ('spinner', const LoadingSpinnerPlayground(), 'Spinner customizado'),
+      ('morphing', const MorphingShapePlayground(), 'Forma morphando'),
+      ('ripple', const RippleHoverPlayground(), 'Ripple no hover'),
+      ('wave', const WaveDividerPlayground(), 'Onda divisora'),
     ];
 
     for (final (id, widget, title) in cases) {
-      testWidgets('$id renderiza com titulo "$title" e back button',
-          (tester) async {
+      testWidgets('$id renderiza com titulo "$title" e back button', (
+        tester,
+      ) async {
         tester.view.physicalSize = const Size(1200, 800);
         tester.view.devicePixelRatio = 1;
         addTearDown(tester.view.resetPhysicalSize);
@@ -59,13 +32,12 @@ void main() {
         await tester.pump(const Duration(milliseconds: 16));
 
         expect(find.text(title), findsOneWidget);
+        expect(find.byKey(const Key('playground-back-button')), findsOneWidget);
         expect(
-          find.byKey(const Key('playground-back-button')),
+          find.byKey(const Key('playground-preview-frame')),
           findsOneWidget,
         );
-        expect(find.byKey(const Key('playground-preview-frame')), findsOneWidget);
       });
     }
-
   });
 }

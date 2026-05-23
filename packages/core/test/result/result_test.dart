@@ -123,9 +123,9 @@ void main() {
 
     test('switch exaustivo nas variantes', () {
       String describe(Result<int> r) => switch (r) {
-            Success(:final value) => 'ok:$value',
-            FailureResult(:final failure) => 'fail:${failure.message}',
-          };
+        Success(:final value) => 'ok:$value',
+        FailureResult(:final failure) => 'fail:${failure.message}',
+      };
 
       expect(describe(const Result.success(5)), 'ok:5');
       expect(

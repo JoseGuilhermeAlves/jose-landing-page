@@ -16,10 +16,7 @@ import 'package:flutter/material.dart';
 ///   pontos), nao vale cachear vs o custo de invalidate logic;
 /// - `RepaintBoundary` no widget isola repaints da subarvore vizinha.
 class MiraHeroBackdrop extends StatefulWidget {
-  const MiraHeroBackdrop({
-    required this.height,
-    super.key,
-  });
+  const MiraHeroBackdrop({required this.height, super.key});
 
   final double height;
 
@@ -173,11 +170,7 @@ class _MiraHeroBackdropPainter extends CustomPainter {
       final y = i * rowSpacing;
       for (var j = 0; j <= columnCount; j += 2) {
         final x = j * colSpacing;
-        canvas.drawLine(
-          Offset(x - 2, y),
-          Offset(x + 2, y),
-          paint,
-        );
+        canvas.drawLine(Offset(x - 2, y), Offset(x + 2, y), paint);
       }
     }
   }
@@ -201,7 +194,8 @@ class _MiraHeroBackdropPainter extends CustomPainter {
     final centerY = size.height * 0.62;
     final amplitude = size.height * 0.3;
 
-    final path = Path()..moveTo(-shift, centerY - (points[0] - 0.5) * amplitude);
+    final path = Path()
+      ..moveTo(-shift, centerY - (points[0] - 0.5) * amplitude);
     for (var i = 1; i < points.length; i++) {
       final x = i * dx - shift;
       // Adiciona oscilacao sutil temporal pra cada ponto se mover um pouco.
@@ -247,11 +241,7 @@ class _MiraHeroBackdropPainter extends CustomPainter {
             ..color = color.withValues(alpha: 0.18 * pulse)
             ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 4),
         )
-        ..drawCircle(
-          Offset(x, y),
-          radius,
-          Paint()..color = color,
-        );
+        ..drawCircle(Offset(x, y), radius, Paint()..color = color);
     }
   }
 
@@ -267,10 +257,7 @@ class _MiraHeroBackdropPainter extends CustomPainter {
       ],
       stops: const [0, 0.35, 1],
     );
-    canvas.drawRect(
-      rect,
-      Paint()..shader = overlay.createShader(rect),
-    );
+    canvas.drawRect(rect, Paint()..shader = overlay.createShader(rect));
   }
 
   @override

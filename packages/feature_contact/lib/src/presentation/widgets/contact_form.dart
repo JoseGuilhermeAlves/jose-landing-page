@@ -95,10 +95,7 @@ class _ContactFormState extends State<ContactForm> {
               ),
               items: [
                 for (final t in ProjectType.values)
-                  DropdownMenuItem(
-                    value: t,
-                    child: Text(t.label),
-                  ),
+                  DropdownMenuItem(value: t, child: Text(t.label)),
               ],
               onChanged: submitting
                   ? null

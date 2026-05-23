@@ -91,10 +91,7 @@ abstract final class VitralBrand {
       ),
       iconTheme: IconThemeData(color: palette.onSurface),
       textTheme: baseText
-          .apply(
-            bodyColor: palette.onSurface,
-            displayColor: palette.onSurface,
-          )
+          .apply(bodyColor: palette.onSurface, displayColor: palette.onSurface)
           .copyWith(
             // Display fica sans bold + tighter letter spacing pra dar
             // ar de "tabela bem diagramada".

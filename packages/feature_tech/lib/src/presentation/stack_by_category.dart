@@ -70,9 +70,7 @@ class _CategoryCluster extends StatelessWidget {
         Wrap(
           spacing: AppSpacing.sm,
           runSpacing: AppSpacing.sm,
-          children: [
-            for (final item in items) _StackChip(item: item),
-          ],
+          children: [for (final item in items) _StackChip(item: item)],
         ),
       ],
     );
@@ -114,11 +112,7 @@ class _StackChip extends StatelessWidget {
               ),
             ),
             const SizedBox(width: AppSpacing.sm),
-            Container(
-              width: 1,
-              height: 12,
-              color: colors.border,
-            ),
+            Container(width: 1, height: 12, color: colors.border),
             const SizedBox(width: AppSpacing.sm),
             Text(
               item.version,

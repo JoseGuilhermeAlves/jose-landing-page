@@ -20,12 +20,12 @@ class WorkoutDay extends Equatable {
   bool get isRestDay => exercises.isEmpty;
 
   /// Soma dos sets-alvo do dia. Em dia de descanso retorna 0.
-  int get totalTargetSets =>
-      exercises.fold(0, (acc, e) => acc + e.targetSets);
+  int get totalTargetSets => exercises.fold(0, (acc, e) => acc + e.targetSets);
 
   @override
   List<Object?> get props => [weekday, label, exercises];
 
   @override
-  String toString() => 'WorkoutDay($weekday, $label, exercises: ${exercises.length})';
+  String toString() =>
+      'WorkoutDay($weekday, $label, exercises: ${exercises.length})';
 }

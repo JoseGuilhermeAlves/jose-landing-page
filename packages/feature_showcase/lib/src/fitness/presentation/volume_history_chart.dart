@@ -91,9 +91,7 @@ class _VolumeHistoryChartState extends State<VolumeHistoryChart>
             children: [
               Text(
                 'Volume — 8 semanas',
-                style: textTheme.titleMedium?.copyWith(
-                  color: colors.onSurface,
-                ),
+                style: textTheme.titleMedium?.copyWith(color: colors.onSurface),
               ),
               const Spacer(),
               if (inProgress)
@@ -309,9 +307,7 @@ class _VolumeChartPainter extends CustomPainter {
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
         colors: [fillTop, fillBottom],
-      ).createShader(
-        Rect.fromLTWH(0, _topPadding, size.width, chartHeight),
-      );
+      ).createShader(Rect.fromLTWH(0, _topPadding, size.width, chartHeight));
 
     canvas
       ..save()

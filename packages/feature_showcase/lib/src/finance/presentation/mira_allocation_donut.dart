@@ -194,16 +194,10 @@ class _MiraDonutPainter extends CustomPainter {
 
     final totalHeight = labelTp.size.height + 4 + valueTp.size.height;
     final top = center.dy - totalHeight / 2;
-    labelTp.paint(
-      canvas,
-      Offset(center.dx - labelTp.size.width / 2, top),
-    );
+    labelTp.paint(canvas, Offset(center.dx - labelTp.size.width / 2, top));
     valueTp.paint(
       canvas,
-      Offset(
-        center.dx - valueTp.size.width / 2,
-        top + labelTp.size.height + 4,
-      ),
+      Offset(center.dx - valueTp.size.width / 2, top + labelTp.size.height + 4),
     );
   }
 

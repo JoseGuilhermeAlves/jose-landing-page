@@ -1,4 +1,5 @@
 import 'package:design_system/design_system.dart';
+import 'package:feature_showcase/src/shared/presentation/mock_body_constraint.dart';
 import 'package:feature_showcase/src/delivery/data/aurora_vendors_catalog.dart';
 import 'package:feature_showcase/src/delivery/domain/delivery_order.dart';
 import 'package:feature_showcase/src/delivery/domain/delivery_status.dart';
@@ -40,95 +41,97 @@ class AuroraOrderDetailPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: colors.background,
       appBar: const AuroraAppBar(),
-      body: BlocBuilder<DeliveryBloc, DeliveryState>(
-        builder: (context, state) {
-          final order = state.findById(orderId);
-          if (order == null) {
-            return _NotFound(colors: colors, textTheme: textTheme);
-          }
-          final vendor = AuroraVendorsCatalog.byId(order.vendorId);
-          return SafeArea(
-            top: false,
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.fromLTRB(
-                AppSpacing.lg,
-                AppSpacing.md,
-                AppSpacing.lg,
-                AppSpacing.xxl,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(AppRadius.lg),
-                    child: Stack(
-                      children: [
-                        const AuroraDeliveryMap(height: 220),
-                        Positioned(
-                          left: AppSpacing.sm,
-                          bottom: AppSpacing.sm,
-                          child: _MapDisclaimer(colors: colors),
-                        ),
-                      ],
+      body: MockBodyConstraint(
+        child: BlocBuilder<DeliveryBloc, DeliveryState>(
+          builder: (context, state) {
+            final order = state.findById(orderId);
+            if (order == null) {
+              return _NotFound(colors: colors, textTheme: textTheme);
+            }
+            final vendor = AuroraVendorsCatalog.byId(order.vendorId);
+            return SafeArea(
+              top: false,
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.fromLTRB(
+                  AppSpacing.lg,
+                  AppSpacing.md,
+                  AppSpacing.lg,
+                  AppSpacing.xxl,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(AppRadius.lg),
+                      child: Stack(
+                        children: [
+                          const AuroraDeliveryMap(height: 220),
+                          Positioned(
+                            left: AppSpacing.sm,
+                            bottom: AppSpacing.sm,
+                            child: _MapDisclaimer(colors: colors),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: AppSpacing.lg),
-                  _VendorHeader(
-                    order: order,
-                    vendor: vendor,
-                    colors: colors,
-                    textTheme: textTheme,
-                  ),
-                  const SizedBox(height: AppSpacing.lg),
-                  _DeliveryEtaCard(
-                    order: order,
-                    colors: colors,
-                    textTheme: textTheme,
-                  ),
-                  const SizedBox(height: AppSpacing.xl),
-                  Text(
-                    'Onde esta seu pedido',
-                    style: textTheme.titleMedium?.copyWith(
-                      color: colors.onSurface,
-                      fontFamily: AuroraBrand.displayFontFamily,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  const SizedBox(height: AppSpacing.md),
-                  if (order.status == DeliveryStatus.cancelled)
-                    _CancelledBanner(colors: colors, textTheme: textTheme)
-                  else ...[
-                    AuroraStatusTimeline(activeStatus: order.status),
                     const SizedBox(height: AppSpacing.lg),
-                    _CancelOrderButton(order: order),
-                  ],
-                  const SizedBox(height: AppSpacing.xl),
-                  Text(
-                    'Itens',
-                    style: textTheme.titleMedium?.copyWith(
-                      color: colors.onSurface,
-                      fontFamily: AuroraBrand.displayFontFamily,
-                      fontWeight: FontWeight.w600,
+                    _VendorHeader(
+                      order: order,
+                      vendor: vendor,
+                      colors: colors,
+                      textTheme: textTheme,
                     ),
-                  ),
-                  const SizedBox(height: AppSpacing.md),
-                  _ItemsList(
-                    order: order,
-                    colors: colors,
-                    textTheme: textTheme,
-                  ),
-                  const SizedBox(height: AppSpacing.xl),
-                  _TotalsCard(
-                    order: order,
-                    vendor: vendor,
-                    colors: colors,
-                    textTheme: textTheme,
-                  ),
-                ],
+                    const SizedBox(height: AppSpacing.lg),
+                    _DeliveryEtaCard(
+                      order: order,
+                      colors: colors,
+                      textTheme: textTheme,
+                    ),
+                    const SizedBox(height: AppSpacing.xl),
+                    Text(
+                      'Onde esta seu pedido',
+                      style: textTheme.titleMedium?.copyWith(
+                        color: colors.onSurface,
+                        fontFamily: AuroraBrand.displayFontFamily,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    const SizedBox(height: AppSpacing.md),
+                    if (order.status == DeliveryStatus.cancelled)
+                      _CancelledBanner(colors: colors, textTheme: textTheme)
+                    else ...[
+                      AuroraStatusTimeline(activeStatus: order.status),
+                      const SizedBox(height: AppSpacing.lg),
+                      _CancelOrderButton(order: order),
+                    ],
+                    const SizedBox(height: AppSpacing.xl),
+                    Text(
+                      'Itens',
+                      style: textTheme.titleMedium?.copyWith(
+                        color: colors.onSurface,
+                        fontFamily: AuroraBrand.displayFontFamily,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    const SizedBox(height: AppSpacing.md),
+                    _ItemsList(
+                      order: order,
+                      colors: colors,
+                      textTheme: textTheme,
+                    ),
+                    const SizedBox(height: AppSpacing.xl),
+                    _TotalsCard(
+                      order: order,
+                      vendor: vendor,
+                      colors: colors,
+                      textTheme: textTheme,
+                    ),
+                  ],
+                ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }
@@ -231,21 +234,19 @@ class _DeliveryEtaCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDelivered = order.status == DeliveryStatus.delivered;
     final isCancelled = order.status == DeliveryStatus.cancelled;
-    final accent = isCancelled
-        ? colors.onSurfaceMuted
-        : colors.primary;
+    final accent = isCancelled ? colors.onSurfaceMuted : colors.primary;
     final iconData = isCancelled
         ? Icons.cancel_outlined
         : isDelivered
-            ? Icons.check_circle_outline
-            : Icons.location_on_outlined;
+        ? Icons.check_circle_outline
+        : Icons.location_on_outlined;
     final headline = isCancelled
         ? 'Pedido cancelado'
         : isDelivered
-            ? 'Entregue em'
-            : order.etaMinutes > 0
-                ? 'Chega em ~${order.etaMinutes} min'
-                : 'A caminho';
+        ? 'Entregue em'
+        : order.etaMinutes > 0
+        ? 'Chega em ~${order.etaMinutes} min'
+        : 'A caminho';
 
     return Container(
       padding: const EdgeInsets.all(AppSpacing.lg),
@@ -376,11 +377,7 @@ class _CancelledBanner extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Icon(
-            Icons.block_rounded,
-            color: colors.onSurfaceMuted,
-            size: 22,
-          ),
+          Icon(Icons.block_rounded, color: colors.onSurfaceMuted, size: 22),
           const SizedBox(width: AppSpacing.md),
           Expanded(
             child: Column(
@@ -432,11 +429,7 @@ class _ItemsList extends StatelessWidget {
     return Column(
       children: [
         for (var i = 0; i < order.lineItems.length; i++) ...[
-          if (i > 0)
-            Divider(
-              color: colors.border,
-              height: AppSpacing.lg,
-            ),
+          if (i > 0) Divider(color: colors.border, height: AppSpacing.lg),
           _ItemRow(
             line: order.lineItems[i],
             colors: colors,
@@ -489,9 +482,7 @@ class _ItemRow extends StatelessWidget {
         Expanded(
           child: Text(
             line.name,
-            style: textTheme.bodyMedium?.copyWith(
-              color: colors.onSurface,
-            ),
+            style: textTheme.bodyMedium?.copyWith(color: colors.onSurface),
           ),
         ),
         Text(
@@ -526,9 +517,7 @@ class _TotalsCard extends StatelessWidget {
       (acc, l) => acc + l.subtotalCents,
     );
     final fee = vendor?.deliveryFeeCents ?? 0;
-    final total = order.totalCents > 0
-        ? order.totalCents
-        : itemsTotal + fee;
+    final total = order.totalCents > 0 ? order.totalCents : itemsTotal + fee;
 
     return Container(
       padding: const EdgeInsets.all(AppSpacing.lg),
@@ -592,10 +581,11 @@ class _Row extends StatelessWidget {
       children: [
         Text(
           label,
-          style: (bold ? textTheme.titleMedium : textTheme.bodyMedium)?.copyWith(
-            color: bold ? colors.onSurface : colors.onSurfaceMuted,
-            fontWeight: bold ? FontWeight.w700 : null,
-          ),
+          style: (bold ? textTheme.titleMedium : textTheme.bodyMedium)
+              ?.copyWith(
+                color: bold ? colors.onSurface : colors.onSurfaceMuted,
+                fontWeight: bold ? FontWeight.w700 : null,
+              ),
         ),
         const Spacer(),
         Text(
@@ -624,13 +614,15 @@ class _NotFound extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.search_off_rounded, size: 48, color: colors.onSurfaceMuted),
+            Icon(
+              Icons.search_off_rounded,
+              size: 48,
+              color: colors.onSurfaceMuted,
+            ),
             const SizedBox(height: AppSpacing.md),
             Text(
               'Pedido nao encontrado.',
-              style: textTheme.titleMedium?.copyWith(
-                color: colors.onSurface,
-              ),
+              style: textTheme.titleMedium?.copyWith(color: colors.onSurface),
             ),
           ],
         ),
@@ -658,10 +650,10 @@ class _MapDisclaimer extends StatelessWidget {
       child: Text(
         'Mapa ilustrativo · Em producao: Google Maps SDK + tracking real-time',
         style: Theme.of(context).textTheme.labelSmall?.copyWith(
-              color: colors.onSurfaceMuted,
-              fontSize: 9,
-              letterSpacing: 0.1,
-            ),
+          color: colors.onSurfaceMuted,
+          fontSize: 9,
+          letterSpacing: 0.1,
+        ),
       ),
     );
   }

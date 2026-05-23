@@ -1,4 +1,5 @@
 import 'package:design_system/design_system.dart';
+import 'package:feature_showcase/src/shared/presentation/mock_body_constraint.dart';
 import 'package:feature_showcase/src/delivery/data/aurora_vendors_catalog.dart';
 import 'package:feature_showcase/src/delivery/domain/delivery_order.dart';
 import 'package:feature_showcase/src/delivery/domain/market_category.dart';
@@ -57,67 +58,67 @@ class AuroraHomePage extends StatelessWidget {
             icon: const Icon(Icons.history_rounded),
             onPressed: () => Navigator.of(context).push(
               MaterialPageRoute<void>(
-                builder: (_) => auroraWithDemoBloc(
-                  context,
-                  const AuroraHistoryPage(),
-                ),
+                builder: (_) =>
+                    auroraWithDemoBloc(context, const AuroraHistoryPage()),
               ),
             ),
           ),
           const SizedBox(width: AppSpacing.xs),
         ],
       ),
-      body: SafeArea(
-        top: false,
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(
-            AppSpacing.lg,
-            AppSpacing.md,
-            AppSpacing.lg,
-            AppSpacing.xl,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _HeroCard(colors: colors, textTheme: textTheme),
-              const SizedBox(height: AppSpacing.xl),
-              BlocBuilder<DeliveryBloc, DeliveryState>(
-                builder: (context, state) {
-                  final order = state.activeOrder;
-                  if (order == null) {
-                    return _NoActiveOrderCard(
+      body: MockBodyConstraint(
+        child: SafeArea(
+          top: false,
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.fromLTRB(
+              AppSpacing.lg,
+              AppSpacing.md,
+              AppSpacing.lg,
+              AppSpacing.xl,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _HeroCard(colors: colors, textTheme: textTheme),
+                const SizedBox(height: AppSpacing.xl),
+                BlocBuilder<DeliveryBloc, DeliveryState>(
+                  builder: (context, state) {
+                    final order = state.activeOrder;
+                    if (order == null) {
+                      return _NoActiveOrderCard(
+                        colors: colors,
+                        textTheme: textTheme,
+                      );
+                    }
+                    return _ActiveOrderCard(
+                      order: order,
                       colors: colors,
                       textTheme: textTheme,
                     );
-                  }
-                  return _ActiveOrderCard(
-                    order: order,
-                    colors: colors,
-                    textTheme: textTheme,
-                  );
-                },
-              ),
-              const SizedBox(height: AppSpacing.xl),
-              _SectionLabel(
-                eyebrow: 'Categorias',
-                title: 'O que vai pro caixote',
-                colors: colors,
-                textTheme: textTheme,
-              ),
-              const SizedBox(height: AppSpacing.md),
-              _CategoriesStrip(colors: colors, textTheme: textTheme),
-              const SizedBox(height: AppSpacing.xl),
-              _SectionLabel(
-                eyebrow: 'Bancas em destaque',
-                title: 'Quem entrega hoje',
-                colors: colors,
-                textTheme: textTheme,
-              ),
-              const SizedBox(height: AppSpacing.md),
-              _VendorsList(colors: colors, textTheme: textTheme),
-              const SizedBox(height: AppSpacing.xxl),
-              _AboutBlock(colors: colors, textTheme: textTheme),
-            ],
+                  },
+                ),
+                const SizedBox(height: AppSpacing.xl),
+                _SectionLabel(
+                  eyebrow: 'Categorias',
+                  title: 'O que vai pro caixote',
+                  colors: colors,
+                  textTheme: textTheme,
+                ),
+                const SizedBox(height: AppSpacing.md),
+                _CategoriesStrip(colors: colors, textTheme: textTheme),
+                const SizedBox(height: AppSpacing.xl),
+                _SectionLabel(
+                  eyebrow: 'Bancas em destaque',
+                  title: 'Quem entrega hoje',
+                  colors: colors,
+                  textTheme: textTheme,
+                ),
+                const SizedBox(height: AppSpacing.md),
+                _VendorsList(colors: colors, textTheme: textTheme),
+                const SizedBox(height: AppSpacing.xxl),
+                _AboutBlock(colors: colors, textTheme: textTheme),
+              ],
+            ),
           ),
         ),
       ),
@@ -543,16 +544,16 @@ class AuroraVendorCard extends StatelessWidget {
       child: InkWell(
         key: Key('aurora-vendor-card-${vendor.id}'),
         borderRadius: BorderRadius.circular(AppRadius.lg),
-        onTap: onTap ??
+        onTap:
+            onTap ??
             () => Navigator.of(context).push(
-                  MaterialPageRoute<void>(
-                    builder: (_) => auroraWithDemoBloc(
-                      context,
-                      AuroraStoreListPage(
-                          initialCategory: vendor.primaryCategory),
-                    ),
-                  ),
+              MaterialPageRoute<void>(
+                builder: (_) => auroraWithDemoBloc(
+                  context,
+                  AuroraStoreListPage(initialCategory: vendor.primaryCategory),
                 ),
+              ),
+            ),
         child: Container(
           padding: const EdgeInsets.all(AppSpacing.md),
           decoration: BoxDecoration(

@@ -56,8 +56,9 @@ class SchedulingState extends Equatable {
   final List<Appointment> confirmedAppointments;
 
   /// Janela de [today, today+1, ..., today+13] — 14 dias.
-  List<DateTime> get availableDates =>
-      [for (var i = 0; i < 14; i++) today.add(Duration(days: i))];
+  List<DateTime> get availableDates => [
+    for (var i = 0; i < 14; i++) today.add(Duration(days: i)),
+  ];
 
   /// Proximo agendamento confirmado (slot mais cedo no futuro). Null
   /// quando nao ha confirmacao na sessao.
@@ -72,7 +73,8 @@ class SchedulingState extends Equatable {
   List<AppointmentSlot> slotsFor(DateTime date) {
     final base = DateTime(date.year, date.month, date.day, 9);
     return [
-      for (var i = 0; i < 18; i++) _buildSlot(base.add(Duration(minutes: 30 * i))),
+      for (var i = 0; i < 18; i++)
+        _buildSlot(base.add(Duration(minutes: 30 * i))),
     ];
   }
 
@@ -82,8 +84,8 @@ class SchedulingState extends Equatable {
     final status = preBookedSlots.contains(start)
         ? SlotStatus.unavailable
         : userBookedSlots.contains(start)
-            ? SlotStatus.booked
-            : SlotStatus.free;
+        ? SlotStatus.booked
+        : SlotStatus.free;
     return AppointmentSlot(start: start, status: status);
   }
 
@@ -105,10 +107,10 @@ class SchedulingState extends Equatable {
 
   @override
   List<Object?> get props => [
-        today,
-        selectedDate,
-        preBookedSlots,
-        userBookedSlots,
-        confirmedAppointments,
-      ];
+    today,
+    selectedDate,
+    preBookedSlots,
+    userBookedSlots,
+    confirmedAppointments,
+  ];
 }

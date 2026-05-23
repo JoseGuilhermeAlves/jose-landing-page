@@ -11,10 +11,10 @@ class PaintersStrip extends StatelessWidget {
   final List<PainterHighlight> painters;
 
   int _columnsFor(Breakpoint bp) => switch (bp) {
-        Breakpoint.mobile => 1,
-        Breakpoint.tablet => 2,
-        Breakpoint.desktop || Breakpoint.wide => 3,
-      };
+    Breakpoint.mobile => 1,
+    Breakpoint.tablet => 2,
+    Breakpoint.desktop || Breakpoint.wide => 3,
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -87,9 +87,7 @@ class _PainterCard extends StatelessWidget {
             ),
             decoration: BoxDecoration(
               color: colors.primary.withValues(alpha: 0.08),
-              border: Border.all(
-                color: colors.primary.withValues(alpha: 0.25),
-              ),
+              border: Border.all(color: colors.primary.withValues(alpha: 0.25)),
               borderRadius: BorderRadius.circular(AppRadius.full),
             ),
             child: Text(

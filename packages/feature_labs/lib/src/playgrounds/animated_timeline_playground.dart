@@ -14,8 +14,7 @@ class AnimatedTimelinePlayground extends StatefulWidget {
       _AnimatedTimelinePlaygroundState();
 }
 
-class _AnimatedTimelinePlaygroundState
-    extends State<AnimatedTimelinePlayground>
+class _AnimatedTimelinePlaygroundState extends State<AnimatedTimelinePlayground>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller = AnimationController(
     vsync: this,

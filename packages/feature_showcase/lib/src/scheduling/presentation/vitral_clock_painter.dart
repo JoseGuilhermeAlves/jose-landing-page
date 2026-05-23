@@ -171,8 +171,7 @@ class _VitralClockFacePainter extends CustomPainter {
   void _paintHourHand(Canvas canvas, Offset center, double r) {
     // Hora deslocada pelos minutos pra dar continuidade.
     final hour12 = hour % 12;
-    final angle =
-        ((hour12 + minute / 60) / 12) * 2 * math.pi - math.pi / 2;
+    final angle = ((hour12 + minute / 60) / 12) * 2 * math.pi - math.pi / 2;
     final tip = Offset(
       center.dx + math.cos(angle) * r * 0.55,
       center.dy + math.sin(angle) * r * 0.55,

@@ -49,10 +49,7 @@ class AnimatedBorderPainter extends CustomPainter {
     );
     if (rect.isEmpty) return;
 
-    final rrect = RRect.fromRectAndRadius(
-      rect,
-      Radius.circular(borderRadius),
-    );
+    final rrect = RRect.fromRectAndRadius(rect, Radius.circular(borderRadius));
 
     final path = Path()..addRRect(rrect);
 

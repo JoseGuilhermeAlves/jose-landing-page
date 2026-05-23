@@ -255,11 +255,7 @@ class _SolarPropertyIllustrationPainter extends CustomPainter {
       ..strokeCap = StrokeCap.round;
     for (var i = 0; i <= 6; i++) {
       final x = w * 0.10 + (w * 0.80) * (i / 6);
-      canvas.drawLine(
-        Offset(x, h * 0.66),
-        Offset(x, h * 0.88),
-        fencePaint,
-      );
+      canvas.drawLine(Offset(x, h * 0.66), Offset(x, h * 0.88), fencePaint);
     }
     canvas
       ..drawLine(
@@ -290,10 +286,7 @@ class _SolarPropertyIllustrationPainter extends CustomPainter {
     final h = size.height;
 
     // Chao.
-    canvas.drawRect(
-      Rect.fromLTWH(0, h * 0.82, w, h * 0.18),
-      _shadeFill,
-    );
+    canvas.drawRect(Rect.fromLTWH(0, h * 0.82, w, h * 0.18), _shadeFill);
 
     // Sol.
     final sunCx = variant == 1 ? w * 0.18 : w * 0.82;

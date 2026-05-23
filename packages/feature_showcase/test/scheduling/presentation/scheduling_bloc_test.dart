@@ -91,8 +91,7 @@ void main() {
       blocTest<SchedulingBloc, SchedulingState>(
         'adiciona ao confirmedAppointments e ao userBookedSlots',
         build: makeBloc,
-        act: (bloc) =>
-            bloc.add(SchedulingAppointmentConfirmed(appointment)),
+        act: (bloc) => bloc.add(SchedulingAppointmentConfirmed(appointment)),
         verify: (bloc) {
           expect(bloc.state.confirmedAppointments, hasLength(1));
           expect(bloc.state.confirmedAppointments.first.id, 'VIT-0001');
@@ -114,8 +113,7 @@ void main() {
       blocTest<SchedulingBloc, SchedulingState>(
         'ignora confirmacao se slot ja esta em preBookedSlots',
         build: () => makeBloc(preBooked: {morning}),
-        act: (bloc) =>
-            bloc.add(SchedulingAppointmentConfirmed(appointment)),
+        act: (bloc) => bloc.add(SchedulingAppointmentConfirmed(appointment)),
         verify: (bloc) {
           expect(bloc.state.confirmedAppointments, isEmpty);
           expect(bloc.state.userBookedSlots, isEmpty);

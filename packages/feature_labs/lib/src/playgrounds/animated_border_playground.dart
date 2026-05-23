@@ -14,8 +14,7 @@ class AnimatedBorderPlayground extends StatefulWidget {
       _AnimatedBorderPlaygroundState();
 }
 
-class _AnimatedBorderPlaygroundState
-    extends State<AnimatedBorderPlayground>
+class _AnimatedBorderPlaygroundState extends State<AnimatedBorderPlayground>
     with SingleTickerProviderStateMixin {
   late final AnimationController _hoverController = AnimationController(
     vsync: this,
@@ -67,8 +66,7 @@ class _AnimatedBorderPlaygroundState
                       child: DecoratedBox(
                         decoration: BoxDecoration(
                           color: colors.surface,
-                          borderRadius:
-                              BorderRadius.circular(_borderRadius),
+                          borderRadius: BorderRadius.circular(_borderRadius),
                         ),
                         child: Center(
                           child: Text(

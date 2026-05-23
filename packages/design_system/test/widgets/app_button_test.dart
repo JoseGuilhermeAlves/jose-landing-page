@@ -72,11 +72,7 @@ void main() {
     testWidgets('renderiza icone quando provido', (tester) async {
       await tester.pumpWidget(
         _wrap(
-          AppButton(
-            label: 'WhatsApp',
-            icon: Icons.message,
-            onPressed: () {},
-          ),
+          AppButton(label: 'WhatsApp', icon: Icons.message, onPressed: () {}),
         ),
       );
       expect(find.byIcon(Icons.message), findsOneWidget);

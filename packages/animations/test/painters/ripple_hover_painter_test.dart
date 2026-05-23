@@ -31,22 +31,13 @@ void main() {
     });
 
     test('shouldRepaint reage a center, color, maxRadius, strokeWidth', () {
-      expect(
-        make(center: const Offset(10, 10)).shouldRepaint(make()),
-        isTrue,
-      );
+      expect(make(center: const Offset(10, 10)).shouldRepaint(make()), isTrue);
       expect(
         make(color: const Color(0xFFAA0000)).shouldRepaint(make()),
         isTrue,
       );
-      expect(
-        make(maxRadius: 200).shouldRepaint(make()),
-        isTrue,
-      );
-      expect(
-        make(strokeWidth: 4).shouldRepaint(make()),
-        isTrue,
-      );
+      expect(make(maxRadius: 200).shouldRepaint(make()), isTrue);
+      expect(make(strokeWidth: 4).shouldRepaint(make()), isTrue);
     });
 
     test('progress fica clampeado em [0,1]', () {

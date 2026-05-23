@@ -12,10 +12,10 @@ class ArchGrid extends StatelessWidget {
   final List<ArchDecision> decisions;
 
   int _columnsFor(Breakpoint bp) => switch (bp) {
-        Breakpoint.mobile => 1,
-        Breakpoint.tablet => 2,
-        Breakpoint.desktop || Breakpoint.wide => 3,
-      };
+    Breakpoint.mobile => 1,
+    Breakpoint.tablet => 2,
+    Breakpoint.desktop || Breakpoint.wide => 3,
+  };
 
   @override
   Widget build(BuildContext context) {

@@ -18,16 +18,20 @@ void main() {
       await tester.pumpWidget(const SizedBox());
     });
 
-    testWidgets('expoe AppColors via Theme extension (sanity do design system)',
-        (tester) async {
-      await tester.pumpWidget(const LandingApp());
-      await tester.pump(const Duration(milliseconds: 32));
+    testWidgets(
+      'expoe AppColors via Theme extension (sanity do design system)',
+      (tester) async {
+        await tester.pumpWidget(const LandingApp());
+        await tester.pump(const Duration(milliseconds: 32));
 
-      // Pega o BuildContext da Home — basta que `context.colors` resolva.
-      final BuildContext ctx = tester.element(find.byKey(const Key('home-page')));
-      expect(() => ctx.colors.primary, returnsNormally);
+        // Pega o BuildContext da Home — basta que `context.colors` resolva.
+        final BuildContext ctx = tester.element(
+          find.byKey(const Key('home-page')),
+        );
+        expect(() => ctx.colors.primary, returnsNormally);
 
-      await tester.pumpWidget(const SizedBox());
-    });
+        await tester.pumpWidget(const SizedBox());
+      },
+    );
   });
 }

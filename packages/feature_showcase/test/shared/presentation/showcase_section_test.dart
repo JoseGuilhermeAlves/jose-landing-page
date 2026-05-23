@@ -5,13 +5,14 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   Widget wrap(Widget child) => MaterialApp(
-        theme: AppTheme.dark(),
-        home: Scaffold(body: SingleChildScrollView(child: child)),
-      );
+    theme: AppTheme.dark(),
+    home: Scaffold(body: SingleChildScrollView(child: child)),
+  );
 
   group('ShowcaseSection', () {
-    testWidgets('renderiza um ShowcaseCard pra cada nicho do catalogo',
-        (tester) async {
+    testWidgets('renderiza um ShowcaseCard pra cada nicho do catalogo', (
+      tester,
+    ) async {
       await tester.pumpWidget(wrap(const ShowcaseSection()));
       await tester.pump(const Duration(milliseconds: 16));
 
@@ -21,8 +22,9 @@ void main() {
       );
     });
 
-    testWidgets('todos os templates do catalogo tem demo plugada',
-        (tester) async {
+    testWidgets('todos os templates do catalogo tem demo plugada', (
+      tester,
+    ) async {
       await tester.pumpWidget(wrap(const ShowcaseSection()));
       await tester.pump(const Duration(milliseconds: 16));
 
@@ -31,8 +33,9 @@ void main() {
       expect(find.textContaining('em breve'), findsNothing);
     });
 
-    testWidgets('tap no card de delivery abre o DeliveryDemo em modal',
-        (tester) async {
+    testWidgets('tap no card de delivery abre o DeliveryDemo em modal', (
+      tester,
+    ) async {
       await tester.pumpWidget(wrap(const ShowcaseSection()));
       await tester.pump(const Duration(milliseconds: 16));
 
@@ -47,8 +50,9 @@ void main() {
       expect(find.byType(DeliveryDemo), findsOneWidget);
     });
 
-    testWidgets('tap no card de scheduling abre o SchedulingDemo em modal',
-        (tester) async {
+    testWidgets('tap no card de scheduling abre o SchedulingDemo em modal', (
+      tester,
+    ) async {
       await tester.pumpWidget(wrap(const ShowcaseSection()));
       await tester.pump(const Duration(milliseconds: 16));
 
@@ -68,8 +72,9 @@ void main() {
       expect(find.byType(SchedulingDemo), findsOneWidget);
     });
 
-    testWidgets('tap no card de fitness abre o FitnessDemo em modal',
-        (tester) async {
+    testWidgets('tap no card de fitness abre o FitnessDemo em modal', (
+      tester,
+    ) async {
       await tester.pumpWidget(wrap(const ShowcaseSection()));
       await tester.pump(const Duration(milliseconds: 16));
 
@@ -87,8 +92,9 @@ void main() {
       expect(find.byType(FitnessDemo), findsOneWidget);
     });
 
-    testWidgets('tap no card de imobiliaria abre o RealEstateDemo em modal',
-        (tester) async {
+    testWidgets('tap no card de imobiliaria abre o RealEstateDemo em modal', (
+      tester,
+    ) async {
       await tester.pumpWidget(wrap(const ShowcaseSection()));
       await tester.pump(const Duration(milliseconds: 16));
 
@@ -104,8 +110,9 @@ void main() {
       expect(find.byType(RealEstateDemo), findsOneWidget);
     });
 
-    testWidgets('tap no card de finance abre o FinanceDemo em modal',
-        (tester) async {
+    testWidgets('tap no card de finance abre o FinanceDemo em modal', (
+      tester,
+    ) async {
       await tester.pumpWidget(wrap(const ShowcaseSection()));
       await tester.pump(const Duration(milliseconds: 16));
 

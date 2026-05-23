@@ -9,10 +9,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:landing/features/home_page.dart';
 
 void main() {
-  Widget wrap(Widget child) => MaterialApp(
-        theme: AppTheme.dark(),
-        home: child,
-      );
+  Widget wrap(Widget child) => MaterialApp(theme: AppTheme.dark(), home: child);
 
   group('HomePage', () {
     testWidgets('compoe HeroSection no topo', (tester) async {
@@ -39,10 +36,7 @@ void main() {
       await tester.pumpWidget(wrap(const HomePage()));
       await tester.pump(const Duration(milliseconds: 16));
 
-      expect(
-        find.byType(ShowcaseSection, skipOffstage: false),
-        findsOneWidget,
-      );
+      expect(find.byType(ShowcaseSection, skipOffstage: false), findsOneWidget);
 
       await tester.pumpWidget(const SizedBox());
     });
@@ -60,10 +54,7 @@ void main() {
       await tester.pumpWidget(wrap(const HomePage()));
       await tester.pump(const Duration(milliseconds: 16));
 
-      expect(
-        find.byType(ContactSection, skipOffstage: false),
-        findsOneWidget,
-      );
+      expect(find.byType(ContactSection, skipOffstage: false), findsOneWidget);
 
       await tester.pumpWidget(const SizedBox());
     });

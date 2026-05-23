@@ -201,18 +201,15 @@ class _ExerciseLoadHistoryPainter extends CustomPainter {
       final norm = ((values[i] - yBase) / yRange).clamp(0.0, 1.0);
       // Cada barra cresce em sequencia: divide o progresso em fatias.
       final barRevealStart = i / values.length;
-      final barReveal = ((reveal - barRevealStart) * values.length)
-          .clamp(0.0, 1.0);
+      final barReveal = ((reveal - barRevealStart) * values.length).clamp(
+        0.0,
+        1.0,
+      );
       final fullHeight = norm * chartHeight;
       final barHeight = fullHeight * barReveal;
 
       // Track (sombra) — barra cheia em alpha baixo.
-      final trackRect = Rect.fromLTWH(
-        x,
-        _topPadding,
-        barWidth,
-        chartHeight,
-      );
+      final trackRect = Rect.fromLTWH(x, _topPadding, barWidth, chartHeight);
       canvas.drawRRect(
         RRect.fromRectAndRadius(trackRect, const Radius.circular(_radius)),
         _trackPaint,
@@ -291,11 +288,7 @@ class _ExerciseLoadHistoryPainter extends CustomPainter {
     textPainter.paint(canvas, Offset(labelX, barTop - 22));
   }
 
-  void _paintAxisLabels(
-    Canvas canvas,
-    Size size, {
-    required double barWidth,
-  }) {
+  void _paintAxisLabels(Canvas canvas, Size size, {required double barWidth}) {
     for (var i = 0; i < values.length; i++) {
       final x = i * (barWidth + _gap);
       final tp = TextPainter(

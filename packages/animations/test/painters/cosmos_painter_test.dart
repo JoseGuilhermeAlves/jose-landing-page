@@ -60,10 +60,7 @@ void main() {
       List<CosmosPlanet> planets = const [planet, ringed, speckled],
       List<CosmosNebula> nebulas = const [nebula],
       CosmosComet? comet$ = comet,
-      List<Offset> pixelStars = const [
-        Offset(0.1, 0.1),
-        Offset(0.9, 0.9),
-      ],
+      List<Offset> pixelStars = const [Offset(0.1, 0.1), Offset(0.9, 0.9)],
     }) {
       return CosmosPainter(
         tick: tick,

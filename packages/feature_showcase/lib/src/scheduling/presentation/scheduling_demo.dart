@@ -16,11 +16,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 /// niveis; monospace pontual nos timestamps e codigos (fontFamily
 /// inline via `VitralBrand.monoFontFamily`).
 class SchedulingDemo extends StatelessWidget {
-  const SchedulingDemo({
-    required this.today,
-    this.preBookedSlots,
-    super.key,
-  });
+  const SchedulingDemo({required this.today, this.preBookedSlots, super.key});
 
   /// Hoje como ancora pro range. Em produto real,
   /// `today: DateTime.now()`.
@@ -35,10 +31,8 @@ class SchedulingDemo extends StatelessWidget {
     return Theme(
       data: VitralBrand.buildTheme(context),
       child: BlocProvider(
-        create: (_) => SchedulingBloc(
-          today: today,
-          preBookedSlots: preBookedSlots,
-        ),
+        create: (_) =>
+            SchedulingBloc(today: today, preBookedSlots: preBookedSlots),
         child: const VitralHomePage(),
       ),
     );

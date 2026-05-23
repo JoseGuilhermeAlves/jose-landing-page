@@ -1,4 +1,5 @@
 import 'package:design_system/design_system.dart';
+import 'package:feature_showcase/src/shared/presentation/mock_body_constraint.dart';
 import 'package:feature_showcase/src/finance/data/mira_assets_catalog.dart';
 import 'package:feature_showcase/src/finance/domain/order_side.dart';
 import 'package:feature_showcase/src/finance/presentation/finance_bloc.dart';
@@ -69,92 +70,95 @@ class _MiraOrderEntryPageState extends State<MiraOrderEntryPage> {
 
     return Scaffold(
       backgroundColor: colors.background,
-      appBar: MiraAppBar(
-        title: '${widget.side.label} ${asset.symbol}',
-      ),
-      body: BlocBuilder<FinanceBloc, FinanceState>(
-        builder: (context, state) {
-          final holding = state.holdingOf(asset.id);
-          final maxSellable = holding?.quantity ?? 0;
-          final priceCents = _effectivePriceCents();
-          final totalCents = priceCents * _quantity;
-          final canSubmit = priceCents > 0 &&
-              _quantity > 0 &&
-              (isBuy || _quantity <= maxSellable);
+      appBar: MiraAppBar(title: '${widget.side.label} ${asset.symbol}'),
+      body: MockBodyConstraint(
+        child: BlocBuilder<FinanceBloc, FinanceState>(
+          builder: (context, state) {
+            final holding = state.holdingOf(asset.id);
+            final maxSellable = holding?.quantity ?? 0;
+            final priceCents = _effectivePriceCents();
+            final totalCents = priceCents * _quantity;
+            final canSubmit =
+                priceCents > 0 &&
+                _quantity > 0 &&
+                (isBuy || _quantity <= maxSellable);
 
-          return Column(
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  padding: const EdgeInsets.fromLTRB(
-                    AppSpacing.lg,
-                    AppSpacing.lg,
-                    AppSpacing.lg,
-                    AppSpacing.lg,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const _AssetSummary(),
-                      const SizedBox(height: AppSpacing.xl),
-                      const _Label(text: 'Quantidade'),
-                      const SizedBox(height: AppSpacing.sm),
-                      _QuantityRow(
-                        value: _quantity,
-                        max: isBuy ? null : maxSellable,
-                        onChanged: (v) => setState(() => _quantity = v),
-                      ),
-                      if (!isBuy && maxSellable > 0) ...[
+            return Column(
+              children: [
+                Expanded(
+                  child: SingleChildScrollView(
+                    padding: const EdgeInsets.fromLTRB(
+                      AppSpacing.lg,
+                      AppSpacing.lg,
+                      AppSpacing.lg,
+                      AppSpacing.lg,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const _AssetSummary(),
+                        const SizedBox(height: AppSpacing.xl),
+                        const _Label(text: 'Quantidade'),
                         const SizedBox(height: AppSpacing.sm),
-                        _QuickPicks(
-                          max: maxSellable,
-                          onPicked: (v) => setState(() => _quantity = v),
+                        _QuantityRow(
+                          value: _quantity,
+                          max: isBuy ? null : maxSellable,
+                          onChanged: (v) => setState(() => _quantity = v),
                         ),
-                      ],
-                      const SizedBox(height: AppSpacing.xl),
-                      const _Label(text: 'Tipo de ordem'),
-                      const SizedBox(height: AppSpacing.sm),
-                      _TypeSegment(
-                        selected: _type,
-                        onChanged: (t) => setState(() => _type = t),
-                      ),
-                      if (_type == OrderType.limit) ...[
-                        const SizedBox(height: AppSpacing.lg),
-                        const _Label(text: r'Preco limite (R$)'),
+                        if (!isBuy && maxSellable > 0) ...[
+                          const SizedBox(height: AppSpacing.sm),
+                          _QuickPicks(
+                            max: maxSellable,
+                            onPicked: (v) => setState(() => _quantity = v),
+                          ),
+                        ],
+                        const SizedBox(height: AppSpacing.xl),
+                        const _Label(text: 'Tipo de ordem'),
                         const SizedBox(height: AppSpacing.sm),
-                        _LimitPriceField(
-                          controller: _limitController,
-                          onChanged: (_) => setState(() {}),
+                        _TypeSegment(
+                          selected: _type,
+                          onChanged: (t) => setState(() => _type = t),
                         ),
-                      ],
-                      const SizedBox(height: AppSpacing.xl),
-                      _TotalCard(
-                        priceCents: priceCents,
-                        quantity: _quantity,
-                        totalCents: totalCents,
-                        type: _type,
-                      ),
-                      if (!isBuy && maxSellable < _quantity) ...[
-                        const SizedBox(height: AppSpacing.md),
-                        _WarningBanner(
-                          text:
-                              'Voce tem $maxSellable papeis dessa posicao. '
-                              'Ajuste a quantidade.',
+                        if (_type == OrderType.limit) ...[
+                          const SizedBox(height: AppSpacing.lg),
+                          const _Label(text: r'Preco limite (R$)'),
+                          const SizedBox(height: AppSpacing.sm),
+                          _LimitPriceField(
+                            controller: _limitController,
+                            onChanged: (_) => setState(() {}),
+                          ),
+                        ],
+                        const SizedBox(height: AppSpacing.xl),
+                        _TotalCard(
+                          priceCents: priceCents,
+                          quantity: _quantity,
+                          totalCents: totalCents,
+                          type: _type,
                         ),
+                        if (!isBuy && maxSellable < _quantity) ...[
+                          const SizedBox(height: AppSpacing.md),
+                          _WarningBanner(
+                            text:
+                                'Voce tem $maxSellable papeis dessa posicao. '
+                                'Ajuste a quantidade.',
+                          ),
+                        ],
                       ],
-                    ],
+                    ),
                   ),
                 ),
-              ),
-              _BottomConfirmBar(
-                label: '${widget.side.label} ${asset.symbol}',
-                color: actionColor,
-                enabled: canSubmit,
-                onSubmit: canSubmit ? () => _submit(context, asset.symbol) : null,
-              ),
-            ],
-          );
-        },
+                _BottomConfirmBar(
+                  label: '${widget.side.label} ${asset.symbol}',
+                  color: actionColor,
+                  enabled: canSubmit,
+                  onSubmit: canSubmit
+                      ? () => _submit(context, asset.symbol)
+                      : null,
+                ),
+              ],
+            );
+          },
+        ),
       ),
     );
   }
@@ -162,13 +166,13 @@ class _MiraOrderEntryPageState extends State<MiraOrderEntryPage> {
   void _submit(BuildContext context, String symbol) {
     final priceCents = _effectivePriceCents();
     context.read<FinanceBloc>().add(
-          FinanceTradeExecuted(
-            assetId: widget.assetId,
-            side: widget.side,
-            quantity: _quantity,
-            priceCents: priceCents,
-          ),
-        );
+      FinanceTradeExecuted(
+        assetId: widget.assetId,
+        side: widget.side,
+        quantity: _quantity,
+        priceCents: priceCents,
+      ),
+    );
     ScaffoldMessenger.of(context)
       ..hideCurrentSnackBar()
       ..showSnackBar(
@@ -216,17 +220,17 @@ class _AssetSummary extends StatelessWidget {
                     Text(
                       asset.symbol,
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            color: colors.onSurface,
-                            fontWeight: FontWeight.w800,
-                            fontFamily: MiraBrand.monoFontFamily,
-                            letterSpacing: 0.6,
-                          ),
+                        color: colors.onSurface,
+                        fontWeight: FontWeight.w800,
+                        fontFamily: MiraBrand.monoFontFamily,
+                        letterSpacing: 0.6,
+                      ),
                     ),
                     Text(
                       asset.name,
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            color: colors.onSurfaceMuted,
-                          ),
+                        color: colors.onSurfaceMuted,
+                      ),
                     ),
                   ],
                 ),
@@ -234,11 +238,11 @@ class _AssetSummary extends StatelessWidget {
               Text(
                 formatMiraPrice(asset.currentPriceCents),
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      color: colors.onSurface,
-                      fontWeight: FontWeight.w800,
-                      fontFamily: MiraBrand.monoFontFamily,
-                      fontFeatures: const [FontFeature.tabularFigures()],
-                    ),
+                  color: colors.onSurface,
+                  fontWeight: FontWeight.w800,
+                  fontFamily: MiraBrand.monoFontFamily,
+                  fontFeatures: const [FontFeature.tabularFigures()],
+                ),
               ),
             ],
           ),
@@ -440,9 +444,7 @@ class _LimitPriceField extends StatelessWidget {
       key: const Key('mira-limit-price-input'),
       controller: controller,
       keyboardType: const TextInputType.numberWithOptions(decimal: true),
-      inputFormatters: [
-        FilteringTextInputFormatter.allow(RegExp(r'[\d,.]')),
-      ],
+      inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[\d,.]'))],
       style: TextStyle(
         color: colors.onSurface,
         fontFamily: MiraBrand.monoFontFamily,
@@ -504,10 +506,7 @@ class _TotalCard extends StatelessWidget {
             value: formatMiraPrice(priceCents),
           ),
           const SizedBox(height: AppSpacing.xs),
-          _TotalRow(
-            label: 'Quantidade',
-            value: '× $quantity',
-          ),
+          _TotalRow(label: 'Quantidade', value: '× $quantity'),
           const Divider(height: AppSpacing.lg),
           _TotalRow(
             label: 'Total',
@@ -629,8 +628,7 @@ class _BottomConfirmBar extends StatelessWidget {
             onPressed: onSubmit,
             style: ElevatedButton.styleFrom(
               backgroundColor: color,
-              disabledBackgroundColor:
-                  colors.surfaceMuted,
+              disabledBackgroundColor: colors.surfaceMuted,
               foregroundColor: colors.onPrimary,
               disabledForegroundColor: colors.onSurfaceMuted,
               padding: const EdgeInsets.symmetric(vertical: 16),

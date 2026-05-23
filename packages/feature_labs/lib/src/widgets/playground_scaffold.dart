@@ -291,9 +291,7 @@ class PlaygroundSwitch extends StatelessWidget {
         Expanded(
           child: Text(
             label,
-            style: textTheme.bodySmall?.copyWith(
-              color: colors.onSurfaceMuted,
-            ),
+            style: textTheme.bodySmall?.copyWith(color: colors.onSurfaceMuted),
           ),
         ),
         Switch(

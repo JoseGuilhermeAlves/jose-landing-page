@@ -33,26 +33,20 @@ void main() {
       FitnessBloc(plan: plan, today: today);
 
   group('FitnessBloc', () {
-    test(
-      'estado inicial: foco em today, completedSets vazio',
-      () {
-        final bloc = makeBloc();
-        expect(bloc.state.selectedWeekday, 1);
-        expect(bloc.state.completedSets, isEmpty);
-        expect(bloc.state.weeklyProgress, 0);
-        bloc.close();
-      },
-    );
+    test('estado inicial: foco em today, completedSets vazio', () {
+      final bloc = makeBloc();
+      expect(bloc.state.selectedWeekday, 1);
+      expect(bloc.state.completedSets, isEmpty);
+      expect(bloc.state.weeklyProgress, 0);
+      bloc.close();
+    });
 
-    test(
-      'inicial em dia de descanso pula pro proximo dia com treino',
-      () {
-        final bloc = makeBloc(today: 2);
-        // Dia 2 do plan e descanso, dia 1 (proximo no rollover) tem treino.
-        expect(bloc.state.selectedWeekday, 1);
-        bloc.close();
-      },
-    );
+    test('inicial em dia de descanso pula pro proximo dia com treino', () {
+      final bloc = makeBloc(today: 2);
+      // Dia 2 do plan e descanso, dia 1 (proximo no rollover) tem treino.
+      expect(bloc.state.selectedWeekday, 1);
+      bloc.close();
+    });
 
     blocTest<FitnessBloc, FitnessState>(
       'FitnessDaySelected troca o foco',
@@ -78,10 +72,7 @@ void main() {
         // Quarta tentativa deve ser ignorada — alvo e 3.
         ..add(const FitnessSetCompleted(weekday: 1, exerciseId: 'mon-bench')),
       verify: (bloc) {
-        expect(
-          bloc.state.completedFor(weekday: 1, exerciseId: 'mon-bench'),
-          3,
-        );
+        expect(bloc.state.completedFor(weekday: 1, exerciseId: 'mon-bench'), 3);
       },
     );
 
@@ -103,10 +94,7 @@ void main() {
         ..add(const FitnessSetUndone(weekday: 1, exerciseId: 'mon-bench'))
         ..add(const FitnessSetUndone(weekday: 1, exerciseId: 'mon-bench')),
       verify: (bloc) {
-        expect(
-          bloc.state.completedFor(weekday: 1, exerciseId: 'mon-bench'),
-          0,
-        );
+        expect(bloc.state.completedFor(weekday: 1, exerciseId: 'mon-bench'), 0);
         // Chave nao deve sobrar com valor zero — Equatable confiar em
         // mapas iguais depende disso.
         expect(bloc.state.completedSets, isEmpty);
@@ -116,9 +104,8 @@ void main() {
     blocTest<FitnessBloc, FitnessState>(
       'FitnessSetUndone em zero eh no-op',
       build: makeBloc,
-      act: (bloc) => bloc.add(
-        const FitnessSetUndone(weekday: 1, exerciseId: 'mon-bench'),
-      ),
+      act: (bloc) =>
+          bloc.add(const FitnessSetUndone(weekday: 1, exerciseId: 'mon-bench')),
       expect: () => <FitnessState>[],
     );
 

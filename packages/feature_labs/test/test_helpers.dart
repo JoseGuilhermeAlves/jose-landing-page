@@ -18,28 +18,16 @@ Future<void> pumpLabsHarness(
   final router = GoRouter(
     initialLocation: path,
     routes: [
-      GoRoute(
-        path: LabsRoutePaths.index,
-        builder: (_, _) => child,
-      ),
+      GoRoute(path: LabsRoutePaths.index, builder: (_, _) => child),
       // Placeholder pra qualquer sub-rota referenciada via context.go.
       for (final p in LabsRoutePaths.playgroundPaths)
-        GoRoute(
-          path: p,
-          builder: (_, _) => const _PlaygroundPlaceholder(),
-        ),
-      GoRoute(
-        path: '/',
-        builder: (_, _) => const _PlaygroundPlaceholder(),
-      ),
+        GoRoute(path: p, builder: (_, _) => const _PlaygroundPlaceholder()),
+      GoRoute(path: '/', builder: (_, _) => const _PlaygroundPlaceholder()),
     ],
   );
 
   return tester.pumpWidget(
-    MaterialApp.router(
-      theme: AppTheme.dark(),
-      routerConfig: router,
-    ),
+    MaterialApp.router(theme: AppTheme.dark(), routerConfig: router),
   );
 }
 

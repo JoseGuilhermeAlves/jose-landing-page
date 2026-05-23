@@ -14,10 +14,10 @@ class ShowcaseGrid extends StatelessWidget {
   final ValueChanged<ShowcaseTemplate> onTemplateTapped;
 
   int _columnsFor(Breakpoint bp) => switch (bp) {
-        Breakpoint.mobile => 1,
-        Breakpoint.tablet => 2,
-        Breakpoint.desktop || Breakpoint.wide => 3,
-      };
+    Breakpoint.mobile => 1,
+    Breakpoint.tablet => 2,
+    Breakpoint.desktop || Breakpoint.wide => 3,
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -52,11 +52,7 @@ class ShowcaseGrid extends StatelessWidget {
 /// Card de um template do showcase. Hover lift + glow shadow + icone
 /// em gradient — segue o mesmo padrao visual do `ServiceCard`.
 class ShowcaseCard extends StatefulWidget {
-  const ShowcaseCard({
-    required this.template,
-    required this.onTap,
-    super.key,
-  });
+  const ShowcaseCard({required this.template, required this.onTap, super.key});
 
   final ShowcaseTemplate template;
   final VoidCallback onTap;
@@ -194,9 +190,7 @@ class _ShowcaseCardState extends State<ShowcaseCard>
       onTap: disabled ? null : widget.onTap,
       excludeSemantics: true,
       child: MouseRegion(
-        cursor: disabled
-            ? SystemMouseCursors.basic
-            : SystemMouseCursors.click,
+        cursor: disabled ? SystemMouseCursors.basic : SystemMouseCursors.click,
         onEnter: disabled ? null : (_) => _setHovered(hovered: true),
         onExit: disabled ? null : (_) => _setHovered(hovered: false),
         child: GestureDetector(

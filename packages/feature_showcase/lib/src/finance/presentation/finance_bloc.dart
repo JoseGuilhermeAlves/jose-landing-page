@@ -18,23 +18,24 @@ class FinanceBloc extends Bloc<FinanceEvent, FinanceState> {
     required List<PortfolioHolding> initialHoldings,
     required List<Trade> initialTrades,
     Set<String>? initialFavoriteIds,
-  })  : _initialHoldings = List.unmodifiable(initialHoldings),
-        _initialTrades = List.unmodifiable(
-          <Trade>[...initialTrades]..sort((a, b) => b.timestamp.compareTo(a.timestamp)),
-        ),
-        _tradeCounter = initialTrades.length,
-        super(
-          FinanceState(
-            holdings: List.unmodifiable(initialHoldings),
-            trades: List.unmodifiable(
-              <Trade>[...initialTrades]
-                ..sort((a, b) => b.timestamp.compareTo(a.timestamp)),
-            ),
-            favoriteIds: Set<String>.unmodifiable(
-              initialFavoriteIds ?? _defaultFavorites(initialHoldings),
-            ),
-          ),
-        ) {
+  }) : _initialHoldings = List.unmodifiable(initialHoldings),
+       _initialTrades = List.unmodifiable(
+         <Trade>[...initialTrades]
+           ..sort((a, b) => b.timestamp.compareTo(a.timestamp)),
+       ),
+       _tradeCounter = initialTrades.length,
+       super(
+         FinanceState(
+           holdings: List.unmodifiable(initialHoldings),
+           trades: List.unmodifiable(
+             <Trade>[...initialTrades]
+               ..sort((a, b) => b.timestamp.compareTo(a.timestamp)),
+           ),
+           favoriteIds: Set<String>.unmodifiable(
+             initialFavoriteIds ?? _defaultFavorites(initialHoldings),
+           ),
+         ),
+       ) {
     on<FinanceFavoriteToggled>(_onFavoriteToggled);
     on<FinanceTradeExecuted>(_onTradeExecuted);
     on<FinanceReset>(_onReset);

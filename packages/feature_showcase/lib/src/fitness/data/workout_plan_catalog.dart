@@ -110,11 +110,7 @@ abstract final class WorkoutPlanCatalog {
         ),
       ],
     ),
-    WorkoutDay(
-      weekday: 4,
-      label: 'Descanso',
-      exercises: [],
-    ),
+    WorkoutDay(weekday: 4, label: 'Descanso', exercises: []),
     WorkoutDay(
       weekday: 5,
       label: 'Ombros e core',
@@ -176,10 +172,6 @@ abstract final class WorkoutPlanCatalog {
         ),
       ],
     ),
-    WorkoutDay(
-      weekday: 7,
-      label: 'Descanso',
-      exercises: [],
-    ),
+    WorkoutDay(weekday: 7, label: 'Descanso', exercises: []),
   ];
 }

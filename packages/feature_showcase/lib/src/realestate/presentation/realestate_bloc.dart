@@ -8,7 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 /// aditivos do mock Solar.
 class RealEstateBloc extends Bloc<RealEstateEvent, RealEstateState> {
   RealEstateBloc({required List<Property> initialProperties})
-      : super(RealEstateState(allProperties: initialProperties)) {
+    : super(RealEstateState(allProperties: initialProperties)) {
     on<RealEstateNeighborhoodSelected>(_onNeighborhood);
     on<RealEstateBedroomsSelected>(_onBedrooms);
     on<RealEstateMaxPriceChanged>(_onMaxPrice);

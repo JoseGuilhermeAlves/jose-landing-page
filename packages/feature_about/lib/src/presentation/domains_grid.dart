@@ -81,11 +81,7 @@ class DomainCard extends StatelessWidget {
               gradient: AppGradients.brandSoft(colors),
               borderRadius: BorderRadius.circular(AppRadius.md),
             ),
-            child: Icon(
-              domain.icon,
-              color: colors.primary,
-              size: 22,
-            ),
+            child: Icon(domain.icon, color: colors.primary, size: 22),
           ),
           const SizedBox(height: AppSpacing.md),
           // `Wrap` em vez de `Row` permite o badge cair pra linha de

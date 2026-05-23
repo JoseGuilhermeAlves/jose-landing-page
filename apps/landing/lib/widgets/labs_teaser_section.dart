@@ -88,10 +88,7 @@ class _LabsTeaserSectionState extends State<LabsTeaserSection>
             children: [
               copyBlock,
               const SizedBox(height: AppSpacing.xxl),
-              SizedBox(
-                height: 240,
-                child: previewBlock,
-              ),
+              SizedBox(height: 240, child: previewBlock),
             ],
           )
         : Row(
@@ -100,10 +97,7 @@ class _LabsTeaserSectionState extends State<LabsTeaserSection>
               const SizedBox(width: AppSpacing.huge),
               Expanded(
                 flex: 2,
-                child: SizedBox(
-                  height: 320,
-                  child: previewBlock,
-                ),
+                child: SizedBox(height: 320, child: previewBlock),
               ),
             ],
           );
@@ -193,10 +187,7 @@ class _MorphingPreview extends StatelessWidget {
           Positioned.fill(
             child: DecoratedBox(
               decoration: BoxDecoration(
-                gradient: AppGradients.glow(
-                  colors.primary,
-                  opacity: 0.32,
-                ),
+                gradient: AppGradients.glow(colors.primary, opacity: 0.32),
                 color: colors.surface,
               ),
             ),

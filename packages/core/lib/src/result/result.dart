@@ -36,14 +36,15 @@ final class Success<T> extends Result<T> {
   R fold<R>({
     required R Function(T value) onSuccess,
     required R Function(Failure failure) onFailure,
-  }) =>
-      onSuccess(value);
+  }) => onSuccess(value);
 
   @override
-  Result<R> map<R>(R Function(T value) transform) => Success<R>(transform(value));
+  Result<R> map<R>(R Function(T value) transform) =>
+      Success<R>(transform(value));
 
   @override
-  Result<R> flatMap<R>(Result<R> Function(T value) transform) => transform(value);
+  Result<R> flatMap<R>(Result<R> Function(T value) transform) =>
+      transform(value);
 
   @override
   List<Object?> get props => [value];
@@ -58,14 +59,14 @@ final class FailureResult<T> extends Result<T> {
   R fold<R>({
     required R Function(T value) onSuccess,
     required R Function(Failure failure) onFailure,
-  }) =>
-      onFailure(failure);
+  }) => onFailure(failure);
 
   @override
   Result<R> map<R>(R Function(T value) transform) => FailureResult<R>(failure);
 
   @override
-  Result<R> flatMap<R>(Result<R> Function(T value) transform) => FailureResult<R>(failure);
+  Result<R> flatMap<R>(Result<R> Function(T value) transform) =>
+      FailureResult<R>(failure);
 
   @override
   List<Object?> get props => [failure];

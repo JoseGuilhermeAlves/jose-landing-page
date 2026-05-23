@@ -71,10 +71,10 @@ class _PlaygroundsGrid extends StatelessWidget {
   final List<PlaygroundDescriptor> playgrounds;
 
   int _columnsFor(Breakpoint bp) => switch (bp) {
-        Breakpoint.mobile => 1,
-        Breakpoint.tablet => 2,
-        Breakpoint.desktop || Breakpoint.wide => 3,
-      };
+    Breakpoint.mobile => 1,
+    Breakpoint.tablet => 2,
+    Breakpoint.desktop || Breakpoint.wide => 3,
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -136,11 +136,7 @@ class _PlaygroundCard extends StatelessWidget {
                     color: colors.primary.withValues(alpha: 0.12),
                     borderRadius: BorderRadius.circular(AppRadius.md),
                   ),
-                  child: Icon(
-                    descriptor.icon,
-                    color: colors.primary,
-                    size: 22,
-                  ),
+                  child: Icon(descriptor.icon, color: colors.primary, size: 22),
                 ),
                 const SizedBox(height: AppSpacing.md),
                 Text(
@@ -176,11 +172,7 @@ class _PlaygroundCard extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: AppSpacing.xs),
-                    Icon(
-                      Icons.arrow_forward,
-                      size: 14,
-                      color: colors.primary,
-                    ),
+                    Icon(Icons.arrow_forward, size: 14, color: colors.primary),
                   ],
                 ),
               ],

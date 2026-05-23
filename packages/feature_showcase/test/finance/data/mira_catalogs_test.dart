@@ -44,14 +44,12 @@ void main() {
 
     test('high >= max(open, close) e low <= min(open, close) em toda vela', () {
       for (final candle in MiraCandlesCatalog.forAsset('VALE3')) {
-        final maxOC =
-            candle.openCents > candle.closeCents
-                ? candle.openCents
-                : candle.closeCents;
-        final minOC =
-            candle.openCents < candle.closeCents
-                ? candle.openCents
-                : candle.closeCents;
+        final maxOC = candle.openCents > candle.closeCents
+            ? candle.openCents
+            : candle.closeCents;
+        final minOC = candle.openCents < candle.closeCents
+            ? candle.openCents
+            : candle.closeCents;
         expect(candle.highCents >= maxOC, isTrue);
         expect(candle.lowCents <= minOC, isTrue);
       }

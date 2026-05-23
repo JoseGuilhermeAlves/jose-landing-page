@@ -1,4 +1,5 @@
 import 'package:design_system/design_system.dart';
+import 'package:feature_showcase/src/shared/presentation/mock_body_constraint.dart';
 import 'package:feature_showcase/src/finance/data/mira_assets_catalog.dart';
 import 'package:feature_showcase/src/finance/domain/asset.dart';
 import 'package:feature_showcase/src/finance/domain/portfolio_holding.dart';
@@ -37,65 +38,64 @@ class MiraPortfolioPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: colors.background,
       appBar: const MiraAppBar(title: 'Meu portfolio'),
-      body: BlocBuilder<FinanceBloc, FinanceState>(
-        builder: (context, state) {
-          if (state.holdings.isEmpty) {
-            return const _EmptyPortfolio();
-          }
+      body: MockBodyConstraint(
+        child: BlocBuilder<FinanceBloc, FinanceState>(
+          builder: (context, state) {
+            if (state.holdings.isEmpty) {
+              return const _EmptyPortfolio();
+            }
 
-          final marketValue = state.marketValueCents;
-          final slices = <MiraAllocationSlice>[];
-          final holdingViews = <_HoldingView>[];
+            final marketValue = state.marketValueCents;
+            final slices = <MiraAllocationSlice>[];
+            final holdingViews = <_HoldingView>[];
 
-          for (var i = 0; i < state.holdings.length; i++) {
-            final h = state.holdings[i];
-            final asset = MiraAssetsCatalog.findById(h.assetId);
-            if (asset == null) continue;
-            final color = _slicePalette[i % _slicePalette.length];
-            final mv = h.marketValueCents(asset.currentPriceCents);
-            final weight = marketValue == 0 ? 0.0 : mv / marketValue;
-            slices.add(
-              MiraAllocationSlice(
-                label: asset.symbol,
-                weight: weight,
-                color: color,
-              ),
-            );
-            holdingViews.add(
-              _HoldingView(
-                holding: h,
-                asset: asset,
-                marketValueCents: mv,
-                weight: weight,
-                color: color,
-              ),
-            );
-          }
-
-          return SingleChildScrollView(
-            padding: const EdgeInsets.fromLTRB(
-              AppSpacing.lg,
-              AppSpacing.xl,
-              AppSpacing.lg,
-              AppSpacing.xxl,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                MiraAllocationDonut(
-                  slices: slices,
-                  totalCents: marketValue,
+            for (var i = 0; i < state.holdings.length; i++) {
+              final h = state.holdings[i];
+              final asset = MiraAssetsCatalog.findById(h.assetId);
+              if (asset == null) continue;
+              final color = _slicePalette[i % _slicePalette.length];
+              final mv = h.marketValueCents(asset.currentPriceCents);
+              final weight = marketValue == 0 ? 0.0 : mv / marketValue;
+              slices.add(
+                MiraAllocationSlice(
+                  label: asset.symbol,
+                  weight: weight,
+                  color: color,
                 ),
-                const SizedBox(height: AppSpacing.xxl),
-                _PortfolioStatsRow(state: state),
-                const SizedBox(height: AppSpacing.xl),
-                const _SectionTitle(text: 'Posicoes'),
-                const SizedBox(height: AppSpacing.md),
-                ...holdingViews.map((v) => _HoldingRow(view: v)),
-              ],
-            ),
-          );
-        },
+              );
+              holdingViews.add(
+                _HoldingView(
+                  holding: h,
+                  asset: asset,
+                  marketValueCents: mv,
+                  weight: weight,
+                  color: color,
+                ),
+              );
+            }
+
+            return SingleChildScrollView(
+              padding: const EdgeInsets.fromLTRB(
+                AppSpacing.lg,
+                AppSpacing.xl,
+                AppSpacing.lg,
+                AppSpacing.xxl,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  MiraAllocationDonut(slices: slices, totalCents: marketValue),
+                  const SizedBox(height: AppSpacing.xxl),
+                  _PortfolioStatsRow(state: state),
+                  const SizedBox(height: AppSpacing.xl),
+                  const _SectionTitle(text: 'Posicoes'),
+                  const SizedBox(height: AppSpacing.md),
+                  ...holdingViews.map((v) => _HoldingRow(view: v)),
+                ],
+              ),
+            );
+          },
+        ),
       ),
     );
   }
@@ -126,11 +126,7 @@ class _PortfolioStatsRow extends StatelessWidget {
               value: formatMiraTotal(state.costBasisCents),
             ),
           ),
-          Container(
-            width: 1,
-            height: 40,
-            color: colors.border,
-          ),
+          Container(width: 1, height: 40, color: colors.border),
           Expanded(
             child: _Stat(
               label: 'RESULTADO',
@@ -186,10 +182,7 @@ class _Stat extends StatelessWidget {
               fontFeatures: const [FontFeature.tabularFigures()],
             ),
           ),
-          if (trailing != null) ...[
-            const SizedBox(height: 4),
-            trailing!,
-          ],
+          if (trailing != null) ...[const SizedBox(height: 4), trailing!],
         ],
       ),
     );
@@ -365,17 +358,17 @@ class _EmptyPortfolio extends StatelessWidget {
             const SizedBox(height: AppSpacing.md),
             Text(
               'Sem posicoes ainda',
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    color: colors.onSurface,
-                  ),
+              style: Theme.of(
+                context,
+              ).textTheme.titleMedium?.copyWith(color: colors.onSurface),
             ),
             const SizedBox(height: AppSpacing.xs),
             Text(
               'Abra sua primeira ordem na aba "Mira" pra ver o donut por aqui.',
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: colors.onSurfaceMuted,
-                  ),
+              style: Theme.of(
+                context,
+              ).textTheme.bodyMedium?.copyWith(color: colors.onSurfaceMuted),
             ),
           ],
         ),

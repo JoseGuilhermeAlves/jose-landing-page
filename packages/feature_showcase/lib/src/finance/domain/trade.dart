@@ -29,11 +29,11 @@ class Trade extends Equatable {
 
   @override
   List<Object?> get props => [
-        id,
-        assetId,
-        side,
-        quantity,
-        priceCents,
-        timestamp,
-      ];
+    id,
+    assetId,
+    side,
+    quantity,
+    priceCents,
+    timestamp,
+  ];
 }

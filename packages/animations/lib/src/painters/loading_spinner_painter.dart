@@ -50,8 +50,8 @@ class LoadingSpinnerPainter extends CustomPainter {
 
     // Comprimento do arco oscila como uma onda — cresce, decresce.
     final t = progress * 2 * math.pi;
-    final sweepFraction = _minSweep +
-        (_maxSweep - _minSweep) * (0.5 - 0.5 * math.cos(t));
+    final sweepFraction =
+        _minSweep + (_maxSweep - _minSweep) * (0.5 - 0.5 * math.cos(t));
 
     // Rotacao continua. Usamos `progress` direto pra rodada completa por
     // ciclo do controller.

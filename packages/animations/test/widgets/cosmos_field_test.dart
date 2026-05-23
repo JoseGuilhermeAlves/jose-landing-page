@@ -5,9 +5,9 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   Widget wrap(Widget child) => MaterialApp(
-        theme: AppTheme.dark(),
-        home: Scaffold(body: child),
-      );
+    theme: AppTheme.dark(),
+    home: Scaffold(body: child),
+  );
 
   CosmosPainter currentPainter(WidgetTester tester) {
     final paint = tester.widget<CustomPaint>(
@@ -48,8 +48,9 @@ void main() {
       await tester.pumpWidget(const SizedBox());
     });
 
-    testWidgets('avanca o tick continuamente (animacao em loop)',
-        (tester) async {
+    testWidgets('avanca o tick continuamente (animacao em loop)', (
+      tester,
+    ) async {
       await tester.pumpWidget(
         wrap(const SizedBox(width: 400, height: 240, child: CosmosField())),
       );
@@ -63,8 +64,9 @@ void main() {
       await tester.pumpWidget(const SizedBox());
     });
 
-    testWidgets('overrides de planetas/nebulas/cometa sao respeitados',
-        (tester) async {
+    testWidgets('overrides de planetas/nebulas/cometa sao respeitados', (
+      tester,
+    ) async {
       const planets = [
         CosmosPlanet(
           id: 'only',

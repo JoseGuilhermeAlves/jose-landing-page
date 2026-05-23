@@ -207,12 +207,7 @@ class _Avatar extends StatelessWidget {
       ),
       clipBehavior: Clip.antiAlias,
       child: photo != null
-          ? Image(
-              image: photo!,
-              width: 96,
-              height: 96,
-              fit: BoxFit.cover,
-            )
+          ? Image(image: photo!, width: 96, height: 96, fit: BoxFit.cover)
           : Center(
               child: Text(
                 initials,

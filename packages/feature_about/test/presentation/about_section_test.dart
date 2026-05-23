@@ -56,8 +56,9 @@ void main() {
       },
     );
 
-    testWidgets('expoe Semantics(header: true) na headline da secao',
-        (tester) async {
+    testWidgets('expoe Semantics(header: true) na headline da secao', (
+      tester,
+    ) async {
       final handle = tester.ensureSemantics();
       try {
         await tester.pumpWidget(wrap(const AboutSection()));

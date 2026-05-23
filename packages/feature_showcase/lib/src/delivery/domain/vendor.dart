@@ -45,21 +45,18 @@ class Vendor extends Equatable {
     if (deliveryFeeCents == 0) return 'Gratis';
     final reais = deliveryFeeCents / 100;
     final integer = reais.truncate();
-    final cents = ((reais - integer) * 100)
-        .round()
-        .toString()
-        .padLeft(2, '0');
+    final cents = ((reais - integer) * 100).round().toString().padLeft(2, '0');
     return 'R\$ $integer,$cents';
   }
 
   @override
   List<Object?> get props => [
-        id,
-        name,
-        tagline,
-        categories,
-        etaMinutes,
-        deliveryFeeCents,
-        rating,
-      ];
+    id,
+    name,
+    tagline,
+    categories,
+    etaMinutes,
+    deliveryFeeCents,
+    rating,
+  ];
 }

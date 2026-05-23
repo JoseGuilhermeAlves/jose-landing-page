@@ -113,7 +113,9 @@ class _Illustration extends StatelessWidget {
     return AspectRatio(
       aspectRatio: 1.7,
       child: ClipRRect(
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(AppRadius.lg)),
+        borderRadius: const BorderRadius.vertical(
+          top: Radius.circular(AppRadius.lg),
+        ),
         child: Stack(
           children: [
             Positioned.fill(
@@ -136,7 +138,10 @@ class _Illustration extends StatelessWidget {
               Positioned(
                 bottom: AppSpacing.sm,
                 left: AppSpacing.sm,
-                child: _PhotosBadge(count: property.photosCount, colors: colors),
+                child: _PhotosBadge(
+                  count: property.photosCount,
+                  colors: colors,
+                ),
               ),
           ],
         ),
@@ -170,9 +175,9 @@ class _FavoriteButton extends StatelessWidget {
               isFav ? Icons.favorite : Icons.favorite_border,
               color: isFav ? colors.primary : colors.onSurfaceMuted,
             ),
-            onPressed: () => context
-                .read<RealEstateBloc>()
-                .add(RealEstateFavoriteToggled(property.id)),
+            onPressed: () => context.read<RealEstateBloc>().add(
+              RealEstateFavoriteToggled(property.id),
+            ),
           ),
         );
       },
@@ -201,7 +206,11 @@ class _PhotosBadge extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Icon(Icons.photo_camera_outlined, size: 12, color: Colors.white),
+          const Icon(
+            Icons.photo_camera_outlined,
+            size: 12,
+            color: Colors.white,
+          ),
           const SizedBox(width: AppSpacing.xxs),
           Text(
             '$count fotos',
@@ -229,14 +238,12 @@ class _StatsRow extends StatelessWidget {
       if (property.bedrooms > 0)
         _Stat(
           icon: Icons.bed_outlined,
-          label: '${property.bedrooms} '
+          label:
+              '${property.bedrooms} '
               '${property.bedrooms == 1 ? "quarto" : "quartos"}',
         ),
       if (property.areaM2 > 0)
-        _Stat(
-          icon: Icons.square_foot_outlined,
-          label: '${property.areaM2} m²',
-        ),
+        _Stat(icon: Icons.square_foot_outlined, label: '${property.areaM2} m²'),
       if (property.areaLandM2 > 0 && property.areaM2 == 0)
         _Stat(
           icon: Icons.crop_landscape_outlined,
@@ -245,7 +252,8 @@ class _StatsRow extends StatelessWidget {
       if (property.parkingSpots > 0)
         _Stat(
           icon: Icons.directions_car_outlined,
-          label: '${property.parkingSpots} '
+          label:
+              '${property.parkingSpots} '
               '${property.parkingSpots == 1 ? "vaga" : "vagas"}',
         ),
     ];

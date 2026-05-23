@@ -34,17 +34,16 @@ class HeroSection extends StatelessWidget {
     final colors = context.colors;
     final textTheme = Theme.of(context).textTheme;
 
-    final headlineStyle = (isMobile
-            ? textTheme.displaySmall
-            : textTheme.displayMedium)
-        ?.copyWith(
-      color: colors.onSurface,
-      height: 1.05,
-      letterSpacing: -1.2,
-    );
+    final headlineStyle =
+        (isMobile ? textTheme.displaySmall : textTheme.displayMedium)?.copyWith(
+          color: colors.onSurface,
+          height: 1.05,
+          letterSpacing: -1.2,
+        );
 
-    final crossAxisAlignment =
-        isMobile ? CrossAxisAlignment.start : CrossAxisAlignment.center;
+    final crossAxisAlignment = isMobile
+        ? CrossAxisAlignment.start
+        : CrossAxisAlignment.center;
     final textAlign = isMobile ? TextAlign.start : TextAlign.center;
 
     final content = Padding(
@@ -145,9 +144,7 @@ class HeroSection extends StatelessWidget {
         // constelacoes (pra que estrelas nomeadas continuem dialogando
         // com o headline). Pixel-art rasterizado a 4 logical px por
         // 8-bit pixel.
-        const Positioned.fill(
-          child: IgnorePointer(child: CosmosField()),
-        ),
+        const Positioned.fill(child: IgnorePointer(child: CosmosField())),
         // Constelacoes com flare em cruz e twinkle — pontos
         // reconheciveis (Cruzeiro do Sul, Orion, Triangulo de Verao).
         // Vai por cima do cosmos pra que estrelas e linhas dialoguem
@@ -406,8 +403,9 @@ class _TrustStrip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final crossAxisAlign =
-        isMobile ? CrossAxisAlignment.start : CrossAxisAlignment.center;
+    final crossAxisAlign = isMobile
+        ? CrossAxisAlignment.start
+        : CrossAxisAlignment.center;
 
     return Wrap(
       spacing: AppSpacing.xl,
@@ -428,10 +426,7 @@ class _TrustStat {
 }
 
 class _TrustStatChip extends StatelessWidget {
-  const _TrustStatChip({
-    required this.stat,
-    required this.crossAxisAlignment,
-  });
+  const _TrustStatChip({required this.stat, required this.crossAxisAlignment});
   final _TrustStat stat;
   final CrossAxisAlignment crossAxisAlignment;
 

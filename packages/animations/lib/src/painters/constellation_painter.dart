@@ -180,14 +180,14 @@ class ConstellationPainter extends CustomPainter {
       // Estrelas com twinkle independente por indice.
       for (var i = 0; i < positions.length; i++) {
         final phase = i * 1.7;
-        final twinkle = 0.65 + 0.35 *
-            (0.5 + 0.5 * math.sin(tick * 2 * math.pi + phase));
+        final twinkle =
+            0.65 + 0.35 * (0.5 + 0.5 * math.sin(tick * 2 * math.pi + phase));
         final p = positions[i];
 
-        _starPaint.color =
-            starColor.withValues(alpha: starColor.a * twinkle);
-        _flarePaint.color =
-            starColor.withValues(alpha: starColor.a * twinkle * 0.55);
+        _starPaint.color = starColor.withValues(alpha: starColor.a * twinkle);
+        _flarePaint.color = starColor.withValues(
+          alpha: starColor.a * twinkle * 0.55,
+        );
 
         canvas.drawCircle(p, starRadius, _starPaint);
 

@@ -30,10 +30,10 @@ class OrderTimelineStep extends Equatable {
 
   @override
   List<Object?> get props => [
-        title,
-        subtitle,
-        timeLabel,
-        isComplete,
-        isCurrent,
-      ];
+    title,
+    subtitle,
+    timeLabel,
+    isComplete,
+    isCurrent,
+  ];
 }

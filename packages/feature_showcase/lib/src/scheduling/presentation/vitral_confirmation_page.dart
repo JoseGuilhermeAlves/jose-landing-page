@@ -1,4 +1,5 @@
 import 'package:design_system/design_system.dart';
+import 'package:feature_showcase/src/shared/presentation/mock_body_constraint.dart';
 import 'package:feature_showcase/src/scheduling/data/vitral_specialists_catalog.dart';
 import 'package:feature_showcase/src/scheduling/domain/appointment.dart';
 import 'package:feature_showcase/src/scheduling/domain/service.dart';
@@ -62,99 +63,101 @@ class VitralConfirmationPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: colors.background,
       appBar: const VitralAppBar(),
-      body: SafeArea(
-        top: false,
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(
-            AppSpacing.lg,
-            AppSpacing.md,
-            AppSpacing.lg,
-            AppSpacing.xxl,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Center(
-                child: VitralConfirmationBadge(
-                  fillColor: colors.primary,
-                  checkColor: colors.onPrimary,
-                  ringColor: colors.primary,
+      body: MockBodyConstraint(
+        child: SafeArea(
+          top: false,
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.fromLTRB(
+              AppSpacing.lg,
+              AppSpacing.md,
+              AppSpacing.lg,
+              AppSpacing.xxl,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Center(
+                  child: VitralConfirmationBadge(
+                    fillColor: colors.primary,
+                    checkColor: colors.onPrimary,
+                    ringColor: colors.primary,
+                  ),
                 ),
-              ),
-              const SizedBox(height: AppSpacing.lg),
-              Text(
-                'tudo certo'.toUpperCase(),
-                style: textTheme.labelSmall?.copyWith(
-                  color: colors.accent,
-                  letterSpacing: 1.2,
+                const SizedBox(height: AppSpacing.lg),
+                Text(
+                  'tudo certo'.toUpperCase(),
+                  style: textTheme.labelSmall?.copyWith(
+                    color: colors.accent,
+                    letterSpacing: 1.2,
+                  ),
                 ),
-              ),
-              const SizedBox(height: AppSpacing.xs),
-              Text(
-                'Confirmar agendamento?',
-                key: const Key('vitral-confirmation-title'),
-                style: textTheme.displaySmall?.copyWith(
-                  color: colors.onSurface,
-                  fontWeight: FontWeight.w800,
-                  letterSpacing: -0.4,
-                  height: 1.1,
+                const SizedBox(height: AppSpacing.xs),
+                Text(
+                  'Confirmar agendamento?',
+                  key: const Key('vitral-confirmation-title'),
+                  style: textTheme.displaySmall?.copyWith(
+                    color: colors.onSurface,
+                    fontWeight: FontWeight.w800,
+                    letterSpacing: -0.4,
+                    height: 1.1,
+                  ),
                 ),
-              ),
-              const SizedBox(height: AppSpacing.sm),
-              Text(
-                'Revise os dados antes de fechar. Voce recebe o lembrete '
-                'por e-mail na vespera.',
-                style: textTheme.bodyMedium?.copyWith(
-                  color: colors.onSurfaceMuted,
-                  height: 1.5,
+                const SizedBox(height: AppSpacing.sm),
+                Text(
+                  'Revise os dados antes de fechar. Voce recebe o lembrete '
+                  'por e-mail na vespera.',
+                  style: textTheme.bodyMedium?.copyWith(
+                    color: colors.onSurfaceMuted,
+                    height: 1.5,
+                  ),
                 ),
-              ),
-              const SizedBox(height: AppSpacing.xl),
-              _DetailsCard(
-                service: service,
-                specialistName: specialist?.name,
-                specialistRole: specialist?.role,
-                slot: slot,
-                endsAt: endsAt,
-                colors: colors,
-                textTheme: textTheme,
-              ),
-              const SizedBox(height: AppSpacing.md),
-              _AddressCard(
-                line: _addressLine,
-                colors: colors,
-                textTheme: textTheme,
-              ),
-              const SizedBox(height: AppSpacing.xl),
-              AppButton(
-                key: const Key('vitral-confirmation-confirm'),
-                label: 'Confirmar agendamento',
-                icon: Icons.check_rounded,
-                size: AppButtonSize.large,
-                expand: true,
-                onPressed: () {
-                  final appt = _buildAppointment();
-                  final navigator = Navigator.of(context);
-                  final messenger = ScaffoldMessenger.of(context);
-                  context
-                      .read<SchedulingBloc>()
-                      .add(SchedulingAppointmentConfirmed(appt));
-                  navigator.popUntil((r) => r.isFirst);
-                  messenger.showSnackBar(
-                    SnackBar(
-                      key: const Key('vitral-confirmation-snackbar'),
-                      behavior: SnackBarBehavior.floating,
-                      backgroundColor: colors.primary,
-                      content: Text(
-                        'Agendamento ${appt.id} confirmado. '
-                        'Lembrete por e-mail na vespera.',
-                        style: TextStyle(color: colors.onPrimary),
+                const SizedBox(height: AppSpacing.xl),
+                _DetailsCard(
+                  service: service,
+                  specialistName: specialist?.name,
+                  specialistRole: specialist?.role,
+                  slot: slot,
+                  endsAt: endsAt,
+                  colors: colors,
+                  textTheme: textTheme,
+                ),
+                const SizedBox(height: AppSpacing.md),
+                _AddressCard(
+                  line: _addressLine,
+                  colors: colors,
+                  textTheme: textTheme,
+                ),
+                const SizedBox(height: AppSpacing.xl),
+                AppButton(
+                  key: const Key('vitral-confirmation-confirm'),
+                  label: 'Confirmar agendamento',
+                  icon: Icons.check_rounded,
+                  size: AppButtonSize.large,
+                  expand: true,
+                  onPressed: () {
+                    final appt = _buildAppointment();
+                    final navigator = Navigator.of(context);
+                    final messenger = ScaffoldMessenger.of(context);
+                    context.read<SchedulingBloc>().add(
+                      SchedulingAppointmentConfirmed(appt),
+                    );
+                    navigator.popUntil((r) => r.isFirst);
+                    messenger.showSnackBar(
+                      SnackBar(
+                        key: const Key('vitral-confirmation-snackbar'),
+                        behavior: SnackBarBehavior.floating,
+                        backgroundColor: colors.primary,
+                        content: Text(
+                          'Agendamento ${appt.id} confirmado. '
+                          'Lembrete por e-mail na vespera.',
+                          style: TextStyle(color: colors.onPrimary),
+                        ),
                       ),
-                    ),
-                  );
-                },
-              ),
-            ],
+                    );
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -378,11 +381,7 @@ class _AddressCard extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Icon(
-            Icons.location_on_outlined,
-            color: colors.primary,
-            size: 20,
-          ),
+          Icon(Icons.location_on_outlined, color: colors.primary, size: 20),
           const SizedBox(width: AppSpacing.sm),
           Expanded(
             child: Column(

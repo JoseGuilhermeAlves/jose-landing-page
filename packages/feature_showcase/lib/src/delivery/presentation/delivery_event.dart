@@ -29,6 +29,21 @@ class DeliveryOrderPlaced extends DeliveryEvent {
   List<Object?> get props => [vendorId];
 }
 
+/// Cria pedido a partir de selecao manual de itens (carrinho).
+/// [quantities] mapeia `itemId` → quantidade selecionada.
+class DeliveryOrderPlacedWithCart extends DeliveryEvent {
+  const DeliveryOrderPlacedWithCart({
+    required this.vendorId,
+    required this.quantities,
+  });
+
+  final String vendorId;
+  final Map<String, int> quantities;
+
+  @override
+  List<Object?> get props => [vendorId, quantities];
+}
+
 /// Cancela o pedido com `orderId`. Marca status como `cancelled` (que
 /// e terminal) — pedido sai do round-robin e migra pro historico.
 class DeliveryOrderCancelled extends DeliveryEvent {

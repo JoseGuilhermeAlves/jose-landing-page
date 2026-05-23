@@ -24,8 +24,10 @@ class DeliveryState extends Equatable {
   }
 
   /// Pedidos ja entregues — alimentam a tela de Historico.
-  List<DeliveryOrder> get historyOrders =>
-      [for (final o in orders) if (o.status.isFinal) o];
+  List<DeliveryOrder> get historyOrders => [
+    for (final o in orders)
+      if (o.status.isFinal) o,
+  ];
 
   /// Lookup por id — null quando o pedido foi removido (nao ocorre no
   /// mock atual, mas e necessario pra rotas que recebem o id como

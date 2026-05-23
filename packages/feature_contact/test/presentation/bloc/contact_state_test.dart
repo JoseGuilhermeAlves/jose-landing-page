@@ -20,8 +20,12 @@ void main() {
 
     test('nameError so aparece com autoValidate ativo', () {
       const without = ContactState.initial();
-      const withAuto =
-          ContactState(name: '', email: '', message: '', autoValidate: true);
+      const withAuto = ContactState(
+        name: '',
+        email: '',
+        message: '',
+        autoValidate: true,
+      );
 
       expect(without.nameError, isNull);
       expect(withAuto.nameError, isNotNull);
@@ -29,13 +33,21 @@ void main() {
 
     test('nameError pega nome vazio e nome muito curto', () {
       expect(
-        const ContactState(name: '', email: '', message: '', autoValidate: true)
-            .nameError,
+        const ContactState(
+          name: '',
+          email: '',
+          message: '',
+          autoValidate: true,
+        ).nameError,
         isNotNull,
       );
       expect(
-        const ContactState(name: 'A', email: '', message: '', autoValidate: true)
-            .nameError,
+        const ContactState(
+          name: 'A',
+          email: '',
+          message: '',
+          autoValidate: true,
+        ).nameError,
         isNotNull,
       );
       expect(
@@ -50,12 +62,8 @@ void main() {
     });
 
     test('emailError pega vazio e formato invalido', () {
-      ContactState s(String email) => ContactState(
-            name: '',
-            email: email,
-            message: '',
-            autoValidate: true,
-          );
+      ContactState s(String email) =>
+          ContactState(name: '', email: email, message: '', autoValidate: true);
       expect(s('').emailError, isNotNull);
       expect(s('notanemail').emailError, isNotNull);
       expect(s('a@b').emailError, isNotNull);
@@ -63,12 +71,8 @@ void main() {
     });
 
     test('messageError exige minimo de 10 caracteres', () {
-      ContactState s(String msg) => ContactState(
-            name: '',
-            email: '',
-            message: msg,
-            autoValidate: true,
-          );
+      ContactState s(String msg) =>
+          ContactState(name: '', email: '', message: msg, autoValidate: true);
       expect(s('').messageError, isNotNull);
       expect(s('curto').messageError, isNotNull);
       expect(s('mensagem boa').messageError, isNull);
@@ -96,22 +100,10 @@ void main() {
       );
       expect(ok.isValid, isTrue);
 
-      expect(
-        ok.copyWith(name: '').isValid,
-        isFalse,
-      );
-      expect(
-        ok.copyWith(email: 'invalid').isValid,
-        isFalse,
-      );
-      expect(
-        ok.copyWith(message: 'curto').isValid,
-        isFalse,
-      );
-      expect(
-        ok.copyWith(clearProjectType: true).isValid,
-        isFalse,
-      );
+      expect(ok.copyWith(name: '').isValid, isFalse);
+      expect(ok.copyWith(email: 'invalid').isValid, isFalse);
+      expect(ok.copyWith(message: 'curto').isValid, isFalse);
+      expect(ok.copyWith(clearProjectType: true).isValid, isFalse);
     });
 
     test('valor: dois ContactState identicos sao iguais', () {
@@ -134,7 +126,10 @@ void main() {
       final success = ContactSubmissionSuccess(Uri.parse('https://wa.me/123'));
       const failure = ContactSubmissionFailure('boom');
 
-      expect(const ContactSubmissionInitial(), isNot(equals(const ContactSubmissionSubmitting())));
+      expect(
+        const ContactSubmissionInitial(),
+        isNot(equals(const ContactSubmissionSubmitting())),
+      );
       expect(success, isNot(equals(failure)));
     });
 

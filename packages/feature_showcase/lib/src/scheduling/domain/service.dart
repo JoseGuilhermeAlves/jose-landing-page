@@ -49,21 +49,18 @@ class Service extends Equatable {
   String get formattedPrice {
     final reais = priceCents / 100;
     final integer = reais.truncate();
-    final cents = ((reais - integer) * 100)
-        .round()
-        .toString()
-        .padLeft(2, '0');
+    final cents = ((reais - integer) * 100).round().toString().padLeft(2, '0');
     return 'R\$ $integer,$cents';
   }
 
   @override
   List<Object?> get props => [
-        id,
-        name,
-        specialistId,
-        category,
-        durationMinutes,
-        priceCents,
-        description,
-      ];
+    id,
+    name,
+    specialistId,
+    category,
+    durationMinutes,
+    priceCents,
+    description,
+  ];
 }

@@ -7,7 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 /// a Uri).
 class ContactBloc extends Bloc<ContactEvent, ContactState> {
   ContactBloc({required this.whatsappNumber})
-      : super(const ContactState.initial()) {
+    : super(const ContactState.initial()) {
     on<ContactNameChanged>(_onNameChanged);
     on<ContactEmailChanged>(_onEmailChanged);
     on<ContactMessageChanged>(_onMessageChanged);
@@ -20,17 +20,11 @@ class ContactBloc extends Bloc<ContactEvent, ContactState> {
   /// URI `wa.me/<numero>`.
   final String whatsappNumber;
 
-  void _onNameChanged(
-    ContactNameChanged event,
-    Emitter<ContactState> emit,
-  ) {
+  void _onNameChanged(ContactNameChanged event, Emitter<ContactState> emit) {
     emit(state.copyWith(name: event.name));
   }
 
-  void _onEmailChanged(
-    ContactEmailChanged event,
-    Emitter<ContactState> emit,
-  ) {
+  void _onEmailChanged(ContactEmailChanged event, Emitter<ContactState> emit) {
     emit(state.copyWith(email: event.email));
   }
 
@@ -79,7 +73,8 @@ class ContactBloc extends Bloc<ContactEvent, ContactState> {
 
   Uri _buildWhatsappUri(ContactState s) {
     final type = s.projectType?.label ?? '—';
-    final body = '''
+    final body =
+        '''
 Ola, Jose! Vim pelo seu site.
 
 Nome: ${s.name.trim()}

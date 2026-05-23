@@ -5,20 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  Widget wrap(
-    Widget child, {
-    Size size = const Size(1280, 800),
-  }) {
+  Widget wrap(Widget child, {Size size = const Size(1280, 800)}) {
     return MaterialApp(
       theme: AppTheme.dark(),
       home: MediaQuery(
         data: MediaQueryData(size: size),
         child: Scaffold(
-          body: SizedBox(
-            width: size.width,
-            height: size.height,
-            child: child,
-          ),
+          body: SizedBox(width: size.width, height: size.height, child: child),
         ),
       ),
     );
@@ -37,8 +30,9 @@ void main() {
       await tester.pumpWidget(const SizedBox());
     });
 
-    testWidgets('expoe a headline como Semantics(header: true)',
-        (tester) async {
+    testWidgets('expoe a headline como Semantics(header: true)', (
+      tester,
+    ) async {
       final handle = tester.ensureSemantics();
       try {
         await tester.pumpWidget(wrap(const HeroSection()));
@@ -56,8 +50,9 @@ void main() {
       await tester.pumpWidget(const SizedBox());
     });
 
-    testWidgets('renderiza dois CTAs: WhatsApp (primario) + Ver projetos',
-        (tester) async {
+    testWidgets('renderiza dois CTAs: WhatsApp (primario) + Ver projetos', (
+      tester,
+    ) async {
       await tester.pumpWidget(wrap(const HeroSection()));
       await tester.pump(const Duration(milliseconds: 16));
 
@@ -80,8 +75,9 @@ void main() {
       await tester.pumpWidget(const SizedBox());
     });
 
-    testWidgets('CTA "Ver projetos" dispara onSeeProjectsPressed',
-        (tester) async {
+    testWidgets('CTA "Ver projetos" dispara onSeeProjectsPressed', (
+      tester,
+    ) async {
       var taps = 0;
       await tester.pumpWidget(
         wrap(HeroSection(onSeeProjectsPressed: () => taps++)),
@@ -94,8 +90,9 @@ void main() {
       await tester.pumpWidget(const SizedBox());
     });
 
-    testWidgets('CTAs ficam desabilitados quando callbacks nao sao providos',
-        (tester) async {
+    testWidgets('CTAs ficam desabilitados quando callbacks nao sao providos', (
+      tester,
+    ) async {
       final handle = tester.ensureSemantics();
       try {
         await tester.pumpWidget(wrap(const HeroSection()));
@@ -117,8 +114,9 @@ void main() {
       await tester.pumpWidget(const SizedBox());
     });
 
-    testWidgets('renderiza ParticleField no fundo (animacao §5.1)',
-        (tester) async {
+    testWidgets('renderiza ParticleField no fundo (animacao §5.1)', (
+      tester,
+    ) async {
       await tester.pumpWidget(wrap(const HeroSection()));
       await tester.pump(const Duration(milliseconds: 16));
 
@@ -127,8 +125,9 @@ void main() {
       await tester.pumpWidget(const SizedBox());
     });
 
-    testWidgets('layout mobile (largura < 600) empilha CTAs verticalmente',
-        (tester) async {
+    testWidgets('layout mobile (largura < 600) empilha CTAs verticalmente', (
+      tester,
+    ) async {
       await tester.pumpWidget(
         wrap(const HeroSection(), size: const Size(360, 720)),
       );
@@ -143,8 +142,9 @@ void main() {
       await tester.pumpWidget(const SizedBox());
     });
 
-    testWidgets('layout desktop (largura >= 900) coloca CTAs lado a lado',
-        (tester) async {
+    testWidgets('layout desktop (largura >= 900) coloca CTAs lado a lado', (
+      tester,
+    ) async {
       await tester.pumpWidget(wrap(const HeroSection()));
       await tester.pump(const Duration(milliseconds: 16));
 

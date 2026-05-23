@@ -107,8 +107,7 @@ abstract final class MiraAssetsCatalog {
 
   /// Busca um asset por id. Lanca StateError se nao existir — sintoma
   /// de bug, nao de input ruim do usuario.
-  static Asset byId(String id) =>
-      all.firstWhere((a) => a.id == id);
+  static Asset byId(String id) => all.firstWhere((a) => a.id == id);
 
   /// Lookup seguro — retorna null em vez de lancar.
   static Asset? findById(String id) {

@@ -24,8 +24,8 @@ class MorphingShapePainter extends CustomPainter {
     this.style = PaintingStyle.fill,
     this.strokeWidth = 1.5,
     this.sampleCount = 72,
-  })  : assert(sampleCount >= 8, 'Sample count muito baixo'),
-        progress = progress.clamp(0.0, 1.0);
+  }) : assert(sampleCount >= 8, 'Sample count muito baixo'),
+       progress = progress.clamp(0.0, 1.0);
 
   /// Fase do ciclo (0..1). Externamente alimentado por um
   /// [AnimationController] em loop.

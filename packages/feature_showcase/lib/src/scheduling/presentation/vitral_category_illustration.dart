@@ -224,12 +224,7 @@ class _VitralCategoryIllustrationPainter extends CustomPainter {
     double unit,
   ) {
     // Quatro barras ascendentes.
-    final bars = [
-      (-0.28, 0.10),
-      (-0.10, 0.04),
-      (0.08, -0.05),
-      (0.26, -0.16),
-    ];
+    final bars = [(-0.28, 0.10), (-0.10, 0.04), (0.08, -0.05), (0.26, -0.16)];
     for (var i = 0; i < bars.length; i++) {
       final b = bars[i];
       final rect = Rect.fromLTRB(

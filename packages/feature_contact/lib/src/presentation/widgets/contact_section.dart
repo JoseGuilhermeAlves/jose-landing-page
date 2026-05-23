@@ -34,9 +34,7 @@ class ContactSection extends StatelessWidget {
 
     final form = BlocProvider(
       create: (_) => ContactBloc(whatsappNumber: whatsappNumber),
-      child: ContactForm(
-        onSubmissionSuccess: (uri) => onOpenUri?.call(uri),
-      ),
+      child: ContactForm(onSubmissionSuccess: (uri) => onOpenUri?.call(uri)),
     );
 
     final ctas = _AlternateCtas(
@@ -105,10 +103,7 @@ class _AlternateCtas extends StatelessWidget {
         icon: Icons.chat_bubble_outline,
         label: 'WhatsApp direto',
         helper: '+$whatsappNumber',
-        onTap: () => _open(
-          context,
-          Uri.https('wa.me', '/$whatsappNumber'),
-        ),
+        onTap: () => _open(context, Uri.https('wa.me', '/$whatsappNumber')),
       ),
       if (email != null)
         _CtaTile(
@@ -200,13 +195,15 @@ class _CtaTile extends StatelessWidget {
                     children: [
                       Text(
                         label,
-                        style: textTheme.labelLarge
-                            ?.copyWith(color: colors.onSurface),
+                        style: textTheme.labelLarge?.copyWith(
+                          color: colors.onSurface,
+                        ),
                       ),
                       Text(
                         helper,
-                        style: textTheme.bodySmall
-                            ?.copyWith(color: colors.onSurfaceMuted),
+                        style: textTheme.bodySmall?.copyWith(
+                          color: colors.onSurfaceMuted,
+                        ),
                         overflow: TextOverflow.ellipsis,
                       ),
                     ],

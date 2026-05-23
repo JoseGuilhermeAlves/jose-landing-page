@@ -67,8 +67,7 @@ class _MiraTickerTapeState extends State<MiraTickerTape>
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    for (final asset in assets)
-                      _TickerChip(asset: asset),
+                    for (final asset in assets) _TickerChip(asset: asset),
                   ],
                 ),
               ),

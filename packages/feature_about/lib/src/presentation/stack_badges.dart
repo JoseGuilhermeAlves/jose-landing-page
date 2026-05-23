@@ -5,10 +5,7 @@ import 'package:flutter/material.dart';
 /// igual a chips estaticos com cor primaria sutil — pegar a atencao
 /// sem virar carnaval.
 class StackBadges extends StatelessWidget {
-  const StackBadges({
-    required this.stack,
-    super.key,
-  });
+  const StackBadges({required this.stack, super.key});
 
   final List<String> stack;
 
@@ -31,9 +28,7 @@ class StackBadges extends StatelessWidget {
             ),
             decoration: BoxDecoration(
               color: colors.primary.withValues(alpha: 0.08),
-              border: Border.all(
-                color: colors.primary.withValues(alpha: 0.35),
-              ),
+              border: Border.all(color: colors.primary.withValues(alpha: 0.35)),
               borderRadius: BorderRadius.circular(AppRadius.full),
             ),
             child: Text(

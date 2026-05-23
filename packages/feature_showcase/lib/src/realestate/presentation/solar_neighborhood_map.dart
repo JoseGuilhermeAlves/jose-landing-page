@@ -184,14 +184,11 @@ class _SolarNeighborhoodMapPainter extends CustomPainter {
       ..drawCircle(
         pinCenter,
         halo,
-        Paint()..color = pinColor.withValues(alpha: 0.20 * (1 - controller.value)),
+        Paint()
+          ..color = pinColor.withValues(alpha: 0.20 * (1 - controller.value)),
       )
       ..drawCircle(pinCenter, 6, _pinPaint)
-      ..drawCircle(
-        pinCenter,
-        2.4,
-        Paint()..color = Colors.white,
-      )
+      ..drawCircle(pinCenter, 2.4, Paint()..color = Colors.white)
       // Aro fino branco em volta pra destacar.
       ..drawCircle(
         pinCenter,
@@ -224,7 +221,10 @@ class _SolarNeighborhoodMapPainter extends CustomPainter {
       ),
       textDirection: TextDirection.ltr,
     )..layout();
-    tp.paint(canvas, Offset(origin.dx - tp.width / 2, origin.dy - tp.height / 2));
+    tp.paint(
+      canvas,
+      Offset(origin.dx - tp.width / 2, origin.dy - tp.height / 2),
+    );
   }
 
   @override

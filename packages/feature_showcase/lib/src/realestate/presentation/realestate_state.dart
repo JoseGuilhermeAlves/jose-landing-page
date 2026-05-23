@@ -52,7 +52,8 @@ class RealEstateState extends Equatable {
   bool hasSentContact(String id) => sentContactIds.contains(id);
 
   bool _matches(Property p) {
-    if (selectedNeighborhood != null && p.neighborhood != selectedNeighborhood) {
+    if (selectedNeighborhood != null &&
+        p.neighborhood != selectedNeighborhood) {
       return false;
     }
     if (selectedBedrooms != null) {
@@ -82,10 +83,12 @@ class RealEstateState extends Equatable {
       selectedNeighborhood: clearNeighborhood
           ? null
           : (selectedNeighborhood ?? this.selectedNeighborhood),
-      selectedBedrooms:
-          clearBedrooms ? null : (selectedBedrooms ?? this.selectedBedrooms),
-      maxPriceCents:
-          clearMaxPrice ? null : (maxPriceCents ?? this.maxPriceCents),
+      selectedBedrooms: clearBedrooms
+          ? null
+          : (selectedBedrooms ?? this.selectedBedrooms),
+      maxPriceCents: clearMaxPrice
+          ? null
+          : (maxPriceCents ?? this.maxPriceCents),
       favoriteIds: favoriteIds ?? this.favoriteIds,
       sentContactIds: sentContactIds ?? this.sentContactIds,
     );
@@ -93,11 +96,11 @@ class RealEstateState extends Equatable {
 
   @override
   List<Object?> get props => [
-        allProperties,
-        selectedNeighborhood,
-        selectedBedrooms,
-        maxPriceCents,
-        favoriteIds,
-        sentContactIds,
-      ];
+    allProperties,
+    selectedNeighborhood,
+    selectedBedrooms,
+    maxPriceCents,
+    favoriteIds,
+    sentContactIds,
+  ];
 }

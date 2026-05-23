@@ -164,7 +164,11 @@ class _SolarFeatureIconPainter extends CustomPainter {
         Offset(base.right, railTop),
         _stroke,
       )
-      ..drawLine(Offset(base.left, railTop), Offset(base.left, base.top), _stroke)
+      ..drawLine(
+        Offset(base.left, railTop),
+        Offset(base.left, base.top),
+        _stroke,
+      )
       ..drawLine(
         Offset(base.right, railTop),
         Offset(base.right, base.top),
@@ -216,11 +220,7 @@ class _SolarFeatureIconPainter extends CustomPainter {
     final dome = Rect.fromCircle(center: Offset(cx, cy), radius: radius);
     canvas
       ..drawArc(dome, math.pi, math.pi, false, _stroke)
-      ..drawLine(
-        Offset(cx - radius, cy),
-        Offset(cx + radius, cy),
-        _stroke,
-      );
+      ..drawLine(Offset(cx - radius, cy), Offset(cx + radius, cy), _stroke);
     // Espetos.
     for (var i = 0; i < 3; i++) {
       final y = cy - radius * (0.20 + 0.20 * i);

@@ -6,8 +6,9 @@ import '../test_helpers.dart';
 
 void main() {
   group('LabsPage', () {
-    testWidgets('renderiza um card pra cada playground do catalogo',
-        (tester) async {
+    testWidgets('renderiza um card pra cada playground do catalogo', (
+      tester,
+    ) async {
       tester.view.physicalSize = const Size(1200, 1600);
       tester.view.devicePixelRatio = 1;
       addTearDown(tester.view.resetPhysicalSize);
@@ -24,8 +25,9 @@ void main() {
       }
     });
 
-    testWidgets('tap em card navega pra sub-rota correspondente',
-        (tester) async {
+    testWidgets('tap em card navega pra sub-rota correspondente', (
+      tester,
+    ) async {
       tester.view.physicalSize = const Size(1200, 1600);
       tester.view.devicePixelRatio = 1;
       addTearDown(tester.view.resetPhysicalSize);

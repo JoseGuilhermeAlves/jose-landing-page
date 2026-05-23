@@ -32,8 +32,9 @@ void main() {
       expect(find.textContaining('conversar'), findsWidgets);
     });
 
-    testWidgets('expoe links alternativos: WhatsApp, email, LinkedIn, GitHub',
-        (tester) async {
+    testWidgets('expoe links alternativos: WhatsApp, email, LinkedIn, GitHub', (
+      tester,
+    ) async {
       await tester.pumpWidget(
         wrap(
           const ContactSection(

@@ -1,4 +1,5 @@
 import 'package:design_system/design_system.dart';
+import 'package:feature_showcase/src/shared/presentation/mock_body_constraint.dart';
 import 'package:feature_showcase/src/fitness/domain/workout_day.dart';
 import 'package:feature_showcase/src/fitness/presentation/fitness_bloc.dart';
 import 'package:feature_showcase/src/fitness/presentation/fitness_state.dart';
@@ -57,73 +58,75 @@ class PulsoHomePage extends StatelessWidget {
 
         return Scaffold(
           backgroundColor: colors.background,
-          body: SafeArea(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.fromLTRB(
-                AppSpacing.lg,
-                AppSpacing.md,
-                AppSpacing.lg,
-                AppSpacing.xl,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _Header(
-                    colors: colors,
-                    textTheme: textTheme,
-                    weekdayLabel: _weekdayShort[today.weekday],
-                    onClose: () => Navigator.of(context).maybePop(),
-                  ),
-                  const SizedBox(height: AppSpacing.xl),
-                  _WorkoutTodayCard(
-                    day: today,
-                    estimatedMinutes: estimatedMinutes,
-                    colors: colors,
-                    textTheme: textTheme,
-                    onStart: onEnterApp,
-                  ),
-                  const SizedBox(height: AppSpacing.xl),
-                  _SectionLabel(
-                    text: 'Hoje em foco',
-                    colors: colors,
-                    textTheme: textTheme,
-                  ),
-                  const SizedBox(height: AppSpacing.md),
-                  _ActivityRingsCard(
-                    day: today,
-                    state: state,
-                    colors: colors,
-                    textTheme: textTheme,
-                  ),
-                  if (!isRest) ...[
+          body: MockBodyConstraint(
+            child: SafeArea(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.fromLTRB(
+                  AppSpacing.lg,
+                  AppSpacing.md,
+                  AppSpacing.lg,
+                  AppSpacing.xl,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _Header(
+                      colors: colors,
+                      textTheme: textTheme,
+                      weekdayLabel: _weekdayShort[today.weekday],
+                      onClose: () => Navigator.of(context).maybePop(),
+                    ),
+                    const SizedBox(height: AppSpacing.xl),
+                    _WorkoutTodayCard(
+                      day: today,
+                      estimatedMinutes: estimatedMinutes,
+                      colors: colors,
+                      textTheme: textTheme,
+                      onStart: onEnterApp,
+                    ),
                     const SizedBox(height: AppSpacing.xl),
                     _SectionLabel(
-                      text: 'Musculos do dia',
+                      text: 'Hoje em foco',
                       colors: colors,
                       textTheme: textTheme,
                     ),
                     const SizedBox(height: AppSpacing.md),
-                    _MuscleFocusCard(
+                    _ActivityRingsCard(
                       day: today,
+                      state: state,
+                      colors: colors,
+                      textTheme: textTheme,
+                    ),
+                    if (!isRest) ...[
+                      const SizedBox(height: AppSpacing.xl),
+                      _SectionLabel(
+                        text: 'Musculos do dia',
+                        colors: colors,
+                        textTheme: textTheme,
+                      ),
+                      const SizedBox(height: AppSpacing.md),
+                      _MuscleFocusCard(
+                        day: today,
+                        colors: colors,
+                        textTheme: textTheme,
+                      ),
+                    ],
+                    const SizedBox(height: AppSpacing.xl),
+                    _SectionLabel(
+                      text: 'Sua semana',
+                      colors: colors,
+                      textTheme: textTheme,
+                    ),
+                    const SizedBox(height: AppSpacing.md),
+                    _WeekSummaryCard(
+                      activeDays: activeDays,
+                      totalSets: state.weeklyTargetSets,
+                      volumeLabel: volumeLabel,
                       colors: colors,
                       textTheme: textTheme,
                     ),
                   ],
-                  const SizedBox(height: AppSpacing.xl),
-                  _SectionLabel(
-                    text: 'Sua semana',
-                    colors: colors,
-                    textTheme: textTheme,
-                  ),
-                  const SizedBox(height: AppSpacing.md),
-                  _WeekSummaryCard(
-                    activeDays: activeDays,
-                    totalSets: state.weeklyTargetSets,
-                    volumeLabel: volumeLabel,
-                    colors: colors,
-                    textTheme: textTheme,
-                  ),
-                ],
+                ),
               ),
             ),
           ),

@@ -19,12 +19,12 @@ class ContactState extends Equatable {
   });
 
   const ContactState.initial()
-      : name = '',
-        email = '',
-        message = '',
-        projectType = null,
-        autoValidate = false,
-        submission = const ContactSubmissionInitial();
+    : name = '',
+      email = '',
+      message = '',
+      projectType = null,
+      autoValidate = false,
+      submission = const ContactSubmissionInitial();
 
   final String name;
   final String email;
@@ -98,14 +98,18 @@ class ContactState extends Equatable {
   }
 
   @override
-  List<Object?> get props =>
-      [name, email, message, projectType, autoValidate, submission];
+  List<Object?> get props => [
+    name,
+    email,
+    message,
+    projectType,
+    autoValidate,
+    submission,
+  ];
 
   // Padrao simples — pega "x@y.z" (sem cobrir todos os RFCs, mas
   // suficiente pra um landing page).
-  static final RegExp _emailPattern = RegExp(
-    r'^[\w.+-]+@[\w-]+\.[\w.-]+$',
-  );
+  static final RegExp _emailPattern = RegExp(r'^[\w.+-]+@[\w-]+\.[\w.-]+$');
 }
 
 /// Status da submissao do form. Sealed pra forcar `switch` exaustivo.

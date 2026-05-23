@@ -43,8 +43,7 @@ void main() {
     ),
   ];
 
-  RealEstateBloc makeBloc() =>
-      RealEstateBloc(initialProperties: properties);
+  RealEstateBloc makeBloc() => RealEstateBloc(initialProperties: properties);
 
   group('RealEstateBloc', () {
     test('estado inicial: sem filtros, lista filtrada = catalogo todo', () {
@@ -57,8 +56,7 @@ void main() {
     blocTest<RealEstateBloc, RealEstateState>(
       'NeighborhoodSelected aplica filtro por bairro',
       build: makeBloc,
-      act: (bloc) =>
-          bloc.add(const RealEstateNeighborhoodSelected('Centro')),
+      act: (bloc) => bloc.add(const RealEstateNeighborhoodSelected('Centro')),
       verify: (bloc) {
         expect(bloc.state.selectedNeighborhood, 'Centro');
         expect(bloc.state.filtered.map((p) => p.id), ['a', 'b']);
@@ -98,8 +96,7 @@ void main() {
     blocTest<RealEstateBloc, RealEstateState>(
       'MaxPriceChanged filtra por teto de preco',
       build: makeBloc,
-      act: (bloc) =>
-          bloc.add(const RealEstateMaxPriceChanged(60000000)),
+      act: (bloc) => bloc.add(const RealEstateMaxPriceChanged(60000000)),
       verify: (bloc) {
         expect(bloc.state.filtered.map((p) => p.id), ['a', 'b']);
       },

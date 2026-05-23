@@ -37,15 +37,13 @@ class MiraAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: Text(
         title,
         style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              color: colors.onSurface,
-              fontWeight: FontWeight.w700,
-              letterSpacing: 0.6,
-            ),
+          color: colors.onSurface,
+          fontWeight: FontWeight.w700,
+          letterSpacing: 0.6,
+        ),
       ),
       actions: actions,
-      shape: Border(
-        bottom: BorderSide(color: colors.border),
-      ),
+      shape: Border(bottom: BorderSide(color: colors.border)),
     );
   }
 }

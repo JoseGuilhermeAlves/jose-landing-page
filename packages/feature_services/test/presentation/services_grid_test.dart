@@ -4,32 +4,29 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  Widget wrap(
-    Widget child, {
-    Size size = const Size(1280, 1200),
-  }) {
+  Widget wrap(Widget child, {Size size = const Size(1280, 1200)}) {
     return MaterialApp(
       theme: AppTheme.dark(),
       home: MediaQuery(
         data: MediaQueryData(size: size),
         child: Scaffold(
-          body: SizedBox(
-            width: size.width,
-            height: size.height,
-            child: child,
-          ),
+          body: SizedBox(width: size.width, height: size.height, child: child),
         ),
       ),
     );
   }
 
   group('ServicesGrid', () {
-    testWidgets('renderiza um ServiceCard pra cada servico do catalogo',
-        (tester) async {
+    testWidgets('renderiza um ServiceCard pra cada servico do catalogo', (
+      tester,
+    ) async {
       await tester.pumpWidget(wrap(const ServicesGrid()));
       await tester.pump(const Duration(milliseconds: 16));
 
-      expect(find.byType(ServiceCard), findsNWidgets(ServicesCatalog.all.length));
+      expect(
+        find.byType(ServiceCard),
+        findsNWidgets(ServicesCatalog.all.length),
+      );
 
       await tester.pumpWidget(const SizedBox());
     });
@@ -41,9 +38,7 @@ void main() {
       await tester.pump(const Duration(milliseconds: 16));
 
       final cards = tester.widgetList<ServiceCard>(find.byType(ServiceCard));
-      final rects = cards
-          .map((c) => tester.getRect(find.byWidget(c)))
-          .toList();
+      final rects = cards.map((c) => tester.getRect(find.byWidget(c))).toList();
 
       // Todos os cards comecam na mesma coluna (left aprox igual).
       final firstLeft = rects.first.left;
@@ -56,15 +51,14 @@ void main() {
       await tester.pumpWidget(const SizedBox());
     });
 
-    testWidgets('desktop (>=900): cards em multi-coluna lado a lado',
-        (tester) async {
+    testWidgets('desktop (>=900): cards em multi-coluna lado a lado', (
+      tester,
+    ) async {
       await tester.pumpWidget(wrap(const ServicesGrid()));
       await tester.pump(const Duration(milliseconds: 16));
 
       final cards = tester.widgetList<ServiceCard>(find.byType(ServiceCard));
-      final rects = cards
-          .map((c) => tester.getRect(find.byWidget(c)))
-          .toList();
+      final rects = cards.map((c) => tester.getRect(find.byWidget(c))).toList();
 
       // Pelo menos dois cards compartilham aprox a mesma linha (top igual).
       var sameRowPair = false;
@@ -76,8 +70,11 @@ void main() {
           }
         }
       }
-      expect(sameRowPair, isTrue,
-          reason: 'desktop deveria render cards lado a lado');
+      expect(
+        sameRowPair,
+        isTrue,
+        reason: 'desktop deveria render cards lado a lado',
+      );
 
       await tester.pumpWidget(const SizedBox());
     });

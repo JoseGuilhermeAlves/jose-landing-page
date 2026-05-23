@@ -5,9 +5,9 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   Widget wrap(Widget child) => MaterialApp(
-        theme: AppTheme.dark(),
-        home: Scaffold(body: SizedBox(width: 600, child: child)),
-      );
+    theme: AppTheme.dark(),
+    home: Scaffold(body: SizedBox(width: 600, child: child)),
+  );
 
   group('StackBadges', () {
     testWidgets('renderiza um chip para cada item de stack', (tester) async {

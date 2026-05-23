@@ -1,4 +1,5 @@
 import 'package:design_system/design_system.dart';
+import 'package:feature_showcase/src/shared/presentation/mock_body_constraint.dart';
 import 'package:feature_showcase/src/realestate/data/solar_brokers_catalog.dart';
 import 'package:feature_showcase/src/realestate/domain/broker.dart';
 import 'package:feature_showcase/src/realestate/domain/property.dart';
@@ -54,131 +55,142 @@ class _SolarPropertyDetailPageState extends State<SolarPropertyDetailPage> {
               final isFav = state.isFavorite(property.id);
               return IconButton(
                 key: const Key('solar-detail-favorite'),
-                tooltip:
-                    isFav ? 'Remover dos favoritos' : 'Salvar nos favoritos',
+                tooltip: isFav
+                    ? 'Remover dos favoritos'
+                    : 'Salvar nos favoritos',
                 icon: Icon(
                   isFav ? Icons.favorite : Icons.favorite_border,
                   color: isFav ? colors.primary : colors.onSurface,
                 ),
-                onPressed: () => context
-                    .read<RealEstateBloc>()
-                    .add(RealEstateFavoriteToggled(property.id)),
+                onPressed: () => context.read<RealEstateBloc>().add(
+                  RealEstateFavoriteToggled(property.id),
+                ),
               );
             },
           ),
         ],
       ),
-      body: SafeArea(
-        top: false,
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(
-            AppSpacing.lg,
-            AppSpacing.md,
-            AppSpacing.lg,
-            AppSpacing.xxl,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _Gallery(
-                property: property,
-                colors: colors,
-                galleryIndex: _galleryIndex,
-                onChange: (i) => setState(() => _galleryIndex = i),
-              ),
-              const SizedBox(height: AppSpacing.lg),
-              _Header(property: property, colors: colors, textTheme: textTheme),
-              const SizedBox(height: AppSpacing.lg),
-              _StatsCard(property: property, colors: colors, textTheme: textTheme),
-              if (property.description.isNotEmpty) ...[
+      body: MockBodyConstraint(
+        child: SafeArea(
+          top: false,
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.fromLTRB(
+              AppSpacing.lg,
+              AppSpacing.md,
+              AppSpacing.lg,
+              AppSpacing.xxl,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _Gallery(
+                  property: property,
+                  colors: colors,
+                  galleryIndex: _galleryIndex,
+                  onChange: (i) => setState(() => _galleryIndex = i),
+                ),
                 const SizedBox(height: AppSpacing.lg),
-                _Description(
-                  text: property.description,
-                  colors: colors,
-                  textTheme: textTheme,
-                ),
-              ],
-              if (property.features.isNotEmpty) ...[
-                const SizedBox(height: AppSpacing.xl),
-                _SectionLabel(
-                  eyebrow: 'Caracteristicas',
-                  title: 'O que o imovel oferece',
-                  colors: colors,
-                  textTheme: textTheme,
-                ),
-                const SizedBox(height: AppSpacing.md),
-                _FeaturesGrid(
+                _Header(
                   property: property,
                   colors: colors,
                   textTheme: textTheme,
                 ),
-              ],
-              if (property.type != PropertyType.land) ...[
+                const SizedBox(height: AppSpacing.lg),
+                _StatsCard(
+                  property: property,
+                  colors: colors,
+                  textTheme: textTheme,
+                ),
+                if (property.description.isNotEmpty) ...[
+                  const SizedBox(height: AppSpacing.lg),
+                  _Description(
+                    text: property.description,
+                    colors: colors,
+                    textTheme: textTheme,
+                  ),
+                ],
+                if (property.features.isNotEmpty) ...[
+                  const SizedBox(height: AppSpacing.xl),
+                  _SectionLabel(
+                    eyebrow: 'Caracteristicas',
+                    title: 'O que o imovel oferece',
+                    colors: colors,
+                    textTheme: textTheme,
+                  ),
+                  const SizedBox(height: AppSpacing.md),
+                  _FeaturesGrid(
+                    property: property,
+                    colors: colors,
+                    textTheme: textTheme,
+                  ),
+                ],
+                if (property.type != PropertyType.land) ...[
+                  const SizedBox(height: AppSpacing.xl),
+                  _SectionLabel(
+                    eyebrow: 'Planta baixa',
+                    title: 'Planta esquematica do imovel',
+                    colors: colors,
+                    textTheme: textTheme,
+                  ),
+                  const SizedBox(height: AppSpacing.md),
+                  _FloorPlanCard(property: property, colors: colors),
+                ],
                 const SizedBox(height: AppSpacing.xl),
                 _SectionLabel(
-                  eyebrow: 'Planta baixa',
-                  title: 'Planta esquematica do imovel',
+                  eyebrow: 'Localizacao',
+                  title: 'Onde fica',
                   colors: colors,
                   textTheme: textTheme,
                 ),
                 const SizedBox(height: AppSpacing.md),
-                _FloorPlanCard(property: property, colors: colors),
-              ],
-              const SizedBox(height: AppSpacing.xl),
-              _SectionLabel(
-                eyebrow: 'Localizacao',
-                title: 'Onde fica',
-                colors: colors,
-                textTheme: textTheme,
-              ),
-              const SizedBox(height: AppSpacing.md),
-              _MapCard(
-                property: property,
-                colors: colors,
-                textTheme: textTheme,
-              ),
-              if (broker != null) ...[
+                _MapCard(
+                  property: property,
+                  colors: colors,
+                  textTheme: textTheme,
+                ),
+                if (broker != null) ...[
+                  const SizedBox(height: AppSpacing.xl),
+                  _SectionLabel(
+                    eyebrow: 'Corretor responsavel',
+                    title: 'Quem te acompanha',
+                    colors: colors,
+                    textTheme: textTheme,
+                  ),
+                  const SizedBox(height: AppSpacing.md),
+                  _BrokerCard(
+                    broker: broker,
+                    colors: colors,
+                    textTheme: textTheme,
+                  ),
+                ],
                 const SizedBox(height: AppSpacing.xl),
-                _SectionLabel(
-                  eyebrow: 'Corretor responsavel',
-                  title: 'Quem te acompanha',
-                  colors: colors,
-                  textTheme: textTheme,
-                ),
-                const SizedBox(height: AppSpacing.md),
-                _BrokerCard(
-                  broker: broker,
-                  colors: colors,
-                  textTheme: textTheme,
-                ),
-              ],
-              const SizedBox(height: AppSpacing.xl),
-              BlocBuilder<RealEstateBloc, RealEstateState>(
-                buildWhen: (a, b) =>
-                    a.hasSentContact(property.id) !=
-                    b.hasSentContact(property.id),
-                builder: (context, state) {
-                  final sent = state.hasSentContact(property.id);
-                  return AppButton(
-                    key: const Key('solar-detail-contact-cta'),
-                    label: sent
-                        ? 'Pedido enviado · ver detalhes'
-                        : 'Falar com o corretor',
-                    icon: sent ? Icons.check_rounded : Icons.send_rounded,
-                    size: AppButtonSize.large,
-                    expand: true,
-                    onPressed: () => Navigator.of(context).push(
-                      MaterialPageRoute<void>(
-                        builder: (_) => solarWithDemoBloc(
-                          context,
-                          SolarContactPage(property: property),
+                BlocBuilder<RealEstateBloc, RealEstateState>(
+                  buildWhen: (a, b) =>
+                      a.hasSentContact(property.id) !=
+                      b.hasSentContact(property.id),
+                  builder: (context, state) {
+                    final sent = state.hasSentContact(property.id);
+                    return AppButton(
+                      key: const Key('solar-detail-contact-cta'),
+                      label: sent
+                          ? 'Pedido enviado · ver detalhes'
+                          : 'Falar com o corretor',
+                      icon: sent ? Icons.check_rounded : Icons.send_rounded,
+                      size: AppButtonSize.large,
+                      expand: true,
+                      onPressed: () => Navigator.of(context).push(
+                        MaterialPageRoute<void>(
+                          builder: (_) => solarWithDemoBloc(
+                            context,
+                            SolarContactPage(property: property),
+                          ),
                         ),
                       ),
-                    ),
-                  );
-                },
-              ),
-            ],
+                    );
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -282,9 +294,7 @@ class _GalleryDot extends StatelessWidget {
         decoration: BoxDecoration(
           color: selected ? colors.primary : colors.surface,
           borderRadius: BorderRadius.circular(AppRadius.full),
-          border: Border.all(
-            color: selected ? colors.primary : colors.border,
-          ),
+          border: Border.all(color: selected ? colors.primary : colors.border),
         ),
         child: Text(
           label,
@@ -447,7 +457,11 @@ class _StatsCard extends StatelessWidget {
 }
 
 class _StatEntry {
-  const _StatEntry({required this.icon, required this.value, required this.label});
+  const _StatEntry({
+    required this.icon,
+    required this.value,
+    required this.label,
+  });
   final IconData icon;
   final String value;
   final String label;
@@ -691,9 +705,7 @@ class _BrokerCard extends StatelessWidget {
                 const SizedBox(height: AppSpacing.xs),
                 Text(
                   broker.phone,
-                  style: textTheme.labelMedium?.copyWith(
-                    color: colors.accent,
-                  ),
+                  style: textTheme.labelMedium?.copyWith(color: colors.accent),
                 ),
               ],
             ),

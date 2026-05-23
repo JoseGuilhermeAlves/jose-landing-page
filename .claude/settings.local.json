@@ -32,7 +32,8 @@
       "Bash(git add *)",
       "Bash(git commit -m ' *)",
       "Bash(melos bs *)",
-      "Bash(Get-ChildItem *)"
+      "Bash(Get-ChildItem *)",
+      "PowerShell(git add *)"
     ]
   }
 }

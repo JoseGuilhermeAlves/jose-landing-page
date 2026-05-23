@@ -36,10 +36,7 @@ void main() {
     ),
   ];
 
-  Widget wrap(Widget child) => MaterialApp(
-        theme: AppTheme.dark(),
-        home: child,
-      );
+  Widget wrap(Widget child) => MaterialApp(theme: AppTheme.dark(), home: child);
 
   // Helper — abre o demo na home e empurra a listagem pelo CTA do hero.
   Future<void> openListings(WidgetTester tester) async {
@@ -61,11 +58,15 @@ void main() {
       // Tagline da marca aparece + chip de bairros + CTA visivel.
       expect(find.text('Sua nova casa cabe aqui.'), findsOneWidget);
       expect(find.byKey(const Key('solar-cta-listings')), findsOneWidget);
-      expect(find.byKey(const Key('solar-home-neighborhood-Centro')), findsOneWidget);
+      expect(
+        find.byKey(const Key('solar-home-neighborhood-Centro')),
+        findsOneWidget,
+      );
     });
 
-    testWidgets('tap em chip de bairro abre listagem ja filtrada',
-        (tester) async {
+    testWidgets('tap em chip de bairro abre listagem ja filtrada', (
+      tester,
+    ) async {
       tester.view.physicalSize = const Size(900, 2400);
       tester.view.devicePixelRatio = 1;
       addTearDown(tester.view.resetPhysicalSize);
@@ -111,8 +112,9 @@ void main() {
       expect(find.byKey(const Key('solar-property-card-c')), findsNothing);
     });
 
-    testWidgets('chip de quartos 4+ casa imoveis com 4 ou mais',
-        (tester) async {
+    testWidgets('chip de quartos 4+ casa imoveis com 4 ou mais', (
+      tester,
+    ) async {
       tester.view.physicalSize = const Size(900, 3200);
       tester.view.devicePixelRatio = 1;
       addTearDown(tester.view.resetPhysicalSize);
@@ -126,8 +128,7 @@ void main() {
       expect(find.byKey(const Key('solar-property-card-c')), findsOneWidget);
     });
 
-    testWidgets('botao "Limpar filtros" zera selecao e some',
-        (tester) async {
+    testWidgets('botao "Limpar filtros" zera selecao e some', (tester) async {
       tester.view.physicalSize = const Size(900, 3200);
       tester.view.devicePixelRatio = 1;
       addTearDown(tester.view.resetPhysicalSize);
@@ -159,17 +160,15 @@ void main() {
       await tester.tap(find.byKey(const Key('solar-bedroom-chip-4')));
       await tester.pump(const Duration(milliseconds: 50));
 
-      expect(
-        find.byKey(const Key('solar-property-card-a')),
-        findsNothing,
-      );
+      expect(find.byKey(const Key('solar-property-card-a')), findsNothing);
       expect(find.text('Nenhum imovel com esses filtros'), findsOneWidget);
     });
   });
 
   group('SolarPropertyDetailPage', () {
-    testWidgets('abre detalhe via tap no card e mostra headline + preco',
-        (tester) async {
+    testWidgets('abre detalhe via tap no card e mostra headline + preco', (
+      tester,
+    ) async {
       tester.view.physicalSize = const Size(900, 3200);
       tester.view.devicePixelRatio = 1;
       addTearDown(tester.view.resetPhysicalSize);

@@ -5,10 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 Widget _wrap({required Size size, required Widget child}) {
   return MediaQuery(
     data: MediaQueryData(size: size),
-    child: Directionality(
-      textDirection: TextDirection.ltr,
-      child: child,
-    ),
+    child: Directionality(textDirection: TextDirection.ltr, child: child),
   );
 }
 
@@ -33,23 +30,19 @@ void main() {
       await tester.pumpWidget(
         _wrap(
           size: const Size(1280, 800),
-          child: const AdaptiveLayout(
-            mobile: Text('m'),
-            desktop: Text('d'),
-          ),
+          child: const AdaptiveLayout(mobile: Text('m'), desktop: Text('d')),
         ),
       );
       expect(find.text('d'), findsOneWidget);
     });
 
-    testWidgets('cai pra tablet quando desktop nao foi provido', (tester) async {
+    testWidgets('cai pra tablet quando desktop nao foi provido', (
+      tester,
+    ) async {
       await tester.pumpWidget(
         _wrap(
           size: const Size(1280, 800),
-          child: const AdaptiveLayout(
-            mobile: Text('m'),
-            tablet: Text('t'),
-          ),
+          child: const AdaptiveLayout(mobile: Text('m'), tablet: Text('t')),
         ),
       );
       expect(find.text('t'), findsOneWidget);

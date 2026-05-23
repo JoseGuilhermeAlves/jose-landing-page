@@ -85,9 +85,8 @@ abstract final class MiraCandlesCatalog {
 
       // Volume — entre 200k e 5M, mais alto em velas com movimento.
       final movePct = ((close - open).abs() / open).clamp(0.0, 0.04);
-      final volume = (
-        200000 + rng.nextDouble() * 1500000 + movePct * 60000000
-      ).round();
+      final volume = (200000 + rng.nextDouble() * 1500000 + movePct * 60000000)
+          .round();
 
       candles.add(
         Candle(

@@ -58,10 +58,7 @@ void main() {
 
     testWidgets('mobile (<600): cards em uma unica coluna', (tester) async {
       await tester.pumpWidget(
-        wrap(
-          const DomainsGrid(domains: domains),
-          size: const Size(360, 1200),
-        ),
+        wrap(const DomainsGrid(domains: domains), size: const Size(360, 1200)),
       );
       await tester.pump(const Duration(milliseconds: 16));
 
@@ -75,9 +72,7 @@ void main() {
     });
 
     testWidgets('lista vazia: nao lanca e nao renderiza cards', (tester) async {
-      await tester.pumpWidget(
-        wrap(const DomainsGrid(domains: [])),
-      );
+      await tester.pumpWidget(wrap(const DomainsGrid(domains: [])));
       await tester.pump(const Duration(milliseconds: 16));
       expect(find.byType(DomainCard), findsNothing);
       expect(tester.takeException(), isNull);

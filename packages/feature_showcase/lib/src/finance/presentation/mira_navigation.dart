@@ -10,9 +10,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 Widget miraWithDemoBloc(BuildContext context, Widget child) {
   return Theme(
     data: Theme.of(context),
-    child: BlocProvider.value(
-      value: context.read<FinanceBloc>(),
-      child: child,
-    ),
+    child: BlocProvider.value(value: context.read<FinanceBloc>(), child: child),
   );
 }

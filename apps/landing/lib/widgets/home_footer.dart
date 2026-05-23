@@ -8,11 +8,7 @@ import 'package:go_router/go_router.dart';
 /// tecnica, nao indexada no menu principal — PROJECT.md §4.6), tag
 /// "Made with Flutter".
 class HomeFooter extends StatelessWidget {
-  const HomeFooter({
-    required this.startYear,
-    required this.name,
-    super.key,
-  });
+  const HomeFooter({required this.startYear, required this.name, super.key});
 
   final int startYear;
   final String name;
@@ -55,17 +51,11 @@ class HomeFooter extends StatelessWidget {
     final madeWith = Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(
-          Icons.flutter_dash,
-          size: 14,
-          color: colors.onSurfaceMuted,
-        ),
+        Icon(Icons.flutter_dash, size: 14, color: colors.onSurfaceMuted),
         const SizedBox(width: AppSpacing.xs),
         Text(
           'Feito em Flutter',
-          style: textTheme.labelMedium?.copyWith(
-            color: colors.onSurfaceMuted,
-          ),
+          style: textTheme.labelMedium?.copyWith(color: colors.onSurfaceMuted),
         ),
       ],
     );
@@ -73,9 +63,7 @@ class HomeFooter extends StatelessWidget {
     final children = [
       Text(
         copy,
-        style: textTheme.labelMedium?.copyWith(
-          color: colors.onSurfaceMuted,
-        ),
+        style: textTheme.labelMedium?.copyWith(color: colors.onSurfaceMuted),
       ),
       labsLink,
       madeWith,

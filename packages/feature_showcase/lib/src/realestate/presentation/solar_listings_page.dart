@@ -1,4 +1,5 @@
 import 'package:design_system/design_system.dart';
+import 'package:feature_showcase/src/shared/presentation/mock_body_constraint.dart';
 import 'package:feature_showcase/src/realestate/presentation/realestate_bloc.dart';
 import 'package:feature_showcase/src/realestate/presentation/realestate_event.dart';
 import 'package:feature_showcase/src/realestate/presentation/realestate_state.dart';
@@ -27,58 +28,60 @@ class SolarListingsPage extends StatelessWidget {
               if (!state.hasActiveFilters) return const SizedBox.shrink();
               return TextButton(
                 key: const Key('solar-clear-filters'),
-                onPressed: () => context
-                    .read<RealEstateBloc>()
-                    .add(const RealEstateFiltersCleared()),
+                onPressed: () => context.read<RealEstateBloc>().add(
+                  const RealEstateFiltersCleared(),
+                ),
                 child: const Text('Limpar filtros'),
               );
             },
           ),
         ],
       ),
-      body: SafeArea(
-        top: false,
-        child: CustomScrollView(
-          slivers: [
-            const SliverToBoxAdapter(child: _ListingsHeader()),
-            const SliverToBoxAdapter(child: _Filters()),
-            const SliverToBoxAdapter(child: SizedBox(height: AppSpacing.md)),
-            SliverPadding(
-              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
-              sliver: BlocBuilder<RealEstateBloc, RealEstateState>(
-                builder: (context, state) {
-                  final list = state.filtered;
-                  if (list.isEmpty) {
-                    return SliverToBoxAdapter(
-                      child: _EmptyState(colors: colors),
+      body: MockBodyConstraint(
+        child: SafeArea(
+          top: false,
+          child: CustomScrollView(
+            slivers: [
+              const SliverToBoxAdapter(child: _ListingsHeader()),
+              const SliverToBoxAdapter(child: _Filters()),
+              const SliverToBoxAdapter(child: SizedBox(height: AppSpacing.md)),
+              SliverPadding(
+                padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
+                sliver: BlocBuilder<RealEstateBloc, RealEstateState>(
+                  builder: (context, state) {
+                    final list = state.filtered;
+                    if (list.isEmpty) {
+                      return SliverToBoxAdapter(
+                        child: _EmptyState(colors: colors),
+                      );
+                    }
+                    return SliverList.separated(
+                      itemCount: list.length + 1,
+                      separatorBuilder: (_, _) =>
+                          const SizedBox(height: AppSpacing.md),
+                      itemBuilder: (context, index) {
+                        if (index == 0) {
+                          return Padding(
+                            padding: const EdgeInsets.only(
+                              bottom: AppSpacing.xs,
+                            ),
+                            child: Text(
+                              _countLabel(list.length),
+                              key: const Key('solar-results-count'),
+                              style: Theme.of(context).textTheme.labelMedium
+                                  ?.copyWith(color: colors.onSurfaceMuted),
+                            ),
+                          );
+                        }
+                        return SolarPropertyCard(property: list[index - 1]);
+                      },
                     );
-                  }
-                  return SliverList.separated(
-                    itemCount: list.length + 1,
-                    separatorBuilder: (_, _) =>
-                        const SizedBox(height: AppSpacing.md),
-                    itemBuilder: (context, index) {
-                      if (index == 0) {
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: AppSpacing.xs),
-                          child: Text(
-                            _countLabel(list.length),
-                            key: const Key('solar-results-count'),
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelMedium
-                                ?.copyWith(color: colors.onSurfaceMuted),
-                          ),
-                        );
-                      }
-                      return SolarPropertyCard(property: list[index - 1]);
-                    },
-                  );
-                },
+                  },
+                ),
               ),
-            ),
-            const SliverToBoxAdapter(child: SizedBox(height: AppSpacing.xxl)),
-          ],
+              const SliverToBoxAdapter(child: SizedBox(height: AppSpacing.xxl)),
+            ],
+          ),
         ),
       ),
     );
@@ -173,7 +176,11 @@ class _Filters extends StatelessWidget {
 }
 
 class _FilterLabel extends StatelessWidget {
-  const _FilterLabel(this.label, {required this.colors, required this.textTheme});
+  const _FilterLabel(
+    this.label, {
+    required this.colors,
+    required this.textTheme,
+  });
   final String label;
   final AppColorScheme colors;
   final TextTheme textTheme;
@@ -206,9 +213,9 @@ class _NeighborhoodChips extends StatelessWidget {
                 key: Key('solar-neighborhood-chip-$n'),
                 label: n,
                 selected: state.selectedNeighborhood == n,
-                onTap: () => context
-                    .read<RealEstateBloc>()
-                    .add(RealEstateNeighborhoodSelected(n)),
+                onTap: () => context.read<RealEstateBloc>().add(
+                  RealEstateNeighborhoodSelected(n),
+                ),
               ),
           ],
         );
@@ -234,9 +241,9 @@ class _BedroomChips extends StatelessWidget {
                 key: Key('solar-bedroom-chip-$n'),
                 label: n == 4 ? '4+' : '$n',
                 selected: state.selectedBedrooms == n,
-                onTap: () => context
-                    .read<RealEstateBloc>()
-                    .add(RealEstateBedroomsSelected(n)),
+                onTap: () => context.read<RealEstateBloc>().add(
+                  RealEstateBedroomsSelected(n),
+                ),
               ),
           ],
         );
@@ -275,18 +282,18 @@ class _PriceSlider extends StatelessWidget {
               child: Slider(
                 key: const Key('solar-price-slider'),
                 value: current.toDouble().clamp(
-                      minCents.toDouble(),
-                      maxCents.toDouble(),
-                    ),
+                  minCents.toDouble(),
+                  maxCents.toDouble(),
+                ),
                 min: minCents.toDouble(),
                 max: maxCents.toDouble(),
                 divisions: divisions,
                 onChanged: (value) {
                   final rounded = value.round();
                   final eventValue = rounded >= maxCents ? null : rounded;
-                  context
-                      .read<RealEstateBloc>()
-                      .add(RealEstateMaxPriceChanged(eventValue));
+                  context.read<RealEstateBloc>().add(
+                    RealEstateMaxPriceChanged(eventValue),
+                  );
                 },
               ),
             ),
@@ -335,9 +342,7 @@ class _SolarFilterChip extends StatelessWidget {
         decoration: BoxDecoration(
           color: selected ? colors.primary : colors.surfaceMuted,
           borderRadius: BorderRadius.circular(AppRadius.full),
-          border: Border.all(
-            color: selected ? colors.primary : colors.border,
-          ),
+          border: Border.all(color: selected ? colors.primary : colors.border),
         ),
         child: Text(
           label,
@@ -377,9 +382,7 @@ class _EmptyState extends StatelessWidget {
           const SizedBox(height: AppSpacing.xs),
           Text(
             'Tente afrouxar bairro, quartos ou preco maximo.',
-            style: textTheme.bodyMedium?.copyWith(
-              color: colors.onSurfaceMuted,
-            ),
+            style: textTheme.bodyMedium?.copyWith(color: colors.onSurfaceMuted),
             textAlign: TextAlign.center,
           ),
         ],

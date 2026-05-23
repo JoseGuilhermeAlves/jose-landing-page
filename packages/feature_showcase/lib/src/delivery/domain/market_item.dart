@@ -47,21 +47,18 @@ class MarketItem extends Equatable {
   String get formattedPrice {
     final reais = priceCents / 100;
     final integer = reais.truncate();
-    final cents = ((reais - integer) * 100)
-        .round()
-        .toString()
-        .padLeft(2, '0');
+    final cents = ((reais - integer) * 100).round().toString().padLeft(2, '0');
     return 'R\$ $integer,$cents/${unit.shortLabel}';
   }
 
   @override
   List<Object?> get props => [
-        id,
-        name,
-        vendorId,
-        priceCents,
-        unit,
-        category,
-        subtitle,
-      ];
+    id,
+    name,
+    vendorId,
+    priceCents,
+    unit,
+    category,
+    subtitle,
+  ];
 }

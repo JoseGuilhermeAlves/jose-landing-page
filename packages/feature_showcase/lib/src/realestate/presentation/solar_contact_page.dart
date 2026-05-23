@@ -1,4 +1,5 @@
 import 'package:design_system/design_system.dart';
+import 'package:feature_showcase/src/shared/presentation/mock_body_constraint.dart';
 import 'package:feature_showcase/src/realestate/data/solar_brokers_catalog.dart';
 import 'package:feature_showcase/src/realestate/domain/broker.dart';
 import 'package:feature_showcase/src/realestate/domain/property.dart';
@@ -56,9 +57,9 @@ class _SolarContactPageState extends State<SolarContactPage> {
 
   void _submit() {
     if (!(_formKey.currentState?.validate() ?? false)) return;
-    context
-        .read<RealEstateBloc>()
-        .add(RealEstateContactSent(widget.property.id));
+    context.read<RealEstateBloc>().add(
+      RealEstateContactSent(widget.property.id),
+    );
     setState(() => _submitted = true);
   }
 
@@ -72,33 +73,35 @@ class _SolarContactPageState extends State<SolarContactPage> {
     return Scaffold(
       backgroundColor: colors.background,
       appBar: const SolarAppBar(),
-      body: SafeArea(
-        top: false,
-        child: BlocBuilder<RealEstateBloc, RealEstateState>(
-          buildWhen: (a, b) =>
-              a.hasSentContact(property.id) != b.hasSentContact(property.id),
-          builder: (context, state) {
-            final alreadySent = state.hasSentContact(property.id);
-            if (_submitted || alreadySent) {
-              return _SuccessState(
+      body: MockBodyConstraint(
+        child: SafeArea(
+          top: false,
+          child: BlocBuilder<RealEstateBloc, RealEstateState>(
+            buildWhen: (a, b) =>
+                a.hasSentContact(property.id) != b.hasSentContact(property.id),
+            builder: (context, state) {
+              final alreadySent = state.hasSentContact(property.id);
+              if (_submitted || alreadySent) {
+                return _SuccessState(
+                  property: property,
+                  broker: broker,
+                  colors: colors,
+                  textTheme: textTheme,
+                );
+              }
+              return _FormState(
                 property: property,
                 broker: broker,
                 colors: colors,
                 textTheme: textTheme,
+                formKey: _formKey,
+                nameController: _nameController,
+                phoneController: _phoneController,
+                messageController: _messageController,
+                onSubmit: _submit,
               );
-            }
-            return _FormState(
-              property: property,
-              broker: broker,
-              colors: colors,
-              textTheme: textTheme,
-              formKey: _formKey,
-              nameController: _nameController,
-              phoneController: _phoneController,
-              messageController: _messageController,
-              onSubmit: _submit,
-            );
-          },
+            },
+          ),
         ),
       ),
     );
@@ -186,8 +189,9 @@ class _FormState extends StatelessWidget {
                   label: 'Nome',
                   hint: 'Seu nome',
                   textInputAction: TextInputAction.next,
-                  validator: (v) =>
-                      (v == null || v.trim().isEmpty) ? 'Informe seu nome' : null,
+                  validator: (v) => (v == null || v.trim().isEmpty)
+                      ? 'Informe seu nome'
+                      : null,
                   fieldKey: const Key('solar-contact-name'),
                 ),
                 const SizedBox(height: AppSpacing.md),
@@ -208,8 +212,9 @@ class _FormState extends StatelessWidget {
                   label: 'Mensagem',
                   hint: 'Conte rapidamente o que quer saber',
                   maxLines: 4,
-                  validator: (v) =>
-                      (v == null || v.trim().length < 10) ? 'Mensagem curta demais' : null,
+                  validator: (v) => (v == null || v.trim().length < 10)
+                      ? 'Mensagem curta demais'
+                      : null,
                   fieldKey: const Key('solar-contact-message'),
                 ),
               ],
@@ -424,9 +429,9 @@ class _SuccessState extends StatelessWidget {
           Text(
             broker == null
                 ? 'Em ate 4 horas uteis voce recebe o retorno por telefone '
-                    'ou e-mail.'
+                      'ou e-mail.'
                 : '${broker!.name} retorna em ate 4 horas uteis pelo telefone '
-                    'informado.',
+                      'informado.',
             style: textTheme.bodyMedium?.copyWith(
               color: colors.onSurfaceMuted,
               height: 1.5,

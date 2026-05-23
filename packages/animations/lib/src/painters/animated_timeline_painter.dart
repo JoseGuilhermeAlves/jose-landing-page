@@ -65,8 +65,7 @@ class AnimatedTimelinePainter extends CustomPainter {
     final step = usableHeight / (markerCount - 1);
 
     return [
-      for (var i = 0; i < markerCount; i++)
-        Offset(x, topPadding + step * i),
+      for (var i = 0; i < markerCount; i++) Offset(x, topPadding + step * i),
     ];
   }
 

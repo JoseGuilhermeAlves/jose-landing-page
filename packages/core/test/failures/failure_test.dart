@@ -16,11 +16,14 @@ void main() {
       expect(a, isNot(equals(b)));
     });
 
-    test('subclasses de tipos diferentes sao distintas mesmo com mesmo message', () {
-      const a = NetworkFailure(message: 'erro');
-      const b = ServerFailure(message: 'erro');
-      expect(a, isNot(equals(b)));
-    });
+    test(
+      'subclasses de tipos diferentes sao distintas mesmo com mesmo message',
+      () {
+        const a = NetworkFailure(message: 'erro');
+        const b = ServerFailure(message: 'erro');
+        expect(a, isNot(equals(b)));
+      },
+    );
 
     test('cause faz parte da igualdade', () {
       const exception = FormatException('bad json');
@@ -32,7 +35,10 @@ void main() {
     });
 
     test('toString inclui runtimeType, message e cause', () {
-      const failure = CacheFailure(message: 'chave nao encontrada', cause: 'key=user');
+      const failure = CacheFailure(
+        message: 'chave nao encontrada',
+        cause: 'key=user',
+      );
       final s = failure.toString();
       expect(s, contains('CacheFailure'));
       expect(s, contains('chave nao encontrada'));
@@ -75,12 +81,12 @@ void main() {
 
     test('switch exaustivo cobre todas as variantes', () {
       String describe(Failure f) => switch (f) {
-            NetworkFailure() => 'network',
-            ServerFailure() => 'server',
-            CacheFailure() => 'cache',
-            ValidationFailure() => 'validation',
-            UnknownFailure() => 'unknown',
-          };
+        NetworkFailure() => 'network',
+        ServerFailure() => 'server',
+        CacheFailure() => 'cache',
+        ValidationFailure() => 'validation',
+        UnknownFailure() => 'unknown',
+      };
 
       expect(describe(const NetworkFailure(message: '')), 'network');
       expect(describe(const ServerFailure(message: '')), 'server');

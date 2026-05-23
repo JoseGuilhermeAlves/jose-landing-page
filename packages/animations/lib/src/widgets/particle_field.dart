@@ -88,7 +88,8 @@ class _ParticleFieldState extends State<ParticleField>
   Widget build(BuildContext context) {
     final colors = context.colors;
     final particleColor = widget.particleColor ?? colors.primary;
-    final linkColor = widget.linkColor ?? colors.primary.withValues(alpha: 0.18);
+    final linkColor =
+        widget.linkColor ?? colors.primary.withValues(alpha: 0.18);
 
     return MouseRegion(
       opaque: false,

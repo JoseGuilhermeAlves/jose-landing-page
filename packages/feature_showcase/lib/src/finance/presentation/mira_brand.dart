@@ -88,10 +88,7 @@ abstract final class MiraBrand {
       ),
       iconTheme: IconThemeData(color: palette.onSurface),
       textTheme: baseText
-          .apply(
-            bodyColor: palette.onSurface,
-            displayColor: palette.onSurface,
-          )
+          .apply(bodyColor: palette.onSurface, displayColor: palette.onSurface)
           .copyWith(
             displayLarge: baseText.displayLarge?.copyWith(
               fontWeight: FontWeight.w800,

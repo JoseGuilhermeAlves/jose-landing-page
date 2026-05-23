@@ -24,7 +24,8 @@ enum Breakpoint {
 
 /// Acesso conveniente: `context.breakpoint`, `context.isMobile`.
 extension BreakpointContext on BuildContext {
-  Breakpoint get breakpoint => Breakpoint.forWidth(MediaQuery.sizeOf(this).width);
+  Breakpoint get breakpoint =>
+      Breakpoint.forWidth(MediaQuery.sizeOf(this).width);
 
   bool get isMobile => breakpoint.isMobile;
   bool get isTablet => breakpoint.isTablet;

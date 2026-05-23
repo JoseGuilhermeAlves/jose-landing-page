@@ -50,23 +50,27 @@ class _AppButtonState extends State<AppButton> {
     final isPrimary = widget.variant == AppButtonVariant.primary;
     final usesGradient = isPrimary && !_disabled;
 
-    final (Color background, Color foreground, Color? border) = switch (widget.variant) {
+    final (
+      Color background,
+      Color foreground,
+      Color? border,
+    ) = switch (widget.variant) {
       AppButtonVariant.primary => (
-          // Cor de fundo so importa quando NAO usa gradient (disabled).
-          colors.surfaceMuted,
-          colors.onPrimary,
-          null,
-        ),
+        // Cor de fundo so importa quando NAO usa gradient (disabled).
+        colors.surfaceMuted,
+        colors.onPrimary,
+        null,
+      ),
       AppButtonVariant.secondary => (
-          _hovering && !_disabled ? colors.surfaceMuted : colors.surface,
-          colors.onSurface,
-          colors.border,
-        ),
+        _hovering && !_disabled ? colors.surfaceMuted : colors.surface,
+        colors.onSurface,
+        colors.border,
+      ),
       AppButtonVariant.ghost => (
-          _hovering && !_disabled ? colors.surfaceMuted : Colors.transparent,
-          colors.onSurface,
-          null,
-        ),
+        _hovering && !_disabled ? colors.surfaceMuted : Colors.transparent,
+        colors.onSurface,
+        null,
+      ),
     };
 
     final shadows = isPrimary && _hovering && !_disabled
@@ -81,8 +85,14 @@ class _AppButtonState extends State<AppButton> {
         : <BoxShadow>[];
 
     final padding = switch (widget.size) {
-      AppButtonSize.medium => const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-      AppButtonSize.large => const EdgeInsets.symmetric(horizontal: 28, vertical: 16),
+      AppButtonSize.medium => const EdgeInsets.symmetric(
+        horizontal: 20,
+        vertical: 12,
+      ),
+      AppButtonSize.large => const EdgeInsets.symmetric(
+        horizontal: 28,
+        vertical: 16,
+      ),
     };
 
     final textStyle = switch (widget.size) {
@@ -133,7 +143,9 @@ class _AppButtonState extends State<AppButton> {
     );
 
     return MouseRegion(
-      cursor: _disabled ? SystemMouseCursors.forbidden : SystemMouseCursors.click,
+      cursor: _disabled
+          ? SystemMouseCursors.forbidden
+          : SystemMouseCursors.click,
       onEnter: (_) => setState(() => _hovering = true),
       onExit: (_) => setState(() => _hovering = false),
       child: GestureDetector(

@@ -74,10 +74,7 @@ enum _RoomKind {
 
 /// Retangulo de um comodo na planta (coordenadas relativas 0..1).
 class _Room {
-  const _Room({
-    required this.rect,
-    required this.kind,
-  });
+  const _Room({required this.rect, required this.kind});
   final Rect rect;
   final _RoomKind kind;
 }
@@ -281,7 +278,8 @@ class _SolarFloorPlanPainter extends CustomPainter {
 
     final bedrooms = property.bedrooms.clamp(0, 5);
     final suites = property.suites.clamp(0, bedrooms);
-    final hasGarage = property.parkingSpots > 0 ||
+    final hasGarage =
+        property.parkingSpots > 0 ||
         property.features.contains(PropertyFeature.garage);
     final hasPool = property.features.contains(PropertyFeature.pool);
     final hasGarden = property.features.contains(PropertyFeature.garden);
@@ -307,12 +305,7 @@ class _SolarFloorPlanPainter extends CustomPainter {
       // Sala — 50% da faixa superior.
       _Room(
         kind: _RoomKind.living,
-        rect: Rect.fromLTWH(
-          houseLeft,
-          houseTop,
-          houseW * 0.50,
-          topRowH,
-        ),
+        rect: Rect.fromLTWH(houseLeft, houseTop, houseW * 0.50, topRowH),
       ),
       // Cozinha — 32%.
       _Room(

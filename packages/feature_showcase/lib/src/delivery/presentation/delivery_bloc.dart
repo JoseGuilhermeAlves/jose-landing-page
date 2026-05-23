@@ -17,11 +17,12 @@ class DeliveryBloc extends Bloc<DeliveryEvent, DeliveryState> {
   DeliveryBloc({
     required List<DeliveryOrder> initialOrders,
     Stream<void>? ticker,
-  })  : _initial = List.unmodifiable(initialOrders),
-        super(DeliveryState(orders: initialOrders)) {
+  }) : _initial = List.unmodifiable(initialOrders),
+       super(DeliveryState(orders: initialOrders)) {
     on<DeliveryTickRequested>(_onTick);
     on<DeliveryReset>(_onReset);
     on<DeliveryOrderPlaced>(_onOrderPlaced);
+    on<DeliveryOrderPlacedWithCart>(_onOrderPlacedWithCart);
     on<DeliveryOrderCancelled>(_onOrderCancelled);
 
     if (ticker != null) {
@@ -77,10 +78,7 @@ class DeliveryBloc extends Bloc<DeliveryEvent, DeliveryState> {
   /// Reseta o contador de pedidos — util pra isolar testes.
   static void resetOrderCounter() => _orderCounter = 1050;
 
-  void _onOrderPlaced(
-    DeliveryOrderPlaced event,
-    Emitter<DeliveryState> emit,
-  ) {
+  void _onOrderPlaced(DeliveryOrderPlaced event, Emitter<DeliveryState> emit) {
     final vendor = AuroraVendorsCatalog.byId(event.vendorId);
     if (vendor == null) return;
 
@@ -95,6 +93,50 @@ class DeliveryBloc extends Bloc<DeliveryEvent, DeliveryState> {
           unitPriceCents: item.priceCents,
         ),
     ];
+
+    final subtotalCents = lineItems.fold<double>(
+      0,
+      (sum, li) => sum + li.subtotalCents,
+    );
+
+    final orderId = '#A-${_orderCounter++}';
+    final order = DeliveryOrder(
+      id: orderId,
+      customerName: 'Voce',
+      items: lineItems.length,
+      status: DeliveryStatus.received,
+      etaMinutes: vendor.etaMinutes,
+      vendorId: vendor.id,
+      lineItems: lineItems,
+      totalCents: subtotalCents + vendor.deliveryFeeCents,
+      addressLine: 'Rua das Palmeiras, 240 · Pinheiros · SP',
+      placedAtLabel: 'Agora',
+    );
+
+    emit(state.copyWith(orders: [order, ...state.orders]));
+  }
+
+  void _onOrderPlacedWithCart(
+    DeliveryOrderPlacedWithCart event,
+    Emitter<DeliveryState> emit,
+  ) {
+    final vendor = AuroraVendorsCatalog.byId(event.vendorId);
+    if (vendor == null) return;
+
+    final catalogItems = AuroraItemsCatalog.byVendor(vendor.id);
+    final lineItems = <OrderLineItem>[
+      for (final item in catalogItems)
+        if (event.quantities.containsKey(item.id))
+          OrderLineItem(
+            itemId: item.id,
+            name: item.name,
+            quantity: event.quantities[item.id]!.toDouble(),
+            unitShort: item.unit.shortLabel,
+            unitPriceCents: item.priceCents,
+          ),
+    ];
+
+    if (lineItems.isEmpty) return;
 
     final subtotalCents = lineItems.fold<double>(
       0,

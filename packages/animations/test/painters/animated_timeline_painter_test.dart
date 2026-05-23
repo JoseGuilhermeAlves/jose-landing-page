@@ -30,10 +30,7 @@ void main() {
     });
 
     test('shouldRepaint reage a markerCount, cores e dimensoes', () {
-      expect(
-        make(markerCount: 5).shouldRepaint(make()),
-        isTrue,
-      );
+      expect(make(markerCount: 5).shouldRepaint(make()), isTrue);
       expect(
         make(lineColor: const Color(0xFF000000)).shouldRepaint(make()),
         isTrue,
@@ -42,14 +39,8 @@ void main() {
         make(markerColor: const Color(0xFF000000)).shouldRepaint(make()),
         isTrue,
       );
-      expect(
-        make(lineWidth: 4).shouldRepaint(make()),
-        isTrue,
-      );
-      expect(
-        make(markerRadius: 8).shouldRepaint(make()),
-        isTrue,
-      );
+      expect(make(lineWidth: 4).shouldRepaint(make()), isTrue);
+      expect(make(markerRadius: 8).shouldRepaint(make()), isTrue);
     });
 
     test('progress fica clampeado em [0,1]', () {

@@ -1,4 +1,5 @@
 import 'package:design_system/design_system.dart';
+import 'package:feature_showcase/src/shared/presentation/mock_body_constraint.dart';
 import 'package:feature_showcase/src/fitness/domain/workout_exercise.dart';
 import 'package:feature_showcase/src/fitness/presentation/exercise_load_history_chart.dart';
 import 'package:feature_showcase/src/fitness/presentation/fitness_bloc.dart';
@@ -48,10 +49,7 @@ class ExerciseDetailPage extends StatelessWidget {
           data: theme,
           child: BlocProvider.value(
             value: bloc,
-            child: ExerciseDetailPage(
-              weekday: weekday,
-              exercise: exercise,
-            ),
+            child: ExerciseDetailPage(weekday: weekday, exercise: exercise),
           ),
         ),
       ),
@@ -86,95 +84,97 @@ class ExerciseDetailPage extends StatelessWidget {
           ),
         ),
       ),
-      body: BlocBuilder<FitnessBloc, FitnessState>(
-        builder: (context, state) {
-          final completed = state.completedFor(
-            weekday: weekday,
-            exerciseId: exercise.id,
-          );
-          return SingleChildScrollView(
-            padding: const EdgeInsets.fromLTRB(
-              AppSpacing.lg,
-              AppSpacing.sm,
-              AppSpacing.lg,
-              AppSpacing.xl,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _SummaryCard(
-                  exercise: exercise,
-                  completed: completed,
-                  colors: colors,
-                  textTheme: textTheme,
-                ),
-                const SizedBox(height: AppSpacing.xl),
-                _SectionLabel(
-                  text: 'Progresso de hoje',
-                  colors: colors,
-                  textTheme: textTheme,
-                ),
-                const SizedBox(height: AppSpacing.md),
-                _TodaySetsCard(
-                  weekday: weekday,
-                  exercise: exercise,
-                  completed: completed,
-                  colors: colors,
-                  textTheme: textTheme,
-                ),
-                const SizedBox(height: AppSpacing.xl),
-                _SectionLabel(
-                  text: 'Carga — últimas 8 semanas',
-                  colors: colors,
-                  textTheme: textTheme,
-                ),
-                const SizedBox(height: AppSpacing.md),
-                Container(
-                  padding: const EdgeInsets.all(AppSpacing.lg),
-                  decoration: BoxDecoration(
-                    color: colors.surface,
-                    borderRadius: BorderRadius.circular(AppRadius.lg),
-                    border: Border.all(color: colors.border),
+      body: MockBodyConstraint(
+        child: BlocBuilder<FitnessBloc, FitnessState>(
+          builder: (context, state) {
+            final completed = state.completedFor(
+              weekday: weekday,
+              exerciseId: exercise.id,
+            );
+            return SingleChildScrollView(
+              padding: const EdgeInsets.fromLTRB(
+                AppSpacing.lg,
+                AppSpacing.sm,
+                AppSpacing.lg,
+                AppSpacing.xl,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _SummaryCard(
+                    exercise: exercise,
+                    completed: completed,
+                    colors: colors,
+                    textTheme: textTheme,
                   ),
-                  child: ExerciseLoadHistoryChart(
-                    currentWeightKg: exercise.weightKg <= 0
-                        ? 1
-                        : exercise.weightKg,
-                    seed: exercise.id.hashCode,
-                  ),
-                ),
-                if (muscles.isNotEmpty) ...[
                   const SizedBox(height: AppSpacing.xl),
                   _SectionLabel(
-                    text: 'Músculos trabalhados',
+                    text: 'Progresso de hoje',
                     colors: colors,
                     textTheme: textTheme,
                   ),
                   const SizedBox(height: AppSpacing.md),
-                  _MusclesCard(
-                    muscles: muscles,
+                  _TodaySetsCard(
+                    weekday: weekday,
+                    exercise: exercise,
+                    completed: completed,
                     colors: colors,
                     textTheme: textTheme,
                   ),
-                ],
-                if (notes.isNotEmpty) ...[
                   const SizedBox(height: AppSpacing.xl),
                   _SectionLabel(
-                    text: 'Notas técnicas',
+                    text: 'Carga — últimas 8 semanas',
                     colors: colors,
                     textTheme: textTheme,
                   ),
                   const SizedBox(height: AppSpacing.md),
-                  _NotesCard(
-                    notes: notes,
-                    colors: colors,
-                    textTheme: textTheme,
+                  Container(
+                    padding: const EdgeInsets.all(AppSpacing.lg),
+                    decoration: BoxDecoration(
+                      color: colors.surface,
+                      borderRadius: BorderRadius.circular(AppRadius.lg),
+                      border: Border.all(color: colors.border),
+                    ),
+                    child: ExerciseLoadHistoryChart(
+                      currentWeightKg: exercise.weightKg <= 0
+                          ? 1
+                          : exercise.weightKg,
+                      seed: exercise.id.hashCode,
+                    ),
                   ),
+                  if (muscles.isNotEmpty) ...[
+                    const SizedBox(height: AppSpacing.xl),
+                    _SectionLabel(
+                      text: 'Músculos trabalhados',
+                      colors: colors,
+                      textTheme: textTheme,
+                    ),
+                    const SizedBox(height: AppSpacing.md),
+                    _MusclesCard(
+                      muscles: muscles,
+                      colors: colors,
+                      textTheme: textTheme,
+                    ),
+                  ],
+                  if (notes.isNotEmpty) ...[
+                    const SizedBox(height: AppSpacing.xl),
+                    _SectionLabel(
+                      text: 'Notas técnicas',
+                      colors: colors,
+                      textTheme: textTheme,
+                    ),
+                    const SizedBox(height: AppSpacing.md),
+                    _NotesCard(
+                      notes: notes,
+                      colors: colors,
+                      textTheme: textTheme,
+                    ),
+                  ],
                 ],
-              ],
-            ),
-          );
-        },
+              ),
+            );
+          },
+        ),
       ),
     );
   }
@@ -218,7 +218,9 @@ class ExerciseDetailPage extends StatelessWidget {
         'Empurrar como se afastasse algo do teto, sem trancar cotovelo.',
       ];
     }
-    if (n.contains('prancha') || n.contains('abdominal') || n.contains('core')) {
+    if (n.contains('prancha') ||
+        n.contains('abdominal') ||
+        n.contains('core')) {
       return const [
         'Alinhe cabeça, quadril e calcanhar numa linha contínua.',
         'Glúteos contraídos — evite "afundar" o quadril.',
@@ -232,7 +234,9 @@ class ExerciseDetailPage extends StatelessWidget {
         'Manter joelhos travados (em pé) ou flexionados (sentado).',
       ];
     }
-    if (n.contains('burpee') || n.contains('kettlebell') || n.contains('remo')) {
+    if (n.contains('burpee') ||
+        n.contains('kettlebell') ||
+        n.contains('remo')) {
       return const [
         'Cadência constante — não comprometa a forma pela velocidade.',
         'Core firme em toda transição, evitando perda de coluna neutra.',
@@ -430,9 +434,7 @@ class _TodaySetsCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: colors.surface,
         borderRadius: BorderRadius.circular(AppRadius.lg),
-        border: Border.all(
-          color: isDone ? colors.success : colors.border,
-        ),
+        border: Border.all(color: isDone ? colors.success : colors.border),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -532,11 +534,7 @@ class _TodaySetsCard extends StatelessWidget {
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(
-                      Icons.timer_outlined,
-                      size: 16,
-                      color: colors.primary,
-                    ),
+                    Icon(Icons.timer_outlined, size: 16, color: colors.primary),
                     const SizedBox(width: AppSpacing.xs),
                     Text(
                       'Descanso ${_formatRest(restSeconds)}',

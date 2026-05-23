@@ -132,7 +132,10 @@ class _SolarHeroBackdropPainter extends CustomPainter {
         size.height * 0.35,
         Paint()
           ..shader = RadialGradient(
-            colors: [sunColor.withValues(alpha: 0.45), skyColor.withValues(alpha: 0)],
+            colors: [
+              sunColor.withValues(alpha: 0.45),
+              skyColor.withValues(alpha: 0),
+            ],
           ).createShader(haloRect),
       )
       ..drawCircle(Offset(sunX, sunY), size.height * 0.07, _sunPaint);

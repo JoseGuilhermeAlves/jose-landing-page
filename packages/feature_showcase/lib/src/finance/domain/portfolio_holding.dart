@@ -22,8 +22,7 @@ class PortfolioHolding extends Equatable {
   /// Valor de mercado em centavos dado o `currentPriceCents` atual
   /// do ativo. Calculado fora da entidade pra desacoplar do catalogo
   /// de precos.
-  int marketValueCents(int currentPriceCents) =>
-      quantity * currentPriceCents;
+  int marketValueCents(int currentPriceCents) => quantity * currentPriceCents;
 
   /// Resultado financeiro (PnL) em centavos.
   int unrealizedPnlCents(int currentPriceCents) =>

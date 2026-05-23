@@ -46,11 +46,11 @@ class Asset extends Equatable {
 
   @override
   List<Object?> get props => [
-        id,
-        symbol,
-        name,
-        sector,
-        currentPriceCents,
-        dailyChangeBps,
-      ];
+    id,
+    symbol,
+    name,
+    sector,
+    currentPriceCents,
+    dailyChangeBps,
+  ];
 }

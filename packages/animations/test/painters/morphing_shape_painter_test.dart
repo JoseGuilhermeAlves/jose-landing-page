@@ -35,18 +35,9 @@ void main() {
         make(color: const Color(0xFF00FF00)).shouldRepaint(make()),
         isTrue,
       );
-      expect(
-        make(style: PaintingStyle.stroke).shouldRepaint(make()),
-        isTrue,
-      );
-      expect(
-        make(strokeWidth: 3).shouldRepaint(make()),
-        isTrue,
-      );
-      expect(
-        make(sampleCount: 36).shouldRepaint(make()),
-        isTrue,
-      );
+      expect(make(style: PaintingStyle.stroke).shouldRepaint(make()), isTrue);
+      expect(make(strokeWidth: 3).shouldRepaint(make()), isTrue);
+      expect(make(sampleCount: 36).shouldRepaint(make()), isTrue);
     });
 
     test('progress fica clampeado em [0,1]', () {

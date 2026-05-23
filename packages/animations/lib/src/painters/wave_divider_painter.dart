@@ -28,11 +28,11 @@ class WaveDividerPainter extends CustomPainter {
     this.style = PaintingStyle.stroke,
     this.strokeWidth = 1.5,
     this.sampleStep = 2,
-  })  : assert(amplitude >= 0, 'Amplitude negativa nao faz sentido'),
-        assert(frequency > 0, 'Frequencia deve ser positiva'),
-        assert(sampleStep > 0, 'sampleStep deve ser positivo'),
-        // Phase e ciclica: aceita qualquer real, normaliza pra [0, 1).
-        phase = _wrapUnit(phase);
+  }) : assert(amplitude >= 0, 'Amplitude negativa nao faz sentido'),
+       assert(frequency > 0, 'Frequencia deve ser positiva'),
+       assert(sampleStep > 0, 'sampleStep deve ser positivo'),
+       // Phase e ciclica: aceita qualquer real, normaliza pra [0, 1).
+       phase = _wrapUnit(phase);
 
   final double phase;
   final Color color;

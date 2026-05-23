@@ -4,10 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  Widget wrap(Widget child) => MaterialApp(
-        theme: AppTheme.dark(),
-        home: child,
-      );
+  Widget wrap(Widget child) => MaterialApp(theme: AppTheme.dark(), home: child);
 
   group('FinanceDemo (Mira, multi-tela)', () {
     testWidgets('home abre com hero do portfolio + watchlist', (tester) async {
@@ -19,10 +16,7 @@ void main() {
       // Hero do portfolio renderiza.
       expect(find.byKey(const Key('mira-portfolio-hero')), findsOneWidget);
       // Pelo menos um row de ativo aparece (favoritos).
-      expect(
-        find.byKey(const Key('mira-asset-row-PETR4')),
-        findsOneWidget,
-      );
+      expect(find.byKey(const Key('mira-asset-row-PETR4')), findsOneWidget);
     });
 
     testWidgets('tap em ativo abre detail com candlestick', (tester) async {
@@ -39,8 +33,9 @@ void main() {
       expect(find.byKey(const Key('mira-cta-sell')), findsOneWidget);
     });
 
-    testWidgets('icone do portfolio no AppBar abre MiraPortfolioPage',
-        (tester) async {
+    testWidgets('icone do portfolio no AppBar abre MiraPortfolioPage', (
+      tester,
+    ) async {
       await tester.pumpWidget(wrap(const FinanceDemo()));
       await tester.pump(const Duration(milliseconds: 50));
 
@@ -52,8 +47,9 @@ void main() {
       expect(find.text('Posicoes'), findsOneWidget);
     });
 
-    testWidgets('icone de historico no AppBar abre MiraTradeHistoryPage',
-        (tester) async {
+    testWidgets('icone de historico no AppBar abre MiraTradeHistoryPage', (
+      tester,
+    ) async {
       await tester.pumpWidget(wrap(const FinanceDemo()));
       await tester.pump(const Duration(milliseconds: 50));
 
@@ -65,8 +61,9 @@ void main() {
       expect(find.textContaining('T-000'), findsWidgets);
     });
 
-    testWidgets('toggle de favorito remove e re-adiciona ativo da watchlist',
-        (tester) async {
+    testWidgets('toggle de favorito remove e re-adiciona ativo da watchlist', (
+      tester,
+    ) async {
       await tester.pumpWidget(wrap(const FinanceDemo()));
       await tester.pump(const Duration(milliseconds: 50));
 
@@ -79,11 +76,10 @@ void main() {
       // PETR4 sai dos favoritos e migra pro grupo de "outros ativos"
       // — ainda renderiza, em outra posicao, com a estrela vazia.
       // Conferimos o icone preenchido vs vazio:
-      final filled =
-          find.descendant(
-            of: find.byKey(const Key('mira-favorite-toggle-PETR4')),
-            matching: find.byIcon(Icons.star_rounded),
-          );
+      final filled = find.descendant(
+        of: find.byKey(const Key('mira-favorite-toggle-PETR4')),
+        matching: find.byIcon(Icons.star_rounded),
+      );
       expect(filled, findsNothing);
     });
   });

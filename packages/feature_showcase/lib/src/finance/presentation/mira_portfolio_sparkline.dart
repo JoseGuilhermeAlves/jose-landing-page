@@ -109,7 +109,8 @@ class _SparklinePainter extends CustomPainter {
     final span = (max - min).clamp(0.0001, double.infinity);
     final stepX = size.width / (series.length - 1);
 
-    double yFor(double v) => size.height - ((v - min) / span) * size.height * 0.85 - 4;
+    double yFor(double v) =>
+        size.height - ((v - min) / span) * size.height * 0.85 - 4;
 
     final path = Path()..moveTo(0, yFor(series.first));
     for (var i = 1; i < series.length; i++) {
@@ -156,11 +157,7 @@ class _SparklinePainter extends CustomPainter {
           ..color = lineColor.withValues(alpha: 0.20 * phase)
           ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 3),
       )
-      ..drawCircle(
-        Offset(endX, endY),
-        2.6,
-        Paint()..color = lineColor,
-      );
+      ..drawCircle(Offset(endX, endY), 2.6, Paint()..color = lineColor);
   }
 
   @override

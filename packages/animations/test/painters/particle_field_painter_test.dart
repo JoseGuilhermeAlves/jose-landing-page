@@ -52,19 +52,25 @@ void main() {
       expect(a.shouldRepaint(b), isTrue);
     });
 
-    test('mesmo seed -> mesma posicao inicial das particulas (deterministico)',
-        () {
-      final a = make(seed: 42);
-      final b = make(seed: 42);
-      expect(a.debugInitialPositions(const Size(200, 200)),
-          equals(b.debugInitialPositions(const Size(200, 200))));
-    });
+    test(
+      'mesmo seed -> mesma posicao inicial das particulas (deterministico)',
+      () {
+        final a = make(seed: 42);
+        final b = make(seed: 42);
+        expect(
+          a.debugInitialPositions(const Size(200, 200)),
+          equals(b.debugInitialPositions(const Size(200, 200))),
+        );
+      },
+    );
 
     test('seeds diferentes -> particulas diferentes', () {
       final a = make(seed: 1);
       final b = make(seed: 2);
-      expect(a.debugInitialPositions(const Size(200, 200)),
-          isNot(equals(b.debugInitialPositions(const Size(200, 200)))));
+      expect(
+        a.debugInitialPositions(const Size(200, 200)),
+        isNot(equals(b.debugInitialPositions(const Size(200, 200)))),
+      );
     });
 
     test('particulas ficam dentro do retangulo da Size', () {
@@ -79,12 +85,14 @@ void main() {
       expect(positions, hasLength(50));
     });
 
-    test('isComplex e willChange refletem animacao continua e geometria pesada',
-        () {
-      final p = make(particleCount: 60);
-      expect(p.willChange, isTrue);
-      expect(p.isComplex, isTrue);
-    });
+    test(
+      'isComplex e willChange refletem animacao continua e geometria pesada',
+      () {
+        final p = make(particleCount: 60);
+        expect(p.willChange, isTrue);
+        expect(p.isComplex, isTrue);
+      },
+    );
 
     test('paint executa sem lancar para Size zero', () {
       final painter = make();
@@ -110,48 +118,55 @@ void main() {
     });
 
     test(
-        'particulas movem-se entre ticks (animacao real, nao snapshot estatico)',
-        () {
-      final painter = make(particleCount: 8);
-      const size = Size(200, 200);
-      final at0 = painter.debugPositionsAt(size, t: 0);
-      final at1 = painter.debugPositionsAt(size, t: 0.5);
+      'particulas movem-se entre ticks (animacao real, nao snapshot estatico)',
+      () {
+        final painter = make(particleCount: 8);
+        const size = Size(200, 200);
+        final at0 = painter.debugPositionsAt(size, t: 0);
+        final at1 = painter.debugPositionsAt(size, t: 0.5);
 
-      // Pelo menos uma das particulas precisa ter mudado.
-      var anyMoved = false;
-      for (var i = 0; i < at0.length; i++) {
-        if ((at0[i] - at1[i]).distance > 0.01) {
-          anyMoved = true;
-          break;
+        // Pelo menos uma das particulas precisa ter mudado.
+        var anyMoved = false;
+        for (var i = 0; i < at0.length; i++) {
+          if ((at0[i] - at1[i]).distance > 0.01) {
+            anyMoved = true;
+            break;
+          }
         }
-      }
-      expect(anyMoved, isTrue);
-    });
+        expect(anyMoved, isTrue);
+      },
+    );
 
     test(
-        'particulas afastam do pointer (deslocamento radial) quando dentro do raio',
-        () {
-      const size = Size(300, 300);
-      const pointer = Offset(150, 150);
+      'particulas afastam do pointer (deslocamento radial) quando dentro do raio',
+      () {
+        const size = Size(300, 300);
+        const pointer = Offset(150, 150);
 
-      final without = make(seed: 5, particleCount: 12)
-          .debugPositionsAt(size, t: 0);
-      final with_ = make(seed: 5, particleCount: 12, pointer: pointer)
-          .debugPositionsAt(size, t: 0);
+        final without = make(
+          seed: 5,
+          particleCount: 12,
+        ).debugPositionsAt(size, t: 0);
+        final with_ = make(
+          seed: 5,
+          particleCount: 12,
+          pointer: pointer,
+        ).debugPositionsAt(size, t: 0);
 
-      // Pelo menos uma particula precisa ficar mais longe do pointer com
-      // o efeito ativo do que estaria sem.
-      var anyPushed = false;
-      for (var i = 0; i < without.length; i++) {
-        final d0 = (without[i] - pointer).distance;
-        final d1 = (with_[i] - pointer).distance;
-        if (d1 > d0 + 0.5) {
-          anyPushed = true;
-          break;
+        // Pelo menos uma particula precisa ficar mais longe do pointer com
+        // o efeito ativo do que estaria sem.
+        var anyPushed = false;
+        for (var i = 0; i < without.length; i++) {
+          final d0 = (without[i] - pointer).distance;
+          final d1 = (with_[i] - pointer).distance;
+          if (d1 > d0 + 0.5) {
+            anyPushed = true;
+            break;
+          }
         }
-      }
-      expect(anyPushed, isTrue);
-    });
+        expect(anyPushed, isTrue);
+      },
+    );
 
     testWidgets('integra com CustomPaint sem lancar', (tester) async {
       await tester.pumpWidget(

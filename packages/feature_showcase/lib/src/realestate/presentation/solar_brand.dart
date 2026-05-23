@@ -80,10 +80,7 @@ abstract final class SolarBrand {
       ),
       iconTheme: IconThemeData(color: palette.onSurface),
       textTheme: baseText
-          .apply(
-            bodyColor: palette.onSurface,
-            displayColor: palette.onSurface,
-          )
+          .apply(bodyColor: palette.onSurface, displayColor: palette.onSurface)
           .copyWith(
             displayLarge: baseText.displayLarge?.copyWith(
               fontFamily: displayFontFamily,

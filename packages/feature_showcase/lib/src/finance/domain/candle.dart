@@ -28,11 +28,11 @@ class Candle extends Equatable {
 
   @override
   List<Object?> get props => [
-        timestamp,
-        openCents,
-        highCents,
-        lowCents,
-        closeCents,
-        volume,
-      ];
+    timestamp,
+    openCents,
+    highCents,
+    lowCents,
+    closeCents,
+    volume,
+  ];
 }

@@ -34,8 +34,9 @@ void main() {
       await tester.pumpWidget(const SizedBox());
     });
 
-    testWidgets('renderiza um card pra cada decisao do catalogo',
-        (tester) async {
+    testWidgets('renderiza um card pra cada decisao do catalogo', (
+      tester,
+    ) async {
       await tester.pumpWidget(wrap(const TechSection()));
       await tester.pump(const Duration(milliseconds: 16));
 
@@ -50,8 +51,9 @@ void main() {
       await tester.pumpWidget(const SizedBox());
     });
 
-    testWidgets('renderiza um card pra cada painter do catalogo',
-        (tester) async {
+    testWidgets('renderiza um card pra cada painter do catalogo', (
+      tester,
+    ) async {
       await tester.pumpWidget(wrap(const TechSection()));
       await tester.pump(const Duration(milliseconds: 16));
 
@@ -66,8 +68,9 @@ void main() {
       await tester.pumpWidget(const SizedBox());
     });
 
-    testWidgets('mostra header de cada categoria com items do stack',
-        (tester) async {
+    testWidgets('mostra header de cada categoria com items do stack', (
+      tester,
+    ) async {
       await tester.pumpWidget(wrap(const TechSection()));
       await tester.pump(const Duration(milliseconds: 16));
 
@@ -84,47 +87,46 @@ void main() {
       await tester.pumpWidget(const SizedBox());
     });
 
-    testWidgets(
-      'botao de GitHub aparece so quando githubUrl e fornecido',
-      (tester) async {
-        tester.view.physicalSize = const Size(1280, 4200);
-        tester.view.devicePixelRatio = 1;
-        addTearDown(tester.view.resetPhysicalSize);
+    testWidgets('botao de GitHub aparece so quando githubUrl e fornecido', (
+      tester,
+    ) async {
+      tester.view.physicalSize = const Size(1280, 4200);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.resetPhysicalSize);
 
-        await tester.pumpWidget(wrap(const TechSection()));
-        await tester.pump(const Duration(milliseconds: 16));
-        expect(find.byKey(const Key('tech-github-button')), findsNothing);
+      await tester.pumpWidget(wrap(const TechSection()));
+      await tester.pump(const Duration(milliseconds: 16));
+      expect(find.byKey(const Key('tech-github-button')), findsNothing);
 
-        var clicked = '';
-        await tester.pumpWidget(
-          wrap(
-            TechSection(
-              githubUrl: 'https://github.com/example/repo',
-              onOpenGithub: (url) => clicked = url,
-            ),
+      var clicked = '';
+      await tester.pumpWidget(
+        wrap(
+          TechSection(
+            githubUrl: 'https://github.com/example/repo',
+            onOpenGithub: (url) => clicked = url,
           ),
-        );
-        await tester.pump(const Duration(milliseconds: 16));
+        ),
+      );
+      await tester.pump(const Duration(milliseconds: 16));
 
-        final button = find.byKey(const Key('tech-github-button'));
-        expect(button, findsOneWidget);
-        await tester.ensureVisible(button);
-        await tester.pump(const Duration(milliseconds: 16));
-        await tester.tap(button);
-        await tester.pump(const Duration(milliseconds: 16));
-        expect(clicked, 'https://github.com/example/repo');
+      final button = find.byKey(const Key('tech-github-button'));
+      expect(button, findsOneWidget);
+      await tester.ensureVisible(button);
+      await tester.pump(const Duration(milliseconds: 16));
+      await tester.tap(button);
+      await tester.pump(const Duration(milliseconds: 16));
+      expect(clicked, 'https://github.com/example/repo');
 
-        await tester.pumpWidget(const SizedBox());
-      },
-    );
+      await tester.pumpWidget(const SizedBox());
+    });
 
-    testWidgets('arch card revela border ao hover via AnimationController',
-        (tester) async {
+    testWidgets('arch card revela border ao hover via AnimationController', (
+      tester,
+    ) async {
       await tester.pumpWidget(wrap(const TechSection()));
       await tester.pump(const Duration(milliseconds: 16));
 
-      final cardKey =
-          Key('arch-card-${ArchDecisionsCatalog.all.first.id}');
+      final cardKey = Key('arch-card-${ArchDecisionsCatalog.all.first.id}');
       final card = find.byKey(cardKey);
       expect(card, findsOneWidget);
 

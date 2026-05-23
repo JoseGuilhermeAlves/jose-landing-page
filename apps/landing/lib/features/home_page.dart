@@ -120,8 +120,7 @@ class _HomePageState extends State<HomePage> {
     // pra emendar com a primeira secao.
     final heroHeight = viewportHeight.clamp(640.0, 920.0);
 
-    final horizontalPadding =
-        isMobile ? AppSpacing.lg : AppSpacing.huge;
+    final horizontalPadding = isMobile ? AppSpacing.lg : AppSpacing.huge;
 
     final anchors = <HomeNavAnchor>[
       HomeNavAnchor(
@@ -303,8 +302,9 @@ class _SectionSlot extends StatelessWidget {
         ),
         child: Center(
           child: ConstrainedBox(
-            constraints:
-                const BoxConstraints(maxWidth: HomePage._maxContentWidth),
+            constraints: const BoxConstraints(
+              maxWidth: HomePage._maxContentWidth,
+            ),
             child: child,
           ),
         ),

@@ -28,8 +28,7 @@ abstract final class PaintersCatalog {
     ),
     PainterHighlight(
       name: 'MorphingShapePainter',
-      role:
-          'Interpolacao bezier entre formas. Centro do teaser do /labs.',
+      role: 'Interpolacao bezier entre formas. Centro do teaser do /labs.',
       location: 'packages/animations',
     ),
     PainterHighlight(
@@ -62,8 +61,7 @@ abstract final class PaintersCatalog {
     ),
     PainterHighlight(
       name: 'MiraCandlestickChart',
-      role:
-          'Velas OHLC com crosshair interativo, tooltip e seed-determinismo.',
+      role: 'Velas OHLC com crosshair interativo, tooltip e seed-determinismo.',
       location: 'feature_showcase / finance',
     ),
   ];

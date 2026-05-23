@@ -5,9 +5,9 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   group('FinanceBloc', () {
     FinanceBloc build() => FinanceBloc(
-          initialHoldings: MiraPortfolioCatalog.initial,
-          initialTrades: MiraTradesCatalog.initial,
-        );
+      initialHoldings: MiraPortfolioCatalog.initial,
+      initialTrades: MiraTradesCatalog.initial,
+    );
 
     test('estado inicial: holdings e trades carregados', () {
       final bloc = build();
@@ -21,18 +21,14 @@ void main() {
     blocTest<FinanceBloc, FinanceState>(
       'favorite toggle: adiciona quando ausente',
       build: build,
-      seed: () => const FinanceState(
-        holdings: [],
-        trades: [],
-        favoriteIds: {'PETR4'},
-      ),
+      seed: () =>
+          const FinanceState(holdings: [], trades: [], favoriteIds: {'PETR4'}),
       act: (bloc) => bloc.add(const FinanceFavoriteToggled('VALE3')),
       expect: () => [
-        isA<FinanceState>().having(
-          (s) => s.favoriteIds,
-          'favoriteIds',
-          {'PETR4', 'VALE3'},
-        ),
+        isA<FinanceState>().having((s) => s.favoriteIds, 'favoriteIds', {
+          'PETR4',
+          'VALE3',
+        }),
       ],
     );
 
@@ -46,22 +42,16 @@ void main() {
       ),
       act: (bloc) => bloc.add(const FinanceFavoriteToggled('VALE3')),
       expect: () => [
-        isA<FinanceState>().having(
-          (s) => s.favoriteIds,
-          'favoriteIds',
-          {'PETR4'},
-        ),
+        isA<FinanceState>().having((s) => s.favoriteIds, 'favoriteIds', {
+          'PETR4',
+        }),
       ],
     );
 
     blocTest<FinanceBloc, FinanceState>(
       'buy: adiciona holding novo quando nao havia posicao',
       build: build,
-      seed: () => const FinanceState(
-        holdings: [],
-        trades: [],
-        favoriteIds: {},
-      ),
+      seed: () => const FinanceState(holdings: [], trades: [], favoriteIds: {}),
       act: (bloc) => bloc.add(
         const FinanceTradeExecuted(
           assetId: 'MGLU3',

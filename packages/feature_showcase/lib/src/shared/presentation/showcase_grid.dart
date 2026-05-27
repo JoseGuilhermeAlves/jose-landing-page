@@ -1,5 +1,6 @@
 import 'package:design_system/design_system.dart';
 import 'package:feature_showcase/src/shared/domain/showcase_template.dart';
+import 'package:feature_showcase/src/shared/presentation/showcase_card_preview.dart';
 import 'package:flutter/material.dart';
 
 /// Grid responsivo de [ShowcaseCard]. 1/2/3 col por breakpoint.
@@ -95,7 +96,6 @@ class _ShowcaseCardState extends State<ShowcaseCard>
         return Transform.translate(
           offset: Offset(0, -4 * t),
           child: Container(
-            padding: const EdgeInsets.all(AppSpacing.lg),
             decoration: BoxDecoration(
               color: colors.surface,
               borderRadius: BorderRadius.circular(AppRadius.lg),
@@ -119,63 +119,78 @@ class _ShowcaseCardState extends State<ShowcaseCard>
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Container(
-                  padding: const EdgeInsets.all(AppSpacing.sm),
-                  decoration: BoxDecoration(
-                    gradient: AppGradients.brandSoft(colors),
-                    borderRadius: BorderRadius.circular(AppRadius.md),
+                ShowcaseCardPreview(templateId: widget.template.id),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(
+                    AppSpacing.lg,
+                    AppSpacing.sm,
+                    AppSpacing.lg,
+                    AppSpacing.lg,
                   ),
-                  child: Icon(
-                    widget.template.icon,
-                    color: colors.primary,
-                    size: 22,
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.md),
-                Wrap(
-                  spacing: AppSpacing.sm,
-                  runSpacing: AppSpacing.xs,
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  children: [
-                    Text(
-                      widget.template.label,
-                      style: textTheme.titleLarge?.copyWith(
-                        color: disabled
-                            ? colors.onSurfaceMuted
-                            : colors.onSurface,
-                      ),
-                    ),
-                    if (disabled) _ComingSoonBadge(colors: colors),
-                  ],
-                ),
-                const SizedBox(height: AppSpacing.sm),
-                Text(
-                  widget.template.description,
-                  style: textTheme.bodyMedium?.copyWith(
-                    color: colors.onSurfaceMuted,
-                    height: 1.5,
-                  ),
-                ),
-                if (!disabled) ...[
-                  const SizedBox(height: AppSpacing.md),
-                  Row(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text(
-                        'Abrir demo',
-                        style: textTheme.labelMedium?.copyWith(
+                      Container(
+                        padding: const EdgeInsets.all(AppSpacing.sm),
+                        decoration: BoxDecoration(
+                          gradient: AppGradients.brandSoft(colors),
+                          borderRadius: BorderRadius.circular(AppRadius.md),
+                        ),
+                        child: Icon(
+                          widget.template.icon,
                           color: colors.primary,
-                          letterSpacing: 0.4,
+                          size: 22,
                         ),
                       ),
-                      const SizedBox(width: AppSpacing.xs),
-                      Icon(
-                        Icons.arrow_forward,
-                        size: 14,
-                        color: colors.primary,
+                      const SizedBox(height: AppSpacing.md),
+                      Wrap(
+                        spacing: AppSpacing.sm,
+                        runSpacing: AppSpacing.xs,
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        children: [
+                          Text(
+                            widget.template.label,
+                            style: textTheme.titleLarge?.copyWith(
+                              color: disabled
+                                  ? colors.onSurfaceMuted
+                                  : colors.onSurface,
+                            ),
+                          ),
+                          if (disabled) _ComingSoonBadge(colors: colors),
+                        ],
                       ),
+                      const SizedBox(height: AppSpacing.sm),
+                      Text(
+                        widget.template.description,
+                        style: textTheme.bodyMedium?.copyWith(
+                          color: colors.onSurfaceMuted,
+                          height: 1.5,
+                        ),
+                      ),
+                      if (!disabled) ...[
+                        const SizedBox(height: AppSpacing.md),
+                        Row(
+                          children: [
+                            Text(
+                              'Abrir demo',
+                              style: textTheme.labelMedium?.copyWith(
+                                color: colors.primary,
+                                letterSpacing: 0.4,
+                              ),
+                            ),
+                            const SizedBox(width: AppSpacing.xs),
+                            Icon(
+                              Icons.arrow_forward,
+                              size: 14,
+                              color: colors.primary,
+                            ),
+                          ],
+                        ),
+                      ],
                     ],
                   ),
-                ],
+                ),
               ],
             ),
           ),

@@ -80,7 +80,7 @@ void main() {
 
       final card = find.byKey(const Key('showcase-card-fitness'));
       await tester.ensureVisible(card);
-      await tester.pumpAndSettle();
+      await tester.pump(const Duration(milliseconds: 50));
       await tester.tap(card);
       // PulsoHomePage tem painters animando em loop infinito (athlete
       // figure, activity rings); pumpAndSettle nao termina. Pumps
@@ -100,7 +100,7 @@ void main() {
 
       final card = find.byKey(const Key('showcase-card-realestate'));
       await tester.ensureVisible(card);
-      await tester.pumpAndSettle();
+      await tester.pump(const Duration(milliseconds: 50));
       await tester.tap(card);
       // SolarHomePage tem SolarHeroBackdrop animando em loop;
       // pumpAndSettle nao termina. Pumps explicitos cobrem o push.
@@ -118,7 +118,7 @@ void main() {
 
       final card = find.byKey(const Key('showcase-card-finance'));
       await tester.ensureVisible(card);
-      await tester.pumpAndSettle();
+      await tester.pump(const Duration(milliseconds: 50));
       await tester.tap(card);
       await tester.pump(const Duration(milliseconds: 100));
       await tester.pump(const Duration(milliseconds: 400));

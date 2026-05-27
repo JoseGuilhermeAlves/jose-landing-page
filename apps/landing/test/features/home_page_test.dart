@@ -2,11 +2,11 @@ import 'package:design_system/design_system.dart';
 import 'package:feature_about/feature_about.dart';
 import 'package:feature_contact/feature_contact.dart';
 import 'package:feature_hero/feature_hero.dart';
-import 'package:feature_services/feature_services.dart';
 import 'package:feature_showcase/feature_showcase.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:landing/features/home_page.dart';
+import 'package:landing/widgets/engineering_section.dart';
 
 void main() {
   Widget wrap(Widget child) => MaterialApp(theme: AppTheme.dark(), home: child);
@@ -21,22 +21,25 @@ void main() {
       await tester.pumpWidget(const SizedBox());
     });
 
-    testWidgets('compoe ServicesGrid abaixo do Hero', (tester) async {
+    testWidgets('compoe ShowcaseSection abaixo do Hero', (tester) async {
       await tester.pumpWidget(wrap(const HomePage()));
       await tester.pump(const Duration(milliseconds: 16));
 
-      // ServicesGrid esta no tree, mas pode estar fora da viewport
+      // ShowcaseSection esta no tree, mas pode estar fora da viewport
       // inicial — `skipOffstage: false` percorre toda a lista.
-      expect(find.byType(ServicesGrid, skipOffstage: false), findsOneWidget);
+      expect(find.byType(ShowcaseSection, skipOffstage: false), findsOneWidget);
 
       await tester.pumpWidget(const SizedBox());
     });
 
-    testWidgets('compoe ShowcaseSection abaixo do Services', (tester) async {
+    testWidgets('compoe EngineeringSection abaixo do About', (tester) async {
       await tester.pumpWidget(wrap(const HomePage()));
       await tester.pump(const Duration(milliseconds: 16));
 
-      expect(find.byType(ShowcaseSection, skipOffstage: false), findsOneWidget);
+      expect(
+        find.byType(EngineeringSection, skipOffstage: false),
+        findsOneWidget,
+      );
 
       await tester.pumpWidget(const SizedBox());
     });

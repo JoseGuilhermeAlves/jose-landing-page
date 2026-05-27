@@ -1,31 +1,45 @@
 import 'package:flutter/material.dart';
 
-/// Escala tipografica do design system. Os tamanhos seguem uma progressao
-/// modular (ratio ~1.25) tipica de sites tecnicos modernos.
-///
-/// Sem `google_fonts` agora — Flutter usa o sans-serif padrao do sistema.
-/// Etapa 13 (polish) bundla Inter local para preload via index.html.
+/// Escala tipografica do design system. Familia unica IBMPlexSans bundlada
+/// como asset em apps/landing — substituta open-source proxima a Kraken-Product
+/// (DESIGN.md §3 fallback canonico). Display e UI compartilham a familia,
+/// diferenciados por weight/size.
 abstract final class AppTypography {
-  static const String _fontFamily = 'sans-serif';
+  static const String _displayFamily = 'IBMPlexSans';
+  static const List<String> _displayFallback = <String>[
+    'Helvetica Neue',
+    'Helvetica',
+    'Arial',
+  ];
+
+  static const String _uiFamily = 'IBMPlexSans';
+  static const List<String> _uiFallback = <String>[
+    'Helvetica Neue',
+    'Helvetica',
+    'Arial',
+  ];
 
   static const TextTheme textTheme = TextTheme(
     // Hero / titulo de pagina
     displayLarge: TextStyle(
-      fontFamily: _fontFamily,
+      fontFamily: _displayFamily,
+      fontFamilyFallback: _displayFallback,
       fontSize: 64,
       fontWeight: FontWeight.w700,
       height: 1.05,
       letterSpacing: -1.2,
     ),
     displayMedium: TextStyle(
-      fontFamily: _fontFamily,
+      fontFamily: _displayFamily,
+      fontFamilyFallback: _displayFallback,
       fontSize: 48,
       fontWeight: FontWeight.w700,
       height: 1.1,
       letterSpacing: -0.8,
     ),
     displaySmall: TextStyle(
-      fontFamily: _fontFamily,
+      fontFamily: _displayFamily,
+      fontFamilyFallback: _displayFallback,
       fontSize: 36,
       fontWeight: FontWeight.w600,
       height: 1.15,
@@ -34,20 +48,23 @@ abstract final class AppTypography {
 
     // Headlines de secao
     headlineLarge: TextStyle(
-      fontFamily: _fontFamily,
+      fontFamily: _displayFamily,
+      fontFamilyFallback: _displayFallback,
       fontSize: 32,
       fontWeight: FontWeight.w600,
       height: 1.2,
       letterSpacing: -0.2,
     ),
     headlineMedium: TextStyle(
-      fontFamily: _fontFamily,
+      fontFamily: _displayFamily,
+      fontFamilyFallback: _displayFallback,
       fontSize: 24,
       fontWeight: FontWeight.w600,
       height: 1.25,
     ),
     headlineSmall: TextStyle(
-      fontFamily: _fontFamily,
+      fontFamily: _displayFamily,
+      fontFamilyFallback: _displayFallback,
       fontSize: 20,
       fontWeight: FontWeight.w600,
       height: 1.3,
@@ -55,19 +72,22 @@ abstract final class AppTypography {
 
     // Titulos de cards / listas
     titleLarge: TextStyle(
-      fontFamily: _fontFamily,
+      fontFamily: _uiFamily,
+      fontFamilyFallback: _uiFallback,
       fontSize: 18,
       fontWeight: FontWeight.w600,
       height: 1.35,
     ),
     titleMedium: TextStyle(
-      fontFamily: _fontFamily,
+      fontFamily: _uiFamily,
+      fontFamilyFallback: _uiFallback,
       fontSize: 16,
       fontWeight: FontWeight.w600,
       height: 1.4,
     ),
     titleSmall: TextStyle(
-      fontFamily: _fontFamily,
+      fontFamily: _uiFamily,
+      fontFamilyFallback: _uiFallback,
       fontSize: 14,
       fontWeight: FontWeight.w600,
       height: 1.4,
@@ -75,19 +95,22 @@ abstract final class AppTypography {
 
     // Texto corrido
     bodyLarge: TextStyle(
-      fontFamily: _fontFamily,
+      fontFamily: _uiFamily,
+      fontFamilyFallback: _uiFallback,
       fontSize: 18,
       fontWeight: FontWeight.w400,
       height: 1.55,
     ),
     bodyMedium: TextStyle(
-      fontFamily: _fontFamily,
+      fontFamily: _uiFamily,
+      fontFamilyFallback: _uiFallback,
       fontSize: 16,
       fontWeight: FontWeight.w400,
       height: 1.55,
     ),
     bodySmall: TextStyle(
-      fontFamily: _fontFamily,
+      fontFamily: _uiFamily,
+      fontFamilyFallback: _uiFallback,
       fontSize: 14,
       fontWeight: FontWeight.w400,
       height: 1.5,
@@ -95,21 +118,24 @@ abstract final class AppTypography {
 
     // Labels de botao, chip, badge
     labelLarge: TextStyle(
-      fontFamily: _fontFamily,
+      fontFamily: _uiFamily,
+      fontFamilyFallback: _uiFallback,
       fontSize: 16,
       fontWeight: FontWeight.w600,
       height: 1.2,
       letterSpacing: 0.2,
     ),
     labelMedium: TextStyle(
-      fontFamily: _fontFamily,
+      fontFamily: _uiFamily,
+      fontFamilyFallback: _uiFallback,
       fontSize: 14,
       fontWeight: FontWeight.w600,
       height: 1.2,
       letterSpacing: 0.2,
     ),
     labelSmall: TextStyle(
-      fontFamily: _fontFamily,
+      fontFamily: _uiFamily,
+      fontFamilyFallback: _uiFallback,
       fontSize: 12,
       fontWeight: FontWeight.w600,
       height: 1.2,

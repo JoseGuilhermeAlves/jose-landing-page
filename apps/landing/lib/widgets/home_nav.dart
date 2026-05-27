@@ -50,7 +50,7 @@ class HomeNav extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = context.colors;
     final isMobile = context.isMobile;
-    final isCompact = MediaQuery.sizeOf(context).width < 920;
+    final isCompact = MediaQuery.sizeOf(context).width < 1180;
 
     return ClipRect(
       child: BackdropFilter(
@@ -124,26 +124,29 @@ class _Logo extends StatelessWidget {
       ),
     );
 
-    return MouseRegion(
-      cursor: SystemMouseCursors.click,
-      child: GestureDetector(
-        key: const Key('home-nav-logo'),
-        onTap: onTap,
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            mark,
-            if (!isMobile) ...[
-              const SizedBox(width: AppSpacing.md),
-              Text(
-                'Jose Guilherme',
-                style: textTheme.titleSmall?.copyWith(
-                  color: colors.onSurface,
-                  fontWeight: FontWeight.w600,
+    return Tooltip(
+      message: 'Voltar ao topo',
+      child: MouseRegion(
+        cursor: SystemMouseCursors.click,
+        child: GestureDetector(
+          key: const Key('home-nav-logo'),
+          onTap: onTap,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              mark,
+              if (!isMobile) ...[
+                const SizedBox(width: AppSpacing.md),
+                Text(
+                  'Jose Guilherme',
+                  style: textTheme.titleSmall?.copyWith(
+                    color: colors.onSurface,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
-              ),
+              ],
             ],
-          ],
+          ),
         ),
       ),
     );
@@ -220,9 +223,9 @@ class _Cta extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppButton(
       key: const Key('home-nav-cta'),
-      label: 'Falar',
+      label: 'Contato',
       onPressed: onTap,
-      icon: Icons.chat_bubble_outline,
+      icon: Icons.mail_outline,
     );
   }
 }

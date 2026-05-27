@@ -6,6 +6,15 @@ import 'package:flutter/material.dart';
 abstract final class ShowcaseCatalog {
   static const List<ShowcaseTemplate> all = [
     ShowcaseTemplate(
+      id: 'finance',
+      label: 'Investimentos',
+      description:
+          'Mira — watchlist, candlestick interativo com crosshair, '
+          'envio de ordem e portfolio com donut de alocacao.',
+      icon: Icons.show_chart_rounded,
+      hasDemo: true,
+    ),
+    ShowcaseTemplate(
       id: 'delivery',
       label: 'Delivery',
       description:
@@ -39,15 +48,6 @@ abstract final class ShowcaseCatalog {
           'Listagem de imoveis com filtros por bairro, faixa de preco '
           'e numero de quartos.',
       icon: Icons.home_work_outlined,
-      hasDemo: true,
-    ),
-    ShowcaseTemplate(
-      id: 'finance',
-      label: 'Investimentos',
-      description:
-          'Mira — watchlist, candlestick interativo com crosshair, '
-          'envio de ordem e portfolio com donut de alocacao.',
-      icon: Icons.show_chart_rounded,
       hasDemo: true,
     ),
   ];

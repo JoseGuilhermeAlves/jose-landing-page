@@ -4,6 +4,8 @@ enum StackCategory {
   framework('Framework'),
   state('Estado'),
   routing('Rotas'),
+  graphics('Graficos'),
+  persistence('Persistencia'),
   quality('Qualidade'),
   web('Web / PWA'),
   tooling('Tooling');

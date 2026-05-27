@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 
-/// Largura maxima do conteudo dos mocks quando exibidos em viewport
-/// larga (web/desktop). Simula dimensao de dispositivo mobile — os
-/// mocks sao demos de apps moveis, nao dashboards desktop.
-const double kMockMaxWidth = 480;
+/// Largura maxima do conteudo dos mocks em viewport larga. Valor alto
+/// o suficiente pra que o demo preencha bem a tela em desktop/web sem
+/// esticar texto a ponto de quebrar leitura.
+const double kMockMaxWidth = 960;
 
-/// Envolve o body de uma pagina mock com constraint de largura maxima
-/// e centralizacao horizontal. Em viewport estreita (<= [kMockMaxWidth])
-/// nao altera nada; em viewport larga centraliza o conteudo.
+/// Envolve o body de uma pagina mock com constraint responsiva.
+/// Em mobile (< 600 lp) nao restringe — o conteudo preenche a
+/// viewport naturalmente. Em desktop/web centraliza com
+/// [kMockMaxWidth] pra manter legibilidade sem parecer app minusculo.
 class MockBodyConstraint extends StatelessWidget {
   const MockBodyConstraint({required this.child, super.key});
 
@@ -15,6 +16,9 @@ class MockBodyConstraint extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.sizeOf(context).width;
+    if (width < 600) return child;
+
     return Center(
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: kMockMaxWidth),

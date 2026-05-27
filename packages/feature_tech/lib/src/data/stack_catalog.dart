@@ -34,10 +34,16 @@ abstract final class StackCatalog {
       category: StackCategory.state,
     ),
     StackItem(
+      name: 'Riverpod',
+      version: '2.x',
+      role: 'Estado reativo com code generation',
+      category: StackCategory.state,
+    ),
+    StackItem(
       name: 'bloc_test',
       version: '10.x',
       role: 'Test harness pra blocs e cubits',
-      category: StackCategory.state,
+      category: StackCategory.quality,
     ),
 
     // Rotas
@@ -46,6 +52,34 @@ abstract final class StackCatalog {
       version: '16.2.4',
       role: 'Routing declarativo com deferred loading',
       category: StackCategory.routing,
+    ),
+
+    // Graficos
+    StackItem(
+      name: 'CustomPainter',
+      version: 'Flutter API',
+      role: 'Renderizacao 2D de baixo nivel no Canvas',
+      category: StackCategory.graphics,
+    ),
+    StackItem(
+      name: 'Animations',
+      version: 'Flutter API',
+      role: 'Implicitas, explicitas e Tween chains',
+      category: StackCategory.graphics,
+    ),
+
+    // Persistencia
+    StackItem(
+      name: 'SQLite',
+      version: 'sqflite',
+      role: 'Banco relacional local no device',
+      category: StackCategory.persistence,
+    ),
+    StackItem(
+      name: 'Hive',
+      version: '4.x',
+      role: 'Key-value store rapido, sem SQL',
+      category: StackCategory.persistence,
     ),
 
     // Qualidade
@@ -93,6 +127,12 @@ abstract final class StackCatalog {
       name: 'GitHub Actions',
       version: 'CI',
       role: 'Pipelines de analyze, test e build web',
+      category: StackCategory.tooling,
+    ),
+    StackItem(
+      name: 'Fastlane',
+      version: 'CI/CD',
+      role: 'Automacao de build, sign e deploy mobile',
       category: StackCategory.tooling,
     ),
   ];

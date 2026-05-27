@@ -2,12 +2,11 @@ import 'package:design_system/design_system.dart';
 import 'package:feature_about/feature_about.dart';
 import 'package:feature_contact/feature_contact.dart';
 import 'package:feature_hero/feature_hero.dart';
-import 'package:feature_services/feature_services.dart';
 import 'package:feature_showcase/feature_showcase.dart';
-import 'package:feature_tech/feature_tech.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:landing/config/app_config.dart';
+import 'package:landing/widgets/engineering_section.dart';
 import 'package:landing/widgets/home_footer.dart';
 import 'package:landing/widgets/home_nav.dart';
 import 'package:landing/widgets/labs_teaser_section.dart';
@@ -15,11 +14,12 @@ import 'package:landing/widgets/section_wave_divider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 /// Home da landing — composta pelas feature_* na ordem do scroll.
-/// Plugadas: Hero (§12.6) + Services (§12.7) + Showcase (§12.10) +
-/// Tech + About (§12.8) + Labs teaser + Contact (§12.9), separadas
-/// por `SectionWaveDivider` e envoltas em `GlowBackdrop` alternados.
+/// Plugadas: Hero (§12.6) + Showcase (§12.10) + About (§12.8) +
+/// Engineering (services + tech merged) + Labs teaser + Contact (§12.9),
+/// separadas por `SectionWaveDivider` e envoltas em `GlowBackdrop`
+/// alternados.
 ///
-/// O `HomeNav` flutua no topo via Stack overlay, com 6 ancoras que
+/// O `HomeNav` flutua no topo via Stack overlay, com 5 ancoras que
 /// rolam a posicao via `ScrollController.animateTo`. O calculo do
 /// offset usa `RenderAbstractViewport.getOffsetToReveal` menos a
 /// altura do nav, pra que o eyebrow chip da secao destino fique
@@ -39,12 +39,10 @@ class _HomePageState extends State<HomePage> {
   final _scrollController = ScrollController();
 
   // Uma `GlobalKey` por secao navegavel — ancorada na arvore via
-  // `KeyedSubtree`. As 6 ancoras do `HomeNav` (servicos, showcase,
-  // arquitetura, sobre, labs, contato) usam estas pra calcular offset
-  // de scroll.
-  final _servicesKey = GlobalKey(debugLabel: 'home-anchor-services');
+  // `KeyedSubtree`. As 5 ancoras do `HomeNav` (showcase, engenharia,
+  // sobre, labs, contato) usam estas pra calcular offset de scroll.
   final _showcaseKey = GlobalKey(debugLabel: 'home-anchor-showcase');
-  final _techKey = GlobalKey(debugLabel: 'home-anchor-tech');
+  final _engineeringKey = GlobalKey(debugLabel: 'home-anchor-engineering');
   final _aboutKey = GlobalKey(debugLabel: 'home-anchor-about');
   final _labsKey = GlobalKey(debugLabel: 'home-anchor-labs');
   final _contactKey = GlobalKey(debugLabel: 'home-anchor-contact');
@@ -124,24 +122,19 @@ class _HomePageState extends State<HomePage> {
 
     final anchors = <HomeNavAnchor>[
       HomeNavAnchor(
-        id: 'servicos',
-        label: 'Serviços',
-        onTap: () => _scrollToKey(_servicesKey),
-      ),
-      HomeNavAnchor(
         id: 'showcase',
         label: 'Showcase',
         onTap: () => _scrollToKey(_showcaseKey),
       ),
       HomeNavAnchor(
-        id: 'arquitetura',
-        label: 'Arquitetura',
-        onTap: () => _scrollToKey(_techKey),
-      ),
-      HomeNavAnchor(
         id: 'sobre',
         label: 'Sobre',
         onTap: () => _scrollToKey(_aboutKey),
+      ),
+      HomeNavAnchor(
+        id: 'engenharia',
+        label: 'Engenharia',
+        onTap: () => _scrollToKey(_engineeringKey),
       ),
       HomeNavAnchor(
         id: 'labs',
@@ -166,22 +159,13 @@ class _HomePageState extends State<HomePage> {
                 child: SizedBox(
                   height: heroHeight,
                   child: HeroSection(
-                    onContactPressed: () => _scrollToKey(_contactKey),
+                    onContactPressed: () => _openExternalUri(
+                      Uri.parse('https://wa.me/5514991163009'),
+                    ),
                     onSeeProjectsPressed: () => _scrollToKey(_showcaseKey),
                   ),
                 ),
               ),
-              SliverToBoxAdapter(
-                child: KeyedSubtree(
-                  key: _servicesKey,
-                  child: _SectionSlot(
-                    horizontalPadding: horizontalPadding,
-                    glowAlignment: Alignment.topRight,
-                    child: const ServicesSection(),
-                  ),
-                ),
-              ),
-              const SliverToBoxAdapter(child: SectionWaveDivider()),
               SliverToBoxAdapter(
                 child: KeyedSubtree(
                   key: _showcaseKey,
@@ -195,13 +179,12 @@ class _HomePageState extends State<HomePage> {
               const SliverToBoxAdapter(child: SectionWaveDivider()),
               SliverToBoxAdapter(
                 child: KeyedSubtree(
-                  key: _techKey,
+                  key: _aboutKey,
                   child: _SectionSlot(
                     horizontalPadding: horizontalPadding,
-                    glowAlignment: Alignment.bottomLeft,
-                    child: TechSection(
-                      githubUrl: AppConfig.githubRepoUrl,
-                      onOpenGithub: (url) => _openExternalUri(Uri.parse(url)),
+                    glowAlignment: Alignment.centerRight,
+                    child: const AboutSection(
+                      photo: AssetImage('assets/images/foto_jose.png'),
                     ),
                   ),
                 ),
@@ -209,12 +192,13 @@ class _HomePageState extends State<HomePage> {
               const SliverToBoxAdapter(child: SectionWaveDivider()),
               SliverToBoxAdapter(
                 child: KeyedSubtree(
-                  key: _aboutKey,
+                  key: _engineeringKey,
                   child: _SectionSlot(
                     horizontalPadding: horizontalPadding,
-                    glowAlignment: Alignment.centerRight,
-                    child: const AboutSection(
-                      photo: AssetImage('assets/images/foto_jose.png'),
+                    glowAlignment: Alignment.bottomRight,
+                    child: EngineeringSection(
+                      githubUrl: AppConfig.githubRepoUrl,
+                      onOpenGithub: (url) => _openExternalUri(Uri.parse(url)),
                     ),
                   ),
                 ),

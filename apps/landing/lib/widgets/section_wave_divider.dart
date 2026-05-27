@@ -59,19 +59,22 @@ class _SectionWaveDividerState extends State<SectionWaveDivider>
     final color = colors.primary.withValues(alpha: widget.intensity);
 
     return IgnorePointer(
-      child: SizedBox(
-        height: widget.height,
-        child: AnimatedBuilder(
-          animation: _controller,
-          builder: (_, _) => CustomPaint(
-            painter: WaveDividerPainter(
-              phase: _controller.value,
-              color: color,
-              amplitude: widget.amplitude,
-              frequency: widget.frequency,
-              strokeWidth: 1,
+      child: RepaintBoundary(
+        child: SizedBox(
+          height: widget.height,
+          child: AnimatedBuilder(
+            animation: _controller,
+            builder: (_, _) => CustomPaint(
+              painter: WaveDividerPainter(
+                phase: _controller.value,
+                color: color,
+                amplitude: widget.amplitude,
+                frequency: widget.frequency,
+                strokeWidth: 1,
+              ),
+              willChange: true,
+              child: const SizedBox.expand(),
             ),
-            child: const SizedBox.expand(),
           ),
         ),
       ),

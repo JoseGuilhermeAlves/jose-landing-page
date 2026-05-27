@@ -106,17 +106,9 @@ class _LabsTeaserSectionState extends State<LabsTeaserSection>
       key: const Key('labs-teaser-section'),
       padding: EdgeInsets.all(isMobile ? AppSpacing.xl : AppSpacing.xxl),
       decoration: BoxDecoration(
-        gradient: AppGradients.brandSoft(colors),
+        color: colors.surface,
         borderRadius: BorderRadius.circular(AppRadius.xl),
-        border: Border.all(color: colors.primary.withValues(alpha: 0.32)),
-        boxShadow: [
-          BoxShadow(
-            color: colors.primary.withValues(alpha: 0.18),
-            blurRadius: 48,
-            spreadRadius: -16,
-            offset: const Offset(0, 16),
-          ),
-        ],
+        border: Border.all(color: colors.border),
       ),
       child: inner,
     );

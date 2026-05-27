@@ -157,6 +157,78 @@ abstract final class TechDescriptionsCatalog {
           'persistentes.',
       docsUrl: 'https://pub.dev/packages/hive',
     ),
+    'Clean Architecture': TechDescription(
+      title: 'Clean Architecture',
+      tagline: 'Separacao rigida data / domain / presentation.',
+      role: 'Arquitetura',
+      version: 'Padrao',
+      body:
+          'Cada feature segue o triangulo data / domain / presentation com '
+          'fronteiras explicitas. Domain nao conhece Flutter, data nao conhece '
+          'presentation, e o shell compoe tudo via construtor. Resultado: '
+          'features substituiveis sem efeito colateral, testabilidade total '
+          'por camada e onboarding rapido em qualquer modulo.',
+    ),
+    'SOLID': TechDescription(
+      title: 'SOLID',
+      tagline: 'Principios que sustentam a extensibilidade.',
+      role: 'Arquitetura',
+      version: 'Principios',
+      body:
+          'Single Responsibility, Open-Closed, Liskov Substitution, Interface '
+          'Segregation e Dependency Inversion aplicados em todas as camadas. '
+          'Repositories abstratos no domain, implementacoes concretas no data, '
+          'Blocs que dependem de contratos — nao de implementacoes. Cada '
+          'decisao de design passa por esses filtros antes de virar codigo.',
+    ),
+    'Monorepo': TechDescription(
+      title: 'Monorepo',
+      tagline: 'Pub Workspaces com Melos.',
+      role: 'Arquitetura',
+      version: 'Pub Workspaces',
+      body:
+          'Workspace Pub nativo com Melos orquestrando bootstrap, analyze, '
+          'test e build em todos os pacotes. Cada pacote tem pubspec proprio, '
+          'dependencias explicitas e barrel de exportacao. Mudancas atomicas '
+          'que cruzam pacotes entram num unico commit sem risco de versao '
+          'desalinhada entre feature e design system.',
+    ),
+    'Design System': TechDescription(
+      title: 'Design System',
+      tagline: 'Tokens, componentes e ritmo visual centralizado.',
+      role: 'Arquitetura',
+      version: 'Tokens',
+      body:
+          'Pacote design_system com tokens de cor, tipografia, spacing, '
+          'breakpoints e componentes reutilizaveis (SectionHeader, EyebrowBadge, '
+          'GradientText, GlowBackdrop, AppButton). Garante consistencia visual '
+          'entre features sem duplicacao — qualquer mudanca de token propaga '
+          'automaticamente para toda a landing.',
+    ),
+    'SDUI': TechDescription(
+      title: 'SDUI',
+      tagline: 'Interface dirigida por contrato remoto.',
+      role: 'Arquitetura',
+      version: 'Server-Driven',
+      body:
+          'Server-Driven UI permite atualizar layouts, ordem de secoes e '
+          'conteudo sem publicar nova versao do app. O front end consome '
+          'contratos JSON que descrevem a arvore de componentes, e o '
+          'design system resolve cada nodo no widget correspondente. '
+          'Reduz ciclo de deploy e desacopla produto de engenharia.',
+    ),
+    'Feature-First': TechDescription(
+      title: 'Feature-First',
+      tagline: 'Modulos por dominio, sem dependencia cruzada.',
+      role: 'Arquitetura',
+      version: 'Organizacao',
+      body:
+          'Organizacao por feature — cada dominio vive em pacote isolado '
+          'com sua propria arvore data/domain/presentation. Features nao '
+          'importam entre si; comunicacao acontece pelo shell via composicao '
+          'direta. Adicionar ou remover uma feature nao quebra as demais. '
+          'Hierarquia rigida: core → design_system → animations → feature_*.',
+    ),
     'very_good_analysis': TechDescription(
       title: 'very_good_analysis',
       tagline: 'Lints estritos failFast no CI.',

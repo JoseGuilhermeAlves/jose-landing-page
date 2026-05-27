@@ -25,16 +25,17 @@ class TechBentoGrid extends StatelessWidget {
       _Slot(category: StackCategory.state, span: 5),
     ],
     [
-      _Slot(category: StackCategory.graphics, span: 6),
-      _Slot(category: StackCategory.persistence, span: 6),
+      _Slot(category: StackCategory.architecture, span: 7),
+      _Slot(category: StackCategory.graphics, span: 5),
     ],
     [
-      _Slot(category: StackCategory.quality, span: 5),
-      _Slot(category: StackCategory.routing, span: 3),
-      _Slot(category: StackCategory.web, span: 4),
+      _Slot(category: StackCategory.persistence, span: 4),
+      _Slot(category: StackCategory.quality, span: 4),
+      _Slot(category: StackCategory.routing, span: 4),
     ],
     [
-      _Slot(category: StackCategory.tooling, span: 12),
+      _Slot(category: StackCategory.web, span: 5),
+      _Slot(category: StackCategory.tooling, span: 7),
     ],
   ];
 
@@ -196,23 +197,67 @@ class _CategoryCard extends StatelessWidget {
               ],
             ),
             const SizedBox(height: AppSpacing.md),
-            // Tiles em wrap pra acomodar 1..3 techs por card sem layout
-            // explodir quando categoria tem so um item.
-            Wrap(
-              spacing: AppSpacing.sm,
-              runSpacing: AppSpacing.sm,
-              children: [
-                for (final item in items)
-                  _TechTile(
-                    techName: item.name,
-                    role: item.role,
-                    onTap: () => onTechTap(item.name),
-                  ),
-              ],
-            ),
+            _TileGrid(items: items, onTechTap: onTechTap),
           ],
         ),
       ),
+    );
+  }
+}
+
+/// Layout de tiles que preenche a largura do card. Distribui items
+/// em rows de Expanded — sem LayoutBuilder (incompativel com
+/// IntrinsicHeight). Coluna count derivado do total de items.
+class _TileGrid extends StatelessWidget {
+  const _TileGrid({required this.items, required this.onTechTap});
+
+  final List<StackItem> items;
+  final void Function(String techName) onTechTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final isMobile = context.isMobile;
+    final cols = isMobile
+        ? items.length.clamp(1, 2)
+        : items.length.clamp(1, 3);
+
+    final rows = <Widget>[];
+    for (var i = 0; i < items.length; i += cols) {
+      final rowItems = items.sublist(
+        i,
+        (i + cols).clamp(0, items.length),
+      );
+      rows.add(
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            for (var j = 0; j < rowItems.length; j++) ...[
+              if (j > 0) const SizedBox(width: AppSpacing.sm),
+              Expanded(
+                child: _TechTile(
+                  techName: rowItems[j].name,
+                  role: rowItems[j].role,
+                  onTap: () => onTechTap(rowItems[j].name),
+                ),
+              ),
+            ],
+            for (var j = rowItems.length; j < cols; j++) ...[
+              const SizedBox(width: AppSpacing.sm),
+              const Expanded(child: SizedBox.shrink()),
+            ],
+          ],
+        ),
+      );
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        for (var i = 0; i < rows.length; i++) ...[
+          if (i > 0) const SizedBox(height: AppSpacing.sm),
+          rows[i],
+        ],
+      ],
     );
   }
 }
@@ -267,7 +312,6 @@ class _TechTileState extends State<_TechTile> {
         child: AnimatedContainer(
           duration: AppDuration.fast,
           curve: Curves.easeOut,
-          constraints: const BoxConstraints(minWidth: 160, maxWidth: 220),
           padding: const EdgeInsets.all(AppSpacing.md),
           decoration: BoxDecoration(
             // Gradient sutil com a cor brand — alpha baixo pra nao

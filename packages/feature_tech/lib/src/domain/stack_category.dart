@@ -6,6 +6,7 @@ enum StackCategory {
   routing('Rotas'),
   graphics('Graficos'),
   persistence('Persistencia'),
+  architecture('Arquitetura'),
   quality('Qualidade'),
   web('Web / PWA'),
   tooling('Tooling');

@@ -22,8 +22,8 @@ dependencies:
     path: ../../packages/feature_contact
   feature_hero:
     path: ../../packages/feature_hero
-  feature_labs:
-    path: ../../packages/feature_labs
+  feature_games:
+    path: ../../packages/feature_games
   feature_services:
     path: ../../packages/feature_services
   feature_showcase:

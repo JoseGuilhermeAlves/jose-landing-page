@@ -39,7 +39,12 @@
       "PowerShell($base = \"https://raw.githubusercontent.com/google/fonts/main/ofl/ibmplexsans\"; $dest = \"C:\\\\jose-landing-page\\\\apps\\\\landing\\\\assets\\\\fonts\"; Invoke-WebRequest \"$base/IBMPlexSans-Regular.ttf\" -OutFile \"$dest\\\\IBMPlexSans-Regular.ttf\"; Invoke-WebRequest \"$base/IBMPlexSans-Medium.ttf\" -OutFile \"$dest\\\\IBMPlexSans-Medium.ttf\"; Invoke-WebRequest \"$base/IBMPlexSans-SemiBold.ttf\" -OutFile \"$dest\\\\IBMPlexSans-SemiBold.ttf\"; Invoke-WebRequest \"$base/IBMPlexSans-Bold.ttf\" -OutFile \"$dest\\\\IBMPlexSans-Bold.ttf\")",
       "WebFetch(domain:api.github.com)",
       "PowerShell(Get-ChildItem *)",
-      "PowerShell($f = [System.IO.File]::ReadAllBytes\\(\"C:\\\\jose-landing-page\\\\apps\\\\landing\\\\assets\\\\fonts\\\\IBMPlexSans-Regular.ttf\"\\); [BitConverter]::ToString\\($f[0..3]\\))"
+      "PowerShell($f = [System.IO.File]::ReadAllBytes\\(\"C:\\\\jose-landing-page\\\\apps\\\\landing\\\\assets\\\\fonts\\\\IBMPlexSans-Regular.ttf\"\\); [BitConverter]::ToString\\($f[0..3]\\))",
+      "PowerShell(Rename-Item *)",
+      "PowerShell(git *)",
+      "PowerShell(Copy-Item *)",
+      "PowerShell(Remove-Item *)",
+      "PowerShell(New-Item *)"
     ]
   }
 }

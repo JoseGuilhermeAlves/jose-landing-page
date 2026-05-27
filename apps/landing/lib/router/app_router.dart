@@ -1,23 +1,16 @@
 import 'package:animations/animations.dart';
-import 'package:feature_labs/feature_labs.dart' deferred as labs;
-import 'package:feature_labs/labs_route_paths.dart';
+import 'package:feature_games/feature_games.dart' deferred as games;
+import 'package:feature_games/games_route_paths.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:landing/features/home_page.dart';
 import 'package:landing/features/not_found_page.dart';
 import 'package:landing/router/route_paths.dart';
 
-/// Configuracao centralizada do GoRouter. Mantem `/labs` (e todas as
-/// suas sub-rotas) como **deferred import** — em build web, o codigo
-/// do feature_labs vira um bundle separado que so baixa quando o
-/// usuario navega pra dentro do playground.
-///
-/// Constantes de rota vem de `LabsRoutePaths` (eager-imported via
-/// `package:feature_labs/labs_route_paths.dart`); os widgets das
-/// pages vivem atras do prefix `labs.` deferido.
+/// Configuracao centralizada do GoRouter. Mantem `/games` como
+/// **deferred import** — em build web, o codigo do feature_games
+/// vira um bundle separado que so baixa quando o usuario navega.
 abstract final class AppRouter {
-  /// Cria uma instancia nova de [GoRouter]. Recebe [initialLocation]
-  /// pra facilitar testes deep-link.
   static GoRouter create({String initialLocation = RoutePaths.home}) {
     return GoRouter(
       initialLocation: initialLocation,
@@ -28,57 +21,19 @@ abstract final class AppRouter {
           pageBuilder: (_, state) => const NoTransitionPage(child: HomePage()),
         ),
         GoRoute(
-          path: LabsRoutePaths.index,
+          path: GamesRoutePaths.index,
           pageBuilder: (_, _) => NoTransitionPage(
-            child: _DeferredLabs(builder: () => labs.LabsPage()),
-          ),
-        ),
-        GoRoute(
-          path: LabsRoutePaths.particles,
-          pageBuilder: (_, _) => NoTransitionPage(
-            child: _DeferredLabs(builder: () => labs.ParticleFieldPlayground()),
-          ),
-        ),
-        GoRoute(
-          path: LabsRoutePaths.timeline,
-          pageBuilder: (_, _) => NoTransitionPage(
-            child: _DeferredLabs(
-              builder: () => labs.AnimatedTimelinePlayground(),
+            child: _DeferredGames(
+              builder: () => games.RaycasterPlayground(),
             ),
           ),
         ),
         GoRoute(
-          path: LabsRoutePaths.border,
+          path: GamesRoutePaths.raycaster,
           pageBuilder: (_, _) => NoTransitionPage(
-            child: _DeferredLabs(
-              builder: () => labs.AnimatedBorderPlayground(),
+            child: _DeferredGames(
+              builder: () => games.RaycasterPlayground(),
             ),
-          ),
-        ),
-        GoRoute(
-          path: LabsRoutePaths.spinner,
-          pageBuilder: (_, _) => NoTransitionPage(
-            child: _DeferredLabs(
-              builder: () => labs.LoadingSpinnerPlayground(),
-            ),
-          ),
-        ),
-        GoRoute(
-          path: LabsRoutePaths.morphing,
-          pageBuilder: (_, _) => NoTransitionPage(
-            child: _DeferredLabs(builder: () => labs.MorphingShapePlayground()),
-          ),
-        ),
-        GoRoute(
-          path: LabsRoutePaths.ripple,
-          pageBuilder: (_, _) => NoTransitionPage(
-            child: _DeferredLabs(builder: () => labs.RippleHoverPlayground()),
-          ),
-        ),
-        GoRoute(
-          path: LabsRoutePaths.wave,
-          pageBuilder: (_, _) => NoTransitionPage(
-            child: _DeferredLabs(builder: () => labs.WaveDividerPlayground()),
           ),
         ),
         GoRoute(
@@ -90,21 +45,18 @@ abstract final class AppRouter {
   }
 }
 
-/// Wrapper que dispara `loadLibrary()` no primeiro build. Em VM (testes)
-/// `loadLibrary` resolve imediatamente; em web ele aguarda o download
-/// do bundle deferido. O [builder] so e invocado apos o future resolver,
-/// entao referenciar simbolos `labs.X` la dentro e seguro.
-class _DeferredLabs extends StatefulWidget {
-  const _DeferredLabs({required this.builder});
+/// Wrapper que dispara `loadLibrary()` no primeiro build.
+class _DeferredGames extends StatefulWidget {
+  const _DeferredGames({required this.builder});
 
   final Widget Function() builder;
 
   @override
-  State<_DeferredLabs> createState() => _DeferredLabsState();
+  State<_DeferredGames> createState() => _DeferredGamesState();
 }
 
-class _DeferredLabsState extends State<_DeferredLabs> {
-  late final Future<void> _loaded = labs.loadLibrary();
+class _DeferredGamesState extends State<_DeferredGames> {
+  late final Future<void> _loaded = games.loadLibrary();
 
   @override
   Widget build(BuildContext context) {

@@ -1,5 +1,5 @@
-name: feature_labs
-description: Playground tecnico com Custom Painters interativos (rota /labs, deferred).
+name: feature_games
+description: Raycaster 3D cyberpunk e experiencias interativas (rota /games, deferred).
 publish_to: none
 version: 0.0.1
 
@@ -9,10 +9,6 @@ environment:
 resolution: workspace
 
 dependencies:
-  animations:
-    path: ../animations
-  core:
-    path: ../core
   design_system:
     path: ../design_system
   flutter:

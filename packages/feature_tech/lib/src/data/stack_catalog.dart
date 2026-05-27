@@ -82,6 +82,44 @@ abstract final class StackCatalog {
       category: StackCategory.persistence,
     ),
 
+    // Arquitetura
+    StackItem(
+      name: 'Clean Architecture',
+      version: 'Padrao',
+      role: 'Camadas data / domain / presentation por feature',
+      category: StackCategory.architecture,
+    ),
+    StackItem(
+      name: 'SOLID',
+      version: 'Principios',
+      role: 'Inversao de dependencia e responsabilidade unica',
+      category: StackCategory.architecture,
+    ),
+    StackItem(
+      name: 'Monorepo',
+      version: 'Pub Workspaces',
+      role: 'Pacotes independentes com contratos explicitos',
+      category: StackCategory.architecture,
+    ),
+    StackItem(
+      name: 'Design System',
+      version: 'Tokens',
+      role: 'Cores, tipografia, spacing e componentes reutilizaveis',
+      category: StackCategory.architecture,
+    ),
+    StackItem(
+      name: 'SDUI',
+      version: 'Server-Driven',
+      role: 'UI dirigida por contrato remoto, sem deploy',
+      category: StackCategory.architecture,
+    ),
+    StackItem(
+      name: 'Feature-First',
+      version: 'Organizacao',
+      role: 'Modulos isolados por dominio, sem dependencia cruzada',
+      category: StackCategory.architecture,
+    ),
+
     // Qualidade
     StackItem(
       name: 'very_good_analysis',

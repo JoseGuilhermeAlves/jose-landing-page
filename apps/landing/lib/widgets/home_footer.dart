@@ -1,5 +1,5 @@
 import 'package:design_system/design_system.dart';
-import 'package:feature_labs/labs_route_paths.dart';
+import 'package:feature_games/games_route_paths.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -21,16 +21,16 @@ class HomeFooter extends StatelessWidget {
 
     final copy = '© $startYear $name';
 
-    final labsLink = MouseRegion(
+    final gamesLink = MouseRegion(
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
-        key: const Key('footer-labs-link'),
-        onTap: () => context.go(LabsRoutePaths.index),
+        key: const Key('footer-games-link'),
+        onTap: () => context.go(GamesRoutePaths.index),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              '/labs',
+              '/games',
               style: textTheme.labelMedium?.copyWith(
                 color: colors.primary,
                 letterSpacing: 0.4,
@@ -65,7 +65,7 @@ class HomeFooter extends StatelessWidget {
         copy,
         style: textTheme.labelMedium?.copyWith(color: colors.onSurfaceMuted),
       ),
-      labsLink,
+      gamesLink,
       madeWith,
     ];
 

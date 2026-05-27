@@ -61,6 +61,32 @@ abstract final class TechBrandColors {
       glow: Color(0xFFF9A825),
     ),
 
+    // Arquitetura
+    'Clean Architecture': _Brand(
+      primary: Color(0xFF7C3AED),
+      glow: Color(0xFF4C1D95),
+    ),
+    'SOLID': _Brand(
+      primary: Color(0xFFA78BFA),
+      glow: Color(0xFF6D28D9),
+    ),
+    'Monorepo': _Brand(
+      primary: Color(0xFF10B981),
+      glow: Color(0xFF047857),
+    ),
+    'Design System': _Brand(
+      primary: Color(0xFFF472B6),
+      glow: Color(0xFFBE185D),
+    ),
+    'SDUI': _Brand(
+      primary: Color(0xFF06B6D4),
+      glow: Color(0xFF0E7490),
+    ),
+    'Feature-First': _Brand(
+      primary: Color(0xFF8B5CF6),
+      glow: Color(0xFF5B21B6),
+    ),
+
     // Qualidade
     'very_good_analysis': _Brand(
       primary: Color(0xFFFB923C),
@@ -123,6 +149,7 @@ abstract final class CategoryBrandColors {
     'routing': Color(0xFF60A5FA),
     'graphics': Color(0xFFFF7043),
     'persistence': Color(0xFF44A8D8),
+    'architecture': Color(0xFF7C3AED),
     'quality': Color(0xFFFB923C),
     'web': Color(0xFFA78BFA),
     'tooling': Color(0xFFFACC15),

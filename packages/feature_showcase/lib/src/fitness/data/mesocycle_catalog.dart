@@ -13,7 +13,11 @@ abstract final class MesocycleCatalog {
     id: 'push-a',
     label: 'Push A',
     weekday: 1,
-    focusMuscles: [MuscleGroup.chest, MuscleGroup.shoulders, MuscleGroup.triceps],
+    focusMuscles: [
+      MuscleGroup.chest,
+      MuscleGroup.shoulders,
+      MuscleGroup.triceps,
+    ],
     estimatedMinutes: 65,
     exercises: [
       ExercisesCatalog.benchPress,
@@ -43,7 +47,11 @@ abstract final class MesocycleCatalog {
     id: 'legs-a',
     label: 'Legs A',
     weekday: 3,
-    focusMuscles: [MuscleGroup.quads, MuscleGroup.glutes, MuscleGroup.hamstrings],
+    focusMuscles: [
+      MuscleGroup.quads,
+      MuscleGroup.glutes,
+      MuscleGroup.hamstrings,
+    ],
     estimatedMinutes: 75,
     exercises: [
       ExercisesCatalog.backSquat,
@@ -58,7 +66,11 @@ abstract final class MesocycleCatalog {
     id: 'push-b',
     label: 'Push B',
     weekday: 4,
-    focusMuscles: [MuscleGroup.shoulders, MuscleGroup.chest, MuscleGroup.triceps],
+    focusMuscles: [
+      MuscleGroup.shoulders,
+      MuscleGroup.chest,
+      MuscleGroup.triceps,
+    ],
     estimatedMinutes: 60,
     exercises: [
       ExercisesCatalog.overheadPress,
@@ -88,7 +100,11 @@ abstract final class MesocycleCatalog {
     id: 'legs-b',
     label: 'Legs B',
     weekday: 6,
-    focusMuscles: [MuscleGroup.glutes, MuscleGroup.hamstrings, MuscleGroup.quads],
+    focusMuscles: [
+      MuscleGroup.glutes,
+      MuscleGroup.hamstrings,
+      MuscleGroup.quads,
+    ],
     estimatedMinutes: 70,
     exercises: [
       ExercisesCatalog.hipThrust,

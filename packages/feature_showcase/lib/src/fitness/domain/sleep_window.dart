@@ -31,8 +31,7 @@ class SleepWindow extends Equatable {
   Duration get totalInBed => wakeAt.difference(bedAt);
 
   Duration get asleep => Duration(
-    minutes:
-        (totalInBed.inMinutes * (efficiencyPercent / 100)).round(),
+    minutes: (totalInBed.inMinutes * (efficiencyPercent / 100)).round(),
   );
 
   /// String compacta tipo "7h32" pro display.

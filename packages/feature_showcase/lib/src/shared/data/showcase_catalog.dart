@@ -36,9 +36,9 @@ abstract final class ShowcaseCatalog {
       id: 'fitness',
       label: 'Fitness',
       description:
-          'Tracker de treino com graficos — series, evolucao, plano '
-          'da semana.',
-      icon: Icons.fitness_center_outlined,
+          'Pulso — recovery dashboard, logger set-a-set com RPE e '
+          'periodizacao de 8 semanas.',
+      icon: Icons.monitor_heart_outlined,
       hasDemo: true,
     ),
     ShowcaseTemplate(

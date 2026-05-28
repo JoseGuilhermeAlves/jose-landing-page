@@ -47,8 +47,12 @@ class StrainScore extends Equatable {
   }
 
   @override
-  List<Object?> get props =>
-      [target, accumulated, cardioContribution, liftingContribution];
+  List<Object?> get props => [
+    target,
+    accumulated,
+    cardioContribution,
+    liftingContribution,
+  ];
 
   @override
   String toString() =>

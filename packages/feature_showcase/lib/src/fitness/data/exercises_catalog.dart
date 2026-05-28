@@ -8,7 +8,11 @@ abstract final class ExercisesCatalog {
   static const PlannedExercise benchPress = PlannedExercise(
     id: 'bench-press',
     name: 'Supino reto',
-    muscleGroups: [MuscleGroup.chest, MuscleGroup.triceps, MuscleGroup.shoulders],
+    muscleGroups: [
+      MuscleGroup.chest,
+      MuscleGroup.triceps,
+      MuscleGroup.shoulders,
+    ],
     targetSets: 4,
     targetReps: 8,
     suggestedWeightKg: 80,
@@ -212,7 +216,11 @@ abstract final class ExercisesCatalog {
   static const PlannedExercise romanianDeadlift = PlannedExercise(
     id: 'romanian-deadlift',
     name: 'Stiff',
-    muscleGroups: [MuscleGroup.hamstrings, MuscleGroup.glutes, MuscleGroup.back],
+    muscleGroups: [
+      MuscleGroup.hamstrings,
+      MuscleGroup.glutes,
+      MuscleGroup.back,
+    ],
     targetSets: 4,
     targetReps: 8,
     suggestedWeightKg: 90,

@@ -101,8 +101,7 @@ class SessionTemplate extends Equatable {
 
   bool get isRest => exercises.isEmpty;
 
-  int get totalTargetSets =>
-      exercises.fold(0, (acc, e) => acc + e.targetSets);
+  int get totalTargetSets => exercises.fold(0, (acc, e) => acc + e.targetSets);
 
   @override
   List<Object?> get props => [

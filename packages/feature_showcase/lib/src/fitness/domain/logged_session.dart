@@ -115,6 +115,7 @@ class LoggedSession extends Equatable {
   ];
 
   @override
-  String toString() => 'LoggedSession($id, $completedSetsCount sets, '
+  String toString() =>
+      'LoggedSession($id, $completedSetsCount sets, '
       '${isLive ? "live" : "finished"})';
 }

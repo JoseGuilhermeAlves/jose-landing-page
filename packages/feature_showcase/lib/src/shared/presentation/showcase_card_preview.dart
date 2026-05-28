@@ -3,7 +3,7 @@ import 'package:feature_showcase/src/delivery/presentation/aurora_hero_backdrop.
 import 'package:feature_showcase/src/finance/presentation/mira_brand.dart';
 import 'package:feature_showcase/src/finance/presentation/mira_hero_backdrop.dart';
 import 'package:feature_showcase/src/fitness/presentation/fitness_brand.dart';
-import 'package:feature_showcase/src/fitness/presentation/pulso_hero_backdrop.dart';
+import 'package:feature_showcase/src/fitness/presentation/painters/pulso_card_backdrop.dart';
 import 'package:feature_showcase/src/realestate/presentation/solar_hero_backdrop.dart';
 import 'package:feature_showcase/src/scheduling/presentation/vitral_hero_backdrop.dart';
 import 'package:flutter/material.dart';
@@ -70,10 +70,7 @@ class ShowcaseCardPreview extends StatelessWidget {
       gridColor: Color(0x1F2A3B70),
       cursorColor: Color(0x33B07A2C),
     ),
-    'fitness' => _themed(
-      FitnessBrand.palette,
-      const PulsoHeroBackdrop(isRest: false),
-    ),
+    'fitness' => _themed(FitnessBrand.palette, const PulsoCardBackdrop()),
     'realestate' => const SolarHeroBackdrop(
       skyColor: Color(0xFF1A1510),
       hillColor: Color(0x664B5D3A),
@@ -89,9 +86,7 @@ class ShowcaseCardPreview extends StatelessWidget {
         final base = Theme.of(context);
         return Theme(
           data: base.copyWith(
-            extensions: <ThemeExtension<dynamic>>[
-              AppColorsExtension(palette),
-            ],
+            extensions: <ThemeExtension<dynamic>>[AppColorsExtension(palette)],
           ),
           child: child,
         );

@@ -1,85 +1,198 @@
-import 'package:feature_showcase/src/fitness/domain/workout_day.dart';
-import 'package:feature_showcase/src/fitness/domain/workout_exercise.dart';
+import 'package:feature_showcase/src/fitness/data/exercises_catalog.dart';
+import 'package:feature_showcase/src/fitness/data/mesocycle_catalog.dart';
+import 'package:feature_showcase/src/fitness/data/recovery_catalog.dart';
+import 'package:feature_showcase/src/fitness/domain/logged_session.dart';
+import 'package:feature_showcase/src/fitness/domain/program.dart';
+import 'package:feature_showcase/src/fitness/domain/recovery_snapshot.dart';
+import 'package:feature_showcase/src/fitness/domain/set_entry.dart';
 import 'package:feature_showcase/src/fitness/presentation/fitness_event.dart';
 import 'package:feature_showcase/src/fitness/presentation/fitness_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-/// Bloc do mock de fitness. Mantem progresso de sets por (dia,
-/// exercicio) na semana inteira. Aceita `today` injetavel pro foco
-/// inicial cair no dia atual; testes passam data fixa.
+/// Bloc Pulso v2 (dark Whoop). Gerencia mesociclo, snapshot de
+/// recovery, strain do dia e sessao de treino logada (set-a-set
+/// com RPE).
 class FitnessBloc extends Bloc<FitnessEvent, FitnessState> {
-  FitnessBloc({required List<WorkoutDay> plan, required int today})
-    : super(
-        FitnessState(
-          plan: plan,
-          selectedWeekday: _resolveInitialDay(plan, today),
-          completedSets: const <String, int>{},
-        ),
-      ) {
-    on<FitnessDaySelected>(_onDaySelected);
-    on<FitnessSetCompleted>(_onSetCompleted);
-    on<FitnessSetUndone>(_onSetUndone);
+  FitnessBloc({Program? program, List<RecoverySnapshot>? recoveryHistory})
+    : super(_buildInitial(program, recoveryHistory)) {
+    on<SessionStarted>(_onSessionStarted);
+    on<SetLogged>(_onSetLogged);
+    on<ExerciseSwapped>(_onExerciseSwapped);
+    on<SessionFinished>(_onSessionFinished);
+    on<ProgramDaySelected>(_onProgramDaySelected);
+    on<RecoveryHistorySelected>(_onRecoveryHistorySelected);
+    on<RecoveryRefreshed>(_onRecoveryRefreshed);
+    on<RestExtended>(_onRestExtended);
+    on<RestSkipped>(_onRestSkipped);
     on<FitnessReset>(_onReset);
   }
 
-  /// Se [today] cai num dia de descanso, foca no proximo dia com
-  /// treino — evita o demo abrir vazio.
-  static int _resolveInitialDay(List<WorkoutDay> plan, int today) {
-    for (var offset = 0; offset < 7; offset++) {
-      final wd = ((today - 1 + offset) % 7) + 1;
-      final day = plan.firstWhere(
-        (d) => d.weekday == wd,
-        orElse: () => const WorkoutDay(weekday: 0, label: '', exercises: []),
-      );
-      if (!day.isRestDay) return wd;
-    }
-    return today;
-  }
+  /// Strain contribuido por cada set concluido — abstracao do mock.
+  /// Whoop calcula por HR; aqui usamos heuristica simples (peso x
+  /// RPE x reps normalizados).
+  static const double _strainPerSetBaseline = 0.45;
 
-  void _onDaySelected(FitnessDaySelected event, Emitter<FitnessState> emit) {
-    if (event.weekday == state.selectedWeekday) return;
-    emit(state.copyWith(selectedWeekday: event.weekday));
-  }
-
-  void _onSetCompleted(FitnessSetCompleted event, Emitter<FitnessState> emit) {
-    final exercise = _findExercise(event.weekday, event.exerciseId);
-    if (exercise == null) return;
-
-    final key = FitnessState.composeKey(event.weekday, event.exerciseId);
-    final current = state.completedSets[key] ?? 0;
-    if (current >= exercise.targetSets) return;
-
-    emit(
-      state.copyWith(completedSets: {...state.completedSets, key: current + 1}),
+  static FitnessState _buildInitial(
+    Program? program,
+    List<RecoverySnapshot>? history,
+  ) {
+    final p = program ?? MesocycleCatalog.build();
+    final h = history ?? RecoveryCatalog.history();
+    final today = DateTime.now().weekday;
+    return FitnessState(
+      program: p,
+      recoveryHistory: h,
+      strainToday: RecoveryCatalog.strainToday(),
+      selectedProgramDay: today,
+      recoveryHistoryOffset: 0,
     );
   }
 
-  void _onSetUndone(FitnessSetUndone event, Emitter<FitnessState> emit) {
-    final key = FitnessState.composeKey(event.weekday, event.exerciseId);
-    final current = state.completedSets[key] ?? 0;
-    if (current <= 0) return;
+  void _onSessionStarted(SessionStarted event, Emitter<FitnessState> emit) {
+    if (state.activeSession != null) return;
+    final template = state.program.sessionForToday(event.weekday);
+    if (template == null) return;
+    final week = state.program.currentWeek;
+    final session = LoggedSession(
+      id: 'session-${event.now.millisecondsSinceEpoch}',
+      templateId: template.id,
+      startedAt: event.now,
+      programWeek: week?.index ?? 1,
+      sets: const {},
+      peakStrain: 0,
+    );
+    emit(
+      state.copyWith(
+        activeSession: () => session,
+        selectedProgramDay: event.weekday,
+      ),
+    );
+  }
 
-    final next = {...state.completedSets};
-    if (current - 1 == 0) {
-      next.remove(key);
-    } else {
-      next[key] = current - 1;
+  void _onSetLogged(SetLogged event, Emitter<FitnessState> emit) {
+    final session = state.activeSession;
+    if (session == null) return;
+    final existingSets = List<SetEntry>.from(session.setsFor(event.exerciseId));
+    final wasCompleted = existingSets.any(
+      (s) => s.index == event.setIndex && s.completed,
+    );
+    var found = false;
+    for (var i = 0; i < existingSets.length; i++) {
+      if (existingSets[i].index == event.setIndex) {
+        existingSets[i] = existingSets[i].copyWith(
+          weightKg: event.weightKg,
+          reps: event.reps,
+          rpe: event.rpe,
+          completed: event.completed,
+        );
+        found = true;
+        break;
+      }
     }
-    emit(state.copyWith(completedSets: next));
+    if (!found) {
+      existingSets.add(
+        SetEntry(
+          id: '${event.exerciseId}-${event.setIndex}',
+          index: event.setIndex,
+          weightKg: event.weightKg,
+          reps: event.reps,
+          rpe: event.rpe,
+          completed: event.completed,
+        ),
+      );
+      existingSets.sort((a, b) => a.index.compareTo(b.index));
+    }
+    final nextSets = Map<String, List<SetEntry>>.from(session.sets);
+    nextSets[event.exerciseId] = existingSets;
+
+    final justCompleted = event.completed && !wasCompleted;
+    final justUncompleted = !event.completed && wasCompleted;
+    final strainDelta = justCompleted
+        ? _strainPerSetBaseline * (event.rpe / 7).clamp(0.5, 1.6)
+        : justUncompleted
+        ? -_strainPerSetBaseline * (event.rpe / 7).clamp(0.5, 1.6)
+        : 0.0;
+    final nextLifting = (state.strainToday.liftingContribution + strainDelta)
+        .clamp(0, 18)
+        .toDouble();
+    final nextAccumulated = nextLifting + state.strainToday.cardioContribution;
+    final nextStrain = state.strainToday.copyWith(
+      accumulated: nextAccumulated,
+      liftingContribution: nextLifting,
+    );
+    final nextPeak = nextAccumulated > session.peakStrain
+        ? nextAccumulated
+        : session.peakStrain;
+    emit(
+      state.copyWith(
+        activeSession: () =>
+            session.copyWith(sets: nextSets, peakStrain: nextPeak),
+        strainToday: nextStrain,
+      ),
+    );
+  }
+
+  void _onExerciseSwapped(ExerciseSwapped event, Emitter<FitnessState> emit) {
+    final replacement = ExercisesCatalog.byId(event.replacementExerciseId);
+    if (replacement == null) return;
+    final swaps = Map<String, String>.from(state.lastSwaps);
+    swaps[event.originalExerciseId] = event.replacementExerciseId;
+    final session = state.activeSession;
+    LoggedSession? Function() activeFn = () => session;
+    if (session != null) {
+      final sessionSwaps = Map<String, String>.from(session.swappedExercises);
+      sessionSwaps[event.originalExerciseId] = event.replacementExerciseId;
+      activeFn = () => session.copyWith(swappedExercises: sessionSwaps);
+    }
+    emit(state.copyWith(lastSwaps: swaps, activeSession: activeFn));
+  }
+
+  void _onSessionFinished(SessionFinished event, Emitter<FitnessState> emit) {
+    final session = state.activeSession;
+    if (session == null) return;
+    emit(
+      state.copyWith(
+        activeSession: () => session.copyWith(finishedAt: event.now),
+      ),
+    );
+  }
+
+  void _onProgramDaySelected(
+    ProgramDaySelected event,
+    Emitter<FitnessState> emit,
+  ) {
+    if (event.weekday == state.selectedProgramDay) return;
+    emit(state.copyWith(selectedProgramDay: event.weekday));
+  }
+
+  void _onRecoveryHistorySelected(
+    RecoveryHistorySelected event,
+    Emitter<FitnessState> emit,
+  ) {
+    if (event.offsetDays == state.recoveryHistoryOffset) return;
+    emit(state.copyWith(recoveryHistoryOffset: event.offsetDays));
+  }
+
+  void _onRecoveryRefreshed(
+    RecoveryRefreshed event,
+    Emitter<FitnessState> emit,
+  ) {
+    // Mock: re-emite mesma historia. Pro produto real, dispararia
+    // datasource e atualizaria. Sinaliza pra UI que recovery foi
+    // re-puxado via novo strain (mesmos numeros).
+    emit(state.copyWith(strainToday: state.strainToday.copyWith()));
+  }
+
+  void _onRestExtended(RestExtended event, Emitter<FitnessState> emit) {
+    // Rest timer e local ao widget; aqui so registramos pra
+    // analytics futuras (no-op pro mock).
+  }
+
+  void _onRestSkipped(RestSkipped event, Emitter<FitnessState> emit) {
+    // Idem — no-op pro mock.
   }
 
   void _onReset(FitnessReset event, Emitter<FitnessState> emit) {
-    emit(state.copyWith(completedSets: const <String, int>{}));
-  }
-
-  WorkoutExercise? _findExercise(int weekday, String exerciseId) {
-    final day = state.plan.firstWhere(
-      (d) => d.weekday == weekday,
-      orElse: () => const WorkoutDay(weekday: 0, label: '', exercises: []),
-    );
-    for (final ex in day.exercises) {
-      if (ex.id == exerciseId) return ex;
-    }
-    return null;
+    emit(_buildInitial(state.program, state.recoveryHistory));
   }
 }

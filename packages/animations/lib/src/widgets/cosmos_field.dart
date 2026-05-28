@@ -29,6 +29,10 @@ class CosmosField extends StatefulWidget {
     this.pixelSize = 2,
     this.planets,
     this.nebulas,
+    this.galaxies,
+    this.pulsars,
+    this.asteroidBelts,
+    this.wisps,
     this.comet = _defaultCometSentinel,
     this.shootingStars,
     this.pixelStars = CosmosField.defaultPixelStars,
@@ -48,6 +52,22 @@ class CosmosField extends StatefulWidget {
 
   /// Override das nebulosas. `null` aplica [defaultNebulas].
   final List<CosmosNebula>? nebulas;
+
+  /// Override das galaxias espirais. `null` aplica [defaultGalaxies];
+  /// passar lista vazia desativa.
+  final List<CosmosGalaxy>? galaxies;
+
+  /// Override dos pulsares. `null` aplica [defaultPulsars]; passar lista
+  /// vazia desativa.
+  final List<CosmosPulsar>? pulsars;
+
+  /// Override dos cinturoes de asteroides. `null` aplica
+  /// [defaultAsteroidBelts]; passar lista vazia desativa.
+  final List<CosmosAsteroidBelt>? asteroidBelts;
+
+  /// Override dos wisps. `null` aplica [defaultWisps]; passar lista vazia
+  /// desativa.
+  final List<CosmosWisp>? wisps;
 
   /// Cometa. `null` desativa explicitamente (sem cometa na cena); omitir
   /// o argumento aplica [defaultComet]. Implementado via sentinel interno
@@ -302,6 +322,105 @@ class CosmosField extends StatefulWidget {
     ];
   }
 
+  /// Galaxias espirais default — uma unica centerpiece grande off-axis
+  /// no canto inferior esquerdo. Nucleo creme quente + bracos violet
+  /// frios pra harmonizar com o conjunto de planetas neon. Renderiza
+  /// atras de tudo (sob nebulosas e estrelas), criando uma sensacao de
+  /// profundidade cosmica sem competir com o red giant focal.
+  static List<CosmosGalaxy> defaultGalaxies(AppColorScheme colors) {
+    return const [
+      CosmosGalaxy(
+        canvasAnchor: Offset(0.18, 0.86),
+        radiusPixels: 130,
+        coreColor: Color(0xFFFFE8C2),
+        armColor: Color(0xFF9D3FFF),
+        tiltY: 0.42,
+        rotation: -0.6,
+        dustCount: 260,
+        seed: 41,
+      ),
+    ];
+  }
+
+  /// Pulsares default — dois acentos pontuais em pontos calmos da cena
+  /// (longe dos planetas grandes), com cores frias (cyan + hot pink) e
+  /// fases dessincronizadas pra os pulsos nao baterem juntos.
+  static List<CosmosPulsar> defaultPulsars(AppColorScheme colors) {
+    return const [
+      CosmosPulsar(
+        canvasAnchor: Offset(0.86, 0.78),
+        coreColor: Color(0xFF99FFEC),
+        beamColor: Color(0xFF0AC4FF),
+        beamLengthPixels: 70,
+        seed: 31,
+      ),
+      CosmosPulsar(
+        canvasAnchor: Offset(0.30, 0.16),
+        coreColor: Color(0xFFFFCFF8),
+        beamColor: Color(0xFFFF1F8B),
+        coreRadiusPixels: 2,
+        beamLengthPixels: 54,
+        phaseOffset: 0.37,
+        seed: 47,
+      ),
+    ];
+  }
+
+  /// Cinturao de asteroides default — um unico arco amplo no canto
+  /// inferior-direito, levemente atras do coral-rocky. Rochas escuras com
+  /// pingos de gold pra reforcar a paleta quente da cena sem competir com
+  /// o red giant.
+  static List<CosmosAsteroidBelt> defaultAsteroidBelts(AppColorScheme colors) {
+    return const [
+      CosmosAsteroidBelt(
+        canvasAnchor: Offset(0.74, 0.62),
+        radiusPixels: 90,
+        rockColor: Color(0xFFC9B59A),
+        highlightColor: Color(0xFFFFE066),
+        tiltY: 0.32,
+        rotation: 0.45,
+        thicknessFactor: 0.16,
+        rockCount: 160,
+        arcStart: 0.08,
+        arcSweep: 0.78,
+        seed: 53,
+      ),
+    ];
+  }
+
+  /// Wisps default — um cluster soft no quadrante superior-esquerdo
+  /// (cyan + violet iridescente) e outro menor mid-direito (warm pink) pra
+  /// preencher cantos sem competir com nebulosas/focal points.
+  static List<CosmosWisp> defaultWisps(AppColorScheme colors) {
+    return const [
+      CosmosWisp(
+        canvasAnchor: Offset(0.32, 0.20),
+        radiusPixels: 70,
+        colors: [
+          Color(0xFF7FE9FF),
+          Color(0xFFB78BFF),
+          Color(0xFFE020F2),
+        ],
+        blobCount: 6,
+        driftPixels: 9,
+        density: 0.55,
+        seed: 71,
+      ),
+      CosmosWisp(
+        canvasAnchor: Offset(0.88, 0.42),
+        radiusPixels: 56,
+        colors: [
+          Color(0xFFFF99D6),
+          Color(0xFFFFE2B0),
+        ],
+        blobCount: 4,
+        driftPixels: 7,
+        density: 0.48,
+        seed: 89,
+      ),
+    ];
+  }
+
   /// Cometa default: diagonal noroeste -> sudeste, com cauda longa.
   /// Janela curta no inicio do ciclo (~6s) — sensacao de evento raro.
   static CosmosComet defaultComet(AppColorScheme colors) {
@@ -389,6 +508,11 @@ class _CosmosFieldState extends State<CosmosField>
     final colors = context.colors;
     final planets = widget.planets ?? CosmosField.defaultPlanets(colors);
     final nebulas = widget.nebulas ?? CosmosField.defaultNebulas(colors);
+    final galaxies = widget.galaxies ?? CosmosField.defaultGalaxies(colors);
+    final pulsars = widget.pulsars ?? CosmosField.defaultPulsars(colors);
+    final asteroidBelts =
+        widget.asteroidBelts ?? CosmosField.defaultAsteroidBelts(colors);
+    final wisps = widget.wisps ?? CosmosField.defaultWisps(colors);
     final comet = identical(widget.comet, _defaultCometSentinel)
         ? CosmosField.defaultComet(colors)
         : widget.comet;
@@ -409,6 +533,10 @@ class _CosmosFieldState extends State<CosmosField>
             pixelSize: widget.pixelSize,
             planets: planets,
             nebulas: nebulas,
+            galaxies: galaxies,
+            pulsars: pulsars,
+            asteroidBelts: asteroidBelts,
+            wisps: wisps,
             comet: comet,
             shootingStars: shootingStars,
             pixelStars: widget.pixelStars,

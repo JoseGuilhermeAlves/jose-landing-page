@@ -53,12 +53,49 @@ void main() {
       color: Color(0xFFFFFFFF),
     );
 
+    const galaxy = CosmosGalaxy(
+      canvasAnchor: Offset(0.2, 0.8),
+      radiusPixels: 40,
+      coreColor: Color(0xFFFFE8C2),
+      armColor: Color(0xFF9D3FFF),
+      seed: 41,
+    );
+
+    const pulsar = CosmosPulsar(
+      canvasAnchor: Offset(0.85, 0.2),
+      coreColor: Color(0xFF99FFEC),
+      beamColor: Color(0xFF0AC4FF),
+      coreRadiusPixels: 2,
+      beamLengthPixels: 30,
+    );
+
+    const belt = CosmosAsteroidBelt(
+      canvasAnchor: Offset(0.6, 0.5),
+      radiusPixels: 30,
+      rockColor: Color(0xFFC9B59A),
+      highlightColor: Color(0xFFFFE066),
+      rockCount: 40,
+      seed: 53,
+    );
+
+    const wisp = CosmosWisp(
+      canvasAnchor: Offset(0.3, 0.25),
+      radiusPixels: 20,
+      colors: [Color(0xFF7FE9FF), Color(0xFFB78BFF)],
+      blobCount: 4,
+      seed: 71,
+    );
+
     CosmosPainter make({
       double tick = 0,
       Color starColor = const Color(0xFFE8E8F0),
       double pixelSize = 4,
       List<CosmosPlanet> planets = const [planet, ringed, speckled],
       List<CosmosNebula> nebulas = const [nebula],
+      List<CosmosGalaxy> galaxies = const [galaxy],
+      List<CosmosPulsar> pulsars = const [pulsar],
+      List<CosmosAsteroidBelt> asteroidBelts = const [belt],
+      List<CosmosWisp> wisps = const [wisp],
       CosmosComet? comet$ = comet,
       List<Offset> pixelStars = const [Offset(0.1, 0.1), Offset(0.9, 0.9)],
     }) {
@@ -68,6 +105,10 @@ void main() {
         pixelSize: pixelSize,
         planets: planets,
         nebulas: nebulas,
+        galaxies: galaxies,
+        pulsars: pulsars,
+        asteroidBelts: asteroidBelts,
+        wisps: wisps,
         comet: comet$,
         pixelStars: pixelStars,
       );
@@ -88,6 +129,29 @@ void main() {
       );
       expect(make(pixelSize: 8).shouldRepaint(make()), isTrue);
       expect(make(comet$: null).shouldRepaint(make()), isTrue);
+    });
+
+    test('shouldRepaint reage a mudancas em galaxias e pulsares', () {
+      // Listas diferentes (nao identicas) devem disparar repaint.
+      expect(
+        make(galaxies: const []).shouldRepaint(make()),
+        isTrue,
+      );
+      expect(
+        make(pulsars: const []).shouldRepaint(make()),
+        isTrue,
+      );
+    });
+
+    test('shouldRepaint reage a mudancas em cinturoes e wisps', () {
+      expect(
+        make(asteroidBelts: const []).shouldRepaint(make()),
+        isTrue,
+      );
+      expect(
+        make(wisps: const []).shouldRepaint(make()),
+        isTrue,
+      );
     });
 
     test('hints: complexo + animando (willChange true)', () {

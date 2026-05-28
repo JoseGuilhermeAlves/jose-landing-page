@@ -99,29 +99,13 @@ class _Logo extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = context.colors;
     final textTheme = Theme.of(context).textTheme;
-    final isMobile = context.isMobile;
 
-    final mark = Container(
-      width: 36,
-      height: 36,
-      decoration: BoxDecoration(
-        gradient: AppGradients.brand(colors),
-        borderRadius: BorderRadius.circular(AppRadius.md),
-        boxShadow: [
-          BoxShadow(
-            color: colors.primary.withValues(alpha: 0.4),
-            blurRadius: 16,
-            spreadRadius: -4,
-          ),
-        ],
-      ),
-      clipBehavior: Clip.antiAlias,
-      child: Image.asset(
-        'assets/images/foto_jose.png',
-        width: 36,
-        height: 36,
-        fit: BoxFit.cover,
-      ),
+    // Wordmark "ZeguiDev" puro (sem icone). Sufixo "Dev" em gradient
+    // brand pra carregar a identidade visual sem mark separado.
+    final baseStyle = textTheme.titleSmall?.copyWith(
+      color: colors.onSurface,
+      fontWeight: FontWeight.w700,
+      letterSpacing: 0.3,
     );
 
     return Tooltip(
@@ -134,17 +118,12 @@ class _Logo extends StatelessWidget {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              mark,
-              if (!isMobile) ...[
-                const SizedBox(width: AppSpacing.md),
-                Text(
-                  'Jose Guilherme',
-                  style: textTheme.titleSmall?.copyWith(
-                    color: colors.onSurface,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ],
+              Text('Zegui', style: baseStyle),
+              GradientText(
+                text: 'Dev',
+                gradient: AppGradients.brand(colors),
+                style: baseStyle,
+              ),
             ],
           ),
         ),

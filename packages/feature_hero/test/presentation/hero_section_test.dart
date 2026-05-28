@@ -17,6 +17,15 @@ void main() {
     );
   }
 
+  // Hero agora exibe foto a esquerda em desktop — surface size default
+  // do flutter_test (800x600) nao acomoda foto + CTAs lado a lado, o que
+  // empurra botoes pra fora do viewport e quebra taps. Helper aumenta
+  // surface por teste e registra reset.
+  Future<void> useDesktopSurface(WidgetTester tester) async {
+    await tester.binding.setSurfaceSize(const Size(1600, 1200));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+  }
+
   group('HeroSection', () {
     testWidgets('renderiza headline e subheadline canonicos', (tester) async {
       await tester.pumpWidget(wrap(const HeroSection()));
@@ -63,6 +72,7 @@ void main() {
     });
 
     testWidgets('CTA do WhatsApp dispara onContactPressed', (tester) async {
+      await useDesktopSurface(tester);
       var taps = 0;
       await tester.pumpWidget(
         wrap(HeroSection(onContactPressed: () => taps++)),
@@ -78,6 +88,7 @@ void main() {
     testWidgets('CTA "Ver projetos" dispara onSeeProjectsPressed', (
       tester,
     ) async {
+      await useDesktopSurface(tester);
       var taps = 0;
       await tester.pumpWidget(
         wrap(HeroSection(onSeeProjectsPressed: () => taps++)),
@@ -93,6 +104,7 @@ void main() {
     testWidgets('CTAs ficam desabilitados quando callbacks nao sao providos', (
       tester,
     ) async {
+      await useDesktopSurface(tester);
       final handle = tester.ensureSemantics();
       try {
         await tester.pumpWidget(wrap(const HeroSection()));
@@ -142,22 +154,36 @@ void main() {
       await tester.pumpWidget(const SizedBox());
     });
 
-    testWidgets('layout desktop (largura >= 900) coloca CTAs lado a lado', (
+    testWidgets('layout desktop renderiza foto a esquerda do texto', (
       tester,
     ) async {
-      await tester.pumpWidget(wrap(const HeroSection()));
+      // Em desktop o hero passa a ser Row com foto a esquerda e
+      // texto+CTA a direita — eixo de leitura horizontal substitui
+      // o center-aligned anterior.
+      await tester.binding.setSurfaceSize(const Size(1600, 900));
+      addTearDown(() => tester.binding.setSurfaceSize(null));
+
+      await tester.pumpWidget(
+        wrap(const HeroSection(), size: const Size(1600, 900)),
+      );
       await tester.pump(const Duration(milliseconds: 16));
 
-      final whatsappRect = tester.getRect(find.text('Falar no WhatsApp'));
-      final projectsRect = tester.getRect(find.text('Ver projetos'));
-
-      // Em desktop, ambos compartilham aproximadamente a mesma linha.
-      expect(
-        (whatsappRect.center.dy - projectsRect.center.dy).abs(),
-        lessThan(8),
+      final photoFinder = find.byWidgetPredicate(
+        (w) =>
+            w is Image &&
+            w.image is AssetImage &&
+            (w.image as AssetImage).assetName ==
+                'assets/images/foto_recortada.png',
       );
-      // E o "Ver projetos" fica a direita do WhatsApp.
-      expect(projectsRect.left, greaterThan(whatsappRect.right - 1));
+      expect(photoFinder, findsOneWidget);
+
+      final photoRect = tester.getRect(photoFinder);
+      final headlineRect = tester.getRect(
+        find.textContaining('Front end mobile'),
+      );
+
+      // Foto fica a esquerda do headline.
+      expect(photoRect.right, lessThan(headlineRect.left + 1));
 
       await tester.pumpWidget(const SizedBox());
     });

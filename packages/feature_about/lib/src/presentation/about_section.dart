@@ -105,12 +105,7 @@ class _BioCard extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     final isMobile = context.isMobile;
 
-    final avatar = _Avatar(
-      initials: 'JG',
-      photo: photo,
-      colors: colors,
-      textTheme: textTheme,
-    );
+    final avatar = _Avatar(photo: photo, colors: colors);
 
     final textBlock = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -177,26 +172,25 @@ class _BioCard extends StatelessWidget {
 }
 
 class _Avatar extends StatelessWidget {
-  const _Avatar({
-    required this.initials,
-    required this.colors,
-    required this.textTheme,
-    this.photo,
-  });
+  const _Avatar({required this.colors, this.photo});
 
-  final String initials;
   final ImageProvider? photo;
   final AppColorScheme colors;
-  final TextTheme textTheme;
 
   @override
   Widget build(BuildContext context) {
+    // Sem foto: BrandMark assume papel de avatar (ja traz gradiente + glow).
+    if (photo == null) {
+      return BrandMark(
+        size: 96,
+        borderRadius: BorderRadius.circular(AppRadius.lg),
+      );
+    }
     return Container(
       width: 96,
       height: 96,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        gradient: photo == null ? AppGradients.brand(colors) : null,
         boxShadow: [
           BoxShadow(
             color: colors.primary.withValues(alpha: 0.4),
@@ -206,17 +200,7 @@ class _Avatar extends StatelessWidget {
         ],
       ),
       clipBehavior: Clip.antiAlias,
-      child: photo != null
-          ? Image(image: photo!, width: 96, height: 96, fit: BoxFit.cover)
-          : Center(
-              child: Text(
-                initials,
-                style: textTheme.headlineMedium?.copyWith(
-                  color: colors.onPrimary,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-            ),
+      child: Image(image: photo!, width: 96, height: 96, fit: BoxFit.cover),
     );
   }
 }

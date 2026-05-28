@@ -13,7 +13,6 @@ dependencies:
     path: ../design_system
   flutter:
     sdk: flutter
-  go_router: ^16.2.4
 
 dev_dependencies:
   flutter_test:

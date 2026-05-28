@@ -1,4 +1,5 @@
 import 'dart:math' as math;
+import 'dart:ui' show PointMode;
 
 import 'package:flutter/material.dart';
 
@@ -109,6 +110,193 @@ class CosmosNebula {
   final int seed;
 }
 
+/// Galaxia espiral — pinwheel com nucleo bright, bracos em espiral
+/// logaritmica e poeira/estrelas dispersas. Suporta inclinacao `tiltY`
+/// (achatamento vertical pra sensacao de plano galactico inclinado) e
+/// rotacao lenta amarrada ao `tick` do painter.
+///
+/// Usada como centerpiece de fundo (renderiza antes das nebulosas).
+/// Cores tipicas: nucleo creme/branco quente, bracos em tom frio (cyan,
+/// violet, magenta).
+@immutable
+class CosmosGalaxy {
+  const CosmosGalaxy({
+    required this.canvasAnchor,
+    required this.radiusPixels,
+    required this.coreColor,
+    required this.armColor,
+    this.armCount = 2,
+    this.tiltY = 0.45,
+    this.rotation = 0.0,
+    this.dustCount = 220,
+    this.seed = 0,
+  });
+
+  final Offset canvasAnchor;
+  final int radiusPixels;
+
+  /// Cor do nucleo brilhante (centro denso).
+  final Color coreColor;
+
+  /// Cor dominante dos bracos espirais (poeira + estrelas).
+  final Color armColor;
+
+  /// 2 ou 4 dao melhor leitura visual.
+  final int armCount;
+
+  /// Achatamento vertical (0.05..1.0). Valor < 1 simula plano inclinado.
+  final double tiltY;
+
+  /// Offset estatico de rotacao em radianos. O painter adiciona drift
+  /// derivado de `tick`.
+  final double rotation;
+
+  /// Quantidade de pontos de poeira espalhados ao longo dos bracos.
+  /// Renderizados em batch via `drawPoints(PointMode.points)`.
+  final int dustCount;
+
+  final int seed;
+}
+
+/// Pulsar — estrela de neutrons pequena e brilhante com dois feixes de
+/// luz girando radialmente, estilo farol. Pulso de brilho rapido
+/// (sine sync com `tick`) reforca o ritmo. Compacto e pontual, ideal
+/// como acento ornamental.
+@immutable
+class CosmosPulsar {
+  const CosmosPulsar({
+    required this.canvasAnchor,
+    required this.coreColor,
+    required this.beamColor,
+    this.coreRadiusPixels = 3,
+    this.beamLengthPixels = 80,
+    this.beamWidthRadians = 0.10,
+    this.phaseOffset = 0.0,
+    this.seed = 0,
+  });
+
+  final Offset canvasAnchor;
+  final Color coreColor;
+  final Color beamColor;
+
+  /// Raio do nucleo brilhante (logico, antes do `pixelSize`).
+  final int coreRadiusPixels;
+
+  /// Comprimento dos feixes (logico, antes do `pixelSize`).
+  final int beamLengthPixels;
+
+  /// Abertura angular do feixe em radianos. ~0.10 da um leque estreito
+  /// estilo farol; valores maiores espalham demais.
+  final double beamWidthRadians;
+
+  /// Offset de fase em [0,1] pra dessincronizar pulsares vizinhos.
+  final double phaseOffset;
+
+  final int seed;
+}
+
+/// Cinturao de asteroides — ribbon de pequenas rochas distribuidas em uma
+/// elipse inclinada (plano orbital visto em perspectiva). Roda lentamente
+/// em torno do centro (~25% de uma volta por ciclo). Cada rocha tem
+/// tamanho e tinta variados (cinza rochoso + highlights quentes ou
+/// gelados), seed-determinista. Renderizadas em batch via
+/// `drawPoints(PointMode.points)` pra suportar densidade alta sem custo
+/// por-rocha.
+///
+/// Usado como camada mid (entre planetas e pulsares). Distinto do anel de
+/// planeta porque nao orbita um corpo especifico — flutua livre.
+@immutable
+class CosmosAsteroidBelt {
+  const CosmosAsteroidBelt({
+    required this.canvasAnchor,
+    required this.radiusPixels,
+    required this.rockColor,
+    required this.highlightColor,
+    this.tiltY = 0.30,
+    this.rotation = 0.0,
+    this.thicknessFactor = 0.18,
+    this.rockCount = 140,
+    this.arcStart = 0.0,
+    this.arcSweep = 1.0,
+    this.seed = 0,
+  });
+
+  final Offset canvasAnchor;
+
+  /// Raio medio do cinturao (eixo maior da elipse).
+  final int radiusPixels;
+
+  /// Cor dominante das rochas (cinza rochoso ou tom escuro frio).
+  final Color rockColor;
+
+  /// Cor dos brilhos pontuais (gold quente, white gelado).
+  final Color highlightColor;
+
+  /// Achatamento vertical (0.05..1.0). Valor < 1 simula plano orbital
+  /// inclinado em perspectiva.
+  final double tiltY;
+
+  /// Offset estatico de rotacao em radianos. O painter adiciona drift
+  /// derivado de `tick`.
+  final double rotation;
+
+  /// Espessura radial relativa ao raio (0..1). 0.18 = banda fina como
+  /// cinturao classico; valores maiores espalham mais.
+  final double thicknessFactor;
+
+  /// Quantidade de rochas. Renderizadas em batch via `drawPoints`.
+  final int rockCount;
+
+  /// Fracao [0,1] de onde comeca o arco. 0 = leste do centro.
+  final double arcStart;
+
+  /// Fracao [0,1] de quanto do circulo cobrir. 1 = completo;
+  /// 0.6 = ribbon parcial pra sensacao de arco.
+  final double arcSweep;
+
+  final int seed;
+}
+
+/// Wisp — nuvem de gas concentrada com multiplas bolhas de cor soft
+/// sobrepostas, drift turbulento via offsets seed-deterministas. Distinta
+/// de nebulosa por ser mais densa, concentrada e visivelmente animada
+/// (cada blob respira numa fase diferente).
+///
+/// Usado como camada atmosferica (entre nebulosas e planetas). Boa pra
+/// preencher cantos vazios sem competir com focal points.
+@immutable
+class CosmosWisp {
+  const CosmosWisp({
+    required this.canvasAnchor,
+    required this.radiusPixels,
+    required this.colors,
+    this.blobCount = 5,
+    this.driftPixels = 12,
+    this.density = 0.6,
+    this.seed = 0,
+  });
+
+  final Offset canvasAnchor;
+
+  /// Raio aparente do cluster como um todo (envelope externo).
+  final int radiusPixels;
+
+  /// 2-4 cores soft. Cada blob escolhe ciclicamente — overlap de tintas
+  /// distintas gera profundidade tipo gas iridescente.
+  final List<Color> colors;
+
+  /// Quantidade de blobs sobrepostos. 4-7 da volume sem virar mancha.
+  final int blobCount;
+
+  /// Amplitude maxima do drift (logico, antes do `pixelSize`).
+  final int driftPixels;
+
+  /// Multiplicador global de alpha (0..1).
+  final double density;
+
+  final int seed;
+}
+
 @immutable
 class CosmosComet {
   const CosmosComet({
@@ -136,6 +324,10 @@ class CosmosPainter extends CustomPainter {
     this.pixelSize = 2,
     this.planets = const [],
     this.nebulas = const [],
+    this.galaxies = const [],
+    this.pulsars = const [],
+    this.asteroidBelts = const [],
+    this.wisps = const [],
     this.comet,
     this.shootingStars = const [],
     this.pixelStars = const [],
@@ -150,6 +342,10 @@ class CosmosPainter extends CustomPainter {
 
   final List<CosmosPlanet> planets;
   final List<CosmosNebula> nebulas;
+  final List<CosmosGalaxy> galaxies;
+  final List<CosmosPulsar> pulsars;
+  final List<CosmosAsteroidBelt> asteroidBelts;
+  final List<CosmosWisp> wisps;
   final CosmosComet? comet;
   final List<CosmosComet> shootingStars;
   final List<Offset> pixelStars;
@@ -164,8 +360,17 @@ class CosmosPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     if (size.isEmpty) return;
 
+    // Camada mais profunda: galaxias antes de tudo, depois nebulosas.
+    for (final g in galaxies) {
+      _paintGalaxy(canvas, size, g);
+    }
     for (final n in nebulas) {
       _paintNebula(canvas, size, n);
+    }
+    // Wisps logo apos nebulosas — camada atmosferica densa entre o fundo
+    // nebuloso e os corpos solidos.
+    for (final w in wisps) {
+      _paintWisp(canvas, size, w);
     }
     _paintStars(canvas, size);
     for (final p in planets) {
@@ -179,6 +384,15 @@ class CosmosPainter extends CustomPainter {
     }
     for (final p in planets) {
       if (p.moon != null) _paintMoon(canvas, size, p);
+    }
+    // Cinturoes de asteroides na camada mid — depois das luas, antes dos
+    // pulsares. Sao texturais; pulsares precisam ficar por cima.
+    for (final b in asteroidBelts) {
+      _paintAsteroidBelt(canvas, size, b);
+    }
+    // Pulsares na camada mid (com planetas) — bright spots pontuais.
+    for (final ps in pulsars) {
+      _paintPulsar(canvas, size, ps);
     }
     if (comet != null) _paintComet(canvas, size, comet!);
     for (final s in shootingStars) {
@@ -785,6 +999,394 @@ class CosmosPainter extends CustomPainter {
   }
 
   // ===========================================================================
+  // GALAXIA ESPIRAL — nucleo bright + bracos em espiral logaritmica
+  // ===========================================================================
+
+  void _paintGalaxy(Canvas canvas, Size size, CosmosGalaxy g) {
+    if (g.radiusPixels <= 0) return;
+    final cx = g.canvasAnchor.dx * size.width;
+    final cy = g.canvasAnchor.dy * size.height;
+    final r = g.radiusPixels * pixelSize;
+    final tiltY = g.tiltY.clamp(0.05, 1.0);
+    // Rotacao lenta (~25% de uma volta por ciclo) somada ao offset estatico.
+    final rot = g.rotation + tick * 2 * math.pi * 0.25;
+    final armCount = math.max(1, g.armCount);
+
+    // Escalas Y pra simular plano galactico inclinado. Toda matematica
+    // subsequente (centro, halo, bracos) ja sai esmagada verticalmente.
+    canvas
+      ..save()
+      ..translate(cx, cy)
+      ..scale(1, tiltY)
+      ..rotate(rot);
+
+    // Halo externo difuso — bloom geral que une nucleo + bracos sem
+    // virar nuvem chapada.
+    final haloShader = RadialGradient(
+      colors: [
+        g.armColor.withValues(alpha: (g.armColor.a * 0.22).clamp(0.0, 1.0)),
+        g.armColor.withValues(alpha: (g.armColor.a * 0.10).clamp(0.0, 1.0)),
+        g.armColor.withValues(alpha: 0),
+      ],
+      stops: const [0.0, 0.55, 1.0],
+    ).createShader(Rect.fromCircle(center: Offset.zero, radius: r));
+    _paint.shader = haloShader;
+    canvas.drawCircle(Offset.zero, r, _paint);
+    _paint.shader = null;
+
+    // Nucleo denso — gradient creme/quente concentrado no centro.
+    final coreR = r * 0.32;
+    final coreShader = RadialGradient(
+      colors: [
+        g.coreColor.withValues(alpha: 0.98),
+        g.coreColor.withValues(alpha: 0.65),
+        g.coreColor.withValues(alpha: 0.18),
+        g.coreColor.withValues(alpha: 0),
+      ],
+      stops: const [0.0, 0.35, 0.70, 1.0],
+    ).createShader(Rect.fromCircle(center: Offset.zero, radius: coreR));
+    _paint.shader = coreShader;
+    canvas.drawCircle(Offset.zero, coreR, _paint);
+    _paint.shader = null;
+
+    // Bracos: poeira em pontos batched via drawPoints — Skia desenha
+    // todos como squares de strokeWidth em uma chamada so. Espiral
+    // logaritmica r(theta) = a * exp(b * theta).
+    final rng = math.Random(g.seed * 131 + 17);
+    final perArm = math.max(1, g.dustCount ~/ armCount);
+    const turns = 1.6; // quantas voltas a espiral da do centro a borda.
+    const b = 0.32; // tightness do braco; menor = mais enrolado.
+
+    // Pontos coletados em lista local — alocacao reusada nao serve aqui
+    // porque drawPoints aceita lista; mas é UMA alocacao por frame, nao
+    // mil drawCircle. Vale o tradeoff.
+    for (var arm = 0; arm < armCount; arm++) {
+      final armPhase = (arm / armCount) * 2 * math.pi;
+      final points = <Offset>[];
+      for (var i = 0; i < perArm; i++) {
+        // Distribuicao com bias pra fora — concentra menos pontos no
+        // nucleo (que ja tem o gradient denso) e mais nos bracos.
+        final t = math.pow(rng.nextDouble(), 0.6).toDouble();
+        final theta = armPhase + t * turns * 2 * math.pi;
+        final radius = r * 0.18 + (r * 0.78) * t * math.exp(b * 0);
+        // Jitter perpendicular ao braco — espessura natural.
+        final jitter = (rng.nextDouble() - 0.5) * r * 0.10 * (1 - t * 0.4);
+        final dirX = math.cos(theta);
+        final dirY = math.sin(theta);
+        final px = dirX * radius + (-dirY) * jitter;
+        final py = dirY * radius + dirX * jitter;
+        points.add(Offset(px, py));
+      }
+      // Alpha decai um pouco em bracos secundarios pra dar leitura
+      // hierarquica quando armCount > 2.
+      final armAlpha = (g.armColor.a * (arm == 0 ? 0.85 : 0.70))
+          .clamp(0.0, 1.0);
+      _paint
+        ..color = g.armColor.withValues(alpha: armAlpha)
+        ..strokeCap = StrokeCap.round
+        ..strokeWidth = pixelSize * 0.9;
+      canvas.drawPoints(PointMode.points, points, _paint);
+
+      // Algumas estrelas brilhantes pontuais por braco (1 em ~15 pontos)
+      // — desenhadas como dots maiores no nucleo de cor clara.
+      for (var i = 0; i < points.length; i += 15) {
+        _paint
+          ..color = g.coreColor.withValues(alpha: 0.85)
+          ..strokeWidth = pixelSize * 1.6;
+        canvas.drawPoints(PointMode.points, [points[i]], _paint);
+      }
+    }
+
+    // Reset paint state mutavel.
+    _paint
+      ..strokeWidth = 0
+      ..strokeCap = StrokeCap.butt
+      ..color = const Color(0xFF000000);
+
+    canvas.restore();
+  }
+
+  // ===========================================================================
+  // PULSAR — nucleo bright + dois feixes rotativos estilo farol
+  // ===========================================================================
+
+  void _paintPulsar(Canvas canvas, Size size, CosmosPulsar p) {
+    final cx = p.canvasAnchor.dx * size.width;
+    final cy = p.canvasAnchor.dy * size.height;
+    final coreR = p.coreRadiusPixels * pixelSize;
+    final beamLen = p.beamLengthPixels * pixelSize;
+    if (coreR <= 0 || beamLen <= 0) return;
+    final center = Offset(cx, cy);
+
+    // Pulso rapido (~6 batidas por ciclo). Brilho oscila 0.55..1.0.
+    final pulse =
+        0.55 +
+        0.45 * (0.5 + 0.5 * math.sin((tick + p.phaseOffset) * 2 * math.pi * 6));
+    // Rotacao dos feixes (~4 voltas por ciclo).
+    final beamAngle =
+        (tick + p.phaseOffset) * 2 * math.pi * 4 + p.seed * 0.37;
+
+    // Halo externo discreto.
+    final haloR = coreR * 4.5;
+    final haloShader = RadialGradient(
+      colors: [
+        p.coreColor.withValues(alpha: (0.55 * pulse).clamp(0.0, 1.0)),
+        p.coreColor.withValues(alpha: (0.18 * pulse).clamp(0.0, 1.0)),
+        p.coreColor.withValues(alpha: 0),
+      ],
+      stops: const [0.0, 0.40, 1.0],
+    ).createShader(Rect.fromCircle(center: center, radius: haloR));
+    _paint.shader = haloShader;
+    canvas.drawCircle(center, haloR, _paint);
+    _paint.shader = null;
+
+    // Dois feixes opostos — triangulos finos com gradient linear
+    // (cheio no nucleo, transparente na ponta).
+    final width = p.beamWidthRadians.clamp(0.02, 1.0);
+    for (var i = 0; i < 2; i++) {
+      final ang = beamAngle + i * math.pi;
+      final tip = Offset(
+        center.dx + math.cos(ang) * beamLen,
+        center.dy + math.sin(ang) * beamLen,
+      );
+      final leftAng = ang + width / 2;
+      final rightAng = ang - width / 2;
+      // Base do feixe e o proprio nucleo — sai do raio do core.
+      final baseL = Offset(
+        center.dx + math.cos(leftAng) * coreR,
+        center.dy + math.sin(leftAng) * coreR,
+      );
+      final baseR = Offset(
+        center.dx + math.cos(rightAng) * coreR,
+        center.dy + math.sin(rightAng) * coreR,
+      );
+      final beam = Path()
+        ..moveTo(baseL.dx, baseL.dy)
+        ..lineTo(tip.dx, tip.dy)
+        ..lineTo(baseR.dx, baseR.dy)
+        ..close();
+      final beamShader = LinearGradient(
+        colors: [
+          p.beamColor.withValues(
+            alpha: (p.beamColor.a * 0.95 * pulse).clamp(0.0, 1.0),
+          ),
+          p.beamColor.withValues(alpha: 0),
+        ],
+      ).createShader(Rect.fromPoints(center, tip));
+      _paint.shader = beamShader;
+      canvas.drawPath(beam, _paint);
+      _paint.shader = null;
+    }
+
+    // Nucleo: glow + dot branco no centro.
+    final coreShader = RadialGradient(
+      colors: [
+        Colors.white.withValues(alpha: pulse.clamp(0.0, 1.0)),
+        p.coreColor.withValues(alpha: (0.85 * pulse).clamp(0.0, 1.0)),
+        p.coreColor.withValues(alpha: 0),
+      ],
+      stops: const [0.0, 0.55, 1.0],
+    ).createShader(Rect.fromCircle(center: center, radius: coreR * 1.8));
+    _paint.shader = coreShader;
+    canvas.drawCircle(center, coreR * 1.8, _paint);
+    _paint.shader = null;
+
+    _paint.color = Colors.white.withValues(alpha: pulse.clamp(0.0, 1.0));
+    canvas.drawCircle(center, coreR * 0.55, _paint);
+  }
+
+  // ===========================================================================
+  // CINTURAO DE ASTEROIDES — elipse tilted com rochas batched
+  // ===========================================================================
+
+  void _paintAsteroidBelt(Canvas canvas, Size size, CosmosAsteroidBelt b) {
+    if (b.radiusPixels <= 0 || b.rockCount <= 0) return;
+    final cx = b.canvasAnchor.dx * size.width;
+    final cy = b.canvasAnchor.dy * size.height;
+    final r = b.radiusPixels * pixelSize;
+    final tiltY = b.tiltY.clamp(0.05, 1.0);
+    // Rotacao lenta ~25% por ciclo.
+    final rot = b.rotation + tick * 2 * math.pi * 0.25;
+    final thickness = (b.thicknessFactor.clamp(0.02, 0.8)) * r;
+    final sweep = b.arcSweep.clamp(0.05, 1.0);
+    final startAng = b.arcStart * 2 * math.pi;
+
+    canvas
+      ..save()
+      ..translate(cx, cy)
+      ..scale(1, tiltY)
+      ..rotate(rot);
+
+    // Halo difuso fininho ao longo do arco — sensacao de poeira de fundo
+    // antes das rochas individuais. Desenhado como anel via path donut.
+    if (sweep > 0.9) {
+      final haloOuter = r + thickness * 0.6;
+      final haloInner = r - thickness * 0.6;
+      if (haloInner > 0) {
+        final donut = Path()
+          ..addOval(
+            Rect.fromCenter(
+              center: Offset.zero,
+              width: haloOuter * 2,
+              height: haloOuter * 2,
+            ),
+          )
+          ..addOval(
+            Rect.fromCenter(
+              center: Offset.zero,
+              width: haloInner * 2,
+              height: haloInner * 2,
+            ),
+          )
+          ..fillType = PathFillType.evenOdd;
+        _paint.color = b.rockColor.withValues(
+          alpha: (b.rockColor.a * 0.10).clamp(0.0, 1.0),
+        );
+        canvas.drawPath(donut, _paint);
+      }
+    }
+
+    // Distribui rochas ao longo do arco com jitter radial. Coleta em
+    // listas locais por tier (small / medium / highlight) pra batchar em
+    // drawPoints — Skia faz uma chamada GPU por tier ao inves de N
+    // drawCircle, salvando dezenas de draw calls.
+    final rng = math.Random(b.seed * 211 + 3);
+    final smallPoints = <Offset>[];
+    final mediumPoints = <Offset>[];
+    final highlightPoints = <Offset>[];
+
+    for (var i = 0; i < b.rockCount; i++) {
+      // Theta uniforme dentro do arco.
+      final theta = startAng + rng.nextDouble() * sweep * 2 * math.pi;
+      // Distribuicao radial com bias gaussiano fraco no centro do anel —
+      // mais rochas perto do raio medio, menos nas bordas.
+      final jitterRaw = rng.nextDouble() + rng.nextDouble() - 1.0;
+      final radial = r + jitterRaw * thickness;
+      final px = math.cos(theta) * radial;
+      final py = math.sin(theta) * radial;
+      final pt = Offset(px, py);
+
+      // Tier sortido: ~12% highlight (bright gold/ice), ~28% medium,
+      // resto small. Distribuicao tipica de cinturao real.
+      final tier = rng.nextDouble();
+      if (tier < 0.12) {
+        highlightPoints.add(pt);
+      } else if (tier < 0.40) {
+        mediumPoints.add(pt);
+      } else {
+        smallPoints.add(pt);
+      }
+    }
+
+    // Small rocks — pontos finos de baixa intensidade.
+    if (smallPoints.isNotEmpty) {
+      _paint
+        ..color = b.rockColor.withValues(
+          alpha: (b.rockColor.a * 0.70).clamp(0.0, 1.0),
+        )
+        ..strokeCap = StrokeCap.round
+        ..strokeWidth = pixelSize * 0.7;
+      canvas.drawPoints(PointMode.points, smallPoints, _paint);
+    }
+
+    // Medium rocks — um pouco maiores e mais opacos.
+    if (mediumPoints.isNotEmpty) {
+      _paint
+        ..color = b.rockColor.withValues(
+          alpha: (b.rockColor.a * 0.95).clamp(0.0, 1.0),
+        )
+        ..strokeCap = StrokeCap.round
+        ..strokeWidth = pixelSize * 1.2;
+      canvas.drawPoints(PointMode.points, mediumPoints, _paint);
+    }
+
+    // Highlights — rochas reluzentes, cor quente/gelada.
+    if (highlightPoints.isNotEmpty) {
+      _paint
+        ..color = b.highlightColor.withValues(
+          alpha: (b.highlightColor.a * 0.95).clamp(0.0, 1.0),
+        )
+        ..strokeCap = StrokeCap.round
+        ..strokeWidth = pixelSize * 1.6;
+      canvas.drawPoints(PointMode.points, highlightPoints, _paint);
+    }
+
+    // Reset state mutavel.
+    _paint
+      ..strokeWidth = 0
+      ..strokeCap = StrokeCap.butt
+      ..color = const Color(0xFF000000);
+
+    canvas.restore();
+  }
+
+  // ===========================================================================
+  // WISP — cluster de blobs soft com drift turbulento
+  // ===========================================================================
+
+  void _paintWisp(Canvas canvas, Size size, CosmosWisp w) {
+    if (w.radiusPixels <= 0 || w.blobCount <= 0 || w.colors.isEmpty) return;
+    final cx = w.canvasAnchor.dx * size.width;
+    final cy = w.canvasAnchor.dy * size.height;
+    final r = w.radiusPixels * pixelSize;
+    final drift = w.driftPixels * pixelSize;
+    final density = w.density.clamp(0.0, 1.0);
+
+    final rng = math.Random(w.seed * 173 + 11);
+    const twoPi = 2 * math.pi;
+
+    for (var i = 0; i < w.blobCount; i++) {
+      // Cada blob tem ancora base (radial random dentro do envelope),
+      // tamanho proprio e fase de drift dessincronizada.
+      final baseAng = rng.nextDouble() * twoPi;
+      final baseDist = rng.nextDouble() * r * 0.55;
+      final blobR = r * (0.45 + rng.nextDouble() * 0.45);
+      final phaseX = rng.nextDouble() * twoPi;
+      final phaseY = rng.nextDouble() * twoPi;
+      final breathPhase = rng.nextDouble() * twoPi;
+      final color = w.colors[i % w.colors.length];
+
+      // Drift turbulento via duas senoides em fases distintas — barato e
+      // suficientemente organico pra leitura de gas em movimento.
+      final dx = math.sin(tick * twoPi + phaseX) * drift;
+      final dy = math.cos(tick * twoPi * 0.83 + phaseY) * drift * 0.75;
+
+      // Breath de alpha: respira 0.75..1.0.
+      final breath = 0.75 + 0.25 * math.sin(tick * twoPi + breathPhase);
+
+      final center = Offset(
+        math.cos(baseAng) * baseDist + dx,
+        math.sin(baseAng) * baseDist + dy,
+      );
+
+      // Cada blob e um radial gradient denso no nucleo + falloff suave.
+      final coreAlpha = (color.a * density * 0.75 * breath).clamp(0.0, 1.0);
+      final shader =
+          RadialGradient(
+            colors: [
+              color.withValues(alpha: coreAlpha),
+              color.withValues(alpha: coreAlpha * 0.55),
+              color.withValues(alpha: coreAlpha * 0.15),
+              color.withValues(alpha: 0),
+            ],
+            stops: const [0.0, 0.40, 0.75, 1.0],
+          ).createShader(
+            Rect.fromCircle(
+              center: Offset(cx + center.dx, cy + center.dy),
+              radius: blobR,
+            ),
+          );
+      _paint.shader = shader;
+      canvas.drawCircle(
+        Offset(cx + center.dx, cy + center.dy),
+        blobR,
+        _paint,
+      );
+      _paint.shader = null;
+    }
+  }
+
+  // ===========================================================================
   // HELPERS
   // ===========================================================================
 
@@ -835,6 +1437,10 @@ class CosmosPainter extends CustomPainter {
         old.pixelSize != pixelSize ||
         !identical(old.planets, planets) ||
         !identical(old.nebulas, nebulas) ||
+        !identical(old.galaxies, galaxies) ||
+        !identical(old.pulsars, pulsars) ||
+        !identical(old.asteroidBelts, asteroidBelts) ||
+        !identical(old.wisps, wisps) ||
         old.comet != comet ||
         !identical(old.shootingStars, shootingStars) ||
         !identical(old.pixelStars, pixelStars);

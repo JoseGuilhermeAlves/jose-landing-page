@@ -16,6 +16,7 @@ export 'src/tokens/app_radius.dart';
 export 'src/typography/app_typography.dart';
 export 'src/widgets/app_button.dart';
 export 'src/widgets/app_card.dart';
+export 'src/widgets/brand_mark.dart';
 export 'src/widgets/eyebrow_badge.dart';
 export 'src/widgets/glow_backdrop.dart';
 export 'src/widgets/gradient_text.dart';

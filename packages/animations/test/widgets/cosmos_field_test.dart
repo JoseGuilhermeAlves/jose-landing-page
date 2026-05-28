@@ -30,6 +30,10 @@ void main() {
       final painter = currentPainter(tester);
       expect(painter.planets, hasLength(8));
       expect(painter.nebulas, hasLength(5));
+      expect(painter.galaxies, hasLength(1));
+      expect(painter.pulsars, hasLength(2));
+      expect(painter.asteroidBelts, hasLength(1));
+      expect(painter.wisps, hasLength(2));
       expect(painter.comet, isNotNull);
       expect(painter.pixelStars, hasLength(61));
 
@@ -84,6 +88,10 @@ void main() {
             child: CosmosField(
               planets: planets,
               nebulas: [],
+              galaxies: [],
+              pulsars: [],
+              asteroidBelts: [],
+              wisps: [],
               comet: null,
               pixelStars: [],
             ),
@@ -95,6 +103,10 @@ void main() {
       expect(painter.planets, hasLength(1));
       expect(painter.planets.first.id, 'only');
       expect(painter.nebulas, isEmpty);
+      expect(painter.galaxies, isEmpty);
+      expect(painter.pulsars, isEmpty);
+      expect(painter.asteroidBelts, isEmpty);
+      expect(painter.wisps, isEmpty);
       expect(painter.comet, isNull);
       expect(painter.pixelStars, isEmpty);
 

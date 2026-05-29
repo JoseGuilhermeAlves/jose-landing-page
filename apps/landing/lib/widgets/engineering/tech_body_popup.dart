@@ -20,10 +20,7 @@ Future<void> showTechBodyPopup(
     barrierColor: Colors.black.withValues(alpha: 0.72),
     transitionDuration: const Duration(milliseconds: 260),
     pageBuilder: (context, animation, secondaryAnimation) {
-      return _TechBodyPopup(
-        description: description,
-        onOpenDocs: onOpenDocs,
-      );
+      return _TechBodyPopup(description: description, onOpenDocs: onOpenDocs);
     },
     transitionBuilder: (context, animation, secondaryAnimation, child) {
       final curved = CurvedAnimation(
@@ -42,10 +39,7 @@ Future<void> showTechBodyPopup(
 }
 
 class _TechBodyPopup extends StatelessWidget {
-  const _TechBodyPopup({
-    required this.description,
-    required this.onOpenDocs,
-  });
+  const _TechBodyPopup({required this.description, required this.onOpenDocs});
 
   final TechDescription description;
   final void Function(String url)? onOpenDocs;
@@ -66,9 +60,7 @@ class _TechBodyPopup extends StatelessWidget {
             decoration: BoxDecoration(
               color: colors.surface.withValues(alpha: 0.94),
               borderRadius: BorderRadius.circular(AppRadius.lg),
-              border: Border.all(
-                color: colors.primary.withValues(alpha: 0.45),
-              ),
+              border: Border.all(color: colors.primary.withValues(alpha: 0.45)),
               boxShadow: <BoxShadow>[
                 BoxShadow(
                   color: colors.primary.withValues(alpha: 0.32),
@@ -186,10 +178,7 @@ class _Header extends StatelessWidget {
         ),
         IconButton(
           onPressed: () => Navigator.pop(context),
-          icon: Icon(
-            Icons.close_rounded,
-            color: colors.onSurfaceMuted,
-          ),
+          icon: Icon(Icons.close_rounded, color: colors.onSurfaceMuted),
           tooltip: 'Fechar',
         ),
       ],
@@ -225,9 +214,7 @@ class _MetaChip extends StatelessWidget {
           const SizedBox(width: AppSpacing.xs),
           Text(
             label,
-            style: textTheme.labelSmall?.copyWith(
-              color: colors.onSurfaceMuted,
-            ),
+            style: textTheme.labelSmall?.copyWith(color: colors.onSurfaceMuted),
           ),
         ],
       ),

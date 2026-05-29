@@ -114,7 +114,8 @@ abstract final class TechDescriptionsCatalog {
           'no hot loop. Nesta landing, sustenta 20+ painters dedicados — '
           'mapas, plantas baixas, graficos, backdrops e relogios animados '
           'nos mocks do showcase.',
-      docsUrl: 'https://api.flutter.dev/flutter/rendering/CustomPainter-class.html',
+      docsUrl:
+          'https://api.flutter.dev/flutter/rendering/CustomPainter-class.html',
     ),
     'Animations': TechDescription(
       title: 'Animations',

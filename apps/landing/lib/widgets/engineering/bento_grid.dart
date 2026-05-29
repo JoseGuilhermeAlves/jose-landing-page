@@ -111,7 +111,8 @@ class TechBentoGrid extends StatelessWidget {
                     flex: _desktopRows[rowIndex][i].span,
                     child: _CategoryCard(
                       category: _desktopRows[rowIndex][i].category,
-                      items: byCategory[_desktopRows[rowIndex][i].category] ??
+                      items:
+                          byCategory[_desktopRows[rowIndex][i].category] ??
                           const [],
                       onTechTap: (name) => _handleTechTap(context, name),
                     ),
@@ -147,8 +148,7 @@ class _CategoryCard extends StatelessWidget {
   final void Function(String techName) onTechTap;
 
   Color _categoryColor() =>
-      CategoryBrandColors.byCategory[category.name] ??
-      const Color(0xFF9497A9);
+      CategoryBrandColors.byCategory[category.name] ?? const Color(0xFF9497A9);
 
   @override
   Widget build(BuildContext context) {
@@ -217,16 +217,11 @@ class _TileGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isMobile = context.isMobile;
-    final cols = isMobile
-        ? items.length.clamp(1, 2)
-        : items.length.clamp(1, 3);
+    final cols = isMobile ? items.length.clamp(1, 2) : items.length.clamp(1, 3);
 
     final rows = <Widget>[];
     for (var i = 0; i < items.length; i += cols) {
-      final rowItems = items.sublist(
-        i,
-        (i + cols).clamp(0, items.length),
-      );
+      final rowItems = items.sublist(i, (i + cols).clamp(0, items.length));
       rows.add(
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -299,9 +294,7 @@ class _TechTileState extends State<_TechTile> {
           ]
         : const <BoxShadow>[];
 
-    final borderColor = _hovered
-        ? brand.withValues(alpha: 0.7)
-        : colors.border;
+    final borderColor = _hovered ? brand.withValues(alpha: 0.7) : colors.border;
 
     return MouseRegion(
       cursor: SystemMouseCursors.click,

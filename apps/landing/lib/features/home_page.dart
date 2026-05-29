@@ -6,6 +6,7 @@ import 'package:feature_showcase/feature_showcase.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:landing/config/app_config.dart';
+import 'package:landing/widgets/case_study_section.dart';
 import 'package:landing/widgets/engineering_section.dart';
 import 'package:landing/widgets/home_footer.dart';
 import 'package:landing/widgets/home_nav.dart';
@@ -14,9 +15,9 @@ import 'package:url_launcher/url_launcher.dart';
 
 /// Home da landing — composta pelas feature_* na ordem do scroll.
 /// Plugadas: Hero (§12.6) + Showcase (§12.10) + About (§12.8) +
-/// Engineering (services + tech merged) + Contact (§12.9),
-/// separadas por `SectionWaveDivider` e envoltas em `GlowBackdrop`
-/// alternados.
+/// Engineering (services + tech merged) + Case study (Pulso behind-
+/// the-scenes) + Contact (§12.9), separadas por `SectionWaveDivider`
+/// e envoltas em `GlowBackdrop` alternados.
 ///
 /// O `HomeNav` flutua no topo via Stack overlay, com 5 ancoras que
 /// rolam a posicao via `ScrollController.animateTo`. O calculo do
@@ -38,11 +39,13 @@ class _HomePageState extends State<HomePage> {
   final _scrollController = ScrollController();
 
   // Uma `GlobalKey` por secao navegavel — ancorada na arvore via
-  // `KeyedSubtree`. As 4 ancoras do `HomeNav` (showcase, sobre,
-  // engenharia, contato) usam estas pra calcular offset de scroll.
+  // `KeyedSubtree`. As 5 ancoras do `HomeNav` (showcase, sobre,
+  // engenharia, estudo, contato) usam estas pra calcular offset de
+  // scroll.
   final _showcaseKey = GlobalKey(debugLabel: 'home-anchor-showcase');
   final _engineeringKey = GlobalKey(debugLabel: 'home-anchor-engineering');
   final _aboutKey = GlobalKey(debugLabel: 'home-anchor-about');
+  final _caseStudyKey = GlobalKey(debugLabel: 'home-anchor-case-study');
   final _contactKey = GlobalKey(debugLabel: 'home-anchor-contact');
 
   @override
@@ -135,6 +138,11 @@ class _HomePageState extends State<HomePage> {
         onTap: () => _scrollToKey(_engineeringKey),
       ),
       HomeNavAnchor(
+        id: 'estudo',
+        label: 'Estudo',
+        onTap: () => _scrollToKey(_caseStudyKey),
+      ),
+      HomeNavAnchor(
         id: 'contato',
         label: 'Contato',
         onTap: () => _scrollToKey(_contactKey),
@@ -191,6 +199,17 @@ class _HomePageState extends State<HomePage> {
                       githubUrl: AppConfig.githubRepoUrl,
                       onOpenGithub: (url) => _openExternalUri(Uri.parse(url)),
                     ),
+                  ),
+                ),
+              ),
+              const SliverToBoxAdapter(child: SectionWaveDivider()),
+              SliverToBoxAdapter(
+                child: KeyedSubtree(
+                  key: _caseStudyKey,
+                  child: _SectionSlot(
+                    horizontalPadding: horizontalPadding,
+                    glowAlignment: Alignment.topRight,
+                    child: const CaseStudySection(),
                   ),
                 ),
               ),

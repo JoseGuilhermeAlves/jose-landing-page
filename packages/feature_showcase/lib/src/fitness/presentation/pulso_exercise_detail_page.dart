@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:design_system/design_system.dart';
 import 'package:feature_showcase/src/fitness/data/exercises_catalog.dart';
+import 'package:feature_showcase/src/fitness/presentation/pulso_copy.dart';
 import 'package:feature_showcase/src/fitness/domain/session_template.dart';
 import 'package:feature_showcase/src/fitness/presentation/fitness_bloc.dart';
 import 'package:feature_showcase/src/fitness/presentation/fitness_brand.dart';
@@ -62,7 +63,7 @@ class PulsoExerciseDetailPage extends StatelessWidget {
             children: [
               _MuscleChips(exercise: exercise),
               const SizedBox(height: AppSpacing.lg),
-              _SectionLabel(label: 'CARGA PRESCRITA'),
+              _SectionLabel(label: PulsoCopy.eyebrowPrescribedLoad),
               const SizedBox(height: AppSpacing.sm),
               Container(
                 decoration: BoxDecoration(
@@ -77,7 +78,7 @@ class PulsoExerciseDetailPage extends StatelessWidget {
                 child: PulsoBarbellLoader(totalKg: prescribed, height: 100),
               ),
               const SizedBox(height: AppSpacing.lg),
-              _SectionLabel(label: 'TEMPO DE EXECUCAO'),
+              _SectionLabel(label: PulsoCopy.eyebrowExecutionTempo),
               const SizedBox(height: AppSpacing.sm),
               Container(
                 decoration: BoxDecoration(
@@ -110,7 +111,7 @@ class PulsoExerciseDetailPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: AppSpacing.lg),
-              _SectionLabel(label: 'HISTORICO DE CARGA'),
+              _SectionLabel(label: PulsoCopy.eyebrowLoadHistory),
               const SizedBox(height: AppSpacing.sm),
               Container(
                 decoration: BoxDecoration(

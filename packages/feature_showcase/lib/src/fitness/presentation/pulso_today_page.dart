@@ -7,6 +7,7 @@ import 'package:feature_showcase/src/fitness/presentation/fitness_event.dart';
 import 'package:feature_showcase/src/fitness/presentation/fitness_state.dart';
 import 'package:feature_showcase/src/fitness/presentation/painters/pulso_recovery_ring.dart';
 import 'package:feature_showcase/src/fitness/presentation/painters/pulso_strain_dial.dart';
+import 'package:feature_showcase/src/fitness/presentation/pulso_copy.dart';
 import 'package:feature_showcase/src/fitness/presentation/pulso_session_logger_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -115,7 +116,7 @@ class _TodayHeader extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'PULSO',
+                  PulsoCopy.brandName,
                   style: TextStyle(
                     color: colors.onSurface,
                     fontSize: 13,
@@ -179,15 +180,7 @@ class _RecoveryCard extends StatelessWidget {
     );
   }
 
-  String _recoveryCopy(double p) {
-    if (p < 34) {
-      return 'Corpo pede pausa. Aceite o stiff hoje, pegue intensidade amanha.';
-    }
-    if (p < 67) {
-      return 'Banda media. Mantenha o volume planejado, sem buscar PR.';
-    }
-    return 'Tudo verde. Use a janela pra trabalho intenso no padrao do mesociclo.';
-  }
+  String _recoveryCopy(double p) => PulsoCopy.recoveryAdvice(p);
 }
 
 class _StrainAndProgramRow extends StatelessWidget {
@@ -444,7 +437,7 @@ class _SessionCtaCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'TREINO DE HOJE',
+            PulsoCopy.eyebrowTodayWorkout,
             style: TextStyle(
               color: colors.primary,
               fontSize: 10,
@@ -505,7 +498,7 @@ class _SessionCtaCard extends StatelessWidget {
               ),
               onPressed: () => _startSession(context),
               child: const Text(
-                'Iniciar treino',
+                PulsoCopy.startWorkout,
                 style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w700,
@@ -587,7 +580,7 @@ class _RestDayCard extends StatelessWidget {
           Icon(Icons.bedtime_outlined, color: colors.accent, size: 36),
           const SizedBox(height: AppSpacing.sm),
           Text(
-            'Dia de descanso',
+            PulsoCopy.restDayTitle,
             style: TextStyle(
               color: colors.onSurface,
               fontSize: 18,
@@ -596,7 +589,7 @@ class _RestDayCard extends StatelessWidget {
           ),
           const SizedBox(height: 4),
           Text(
-            'Use o dia pra mobilidade leve e sono prolongado.',
+            PulsoCopy.restDayBody,
             textAlign: TextAlign.center,
             style: TextStyle(
               color: colors.onSurfaceMuted,

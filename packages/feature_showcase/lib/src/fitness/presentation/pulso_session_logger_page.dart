@@ -9,6 +9,7 @@ import 'package:feature_showcase/src/fitness/presentation/fitness_brand.dart';
 import 'package:feature_showcase/src/fitness/presentation/fitness_event.dart';
 import 'package:feature_showcase/src/fitness/presentation/fitness_state.dart';
 import 'package:feature_showcase/src/fitness/presentation/painters/pulso_set_complete_burst.dart';
+import 'package:feature_showcase/src/fitness/presentation/pulso_copy.dart';
 import 'package:feature_showcase/src/fitness/presentation/pulso_exercise_detail_page.dart';
 import 'package:feature_showcase/src/fitness/presentation/pulso_swap_exercise_sheet.dart';
 import 'package:flutter/material.dart';
@@ -302,7 +303,7 @@ class _ExerciseCard extends StatelessWidget {
                 ),
               ),
               IconButton(
-                tooltip: 'Trocar exercicio',
+                tooltip: PulsoCopy.swapExercise,
                 icon: Icon(Icons.swap_horiz_rounded, color: colors.accent),
                 onPressed: () => _openSwap(context),
               ),
@@ -734,9 +735,9 @@ class _FinishSessionBar extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                _BarStat(label: 'SETS', value: '$totalSets'),
+                _BarStat(label: PulsoCopy.labelSets, value: '$totalSets'),
                 _BarStat(
-                  label: 'VOLUME',
+                  label: PulsoCopy.labelVolume,
                   value: '${(totalVolumeKg / 1000).toStringAsFixed(1)}t',
                 ),
               ],
@@ -756,7 +757,7 @@ class _FinishSessionBar extends StatelessWidget {
             ),
             onPressed: onFinish,
             child: const Text(
-              'Finalizar',
+              PulsoCopy.finishWorkout,
               style: TextStyle(fontWeight: FontWeight.w700, letterSpacing: 0.4),
             ),
           ),

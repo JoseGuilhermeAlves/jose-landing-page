@@ -1,5 +1,6 @@
 import 'package:design_system/design_system.dart';
 import 'package:feature_showcase/src/fitness/domain/program_week.dart';
+import 'package:feature_showcase/src/fitness/presentation/pulso_copy.dart';
 import 'package:feature_showcase/src/fitness/domain/session_template.dart';
 import 'package:feature_showcase/src/fitness/presentation/fitness_bloc.dart';
 import 'package:feature_showcase/src/fitness/presentation/fitness_brand.dart';
@@ -93,7 +94,7 @@ class _ProgramHeader extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'PROGRAMA',
+          PulsoCopy.eyebrowProgram,
           style: TextStyle(
             color: colors.primary,
             fontSize: 10,
@@ -124,17 +125,17 @@ class _ProgramHeader extends StatelessWidget {
         Row(
           children: [
             _Stat(
-              label: 'SEMANA',
+              label: PulsoCopy.labelWeek,
               value: '${program.currentWeekIndex}/${program.durationWeeks}',
             ),
             const SizedBox(width: AppSpacing.lg),
             _Stat(
-              label: 'INTENSIDADE',
+              label: PulsoCopy.labelIntensity,
               value: 'x${(week?.intensityMultiplier ?? 1).toStringAsFixed(2)}',
             ),
             const SizedBox(width: AppSpacing.lg),
             _Stat(
-              label: 'STRAIN ALVO',
+              label: PulsoCopy.labelStrainTarget,
               value: (week?.targetStrain ?? 0).toStringAsFixed(1),
             ),
           ],

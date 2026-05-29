@@ -1,5 +1,6 @@
 import 'package:design_system/design_system.dart';
 import 'package:feature_showcase/src/fitness/data/recovery_catalog.dart';
+import 'package:feature_showcase/src/fitness/presentation/pulso_copy.dart';
 import 'package:feature_showcase/src/fitness/domain/muscle_group.dart';
 import 'package:feature_showcase/src/fitness/domain/recovery_snapshot.dart';
 import 'package:feature_showcase/src/fitness/domain/sleep_window.dart';
@@ -108,7 +109,7 @@ class _Header extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'RECOVERY',
+          PulsoCopy.eyebrowRecovery,
           style: TextStyle(
             color: colors.primary,
             fontSize: 10,
@@ -218,7 +219,7 @@ class _BreakdownCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'CONTRIBUINTES',
+            PulsoCopy.eyebrowContributors,
             style: TextStyle(
               color: colors.onSurfaceMuted,
               fontSize: 10,
@@ -332,7 +333,7 @@ class _SleepCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'SONO',
+            PulsoCopy.eyebrowSleep,
             style: TextStyle(
               color: colors.onSurfaceMuted,
               fontSize: 10,
@@ -510,7 +511,7 @@ class _MuscleHeatmapCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'HEATMAP MUSCULAR',
+                  PulsoCopy.eyebrowMuscleHeatmap,
                   style: TextStyle(
                     color: colors.onSurfaceMuted,
                     fontSize: 10,
@@ -563,15 +564,7 @@ class _MuscleHeatmapCard extends StatelessWidget {
     );
   }
 
-  String _adviceFor(double score) {
-    if (score < 34) {
-      return 'Cadeia trashada. Foque em alongamento e hidratacao.';
-    }
-    if (score < 67) {
-      return 'Banda media. Mantenha o trabalho na zona prescrita.';
-    }
-    return 'Boa janela. Use pra carga pesada se o plano pedir.';
-  }
+  String _adviceFor(double score) => PulsoCopy.muscleAdvice(score);
 }
 
 class _StrainHistoryCard extends StatelessWidget {
@@ -591,7 +584,7 @@ class _StrainHistoryCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'STRAIN · 7 DIAS',
+            PulsoCopy.eyebrowStrainHistory,
             style: TextStyle(
               color: colors.onSurfaceMuted,
               fontSize: 10,

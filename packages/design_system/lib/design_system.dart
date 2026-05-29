@@ -7,6 +7,7 @@ export 'src/breakpoints/app_breakpoints.dart';
 export 'src/responsive/breakpoint.dart';
 export 'src/responsive/responsive_builder.dart';
 export 'src/spacing/app_spacing.dart';
+export 'src/strings/common_strings.dart';
 export 'src/theme/app_colors.dart';
 export 'src/theme/app_theme.dart';
 export 'src/tokens/app_curves.dart';

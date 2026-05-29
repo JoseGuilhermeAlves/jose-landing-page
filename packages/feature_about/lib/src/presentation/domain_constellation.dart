@@ -76,6 +76,7 @@ class DomainConstellation extends StatefulWidget {
         Color(0xFFF0DCFF),
       ],
       pattern: DomainPlanetPattern.hemispheres,
+      ring: 0.30,
       seed: 47,
     ),
     'sanitation': DomainPlanetSpec(
@@ -87,6 +88,7 @@ class DomainConstellation extends StatefulWidget {
         Color(0xFFE9FFF8),
       ],
       pattern: DomainPlanetPattern.bands,
+      ring: 0.22,
       seed: 53,
     ),
     'retail': DomainPlanetSpec(

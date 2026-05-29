@@ -417,10 +417,11 @@ List<CosmosPlanet> _heroPlanets(
         Color(0xFFFFF1D6),
       ],
     ),
-    // Indigo rocky — abaixo do teal, pequeno, ancora canto esquerdo baixo.
+    // Indigo rocky — mobile relocado pra (0.85, 0.32) pra liberar
+    // raio ao redor da figura que stacka no topo da viewport.
     CosmosPlanet(
       id: 'indigo-rocky',
-      canvasAnchor: Offset(0.16, 0.68),
+      canvasAnchor: Offset(0.85, 0.32),
       radiusPixels: 11,
       pattern: PlanetPattern.speckled,
       seed: 73,
@@ -601,11 +602,12 @@ List<CosmosPlanet> _heroPlanetsDesktop() {
         Color(0xFFFFF1D6),
       ],
     ),
-    // Indigo rocky — esquerda baixa-meio, x 0.20 (mais interno),
-    // preenche faixa intermediaria perto da foto.
+    // Indigo rocky — relocado pra direita (0.78, 0.44) pra liberar
+    // raio de respiro de ~120px ao redor da silhueta da foto. Antes
+    // estava em (0.20, 0.66), cruzando o torso.
     CosmosPlanet(
       id: 'indigo-rocky',
-      canvasAnchor: Offset(0.20, 0.66),
+      canvasAnchor: Offset(0.78, 0.44),
       radiusPixels: 11,
       pattern: PlanetPattern.speckled,
       seed: 73,
@@ -1007,11 +1009,7 @@ List<CosmosWisp> _heroWisps({required bool isMobile}) {
       CosmosWisp(
         canvasAnchor: Offset(0.04, 0.40),
         radiusPixels: 130,
-        colors: [
-          Color(0xFF0AC4FF),
-          Color(0xFF9D3FFF),
-          Color(0xFFE020F2),
-        ],
+        colors: [Color(0xFF0AC4FF), Color(0xFF9D3FFF), Color(0xFFE020F2)],
         blobCount: 6,
         driftPixels: 16,
         density: 0.55,
@@ -1020,11 +1018,7 @@ List<CosmosWisp> _heroWisps({required bool isMobile}) {
       CosmosWisp(
         canvasAnchor: Offset(0.14, 0.62),
         radiusPixels: 90,
-        colors: [
-          Color(0xFFFF1F8B),
-          Color(0xFFFF66F5),
-          Color(0xFFFFCFF8),
-        ],
+        colors: [Color(0xFFFF1F8B), Color(0xFFFF66F5), Color(0xFFFFCFF8)],
         density: 0.45,
         seed: 37,
       ),
@@ -1032,11 +1026,7 @@ List<CosmosWisp> _heroWisps({required bool isMobile}) {
       CosmosWisp(
         canvasAnchor: Offset(0.94, 0.40),
         radiusPixels: 100,
-        colors: [
-          Color(0xFF8B5CF6),
-          Color(0xFF2D7FFF),
-          Color(0xFF7CB8FF),
-        ],
+        colors: [Color(0xFF8B5CF6), Color(0xFF2D7FFF), Color(0xFF7CB8FF)],
         driftPixels: 14,
         density: 0.42,
         seed: 79,
@@ -1048,11 +1038,7 @@ List<CosmosWisp> _heroWisps({required bool isMobile}) {
     CosmosWisp(
       canvasAnchor: Offset(0.08, 0.42),
       radiusPixels: 130,
-      colors: [
-        Color(0xFF0AC4FF),
-        Color(0xFF9D3FFF),
-        Color(0xFFE020F2),
-      ],
+      colors: [Color(0xFF0AC4FF), Color(0xFF9D3FFF), Color(0xFFE020F2)],
       blobCount: 6,
       driftPixels: 16,
       density: 0.55,
@@ -1062,11 +1048,7 @@ List<CosmosWisp> _heroWisps({required bool isMobile}) {
     CosmosWisp(
       canvasAnchor: Offset(0.20, 0.62),
       radiusPixels: 90,
-      colors: [
-        Color(0xFFFF1F8B),
-        Color(0xFFFF66F5),
-        Color(0xFFFFCFF8),
-      ],
+      colors: [Color(0xFFFF1F8B), Color(0xFFFF66F5), Color(0xFFFFCFF8)],
       driftPixels: 12,
       density: 0.45,
       seed: 37,
@@ -1320,13 +1302,42 @@ class _TrustStat {
 ///
 /// Aspect ratio 3:4; `BoxFit.contain` + `bottomCenter` mantem a
 /// silhueta ancorada na base, alinhada com o topo do planeta.
-class _HeroPortrait extends StatelessWidget {
+class _HeroPortrait extends StatefulWidget {
   const _HeroPortrait({required this.isMobile});
 
   final bool isMobile;
 
   @override
+  State<_HeroPortrait> createState() => _HeroPortraitState();
+}
+
+class _HeroPortraitState extends State<_HeroPortrait>
+    with SingleTickerProviderStateMixin {
+  // Bob lento — 3.8s ida + 3.8s volta = ciclo 7.6s. Amplitude pequena
+  // (~7px), sinaliza "ambiente vivo" sem cair em mascote. A sombra
+  // sob a figura encolhe + perde alpha quando a figura sobe; quando
+  // desce, recupera ao tamanho cheio. Ler como peso, nao decoracao.
+  late final AnimationController _bob;
+
+  @override
+  void initState() {
+    super.initState();
+    _bob = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 3800),
+    )..repeat(reverse: true);
+  }
+
+  @override
+  void dispose() {
+    _bob.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
+    final isMobile = widget.isMobile;
     final maxWidth = isMobile ? double.infinity : 460.0;
     final maxHeight = isMobile ? 380.0 : 600.0;
 
@@ -1345,26 +1356,111 @@ class _HeroPortrait extends StatelessWidget {
         constraints: BoxConstraints(maxWidth: maxWidth, maxHeight: maxHeight),
         child: AspectRatio(
           aspectRatio: 3 / 4,
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              // Halo silhueta-aware: 3 layers blurradas+tingidas via
-              // srcIn. Sigmas crescem do mais externo (mais difuso) ao
-              // mais interno (rim quente colado no contorno).
-              const _SilhouetteAura(
-                assetPath: assetPath,
-                farTint: farTint,
-                midTint: midTint,
-                closeTint: closeTint,
+          child: AnimatedBuilder(
+            animation: _bob,
+            builder: (context, _) {
+              // _bob oscila 0..1 (com reverse). easeInOut suaviza
+              // extremos. dy varia -7..+7 px; shadowScale e shadowAlpha
+              // se reduzem quando a figura sobe — vendendo peso ao
+              // assentar.
+              final eased = Curves.easeInOut.transform(_bob.value);
+              final dy = (eased - 0.5) * 14;
+              final lift = (eased - 0.5).abs() * 2; // 0..1
+              final shadowScale = 1 - lift * 0.3;
+              final shadowAlpha = 1 - lift * 0.35;
+              return Stack(
+                alignment: Alignment.center,
+                children: [
+                  // 1. Floor glow estatico — ancora o plano da figura.
+                  Positioned.fill(
+                    child: IgnorePointer(
+                      child: CustomPaint(
+                        painter: _GroundingPainter(color: colors.primary),
+                      ),
+                    ),
+                  ),
+                  // 2. Contact shadow — escala inversa ao bob.
+                  Positioned.fill(
+                    child: IgnorePointer(
+                      child: CustomPaint(
+                        painter: _ContactShadowPainter(
+                          scale: shadowScale,
+                          alpha: shadowAlpha,
+                        ),
+                      ),
+                    ),
+                  ),
+                  // 3. Figura bobbando (aura + rim + crisp).
+                  Transform.translate(
+                    offset: Offset(0, dy),
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        const _SilhouetteAura(
+                          assetPath: assetPath,
+                          farTint: farTint,
+                          midTint: midTint,
+                          closeTint: closeTint,
+                        ),
+                        // Rim light — tint primary deslocado pro upper-
+                        // left, sob a silhueta crisp. Cria highlight
+                        // colorido no contorno apontando pra fonte de
+                        // luz dominante do cenario (planetas brilhantes
+                        // canto esquerdo alto).
+                        _RimLight(assetPath: assetPath, tint: colors.primary),
+                        Image.asset(
+                          assetPath,
+                          fit: BoxFit.contain,
+                          alignment: Alignment.bottomCenter,
+                          errorBuilder: (_, _, _) => const SizedBox.shrink(),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              );
+            },
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Rim light: copia da silhueta tingida com cor primary, blur leve
+/// e deslocada upper-left (offset -1.5, -1.5). Stack-ada **atras** da
+/// imagem crisp — a tinta vaza no contorno superior-esquerdo formando
+/// um halo proximo que sugere luz incidindo dos planetas brilhantes
+/// do canto.
+class _RimLight extends StatelessWidget {
+  const _RimLight({required this.assetPath, required this.tint});
+
+  final String assetPath;
+  final Color tint;
+
+  @override
+  Widget build(BuildContext context) {
+    return Transform.translate(
+      offset: const Offset(-1.8, -1.8),
+      child: IgnorePointer(
+        child: RepaintBoundary(
+          child: Opacity(
+            opacity: 0.55,
+            child: ImageFiltered(
+              imageFilter: ui.ImageFilter.blur(sigmaX: 2, sigmaY: 2),
+              child: ColorFiltered(
+                colorFilter: ColorFilter.mode(tint, BlendMode.srcIn),
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage(assetPath),
+                      fit: BoxFit.contain,
+                      alignment: Alignment.bottomCenter,
+                    ),
+                  ),
+                ),
               ),
-              // Silhueta crisp por cima — o foco optico do frame.
-              Image.asset(
-                assetPath,
-                fit: BoxFit.contain,
-                alignment: Alignment.bottomCenter,
-                errorBuilder: (_, _, _) => const SizedBox.shrink(),
-              ),
-            ],
+            ),
           ),
         ),
       ),
@@ -1517,6 +1613,93 @@ class _AuraLayer extends StatelessWidget {
       ),
     );
   }
+}
+
+/// Contact shadow soft sob a figura. Elipse blurrada via MaskFilter
+/// em y=0.97 do frame, ~42% da largura, 2.5% da altura. Escala e
+/// alpha controlados externamente pelo bob — quando a figura sobe,
+/// a sombra encolhe e perde opacidade; quando assenta, recupera.
+/// Da leitura de peso a um recorte que de outro modo flutua.
+class _ContactShadowPainter extends CustomPainter {
+  _ContactShadowPainter({required this.scale, required this.alpha});
+
+  /// Multiplicador de tamanho da elipse (1.0 = base, < 1 = encolheu).
+  final double scale;
+
+  /// Multiplicador de alpha do preenchimento (1.0 = base, < 1 = mais
+  /// transparente).
+  final double alpha;
+
+  static const double _baseY = 0.97;
+  static const Color _shadowColor = Color(0xFF000000);
+  static const double _baseAlpha = 0.35;
+
+  late final Paint _paint = Paint()
+    ..style = PaintingStyle.fill
+    ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 22);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final cx = size.width * 0.5;
+    final cy = size.height * _baseY;
+    final ellipseW = size.width * 0.42 * scale;
+    final ellipseH = size.height * 0.025 * scale;
+    _paint.color = _shadowColor.withValues(alpha: _baseAlpha * alpha);
+    canvas.drawOval(
+      Rect.fromCenter(
+        center: Offset(cx, cy),
+        width: ellipseW,
+        height: ellipseH,
+      ),
+      _paint,
+    );
+  }
+
+  @override
+  bool shouldRepaint(_ContactShadowPainter old) =>
+      old.scale != scale || old.alpha != alpha;
+}
+
+/// Floor glow radial brand purple ancorado em y=0.95. ScaleY 0.7
+/// estende verticalmente sem virar disco perfeito; o glow sobe pelo
+/// corpo da silhueta dando leitura de "figura emergindo de luz" em
+/// vez de "figura largada no cosmos". Estatico — `shouldRepaint` so
+/// reage a troca de cor (theme switch).
+class _GroundingPainter extends CustomPainter {
+  _GroundingPainter({required this.color});
+
+  final Color color;
+
+  static const double _baseY = 0.95;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final w = size.width;
+    final h = size.height;
+    final cy = h * _baseY;
+    final glowCenter = Offset(w / 2, cy);
+    final glowRadius = w * 0.55;
+    final glowRect = Rect.fromCircle(center: glowCenter, radius: glowRadius);
+    final glowPaint = Paint()
+      ..shader = RadialGradient(
+        colors: [
+          color.withValues(alpha: 0.40),
+          color.withValues(alpha: 0.14),
+          Colors.transparent,
+        ],
+        stops: const [0.0, 0.5, 1.0],
+      ).createShader(glowRect);
+    canvas
+      ..save()
+      ..translate(glowCenter.dx, glowCenter.dy)
+      ..scale(1, 0.7)
+      ..translate(-glowCenter.dx, -glowCenter.dy)
+      ..drawCircle(glowCenter, glowRadius, glowPaint)
+      ..restore();
+  }
+
+  @override
+  bool shouldRepaint(_GroundingPainter old) => old.color != color;
 }
 
 class _TrustStatChip extends StatelessWidget {

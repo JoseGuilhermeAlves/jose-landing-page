@@ -104,7 +104,26 @@ class RecoveryRefreshed extends FitnessEvent {
   const RecoveryRefreshed();
 }
 
-/// Estende o rest timer da sessao ativa em [seconds] segundos.
+/// Inicia o rest timer com [seconds]. Bloc dispara timer interno
+/// que emite `RestTicked` a cada segundo. No-op se ja ha rest timer
+/// ativo (pra evitar interromper countdown em curso).
+class RestStarted extends FitnessEvent {
+  const RestStarted(this.seconds);
+  final int seconds;
+
+  @override
+  List<Object?> get props => [seconds];
+}
+
+/// Tick interno do bloc (1Hz). Decrementa `state.restTimer.remaining`;
+/// quando bate 0, o bloc cancela o timer e zera o sub-state.
+class RestTicked extends FitnessEvent {
+  const RestTicked();
+}
+
+/// Estende ou reduz o rest timer ativo em [seconds] segundos
+/// (pode ser negativo). Ajusta total + remaining em paralelo pra
+/// manter o ratio do progresso coerente.
 class RestExtended extends FitnessEvent {
   const RestExtended(this.seconds);
   final int seconds;
@@ -113,7 +132,8 @@ class RestExtended extends FitnessEvent {
   List<Object?> get props => [seconds];
 }
 
-/// Pula o rest timer da sessao ativa.
+/// Pula o rest timer da sessao ativa — cancela timer interno e
+/// limpa sub-state.
 class RestSkipped extends FitnessEvent {
   const RestSkipped();
 }

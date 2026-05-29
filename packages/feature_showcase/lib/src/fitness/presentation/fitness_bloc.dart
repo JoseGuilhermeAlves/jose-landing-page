@@ -1,17 +1,21 @@
+import 'dart:async';
+
 import 'package:feature_showcase/src/fitness/data/exercises_catalog.dart';
 import 'package:feature_showcase/src/fitness/data/mesocycle_catalog.dart';
 import 'package:feature_showcase/src/fitness/data/recovery_catalog.dart';
 import 'package:feature_showcase/src/fitness/domain/logged_session.dart';
 import 'package:feature_showcase/src/fitness/domain/program.dart';
 import 'package:feature_showcase/src/fitness/domain/recovery_snapshot.dart';
+import 'package:feature_showcase/src/fitness/domain/rest_timer.dart';
 import 'package:feature_showcase/src/fitness/domain/set_entry.dart';
 import 'package:feature_showcase/src/fitness/presentation/fitness_event.dart';
 import 'package:feature_showcase/src/fitness/presentation/fitness_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 /// Bloc Pulso v2 (dark Whoop). Gerencia mesociclo, snapshot de
-/// recovery, strain do dia e sessao de treino logada (set-a-set
-/// com RPE).
+/// recovery, strain do dia, sessao de treino logada (set-a-set com
+/// RPE) **e o rest timer entre sets** — antes vivia em `setState`
+/// local no widget, agora reside aqui como `state.restTimer`.
 class FitnessBloc extends Bloc<FitnessEvent, FitnessState> {
   FitnessBloc({Program? program, List<RecoverySnapshot>? recoveryHistory})
     : super(_buildInitial(program, recoveryHistory)) {
@@ -22,15 +26,27 @@ class FitnessBloc extends Bloc<FitnessEvent, FitnessState> {
     on<ProgramDaySelected>(_onProgramDaySelected);
     on<RecoveryHistorySelected>(_onRecoveryHistorySelected);
     on<RecoveryRefreshed>(_onRecoveryRefreshed);
+    on<RestStarted>(_onRestStarted);
+    on<RestTicked>(_onRestTicked);
     on<RestExtended>(_onRestExtended);
     on<RestSkipped>(_onRestSkipped);
     on<FitnessReset>(_onReset);
   }
 
   /// Strain contribuido por cada set concluido — abstracao do mock.
-  /// Whoop calcula por HR; aqui usamos heuristica simples (peso x
-  /// RPE x reps normalizados).
   static const double _strainPerSetBaseline = 0.45;
+
+  /// Timer interno do rest. Cancelado/reiniciado pelos handlers.
+  /// Override do close pra garantir cleanup mesmo se o consumidor
+  /// fechar o bloc com timer ativo.
+  Timer? _restTicker;
+
+  @override
+  Future<void> close() {
+    _restTicker?.cancel();
+    _restTicker = null;
+    return super.close();
+  }
 
   static FitnessState _buildInitial(
     Program? program,
@@ -150,9 +166,11 @@ class FitnessBloc extends Bloc<FitnessEvent, FitnessState> {
   void _onSessionFinished(SessionFinished event, Emitter<FitnessState> emit) {
     final session = state.activeSession;
     if (session == null) return;
+    _cancelRestTimer();
     emit(
       state.copyWith(
         activeSession: () => session.copyWith(finishedAt: event.now),
+        restTimer: () => null,
       ),
     );
   }
@@ -177,22 +195,69 @@ class FitnessBloc extends Bloc<FitnessEvent, FitnessState> {
     RecoveryRefreshed event,
     Emitter<FitnessState> emit,
   ) {
-    // Mock: re-emite mesma historia. Pro produto real, dispararia
-    // datasource e atualizaria. Sinaliza pra UI que recovery foi
-    // re-puxado via novo strain (mesmos numeros).
     emit(state.copyWith(strainToday: state.strainToday.copyWith()));
   }
 
+  void _onRestStarted(RestStarted event, Emitter<FitnessState> emit) {
+    // Resetar timer existente — usuario disparou novo descanso.
+    _cancelRestTimer();
+    final seconds = event.seconds.clamp(1, 999);
+    emit(
+      state.copyWith(
+        restTimer: () => RestTimer(total: seconds, remaining: seconds),
+      ),
+    );
+    _restTicker = Timer.periodic(
+      const Duration(seconds: 1),
+      (_) => add(const RestTicked()),
+    );
+  }
+
+  void _onRestTicked(RestTicked event, Emitter<FitnessState> emit) {
+    final timer = state.restTimer;
+    if (timer == null) return;
+    final next = timer.remaining - 1;
+    if (next <= 0) {
+      _cancelRestTimer();
+      emit(state.copyWith(restTimer: () => null));
+      return;
+    }
+    emit(state.copyWith(restTimer: () => timer.copyWith(remaining: next)));
+  }
+
   void _onRestExtended(RestExtended event, Emitter<FitnessState> emit) {
-    // Rest timer e local ao widget; aqui so registramos pra
-    // analytics futuras (no-op pro mock).
+    final timer = state.restTimer;
+    if (timer == null) return;
+    final nextRemaining = (timer.remaining + event.seconds).clamp(0, 999);
+    if (nextRemaining == 0) {
+      _cancelRestTimer();
+      emit(state.copyWith(restTimer: () => null));
+      return;
+    }
+    final nextTotal = event.seconds > 0
+        ? timer.total + event.seconds
+        : timer.total;
+    emit(
+      state.copyWith(
+        restTimer: () =>
+            timer.copyWith(total: nextTotal, remaining: nextRemaining),
+      ),
+    );
   }
 
   void _onRestSkipped(RestSkipped event, Emitter<FitnessState> emit) {
-    // Idem — no-op pro mock.
+    if (state.restTimer == null) return;
+    _cancelRestTimer();
+    emit(state.copyWith(restTimer: () => null));
   }
 
   void _onReset(FitnessReset event, Emitter<FitnessState> emit) {
+    _cancelRestTimer();
     emit(_buildInitial(state.program, state.recoveryHistory));
+  }
+
+  void _cancelRestTimer() {
+    _restTicker?.cancel();
+    _restTicker = null;
   }
 }

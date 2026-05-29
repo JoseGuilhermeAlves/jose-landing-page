@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:feature_showcase/src/fitness/domain/logged_session.dart';
 import 'package:feature_showcase/src/fitness/domain/program.dart';
 import 'package:feature_showcase/src/fitness/domain/recovery_snapshot.dart';
+import 'package:feature_showcase/src/fitness/domain/rest_timer.dart';
 import 'package:feature_showcase/src/fitness/domain/session_template.dart';
 import 'package:feature_showcase/src/fitness/domain/set_entry.dart';
 import 'package:feature_showcase/src/fitness/domain/strain_score.dart';
@@ -20,6 +21,7 @@ class FitnessState extends Equatable {
     required this.recoveryHistoryOffset,
     this.activeSession,
     this.lastSwaps = const {},
+    this.restTimer,
   });
 
   /// Mesociclo carregado do catalogo.
@@ -46,6 +48,12 @@ class FitnessState extends Equatable {
   /// e session logger compartilhem mesmo conjunto. Chave = id
   /// original, valor = id substituto.
   final Map<String, String> lastSwaps;
+
+  /// Rest timer ativo entre sets. Null quando nao ha descanso em
+  /// andamento. Antes vivia como `setState` local no SessionLogger;
+  /// migrou pro bloc pra eliminar gambiarra de `Timer.periodic` no
+  /// widget.
+  final RestTimer? restTimer;
 
   /// Snapshot do dia mais recente — usado no hero do TodayPage.
   RecoverySnapshot get todaySnapshot => recoveryHistory.last;
@@ -130,6 +138,7 @@ class FitnessState extends Equatable {
     int? recoveryHistoryOffset,
     LoggedSession? Function()? activeSession,
     Map<String, String>? lastSwaps,
+    RestTimer? Function()? restTimer,
   }) {
     return FitnessState(
       program: program ?? this.program,
@@ -142,6 +151,7 @@ class FitnessState extends Equatable {
           ? activeSession()
           : this.activeSession,
       lastSwaps: lastSwaps ?? this.lastSwaps,
+      restTimer: restTimer != null ? restTimer() : this.restTimer,
     );
   }
 
@@ -154,5 +164,6 @@ class FitnessState extends Equatable {
     recoveryHistoryOffset,
     activeSession,
     lastSwaps,
+    restTimer,
   ];
 }

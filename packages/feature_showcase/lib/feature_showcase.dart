@@ -42,6 +42,7 @@ export 'src/fitness/domain/muscle_recovery.dart';
 export 'src/fitness/domain/program.dart';
 export 'src/fitness/domain/program_week.dart';
 export 'src/fitness/domain/recovery_snapshot.dart';
+export 'src/fitness/domain/rest_timer.dart';
 export 'src/fitness/domain/session_template.dart';
 export 'src/fitness/domain/set_entry.dart';
 export 'src/fitness/domain/sleep_window.dart';

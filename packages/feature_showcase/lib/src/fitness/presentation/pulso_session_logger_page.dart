@@ -1,7 +1,6 @@
-import 'dart:async';
-
 import 'package:design_system/design_system.dart';
 import 'package:feature_showcase/src/fitness/data/exercises_catalog.dart';
+import 'package:feature_showcase/src/fitness/domain/rest_timer.dart';
 import 'package:feature_showcase/src/fitness/domain/session_template.dart';
 import 'package:feature_showcase/src/fitness/domain/set_entry.dart';
 import 'package:feature_showcase/src/fitness/presentation/fitness_bloc.dart';
@@ -19,63 +18,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 /// exercicio tem N linhas de set com weight/reps/RPE editaveis e um
 /// botao de complete que dispara strain + burst. Sticky bottom mostra
 /// rest timer ativo ou CTA pra finalizar a sessao.
-class PulsoSessionLoggerPage extends StatefulWidget {
+///
+/// **Rest timer:** o countdown vive no FitnessBloc como
+/// `state.restTimer`. Esta widget so dispara eventos (RestStarted,
+/// RestExtended, RestSkipped) e le o sub-state — sem Timer local,
+/// sem setState, sem gambiarra.
+class PulsoSessionLoggerPage extends StatelessWidget {
   const PulsoSessionLoggerPage({super.key});
-
-  @override
-  State<PulsoSessionLoggerPage> createState() => _PulsoSessionLoggerPageState();
-}
-
-class _PulsoSessionLoggerPageState extends State<PulsoSessionLoggerPage> {
-  _RestTimerState? _restTimer;
-  Timer? _ticker;
-
-  @override
-  void dispose() {
-    _ticker?.cancel();
-    super.dispose();
-  }
-
-  void _startRest(int seconds) {
-    _ticker?.cancel();
-    setState(() {
-      _restTimer = _RestTimerState(total: seconds, remaining: seconds);
-    });
-    _ticker = Timer.periodic(const Duration(seconds: 1), (_) {
-      if (!mounted) return;
-      final current = _restTimer;
-      if (current == null) return;
-      final next = current.remaining - 1;
-      if (next <= 0) {
-        _ticker?.cancel();
-        setState(() => _restTimer = null);
-      } else {
-        setState(() => _restTimer = current.copyWith(remaining: next));
-      }
-    });
-  }
-
-  void _adjustRest(int delta) {
-    final current = _restTimer;
-    if (current == null) return;
-    setState(
-      () => _restTimer = current.copyWith(
-        remaining: (current.remaining + delta).clamp(0, 600),
-        total: current.total + (delta > 0 ? delta : 0),
-      ),
-    );
-    if (delta < 0) {
-      context.read<FitnessBloc>().add(RestExtended(delta));
-    } else {
-      context.read<FitnessBloc>().add(RestExtended(delta));
-    }
-  }
-
-  void _skipRest() {
-    _ticker?.cancel();
-    setState(() => _restTimer = null);
-    context.read<FitnessBloc>().add(const RestSkipped());
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -88,6 +37,7 @@ class _PulsoSessionLoggerPageState extends State<PulsoSessionLoggerPage> {
             body: Center(child: Text('Sessão não iniciada.')),
           );
         }
+        final restTimer = state.restTimer;
         return Scaffold(
           backgroundColor: context.colors.background,
           appBar: _LoggerAppBar(template: template, state: state),
@@ -108,18 +58,24 @@ class _PulsoSessionLoggerPageState extends State<PulsoSessionLoggerPage> {
                   originalId: original.id,
                   prescribedWeight: state.prescribedWeightFor(original.id),
                   state: state,
-                  onSetComplete: () => _startRest(effective.restSeconds),
+                  onSetComplete: () => context.read<FitnessBloc>().add(
+                    RestStarted(effective.restSeconds),
+                  ),
                 );
               },
             ),
           ),
           bottomNavigationBar: SafeArea(
             top: false,
-            child: _restTimer != null
+            child: restTimer != null
                 ? _RestTimerBanner(
-                    state: _restTimer!,
-                    onAdjust: _adjustRest,
-                    onSkip: _skipRest,
+                    timer: restTimer,
+                    onAdjust: (delta) => context.read<FitnessBloc>().add(
+                      RestExtended(delta),
+                    ),
+                    onSkip: () => context.read<FitnessBloc>().add(
+                      const RestSkipped(),
+                    ),
                   )
                 : _FinishSessionBar(
                     totalSets: session.completedSetsCount,
@@ -135,21 +91,10 @@ class _PulsoSessionLoggerPageState extends State<PulsoSessionLoggerPage> {
   void _finishSession(BuildContext context) {
     context.read<FitnessBloc>().add(SessionFinished(now: DateTime.now()));
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Sessao finalizada. Strain registrado.')),
+      const SnackBar(content: Text('Sessão finalizada. Strain registrado.')),
     );
     Navigator.of(context).pop();
   }
-}
-
-class _RestTimerState {
-  const _RestTimerState({required this.total, required this.remaining});
-  final int total;
-  final int remaining;
-  double get progress => total == 0 ? 0 : 1 - (remaining / total);
-  _RestTimerState copyWith({int? total, int? remaining}) => _RestTimerState(
-    total: total ?? this.total,
-    remaining: remaining ?? this.remaining,
-  );
 }
 
 class _LoggerAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -803,20 +748,20 @@ class _BarStat extends StatelessWidget {
 
 class _RestTimerBanner extends StatelessWidget {
   const _RestTimerBanner({
-    required this.state,
+    required this.timer,
     required this.onAdjust,
     required this.onSkip,
   });
 
-  final _RestTimerState state;
+  final RestTimer timer;
   final ValueChanged<int> onAdjust;
   final VoidCallback onSkip;
 
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
-    final mm = (state.remaining ~/ 60).toString().padLeft(2, '0');
-    final ss = (state.remaining % 60).toString().padLeft(2, '0');
+    final mm = (timer.remaining ~/ 60).toString().padLeft(2, '0');
+    final ss = (timer.remaining % 60).toString().padLeft(2, '0');
     return Container(
       decoration: BoxDecoration(
         color: colors.surface,
@@ -829,7 +774,7 @@ class _RestTimerBanner extends StatelessWidget {
       child: Column(
         children: [
           LinearProgressIndicator(
-            value: state.progress,
+            value: timer.progress,
             backgroundColor: colors.surfaceMuted,
             valueColor: AlwaysStoppedAnimation(colors.primary),
             minHeight: 3,

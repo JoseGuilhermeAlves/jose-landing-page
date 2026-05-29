@@ -15,7 +15,6 @@ workspace:
   - packages/feature_showcase
   - packages/feature_about
   - packages/feature_contact
-  - packages/feature_games
   - packages/feature_tech
 
 dev_dependencies:

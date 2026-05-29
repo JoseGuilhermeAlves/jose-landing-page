@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:landing/config/app_config.dart';
 import 'package:landing/widgets/engineering_section.dart';
-import 'package:landing/widgets/games_teaser_section.dart';
 import 'package:landing/widgets/home_footer.dart';
 import 'package:landing/widgets/home_nav.dart';
 import 'package:landing/widgets/section_wave_divider.dart';
@@ -15,7 +14,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 /// Home da landing — composta pelas feature_* na ordem do scroll.
 /// Plugadas: Hero (§12.6) + Showcase (§12.10) + About (§12.8) +
-/// Engineering (services + tech merged) + Labs teaser + Contact (§12.9),
+/// Engineering (services + tech merged) + Contact (§12.9),
 /// separadas por `SectionWaveDivider` e envoltas em `GlowBackdrop`
 /// alternados.
 ///
@@ -39,12 +38,11 @@ class _HomePageState extends State<HomePage> {
   final _scrollController = ScrollController();
 
   // Uma `GlobalKey` por secao navegavel — ancorada na arvore via
-  // `KeyedSubtree`. As 5 ancoras do `HomeNav` (showcase, engenharia,
-  // sobre, labs, contato) usam estas pra calcular offset de scroll.
+  // `KeyedSubtree`. As 4 ancoras do `HomeNav` (showcase, sobre,
+  // engenharia, contato) usam estas pra calcular offset de scroll.
   final _showcaseKey = GlobalKey(debugLabel: 'home-anchor-showcase');
   final _engineeringKey = GlobalKey(debugLabel: 'home-anchor-engineering');
   final _aboutKey = GlobalKey(debugLabel: 'home-anchor-about');
-  final _gamesKey = GlobalKey(debugLabel: 'home-anchor-games');
   final _contactKey = GlobalKey(debugLabel: 'home-anchor-contact');
 
   @override
@@ -137,11 +135,6 @@ class _HomePageState extends State<HomePage> {
         onTap: () => _scrollToKey(_engineeringKey),
       ),
       HomeNavAnchor(
-        id: 'games',
-        label: 'Games',
-        onTap: () => _scrollToKey(_gamesKey),
-      ),
-      HomeNavAnchor(
         id: 'contato',
         label: 'Contato',
         onTap: () => _scrollToKey(_contactKey),
@@ -198,17 +191,6 @@ class _HomePageState extends State<HomePage> {
                       githubUrl: AppConfig.githubRepoUrl,
                       onOpenGithub: (url) => _openExternalUri(Uri.parse(url)),
                     ),
-                  ),
-                ),
-              ),
-              const SliverToBoxAdapter(child: SectionWaveDivider()),
-              SliverToBoxAdapter(
-                child: KeyedSubtree(
-                  key: _gamesKey,
-                  child: _SectionSlot(
-                    horizontalPadding: horizontalPadding,
-                    glowAlignment: Alignment.topRight,
-                    child: const GamesTeaserSection(),
                   ),
                 ),
               ),

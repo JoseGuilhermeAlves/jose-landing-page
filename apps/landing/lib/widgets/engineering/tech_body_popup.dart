@@ -119,7 +119,7 @@ class _TechBodyPopup extends StatelessWidget {
                   Align(
                     alignment: Alignment.centerLeft,
                     child: AppButton(
-                      label: 'Abrir documentacao',
+                      label: 'Abrir documentação',
                       variant: AppButtonVariant.secondary,
                       icon: Icons.open_in_new,
                       onPressed: () {

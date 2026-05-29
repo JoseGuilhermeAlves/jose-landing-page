@@ -1,8 +1,8 @@
 import 'package:feature_tech/src/domain/arch_decision.dart';
 import 'package:flutter/material.dart';
 
-/// 7 decisoes arquiteturais "que valem ler antes de explorar o monorepo".
-/// Curtas, em pt-br — quem ve esta secao ja e tecnico ou curioso. Detalhe
+/// 6 decisões arquiteturais "que valem ler antes de explorar o monorepo".
+/// Curtas, em pt-br — quem vê esta seção já é técnico ou curioso. Detalhe
 /// completo em PROJECT.md.
 abstract final class ArchDecisionsCatalog {
   static const List<ArchDecision> all = [
@@ -19,25 +19,17 @@ abstract final class ArchDecisionsCatalog {
       id: 'clean_arch',
       title: 'Feature-First + Clean Arch',
       body:
-          'Cada feature tem data, domain e presentation. Features nao se '
-          'conhecem — comunicacao acontece no shell em apps/landing.',
+          'Cada feature tem data, domain e presentation. Features não se '
+          'conhecem — comunicação acontece no shell em apps/landing.',
       icon: Icons.account_tree_outlined,
     ),
     ArchDecision(
-      id: 'core',
-      title: 'core sem dependencia interna',
-      body:
-          'Failure (sealed), Result<T>, UseCase contract. Toda feature '
-          'depende dele; ele nao depende de ninguem.',
-      icon: Icons.layers_outlined,
-    ),
-    ArchDecision(
       id: 'painters',
-      title: 'Custom Painter como coracao',
+      title: 'Custom Painter como coração',
       body:
           'Painters em packages/animations e nos mocks — Paint cacheado '
           'em campo, shouldRepaint correto, hints isComplex/willChange. '
-          'Lottie so em ilustracoes secundarias.',
+          'Lottie só em ilustrações secundárias.',
       icon: Icons.brush_outlined,
     ),
     ArchDecision(

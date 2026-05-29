@@ -104,8 +104,8 @@ class VitralConfirmationPage extends StatelessWidget {
                 ),
                 const SizedBox(height: AppSpacing.sm),
                 Text(
-                  'Revise os dados antes de fechar. Voce recebe o lembrete '
-                  'por e-mail na vespera.',
+                  'Revise os dados antes de fechar. Você recebe o lembrete '
+                  'por e-mail na véspera.',
                   style: textTheme.bodyMedium?.copyWith(
                     color: colors.onSurfaceMuted,
                     height: 1.5,
@@ -256,7 +256,7 @@ class _DetailsCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.sm),
           _Row(
-            label: 'Horario',
+            label: 'Horário',
             value: '${_formatTime(slot)} - ${_formatTime(endsAt)}',
             mono: true,
             colors: colors,
@@ -264,7 +264,7 @@ class _DetailsCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.sm),
           _Row(
-            label: 'Duracao',
+            label: 'Duração',
             value: service.formattedDuration,
             mono: true,
             colors: colors,

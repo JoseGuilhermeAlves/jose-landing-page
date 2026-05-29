@@ -29,8 +29,8 @@ class PulsoExerciseDetailPage extends StatelessWidget {
         final exercise = ExercisesCatalog.byId(effectiveId);
         if (exercise == null) {
           return Scaffold(
-            appBar: AppBar(title: const Text('Exercicio')),
-            body: const Center(child: Text('Exercicio nao encontrado.')),
+            appBar: AppBar(title: const Text('Exercício')),
+            body: const Center(child: Text('Exercício não encontrado.')),
           );
         }
         final prescribed = state.prescribedWeightFor(exerciseId);

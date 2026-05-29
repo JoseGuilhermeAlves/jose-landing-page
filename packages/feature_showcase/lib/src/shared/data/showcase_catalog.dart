@@ -43,7 +43,7 @@ abstract final class ShowcaseCatalog {
     ),
     ShowcaseTemplate(
       id: 'realestate',
-      label: 'Imobiliaria',
+      label: 'Imobiliária',
       description:
           'Listagem de imoveis com filtros por bairro, faixa de preco '
           'e numero de quartos.',

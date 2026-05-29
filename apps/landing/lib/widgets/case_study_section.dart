@@ -358,13 +358,13 @@ class _DecisionsGrid extends StatelessWidget {
     final decisions = [
       const _DecisionCard(
         eyebrow: 'ARQUITETURA',
-        title: 'Clean Arch por mock, nao por pacote',
+        title: 'Clean Arch por mock, não por pacote',
         body:
             'Cada mock do showcase (Pulso, Garoa, Aurora, Vitral, Solar) '
-            'tem seu proprio triangulo data / domain / presentation '
-            'dentro de lib/src/<mock>/. Mocks nao se importam entre si '
-            '— so de shared/. Quando um mock cresce em entidades, tudo '
-            'cabe dentro do triangulo dele.',
+            'tem seu próprio triângulo data / domain / presentation '
+            'dentro de lib/src/<mock>/. Mocks não se importam entre si '
+            '— só de shared/. Quando um mock cresce em entidades, tudo '
+            'cabe dentro do triângulo dele.',
       ),
       const _DecisionCard(
         eyebrow: 'PAINTERS',

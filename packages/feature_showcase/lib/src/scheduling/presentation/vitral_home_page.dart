@@ -101,7 +101,7 @@ class VitralHomePage extends StatelessWidget {
                 const SizedBox(height: AppSpacing.xl),
                 _SectionLabel(
                   eyebrow: 'Categorias',
-                  title: 'O que voce precisa hoje',
+                  title: 'O que você precisa hoje',
                   colors: colors,
                   textTheme: textTheme,
                 ),
@@ -208,7 +208,7 @@ class _HeroCard extends StatelessWidget {
                         const SizedBox(height: AppSpacing.lg),
                         AppButton(
                           key: const Key('vitral-cta-services'),
-                          label: 'Ver servicos',
+                          label: 'Ver serviços',
                           icon: Icons.arrow_forward_rounded,
                           size: AppButtonSize.large,
                           onPressed: () => Navigator.of(context).push(

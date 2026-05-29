@@ -84,7 +84,7 @@ class _PulsoSessionLoggerPageState extends State<PulsoSessionLoggerPage> {
         final template = state.todaysTemplate;
         if (session == null || template == null) {
           return const Scaffold(
-            body: Center(child: Text('Sessao nao iniciada.')),
+            body: Center(child: Text('Sessão não iniciada.')),
           );
         }
         return Scaffold(

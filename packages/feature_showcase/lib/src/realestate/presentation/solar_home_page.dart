@@ -51,7 +51,7 @@ class SolarHomePage extends StatelessWidget {
                 const SizedBox(height: AppSpacing.xl),
                 _SectionLabel(
                   eyebrow: 'Bairros',
-                  title: 'Por onde voce procura',
+                  title: 'Por onde você procura',
                   colors: colors,
                   textTheme: textTheme,
                 ),

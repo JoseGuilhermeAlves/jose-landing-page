@@ -20,7 +20,7 @@ class EngineeringSection extends StatelessWidget {
         : Padding(
             padding: const EdgeInsets.only(top: AppSpacing.xl),
             child: AppButton(
-              label: 'Ver repositorio no GitHub',
+              label: 'Ver repositório no GitHub',
               variant: AppButtonVariant.secondary,
               icon: Icons.open_in_new,
               onPressed: () => onOpenGithub?.call(githubUrl!),

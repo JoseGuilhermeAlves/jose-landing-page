@@ -23,14 +23,14 @@ class TechDescription {
   /// Categoria/papel curto (ex.: "Framework base").
   final String role;
 
-  /// Restricao de versao (ex.: ">=3.38").
+  /// Restricao de versão (ex.: ">=3.38").
   final String version;
 
   /// Paragrafo longo, 3-5 linhas, explicando o porque desta tech no projeto
   /// e qual problema ela resolve.
   final String body;
 
-  /// URL opcional pra documentacao oficial.
+  /// URL opcional pra documentação oficial.
   final String? docsUrl;
 }
 
@@ -70,7 +70,7 @@ abstract final class TechDescriptionsCatalog {
       body:
           'Alternativa reativa ao InheritedWidget com providers tipados e '
           'compile-time safety. Elimina contexto de BuildContext para acesso '
-          'a estado, facilitando testes e composicao. Code generation via '
+          'a estado, facilitando testes e composição. Code generation via '
           'riverpod_generator reduz boilerplate e garante consistencia. '
           'Utilizado em projetos que exigem granularidade fina de rebuild '
           'e cache automatico de estado derivado.',
@@ -97,20 +97,20 @@ abstract final class TechDescriptionsCatalog {
       body:
           'Routing declarativo com `/labs` e suas sub-rotas carregadas como '
           'bundle separado on-demand via `deferred as labs`. A primeira pintura '
-          'da home nao paga o custo dos sete playgrounds — o widget bundle so '
+          'da home não paga o custo dos sete playgrounds — o widget bundle so '
           'materializa quando o usuario navega ate `/labs`. O `errorBuilder` '
           'cobre 404 sem rota nominal extra.',
       docsUrl: 'https://pub.dev/packages/go_router',
     ),
     'CustomPainter': TechDescription(
       title: 'CustomPainter',
-      tagline: 'Renderizacao 2D de baixo nivel no Canvas.',
-      role: 'Graficos',
+      tagline: 'Renderização 2D de baixo nivel no Canvas.',
+      role: 'Gráficos',
       version: 'Flutter API',
       body:
           'API de desenho 2D do Flutter para interfaces que ultrapassam o '
           'catalogo de widgets. Cada painter recebe o Canvas e o Size, '
-          'desenhando com Path, Paint e TextPainter em 60 Hz sem alocacao '
+          'desenhando com Path, Paint e TextPainter em 60 Hz sem alocação '
           'no hot loop. Nesta landing, sustenta 20+ painters dedicados — '
           'mapas, plantas baixas, graficos, backdrops e relogios animados '
           'nos mocks do showcase.',
@@ -119,13 +119,13 @@ abstract final class TechDescriptionsCatalog {
     ),
     'Animations': TechDescription(
       title: 'Animations',
-      tagline: 'Implicitas, explicitas e Tween chains.',
-      role: 'Graficos',
+      tagline: 'Implicitas, explícitas e Tween chains.',
+      role: 'Gráficos',
       version: 'Flutter API',
       body:
           'Dominio completo do pipeline de animacao do Flutter: '
           'AnimatedContainer e AnimatedOpacity para transicoes implicitas, '
-          'AnimationController com Tween chains para sequencias explicitas, '
+          'AnimationController com Tween chains para sequências explícitas, '
           'e Ticker direto em CustomPainter via super(repaint:) para loops '
           'de 60 Hz sem rebuild. Staggered animations, curves customizadas '
           'e physics-based springs aplicados nos mocks e playgrounds.',
@@ -134,52 +134,52 @@ abstract final class TechDescriptionsCatalog {
     'SQLite': TechDescription(
       title: 'SQLite',
       tagline: 'Banco relacional local no device.',
-      role: 'Persistencia',
+      role: 'Persistência',
       version: 'sqflite',
       body:
           'Banco relacional embarcado para persistencia estruturada no '
           'device. Queries SQL tipadas via sqflite com migrations versionadas '
           'garantem integridade dos dados offline. Utilizado em apps que '
           'exigem consultas complexas, joins e indices — cenarios onde '
-          'key-value stores nao oferecem a expressividade necessaria.',
+          'key-value stores não oferecem a expressividade necessária.',
       docsUrl: 'https://pub.dev/packages/sqflite',
     ),
     'Hive': TechDescription(
       title: 'Hive',
       tagline: 'Key-value store rapido, sem SQL.',
-      role: 'Persistencia',
+      role: 'Persistência',
       version: '4.x',
       body:
           'Key-value store de alta performance para dados estruturados no '
           'device. Sem overhead de SQL — leitura e escrita em microsegundos '
-          'com TypeAdapters tipados. Ideal para cache local, preferencias '
-          'do usuario e dados de sessao que nao exigem queries relacionais. '
+          'com TypeAdapters tipados. Ideal para cache local, preferências '
+          'do usuario e dados de sessão que não exigem queries relacionais. '
           'Complementa SQLite em arquiteturas que separam cache de dados '
           'persistentes.',
       docsUrl: 'https://pub.dev/packages/hive',
     ),
     'Clean Architecture': TechDescription(
       title: 'Clean Architecture',
-      tagline: 'Separacao rigida data / domain / presentation.',
+      tagline: 'Separação rígida data / domain / presentation.',
       role: 'Arquitetura',
       version: 'Padrao',
       body:
           'Cada feature segue o triangulo data / domain / presentation com '
-          'fronteiras explicitas. Domain nao conhece Flutter, data nao conhece '
+          'fronteiras explícitas. Domain não conhece Flutter, data não conhece '
           'presentation, e o shell compoe tudo via construtor. Resultado: '
           'features substituiveis sem efeito colateral, testabilidade total '
           'por camada e onboarding rapido em qualquer modulo.',
     ),
     'SOLID': TechDescription(
       title: 'SOLID',
-      tagline: 'Principios que sustentam a extensibilidade.',
+      tagline: 'Princípios que sustentam a extensibilidade.',
       role: 'Arquitetura',
-      version: 'Principios',
+      version: 'Princípios',
       body:
           'Single Responsibility, Open-Closed, Liskov Substitution, Interface '
           'Segregation e Dependency Inversion aplicados em todas as camadas. '
-          'Repositories abstratos no domain, implementacoes concretas no data, '
-          'Blocs que dependem de contratos — nao de implementacoes. Cada '
+          'Repositories abstratos no domain, implementações concretas no data, '
+          'Blocs que dependem de contratos — não de implementações. Cada '
           'decisao de design passa por esses filtros antes de virar codigo.',
     ),
     'Monorepo': TechDescription(
@@ -190,8 +190,8 @@ abstract final class TechDescriptionsCatalog {
       body:
           'Workspace Pub nativo com Melos orquestrando bootstrap, analyze, '
           'test e build em todos os pacotes. Cada pacote tem pubspec proprio, '
-          'dependencias explicitas e barrel de exportacao. Mudancas atomicas '
-          'que cruzam pacotes entram num unico commit sem risco de versao '
+          'dependências explícitas e barrel de exportação. Mudancas atômicas '
+          'que cruzam pacotes entram num unico commit sem risco de versão '
           'desalinhada entre feature e design system.',
     ),
     'Design System': TechDescription(
@@ -208,27 +208,27 @@ abstract final class TechDescriptionsCatalog {
     ),
     'SDUI': TechDescription(
       title: 'SDUI',
-      tagline: 'Interface dirigida por contrato remoto.',
+      tagline: 'Interface dirígida por contrato remoto.',
       role: 'Arquitetura',
       version: 'Server-Driven',
       body:
-          'Server-Driven UI permite atualizar layouts, ordem de secoes e '
-          'conteudo sem publicar nova versao do app. O front end consome '
-          'contratos JSON que descrevem a arvore de componentes, e o '
+          'Server-Driven UI permite atualizar layouts, ordem de seções e '
+          'conteúdo sem publicar nova versão do app. O front end consome '
+          'contratos JSON que descrevem a árvore de componentes, e o '
           'design system resolve cada nodo no widget correspondente. '
           'Reduz ciclo de deploy e desacopla produto de engenharia.',
     ),
     'Feature-First': TechDescription(
       title: 'Feature-First',
-      tagline: 'Modulos por dominio, sem dependencia cruzada.',
+      tagline: 'Modulos por dominio, sem dependência cruzada.',
       role: 'Arquitetura',
-      version: 'Organizacao',
+      version: 'Organização',
       body:
-          'Organizacao por feature — cada dominio vive em pacote isolado '
-          'com sua propria arvore data/domain/presentation. Features nao '
-          'importam entre si; comunicacao acontece pelo shell via composicao '
-          'direta. Adicionar ou remover uma feature nao quebra as demais. '
-          'Hierarquia rigida: core → design_system → animations → feature_*.',
+          'Organização por feature — cada dominio vive em pacote isolado '
+          'com sua própria árvore data/domain/presentation. Features não '
+          'importam entre si; comunicação acontece pelo shell via composição '
+          'direta. Adicionar ou remover uma feature não quebra as demais. '
+          'Hierarquia rígida: core → design_system → animations → feature_*.',
     ),
     'very_good_analysis': TechDescription(
       title: 'very_good_analysis',
@@ -237,10 +237,10 @@ abstract final class TechDescriptionsCatalog {
       version: '^10.0.0',
       body:
           'Conjunto estrito de lints rodando failFast no pipeline de '
-          'analise estatica. Mantem o codigo limpo sem PR review repetitivo — '
+          'análise estática. Mantem o codigo limpo sem PR review repetitivo — '
           'estilo, imutabilidade e ordering ja vem cobertos pela regra. O CI '
           'quebra antes de qualquer review humano enxergar o diff, entao '
-          'inconsistencia nao chega ate o reviewer.',
+          'inconsistência não chega até o reviewer.',
       docsUrl: 'https://pub.dev/packages/very_good_analysis',
     ),
     'bloc_test': TechDescription(
@@ -251,8 +251,8 @@ abstract final class TechDescriptionsCatalog {
       body:
           'Harness oficial pra testar blocs sem mock manual de dependencia. '
           'Cada Bloc/Cubit nasce com seus testes na mesma sessao — politica do '
-          'projeto, nao opcional. A API `blocTest` deixa explicito o `seed`, '
-          'os eventos disparados e a sequencia de states esperada, eliminando '
+          'projeto, não opcional. A API `blocTest` deixa explicito o `seed`, '
+          'os eventos disparados e a sequência de states esperada, eliminando '
           'flakiness por ordering de stream.',
       docsUrl: 'https://bloclibrary.dev',
     ),
@@ -265,7 +265,7 @@ abstract final class TechDescriptionsCatalog {
           'Deep links externos da landing: WhatsApp, mail, GitHub e LinkedIn. '
           'Cobre `https`, `mailto` e schemes customizados de apps moveis com '
           'um unico ponto de entrada. Fallback gracioso quando o app externo '
-          'nao abre — a landing nao crasha por isso, apenas registra a '
+          'não abre — a landing não crasha por isso, apenas registra a '
           'tentativa e segue o fluxo.',
       docsUrl: 'https://pub.dev/packages/url_launcher',
     ),
@@ -278,7 +278,7 @@ abstract final class TechDescriptionsCatalog {
           'Renderer WASM com fallback CanvasKit em navegadores sem suporte. '
           'O build da landing sempre roda com `--wasm`, entregando performance '
           'Canvas-like sem o peso do bundle CanvasKit no first paint. '
-          'Custom Painters em 60 Hz nao engasgam mesmo com varias cenas '
+          'Custom Painters em 60 Hz não engasgam mesmo com varias cenas '
           'ativas simultaneamente no scroll.',
       docsUrl: 'https://docs.flutter.dev/platform-integration/web/renderers',
     ),
@@ -303,7 +303,7 @@ abstract final class TechDescriptionsCatalog {
       body:
           'Automacao de build, code signing e deploy para iOS e Android. '
           'Lanes configuradas por ambiente (dev, staging, prod) eliminam '
-          'passos manuais no ciclo de release — do bump de versao ao upload '
+          'passos manuais no ciclo de release — do bump de versão ao upload '
           'na App Store e Google Play. Integrado com GitHub Actions para '
           'pipeline completo de CI/CD mobile sem intervencao humana.',
       docsUrl: 'https://fastlane.tools',

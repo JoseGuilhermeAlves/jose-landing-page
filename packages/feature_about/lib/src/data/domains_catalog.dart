@@ -21,7 +21,7 @@ abstract final class DomainsCatalog {
     ),
     DomainHighlight(
       id: 'public_services',
-      label: 'Setor publico',
+      label: 'Setor público',
       blurb:
           'Servicos digitais ao cidadao com integracao a identidade '
           'governamental.',

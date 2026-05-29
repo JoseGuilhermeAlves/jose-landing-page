@@ -50,7 +50,16 @@
       "PowerShell(Get-ChildItem -Path \"C:\\\\jose-landing-page\\\\packages\\\\feature_games\" -Recurse | Where-Object { -not $_.PSIsContainer } | Select-Object -ExpandProperty FullName | Sort-Object)",
       "PowerShell(flutter test *)",
       "Bash(pip --version)",
-      "PowerShell(py *)"
+      "PowerShell(py *)",
+      "Bash(git stash *)",
+      "Bash(awk 'NR>=1326 && NR<=1400' C:/jose-landing-page/packages/feature_hero/lib/src/presentation/hero_section.dart)",
+      "Bash(git *)",
+      "WebSearch",
+      "WebFetch(domain:paco.me)",
+      "WebFetch(domain:emilkowal.ski)",
+      "WebFetch(domain:rauno.me)",
+      "Bash(xargs wc -l)",
+      "Bash(dart format *)"
     ]
   }
 }

@@ -1,4 +1,4 @@
-import 'dart:math' as math;
+import 'dart:ui' as ui;
 
 import 'package:animations/animations.dart';
 import 'package:design_system/design_system.dart';
@@ -187,18 +187,22 @@ class HeroSection extends StatelessWidget {
         // ladeiam o conteudo com bleed de ~100px cada lado). Particle
         // e Constellation Field seguem full-bleed pra que estrelas
         // ainda preencham as margens.
+        // Frame expande de 1280 -> 1600 em desktop pra que os corpos
+        // do flanco esquerdo (proximos da foto) fanem por mais largura
+        // e populem viewports wide (1920+). Mobile auto-clampa pro
+        // viewport via SizedBox, sem mudanca de comportamento.
         Positioned.fill(
           child: IgnorePointer(
             child: Center(
               child: SizedBox(
-                width: 1280,
+                width: isMobile ? 1280 : 1600,
                 child: CosmosField(
-                  planets: _heroPlanets(colors),
-                  nebulas: _heroNebulas(),
-                  galaxies: _heroGalaxies(),
-                  pulsars: _heroPulsars(),
-                  asteroidBelts: _heroAsteroidBelts(),
-                  wisps: _heroWisps(),
+                  planets: _heroPlanets(colors, isMobile: isMobile),
+                  nebulas: _heroNebulas(isMobile: isMobile),
+                  galaxies: _heroGalaxies(isMobile: isMobile),
+                  pulsars: _heroPulsars(isMobile: isMobile),
+                  asteroidBelts: _heroAsteroidBelts(isMobile: isMobile),
+                  wisps: _heroWisps(isMobile: isMobile),
                 ),
               ),
             ),
@@ -256,7 +260,18 @@ class HeroSection extends StatelessWidget {
 /// muito longe do conteudo centralizado (maxWidth 1080) e a cena perde
 /// coesao. Anchors aqui ficam em corona apertada (0.10..0.20 / 0.80..0.90)
 /// pra ladearem foto+texto sem sobrepor.
-List<CosmosPlanet> _heroPlanets(AppColorScheme colors) {
+///
+/// Desktop recebe lista expandida: mais corpos no flanco esquerdo
+/// (onde fica a foto), x em {0.03, 0.06, 0.10, 0.14, 0.20} em vez de
+/// clusterizar em 0.10. Y distribui em {0.10, 0.24, 0.36, 0.48, 0.60,
+/// 0.74, 0.88} pra evitar empilhamento vertical. Mobile mantem a lista
+/// compacta original — corpos espacados demais sumiriam no viewport
+/// estreito.
+List<CosmosPlanet> _heroPlanets(
+  AppColorScheme colors, {
+  required bool isMobile,
+}) {
+  if (!isMobile) return _heroPlanetsDesktop();
   return const [
     // Red giant — canto superior direito, off-canvas (igual default).
     CosmosPlanet(
@@ -366,15 +381,351 @@ List<CosmosPlanet> _heroPlanets(AppColorScheme colors) {
         Color(0xFFF0DCFF),
       ],
     ),
+    // Teal-mint world — mid left, dialoga com wisp cyan abaixo.
+    CosmosPlanet(
+      id: 'teal-world',
+      canvasAnchor: Offset(0.05, 0.50),
+      radiusPixels: 16,
+      pattern: PlanetPattern.bands,
+      seed: 53,
+      palette: [
+        Color(0xFF02100E),
+        Color(0xFF0A4A3D),
+        Color(0xFF1FE5B5),
+        Color(0xFFA5FFE5),
+        Color(0xFFE9FFF8),
+      ],
+      moon: PlanetMoon(
+        orbitRadiusPixels: 26,
+        moonRadiusPixels: 2,
+        color: Color(0xFFE6FFF8),
+        phaseOffset: 0.3,
+      ),
+    ),
+    // Amber dwarf — entre ice ringed e teal, preenche meio-esquerda alta.
+    CosmosPlanet(
+      id: 'amber-dwarf',
+      canvasAnchor: Offset(0.04, 0.34),
+      radiusPixels: 9,
+      pattern: PlanetPattern.hemispheres,
+      seed: 61,
+      palette: [
+        Color(0xFF2A1500),
+        Color(0xFF7A4205),
+        Color(0xFFFFA82A),
+        Color(0xFFFFD58A),
+        Color(0xFFFFF1D6),
+      ],
+    ),
+    // Indigo rocky — abaixo do teal, pequeno, ancora canto esquerdo baixo.
+    CosmosPlanet(
+      id: 'indigo-rocky',
+      canvasAnchor: Offset(0.16, 0.68),
+      radiusPixels: 11,
+      pattern: PlanetPattern.speckled,
+      seed: 73,
+      palette: [
+        Color(0xFF08081C),
+        Color(0xFF1F2280),
+        Color(0xFF3F66FF),
+        Color(0xFF9BB8FF),
+        Color(0xFFE0EBFF),
+      ],
+    ),
+    // Coral-rose — entre lime e indigo, densifica canto esquerdo medio.
+    CosmosPlanet(
+      id: 'coral-rose',
+      canvasAnchor: Offset(0.03, 0.72),
+      radiusPixels: 8,
+      pattern: PlanetPattern.bands,
+      seed: 83,
+      palette: [
+        Color(0xFF2A0610),
+        Color(0xFF7A1A30),
+        Color(0xFFFF4E78),
+        Color(0xFFFFA0B8),
+        Color(0xFFFFE0E8),
+      ],
+    ),
+  ];
+}
+
+/// Versao desktop da lista de planetas. Mantem os 10 corpos da mobile
+/// (mas re-espaca o flanco esquerdo) e adiciona +5 novos (3 esquerda,
+/// 2 direita) pra popular wide screens (1920+). Regra de espacamento:
+/// esquerda em x ∈ {0.03, 0.05, 0.08, 0.12, 0.16, 0.20}, y distribuido
+/// de 0.10 ate 0.92 sem clusterizar em 3 pontos.
+List<CosmosPlanet> _heroPlanetsDesktop() {
+  return const [
+    // Red giant — canto superior direito, off-canvas.
+    CosmosPlanet(
+      id: 'red-giant',
+      canvasAnchor: Offset(1.02, -0.08),
+      radiusPixels: 150,
+      pattern: PlanetPattern.speckled,
+      seed: 7,
+      palette: [
+        Color(0xFF1A0008),
+        Color(0xFF7A0E2A),
+        Color(0xFFFF1F44),
+        Color(0xFFFF6679),
+        Color(0xFFFFDADE),
+      ],
+    ),
+    // Ice ringed — flanco esquerdo alto, puxado pra fora (0.12 vs 0.18).
+    CosmosPlanet(
+      id: 'ice-world',
+      canvasAnchor: Offset(0.12, 0.22),
+      radiusPixels: 32,
+      pattern: PlanetPattern.hemispheres,
+      seed: 9,
+      palette: [
+        Color(0xFF010E1A),
+        Color(0xFF0A446A),
+        Color(0xFF0AC4FF),
+        Color(0xFF7FE9FF),
+        Color(0xFFE8FBFF),
+      ],
+      ring: PlanetRing(
+        innerRadiusPixels: 44,
+        outerRadiusPixels: 62,
+        color: Color(0xEE0AE0FF),
+        tiltY: 0.28,
+      ),
+    ),
+    // Magenta giant — canto inferior direito.
+    CosmosPlanet(
+      id: 'magenta-giant',
+      canvasAnchor: Offset(0.88, 0.86),
+      radiusPixels: 28,
+      pattern: PlanetPattern.bands,
+      seed: 13,
+      palette: [
+        Color(0xFF1A0524),
+        Color(0xFF5C0F7A),
+        Color(0xFFE020F2),
+        Color(0xFFFF66F5),
+        Color(0xFFFFCFF8),
+      ],
+      moon: PlanetMoon(
+        orbitRadiusPixels: 40,
+        moonRadiusPixels: 4,
+        color: Color(0xFFFFFFFF),
+        phaseOffset: 0.15,
+      ),
+    ),
+    // Lime rocky — flanco esquerdo baixo, puxado pra fora (0.05 vs 0.10).
+    CosmosPlanet(
+      id: 'lime-rocky',
+      canvasAnchor: Offset(0.05, 0.84),
+      radiusPixels: 14,
+      pattern: PlanetPattern.speckled,
+      seed: 3,
+      palette: [
+        Color(0xFF020F08),
+        Color(0xFF0A4023),
+        Color(0xFF1FFF6E),
+        Color(0xFFA5FFC1),
+        Color(0xFFE9FFEC),
+      ],
+      moon: PlanetMoon(
+        orbitRadiusPixels: 24,
+        moonRadiusPixels: 2,
+        color: Color(0xFFE6FFD9),
+        phaseOffset: 0.55,
+      ),
+    ),
+    // Electric blue — topo direita.
+    CosmosPlanet(
+      id: 'electric-blue',
+      canvasAnchor: Offset(0.84, 0.14),
+      radiusPixels: 9,
+      pattern: PlanetPattern.hemispheres,
+      seed: 19,
+      palette: [
+        Color(0xFF020B26),
+        Color(0xFF0A2B70),
+        Color(0xFF2D7FFF),
+        Color(0xFF7CB8FF),
+        Color(0xFFE0EEFF),
+      ],
+    ),
+    // Violet rocky — borda direita, meio. Puxado pra 0.92 pra fanar.
+    CosmosPlanet(
+      id: 'violet-rocky',
+      canvasAnchor: Offset(0.92, 0.46),
+      radiusPixels: 12,
+      pattern: PlanetPattern.speckled,
+      seed: 17,
+      palette: [
+        Color(0xFF120428),
+        Color(0xFF391066),
+        Color(0xFF9D3FFF),
+        Color(0xFFD58BFF),
+        Color(0xFFF0DCFF),
+      ],
+    ),
+    // Teal-mint — flanco esquerdo meio, x 0.03 (vs 0.05).
+    CosmosPlanet(
+      id: 'teal-world',
+      canvasAnchor: Offset(0.03, 0.48),
+      radiusPixels: 16,
+      pattern: PlanetPattern.bands,
+      seed: 53,
+      palette: [
+        Color(0xFF02100E),
+        Color(0xFF0A4A3D),
+        Color(0xFF1FE5B5),
+        Color(0xFFA5FFE5),
+        Color(0xFFE9FFF8),
+      ],
+      moon: PlanetMoon(
+        orbitRadiusPixels: 26,
+        moonRadiusPixels: 2,
+        color: Color(0xFFE6FFF8),
+        phaseOffset: 0.3,
+      ),
+    ),
+    // Amber dwarf — esquerda alta, x 0.02 (mais externo).
+    CosmosPlanet(
+      id: 'amber-dwarf',
+      canvasAnchor: Offset(0.02, 0.32),
+      radiusPixels: 9,
+      pattern: PlanetPattern.hemispheres,
+      seed: 61,
+      palette: [
+        Color(0xFF2A1500),
+        Color(0xFF7A4205),
+        Color(0xFFFFA82A),
+        Color(0xFFFFD58A),
+        Color(0xFFFFF1D6),
+      ],
+    ),
+    // Indigo rocky — esquerda baixa-meio, x 0.20 (mais interno),
+    // preenche faixa intermediaria perto da foto.
+    CosmosPlanet(
+      id: 'indigo-rocky',
+      canvasAnchor: Offset(0.20, 0.66),
+      radiusPixels: 11,
+      pattern: PlanetPattern.speckled,
+      seed: 73,
+      palette: [
+        Color(0xFF08081C),
+        Color(0xFF1F2280),
+        Color(0xFF3F66FF),
+        Color(0xFF9BB8FF),
+        Color(0xFFE0EBFF),
+      ],
+    ),
+    // Coral-rose — esquerda baixa, x 0.08.
+    CosmosPlanet(
+      id: 'coral-rose',
+      canvasAnchor: Offset(0.08, 0.74),
+      radiusPixels: 8,
+      pattern: PlanetPattern.bands,
+      seed: 83,
+      palette: [
+        Color(0xFF2A0610),
+        Color(0xFF7A1A30),
+        Color(0xFFFF4E78),
+        Color(0xFFFFA0B8),
+        Color(0xFFFFE0E8),
+      ],
+    ),
+    // === Novos corpos desktop-only (5) — popular o flanco esquerdo ===
+    // Cyan-mint dwarf — x 0.16, y 0.10 (topo esquerdo, entre red giant
+    // off-canvas e ice ringed).
+    CosmosPlanet(
+      id: 'cyan-dwarf',
+      canvasAnchor: Offset(0.16, 0.10),
+      radiusPixels: 7,
+      pattern: PlanetPattern.hemispheres,
+      seed: 101,
+      palette: [
+        Color(0xFF021A1F),
+        Color(0xFF0A5566),
+        Color(0xFF2DE5D8),
+        Color(0xFFA5FFF5),
+        Color(0xFFE9FFFB),
+      ],
+    ),
+    // Magenta rocky pequeno — x 0.18, y 0.40 (preenche meio-esquerda
+    // entre amber dwarf e teal world, lado de fora da foto).
+    CosmosPlanet(
+      id: 'magenta-dwarf',
+      canvasAnchor: Offset(0.18, 0.40),
+      radiusPixels: 6,
+      pattern: PlanetPattern.speckled,
+      seed: 109,
+      palette: [
+        Color(0xFF24061A),
+        Color(0xFF66124A),
+        Color(0xFFE040A0),
+        Color(0xFFFFA0D5),
+        Color(0xFFFFE0F0),
+      ],
+    ),
+    // Pale-gold dwarf — x 0.06, y 0.92 (canto inferior esquerdo,
+    // ancora a base do flanco junto com lime-rocky).
+    CosmosPlanet(
+      id: 'pale-gold',
+      canvasAnchor: Offset(0.06, 0.94),
+      radiusPixels: 10,
+      pattern: PlanetPattern.bands,
+      seed: 127,
+      palette: [
+        Color(0xFF1F1505),
+        Color(0xFF6A4A0A),
+        Color(0xFFE6C25A),
+        Color(0xFFFFE8A5),
+        Color(0xFFFFF7DC),
+      ],
+    ),
+    // Deep purple — x 0.94, y 0.74 (flanco direito, abaixo do violet
+    // rocky, simetria com pale-gold).
+    CosmosPlanet(
+      id: 'deep-purple',
+      canvasAnchor: Offset(0.94, 0.72),
+      radiusPixels: 8,
+      pattern: PlanetPattern.speckled,
+      seed: 137,
+      palette: [
+        Color(0xFF0A0420),
+        Color(0xFF2E1466),
+        Color(0xFF6B40E0),
+        Color(0xFFB89BFF),
+        Color(0xFFE6DCFF),
+      ],
+    ),
+    // Sun-yellow dwarf — x 0.96, y 0.28 (flanco direito alto, entre
+    // electric blue e violet rocky).
+    CosmosPlanet(
+      id: 'sun-yellow',
+      canvasAnchor: Offset(0.96, 0.28),
+      radiusPixels: 7,
+      pattern: PlanetPattern.hemispheres,
+      seed: 149,
+      palette: [
+        Color(0xFF2A1F00),
+        Color(0xFF7A5A05),
+        Color(0xFFFFD22A),
+        Color(0xFFFFE88A),
+        Color(0xFFFFF8D6),
+      ],
+    ),
   ];
 }
 
 /// Nebulosas customizadas pro hero — coladas nas bordas, longe do centro.
 /// Default tem nebula em (0.42, 0.38) e (0.42, 0.80) que poluem o eixo de
 /// leitura; aqui empurramos pras laterais.
-List<CosmosNebula> _heroNebulas() {
-  return const [
-    CosmosNebula(
+List<CosmosNebula> _heroNebulas({required bool isMobile}) {
+  // Desktop puxa as nebulas das bordas pra fora (0.10 -> 0.06, 0.88 ->
+  // 0.92) acompanhando o frame expandido.
+  final leftX = isMobile ? 0.12 : 0.06;
+  final rightX = isMobile ? 0.88 : 0.92;
+  return [
+    const CosmosNebula(
       canvasAnchor: Offset(0.86, 0.06),
       radiusPixels: 110,
       color: Color(0xFFFF1F8B),
@@ -382,23 +733,22 @@ List<CosmosNebula> _heroNebulas() {
       seed: 4,
     ),
     CosmosNebula(
-      canvasAnchor: Offset(0.12, 0.20),
+      canvasAnchor: Offset(leftX, 0.20),
       radiusPixels: 70,
-      color: Color(0xFF0AC4FF),
+      color: const Color(0xFF0AC4FF),
       density: 0.62,
       seed: 1,
     ),
     CosmosNebula(
-      canvasAnchor: Offset(0.88, 0.50),
+      canvasAnchor: Offset(rightX, 0.50),
       radiusPixels: 60,
-      color: Color(0xFF9D3FFF),
-      density: 0.55,
+      color: const Color(0xFF9D3FFF),
       seed: 6,
     ),
     CosmosNebula(
-      canvasAnchor: Offset(0.10, 0.88),
+      canvasAnchor: Offset(isMobile ? 0.10 : 0.04, 0.88),
       radiusPixels: 64,
-      color: Color(0xFFE020F2),
+      color: const Color(0xFFE020F2),
       density: 0.60,
       seed: 5,
     ),
@@ -410,7 +760,50 @@ List<CosmosNebula> _heroNebulas() {
 /// canto inferior direito ancora visualmente o trust strip; a do canto
 /// superior esquerdo entra atras do halo do red giant pra criar layered
 /// depth.
-List<CosmosGalaxy> _heroGalaxies() {
+List<CosmosGalaxy> _heroGalaxies({required bool isMobile}) {
+  if (!isMobile) {
+    // Desktop: cyan-pink top-left empurrada pra x=0.10 (vs 0.15), e a
+    // violet-cream bottom-right pra x=0.92 (vs 0.88) — acompanha o
+    // espacamento dos planetas no flanco.
+    return const [
+      CosmosGalaxy(
+        canvasAnchor: Offset(0.92, 0.88),
+        radiusPixels: 160,
+        coreColor: Color(0xFFFFE8C2),
+        armColor: Color(0xFF9D3FFF),
+        armCount: 4,
+        tiltY: 0.38,
+        rotation: -0.7,
+        dustCount: 320,
+        seed: 41,
+      ),
+      CosmosGalaxy(
+        canvasAnchor: Offset(0.10, 0.18),
+        radiusPixels: 90,
+        coreColor: Color(0xFFE8FBFF),
+        armColor: Color(0xFFFF1F8B),
+        tiltY: 0.55,
+        rotation: 1.2,
+        dustCount: 200,
+        seed: 67,
+      ),
+      // Galaxia violet-cream colada abaixo da foto — espelha a do
+      // canto direito (mesma familia de cor + tilt), ancora a base da
+      // silhueta dando sensacao de profundidade local sem virar
+      // grounding chapado.
+      CosmosGalaxy(
+        canvasAnchor: Offset(0.30, 0.92),
+        radiusPixels: 110,
+        coreColor: Color(0xFFFFE8C2),
+        armColor: Color(0xFF9D3FFF),
+        armCount: 4,
+        tiltY: 0.42,
+        rotation: 0.4,
+        dustCount: 240,
+        seed: 89,
+      ),
+    ];
+  }
   return const [
     // Galaxia violet-cream — bottom-right, grande, tilt acentuado.
     CosmosGalaxy(
@@ -442,7 +835,59 @@ List<CosmosGalaxy> _heroGalaxies() {
 /// nas bordas, com fases dessincronizadas pra criar pulso contagiante
 /// sem batida coletiva. Cores variadas dialogam com a paleta dos
 /// planetas.
-List<CosmosPulsar> _heroPulsars() {
+List<CosmosPulsar> _heroPulsars({required bool isMobile}) {
+  if (!isMobile) {
+    // Desktop: 5 pulsares (vs 4 mobile). Adiciona um cyan extra no
+    // flanco esquerdo alto pra popular essa faixa, e re-espaca os
+    // existentes nas bordas externas.
+    return const [
+      CosmosPulsar(
+        canvasAnchor: Offset(0.92, 0.32),
+        coreColor: Color(0xFF99FFEC),
+        beamColor: Color(0xFF0AC4FF),
+        beamLengthPixels: 64,
+        seed: 31,
+      ),
+      CosmosPulsar(
+        canvasAnchor: Offset(0.04, 0.56),
+        coreColor: Color(0xFFFFCFF8),
+        beamColor: Color(0xFFFF1F8B),
+        coreRadiusPixels: 2,
+        beamLengthPixels: 50,
+        phaseOffset: 0.37,
+        seed: 47,
+      ),
+      CosmosPulsar(
+        canvasAnchor: Offset(0.72, 0.08),
+        coreColor: Color(0xFFFFF8C8),
+        beamColor: Color(0xFFFFB81F),
+        coreRadiusPixels: 2,
+        beamLengthPixels: 42,
+        phaseOffset: 0.62,
+        seed: 53,
+      ),
+      CosmosPulsar(
+        canvasAnchor: Offset(0.12, 0.92),
+        coreColor: Color(0xFFF0DCFF),
+        beamColor: Color(0xFF9D3FFF),
+        coreRadiusPixels: 2,
+        beamLengthPixels: 38,
+        phaseOffset: 0.83,
+        seed: 71,
+      ),
+      // Novo: cyan flare no flanco esquerdo alto, dialogando com a
+      // galaxia cyan-pink ali em cima.
+      CosmosPulsar(
+        canvasAnchor: Offset(0.06, 0.16),
+        coreColor: Color(0xFFE8FBFF),
+        beamColor: Color(0xFF06D4FF),
+        coreRadiusPixels: 2,
+        beamLengthPixels: 44,
+        phaseOffset: 0.21,
+        seed: 89,
+      ),
+    ];
+  }
   return const [
     // Direita, altura do headline — cyan farol.
     CosmosPulsar(
@@ -488,7 +933,37 @@ List<CosmosPulsar> _heroPulsars() {
 /// Cinturoes de asteroides do hero — densificam o lado esquerdo com
 /// textura mid-layer. Banda principal envolve a galaxia cyan-pink em
 /// arco parcial, criando profundidade entre ela e o ice ringed.
-List<CosmosAsteroidBelt> _heroAsteroidBelts() {
+List<CosmosAsteroidBelt> _heroAsteroidBelts({required bool isMobile}) {
+  if (!isMobile) {
+    // Desktop: re-ancora os dois cinturoes mais pra fora seguindo as
+    // galaxias que envolvem.
+    return const [
+      CosmosAsteroidBelt(
+        canvasAnchor: Offset(0.10, 0.20),
+        radiusPixels: 96,
+        rockColor: Color(0xFFB69BD9),
+        highlightColor: Color(0xFFFFE8C2),
+        tiltY: 0.28,
+        rotation: -0.4,
+        rockCount: 160,
+        arcStart: 0.05,
+        arcSweep: 0.72,
+        seed: 91,
+      ),
+      CosmosAsteroidBelt(
+        canvasAnchor: Offset(0.90, 0.60),
+        radiusPixels: 110,
+        rockColor: Color(0xFFE8B5C8),
+        highlightColor: Color(0xFFFFCFF8),
+        tiltY: 0.36,
+        rotation: 0.9,
+        rockCount: 180,
+        arcStart: 0.15,
+        arcSweep: 0.80,
+        seed: 119,
+      ),
+    ];
+  }
   return const [
     CosmosAsteroidBelt(
       canvasAnchor: Offset(0.16, 0.22),
@@ -502,6 +977,20 @@ List<CosmosAsteroidBelt> _heroAsteroidBelts() {
       arcSweep: 0.72,
       seed: 91,
     ),
+    // Segundo cinturao — direita-baixa, envolvendo a galaxy violet,
+    // tilt e rotacao opostos pro movimento nao ficar uniforme.
+    CosmosAsteroidBelt(
+      canvasAnchor: Offset(0.86, 0.62),
+      radiusPixels: 110,
+      rockColor: Color(0xFFE8B5C8),
+      highlightColor: Color(0xFFFFCFF8),
+      tiltY: 0.36,
+      rotation: 0.9,
+      rockCount: 180,
+      arcStart: 0.15,
+      arcSweep: 0.80,
+      seed: 119,
+    ),
   ];
 }
 
@@ -509,7 +998,51 @@ List<CosmosAsteroidBelt> _heroAsteroidBelts() {
 /// pra densificar a area entre foto e borda sem competir com a aura.
 /// Tons distintos (cyan-magenta e violet-pink) pra dialogar com a paleta
 /// dos planetas vizinhos.
-List<CosmosWisp> _heroWisps() {
+List<CosmosWisp> _heroWisps({required bool isMobile}) {
+  if (!isMobile) {
+    // Desktop: 3 wisps (vs 2 mobile). Os dois originais sao re-ancorados
+    // mais pra fora e ganha um terceiro no flanco direito-baixo pra que
+    // ambos os lados respirem.
+    return const [
+      CosmosWisp(
+        canvasAnchor: Offset(0.04, 0.40),
+        radiusPixels: 130,
+        colors: [
+          Color(0xFF0AC4FF),
+          Color(0xFF9D3FFF),
+          Color(0xFFE020F2),
+        ],
+        blobCount: 6,
+        driftPixels: 16,
+        density: 0.55,
+        seed: 23,
+      ),
+      CosmosWisp(
+        canvasAnchor: Offset(0.14, 0.62),
+        radiusPixels: 90,
+        colors: [
+          Color(0xFFFF1F8B),
+          Color(0xFFFF66F5),
+          Color(0xFFFFCFF8),
+        ],
+        density: 0.45,
+        seed: 37,
+      ),
+      // Novo: wisp violet-blue no flanco direito-baixo pra simetria.
+      CosmosWisp(
+        canvasAnchor: Offset(0.94, 0.40),
+        radiusPixels: 100,
+        colors: [
+          Color(0xFF8B5CF6),
+          Color(0xFF2D7FFF),
+          Color(0xFF7CB8FF),
+        ],
+        driftPixels: 14,
+        density: 0.42,
+        seed: 79,
+      ),
+    ];
+  }
   return const [
     // Wisp principal — torco cyan/violet logo abaixo do ice ringed.
     CosmosWisp(
@@ -774,46 +1307,36 @@ class _TrustStat {
   final String label;
 }
 
-/// Foto de perfil tratada pra dialogar com o cosmos atras: aura anime
-/// multi-blob animada (mesma paleta neon do headline) + grounding glow
-/// concentrado onde a silhueta termina. Aspect ratio 3:4 retrato pra
-/// enquadrar do busto pra cima. `BoxFit.contain` + `bottomCenter` mantem
-/// a silhueta inteira ancorada na base do frame.
-class _HeroPortrait extends StatefulWidget {
+/// Foto de perfil tratada pra dialogar com o cosmos atras. Em vez de
+/// um RadialGradient no frame retangular (que vazava cor pros cantos
+/// vazios), a aura agora **segue a silhueta**: 3 copias da mesma PNG
+/// empilhadas, cada uma tingida com `srcIn` (a cor mora dentro do
+/// alpha do PNG) e desfocada com `ImageFilter.blur` — o blur dilata o
+/// contorno pra fora, produzindo um halo que abraca o recorte do
+/// corpo, nao o frame. Sob a silhueta, um pequeno planeta
+/// (CustomPainter) emerge da base do frame, ancorando o busto a algo
+/// tangivel sem invocar a metafora de "chao sob os pes" — que nao
+/// caberia num recorte que termina na altura do quadril.
+///
+/// Aspect ratio 3:4; `BoxFit.contain` + `bottomCenter` mantem a
+/// silhueta ancorada na base, alinhada com o topo do planeta.
+class _HeroPortrait extends StatelessWidget {
   const _HeroPortrait({required this.isMobile});
 
   final bool isMobile;
 
   @override
-  State<_HeroPortrait> createState() => _HeroPortraitState();
-}
-
-class _HeroPortraitState extends State<_HeroPortrait>
-    with SingleTickerProviderStateMixin {
-  // Um unico controller alimenta toda a aura via `super(repaint:)` —
-  // 8s ciclo lento bate com o headline neon (ambos em 8s, mas com fases
-  // dessincronizadas pelo seed dos blobs).
-  late final AnimationController _aura = AnimationController(
-    vsync: this,
-    duration: const Duration(seconds: 8),
-  )..repeat();
-
-  @override
-  void dispose() {
-    _aura.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final colors = context.colors;
-    final isMobile = widget.isMobile;
-
-    // Tamanhos por breakpoint. Desktop ampliado (460x600) pra dar mais
-    // presenca a foto — ela e o ancora humano do hero. Mobile full-width
-    // limitado em altura pra nao empurrar headline pra fora do fold.
     final maxWidth = isMobile ? double.infinity : 460.0;
     final maxHeight = isMobile ? 380.0 : 600.0;
+
+    // Paleta da aura: violet/indigo da marca + um rosa-neon quente
+    // no halo proximo pra ecoar o gradient do headline.
+    const farTint = Color(0xFF7132F5);
+    const midTint = Color(0xFF5741D8);
+    const closeTint = Color(0xFFFF2D95);
+
+    const assetPath = 'assets/images/foto_recortada.png';
 
     return Semantics(
       label: 'Foto de Jose Guilherme Alves',
@@ -822,50 +1345,26 @@ class _HeroPortraitState extends State<_HeroPortrait>
         constraints: BoxConstraints(maxWidth: maxWidth, maxHeight: maxHeight),
         child: AspectRatio(
           aspectRatio: 3 / 4,
-          child: RepaintBoundary(
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                // Aura anime: 6 blobs radiais com drift senoidal, em
-                // BlendMode.plus pra que sobreposicoes acendam (ki aura
-                // / nebula emanando) em vez de chapar. Painter recebe
-                // o controller via `super(repaint:)` — sem rebuild do
-                // widget a cada tick.
-                Positioned.fill(
-                  child: IgnorePointer(
-                    child: CustomPaint(
-                      isComplex: true,
-                      willChange: true,
-                      painter: _AnimeAuraPainter(
-                        progress: _aura,
-                        primary: colors.primary,
-                        accent: colors.accent,
-                      ),
-                    ),
-                  ),
-                ),
-                // Grounding: glow eliptico ancorando a silhueta na base
-                // do frame. Sem arco — a silhueta e busto pra cima, nao
-                // tem "pe" pra apoiar; o glow agora le como "silhueta
-                // emergindo de luz".
-                Positioned.fill(
-                  child: IgnorePointer(
-                    child: CustomPaint(
-                      painter: _GroundingPainter(color: colors.primary),
-                    ),
-                  ),
-                ),
-                // Silhueta recortada (PNG transparente). `contain` preserva
-                // a figura inteira sem clip. Asset vive em apps/landing.
-                Image.asset(
-                  'assets/images/foto_recortada.png',
-                  fit: BoxFit.contain,
-                  alignment: Alignment.bottomCenter,
-                  // errorBuilder evita exception em test bundle sem asset.
-                  errorBuilder: (_, _, _) => const SizedBox.shrink(),
-                ),
-              ],
-            ),
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              // Halo silhueta-aware: 3 layers blurradas+tingidas via
+              // srcIn. Sigmas crescem do mais externo (mais difuso) ao
+              // mais interno (rim quente colado no contorno).
+              const _SilhouetteAura(
+                assetPath: assetPath,
+                farTint: farTint,
+                midTint: midTint,
+                closeTint: closeTint,
+              ),
+              // Silhueta crisp por cima — o foco optico do frame.
+              Image.asset(
+                assetPath,
+                fit: BoxFit.contain,
+                alignment: Alignment.bottomCenter,
+                errorBuilder: (_, _, _) => const SizedBox.shrink(),
+              ),
+            ],
           ),
         ),
       ),
@@ -873,188 +1372,150 @@ class _HeroPortraitState extends State<_HeroPortrait>
   }
 }
 
-/// Aura anime-style: 6 blobs radiais sobrepostos em torno da silhueta,
-/// cada um com fase propria e drift senoidal lento. Renderizado com
-/// `BlendMode.plus` — sobreposicoes acendem aditivamente (ki/nebula) em
-/// vez de chapar num retangulo violeta. Paleta espelha a do headline
-/// neon (violet/magenta/cyan/pink hot) pra costurar com o resto do hero.
+/// Halo que respira em torno do recorte. Stack de 3 copias do mesmo
+/// PNG, cada uma com ColorFiltered (`srcIn`) preenchendo a silhueta
+/// com uma cor solida, depois ImageFiltered (`blur`) dilatando o
+/// contorno pra fora. A combinacao produz glow que segue a forma da
+/// pessoa, nao o retangulo do frame.
 ///
-/// Performance: 6 `drawCircle` com shader radial cacheado por blob. Paint
-/// objects e RNG de seed sao campos; shaders ficam invalidados apenas
-/// quando o tamanho do frame muda.
-class _AnimeAuraPainter extends CustomPainter {
-  _AnimeAuraPainter({
-    required this.progress,
-    required this.primary,
-    required this.accent,
-  }) : super(repaint: progress);
+/// Performance: cada Image.asset reusa o mesmo arquivo via image
+/// cache do Flutter (zero upload extra de textura). `RepaintBoundary`
+/// por camada isola o offscreen do `ImageFiltered` — caro quando o
+/// sigma muda, mas confinado a sua propria subtree. Apenas as camadas
+/// de glow assinam o controller (AnimatedBuilder); a imagem crisp
+/// fica fora do ciclo de repaint.
+class _SilhouetteAura extends StatefulWidget {
+  const _SilhouetteAura({
+    required this.assetPath,
+    required this.farTint,
+    required this.midTint,
+    required this.closeTint,
+  });
 
-  final Animation<double> progress;
-  final Color primary;
-  final Color accent;
-
-  // Hot pink + cyan pra dialogar com a paleta neon do headline e do
-  // cosmos (mesmas familias das nebulosas).
-  static const Color _hotPink = Color(0xFFFF2D95);
-  static const Color _cyan = Color(0xFF06D4FF);
-
-  // 6 blobs: cada tupla = (anchor x, anchor y, raio relativo a min(w,h),
-  // amplitude do drift x, amplitude do drift y, offset de fase, cor).
-  late final List<_AuraBlob> _blobs = [
-    // Central-baixo no torso — nucleo violeta saturado.
-    _AuraBlob(0.50, 0.62, 0.55, 0.04, 0.05, 0, primary),
-    // Mid-esquerda — accent profundo.
-    _AuraBlob(0.22, 0.50, 0.40, 0.05, 0.06, 0.21, accent),
-    // Mid-direita — magenta hot.
-    const _AuraBlob(0.78, 0.48, 0.42, 0.05, 0.06, 0.44, _hotPink),
-    // Topo (cabeca) — cyan suave.
-    const _AuraBlob(0.50, 0.18, 0.32, 0.03, 0.04, 0.67, _cyan),
-    // Inferior-esquerdo — pink emergindo.
-    const _AuraBlob(0.32, 0.82, 0.30, 0.04, 0.03, 0.13, _hotPink),
-    // Inferior-direito — accent emergindo.
-    _AuraBlob(0.70, 0.82, 0.32, 0.04, 0.03, 0.87, accent),
-  ];
-
-  // Cache de shaders por (tamanho, indice de blob). Invalidado quando
-  // size muda. `_lastSize` evita reconstruir shaders 60Hz.
-  Size? _lastSize;
-  final List<Shader?> _shaderCache = List<Shader?>.filled(6, null);
-
-  // Paint reutilizavel — BlendMode.plus faz sobreposicoes acenderem.
-  final Paint _paint = Paint()..blendMode = BlendMode.plus;
+  final String assetPath;
+  final Color farTint;
+  final Color midTint;
+  final Color closeTint;
 
   @override
-  void paint(Canvas canvas, Size size) {
-    if (size.isEmpty) return;
-    final w = size.width;
-    final h = size.height;
-    final unit = math.min(w, h);
-    final t = progress.value * 2 * math.pi;
+  State<_SilhouetteAura> createState() => _SilhouetteAuraState();
+}
 
-    // Rebuild shader cache somente quando o frame redimensionar.
-    if (_lastSize != size) {
-      for (var i = 0; i < _blobs.length; i++) {
-        final b = _blobs[i];
-        final r = b.radius * unit;
-        _shaderCache[i] = RadialGradient(
-          colors: [
-            // Alpha baixo no nucleo — em BlendMode.plus, baixo alpha ja
-            // produz brilho perceptivel sem clipping.
-            b.color.withValues(alpha: 0.55),
-            b.color.withValues(alpha: 0.28),
-            b.color.withValues(alpha: 0.10),
-            const Color(0x00000000),
-          ],
-          stops: const [0.0, 0.35, 0.65, 1.0],
-        ).createShader(Rect.fromCircle(center: Offset.zero, radius: r));
-      }
-      _lastSize = size;
-    }
+class _SilhouetteAuraState extends State<_SilhouetteAura>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _breath;
 
-    for (var i = 0; i < _blobs.length; i++) {
-      final b = _blobs[i];
-      final phase = b.phase * 2 * math.pi;
-      // Drift senoidal lento — duas frequencias diferentes em x/y pra
-      // que o movimento nao seja circular previsivel.
-      final dx = math.sin(t + phase) * b.driftX * w;
-      final dy = math.cos(t * 0.85 + phase) * b.driftY * h;
-      final cx = b.anchorX * w + dx;
-      final cy = b.anchorY * h + dy;
-      final r = b.radius * unit;
-      canvas
-        ..save()
-        ..translate(cx, cy);
-      _paint.shader = _shaderCache[i];
-      canvas
-        ..drawCircle(Offset.zero, r, _paint)
-        ..restore();
-    }
+  // Sigmas base por camada — far/mid/close. Range animado [0.85x,
+  // 1.15x] da sensacao de respiracao sem pulsar agressivo. Pensados
+  // pra PNG de ~377px de largura: 42 cobre halo amplo, 20 traz um
+  // meio-termo colorido, 7 deixa um rim quente colado no contorno.
+  static const double _farSigma = 42;
+  static const double _midSigma = 20;
+  static const double _closeSigma = 7;
+
+  @override
+  void initState() {
+    super.initState();
+    _breath = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 7),
+    )..repeat(reverse: true);
   }
 
   @override
-  bool shouldRepaint(_AnimeAuraPainter oldDelegate) {
-    return oldDelegate.progress != progress ||
-        oldDelegate.primary != primary ||
-        oldDelegate.accent != accent;
+  void dispose() {
+    _breath.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return IgnorePointer(
+      child: AnimatedBuilder(
+        animation: _breath,
+        builder: (context, _) {
+          // t oscila 0..1, sigmaMul 0.85..1.15, alphaMul 0.85..1.0.
+          final t = _breath.value;
+          final sigmaMul = 0.85 + 0.30 * t;
+          final alphaMul = 0.85 + 0.15 * t;
+
+          return Stack(
+            fit: StackFit.expand,
+            children: [
+              _AuraLayer(
+                assetPath: widget.assetPath,
+                tint: widget.farTint,
+                baseAlpha: 0.55,
+                sigma: _farSigma * sigmaMul,
+                alphaMul: alphaMul,
+              ),
+              _AuraLayer(
+                assetPath: widget.assetPath,
+                tint: widget.midTint,
+                baseAlpha: 0.65,
+                sigma: _midSigma * sigmaMul,
+                alphaMul: alphaMul,
+              ),
+              _AuraLayer(
+                assetPath: widget.assetPath,
+                tint: widget.closeTint,
+                baseAlpha: 0.55,
+                sigma: _closeSigma * sigmaMul,
+                alphaMul: alphaMul,
+              ),
+            ],
+          );
+        },
+      ),
+    );
   }
 }
 
-class _AuraBlob {
-  const _AuraBlob(
-    this.anchorX,
-    this.anchorY,
-    this.radius,
-    this.driftX,
-    this.driftY,
-    this.phase,
-    this.color,
-  );
+/// Uma camada do halo: PNG -> srcIn (tint) -> blur (dilata pra fora).
+/// `RepaintBoundary` isola o offscreen do ImageFiltered num display
+/// list dedicado.
+class _AuraLayer extends StatelessWidget {
+  const _AuraLayer({
+    required this.assetPath,
+    required this.tint,
+    required this.baseAlpha,
+    required this.sigma,
+    required this.alphaMul,
+  });
 
-  final double anchorX;
-  final double anchorY;
-  final double radius;
-  final double driftX;
-  final double driftY;
-  final double phase;
-  final Color color;
-}
-
-/// Ancoragem da silhueta: glow eliptico concentrado onde a silhueta
-/// termina (quadril/jeans, ~96% da altura do frame), estendendo pra cima
-/// dentro do corpo da figura pra que ela leia como "emergindo de luz" em
-/// vez de "flutuando sobre uma linha". Sem arco — silhueta busto-pra-cima
-/// nao tem pe pra apoiar, e a gramatica de horizonte curvo (planeta)
-/// estava sugerindo isso erradamente. Painter estatico; `shouldRepaint`
-/// compara cor pra reagir a troca de tema.
-class _GroundingPainter extends CustomPainter {
-  _GroundingPainter({required this.color});
-
-  final Color color;
-
-  // Eixo Y onde a silhueta termina visualmente. 0.96 = linha do quadril
-  // na foto recortada (PNG ~0.628 aspect num frame 3:4 = a silhueta
-  // ocupa altura cheia e encerra perto da base do proprio PNG).
-  static const double _baseY = 0.96;
+  final String assetPath;
+  final Color tint;
+  final double baseAlpha;
+  final double sigma;
+  final double alphaMul;
 
   @override
-  void paint(Canvas canvas, Size size) {
-    final w = size.width;
-    final h = size.height;
-    final cy = h * _baseY;
-
-    // Glow eliptico centrado na base da silhueta. Largura ampla (1.1 *
-    // w), altura significativa (scaleY 0.75) pra estender pra cima e
-    // fundir com o corpo — a silhueta parece nascer da luz em vez de
-    // ficar pousada sobre faixa fina.
-    final glowCenter = Offset(w / 2, cy);
-    final glowRadius = w * 0.55;
-    final glowRect = Rect.fromCircle(center: glowCenter, radius: glowRadius);
-    final glowPaint = Paint()
-      ..shader = RadialGradient(
-        colors: [
-          // Alpha 0.5 no nucleo (era 0.38) — interage visivelmente com
-          // a silhueta na base, dando a leitura de luz subindo pelo
-          // corpo em vez de simples sombra no chao.
-          color.withValues(alpha: 0.50),
-          color.withValues(alpha: 0.18),
-          Colors.transparent,
-        ],
-        stops: const [0.0, 0.5, 1.0],
-      ).createShader(glowRect);
-    canvas
-      ..save()
-      // Achatamento vertical local — scaleY 0.75 (era 0.55) faz o glow
-      // estender mais alto, cruzando a base da silhueta e dissipando.
-      ..translate(glowCenter.dx, glowCenter.dy)
-      ..scale(1, 0.75)
-      ..translate(-glowCenter.dx, -glowCenter.dy)
-      ..drawCircle(glowCenter, glowRadius, glowPaint)
-      ..restore();
-  }
-
-  @override
-  bool shouldRepaint(_GroundingPainter oldDelegate) {
-    return oldDelegate.color != color;
+  Widget build(BuildContext context) {
+    final effectiveAlpha = (baseAlpha * alphaMul).clamp(0.0, 1.0);
+    // Usamos DecoratedBox + DecorationImage (ao inves de Image.asset)
+    // pra que a busca de testes por widget `Image` continue achando
+    // apenas a copia crisp. Mesmo AssetImage provider entra no image
+    // cache do Flutter, entao o reuso de textura permanece.
+    return RepaintBoundary(
+      child: Opacity(
+        opacity: effectiveAlpha,
+        child: ImageFiltered(
+          imageFilter: ui.ImageFilter.blur(sigmaX: sigma, sigmaY: sigma),
+          child: ColorFiltered(
+            colorFilter: ColorFilter.mode(tint, BlendMode.srcIn),
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(assetPath),
+                  fit: BoxFit.contain,
+                  alignment: Alignment.bottomCenter,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
 

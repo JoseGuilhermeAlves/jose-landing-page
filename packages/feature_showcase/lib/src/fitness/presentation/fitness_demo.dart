@@ -43,13 +43,63 @@ class _FitnessDemoState extends State<FitnessDemo> {
             final colors = context.colors;
             return Scaffold(
               backgroundColor: colors.background,
-              body: IndexedStack(index: _tab, children: _tabs),
+              body: Stack(
+                children: [
+                  Positioned.fill(
+                    child: IndexedStack(index: _tab, children: _tabs),
+                  ),
+                  Positioned(
+                    top: 0,
+                    right: 0,
+                    child: SafeArea(
+                      child: Padding(
+                        padding: const EdgeInsets.all(AppSpacing.sm),
+                        child: _CloseDemoButton(
+                          onClose: () => Navigator.of(context).maybePop(),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
               bottomNavigationBar: _PulsoBottomNav(
                 index: _tab,
                 onTap: (i) => setState(() => _tab = i),
               ),
             );
           },
+        ),
+      ),
+    );
+  }
+}
+
+class _CloseDemoButton extends StatelessWidget {
+  const _CloseDemoButton({required this.onClose});
+
+  final VoidCallback onClose;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onClose,
+        borderRadius: BorderRadius.circular(20),
+        child: Container(
+          width: 40,
+          height: 40,
+          decoration: BoxDecoration(
+            color: colors.surface,
+            shape: BoxShape.circle,
+            border: Border.all(color: colors.border),
+          ),
+          child: Icon(
+            Icons.close_rounded,
+            color: colors.onSurface,
+            size: 20,
+          ),
         ),
       ),
     );

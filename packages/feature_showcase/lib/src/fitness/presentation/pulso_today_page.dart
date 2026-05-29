@@ -135,7 +135,9 @@ class _TodayHeader extends StatelessWidget {
               ],
             ),
           ),
-          Icon(Icons.notifications_none_rounded, color: colors.onSurfaceMuted),
+          // Espaco reservado pro botao de fechar do shell — evita que o
+          // titulo encoste no overlay do Stack pai.
+          const SizedBox(width: 48),
         ],
       ),
     );

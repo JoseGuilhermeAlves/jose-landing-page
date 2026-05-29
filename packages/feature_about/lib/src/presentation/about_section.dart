@@ -4,19 +4,16 @@ import 'package:feature_about/src/presentation/domains_grid.dart';
 import 'package:feature_about/src/presentation/stack_badges.dart';
 import 'package:flutter/material.dart';
 
-/// Secao "Sobre" — eyebrow + headline em gradiente, card com avatar +
-/// nome + bio, grade de dominios em que atuou, nota de escopo e
-/// stack badges (PROJECT.md §4.4).
+/// Secao "Sobre" — eyebrow + headline em gradiente, card com nome +
+/// bio, grade de dominios em que atuou, nota de escopo e stack badges
+/// (PROJECT.md §4.4).
 ///
 /// **Sem timeline cronologica** e **sem nomear** empresas/produtos —
 /// detalhe nominal fica no LinkedIn. Aqui descrevemos por dominio
 /// (varejo B2B, fintech, etc.) e separamos honestamente o que foi
 /// feito ponta a ponta do que foi em time de produto.
 class AboutSection extends StatelessWidget {
-  const AboutSection({this.photo, super.key});
-
-  /// Foto do perfil — quando nula, mostra iniciais em gradiente.
-  final ImageProvider? photo;
+  const AboutSection({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +67,7 @@ class AboutSection extends StatelessWidget {
               'alinhada desde o kickoff.',
         ),
         const SizedBox(height: AppSpacing.xxl),
-        _BioCard(photo: photo),
+        const _BioCard(),
         const SizedBox(height: AppSpacing.xxl),
         Text(
           'Onde ja atuei',
@@ -92,72 +89,15 @@ class AboutSection extends StatelessWidget {
   }
 }
 
-/// Card "minha bio". Avatar + nome em destaque + paragrafo. Substituir
-/// o avatar de iniciais por foto real quando o Jose enviar.
+/// Card "minha bio". Nome em destaque + paragrafo. Sem avatar — o
+/// rosto do dev nao precisa abrir cada secao; o conteudo carrega.
 class _BioCard extends StatelessWidget {
-  const _BioCard({this.photo});
-
-  final ImageProvider? photo;
+  const _BioCard();
 
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
     final textTheme = Theme.of(context).textTheme;
-    final isMobile = context.isMobile;
-
-    final avatar = _Avatar(photo: photo, colors: colors);
-
-    final textBlock = Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Text(
-          'José Guilherme Alves',
-          style: textTheme.titleLarge?.copyWith(color: colors.onSurface),
-        ),
-        const SizedBox(height: AppSpacing.xs),
-        Text(
-          'Front end mobile · Flutter Developer · Brasil',
-          style: textTheme.labelMedium?.copyWith(
-            color: colors.primary,
-            letterSpacing: 0.4,
-          ),
-        ),
-        const SizedBox(height: AppSpacing.md),
-        Text(
-          'A carreira comecou em apps mobile de operacao varejista — '
-          'front end Flutter do design ao deploy, em time pequeno, '
-          'durante 5 anos. Em seguida, atuacao em times de produto em '
-          'dominios maiores: setor publico, plataforma interna, '
-          'operacao em campo e, atualmente, fintech em escala. Sempre '
-          'no front end mobile, com Flutter web quando o produto '
-          'demandou. Foco constante em arquitetura, performance e '
-          'consistencia de UX em devices reais.',
-          style: textTheme.bodyMedium?.copyWith(
-            color: colors.onSurfaceMuted,
-            height: 1.6,
-          ),
-        ),
-      ],
-    );
-
-    final inner = isMobile
-        ? Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              avatar,
-              const SizedBox(height: AppSpacing.lg),
-              textBlock,
-            ],
-          )
-        : Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              avatar,
-              const SizedBox(width: AppSpacing.xl),
-              Expanded(child: textBlock),
-            ],
-          );
 
     return Container(
       padding: const EdgeInsets.all(AppSpacing.xl),
@@ -166,41 +106,39 @@ class _BioCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(AppRadius.lg),
         border: Border.all(color: colors.border),
       ),
-      child: inner,
-    );
-  }
-}
-
-class _Avatar extends StatelessWidget {
-  const _Avatar({required this.colors, this.photo});
-
-  final ImageProvider? photo;
-  final AppColorScheme colors;
-
-  @override
-  Widget build(BuildContext context) {
-    // Sem foto: BrandMark assume papel de avatar (ja traz gradiente + glow).
-    if (photo == null) {
-      return BrandMark(
-        size: 96,
-        borderRadius: BorderRadius.circular(AppRadius.lg),
-      );
-    }
-    return Container(
-      width: 96,
-      height: 96,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        boxShadow: [
-          BoxShadow(
-            color: colors.primary.withValues(alpha: 0.4),
-            blurRadius: 28,
-            spreadRadius: -4,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            'José Guilherme Alves',
+            style: textTheme.titleLarge?.copyWith(color: colors.onSurface),
+          ),
+          const SizedBox(height: AppSpacing.xs),
+          Text(
+            'Front end mobile · Flutter Developer · Brasil',
+            style: textTheme.labelMedium?.copyWith(
+              color: colors.primary,
+              letterSpacing: 0.4,
+            ),
+          ),
+          const SizedBox(height: AppSpacing.md),
+          Text(
+            'A carreira comecou em apps mobile de operacao varejista — '
+            'front end Flutter do design ao deploy, em time pequeno, '
+            'durante 5 anos. Em seguida, atuacao em times de produto em '
+            'dominios maiores: setor publico, plataforma interna, '
+            'operacao em campo e, atualmente, fintech em escala. Sempre '
+            'no front end mobile, com Flutter web quando o produto '
+            'demandou. Foco constante em arquitetura, performance e '
+            'consistencia de UX em devices reais.',
+            style: textTheme.bodyMedium?.copyWith(
+              color: colors.onSurfaceMuted,
+              height: 1.6,
+            ),
           ),
         ],
       ),
-      clipBehavior: Clip.antiAlias,
-      child: Image(image: photo!, width: 96, height: 96, fit: BoxFit.cover),
     );
   }
 }

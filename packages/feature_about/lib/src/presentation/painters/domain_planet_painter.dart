@@ -192,39 +192,55 @@ class DomainPlanetPainter extends CustomPainter {
     double bodyRadius,
     double tiltY,
   ) {
-    final ringWidth = bodyRadius * 1.85;
-    final ringHeight = bodyRadius * tiltY * 1.65;
+    // Anel saturno-style: oval mais largo que o corpo (~2.4x), altura
+    // proporcional ao tilt. Wings escapam pela esquerda/direita do
+    // corpo — onde o anel fica visivel. Pintamos um back-half atras
+    // (vai ficar escondido pelo body) + front-half desenhada DEPOIS
+    // do corpo (em _paintRingFront).
+    final ringWidth = bodyRadius * 2.4;
+    final ringHeight = math.max(bodyRadius * 0.45, bodyRadius * tiltY * 2.1);
+    final stroke = math.max(2.5, bodyRadius * 0.10);
+
+    // Cor solida bem visivel — gradient horizontal so com leve fade
+    // nas extremidades pras pontas nao ficarem chapadas.
     final ringPaint = Paint()
       ..style = PaintingStyle.stroke
-      ..strokeWidth = math.max(2, bodyRadius * 0.08)
+      ..strokeWidth = stroke
+      ..isAntiAlias = true
       ..shader = ui.Gradient.linear(
         Offset(center.dx - ringWidth / 2, center.dy),
         Offset(center.dx + ringWidth / 2, center.dy),
         [
-          spec.palette[3].withValues(alpha: 0.0),
-          spec.palette[3].withValues(alpha: 0.85),
-          spec.palette[3].withValues(alpha: 0.0),
+          spec.palette[3].withValues(alpha: 0.30),
+          spec.palette[3].withValues(alpha: 0.90),
+          spec.palette[4].withValues(alpha: 0.95),
+          spec.palette[3].withValues(alpha: 0.90),
+          spec.palette[3].withValues(alpha: 0.30),
         ],
-        [0.0, 0.5, 1.0],
+        [0.0, 0.18, 0.5, 0.82, 1.0],
       );
-    canvas.drawOval(
-      Rect.fromCenter(center: center, width: ringWidth, height: ringHeight),
-      ringPaint,
+
+    final ringRect = Rect.fromCenter(
+      center: center,
+      width: ringWidth,
+      height: ringHeight,
     );
 
-    // Aresta brilhante na frente do corpo (front-arc) — cria
-    // sensacao de profundidade do anel passando atras.
+    // Anel completo (back+front). Como nao da pra clipar so o atras
+    // sem state extra de profundidade, desenhamos o oval inteiro
+    // primeiro; o corpo depois cobre a metade superior interna,
+    // dando leitura "anel passa atras". A metade inferior interna
+    // continua visivel pra reforcar o efeito.
+    canvas.drawOval(ringRect, ringPaint);
+
+    // Aresta brilhante adicional na frente (arco inferior) — engrossa
+    // a parte do anel que passa "na frente" do planeta.
     final frontArc = Paint()
       ..style = PaintingStyle.stroke
-      ..strokeWidth = math.max(1.5, bodyRadius * 0.06)
-      ..color = spec.palette[4].withValues(alpha: 0.55);
-    canvas.drawArc(
-      Rect.fromCenter(center: center, width: ringWidth, height: ringHeight),
-      0.05,
-      math.pi - 0.10,
-      false,
-      frontArc,
-    );
+      ..strokeWidth = stroke * 0.9
+      ..isAntiAlias = true
+      ..color = spec.palette[4].withValues(alpha: 0.85);
+    canvas.drawArc(ringRect, 0.10, math.pi - 0.20, false, frontArc);
   }
 
   @override

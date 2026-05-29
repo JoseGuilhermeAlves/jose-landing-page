@@ -30,24 +30,25 @@ void main() {
       await tester.pumpWidget(const SizedBox());
     });
 
-    testWidgets('compoe DomainConstellation e ManifestoStrip', (tester) async {
+    testWidgets('compoe DomainConstellation e DeliveryBlock', (tester) async {
       await tester.pumpWidget(wrap(const AboutSection()));
       await tester.pump(const Duration(milliseconds: 32));
 
       expect(find.byType(DomainConstellation), findsOneWidget);
-      expect(find.byType(ManifestoStrip), findsOneWidget);
+      expect(find.byType(DeliveryBlock), findsOneWidget);
 
       await tester.pumpWidget(const SizedBox());
     });
 
-    testWidgets('manifesto carrega linha "Front end mobile."', (tester) async {
+    testWidgets('DeliveryBlock carrega 3 eyebrows (entrega/craft/colab)', (
+      tester,
+    ) async {
       await tester.pumpWidget(wrap(const AboutSection()));
-      // Espera o fade-in stagger completar.
       await tester.pump(const Duration(milliseconds: 32));
-      await tester.pump(const Duration(milliseconds: 1700));
 
-      expect(find.textContaining('Front end mobile'), findsWidgets);
-      expect(find.textContaining('Devices reais'), findsWidgets);
+      expect(find.text('ENTREGA'), findsOneWidget);
+      expect(find.text('CRAFT'), findsOneWidget);
+      expect(find.text('COLABORAÇÃO'), findsOneWidget);
 
       await tester.pumpWidget(const SizedBox());
     });

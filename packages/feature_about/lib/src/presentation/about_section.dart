@@ -1,21 +1,24 @@
 import 'package:animations/animations.dart';
 import 'package:design_system/design_system.dart';
 import 'package:feature_about/src/data/domains_catalog.dart';
+import 'package:feature_about/src/presentation/delivery_block.dart';
 import 'package:feature_about/src/presentation/domain_constellation.dart';
-import 'package:feature_about/src/presentation/manifesto_strip.dart';
 import 'package:feature_about/src/presentation/painters/jga_monogram_painter.dart';
 import 'package:flutter/material.dart';
 
 /// Secao "Sobre" — eyebrow + headline em gradiente + bio card com
 /// borda animada e monograma JGA no canto + constelacao interativa
-/// de dominios + manifesto strip em mono.
+/// de dominios (planetas + balao popup) + bloco "Como eu entrego"
+/// com 3 cards narrativos.
 ///
 /// **Sem timeline cronologica, sem nomear empresas/produtos** —
 /// detalhe nominal fica no LinkedIn. Estudo de carreira renderizado
-/// como **mapa estelar**: cada dominio e um no luminoso, metodologia
-/// compartilhada vira aresta. O escopo "front end mobile, integro
-/// APIs nao construo" sai do card de disclaimer e vira manifesto em
-/// 4 linhas mono.
+/// como **mapa estelar**: cada dominio e um planeta unico (paleta +
+/// pattern + ring opcional pro retail end-to-end), arestas indicam
+/// metodologia compartilhada. Tap em um planeta abre um balao
+/// inline com label + blurb. O bloco "Como eu entrego" detalha
+/// entrega, craft e colaboracao em paragrafos longos com glifos
+/// vetoriais no canto.
 class AboutSection extends StatelessWidget {
   const AboutSection({super.key});
 
@@ -46,7 +49,7 @@ class AboutSection extends StatelessWidget {
             ),
             const SizedBox(width: AppSpacing.sm),
             Text(
-              '· toque um no',
+              '· toque um planeta',
               style: tt.labelMedium?.copyWith(
                 color: colors.onSurfaceMuted,
                 letterSpacing: 0.4,
@@ -57,7 +60,12 @@ class AboutSection extends StatelessWidget {
         const SizedBox(height: AppSpacing.lg),
         const DomainConstellation(domains: DomainsCatalog.all),
         const SizedBox(height: AppSpacing.xxl),
-        const ManifestoStrip(),
+        Text(
+          'Como eu entrego',
+          style: tt.headlineSmall?.copyWith(color: colors.onSurface),
+        ),
+        const SizedBox(height: AppSpacing.lg),
+        const DeliveryBlock(),
       ],
     );
   }

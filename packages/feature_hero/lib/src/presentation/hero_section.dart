@@ -273,6 +273,31 @@ List<CosmosPlanet> _heroPlanets(
 }) {
   if (!isMobile) return _heroPlanetsDesktop();
   return const [
+    // Grounding anchor mobile — planeta brand-purple posicionado sob
+    // o recorte (em mobile a figura stacka full-width no topo da
+    // viewport, footprint x ~0.10-0.90, y ~0.05-0.50). canvasAnchor
+    // (0.50, 0.52) emerge da base da foto, anel suave + raio menor
+    // pra encaixar no aspect mobile.
+    CosmosPlanet(
+      id: 'grounding-anchor',
+      canvasAnchor: Offset(0.50, 0.52),
+      radiusPixels: 62,
+      pattern: PlanetPattern.bands,
+      seed: 211,
+      palette: [
+        Color(0xFF0A0420),
+        Color(0xFF2E1466),
+        Color(0xFF6B40E0),
+        Color(0xFFB89BFF),
+        Color(0xFFE6DCFF),
+      ],
+      ring: PlanetRing(
+        innerRadiusPixels: 78,
+        outerRadiusPixels: 100,
+        color: Color(0xCC9D6BFF),
+        tiltY: 0.22,
+      ),
+    ),
     // Red giant — canto superior direito, off-canvas (igual default).
     CosmosPlanet(
       id: 'red-giant',
@@ -458,6 +483,33 @@ List<CosmosPlanet> _heroPlanets(
 /// de 0.10 ate 0.92 sem clusterizar em 3 pontos.
 List<CosmosPlanet> _heroPlanetsDesktop() {
   return const [
+    // Grounding anchor — planeta brand-purple sob os pes da figura.
+    // canvasAnchor (0.30, 0.94) coloca o centro perto da base do
+    // recorte (figura ocupa x ~0.13-0.42 do frame 1600px). Renderiza
+    // atras do conteudo (content fica em z-order superior na stack do
+    // HeroSection), entao a silhueta da figura aparece pousada sobre
+    // a curva do planeta. Anel sutil reforca o ground sem virar
+    // saturn. Substitui o anterior "figura no vazio".
+    CosmosPlanet(
+      id: 'grounding-anchor',
+      canvasAnchor: Offset(0.30, 0.94),
+      radiusPixels: 78,
+      pattern: PlanetPattern.bands,
+      seed: 211,
+      palette: [
+        Color(0xFF0A0420),
+        Color(0xFF2E1466),
+        Color(0xFF6B40E0),
+        Color(0xFFB89BFF),
+        Color(0xFFE6DCFF),
+      ],
+      ring: PlanetRing(
+        innerRadiusPixels: 96,
+        outerRadiusPixels: 122,
+        color: Color(0xCC9D6BFF),
+        tiltY: 0.20,
+      ),
+    ),
     // Red giant — canto superior direito, off-canvas.
     CosmosPlanet(
       id: 'red-giant',

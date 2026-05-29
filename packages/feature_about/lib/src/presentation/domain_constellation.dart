@@ -3,32 +3,33 @@ import 'dart:math' as math;
 import 'package:animations/animations.dart';
 import 'package:design_system/design_system.dart';
 import 'package:feature_about/src/domain/domain_highlight.dart';
+import 'package:feature_about/src/presentation/balloon_popup.dart';
+import 'package:feature_about/src/presentation/painters/domain_planet_painter.dart';
 import 'package:flutter/material.dart';
 
 /// Mapa de dominios em forma de **constelacao interativa**. Substitui
-/// o `DomainsGrid` (cards estaticos). Cada dominio e um no luminoso
-/// posicionado num plano 0..1; metodologia que se sobrepoe entre
-/// dominios vira aresta. Hover/tap destaca o no, escurece os outros
-/// e revela uma nota lateral com o blurb.
+/// o `DomainsGrid` (cards estaticos). Cada dominio agora e um
+/// **planeta unico** (paleta + pattern + ring opcional) posicionado
+/// num plano normalizado 0..1; metodologia compartilhada vira
+/// aresta. Tap em um planeta abre um **balao popup** ancorado ao
+/// planeta — nao usa Dialog/rota nova.
 ///
-/// Atras: `ConstellationPainter` (do pacote `animations`) renderiza
+/// Atras: `ConstellationPainter` do pacote `animations` renderiza
 /// constelacoes ambient (Cruzeiro do Sul, Orion, Triangulo) com
-/// twinkle leve — atmosfera de "mapa estelar de carreira". Os nos
-/// dos dominios sao desenhados em camada propria por cima.
+/// twinkle leve — atmosfera de "mapa estelar de carreira". Os
+/// planetas dos dominios sao desenhados em camada propria por cima.
 class DomainConstellation extends StatefulWidget {
   const DomainConstellation({required this.domains, super.key});
 
   final List<DomainHighlight> domains;
 
-  /// Posicoes normalizadas (0..1) por id de dominio. Layout pensado
-  /// pro catalogo atual — fintech canto sup. direito (atual), varejo
-  /// embaixo no centro (origem), demais distribuidos.
+  /// Posicoes normalizadas (0..1) por id de dominio.
   static const Map<String, Offset> _positions = {
-    'fintech': Offset(0.80, 0.22),
-    'public_services': Offset(0.20, 0.18),
+    'fintech': Offset(0.82, 0.22),
+    'public_services': Offset(0.18, 0.18),
     'platform': Offset(0.32, 0.58),
     'sanitation': Offset(0.70, 0.62),
-    'retail': Offset(0.50, 0.90),
+    'retail': Offset(0.50, 0.88),
   };
 
   /// Arestas entre dominios — metodologia/contexto compartilhado.
@@ -39,6 +40,68 @@ class DomainConstellation extends StatefulWidget {
     ('platform', 'fintech'),
     ('sanitation', 'fintech'),
   ];
+
+  /// Specs visuais por dominio: paleta de 5 cores + pattern + ring
+  /// opcional. Cada dominio recebe uma identidade cromatica
+  /// distinta, costurada com a paleta da landing.
+  static const Map<String, DomainPlanetSpec> _planetSpecs = {
+    'fintech': DomainPlanetSpec(
+      palette: [
+        Color(0xFF020B26),
+        Color(0xFF0A2B70),
+        Color(0xFF2D7FFF),
+        Color(0xFF7CB8FF),
+        Color(0xFFE0EEFF),
+      ],
+      pattern: DomainPlanetPattern.bands,
+      seed: 17,
+    ),
+    'public_services': DomainPlanetSpec(
+      palette: [
+        Color(0xFF1F1505),
+        Color(0xFF6A4A0A),
+        Color(0xFFE6C25A),
+        Color(0xFFFFE8A5),
+        Color(0xFFFFF7DC),
+      ],
+      pattern: DomainPlanetPattern.speckled,
+      seed: 31,
+    ),
+    'platform': DomainPlanetSpec(
+      palette: [
+        Color(0xFF120428),
+        Color(0xFF391066),
+        Color(0xFF9D3FFF),
+        Color(0xFFD58BFF),
+        Color(0xFFF0DCFF),
+      ],
+      pattern: DomainPlanetPattern.hemispheres,
+      seed: 47,
+    ),
+    'sanitation': DomainPlanetSpec(
+      palette: [
+        Color(0xFF02100E),
+        Color(0xFF0A4A3D),
+        Color(0xFF1FE5B5),
+        Color(0xFFA5FFE5),
+        Color(0xFFE9FFF8),
+      ],
+      pattern: DomainPlanetPattern.bands,
+      seed: 53,
+    ),
+    'retail': DomainPlanetSpec(
+      palette: [
+        Color(0xFF2A0610),
+        Color(0xFF7A1A30),
+        Color(0xFFFF4E78),
+        Color(0xFFFFA0B8),
+        Color(0xFFFFE0E8),
+      ],
+      pattern: DomainPlanetPattern.speckled,
+      ring: 0.28,
+      seed: 89,
+    ),
+  };
 
   @override
   State<DomainConstellation> createState() => _DomainConstellationState();
@@ -57,15 +120,6 @@ class _DomainConstellationState extends State<DomainConstellation>
       vsync: this,
       duration: const Duration(seconds: 8),
     )..repeat();
-    if (widget.domains.isNotEmpty) {
-      // Default focus em 'retail' — origin da carreira, end-to-end.
-      _selectedId = widget.domains
-          .firstWhere(
-            (d) => d.id == 'retail',
-            orElse: () => widget.domains.first,
-          )
-          .id;
-    }
   }
 
   @override
@@ -85,29 +139,35 @@ class _DomainConstellationState extends State<DomainConstellation>
   Widget build(BuildContext context) {
     if (widget.domains.isEmpty) return const SizedBox.shrink();
     final isMobile = context.isMobile;
-    final selected = _selectedId == null ? null : _domainById(_selectedId!);
     return LayoutBuilder(
       builder: (context, c) {
         final width = c.maxWidth;
-        final sceneHeight = isMobile ? width * 0.85 : width * 0.42;
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            SizedBox(
-              height: sceneHeight,
-              child: _Scene(
-                domains: widget.domains,
-                selectedId: _selectedId,
-                hoverId: _hoverId,
-                ambient: _ambient,
-                onPick: (id) => setState(() => _selectedId = id),
-                onHover: (id) => setState(() => _hoverId = id),
-              ),
+        // Cena em aspect ratio ~16:9 desktop, ~4:3 mobile pra
+        // acomodar planetas + balao sem cortar.
+        final height = isMobile ? width * 0.95 : width * 0.55;
+        return GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          // Tap em area vazia fecha o balao.
+          onTap: () => setState(() => _selectedId = null),
+          child: SizedBox(
+            width: width,
+            height: height,
+            child: _Scene(
+              domains: widget.domains,
+              specs: DomainConstellation._planetSpecs,
+              positions: DomainConstellation._positions,
+              edges: DomainConstellation._edges,
+              selectedId: _selectedId,
+              hoverId: _hoverId,
+              selectedDomain: _selectedId == null
+                  ? null
+                  : _domainById(_selectedId!),
+              ambient: _ambient,
+              onPick: (id) =>
+                  setState(() => _selectedId = id == _selectedId ? null : id),
+              onHover: (id) => setState(() => _hoverId = id),
             ),
-            const SizedBox(height: AppSpacing.md),
-            _SidePanel(domain: selected, isMobile: isMobile),
-          ],
+          ),
         );
       },
     );
@@ -117,16 +177,24 @@ class _DomainConstellationState extends State<DomainConstellation>
 class _Scene extends StatelessWidget {
   const _Scene({
     required this.domains,
+    required this.specs,
+    required this.positions,
+    required this.edges,
     required this.selectedId,
     required this.hoverId,
+    required this.selectedDomain,
     required this.ambient,
     required this.onPick,
     required this.onHover,
   });
 
   final List<DomainHighlight> domains;
+  final Map<String, DomainPlanetSpec> specs;
+  final Map<String, Offset> positions;
+  final List<(String, String)> edges;
   final String? selectedId;
   final String? hoverId;
+  final DomainHighlight? selectedDomain;
   final AnimationController ambient;
   final ValueChanged<String> onPick;
   final ValueChanged<String?> onHover;
@@ -139,71 +207,85 @@ class _Scene extends StatelessWidget {
       borderRadius: BorderRadius.circular(AppRadius.lg),
       child: Container(
         decoration: BoxDecoration(
-          color: colors.surface,
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [colors.surface, colors.background],
+          ),
           border: Border.all(color: colors.border),
           borderRadius: BorderRadius.circular(AppRadius.lg),
         ),
-        child: Stack(
-          children: [
-            // Ambient backdrop: constelacoes reais com twinkle leve.
-            Positioned.fill(
-              child: AnimatedBuilder(
-                animation: ambient,
-                builder: (_, _) => CustomPaint(
-                  painter: ConstellationPainter(
-                    tick: ambient.value,
-                    starColor: colors.onSurfaceMuted.withValues(alpha: 0.35),
-                    linkColor: colors.onSurfaceMuted.withValues(alpha: 0.12),
+        child: LayoutBuilder(
+          builder: (context, c) {
+            final sceneSize = Size(c.maxWidth, c.maxHeight);
+            return Stack(
+              children: [
+                // Ambient backdrop: constelacoes reais com twinkle leve.
+                Positioned.fill(
+                  child: AnimatedBuilder(
+                    animation: ambient,
+                    builder: (_, _) => CustomPaint(
+                      painter: ConstellationPainter(
+                        tick: ambient.value,
+                        starColor: colors.onSurfaceMuted.withValues(
+                          alpha: 0.35,
+                        ),
+                        linkColor: colors.onSurfaceMuted.withValues(
+                          alpha: 0.12,
+                        ),
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
-            // Camada de arestas dos dominios.
-            Positioned.fill(
-              child: AnimatedBuilder(
-                animation: ambient,
-                builder: (_, _) => CustomPaint(
-                  painter: _DomainEdgesPainter(
-                    domains: domains,
-                    activeId: activeId,
-                    tick: ambient.value,
-                    baseColor: colors.primary,
+                // Camada de arestas entre planetas.
+                Positioned.fill(
+                  child: AnimatedBuilder(
+                    animation: ambient,
+                    builder: (_, _) => CustomPaint(
+                      painter: _DomainEdgesPainter(
+                        positions: positions,
+                        edges: edges,
+                        activeId: activeId,
+                        tick: ambient.value,
+                        baseColor: colors.primary,
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
-            // Nos clicaveis.
-            LayoutBuilder(
-              builder: (context, c) {
-                final w = c.maxWidth;
-                final h = c.maxHeight;
-                return Stack(
-                  children: [
-                    for (final d in domains) _buildNode(context, d, w, h),
-                  ],
-                );
-              },
-            ),
-          ],
+                // Planetas clicaveis.
+                for (final d in domains) _buildPlanet(context, d, sceneSize),
+                // Balao popup do dominio selecionado.
+                if (selectedDomain != null)
+                  BalloonPopup(
+                    key: ValueKey('balloon-${selectedDomain!.id}'),
+                    domain: selectedDomain!,
+                    planetCenter: _planetCenterFor(selectedId!, sceneSize),
+                    sceneSize: sceneSize,
+                  ),
+              ],
+            );
+          },
         ),
       ),
     );
   }
 
-  Widget _buildNode(
-    BuildContext context,
-    DomainHighlight d,
-    double w,
-    double h,
-  ) {
-    final pos = DomainConstellation._positions[d.id] ?? const Offset(0.5, 0.5);
+  Offset _planetCenterFor(String id, Size sceneSize) {
+    final p = positions[id] ?? const Offset(0.5, 0.5);
+    return Offset(p.dx * sceneSize.width, p.dy * sceneSize.height);
+  }
+
+  Widget _buildPlanet(BuildContext context, DomainHighlight d, Size sceneSize) {
+    final pos = positions[d.id] ?? const Offset(0.5, 0.5);
     final isActive = (hoverId ?? selectedId) == d.id;
-    final isEndToEnd = d.isEndToEnd;
-    final baseSize = isEndToEnd ? 72.0 : 60.0;
-    final boxSize = baseSize + (isActive ? 12 : 0);
+    final spec = specs[d.id];
+    if (spec == null) return const SizedBox.shrink();
+    final baseSize = d.isEndToEnd ? 86.0 : 70.0;
+    final boxSize = baseSize + (isActive ? 14 : 0);
+    final center = Offset(pos.dx * sceneSize.width, pos.dy * sceneSize.height);
     return Positioned(
-      left: pos.dx * w - boxSize / 2,
-      top: pos.dy * h - boxSize / 2,
+      left: center.dx - boxSize / 2,
+      top: center.dy - boxSize / 2,
       width: boxSize,
       height: boxSize,
       child: MouseRegion(
@@ -211,159 +293,68 @@ class _Scene extends StatelessWidget {
         onExit: (_) => onHover(null),
         cursor: SystemMouseCursors.click,
         child: GestureDetector(
+          // Marca tap como handled pra nao propagar e fechar o balao.
+          behavior: HitTestBehavior.opaque,
           onTap: () => onPick(d.id),
-          child: _DomainNode(domain: d, isActive: isActive, ambient: ambient),
+          child: _DomainPlanet(
+            spec: spec,
+            isActive: isActive,
+            ambient: ambient,
+          ),
         ),
       ),
     );
   }
 }
 
-class _DomainNode extends StatelessWidget {
-  const _DomainNode({
-    required this.domain,
+class _DomainPlanet extends StatelessWidget {
+  const _DomainPlanet({
+    required this.spec,
     required this.isActive,
     required this.ambient,
   });
 
-  final DomainHighlight domain;
+  final DomainPlanetSpec spec;
   final bool isActive;
   final AnimationController ambient;
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.colors;
-    return AnimatedBuilder(
-      animation: ambient,
-      builder: (_, _) {
-        // Pulse leve no ambient pra dar vida sem distrair.
-        final pulse = 0.85 + 0.15 * math.sin(ambient.value * math.pi * 2);
-        return CustomPaint(
-          painter: _DomainNodePainter(
-            icon: domain.icon,
-            color: colors.primary,
-            accent: colors.accent,
-            mutedColor: colors.onSurfaceMuted,
-            surfaceColor: colors.surface,
-            isActive: isActive,
-            isEndToEnd: domain.isEndToEnd,
-            pulse: pulse,
-          ),
-        );
-      },
-    );
-  }
-}
-
-class _DomainNodePainter extends CustomPainter {
-  _DomainNodePainter({
-    required this.icon,
-    required this.color,
-    required this.accent,
-    required this.mutedColor,
-    required this.surfaceColor,
-    required this.isActive,
-    required this.isEndToEnd,
-    required this.pulse,
-  });
-
-  final IconData icon;
-  final Color color;
-  final Color accent;
-  final Color mutedColor;
-  final Color surfaceColor;
-  final bool isActive;
-  final bool isEndToEnd;
-  final double pulse;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final center = Offset(size.width / 2, size.height / 2);
-    final radius = size.shortestSide / 2 - 6;
-
-    // Glow externo quando ativo.
-    if (isActive) {
-      final glowPaint = Paint()
-        ..color = color.withValues(alpha: 0.25 * pulse)
-        ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 16);
-      canvas.drawCircle(center, radius + 8, glowPaint);
-    }
-
-    // Anel externo (apenas end-to-end ganha dois aneis).
-    if (isEndToEnd) {
-      final outerRingPaint = Paint()
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = 1
-        ..color = color.withValues(alpha: isActive ? 0.7 : 0.45);
-      canvas.drawCircle(center, radius + 3, outerRingPaint);
-    }
-
-    // Disco central com gradient brand.
-    final ringPaint = Paint()
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = isActive ? 1.6 : 1.2
-      ..shader = LinearGradient(
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-        colors: [
-          color.withValues(alpha: isActive ? 1.0 : 0.55),
-          accent.withValues(alpha: isActive ? 0.85 : 0.45),
-        ],
-      ).createShader(Rect.fromCircle(center: center, radius: radius));
-    final discPaint = Paint()
-      ..style = PaintingStyle.fill
-      ..color = isActive
-          ? color.withValues(alpha: 0.16)
-          : surfaceColor.withValues(alpha: 0.5);
-    canvas.drawCircle(center, radius, discPaint);
-    canvas.drawCircle(center, radius, ringPaint);
-
-    // Icone centralizado.
-    final iconPainter = TextPainter(
-      text: TextSpan(
-        text: String.fromCharCode(icon.codePoint),
-        style: TextStyle(
-          fontFamily: icon.fontFamily,
-          package: icon.fontPackage,
-          fontSize: radius * 1.05,
-          color: isActive ? color : mutedColor,
-        ),
-      ),
-      textDirection: TextDirection.ltr,
-    )..layout();
-    iconPainter.paint(
-      canvas,
-      Offset(
-        center.dx - iconPainter.width / 2,
-        center.dy - iconPainter.height / 2,
+    return RepaintBoundary(
+      child: AnimatedBuilder(
+        animation: ambient,
+        builder: (_, _) {
+          final pulse = 0.8 + 0.2 * math.sin(ambient.value * math.pi * 2);
+          return CustomPaint(
+            painter: DomainPlanetPainter(
+              spec: spec,
+              isActive: isActive,
+              pulse: pulse,
+            ),
+          );
+        },
       ),
     );
   }
-
-  @override
-  bool shouldRepaint(covariant _DomainNodePainter old) =>
-      old.isActive != isActive ||
-      old.pulse != pulse ||
-      old.color != color ||
-      old.accent != accent ||
-      old.mutedColor != mutedColor;
 }
 
 class _DomainEdgesPainter extends CustomPainter {
   _DomainEdgesPainter({
-    required this.domains,
+    required this.positions,
+    required this.edges,
     required this.activeId,
     required this.tick,
     required this.baseColor,
   });
 
-  final List<DomainHighlight> domains;
+  final Map<String, Offset> positions;
+  final List<(String, String)> edges;
   final String? activeId;
   final double tick;
   final Color baseColor;
 
   Offset _pos(String id, Size size) {
-    final p = DomainConstellation._positions[id] ?? const Offset(0.5, 0.5);
+    final p = positions[id] ?? const Offset(0.5, 0.5);
     return Offset(p.dx * size.width, p.dy * size.height);
   }
 
@@ -373,7 +364,7 @@ class _DomainEdgesPainter extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.round;
 
-    for (final (a, b) in DomainConstellation._edges) {
+    for (final (a, b) in edges) {
       final isHot = activeId != null && (a == activeId || b == activeId);
       edgePaint
         ..color = baseColor.withValues(alpha: isHot ? 0.55 : 0.18)
@@ -382,8 +373,8 @@ class _DomainEdgesPainter extends CustomPainter {
       final to = _pos(b, size);
       canvas.drawLine(from, to, edgePaint);
 
-      // Particula percorrendo a aresta quando hot — sugere fluxo de
-      // metodologia.
+      // Particula percorrendo a aresta ativa — sugere fluxo de
+      // metodologia entre dominios.
       if (isHot) {
         final t = (tick * 0.8) % 1;
         final mid = Offset.lerp(from, to, t)!;
@@ -400,118 +391,4 @@ class _DomainEdgesPainter extends CustomPainter {
       old.activeId != activeId ||
       old.tick != tick ||
       old.baseColor != baseColor;
-}
-
-class _SidePanel extends StatelessWidget {
-  const _SidePanel({required this.domain, this.isMobile = false});
-
-  final DomainHighlight? domain;
-  final bool isMobile;
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = context.colors;
-    final tt = Theme.of(context).textTheme;
-    if (domain == null) {
-      return Container(
-        padding: const EdgeInsets.all(AppSpacing.lg),
-        decoration: BoxDecoration(
-          color: colors.surface,
-          borderRadius: BorderRadius.circular(AppRadius.lg),
-          border: Border.all(color: colors.border),
-        ),
-        alignment: Alignment.center,
-        child: Text(
-          'Toque um nó pra abrir.',
-          style: tt.bodyMedium?.copyWith(color: colors.onSurfaceMuted),
-        ),
-      );
-    }
-    final d = domain!;
-    return AnimatedSwitcher(
-      duration: const Duration(milliseconds: 220),
-      transitionBuilder: (child, anim) => FadeTransition(
-        opacity: anim,
-        child: SlideTransition(
-          position: Tween<Offset>(
-            begin: const Offset(0, 0.04),
-            end: Offset.zero,
-          ).animate(CurvedAnimation(parent: anim, curve: Curves.easeOut)),
-          child: child,
-        ),
-      ),
-      child: Container(
-        key: ValueKey(d.id),
-        padding: const EdgeInsets.all(AppSpacing.lg),
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [colors.surface, colors.primary.withValues(alpha: 0.06)],
-          ),
-          borderRadius: BorderRadius.circular(AppRadius.lg),
-          border: Border.all(color: colors.border),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Row(
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(AppSpacing.xs),
-                  decoration: BoxDecoration(
-                    color: colors.primary.withValues(alpha: 0.12),
-                    borderRadius: BorderRadius.circular(AppRadius.md),
-                    border: Border.all(
-                      color: colors.primary.withValues(alpha: 0.4),
-                    ),
-                  ),
-                  child: Icon(d.icon, color: colors.primary, size: 18),
-                ),
-                const SizedBox(width: AppSpacing.sm),
-                Flexible(
-                  child: Text(
-                    d.label,
-                    style: tt.titleLarge?.copyWith(color: colors.onSurface),
-                  ),
-                ),
-              ],
-            ),
-            if (d.isEndToEnd) ...[
-              const SizedBox(height: AppSpacing.sm),
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: AppSpacing.sm,
-                  vertical: AppSpacing.xxs,
-                ),
-                decoration: BoxDecoration(
-                  color: colors.primary.withValues(alpha: 0.16),
-                  border: Border.all(
-                    color: colors.primary.withValues(alpha: 0.4),
-                  ),
-                  borderRadius: BorderRadius.circular(AppRadius.full),
-                ),
-                child: Text(
-                  'front end inteiro',
-                  style: tt.labelSmall?.copyWith(
-                    color: colors.primary,
-                    letterSpacing: 0.4,
-                  ),
-                ),
-              ),
-            ],
-            const SizedBox(height: AppSpacing.md),
-            Text(
-              d.blurb,
-              style: tt.bodyMedium?.copyWith(
-                color: colors.onSurfaceMuted,
-                height: 1.55,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 }

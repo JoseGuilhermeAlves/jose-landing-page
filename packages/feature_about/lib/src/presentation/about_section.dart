@@ -1,59 +1,28 @@
+import 'package:animations/animations.dart';
 import 'package:design_system/design_system.dart';
 import 'package:feature_about/src/data/domains_catalog.dart';
-import 'package:feature_about/src/presentation/domains_grid.dart';
-import 'package:feature_about/src/presentation/stack_badges.dart';
+import 'package:feature_about/src/presentation/domain_constellation.dart';
+import 'package:feature_about/src/presentation/manifesto_strip.dart';
+import 'package:feature_about/src/presentation/painters/jga_monogram_painter.dart';
 import 'package:flutter/material.dart';
 
-/// Secao "Sobre" — eyebrow + headline em gradiente, card com nome +
-/// bio, grade de dominios em que atuou, nota de escopo e stack badges
-/// (PROJECT.md §4.4).
+/// Secao "Sobre" — eyebrow + headline em gradiente + bio card com
+/// borda animada e monograma JGA no canto + constelacao interativa
+/// de dominios + manifesto strip em mono.
 ///
-/// **Sem timeline cronologica** e **sem nomear** empresas/produtos —
-/// detalhe nominal fica no LinkedIn. Aqui descrevemos por dominio
-/// (varejo B2B, fintech, etc.) e separamos honestamente o que foi
-/// feito ponta a ponta do que foi em time de produto.
+/// **Sem timeline cronologica, sem nomear empresas/produtos** —
+/// detalhe nominal fica no LinkedIn. Estudo de carreira renderizado
+/// como **mapa estelar**: cada dominio e um no luminoso, metodologia
+/// compartilhada vira aresta. O escopo "front end mobile, integro
+/// APIs nao construo" sai do card de disclaimer e vira manifesto em
+/// 4 linhas mono.
 class AboutSection extends StatelessWidget {
   const AboutSection({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final tt = Theme.of(context).textTheme;
     final colors = context.colors;
-    final textTheme = Theme.of(context).textTheme;
-
-    final scopeNote = Container(
-      padding: const EdgeInsets.all(AppSpacing.lg),
-      decoration: BoxDecoration(
-        color: colors.surface,
-        border: Border.all(color: colors.border),
-        borderRadius: BorderRadius.circular(AppRadius.lg),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            'Sobre escopo, sem inflar:',
-            style: textTheme.titleMedium?.copyWith(color: colors.onSurface),
-          ),
-          const SizedBox(height: AppSpacing.sm),
-          Text(
-            'No varejo B2B atuei como front end mobile inteiro — '
-            'design, arquitetura, codigo e suporte direto a operacao, '
-            'em time pequeno, durante 5 anos. Nos demais dominios entro '
-            'como mobile dev em time de produto, com escopo de feature '
-            'ou arquitetura mobile conforme o contexto. Backend nao '
-            'compoe meu escopo de atuacao: integro com APIs ja '
-            'existentes, nao construo. Detalhe nominal de empresas e '
-            'produtos fica no LinkedIn.',
-            style: textTheme.bodyMedium?.copyWith(
-              color: colors.onSurfaceMuted,
-              height: 1.55,
-            ),
-          ),
-        ],
-      ),
-    );
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -69,72 +38,144 @@ class AboutSection extends StatelessWidget {
         const SizedBox(height: AppSpacing.xxl),
         const _BioCard(),
         const SizedBox(height: AppSpacing.xxl),
-        Text(
-          'Onde ja atuei',
-          style: textTheme.headlineSmall?.copyWith(color: colors.onSurface),
+        Row(
+          children: [
+            Text(
+              'Mapa de dominios',
+              style: tt.headlineSmall?.copyWith(color: colors.onSurface),
+            ),
+            const SizedBox(width: AppSpacing.sm),
+            Text(
+              '· toque um no',
+              style: tt.labelMedium?.copyWith(
+                color: colors.onSurfaceMuted,
+                letterSpacing: 0.4,
+              ),
+            ),
+          ],
         ),
         const SizedBox(height: AppSpacing.lg),
-        const DomainsGrid(domains: DomainsCatalog.all),
-        const SizedBox(height: AppSpacing.lg),
-        scopeNote,
+        const DomainConstellation(domains: DomainsCatalog.all),
         const SizedBox(height: AppSpacing.xxl),
-        Text(
-          'Stack',
-          style: textTheme.headlineSmall?.copyWith(color: colors.onSurface),
-        ),
-        const SizedBox(height: AppSpacing.md),
-        const StackBadges(stack: StackCatalog.all),
+        const ManifestoStrip(),
       ],
     );
   }
 }
 
-/// Card "minha bio". Nome em destaque + paragrafo. Sem avatar — o
-/// rosto do dev nao precisa abrir cada secao; o conteudo carrega.
-class _BioCard extends StatelessWidget {
+/// Card "minha bio". Borda animada percorre o perimetro num loop
+/// lento; monograma JGA desenhado em Path fica no canto inferior
+/// direito a ~40% de alpha como artefato pessoal substituto do
+/// avatar removido.
+class _BioCard extends StatefulWidget {
   const _BioCard();
+
+  @override
+  State<_BioCard> createState() => _BioCardState();
+}
+
+class _BioCardState extends State<_BioCard>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _border;
+
+  @override
+  void initState() {
+    super.initState();
+    _border = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 9),
+    )..repeat();
+  }
+
+  @override
+  void dispose() {
+    _border.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
-    final textTheme = Theme.of(context).textTheme;
-
-    return Container(
-      padding: const EdgeInsets.all(AppSpacing.xl),
-      decoration: BoxDecoration(
-        color: colors.surface,
-        borderRadius: BorderRadius.circular(AppRadius.lg),
-        border: Border.all(color: colors.border),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
+    final tt = Theme.of(context).textTheme;
+    return RepaintBoundary(
+      child: Stack(
         children: [
-          Text(
-            'José Guilherme Alves',
-            style: textTheme.titleLarge?.copyWith(color: colors.onSurface),
-          ),
-          const SizedBox(height: AppSpacing.xs),
-          Text(
-            'Front end mobile · Flutter Developer · Brasil',
-            style: textTheme.labelMedium?.copyWith(
-              color: colors.primary,
-              letterSpacing: 0.4,
+          Container(
+            padding: const EdgeInsets.all(AppSpacing.xl),
+            decoration: BoxDecoration(
+              color: colors.surface,
+              borderRadius: BorderRadius.circular(AppRadius.lg),
+              border: Border.all(color: colors.border),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'José Guilherme Alves',
+                  style: tt.titleLarge?.copyWith(color: colors.onSurface),
+                ),
+                const SizedBox(height: AppSpacing.xs),
+                Text(
+                  'Front end mobile · Flutter Developer · Brasil',
+                  style: tt.labelMedium?.copyWith(
+                    color: colors.primary,
+                    letterSpacing: 0.4,
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.md),
+                Text(
+                  'A carreira comecou em apps mobile de operacao varejista '
+                  '— front end Flutter do design ao deploy, em time pequeno, '
+                  'durante 5 anos. Em seguida, atuacao em times de produto '
+                  'em dominios maiores: setor publico, plataforma interna, '
+                  'operacao em campo e, atualmente, fintech em escala. '
+                  'Sempre no front end mobile, com Flutter web quando o '
+                  'produto demandou. Foco constante em arquitetura, '
+                  'performance e consistencia de UX em devices reais.',
+                  style: tt.bodyMedium?.copyWith(
+                    color: colors.onSurfaceMuted,
+                    height: 1.6,
+                  ),
+                ),
+              ],
             ),
           ),
-          const SizedBox(height: AppSpacing.md),
-          Text(
-            'A carreira comecou em apps mobile de operacao varejista — '
-            'front end Flutter do design ao deploy, em time pequeno, '
-            'durante 5 anos. Em seguida, atuacao em times de produto em '
-            'dominios maiores: setor publico, plataforma interna, '
-            'operacao em campo e, atualmente, fintech em escala. Sempre '
-            'no front end mobile, com Flutter web quando o produto '
-            'demandou. Foco constante em arquitetura, performance e '
-            'consistencia de UX em devices reais.',
-            style: textTheme.bodyMedium?.copyWith(
-              color: colors.onSurfaceMuted,
-              height: 1.6,
+          // Borda animada por cima — pinta um trace gradient sweepando
+          // o perimetro num loop continuo.
+          Positioned.fill(
+            child: IgnorePointer(
+              child: AnimatedBuilder(
+                animation: _border,
+                builder: (_, _) {
+                  // Sweep on/off: 0..1 desenha, 1..0 apaga.
+                  final raw = _border.value * 2;
+                  final progress = raw < 1 ? raw : 2 - raw;
+                  return CustomPaint(
+                    painter: AnimatedBorderPainter(
+                      progress: progress,
+                      color: colors.primary.withValues(alpha: 0.85),
+                      strokeWidth: 1.6,
+                      borderRadius: AppRadius.lg,
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
+          // Monograma JGA no canto inferior direito.
+          Positioned(
+            right: AppSpacing.lg,
+            bottom: AppSpacing.lg,
+            width: 64,
+            height: 64,
+            child: IgnorePointer(
+              child: CustomPaint(
+                painter: JgaMonogramPainter(
+                  color: colors.primary.withValues(alpha: 0.4),
+                  strokeWidth: 1.8,
+                ),
+              ),
             ),
           ),
         ],

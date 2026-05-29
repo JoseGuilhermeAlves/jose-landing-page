@@ -66,19 +66,6 @@ void main() {
     });
   });
 
-  group('StackCatalog', () {
-    test('expoe stack com pelo menos 5 itens (Flutter, Dart, Bloc, Clean '
-        'Architecture, etc.)', () {
-      expect(StackCatalog.all.length, greaterThanOrEqualTo(5));
-    });
-
-    test('contem ao menos Flutter e Dart (nao-negociavel)', () {
-      expect(StackCatalog.all, contains('Flutter'));
-      expect(StackCatalog.all, contains('Dart'));
-    });
-
-    test('lista e imutavel (nao aceita add)', () {
-      expect(() => StackCatalog.all.add('foo'), throwsUnsupportedError);
-    });
-  });
+  // StackCatalog removido junto com o widget StackBadges — Engineering
+  // bento ja prova a stack na landing.
 }

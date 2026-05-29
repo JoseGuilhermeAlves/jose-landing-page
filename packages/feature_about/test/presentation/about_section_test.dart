@@ -22,39 +22,35 @@ void main() {
   group('AboutSection', () {
     testWidgets('renderiza bio com nome e parágrafo', (tester) async {
       await tester.pumpWidget(wrap(const AboutSection()));
-      await tester.pump(const Duration(milliseconds: 16));
+      await tester.pump(const Duration(milliseconds: 32));
 
       expect(find.textContaining('José Guilherme'), findsWidgets);
+      expect(find.textContaining('Flutter Developer'), findsWidgets);
 
       await tester.pumpWidget(const SizedBox());
     });
 
-    testWidgets('compoe DomainsGrid e StackBadges', (tester) async {
+    testWidgets('compoe DomainConstellation e ManifestoStrip', (tester) async {
       await tester.pumpWidget(wrap(const AboutSection()));
-      await tester.pump(const Duration(milliseconds: 16));
+      await tester.pump(const Duration(milliseconds: 32));
 
-      expect(find.byType(DomainsGrid), findsOneWidget);
-      expect(find.byType(StackBadges), findsOneWidget);
+      expect(find.byType(DomainConstellation), findsOneWidget);
+      expect(find.byType(ManifestoStrip), findsOneWidget);
 
       await tester.pumpWidget(const SizedBox());
     });
 
-    testWidgets(
-      'inclui nota de escopo honesta (varejo full-FE + demais em time)',
-      (tester) async {
-        await tester.pumpWidget(wrap(const AboutSection()));
-        await tester.pump(const Duration(milliseconds: 16));
+    testWidgets('manifesto carrega linha "Front end mobile."', (tester) async {
+      await tester.pumpWidget(wrap(const AboutSection()));
+      // Espera o fade-in stagger completar.
+      await tester.pump(const Duration(milliseconds: 32));
+      await tester.pump(const Duration(milliseconds: 1700));
 
-        // Nota de escopo separa varejo (front end inteiro) dos demais
-        // dominios (em time de produto). Tambem deixa explicito que
-        // backend nao compoe o escopo de atuacao.
-        expect(find.textContaining('front end mobile inteiro'), findsWidgets);
-        expect(find.textContaining('time'), findsWidgets);
-        expect(find.textContaining('Backend'), findsWidgets);
+      expect(find.textContaining('Front end mobile'), findsWidgets);
+      expect(find.textContaining('Devices reais'), findsWidgets);
 
-        await tester.pumpWidget(const SizedBox());
-      },
-    );
+      await tester.pumpWidget(const SizedBox());
+    });
 
     testWidgets('expoe Semantics(header: true) na headline da secao', (
       tester,
@@ -62,7 +58,7 @@ void main() {
       final handle = tester.ensureSemantics();
       try {
         await tester.pumpWidget(wrap(const AboutSection()));
-        await tester.pump(const Duration(milliseconds: 16));
+        await tester.pump(const Duration(milliseconds: 32));
 
         final headerSemantics = find.byWidgetPredicate(
           (w) => w is Semantics && (w.properties.header ?? false),

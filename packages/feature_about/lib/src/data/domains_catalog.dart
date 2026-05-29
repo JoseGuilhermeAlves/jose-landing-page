@@ -55,20 +55,3 @@ abstract final class DomainsCatalog {
     ),
   ];
 }
-
-/// Stack publica usada na badge list — high-level, sem detalhes de
-/// pacotes. Eh o que cliente leigo e recrutador tecnico precisam saber
-/// "de longe".
-abstract final class StackCatalog {
-  static const List<String> all = [
-    'Flutter',
-    'Dart',
-    'Bloc',
-    'Clean Architecture',
-    'Monorepo (Pub Workspaces + Melos)',
-    'CI/CD',
-    'Firebase',
-    'REST / OAuth',
-    'Bluetooth / NFC',
-  ];
-}

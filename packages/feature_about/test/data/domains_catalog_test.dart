@@ -1,14 +1,22 @@
+import 'package:design_system/design_system.dart';
 import 'package:feature_about/feature_about.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
+  late AppLocalizations l10n;
+
+  setUpAll(() async {
+    l10n = await AppLocalizations.delegate.load(const Locale('pt'));
+  });
+
   group('DomainsCatalog', () {
     test('expoe pelo menos 5 dominios (cobrindo o range do Jose)', () {
-      expect(DomainsCatalog.all.length, greaterThanOrEqualTo(5));
+      expect(DomainsCatalog.all(l10n).length, greaterThanOrEqualTo(5));
     });
 
     test('todos os dominios tem id, label e blurb nao-vazios', () {
-      for (final d in DomainsCatalog.all) {
+      for (final d in DomainsCatalog.all(l10n)) {
         expect(d.id, isNotEmpty, reason: d.toString());
         expect(d.label, isNotEmpty, reason: d.toString());
         expect(d.blurb, isNotEmpty, reason: d.toString());
@@ -16,20 +24,14 @@ void main() {
     });
 
     test('ids sao unicos', () {
-      final ids = DomainsCatalog.all.map((d) => d.id).toSet();
-      expect(ids, hasLength(DomainsCatalog.all.length));
-    });
-
-    test('lista e imutavel (nao aceita add)', () {
-      expect(
-        () => DomainsCatalog.all.add(DomainsCatalog.all.first),
-        throwsUnsupportedError,
-      );
+      final domains = DomainsCatalog.all(l10n);
+      final ids = domains.map((d) => d.id).toSet();
+      expect(ids, hasLength(domains.length));
     });
 
     test('inclui o dominio "retail" como o unico end-to-end '
         '— alinhado com o que Jose construiu sozinho', () {
-      final endToEnd = DomainsCatalog.all
+      final endToEnd = DomainsCatalog.all(l10n)
           .where((d) => d.scope == DomainScope.endToEnd)
           .toList();
       expect(endToEnd, hasLength(1));
@@ -52,7 +54,7 @@ void main() {
         'Sumire',
         'Sumirê',
       ];
-      for (final d in DomainsCatalog.all) {
+      for (final d in DomainsCatalog.all(l10n)) {
         for (final term in banned) {
           for (final field in [d.label, d.blurb]) {
             expect(
@@ -65,7 +67,4 @@ void main() {
       }
     });
   });
-
-  // StackCatalog removido junto com o widget StackBadges — Engineering
-  // bento ja prova a stack na landing.
 }

@@ -63,7 +63,7 @@ class PulsoExerciseDetailPage extends StatelessWidget {
             children: [
               _MuscleChips(exercise: exercise),
               const SizedBox(height: AppSpacing.lg),
-              _SectionLabel(label: PulsoCopy.eyebrowPrescribedLoad),
+              _SectionLabel(label: PulsoCopy(context.l10n).eyebrowPrescribedLoad),
               const SizedBox(height: AppSpacing.sm),
               Container(
                 decoration: BoxDecoration(
@@ -78,7 +78,7 @@ class PulsoExerciseDetailPage extends StatelessWidget {
                 child: PulsoBarbellLoader(totalKg: prescribed, height: 100),
               ),
               const SizedBox(height: AppSpacing.lg),
-              _SectionLabel(label: PulsoCopy.eyebrowExecutionTempo),
+              _SectionLabel(label: PulsoCopy(context.l10n).eyebrowExecutionTempo),
               const SizedBox(height: AppSpacing.sm),
               Container(
                 decoration: BoxDecoration(
@@ -111,7 +111,7 @@ class PulsoExerciseDetailPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: AppSpacing.lg),
-              _SectionLabel(label: PulsoCopy.eyebrowLoadHistory),
+              _SectionLabel(label: PulsoCopy(context.l10n).eyebrowLoadHistory),
               const SizedBox(height: AppSpacing.sm),
               Container(
                 decoration: BoxDecoration(

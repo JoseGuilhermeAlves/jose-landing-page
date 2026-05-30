@@ -40,21 +40,21 @@ class AuroraHomePage extends StatelessWidget {
       appBar: AuroraAppBar(
         leading: IconButton(
           key: const Key('aurora-close-demo'),
-          tooltip: 'Fechar demo',
+          tooltip: context.l10n.aurora_closeDemoTooltip,
           icon: const Icon(Icons.close_rounded),
           onPressed: () => Navigator.of(context).maybePop(),
         ),
         actions: [
           IconButton(
             key: const Key('aurora-reset-icon'),
-            tooltip: 'Reiniciar demo',
+            tooltip: context.l10n.aurora_resetDemoTooltip,
             icon: const Icon(Icons.refresh_rounded),
             onPressed: () =>
                 context.read<DeliveryBloc>().add(const DeliveryReset()),
           ),
           IconButton(
             key: const Key('aurora-history-icon'),
-            tooltip: 'Historico de pedidos',
+            tooltip: context.l10n.aurora_historyTooltip,
             icon: const Icon(Icons.history_rounded),
             onPressed: () => Navigator.of(context).push(
               MaterialPageRoute<void>(
@@ -99,8 +99,8 @@ class AuroraHomePage extends StatelessWidget {
                 ),
                 const SizedBox(height: AppSpacing.xl),
                 _SectionLabel(
-                  eyebrow: 'Categorias',
-                  title: 'O que vai pro caixote',
+                  eyebrow: context.l10n.aurora_categoriesEyebrow,
+                  title: context.l10n.aurora_categoriesTitle,
                   colors: colors,
                   textTheme: textTheme,
                 ),
@@ -108,8 +108,8 @@ class AuroraHomePage extends StatelessWidget {
                 _CategoriesStrip(colors: colors, textTheme: textTheme),
                 const SizedBox(height: AppSpacing.xl),
                 _SectionLabel(
-                  eyebrow: 'Bancas em destaque',
-                  title: 'Quem entrega hoje',
+                  eyebrow: context.l10n.aurora_vendorsEyebrow,
+                  title: context.l10n.aurora_vendorsTitle,
                   colors: colors,
                   textTheme: textTheme,
                 ),
@@ -173,7 +173,7 @@ class _HeroCard extends StatelessWidget {
                       borderRadius: BorderRadius.circular(AppRadius.full),
                     ),
                     child: Text(
-                      'marketplace de hortifruti · sao paulo',
+                      context.l10n.aurora_heroTag,
                       style: textTheme.labelSmall?.copyWith(
                         color: colors.primary,
                         letterSpacing: 0.8,
@@ -193,8 +193,7 @@ class _HeroCard extends StatelessWidget {
                   ),
                   const SizedBox(height: AppSpacing.sm),
                   Text(
-                    'Bancas de bairro, padarias e queijarias entregam no mesmo dia. '
-                    'Pedido pela manha, na sua mesa no almoco.',
+                    context.l10n.aurora_heroSubtitle,
                     style: textTheme.bodyMedium?.copyWith(
                       color: colors.onSurfaceMuted,
                       height: 1.5,

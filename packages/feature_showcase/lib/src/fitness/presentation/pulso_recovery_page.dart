@@ -109,7 +109,7 @@ class _Header extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          PulsoCopy.eyebrowRecovery,
+          PulsoCopy(context.l10n).eyebrowRecovery,
           style: TextStyle(
             color: colors.primary,
             fontSize: 10,
@@ -219,7 +219,7 @@ class _BreakdownCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            PulsoCopy.eyebrowContributors,
+            PulsoCopy(context.l10n).eyebrowContributors,
             style: TextStyle(
               color: colors.onSurfaceMuted,
               fontSize: 10,
@@ -333,7 +333,7 @@ class _SleepCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            PulsoCopy.eyebrowSleep,
+            PulsoCopy(context.l10n).eyebrowSleep,
             style: TextStyle(
               color: colors.onSurfaceMuted,
               fontSize: 10,
@@ -511,7 +511,7 @@ class _MuscleHeatmapCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  PulsoCopy.eyebrowMuscleHeatmap,
+                  PulsoCopy(context.l10n).eyebrowMuscleHeatmap,
                   style: TextStyle(
                     color: colors.onSurfaceMuted,
                     fontSize: 10,
@@ -540,7 +540,7 @@ class _MuscleHeatmapCard extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  _adviceFor(score),
+                  PulsoCopy(context.l10n).muscleAdvice(score),
                   style: TextStyle(
                     color: colors.onSurfaceMuted,
                     fontSize: 12,
@@ -564,7 +564,6 @@ class _MuscleHeatmapCard extends StatelessWidget {
     );
   }
 
-  String _adviceFor(double score) => PulsoCopy.muscleAdvice(score);
 }
 
 class _StrainHistoryCard extends StatelessWidget {
@@ -584,7 +583,7 @@ class _StrainHistoryCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            PulsoCopy.eyebrowStrainHistory,
+            PulsoCopy(context.l10n).eyebrowStrainHistory,
             style: TextStyle(
               color: colors.onSurfaceMuted,
               fontSize: 10,

@@ -41,14 +41,14 @@ class MiraHomePage extends StatelessWidget {
         title: 'Mira',
         leading: IconButton(
           key: const Key('mira-close-demo'),
-          tooltip: 'Fechar demo',
+          tooltip: context.l10n.mira_closeDemoTooltip,
           icon: const Icon(Icons.close_rounded),
           onPressed: () => Navigator.of(context).maybePop(),
         ),
         actions: [
           IconButton(
             key: const Key('mira-portfolio-icon'),
-            tooltip: 'Meu portfolio',
+            tooltip: context.l10n.mira_portfolioTooltip,
             icon: const Icon(Icons.pie_chart_outline_rounded),
             onPressed: () => Navigator.of(context).push(
               MaterialPageRoute<void>(
@@ -59,7 +59,7 @@ class MiraHomePage extends StatelessWidget {
           ),
           IconButton(
             key: const Key('mira-history-icon'),
-            tooltip: 'Historico de ordens',
+            tooltip: context.l10n.mira_historyTooltip,
             icon: const Icon(Icons.history_rounded),
             onPressed: () => Navigator.of(context).push(
               MaterialPageRoute<void>(
@@ -99,9 +99,9 @@ class MiraHomePage extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
-                              const _SectionHeader(
-                                eyebrow: 'WATCHLIST',
-                                title: 'Acompanhando',
+                              _SectionHeader(
+                                eyebrow: context.l10n.mira_watchlistEyebrow,
+                                title: context.l10n.mira_watchlistTitle,
                                 count: null,
                               ),
                               const SizedBox(height: AppSpacing.md),
@@ -113,8 +113,8 @@ class MiraHomePage extends StatelessWidget {
                                 ),
                               const SizedBox(height: AppSpacing.xxl),
                               _SectionHeader(
-                                eyebrow: 'CATALOGO',
-                                title: 'Outros ativos',
+                                eyebrow: context.l10n.mira_catalogEyebrow,
+                                title: context.l10n.mira_otherAssetsTitle,
                                 count: others.length,
                               ),
                               const SizedBox(height: AppSpacing.md),
@@ -179,7 +179,7 @@ class _PortfolioHero extends StatelessWidget {
                       _MarketStatusChip(),
                       const Spacer(),
                       Text(
-                        'B3 · TEMPO REAL',
+                        context.l10n.mira_marketStatusLabel,
                         style: TextStyle(
                           color: colors.onSurfaceMuted,
                           fontSize: 10,
@@ -192,7 +192,7 @@ class _PortfolioHero extends StatelessWidget {
                   ),
                   const Spacer(),
                   Text(
-                    'PATRIMONIO TOTAL',
+                    context.l10n.mira_totalAssetsLabel,
                     style: TextStyle(
                       color: colors.onSurfaceMuted,
                       fontSize: 11,

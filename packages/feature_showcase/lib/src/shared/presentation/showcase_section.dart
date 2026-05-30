@@ -22,19 +22,15 @@ class ShowcaseSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SectionHeader(
-          eyebrow: 'Showcase',
-          title: 'Cinco nichos,',
-          titleAccent: 'cinco prototipos.',
-          subtitle:
-              'Mocks funcionais por nicho — delivery, agendamento, fitness, '
-              'imobiliaria e investimentos. Toque num card pra abrir. '
-              'Sem backend de verdade; demonstram o tipo de produto que '
-              'consigo entregar.',
+        SectionHeader(
+          eyebrow: context.l10n.showcase_eyebrow,
+          title: context.l10n.showcase_title,
+          titleAccent: context.l10n.showcase_titleAccent,
+          subtitle: context.l10n.showcase_subtitle,
         ),
         const SizedBox(height: AppSpacing.xxl),
         ShowcaseGrid(
-          templates: ShowcaseCatalog.all,
+          templates: ShowcaseCatalog.all(context.l10n),
           onTemplateTapped: (t) => _openDemo(context, t),
         ),
       ],

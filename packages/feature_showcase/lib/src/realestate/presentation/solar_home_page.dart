@@ -29,7 +29,7 @@ class SolarHomePage extends StatelessWidget {
       appBar: SolarAppBar(
         leading: IconButton(
           key: const Key('solar-close-demo'),
-          tooltip: 'Fechar demo',
+          tooltip: context.l10n.solar_closeDemoTooltip,
           icon: const Icon(Icons.close_rounded),
           onPressed: () => Navigator.of(context).maybePop(),
         ),
@@ -50,8 +50,8 @@ class SolarHomePage extends StatelessWidget {
                 _HeroCard(colors: colors, textTheme: textTheme),
                 const SizedBox(height: AppSpacing.xl),
                 _SectionLabel(
-                  eyebrow: 'Bairros',
-                  title: 'Por onde você procura',
+                  eyebrow: context.l10n.solar_neighborhoodsEyebrow,
+                  title: context.l10n.solar_neighborhoodsTitle,
                   colors: colors,
                   textTheme: textTheme,
                 ),
@@ -59,8 +59,8 @@ class SolarHomePage extends StatelessWidget {
                 const _NeighborhoodStrip(),
                 const SizedBox(height: AppSpacing.xl),
                 _SectionLabel(
-                  eyebrow: 'Em destaque',
-                  title: 'Selecionados a mao',
+                  eyebrow: context.l10n.solar_featuredEyebrow,
+                  title: context.l10n.solar_featuredTitle,
                   colors: colors,
                   textTheme: textTheme,
                 ),
@@ -127,7 +127,7 @@ class _HeroCard extends StatelessWidget {
                       borderRadius: BorderRadius.circular(AppRadius.full),
                     ),
                     child: Text(
-                      'imobiliaria · interior de sao paulo',
+                      context.l10n.solar_heroTag,
                       style: textTheme.labelSmall?.copyWith(
                         color: colors.primary,
                         letterSpacing: 0.8,
@@ -147,9 +147,7 @@ class _HeroCard extends StatelessWidget {
                   ),
                   const SizedBox(height: AppSpacing.sm),
                   Text(
-                    'Casas, chacaras, terrenos e apartamentos em cidades '
-                    'do interior — com curadoria, planta baixa e corretor '
-                    'local em cada anuncio.',
+                    context.l10n.solar_heroSubtitle,
                     style: textTheme.bodyMedium?.copyWith(
                       color: colors.onSurfaceMuted,
                       height: 1.5,
@@ -158,7 +156,7 @@ class _HeroCard extends StatelessWidget {
                   const SizedBox(height: AppSpacing.lg),
                   AppButton(
                     key: const Key('solar-cta-listings'),
-                    label: 'Ver imoveis',
+                    label: context.l10n.solar_heroCta,
                     icon: Icons.arrow_forward_rounded,
                     size: AppButtonSize.large,
                     onPressed: () => Navigator.of(context).push(

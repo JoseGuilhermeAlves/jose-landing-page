@@ -1,10 +1,18 @@
+import 'package:design_system/design_system.dart';
 import 'package:feature_showcase/feature_showcase.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
+  late AppLocalizations l10n;
+
+  setUpAll(() async {
+    l10n = await AppLocalizations.delegate.load(const Locale('pt'));
+  });
+
   group('ShowcaseCatalog', () {
     test('expoe os 5 nichos da vitrine', () {
-      final ids = ShowcaseCatalog.all.map((t) => t.id).toList();
+      final ids = ShowcaseCatalog.all(l10n).map((t) => t.id).toList();
       expect(ids, hasLength(5));
       expect(
         ids,
@@ -19,7 +27,7 @@ void main() {
     });
 
     test('todos os nichos vem com hasDemo=true', () {
-      for (final t in ShowcaseCatalog.all) {
+      for (final t in ShowcaseCatalog.all(l10n)) {
         expect(
           t.hasDemo,
           isTrue,
@@ -29,20 +37,16 @@ void main() {
     });
 
     test('todos os templates tem label e descricao nao-vazios', () {
-      for (final t in ShowcaseCatalog.all) {
+      for (final t in ShowcaseCatalog.all(l10n)) {
         expect(t.label, isNotEmpty);
         expect(t.description, isNotEmpty);
       }
     });
 
-    test('ids unicos e lista imutavel', () {
-      final ids = ShowcaseCatalog.all.map((t) => t.id).toSet();
-      expect(ids, hasLength(ShowcaseCatalog.all.length));
-
-      expect(
-        () => ShowcaseCatalog.all.add(ShowcaseCatalog.all.first),
-        throwsUnsupportedError,
-      );
+    test('ids unicos', () {
+      final templates = ShowcaseCatalog.all(l10n);
+      final ids = templates.map((t) => t.id).toSet();
+      expect(ids, hasLength(templates.length));
     });
   });
 }

@@ -38,7 +38,7 @@ class VitralHomePage extends StatelessWidget {
       appBar: VitralAppBar(
         leading: IconButton(
           key: const Key('vitral-close-demo'),
-          tooltip: 'Fechar demo',
+          tooltip: context.l10n.vitral_closeDemoTooltip,
           icon: const Icon(Icons.close_rounded),
           onPressed: () => Navigator.of(context).maybePop(),
         ),
@@ -101,7 +101,7 @@ class VitralHomePage extends StatelessWidget {
                 const SizedBox(height: AppSpacing.xl),
                 _SectionLabel(
                   eyebrow: 'Categorias',
-                  title: 'O que você precisa hoje',
+                  title: context.l10n.vitral_categoriesTitle,
                   colors: colors,
                   textTheme: textTheme,
                 ),
@@ -110,7 +110,7 @@ class VitralHomePage extends StatelessWidget {
                 const SizedBox(height: AppSpacing.xl),
                 _SectionLabel(
                   eyebrow: 'Profissionais',
-                  title: 'Quem esta na agenda',
+                  title: context.l10n.vitral_specialistsTitle,
                   colors: colors,
                   textTheme: textTheme,
                 ),

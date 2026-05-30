@@ -6,6 +6,9 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   Widget wrap(Widget child) => MaterialApp(
     theme: AppTheme.dark(),
+    localizationsDelegates: AppLocalizations.localizationsDelegates,
+    supportedLocales: AppLocalizations.supportedLocales,
+    locale: const Locale('pt'),
     home: Scaffold(body: SingleChildScrollView(child: child)),
   );
 
@@ -18,7 +21,7 @@ void main() {
 
       expect(
         find.byType(ShowcaseCard),
-        findsNWidgets(ShowcaseCatalog.all.length),
+        findsNWidgets(5),
       );
     });
 

@@ -94,7 +94,7 @@ class _ProgramHeader extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          PulsoCopy.eyebrowProgram,
+          PulsoCopy(context.l10n).eyebrowProgram,
           style: TextStyle(
             color: colors.primary,
             fontSize: 10,
@@ -125,17 +125,17 @@ class _ProgramHeader extends StatelessWidget {
         Row(
           children: [
             _Stat(
-              label: PulsoCopy.labelWeek,
+              label: PulsoCopy(context.l10n).labelWeek,
               value: '${program.currentWeekIndex}/${program.durationWeeks}',
             ),
             const SizedBox(width: AppSpacing.lg),
             _Stat(
-              label: PulsoCopy.labelIntensity,
+              label: PulsoCopy(context.l10n).labelIntensity,
               value: 'x${(week?.intensityMultiplier ?? 1).toStringAsFixed(2)}',
             ),
             const SizedBox(width: AppSpacing.lg),
             _Stat(
-              label: PulsoCopy.labelStrainTarget,
+              label: PulsoCopy(context.l10n).labelStrainTarget,
               value: (week?.targetStrain ?? 0).toStringAsFixed(1),
             ),
           ],

@@ -248,7 +248,7 @@ class _ExerciseCard extends StatelessWidget {
                 ),
               ),
               IconButton(
-                tooltip: PulsoCopy.swapExercise,
+                tooltip: PulsoCopy(context.l10n).swapExercise,
                 icon: Icon(Icons.swap_horiz_rounded, color: colors.accent),
                 onPressed: () => _openSwap(context),
               ),
@@ -680,9 +680,9 @@ class _FinishSessionBar extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                _BarStat(label: PulsoCopy.labelSets, value: '$totalSets'),
+                _BarStat(label: PulsoCopy(context.l10n).labelSets, value: '$totalSets'),
                 _BarStat(
-                  label: PulsoCopy.labelVolume,
+                  label: PulsoCopy(context.l10n).labelVolume,
                   value: '${(totalVolumeKg / 1000).toStringAsFixed(1)}t',
                 ),
               ],
@@ -701,9 +701,9 @@ class _FinishSessionBar extends StatelessWidget {
               ),
             ),
             onPressed: onFinish,
-            child: const Text(
-              PulsoCopy.finishWorkout,
-              style: TextStyle(fontWeight: FontWeight.w700, letterSpacing: 0.4),
+            child: Text(
+              PulsoCopy(context.l10n).finishWorkout,
+              style: const TextStyle(fontWeight: FontWeight.w700, letterSpacing: 0.4),
             ),
           ),
         ],

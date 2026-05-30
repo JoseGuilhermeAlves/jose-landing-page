@@ -89,7 +89,7 @@ class AuroraOrderDetailPage extends StatelessWidget {
                     ),
                     const SizedBox(height: AppSpacing.xl),
                     Text(
-                      'Onde esta seu pedido',
+                      context.l10n.aurora_orderTimelineTitle,
                       style: textTheme.titleMedium?.copyWith(
                         color: colors.onSurface,
                         fontFamily: AuroraBrand.displayFontFamily,
@@ -106,7 +106,7 @@ class AuroraOrderDetailPage extends StatelessWidget {
                     ],
                     const SizedBox(height: AppSpacing.xl),
                     Text(
-                      'Itens',
+                      context.l10n.aurora_orderItemsTitle,
                       style: textTheme.titleMedium?.copyWith(
                         color: colors.onSurface,
                         fontFamily: AuroraBrand.displayFontFamily,

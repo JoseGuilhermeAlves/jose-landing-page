@@ -1,87 +1,69 @@
+import 'package:design_system/l10n/generated/app_localizations.dart';
+
 /// Copy compartilhada do mock **Pulso** (fitness dark Whoop).
 ///
-/// Centraliza apenas strings que **aparecem em mais de uma tela**.
-/// Copy específica de cada página (header de boas-vindas, mensagem de
-/// recovery contextual, etc.) permanece inline na widget — co-locada
-/// com o layout. Esse arquivo NÃO é um string-table de produção; é um
-/// agregador pragmático que evita inconsistência entre Hoje / Programa
-/// / Recovery / Session logger / Exercise detail.
-///
-/// Convenção visual do mock: eyebrows e labels de seção em CAIXA ALTA
-/// com letter-spacing larga; valores em monospace. As constantes
-/// abaixo já vêm formatadas — quem consome só passa adiante.
-abstract final class PulsoCopy {
-  // Marca.
-  static const String brandName = 'PULSO';
+/// Centraliza strings que aparecem em mais de uma tela, resolvendo
+/// via AppLocalizations. Callers passam `context.l10n` uma vez e
+/// acessam getters tipados.
+class PulsoCopy {
+  const PulsoCopy(this._l10n);
 
-  // Eyebrows / section labels (reutilizados em múltiplas páginas).
-  static const String eyebrowTodayWorkout = 'TREINO DE HOJE';
-  static const String eyebrowProgram = 'PROGRAMA';
-  static const String eyebrowRecovery = 'RECOVERY';
-  static const String eyebrowContributors = 'CONTRIBUINTES';
-  static const String eyebrowSleep = 'SONO';
-  static const String eyebrowMuscleHeatmap = 'HEATMAP MUSCULAR';
-  static const String eyebrowStrainHistory = 'STRAIN · 7 DIAS';
-  static const String eyebrowPrescribedLoad = 'CARGA PRESCRITA';
-  static const String eyebrowExecutionTempo = 'TEMPO DE EXECUÇÃO';
-  static const String eyebrowLoadHistory = 'HISTÓRICO DE CARGA';
-  static const String eyebrowTakeaway = 'TAKEAWAY';
+  final AppLocalizations _l10n;
 
-  // Métricas curtas (chips / cards).
-  static const String labelStrain = 'STRAIN';
-  static const String labelStrainTarget = 'STRAIN ALVO';
-  static const String labelHrv = 'HRV';
-  static const String labelRhr = 'RHR';
-  static const String labelSleep = 'SONO';
-  static const String labelWeek = 'SEMANA';
-  static const String labelFocus = 'FOCO';
-  static const String labelIntensity = 'INTENSIDADE';
-  static const String labelSets = 'SETS';
-  static const String labelVolume = 'VOLUME';
+  String get brandName => 'PULSO';
 
-  // CTAs.
-  static const String startWorkout = 'Iniciar treino';
-  static const String finishWorkout = 'Finalizar';
-  static const String swapExercise = 'Trocar exercício';
+  String get eyebrowTodayWorkout => _l10n.pulso_eyebrowTodayWorkout;
+  String get eyebrowProgram => _l10n.pulso_eyebrowProgram;
+  String get eyebrowRecovery => _l10n.pulso_eyebrowRecovery;
+  String get eyebrowContributors => _l10n.pulso_eyebrowContributors;
+  String get eyebrowSleep => _l10n.pulso_eyebrowSleep;
+  String get eyebrowMuscleHeatmap => _l10n.pulso_eyebrowMuscleHeatmap;
+  String get eyebrowStrainHistory => _l10n.pulso_eyebrowStrainHistory;
+  String get eyebrowPrescribedLoad => _l10n.pulso_eyebrowPrescribedLoad;
+  String get eyebrowExecutionTempo => _l10n.pulso_eyebrowExecutionTempo;
+  String get eyebrowLoadHistory => _l10n.pulso_eyebrowLoadHistory;
+  String get eyebrowTakeaway => _l10n.pulso_eyebrowTakeaway;
 
-  // Estado / mensagens.
-  static const String restDayTitle = 'Dia de descanso';
-  static const String restDayBody =
-      'Use o dia pra mobilidade leve e sono prolongado.';
-  static const String sessionNotStarted = 'Sessão não iniciada.';
-  static const String exerciseNotFound = 'Exercício não encontrado.';
-  static const String sessionFinishedSnack =
-      'Sessão finalizada. Strain registrado.';
+  String get labelStrain => _l10n.pulso_labelStrain;
+  String get labelStrainTarget => _l10n.pulso_labelStrainTarget;
+  String get labelHrv => _l10n.pulso_labelHrv;
+  String get labelRhr => _l10n.pulso_labelRhr;
+  String get labelSleep => _l10n.pulso_labelSleep;
+  String get labelWeek => _l10n.pulso_labelWeek;
+  String get labelFocus => _l10n.pulso_labelFocus;
+  String get labelIntensity => _l10n.pulso_labelIntensity;
+  String get labelSets => _l10n.pulso_labelSets;
+  String get labelVolume => _l10n.pulso_labelVolume;
 
-  // Recovery — copy contextual baseada na banda.
-  static String recoveryAdvice(double percent) {
-    if (percent < 34) {
-      return 'Corpo pede pausa. Aceite o stiff hoje, pegue intensidade amanhã.';
-    }
-    if (percent < 67) {
-      return 'Banda média. Mantenha o volume planejado, sem buscar PR.';
-    }
-    return 'Tudo verde. Use a janela pra trabalho intenso no padrão do mesociclo.';
+  String get startWorkout => _l10n.pulso_ctaStartWorkout;
+  String get finishWorkout => _l10n.pulso_ctaFinish;
+  String get swapExercise => _l10n.pulso_ctaSwapExercise;
+
+  String get restDayTitle => _l10n.pulso_restDayTitle;
+  String get restDayBody => _l10n.pulso_restDayBody;
+  String get sessionNotStarted => _l10n.pulso_errorSessionNotStarted;
+  String get exerciseNotFound => _l10n.pulso_errorExerciseNotFound;
+  String get sessionFinishedSnack => _l10n.pulso_snackbarSessionFinished;
+
+  String recoveryAdvice(double percent) {
+    if (percent < 34) return _l10n.pulso_recoveryAdviceLow;
+    if (percent < 67) return _l10n.pulso_recoveryAdviceMedium;
+    return _l10n.pulso_recoveryAdviceHigh;
   }
 
-  static String muscleAdvice(double score) {
-    if (score < 34) {
-      return 'Cadeia trashada. Foque em alongamento e hidratação.';
-    }
-    if (score < 67) {
-      return 'Banda média. Mantenha o trabalho na zona prescrita.';
-    }
-    return 'Boa janela. Use pra carga pesada se o plano pedir.';
+  String muscleAdvice(double score) {
+    if (score < 34) return _l10n.pulso_muscleAdviceLow;
+    if (score < 67) return _l10n.pulso_muscleAdviceMedium;
+    return _l10n.pulso_muscleAdviceHigh;
   }
 
-  // Dias da semana — usados em headers ("Segunda", "Terça"…).
-  static const List<String> weekdayLabels = [
-    'Segunda',
-    'Terça',
-    'Quarta',
-    'Quinta',
-    'Sexta',
-    'Sábado',
-    'Domingo',
+  List<String> get weekdayLabels => [
+    _l10n.pulso_weekdayMon,
+    _l10n.pulso_weekdayTue,
+    _l10n.pulso_weekdayWed,
+    _l10n.pulso_weekdayThu,
+    _l10n.pulso_weekdayFri,
+    _l10n.pulso_weekdaySat,
+    _l10n.pulso_weekdaySun,
   ];
 }

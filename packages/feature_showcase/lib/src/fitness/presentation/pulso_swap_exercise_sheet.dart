@@ -36,7 +36,7 @@ class PulsoSwapExerciseSheet extends StatelessWidget {
             ),
           ),
           Text(
-            'Trocar exercicio',
+            context.l10n.pulso_swapExerciseTitle,
             style: TextStyle(
               color: colors.onSurface,
               fontSize: 18,
@@ -44,7 +44,7 @@ class PulsoSwapExerciseSheet extends StatelessWidget {
             ),
           ),
           Text(
-            'Alternativas que ativam a mesma cadeia muscular.',
+            context.l10n.pulso_swapExerciseSubtitle,
             style: TextStyle(
               color: colors.onSurfaceMuted,
               fontSize: 12,
@@ -54,7 +54,7 @@ class PulsoSwapExerciseSheet extends StatelessWidget {
           const SizedBox(height: AppSpacing.md),
           if (alternates.isEmpty)
             Text(
-              'Sem alternativas catalogadas pra este exercicio.',
+              context.l10n.pulso_swapExerciseEmpty,
               style: TextStyle(color: colors.onSurfaceMuted),
             )
           else

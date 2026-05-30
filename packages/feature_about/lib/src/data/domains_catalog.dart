@@ -1,3 +1,4 @@
+import 'package:design_system/l10n/generated/app_localizations.dart';
 import 'package:feature_about/src/domain/domain_highlight.dart';
 import 'package:flutter/material.dart';
 
@@ -10,46 +11,35 @@ import 'package:flutter/material.dart';
 /// o varejo (end-to-end) ao final por ser onde a carreira comecou e
 /// por ser o unico contexto onde o Jose construiu sozinho.
 abstract final class DomainsCatalog {
-  static const List<DomainHighlight> all = [
+  static List<DomainHighlight> all(AppLocalizations l10n) => [
     DomainHighlight(
       id: 'fintech',
-      label: 'Fintech',
-      blurb:
-          'Apps de credito mobile em escala — base ativa de milhoes '
-          'de usuários.',
+      label: l10n.domain_fintech_label,
+      blurb: l10n.domain_fintech_blurb,
       icon: Icons.credit_card_outlined,
     ),
     DomainHighlight(
       id: 'public_services',
-      label: 'Setor público',
-      blurb:
-          'Servicos digitais ao cidadao com integracao a identidade '
-          'governamental.',
+      label: l10n.domain_publicServices_label,
+      blurb: l10n.domain_publicServices_blurb,
       icon: Icons.account_balance_outlined,
     ),
     DomainHighlight(
       id: 'sanitation',
-      label: 'Operacao em campo',
-      blurb:
-          'Apps de coleta e inspecao em devices industriais com '
-          'sincronizacao offline-first.',
+      label: l10n.domain_sanitation_label,
+      blurb: l10n.domain_sanitation_blurb,
       icon: Icons.engineering_outlined,
     ),
     DomainHighlight(
       id: 'platform',
-      label: 'Plataforma interna',
-      blurb:
-          'Ferramentas internas pra gestao de equipes e operacao '
-          'corporativa em larga escala.',
+      label: l10n.domain_platform_label,
+      blurb: l10n.domain_platform_blurb,
       icon: Icons.hub_outlined,
     ),
     DomainHighlight(
       id: 'retail',
-      label: 'Varejo B2B',
-      blurb:
-          'Apps mobile de operacao de loja, controle de estoque, '
-          'inventario e pedidos. Front end Flutter inteiro, em time '
-          'pequeno, ao longo de 5 anos.',
+      label: l10n.domain_retail_label,
+      blurb: l10n.domain_retail_blurb,
       icon: Icons.storefront_outlined,
       scope: DomainScope.endToEnd,
     ),

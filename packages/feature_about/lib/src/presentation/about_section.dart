@@ -55,7 +55,7 @@ class AboutSection extends StatelessWidget {
           ],
         ),
         const SizedBox(height: AppSpacing.lg),
-        const DomainConstellation(domains: DomainsCatalog.all),
+        DomainConstellation(domains: DomainsCatalog.all(context.l10n)),
         const SizedBox(height: AppSpacing.xxl),
         Text(
           context.l10n.about_deliveryTitle,

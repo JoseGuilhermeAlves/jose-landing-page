@@ -116,7 +116,7 @@ class _TodayHeader extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  PulsoCopy.brandName,
+                  PulsoCopy(context.l10n).brandName,
                   style: TextStyle(
                     color: colors.onSurface,
                     fontSize: 13,
@@ -167,7 +167,7 @@ class _RecoveryCard extends StatelessWidget {
           PulsoRecoveryRing(percent: percent, diameter: 220),
           const SizedBox(height: AppSpacing.md),
           Text(
-            _recoveryCopy(percent),
+            PulsoCopy(context.l10n).recoveryAdvice(percent),
             textAlign: TextAlign.center,
             style: TextStyle(
               color: colors.onSurfaceMuted,
@@ -179,8 +179,6 @@ class _RecoveryCard extends StatelessWidget {
       ),
     );
   }
-
-  String _recoveryCopy(double p) => PulsoCopy.recoveryAdvice(p);
 }
 
 class _StrainAndProgramRow extends StatelessWidget {
@@ -437,7 +435,7 @@ class _SessionCtaCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            PulsoCopy.eyebrowTodayWorkout,
+            PulsoCopy(context.l10n).eyebrowTodayWorkout,
             style: TextStyle(
               color: colors.primary,
               fontSize: 10,
@@ -497,9 +495,9 @@ class _SessionCtaCard extends StatelessWidget {
                 ),
               ),
               onPressed: () => _startSession(context),
-              child: const Text(
-                PulsoCopy.startWorkout,
-                style: TextStyle(
+              child: Text(
+                PulsoCopy(context.l10n).startWorkout,
+                style: const TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w700,
                   letterSpacing: 0.4,
@@ -580,7 +578,7 @@ class _RestDayCard extends StatelessWidget {
           Icon(Icons.bedtime_outlined, color: colors.accent, size: 36),
           const SizedBox(height: AppSpacing.sm),
           Text(
-            PulsoCopy.restDayTitle,
+            PulsoCopy(context.l10n).restDayTitle,
             style: TextStyle(
               color: colors.onSurface,
               fontSize: 18,
@@ -589,7 +587,7 @@ class _RestDayCard extends StatelessWidget {
           ),
           const SizedBox(height: 4),
           Text(
-            PulsoCopy.restDayBody,
+            PulsoCopy(context.l10n).restDayBody,
             textAlign: TextAlign.center,
             style: TextStyle(
               color: colors.onSurfaceMuted,

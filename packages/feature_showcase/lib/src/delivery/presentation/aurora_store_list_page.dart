@@ -71,7 +71,7 @@ class _AuroraStoreListPageState extends State<AuroraStoreListPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'bancas'.toUpperCase(),
+                  context.l10n.aurora_storesEyebrow.toUpperCase(),
                   style: textTheme.labelSmall?.copyWith(
                     color: colors.accent,
                     letterSpacing: 1.2,
@@ -80,8 +80,8 @@ class _AuroraStoreListPageState extends State<AuroraStoreListPage> {
                 const SizedBox(height: AppSpacing.xxs),
                 Text(
                   _category == null
-                      ? 'Todas as bancas'
-                      : 'Em ${_category!.label.toLowerCase()}',
+                      ? context.l10n.aurora_storesTitleAll
+                      : context.l10n.aurora_storesTitleFiltered(_category!.label.toLowerCase()),
                   style: textTheme.headlineMedium?.copyWith(
                     color: colors.onSurface,
                     fontFamily: AuroraBrand.displayFontFamily,
@@ -98,7 +98,9 @@ class _AuroraStoreListPageState extends State<AuroraStoreListPage> {
                 ),
                 const SizedBox(height: AppSpacing.md),
                 Text(
-                  vendors.length == 1 ? '1 banca' : '${vendors.length} bancas',
+                  vendors.length == 1
+                      ? context.l10n.aurora_storesCountSingular
+                      : context.l10n.aurora_storesCountPlural(vendors.length),
                   style: textTheme.labelMedium?.copyWith(
                     color: colors.onSurfaceMuted,
                     letterSpacing: 0.2,

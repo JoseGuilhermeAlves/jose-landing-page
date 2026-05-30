@@ -357,7 +357,7 @@ class _EmptyPortfolio extends StatelessWidget {
             ),
             const SizedBox(height: AppSpacing.md),
             Text(
-              'Sem posicoes ainda',
+              'Sem posições ainda',
               style: Theme.of(
                 context,
               ).textTheme.titleMedium?.copyWith(color: colors.onSurface),

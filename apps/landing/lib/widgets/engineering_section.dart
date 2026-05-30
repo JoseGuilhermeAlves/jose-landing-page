@@ -32,9 +32,9 @@ class EngineeringSection extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         const SectionHeader(
-          eyebrow: 'Engenharia e servicos',
+          eyebrow: 'Engenharia e serviços',
           title: 'A stack que sustenta',
-          titleAccent: 'cada decisao do projeto.',
+          titleAccent: 'cada decisão do projeto.',
           subtitle:
               'Tecnologias que domino e aplico em producao. '
               'Toque em qualquer tile para saber mais.',

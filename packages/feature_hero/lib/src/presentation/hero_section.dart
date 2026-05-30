@@ -56,7 +56,7 @@ class HeroSection extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: crossAxisAlignment,
       children: [
-        const EyebrowBadge(label: 'Disponivel pra freelas'),
+        const EyebrowBadge(label: 'Disponível pra freelas'),
         SizedBox(height: isMobile ? AppSpacing.lg : AppSpacing.xl),
         Semantics(
           header: true,
@@ -70,7 +70,7 @@ class HeroSection extends StatelessWidget {
                 textAlign: textAlign,
               ),
               _AnimatedNeonHeadline(
-                text: 'Do MVP ao app em producao.',
+                text: 'Do MVP ao app em produção.',
                 style: headlineStyle,
                 textAlign: textAlign,
               ),

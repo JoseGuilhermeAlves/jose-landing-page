@@ -139,7 +139,7 @@ class _MiraOrderEntryPageState extends State<MiraOrderEntryPage> {
                           const SizedBox(height: AppSpacing.md),
                           _WarningBanner(
                             text:
-                                'Voce tem $maxSellable papeis dessa posicao. '
+                                'Você tem $maxSellable papéis dessa posição. '
                                 'Ajuste a quantidade.',
                           ),
                         ],

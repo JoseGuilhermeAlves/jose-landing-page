@@ -16,7 +16,7 @@ abstract final class DomainsCatalog {
       label: 'Fintech',
       blurb:
           'Apps de credito mobile em escala — base ativa de milhoes '
-          'de usuarios.',
+          'de usuários.',
       icon: Icons.credit_card_outlined,
     ),
     DomainHighlight(

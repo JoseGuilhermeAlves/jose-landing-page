@@ -104,7 +104,7 @@ abstract final class StackCatalog {
     StackItem(
       name: 'Design System',
       version: 'Tokens',
-      role: 'Cores, tipografia, spacing e componentes reutilizaveis',
+      role: 'Cores, tipografia, spacing e componentes reutilizáveis',
       category: StackCategory.architecture,
     ),
     StackItem(

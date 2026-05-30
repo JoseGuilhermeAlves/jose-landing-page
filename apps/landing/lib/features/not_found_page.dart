@@ -25,7 +25,7 @@ class NotFoundPage extends StatelessWidget {
                 Text('404', style: textTheme.displayMedium),
                 const SizedBox(height: AppSpacing.sm),
                 Text(
-                  'Pagina nao encontrada.',
+                  'Página não encontrada.',
                   style: textTheme.titleMedium?.copyWith(
                     color: colors.onSurfaceMuted,
                   ),

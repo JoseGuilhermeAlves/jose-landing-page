@@ -1,8 +1,8 @@
 // Catalogo estatico de descricoes expandidas por tecnologia. As chaves casam
 // com `TechBody.techName` exposto em `cosmic_bodies.dart`; o consumidor e o
-// popup acionado quando o usuario clica num corpo celeste da cena cosmica.
+// popup acionado quando o usuário clica num corpo celeste da cena cosmica.
 
-/// Conteudo expandido por tech, exibido no popup quando o usuario clica
+/// Conteudo expandido por tech, exibido no popup quando o usuário clica
 /// num corpo celeste da cena cosmic.
 class TechDescription {
   const TechDescription({
@@ -42,7 +42,7 @@ abstract final class TechDescriptionsCatalog {
       role: 'Framework',
       version: '>=3.38',
       body:
-          'Sustenta toda a landing como app multiplataforma — o mesmo codigo '
+          'Sustenta toda a landing como app multiplataforma — o mesmo código '
           'roda como mobile, PWA e desktop. Material 3 em dark-only define a '
           'base visual, com tokens proprios sobrescrevendo as cores semanticas '
           'do scheme. Compilado com renderer WASM por padrao, garantindo '
@@ -98,7 +98,7 @@ abstract final class TechDescriptionsCatalog {
           'Routing declarativo com `/labs` e suas sub-rotas carregadas como '
           'bundle separado on-demand via `deferred as labs`. A primeira pintura '
           'da home não paga o custo dos sete playgrounds — o widget bundle so '
-          'materializa quando o usuario navega ate `/labs`. O `errorBuilder` '
+          'materializa quando o usuário navega ate `/labs`. O `errorBuilder` '
           'cobre 404 sem rota nominal extra.',
       docsUrl: 'https://pub.dev/packages/go_router',
     ),
@@ -112,7 +112,7 @@ abstract final class TechDescriptionsCatalog {
           'catalogo de widgets. Cada painter recebe o Canvas e o Size, '
           'desenhando com Path, Paint e TextPainter em 60 Hz sem alocação '
           'no hot loop. Nesta landing, sustenta 20+ painters dedicados — '
-          'mapas, plantas baixas, graficos, backdrops e relogios animados '
+          'mapas, plantas baixas, gráficos, backdrops e relógios animados '
           'nos mocks do showcase.',
       docsUrl:
           'https://api.flutter.dev/flutter/rendering/CustomPainter-class.html',
@@ -153,7 +153,7 @@ abstract final class TechDescriptionsCatalog {
           'Key-value store de alta performance para dados estruturados no '
           'device. Sem overhead de SQL — leitura e escrita em microsegundos '
           'com TypeAdapters tipados. Ideal para cache local, preferências '
-          'do usuario e dados de sessão que não exigem queries relacionais. '
+          'do usuário e dados de sessão que não exigem queries relacionais. '
           'Complementa SQLite em arquiteturas que separam cache de dados '
           'persistentes.',
       docsUrl: 'https://pub.dev/packages/hive',
@@ -180,7 +180,7 @@ abstract final class TechDescriptionsCatalog {
           'Segregation e Dependency Inversion aplicados em todas as camadas. '
           'Repositories abstratos no domain, implementações concretas no data, '
           'Blocs que dependem de contratos — não de implementações. Cada '
-          'decisao de design passa por esses filtros antes de virar codigo.',
+          'decisão de design passa por esses filtros antes de virar código.',
     ),
     'Monorepo': TechDescription(
       title: 'Monorepo',
@@ -189,9 +189,9 @@ abstract final class TechDescriptionsCatalog {
       version: 'Pub Workspaces',
       body:
           'Workspace Pub nativo com Melos orquestrando bootstrap, analyze, '
-          'test e build em todos os pacotes. Cada pacote tem pubspec proprio, '
-          'dependências explícitas e barrel de exportação. Mudancas atômicas '
-          'que cruzam pacotes entram num unico commit sem risco de versão '
+          'test e build em todos os pacotes. Cada pacote tem pubspec próprio, '
+          'dependências explícitas e barrel de exportação. Mudanças atômicas '
+          'que cruzam pacotes entram num único commit sem risco de versão '
           'desalinhada entre feature e design system.',
     ),
     'Design System': TechDescription(
@@ -201,7 +201,7 @@ abstract final class TechDescriptionsCatalog {
       version: 'Tokens',
       body:
           'Pacote design_system com tokens de cor, tipografia, spacing, '
-          'breakpoints e componentes reutilizaveis (SectionHeader, EyebrowBadge, '
+          'breakpoints e componentes reutilizáveis (SectionHeader, EyebrowBadge, '
           'GradientText, GlowBackdrop, AppButton). Garante consistencia visual '
           'entre features sem duplicacao — qualquer mudanca de token propaga '
           'automaticamente para toda a landing.',
@@ -237,7 +237,7 @@ abstract final class TechDescriptionsCatalog {
       version: '^10.0.0',
       body:
           'Conjunto estrito de lints rodando failFast no pipeline de '
-          'análise estática. Mantem o codigo limpo sem PR review repetitivo — '
+          'análise estática. Mantem o código limpo sem PR review repetitivo — '
           'estilo, imutabilidade e ordering ja vem cobertos pela regra. O CI '
           'quebra antes de qualquer review humano enxergar o diff, entao '
           'inconsistência não chega até o reviewer.',
@@ -250,7 +250,7 @@ abstract final class TechDescriptionsCatalog {
       version: '^10.0.0',
       body:
           'Harness oficial pra testar blocs sem mock manual de dependencia. '
-          'Cada Bloc/Cubit nasce com seus testes na mesma sessao — politica do '
+          'Cada Bloc/Cubit nasce com seus testes na mesma sessão — politica do '
           'projeto, não opcional. A API `blocTest` deixa explicito o `seed`, '
           'os eventos disparados e a sequência de states esperada, eliminando '
           'flakiness por ordering de stream.',
@@ -292,7 +292,7 @@ abstract final class TechDescriptionsCatalog {
           'sem `==` manual nem `freezed`/`build_runner` puxado pro monorepo. '
           'Cada entity sobrescreve `props` declarando os campos relevantes e '
           'pronto — `Equatable` cuida de `==` e `hashCode`. Mantem o ciclo de '
-          'build curto, sem etapa de geracao de codigo.',
+          'build curto, sem etapa de geração de código.',
       docsUrl: 'https://pub.dev/packages/equatable',
     ),
     'Fastlane': TechDescription(

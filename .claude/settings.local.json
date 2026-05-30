@@ -59,7 +59,31 @@
       "WebFetch(domain:emilkowal.ski)",
       "WebFetch(domain:rauno.me)",
       "Bash(xargs wc -l)",
-      "Bash(dart format *)"
+      "Bash(dart format *)",
+      "WebFetch(domain:brittanychiang.com)",
+      "WebFetch(domain:linear.app)",
+      "WebFetch(domain:leerob.io)",
+      "WebFetch(domain:pierre.io)",
+      "WebFetch(domain:bruno-simon.com)",
+      "WebFetch(domain:patrickheng.com)",
+      "WebFetch(domain:aprtm.com)",
+      "WebFetch(domain:danielkorpai.com)",
+      "WebFetch(domain:cassidoo.co)",
+      "WebFetch(domain:brianlovin.com)",
+      "Bash(awk -F: '{ *)",
+      "Bash(xargs grep -l \"nao \\\\|voce \\\\|carater\\\\|fricao\\\\|informacao\\\\|construcao\\\\|secao\\\\|atras\\\\|facil\\\\|publico\\\\|experiencia\\\\|servicos\\\\|repositorio\\\\|documentacao\")",
+      "Bash(xargs grep -E '\\\\bnao\\\\s+|\\\\bvoce\\\\s+|\\\\bcarater\\\\b|\\\\bfricao\\\\b|\\\\binformacao\\\\b|\\\\bconstrucao\\\\b|\\\\bsecao\\\\b|\\\\batras\\\\s+|\\\\bfacil\\\\s+|\\\\bpublico\\\\s+|\\\\bexperiencia\\\\s+|\\\\bservicos\\\\b|\\\\brevista\\\\b|\\\\bRepositorio\\\\b|\\\\bdocumentacao\\\\b|\\\\bimobiliaria\\\\b')",
+      "Bash(grep -nB1 -A2 \"setState\" C:/jose-landing-page/packages/feature_showcase/lib/src/fitness/presentation/pulso_recovery_page.dart)",
+      "Bash(grep -nB1 -A2 \"setState\" C:/jose-landing-page/packages/feature_showcase/lib/src/realestate/presentation/solar_property_detail_page.dart)",
+      "Bash(grep -nB1 -A2 \"setState\" C:/jose-landing-page/packages/feature_showcase/lib/src/scheduling/presentation/vitral_calendar_page.dart)",
+      "Bash(awk NR==1755 || NR==1756 || NR==1757 {print NR\": \"$0} *)",
+      "Bash(awk NR>=1105 && NR<=1112 {print NR\": \"$0} *)",
+      "Bash(awk NR>=255 && NR<=271 {print NR\": \"$0} *)",
+      "Bash(sed -i '1357,1755d' lib/src/presentation/hero_section.dart)",
+      "Bash(sed -i '258,1109d' lib/src/presentation/hero_section.dart)",
+      "Bash(sed -i '24,318d' lib/src/painters/cosmos_painter.dart)",
+      "Read(//c/c/jose-landing-page/packages/animations/lib/src/painters/**)",
+      "Bash(grep -n \"^      },$\" apps/landing/lib/widgets/engineering/bento_grid.dart)"
     ]
   }
 }

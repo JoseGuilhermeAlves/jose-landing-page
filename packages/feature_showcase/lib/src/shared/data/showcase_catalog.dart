@@ -28,7 +28,7 @@ abstract final class ShowcaseCatalog {
       label: 'Agendamento',
       description:
           'Vitral — estudio de servicos com calendario interativo, '
-          'relogio animado e confirmacao com badge.',
+          'relógio animado e confirmação com badge.',
       icon: Icons.calendar_month_outlined,
       hasDemo: true,
     ),

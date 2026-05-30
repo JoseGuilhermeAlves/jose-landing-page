@@ -28,10 +28,10 @@ class CaseStudySection extends StatelessWidget {
           title: 'Pulso reescrito —',
           titleAccent: 'dark Whoop, do zero.',
           subtitle:
-              'O mock de fitness comecou cream/laranja, padrao Strava. '
+              'O mock de fitness começou cream/laranja, padrão Strava. '
               'Foi pivotado pra dark recovery-first inspirado no Whoop '
-              'apos uma sessao de revisao critica do scroll de '
-              'fechamento. Aqui ficam as decisoes que sustentam o '
+              'após uma sessão de revisão crítica do scroll de '
+              'fechamento. Aqui ficam as decisões que sustentam o '
               'novo Pulso.',
         ),
         const SizedBox(height: AppSpacing.xxl),
@@ -264,7 +264,7 @@ class _PainterShowcase extends StatelessWidget {
         caption:
             'Mesociclo de 8 semanas × 7 dias. Heat por intensidade '
             'prescrita, borda na semana atual, deload colorido '
-            'distinto. Tap em qualquer celula expoe a sessao.',
+            'distinto. Tap em qualquer célula expõe a sessão.',
         child: SizedBox(
           height: 200,
           child: PulsoPeriodizationTimeline(
@@ -323,7 +323,7 @@ class _PainterCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          child,
+          Semantics(image: true, label: '$title: $caption', child: child),
           const SizedBox(height: AppSpacing.md),
           Text(
             title,
@@ -504,7 +504,7 @@ class _ClosingTakeaway extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.sm),
           Text(
-            'Mocks do showcase nao sao demo de paleta — sao prova de que '
+            'Mocks do showcase não são demo de paleta — são prova de que '
             'o codigo aguenta uma virada de produto sem virar gambiarra.',
             style: tt.titleLarge?.copyWith(
               color: colors.onSurface,
@@ -518,9 +518,9 @@ class _ClosingTakeaway extends StatelessWidget {
             'O pivot do Pulso trocou ~5K LOC de UI mantendo a hierarquia '
             'core → design_system → animations → feature_*, sem dep nova, '
             'sem regressao no resto do scroll. Os painters reusam tudo '
-            'que ja existia na propria sub-feature. O codigo que voce ve '
-            'aqui em cima esta rodando exatamente como na sessao do '
-            'Pulso — nao tem espelho, nao tem foto.',
+            'que já existia na própria sub-feature. O código que você vê '
+            'aqui em cima está rodando exatamente como na sessão do '
+            'Pulso — não tem espelho, não tem foto.',
             style: tt.bodyMedium?.copyWith(
               color: colors.onSurfaceMuted,
               height: 1.6,

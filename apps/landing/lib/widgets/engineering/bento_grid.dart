@@ -296,13 +296,20 @@ class _TechTileState extends State<_TechTile> {
 
     final borderColor = _hovered ? brand.withValues(alpha: 0.7) : colors.border;
 
-    return MouseRegion(
-      cursor: SystemMouseCursors.click,
-      onEnter: (_) => setState(() => _hovered = true),
-      onExit: (_) => setState(() => _hovered = false),
-      child: GestureDetector(
-        onTap: widget.onTap,
-        child: AnimatedContainer(
+    return Semantics(
+      button: true,
+      label: '${widget.techName}. Toque pra abrir descrição.',
+      onTap: widget.onTap,
+      excludeSemantics: true,
+      child: MouseRegion(
+        cursor: SystemMouseCursors.click,
+        onEnter: (_) => setState(() => _hovered = true),
+        onExit: (_) => setState(() => _hovered = false),
+        child: GestureDetector(
+          onTap: widget.onTap,
+          child: AnimatedContainer(
+            // AnimatedContainer body abaixo — fechamento extra abaixo
+            // pra balancear o wrapper Semantics adicional.
           duration: AppDuration.fast,
           curve: Curves.easeOut,
           padding: const EdgeInsets.all(AppSpacing.md),
@@ -367,7 +374,9 @@ class _TechTileState extends State<_TechTile> {
             ],
           ),
         ),
-      ),
+          ),
+        ),
     );
+    
   }
 }

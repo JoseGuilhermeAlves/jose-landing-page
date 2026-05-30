@@ -23,16 +23,11 @@ class CaseStudySection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        const SectionHeader(
-          eyebrow: 'Case study',
-          title: 'Pulso reescrito —',
-          titleAccent: 'dark Whoop, do zero.',
-          subtitle:
-              'O mock de fitness começou cream/laranja, padrão Strava. '
-              'Foi pivotado pra dark recovery-first inspirado no Whoop '
-              'após uma sessão de revisão crítica do scroll de '
-              'fechamento. Aqui ficam as decisões que sustentam o '
-              'novo Pulso.',
+        SectionHeader(
+          eyebrow: context.l10n.caseStudy_eyebrow,
+          title: context.l10n.caseStudy_title,
+          titleAccent: context.l10n.caseStudy_titleAccent,
+          subtitle: context.l10n.caseStudy_subtitle,
         ),
         const SizedBox(height: AppSpacing.xxl),
         _HeroBlock(isMobile: isMobile),
@@ -93,7 +88,7 @@ class _Narrative extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'O PIVOT',
+            context.l10n.caseStudy_pivotEyebrow,
             style: tt.labelSmall?.copyWith(
               color: colors.primary,
               fontWeight: FontWeight.w800,
@@ -102,7 +97,7 @@ class _Narrative extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.sm),
           Text(
-            'Do logger leve ao dashboard de leitura.',
+            context.l10n.caseStudy_pivotTitle,
             style: tt.headlineSmall?.copyWith(
               color: colors.onSurface,
               height: 1.2,
@@ -111,30 +106,11 @@ class _Narrative extends StatelessWidget {
             ),
           ),
           const SizedBox(height: AppSpacing.md),
-          _Paragraph(
-            'A primeira versao do Pulso era um tracker comum: aba Hoje, '
-            'aba Semana, aba Progresso. Tudo funcionava — set dots, '
-            'rings, volume — mas a experiencia se resumia a "ver '
-            'numeros". Tres em cada quatro telas eram somente leitura.',
-          ),
+          _Paragraph(context.l10n.caseStudy_pivotPara1),
           const SizedBox(height: AppSpacing.md),
-          _Paragraph(
-            'A reescrita inverteu o foco: recovery primeiro, logger '
-            'depois. Mesociclo de 8 semanas com progressao linear + '
-            'deload na ultima. Cada set logado avanca um strain '
-            'accumulator que reage em tempo real. A paleta cream/laranja '
-            'cedeu lugar ao verde recovery #00D982 e cyan strain '
-            '#5AC8FA sobre superficie quase preta — referencia '
-            'explicita ao Whoop, sem fingir originalidade.',
-          ),
+          _Paragraph(context.l10n.caseStudy_pivotPara2),
           const SizedBox(height: AppSpacing.md),
-          _Paragraph(
-            'O dominio cresceu: Program, ProgramWeek, SessionTemplate, '
-            'PlannedExercise, SetEntry, LoggedSession, RecoverySnapshot, '
-            'StrainScore, MuscleRecovery, SleepWindow. Tudo plain Dart '
-            'com Equatable — sem freezed, sem codegen — pra manter o '
-            'workspace sem build_runner.',
-          ),
+          _Paragraph(context.l10n.caseStudy_pivotPara3),
         ],
       ),
     );
@@ -198,7 +174,7 @@ class _PulsoLivePreviewState extends State<_PulsoLivePreview>
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            'PULSO · HOJE',
+            context.l10n.caseStudy_recoveryLabel,
             style: Theme.of(context).textTheme.labelSmall?.copyWith(
               color: const Color(0xFF7E7E8A),
               fontWeight: FontWeight.w800,
@@ -209,8 +185,7 @@ class _PulsoLivePreviewState extends State<_PulsoLivePreview>
           PulsoRecoveryRing(percent: 79, diameter: 220, animation: _ringAnim),
           const SizedBox(height: AppSpacing.md),
           Text(
-            'Tudo verde. Use a janela pra trabalho intenso\n'
-            'no padrao do mesociclo.',
+            context.l10n.caseStudy_recoveryHint,
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
               color: const Color(0xFFF2F2F5),
@@ -231,11 +206,8 @@ class _PainterShowcase extends StatelessWidget {
   Widget build(BuildContext context) {
     final cards = [
       _PainterCard(
-        title: 'Strain dial',
-        caption:
-            'Escala 0–21 logaritmica do Whoop. Arco com gradient '
-            'azul → magenta. Numeral monospace centralizado pra '
-            'leitura tipo equipamento.',
+        title: context.l10n.caseStudy_painterStrainTitle,
+        caption: context.l10n.caseStudy_painterStrainCaption,
         child: const SizedBox(
           height: 200,
           child: Center(
@@ -244,11 +216,8 @@ class _PainterShowcase extends StatelessWidget {
         ),
       ),
       _PainterCard(
-        title: 'Tempo bars',
-        caption:
-            '4 fases — eccentric / pausa / concentric / pausa — com '
-            'cursor luminoso percorrendo em loop. Roda em AnimationController '
-            'passado direto pro CustomPainter via super(repaint:).',
+        title: context.l10n.caseStudy_painterTempoTitle,
+        caption: context.l10n.caseStudy_painterTempoCaption,
         child: SizedBox(
           height: 200,
           child: Padding(
@@ -260,11 +229,8 @@ class _PainterShowcase extends StatelessWidget {
         ),
       ),
       _PainterCard(
-        title: 'Periodization grid',
-        caption:
-            'Mesociclo de 8 semanas × 7 dias. Heat por intensidade '
-            'prescrita, borda na semana atual, deload colorido '
-            'distinto. Tap em qualquer célula expõe a sessão.',
+        title: context.l10n.caseStudy_painterPeriodTitle,
+        caption: context.l10n.caseStudy_painterPeriodCaption,
         child: SizedBox(
           height: 200,
           child: PulsoPeriodizationTimeline(
@@ -355,37 +321,22 @@ class _DecisionsGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final decisions = [
-      const _DecisionCard(
-        eyebrow: 'ARQUITETURA',
-        title: 'Clean Arch por mock, não por pacote',
-        body:
-            'Cada mock do showcase (Pulso, Garoa, Aurora, Vitral, Solar) '
-            'tem seu próprio triângulo data / domain / presentation '
-            'dentro de lib/src/<mock>/. Mocks não se importam entre si '
-            '— só de shared/. Quando um mock cresce em entidades, tudo '
-            'cabe dentro do triângulo dele.',
+      _DecisionCard(
+        eyebrow: l10n.caseStudy_decisionArchEyebrow,
+        title: l10n.caseStudy_decisionArchTitle,
+        body: l10n.caseStudy_decisionArchBody,
       ),
-      const _DecisionCard(
-        eyebrow: 'PAINTERS',
-        title: 'super(repaint:) e shouldRepaint estrito',
-        body:
-            'Painters animados recebem o AnimationController direto no '
-            'super(repaint:) — o engine pula build/layout e vai pra '
-            'paint imediatamente. shouldRepaint compara campo a campo. '
-            'Sem alocacao no hot loop: Paint, Path e TextPainter '
-            'cacheados como fields static do painter.',
+      _DecisionCard(
+        eyebrow: l10n.caseStudy_decisionPaintersEyebrow,
+        title: l10n.caseStudy_decisionPaintersTitle,
+        body: l10n.caseStudy_decisionPaintersBody,
       ),
-      const _DecisionCard(
-        eyebrow: 'STATE',
-        title: 'Bloc rico, set-a-set com RPE',
-        body:
-            'O estado antigo (mapa completedSets[weekday|exerciseId]) '
-            'foi substituido por LoggedSession com SetEntry tipado: '
-            'weight, reps, RPE, completed, notes. SetLogged move o '
-            'strain accumulator em tempo real — set virando complete '
-            'avanca, virando incompleto recua. Sem freezed; Equatable '
-            'da o == que precisamos.',
+      _DecisionCard(
+        eyebrow: l10n.caseStudy_decisionStateEyebrow,
+        title: l10n.caseStudy_decisionStateTitle,
+        body: l10n.caseStudy_decisionStateBody,
       ),
     ];
     if (isMobile) {
@@ -495,7 +446,7 @@ class _ClosingTakeaway extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'TAKEAWAY',
+            context.l10n.caseStudy_takeawayEyebrow,
             style: tt.labelSmall?.copyWith(
               color: colors.primary,
               fontWeight: FontWeight.w800,
@@ -504,8 +455,7 @@ class _ClosingTakeaway extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.sm),
           Text(
-            'Mocks do showcase não são demo de paleta — são prova de que '
-            'o codigo aguenta uma virada de produto sem virar gambiarra.',
+            context.l10n.caseStudy_takeawayTitle,
             style: tt.titleLarge?.copyWith(
               color: colors.onSurface,
               fontWeight: FontWeight.w600,
@@ -515,12 +465,7 @@ class _ClosingTakeaway extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.md),
           Text(
-            'O pivot do Pulso trocou ~5K LOC de UI mantendo a hierarquia '
-            'core → design_system → animations → feature_*, sem dep nova, '
-            'sem regressao no resto do scroll. Os painters reusam tudo '
-            'que já existia na própria sub-feature. O código que você vê '
-            'aqui em cima está rodando exatamente como na sessão do '
-            'Pulso — não tem espelho, não tem foto.',
+            context.l10n.caseStudy_takeawayBody,
             style: tt.bodyMedium?.copyWith(
               color: colors.onSurfaceMuted,
               height: 1.6,

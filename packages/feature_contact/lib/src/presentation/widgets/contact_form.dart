@@ -49,6 +49,7 @@ class _ContactFormState extends State<ContactForm> {
       builder: (context, state) {
         final submitting = state.submission is ContactSubmissionSubmitting;
         final bloc = context.read<ContactBloc>();
+        final l10n = context.l10n;
 
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -61,7 +62,7 @@ class _ContactFormState extends State<ContactForm> {
               onChanged: (v) => bloc.add(ContactNameChanged(v)),
               decoration: _decoration(
                 colors: colors,
-                label: 'Nome',
+                label: l10n.contact_formName,
                 error: state.nameError,
               ),
               textInputAction: TextInputAction.next,
@@ -76,7 +77,7 @@ class _ContactFormState extends State<ContactForm> {
               onChanged: (v) => bloc.add(ContactEmailChanged(v)),
               decoration: _decoration(
                 colors: colors,
-                label: 'Email',
+                label: l10n.contact_formEmail,
                 error: state.emailError,
               ),
               textInputAction: TextInputAction.next,
@@ -90,12 +91,15 @@ class _ContactFormState extends State<ContactForm> {
               dropdownColor: colors.surface,
               decoration: _decoration(
                 colors: colors,
-                label: 'Tipo de projeto',
+                label: l10n.contact_formProjectType,
                 error: state.projectTypeError,
               ),
               items: [
                 for (final t in ProjectType.values)
-                  DropdownMenuItem(value: t, child: Text(t.label)),
+                  DropdownMenuItem(
+                    value: t,
+                    child: Text(t.localizedLabel(l10n)),
+                  ),
               ],
               onChanged: submitting
                   ? null
@@ -112,14 +116,16 @@ class _ContactFormState extends State<ContactForm> {
               onChanged: (v) => bloc.add(ContactMessageChanged(v)),
               decoration: _decoration(
                 colors: colors,
-                label: 'Mensagem',
+                label: l10n.contact_formMessage,
                 error: state.messageError,
               ),
             ),
             const SizedBox(height: AppSpacing.lg),
             AppButton(
               key: const Key('contact-form-submit'),
-              label: submitting ? 'Enviando...' : 'Enviar pelo WhatsApp',
+              label: submitting
+                  ? l10n.contact_formSubmitting
+                  : l10n.contact_formSubmit,
               onPressed: submitting ? null : _submit,
               icon: Icons.chat_bubble_outline,
               size: AppButtonSize.large,

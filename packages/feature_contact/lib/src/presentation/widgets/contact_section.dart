@@ -45,16 +45,16 @@ class ContactSection extends StatelessWidget {
       onOpenUri: onOpenUri,
     );
 
+    final l10n = context.l10n;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SectionHeader(
-          eyebrow: 'Contato',
-          title: 'Vamos',
-          titleAccent: 'conversar?',
-          subtitle:
-              'Manda uma mensagem por aqui ou direto pelos canais '
-              'abaixo. Respondo rapido durante a semana.',
+        SectionHeader(
+          eyebrow: l10n.contact_eyebrow,
+          title: l10n.contact_title,
+          titleAccent: l10n.contact_titleAccent,
+          subtitle: l10n.contact_subtitle,
         ),
         const SizedBox(height: AppSpacing.xxl),
         if (isMobile) ...[
@@ -97,11 +97,13 @@ class _AlternateCtas extends StatelessWidget {
     final colors = context.colors;
     final textTheme = Theme.of(context).textTheme;
 
+    final l10n = context.l10n;
+
     final tiles = <Widget>[
       _CtaTile(
         key: const Key('contact-cta-whatsapp'),
         icon: Icons.chat_bubble_outline,
-        label: 'WhatsApp direto',
+        label: l10n.contact_ctaWhatsapp,
         helper: '+$whatsappNumber',
         onTap: () => _open(context, Uri.https('wa.me', '/$whatsappNumber')),
       ),
@@ -109,7 +111,7 @@ class _AlternateCtas extends StatelessWidget {
         _CtaTile(
           key: const Key('contact-cta-email'),
           icon: Icons.mail_outline,
-          label: 'Email',
+          label: l10n.contact_ctaEmail,
           helper: email!,
           onTap: () => _open(context, Uri(scheme: 'mailto', path: email)),
         ),
@@ -117,7 +119,7 @@ class _AlternateCtas extends StatelessWidget {
         _CtaTile(
           key: const Key('contact-cta-linkedin'),
           icon: Icons.work_outline,
-          label: 'LinkedIn',
+          label: l10n.contact_ctaLinkedin,
           helper: linkedinUrl!,
           onTap: () => _open(context, Uri.parse(linkedinUrl!)),
         ),
@@ -125,7 +127,7 @@ class _AlternateCtas extends StatelessWidget {
         _CtaTile(
           key: const Key('contact-cta-github'),
           icon: Icons.code,
-          label: 'GitHub',
+          label: l10n.contact_ctaGithub,
           helper: githubUrl!,
           onTap: () => _open(context, Uri.parse(githubUrl!)),
         ),
@@ -142,7 +144,7 @@ class _AlternateCtas extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Ou direto:',
+            l10n.contact_orDirect,
             style: textTheme.titleMedium?.copyWith(color: colors.onSurface),
           ),
           const SizedBox(height: AppSpacing.md),

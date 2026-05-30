@@ -25,7 +25,7 @@ class ServicesGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const services = ServicesCatalog.all;
+    final services = ServicesCatalog.all(context.l10n);
     final columns = _columnsFor(context.breakpoint);
 
     return LayoutBuilder(

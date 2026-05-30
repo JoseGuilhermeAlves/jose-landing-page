@@ -56,7 +56,10 @@ class HeroSection extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: crossAxisAlignment,
       children: [
-        const EyebrowBadge(label: 'Disponível pra freelas'),
+        EyebrowBadge(
+          label: context.l10n.hero_eyebrow,
+          accentColor: context.colors.success,
+        ),
         SizedBox(height: isMobile ? AppSpacing.lg : AppSpacing.xl),
         Semantics(
           header: true,
@@ -65,12 +68,12 @@ class HeroSection extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                'Front end mobile com Flutter.',
+                context.l10n.hero_headline1,
                 style: headlineStyle,
                 textAlign: textAlign,
               ),
               _AnimatedNeonHeadline(
-                text: 'Do MVP ao app em produção.',
+                text: context.l10n.hero_headline2,
                 style: headlineStyle,
                 textAlign: textAlign,
               ),
@@ -81,9 +84,7 @@ class HeroSection extends StatelessWidget {
         ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 680),
           child: Text(
-            '7+ anos construindo o front end de apps mobile (e web '
-            'quando faz sentido) — atuando do varejo B2B a produto '
-            'fintech em escala.',
+            context.l10n.hero_bio,
             style: textTheme.titleMedium?.copyWith(
               color: colors.onSurfaceMuted,
               height: 1.5,
@@ -375,7 +376,7 @@ class _ScrollHintState extends State<_ScrollHint>
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                'role para continuar'.toUpperCase(),
+                context.l10n.hero_scrollHint.toUpperCase(),
                 style: textTheme.labelSmall?.copyWith(
                   color: colors.onSurfaceMuted,
                   letterSpacing: 1.2,
@@ -409,7 +410,7 @@ class _CtaRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final whatsapp = AppButton(
-      label: 'Falar no WhatsApp',
+      label: context.l10n.hero_ctaWhatsapp,
       onPressed: onContactPressed,
       size: AppButtonSize.large,
       icon: Icons.chat_bubble_outline,
@@ -417,7 +418,7 @@ class _CtaRow extends StatelessWidget {
     );
 
     final projects = AppButton(
-      label: 'Ver projetos',
+      label: context.l10n.hero_ctaProjects,
       onPressed: onSeeProjectsPressed,
       size: AppButtonSize.large,
       variant: AppButtonVariant.secondary,
@@ -459,21 +460,21 @@ class _CtaRow extends StatelessWidget {
 class _TrustStrip extends StatelessWidget {
   const _TrustStrip();
 
-  static const List<_TrustStat> _stats = [
-    _TrustStat(value: '7+', label: 'anos de Flutter'),
-    _TrustStat(value: '5+', label: 'dominios atuados'),
-    _TrustStat(value: 'Mobile · Web', label: 'plataformas-alvo'),
-  ];
-
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final stats = [
+      _TrustStat(value: l10n.hero_trustYearsValue, label: l10n.hero_trustYearsLabel),
+      _TrustStat(value: l10n.hero_trustDomainsValue, label: l10n.hero_trustDomainsLabel),
+      _TrustStat(value: l10n.hero_trustPlatformsValue, label: l10n.hero_trustPlatformsLabel),
+    ];
     // Sempre start-aligned: o hero agora lidera com a foto a esquerda,
     // entao centralizar a trust strip quebraria o eixo de leitura.
     return Wrap(
       spacing: AppSpacing.xl,
       runSpacing: AppSpacing.lg,
       children: [
-        for (final stat in _stats)
+        for (final stat in stats)
           _TrustStatChip(
             stat: stat,
             crossAxisAlignment: CrossAxisAlignment.start,

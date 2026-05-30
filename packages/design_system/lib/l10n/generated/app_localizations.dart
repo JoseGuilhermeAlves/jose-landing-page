@@ -1,0 +1,1697 @@
+import 'dart:async';
+
+import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:intl/intl.dart' as intl;
+
+import 'app_localizations_de.dart';
+import 'app_localizations_en.dart';
+import 'app_localizations_es.dart';
+import 'app_localizations_it.dart';
+import 'app_localizations_ja.dart';
+import 'app_localizations_pt.dart';
+import 'app_localizations_zh.dart';
+
+// ignore_for_file: type=lint
+
+/// Callers can lookup localized strings with an instance of AppLocalizations
+/// returned by `AppLocalizations.of(context)`.
+///
+/// Applications need to include `AppLocalizations.delegate()` in their app's
+/// `localizationDelegates` list, and the locales they support in the app's
+/// `supportedLocales` list. For example:
+///
+/// ```dart
+/// import 'generated/app_localizations.dart';
+///
+/// return MaterialApp(
+///   localizationsDelegates: AppLocalizations.localizationsDelegates,
+///   supportedLocales: AppLocalizations.supportedLocales,
+///   home: MyApplicationHome(),
+/// );
+/// ```
+///
+/// ## Update pubspec.yaml
+///
+/// Please make sure to update your pubspec.yaml to include the following
+/// packages:
+///
+/// ```yaml
+/// dependencies:
+///   # Internationalization support.
+///   flutter_localizations:
+///     sdk: flutter
+///   intl: any # Use the pinned version from flutter_localizations
+///
+///   # Rest of dependencies
+/// ```
+///
+/// ## iOS Applications
+///
+/// iOS applications define key application metadata, including supported
+/// locales, in an Info.plist file that is built into the application bundle.
+/// To configure the locales supported by your app, you’ll need to edit this
+/// file.
+///
+/// First, open your project’s ios/Runner.xcworkspace Xcode workspace file.
+/// Then, in the Project Navigator, open the Info.plist file under the Runner
+/// project’s Runner folder.
+///
+/// Next, select the Information Property List item, select Add Item from the
+/// Editor menu, then select Localizations from the pop-up menu.
+///
+/// Select and expand the newly-created Localizations item then, for each
+/// locale your application supports, add a new item and select the locale
+/// you wish to add from the pop-up menu in the Value field. This list should
+/// be consistent with the languages listed in the AppLocalizations.supportedLocales
+/// property.
+abstract class AppLocalizations {
+  AppLocalizations(String locale)
+    : localeName = intl.Intl.canonicalizedLocale(locale.toString());
+
+  final String localeName;
+
+  static AppLocalizations of(BuildContext context) {
+    return Localizations.of<AppLocalizations>(context, AppLocalizations)!;
+  }
+
+  static const LocalizationsDelegate<AppLocalizations> delegate =
+      _AppLocalizationsDelegate();
+
+  /// A list of this localizations delegate along with the default localizations
+  /// delegates.
+  ///
+  /// Returns a list of localizations delegates containing this delegate along with
+  /// GlobalMaterialLocalizations.delegate, GlobalCupertinoLocalizations.delegate,
+  /// and GlobalWidgetsLocalizations.delegate.
+  ///
+  /// Additional delegates can be added by appending to this list in
+  /// MaterialApp. This list does not have to be used at all if a custom list
+  /// of delegates is preferred or required.
+  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
+      <LocalizationsDelegate<dynamic>>[
+        delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ];
+
+  /// A list of this localizations delegate's supported locales.
+  static const List<Locale> supportedLocales = <Locale>[
+    Locale('de'),
+    Locale('en'),
+    Locale('es'),
+    Locale('it'),
+    Locale('ja'),
+    Locale('pt'),
+    Locale('zh'),
+  ];
+
+  /// No description provided for @common_cancel.
+  ///
+  /// In pt, this message translates to:
+  /// **'Cancelar'**
+  String get common_cancel;
+
+  /// No description provided for @common_back.
+  ///
+  /// In pt, this message translates to:
+  /// **'Voltar'**
+  String get common_back;
+
+  /// No description provided for @common_close.
+  ///
+  /// In pt, this message translates to:
+  /// **'Fechar'**
+  String get common_close;
+
+  /// No description provided for @common_continue.
+  ///
+  /// In pt, this message translates to:
+  /// **'Continuar'**
+  String get common_continue;
+
+  /// No description provided for @common_confirm.
+  ///
+  /// In pt, this message translates to:
+  /// **'Confirmar'**
+  String get common_confirm;
+
+  /// No description provided for @common_retry.
+  ///
+  /// In pt, this message translates to:
+  /// **'Tentar novamente'**
+  String get common_retry;
+
+  /// No description provided for @common_loadMore.
+  ///
+  /// In pt, this message translates to:
+  /// **'Carregar mais'**
+  String get common_loadMore;
+
+  /// No description provided for @common_save.
+  ///
+  /// In pt, this message translates to:
+  /// **'Salvar'**
+  String get common_save;
+
+  /// No description provided for @common_delete.
+  ///
+  /// In pt, this message translates to:
+  /// **'Excluir'**
+  String get common_delete;
+
+  /// No description provided for @common_edit.
+  ///
+  /// In pt, this message translates to:
+  /// **'Editar'**
+  String get common_edit;
+
+  /// No description provided for @common_share.
+  ///
+  /// In pt, this message translates to:
+  /// **'Compartilhar'**
+  String get common_share;
+
+  /// No description provided for @common_loading.
+  ///
+  /// In pt, this message translates to:
+  /// **'Carregando…'**
+  String get common_loading;
+
+  /// No description provided for @common_empty.
+  ///
+  /// In pt, this message translates to:
+  /// **'Sem itens por aqui.'**
+  String get common_empty;
+
+  /// No description provided for @common_genericError.
+  ///
+  /// In pt, this message translates to:
+  /// **'Algo deu errado. Tente novamente em instantes.'**
+  String get common_genericError;
+
+  /// No description provided for @common_openInNew.
+  ///
+  /// In pt, this message translates to:
+  /// **'Abrir em nova guia'**
+  String get common_openInNew;
+
+  /// No description provided for @common_search.
+  ///
+  /// In pt, this message translates to:
+  /// **'Buscar'**
+  String get common_search;
+
+  /// No description provided for @common_semanticsClose.
+  ///
+  /// In pt, this message translates to:
+  /// **'Fechar'**
+  String get common_semanticsClose;
+
+  /// No description provided for @common_semanticsLoadingSpinner.
+  ///
+  /// In pt, this message translates to:
+  /// **'Carregando conteúdo'**
+  String get common_semanticsLoadingSpinner;
+
+  /// No description provided for @hero_eyebrow.
+  ///
+  /// In pt, this message translates to:
+  /// **'Disponível para freelas'**
+  String get hero_eyebrow;
+
+  /// No description provided for @hero_headline1.
+  ///
+  /// In pt, this message translates to:
+  /// **'Front end mobile com Flutter.'**
+  String get hero_headline1;
+
+  /// No description provided for @hero_headline2.
+  ///
+  /// In pt, this message translates to:
+  /// **'Do MVP ao app em produção.'**
+  String get hero_headline2;
+
+  /// No description provided for @hero_bio.
+  ///
+  /// In pt, this message translates to:
+  /// **'7+ anos construindo o front end de apps mobile (e web quando faz sentido) — atuando do varejo B2B a produto fintech em escala.'**
+  String get hero_bio;
+
+  /// No description provided for @hero_scrollHint.
+  ///
+  /// In pt, this message translates to:
+  /// **'role para continuar'**
+  String get hero_scrollHint;
+
+  /// No description provided for @hero_ctaWhatsapp.
+  ///
+  /// In pt, this message translates to:
+  /// **'Falar no WhatsApp'**
+  String get hero_ctaWhatsapp;
+
+  /// No description provided for @hero_ctaProjects.
+  ///
+  /// In pt, this message translates to:
+  /// **'Ver projetos'**
+  String get hero_ctaProjects;
+
+  /// No description provided for @hero_trustYearsValue.
+  ///
+  /// In pt, this message translates to:
+  /// **'7+'**
+  String get hero_trustYearsValue;
+
+  /// No description provided for @hero_trustYearsLabel.
+  ///
+  /// In pt, this message translates to:
+  /// **'anos de Flutter'**
+  String get hero_trustYearsLabel;
+
+  /// No description provided for @hero_trustDomainsValue.
+  ///
+  /// In pt, this message translates to:
+  /// **'5+'**
+  String get hero_trustDomainsValue;
+
+  /// No description provided for @hero_trustDomainsLabel.
+  ///
+  /// In pt, this message translates to:
+  /// **'domínios atuados'**
+  String get hero_trustDomainsLabel;
+
+  /// No description provided for @hero_trustPlatformsValue.
+  ///
+  /// In pt, this message translates to:
+  /// **'Mobile · Web'**
+  String get hero_trustPlatformsValue;
+
+  /// No description provided for @hero_trustPlatformsLabel.
+  ///
+  /// In pt, this message translates to:
+  /// **'plataformas-alvo'**
+  String get hero_trustPlatformsLabel;
+
+  /// No description provided for @hero_portraitSemantics.
+  ///
+  /// In pt, this message translates to:
+  /// **'Foto de Jose Guilherme Alves'**
+  String get hero_portraitSemantics;
+
+  /// No description provided for @about_eyebrow.
+  ///
+  /// In pt, this message translates to:
+  /// **'Sobre'**
+  String get about_eyebrow;
+
+  /// No description provided for @about_title.
+  ///
+  /// In pt, this message translates to:
+  /// **'Quem te'**
+  String get about_title;
+
+  /// No description provided for @about_titleAccent.
+  ///
+  /// In pt, this message translates to:
+  /// **'atende.'**
+  String get about_titleAccent;
+
+  /// No description provided for @about_subtitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Front end mobile com Flutter há 7+ anos. Foco em entregar app robusto, com escopo claro e expectativa alinhada desde o kickoff.'**
+  String get about_subtitle;
+
+  /// No description provided for @about_domainsMapLabel.
+  ///
+  /// In pt, this message translates to:
+  /// **'Mapa de domínios'**
+  String get about_domainsMapLabel;
+
+  /// No description provided for @about_domainsHint.
+  ///
+  /// In pt, this message translates to:
+  /// **'· toque um planeta'**
+  String get about_domainsHint;
+
+  /// No description provided for @about_deliveryTitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Como eu entrego'**
+  String get about_deliveryTitle;
+
+  /// No description provided for @about_bioName.
+  ///
+  /// In pt, this message translates to:
+  /// **'José Guilherme Alves'**
+  String get about_bioName;
+
+  /// No description provided for @about_bioTitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Front end mobile · Flutter Developer · Brasil'**
+  String get about_bioTitle;
+
+  /// No description provided for @about_bioParagraph.
+  ///
+  /// In pt, this message translates to:
+  /// **'A carreira começou em apps mobile de operação varejista — front end Flutter do design ao deploy, em time pequeno, durante 5 anos. Em seguida, atuação em times de produto em domínios maiores: setor público, plataforma interna, operação em campo e, atualmente, fintech em escala. Sempre no front end mobile, com Flutter web quando o produto demandou. Foco constante em arquitetura, performance e consistência de UX em devices reais.'**
+  String get about_bioParagraph;
+
+  /// No description provided for @delivery_entrega_eyebrow.
+  ///
+  /// In pt, this message translates to:
+  /// **'ENTREGA'**
+  String get delivery_entrega_eyebrow;
+
+  /// No description provided for @delivery_entrega_title.
+  ///
+  /// In pt, this message translates to:
+  /// **'Escopo claro,'**
+  String get delivery_entrega_title;
+
+  /// No description provided for @delivery_entrega_titleAccent.
+  ///
+  /// In pt, this message translates to:
+  /// **'expectativa alinhada.'**
+  String get delivery_entrega_titleAccent;
+
+  /// No description provided for @delivery_entrega_body.
+  ///
+  /// In pt, this message translates to:
+  /// **'Cada projeto começa pelo recorte: o que entra, o que fica de fora, e como cada decisão amarra um critério de aceite. Sem isso, sprint vira corrida de prazo. Trabalho com PO e design desde o kickoff pra que o backlog reflita o que vai pra produção — não o que parece bonito no protótipo.'**
+  String get delivery_entrega_body;
+
+  /// No description provided for @delivery_craft_eyebrow.
+  ///
+  /// In pt, this message translates to:
+  /// **'CRAFT'**
+  String get delivery_craft_eyebrow;
+
+  /// No description provided for @delivery_craft_title.
+  ///
+  /// In pt, this message translates to:
+  /// **'Arquitetura e'**
+  String get delivery_craft_title;
+
+  /// No description provided for @delivery_craft_titleAccent.
+  ///
+  /// In pt, this message translates to:
+  /// **'performance reais.'**
+  String get delivery_craft_titleAccent;
+
+  /// No description provided for @delivery_craft_body.
+  ///
+  /// In pt, this message translates to:
+  /// **'Clean Architecture por feature, Bloc/Cubit pra estado, CustomPainter quando vetor é mais barato que asset. Mede tempo de frame em device real (não emulador), perfila build time, audita rebuilds. Stack de produção sustenta evolução — não emperra dois meses depois do MVP.'**
+  String get delivery_craft_body;
+
+  /// No description provided for @delivery_collab_eyebrow.
+  ///
+  /// In pt, this message translates to:
+  /// **'COLABORAÇÃO'**
+  String get delivery_collab_eyebrow;
+
+  /// No description provided for @delivery_collab_title.
+  ///
+  /// In pt, this message translates to:
+  /// **'No time de produto'**
+  String get delivery_collab_title;
+
+  /// No description provided for @delivery_collab_titleAccent.
+  ///
+  /// In pt, this message translates to:
+  /// **'ou no Flutter inteiro.'**
+  String get delivery_collab_titleAccent;
+
+  /// No description provided for @delivery_collab_body.
+  ///
+  /// In pt, this message translates to:
+  /// **'Em time grande entro como front end mobile com escopo de feature ou stewardship arquitetural. Em time pequeno (varejo B2B, 5 anos) cuidei do Flutter inteiro — do design ao deploy, integrando APIs já existentes e ajudando a moldar contratos novos quando o caminho era esse. Ajusto-me ao tamanho do time, não ao contrário.'**
+  String get delivery_collab_body;
+
+  /// No description provided for @domain_fintech_label.
+  ///
+  /// In pt, this message translates to:
+  /// **'Fintech'**
+  String get domain_fintech_label;
+
+  /// No description provided for @domain_fintech_blurb.
+  ///
+  /// In pt, this message translates to:
+  /// **'Apps de crédito mobile em escala — base ativa de milhões de usuários.'**
+  String get domain_fintech_blurb;
+
+  /// No description provided for @domain_publicServices_label.
+  ///
+  /// In pt, this message translates to:
+  /// **'Setor público'**
+  String get domain_publicServices_label;
+
+  /// No description provided for @domain_publicServices_blurb.
+  ///
+  /// In pt, this message translates to:
+  /// **'Serviços digitais ao cidadão com integração a identidade governamental.'**
+  String get domain_publicServices_blurb;
+
+  /// No description provided for @domain_sanitation_label.
+  ///
+  /// In pt, this message translates to:
+  /// **'Operação em campo'**
+  String get domain_sanitation_label;
+
+  /// No description provided for @domain_sanitation_blurb.
+  ///
+  /// In pt, this message translates to:
+  /// **'Apps de coleta e inspeção em devices industriais com sincronização offline-first.'**
+  String get domain_sanitation_blurb;
+
+  /// No description provided for @domain_platform_label.
+  ///
+  /// In pt, this message translates to:
+  /// **'Plataforma interna'**
+  String get domain_platform_label;
+
+  /// No description provided for @domain_platform_blurb.
+  ///
+  /// In pt, this message translates to:
+  /// **'Ferramentas internas pra gestão de equipes e operação corporativa em larga escala.'**
+  String get domain_platform_blurb;
+
+  /// No description provided for @domain_retail_label.
+  ///
+  /// In pt, this message translates to:
+  /// **'Varejo B2B'**
+  String get domain_retail_label;
+
+  /// No description provided for @domain_retail_blurb.
+  ///
+  /// In pt, this message translates to:
+  /// **'Apps mobile de operação de loja, controle de estoque, inventário e pedidos. Front end Flutter inteiro, em time pequeno, ao longo de 5 anos.'**
+  String get domain_retail_blurb;
+
+  /// No description provided for @services_eyebrow.
+  ///
+  /// In pt, this message translates to:
+  /// **'Serviços'**
+  String get services_eyebrow;
+
+  /// No description provided for @services_title.
+  ///
+  /// In pt, this message translates to:
+  /// **'Front end mobile.'**
+  String get services_title;
+
+  /// No description provided for @services_titleAccent.
+  ///
+  /// In pt, this message translates to:
+  /// **'Do brief ao deploy.'**
+  String get services_titleAccent;
+
+  /// No description provided for @services_subtitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Apps mobile com Flutter, versão web/PWA quando aplicável, integração com APIs existentes e consultoria de arquitetura. Backend e infra permanecem com o time do cliente.'**
+  String get services_subtitle;
+
+  /// No description provided for @services_mobile_title.
+  ///
+  /// In pt, this message translates to:
+  /// **'Front end mobile'**
+  String get services_mobile_title;
+
+  /// No description provided for @services_mobile_description.
+  ///
+  /// In pt, this message translates to:
+  /// **'Android nativo via Flutter — performance e consistência de UX em devices reais.'**
+  String get services_mobile_description;
+
+  /// No description provided for @services_web_title.
+  ///
+  /// In pt, this message translates to:
+  /// **'Web Apps & PWA'**
+  String get services_web_title;
+
+  /// No description provided for @services_web_description.
+  ///
+  /// In pt, this message translates to:
+  /// **'O mesmo código Flutter como app web — instalável como PWA, rápido e responsivo.'**
+  String get services_web_description;
+
+  /// No description provided for @services_integrations_title.
+  ///
+  /// In pt, this message translates to:
+  /// **'Integração com APIs'**
+  String get services_integrations_title;
+
+  /// No description provided for @services_integrations_description.
+  ///
+  /// In pt, this message translates to:
+  /// **'REST, OAuth, Bluetooth e NFC — integro o app mobile a APIs e periféricos já existentes.'**
+  String get services_integrations_description;
+
+  /// No description provided for @services_maintenance_title.
+  ///
+  /// In pt, this message translates to:
+  /// **'Manutenção e evolução'**
+  String get services_maintenance_title;
+
+  /// No description provided for @services_maintenance_description.
+  ///
+  /// In pt, this message translates to:
+  /// **'Refator, estabilização e novas features no front end de apps já em produção.'**
+  String get services_maintenance_description;
+
+  /// No description provided for @services_consulting_title.
+  ///
+  /// In pt, this message translates to:
+  /// **'Consultoria mobile'**
+  String get services_consulting_title;
+
+  /// No description provided for @services_consulting_description.
+  ///
+  /// In pt, this message translates to:
+  /// **'Arquitetura, code review e definição de stack — apoio técnico antes da feature virar débito.'**
+  String get services_consulting_description;
+
+  /// No description provided for @contact_eyebrow.
+  ///
+  /// In pt, this message translates to:
+  /// **'Contato'**
+  String get contact_eyebrow;
+
+  /// No description provided for @contact_title.
+  ///
+  /// In pt, this message translates to:
+  /// **'Vamos'**
+  String get contact_title;
+
+  /// No description provided for @contact_titleAccent.
+  ///
+  /// In pt, this message translates to:
+  /// **'conversar?'**
+  String get contact_titleAccent;
+
+  /// No description provided for @contact_subtitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Manda uma mensagem por aqui ou direto pelos canais abaixo. Respondo rápido durante a semana.'**
+  String get contact_subtitle;
+
+  /// No description provided for @contact_ctaWhatsapp.
+  ///
+  /// In pt, this message translates to:
+  /// **'WhatsApp direto'**
+  String get contact_ctaWhatsapp;
+
+  /// No description provided for @contact_ctaEmail.
+  ///
+  /// In pt, this message translates to:
+  /// **'Email'**
+  String get contact_ctaEmail;
+
+  /// No description provided for @contact_ctaLinkedin.
+  ///
+  /// In pt, this message translates to:
+  /// **'LinkedIn'**
+  String get contact_ctaLinkedin;
+
+  /// No description provided for @contact_ctaGithub.
+  ///
+  /// In pt, this message translates to:
+  /// **'GitHub'**
+  String get contact_ctaGithub;
+
+  /// No description provided for @contact_orDirect.
+  ///
+  /// In pt, this message translates to:
+  /// **'Ou direto:'**
+  String get contact_orDirect;
+
+  /// No description provided for @contact_formName.
+  ///
+  /// In pt, this message translates to:
+  /// **'Nome'**
+  String get contact_formName;
+
+  /// No description provided for @contact_formEmail.
+  ///
+  /// In pt, this message translates to:
+  /// **'Email'**
+  String get contact_formEmail;
+
+  /// No description provided for @contact_formProjectType.
+  ///
+  /// In pt, this message translates to:
+  /// **'Tipo de projeto'**
+  String get contact_formProjectType;
+
+  /// No description provided for @contact_formMessage.
+  ///
+  /// In pt, this message translates to:
+  /// **'Mensagem'**
+  String get contact_formMessage;
+
+  /// No description provided for @contact_formSubmit.
+  ///
+  /// In pt, this message translates to:
+  /// **'Enviar pelo WhatsApp'**
+  String get contact_formSubmit;
+
+  /// No description provided for @contact_formSubmitting.
+  ///
+  /// In pt, this message translates to:
+  /// **'Enviando...'**
+  String get contact_formSubmitting;
+
+  /// No description provided for @contact_projectNewApp.
+  ///
+  /// In pt, this message translates to:
+  /// **'App novo (do zero ao MVP)'**
+  String get contact_projectNewApp;
+
+  /// No description provided for @contact_projectExisting.
+  ///
+  /// In pt, this message translates to:
+  /// **'Evoluir um app existente'**
+  String get contact_projectExisting;
+
+  /// No description provided for @contact_projectConsulting.
+  ///
+  /// In pt, this message translates to:
+  /// **'Consultoria técnica / arquitetura'**
+  String get contact_projectConsulting;
+
+  /// No description provided for @contact_projectOther.
+  ///
+  /// In pt, this message translates to:
+  /// **'Outro'**
+  String get contact_projectOther;
+
+  /// No description provided for @nav_showcase.
+  ///
+  /// In pt, this message translates to:
+  /// **'Showcase'**
+  String get nav_showcase;
+
+  /// No description provided for @nav_about.
+  ///
+  /// In pt, this message translates to:
+  /// **'Sobre'**
+  String get nav_about;
+
+  /// No description provided for @nav_engineering.
+  ///
+  /// In pt, this message translates to:
+  /// **'Engenharia'**
+  String get nav_engineering;
+
+  /// No description provided for @nav_caseStudy.
+  ///
+  /// In pt, this message translates to:
+  /// **'Estudo'**
+  String get nav_caseStudy;
+
+  /// No description provided for @nav_contact.
+  ///
+  /// In pt, this message translates to:
+  /// **'Contato'**
+  String get nav_contact;
+
+  /// No description provided for @nav_backToTop.
+  ///
+  /// In pt, this message translates to:
+  /// **'Voltar ao topo'**
+  String get nav_backToTop;
+
+  /// No description provided for @nav_ctaContact.
+  ///
+  /// In pt, this message translates to:
+  /// **'Contato'**
+  String get nav_ctaContact;
+
+  /// No description provided for @footer_madeWith.
+  ///
+  /// In pt, this message translates to:
+  /// **'Feito em Flutter'**
+  String get footer_madeWith;
+
+  /// No description provided for @engineering_eyebrow.
+  ///
+  /// In pt, this message translates to:
+  /// **'Engenharia e serviços'**
+  String get engineering_eyebrow;
+
+  /// No description provided for @engineering_title.
+  ///
+  /// In pt, this message translates to:
+  /// **'A stack que sustenta'**
+  String get engineering_title;
+
+  /// No description provided for @engineering_titleAccent.
+  ///
+  /// In pt, this message translates to:
+  /// **'cada decisão do projeto.'**
+  String get engineering_titleAccent;
+
+  /// No description provided for @engineering_subtitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Tecnologias que domino e aplico em produção. Toque em qualquer tile para saber mais.'**
+  String get engineering_subtitle;
+
+  /// No description provided for @engineering_githubButton.
+  ///
+  /// In pt, this message translates to:
+  /// **'Ver repositório no GitHub'**
+  String get engineering_githubButton;
+
+  /// No description provided for @caseStudy_eyebrow.
+  ///
+  /// In pt, this message translates to:
+  /// **'Case study'**
+  String get caseStudy_eyebrow;
+
+  /// No description provided for @caseStudy_title.
+  ///
+  /// In pt, this message translates to:
+  /// **'Pulso reescrito —'**
+  String get caseStudy_title;
+
+  /// No description provided for @caseStudy_titleAccent.
+  ///
+  /// In pt, this message translates to:
+  /// **'dark Whoop, do zero.'**
+  String get caseStudy_titleAccent;
+
+  /// No description provided for @caseStudy_subtitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'O mock de fitness começou cream/laranja, padrão Strava. Foi pivotado pra dark recovery-first inspirado no Whoop após uma sessão de revisão crítica do scroll de fechamento. Aqui ficam as decisões que sustentam o novo Pulso.'**
+  String get caseStudy_subtitle;
+
+  /// No description provided for @caseStudy_pivotEyebrow.
+  ///
+  /// In pt, this message translates to:
+  /// **'O PIVOT'**
+  String get caseStudy_pivotEyebrow;
+
+  /// No description provided for @caseStudy_pivotTitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Do logger leve ao dashboard de leitura.'**
+  String get caseStudy_pivotTitle;
+
+  /// No description provided for @caseStudy_pivotPara1.
+  ///
+  /// In pt, this message translates to:
+  /// **'A primeira versão do Pulso era um tracker comum: aba Hoje, aba Semana, aba Progresso. Tudo funcionava — set dots, rings, volume — mas a experiência se resumia a \"ver números\". Três em cada quatro telas eram somente leitura.'**
+  String get caseStudy_pivotPara1;
+
+  /// No description provided for @caseStudy_pivotPara2.
+  ///
+  /// In pt, this message translates to:
+  /// **'A reescrita inverteu o foco: recovery primeiro, logger depois. Mesociclo de 8 semanas com progressão linear + deload na última. Cada set logado avança um strain accumulator que reage em tempo real. A paleta cream/laranja cedeu lugar ao verde recovery #00D982 e cyan strain #5AC8FA sobre superfície quase preta — referência explícita ao Whoop, sem fingir originalidade.'**
+  String get caseStudy_pivotPara2;
+
+  /// No description provided for @caseStudy_pivotPara3.
+  ///
+  /// In pt, this message translates to:
+  /// **'O domínio cresceu: Program, ProgramWeek, SessionTemplate, PlannedExercise, SetEntry, LoggedSession, RecoverySnapshot, StrainScore, MuscleRecovery, SleepWindow. Tudo plain Dart com Equatable — sem freezed, sem codegen — pra manter o workspace sem build_runner.'**
+  String get caseStudy_pivotPara3;
+
+  /// No description provided for @caseStudy_recoveryLabel.
+  ///
+  /// In pt, this message translates to:
+  /// **'PULSO · HOJE'**
+  String get caseStudy_recoveryLabel;
+
+  /// No description provided for @caseStudy_recoveryHint.
+  ///
+  /// In pt, this message translates to:
+  /// **'Tudo verde. Use a janela pra trabalho intenso\nno padrão do mesociclo.'**
+  String get caseStudy_recoveryHint;
+
+  /// No description provided for @caseStudy_painterStrainTitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Strain dial'**
+  String get caseStudy_painterStrainTitle;
+
+  /// No description provided for @caseStudy_painterStrainCaption.
+  ///
+  /// In pt, this message translates to:
+  /// **'Escala 0–21 logarítmica do Whoop. Arco com gradient azul → magenta. Numeral monospace centralizado pra leitura tipo equipamento.'**
+  String get caseStudy_painterStrainCaption;
+
+  /// No description provided for @caseStudy_painterTempoTitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Tempo bars'**
+  String get caseStudy_painterTempoTitle;
+
+  /// No description provided for @caseStudy_painterTempoCaption.
+  ///
+  /// In pt, this message translates to:
+  /// **'4 fases — eccentric / pausa / concentric / pausa — com cursor luminoso percorrendo em loop. Roda em AnimationController passado direto pro CustomPainter via super(repaint:).'**
+  String get caseStudy_painterTempoCaption;
+
+  /// No description provided for @caseStudy_painterPeriodTitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Periodization grid'**
+  String get caseStudy_painterPeriodTitle;
+
+  /// No description provided for @caseStudy_painterPeriodCaption.
+  ///
+  /// In pt, this message translates to:
+  /// **'Mesociclo de 8 semanas × 7 dias. Heat por intensidade prescrita, borda na semana atual, deload colorido distinto. Tap em qualquer célula expõe a sessão.'**
+  String get caseStudy_painterPeriodCaption;
+
+  /// No description provided for @caseStudy_decisionArchEyebrow.
+  ///
+  /// In pt, this message translates to:
+  /// **'ARQUITETURA'**
+  String get caseStudy_decisionArchEyebrow;
+
+  /// No description provided for @caseStudy_decisionArchTitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Clean Arch por mock, não por pacote'**
+  String get caseStudy_decisionArchTitle;
+
+  /// No description provided for @caseStudy_decisionArchBody.
+  ///
+  /// In pt, this message translates to:
+  /// **'Cada mock do showcase (Pulso, Garoa, Aurora, Vitral, Solar) tem seu próprio triângulo data / domain / presentation dentro de lib/src/<mock>/. Mocks não se importam entre si — só de shared/. Quando um mock cresce em entidades, tudo cabe dentro do triângulo dele.'**
+  String get caseStudy_decisionArchBody;
+
+  /// No description provided for @caseStudy_decisionPaintersEyebrow.
+  ///
+  /// In pt, this message translates to:
+  /// **'PAINTERS'**
+  String get caseStudy_decisionPaintersEyebrow;
+
+  /// No description provided for @caseStudy_decisionPaintersTitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'super(repaint:) e shouldRepaint estrito'**
+  String get caseStudy_decisionPaintersTitle;
+
+  /// No description provided for @caseStudy_decisionPaintersBody.
+  ///
+  /// In pt, this message translates to:
+  /// **'Painters animados recebem o AnimationController direto no super(repaint:) — o engine pula build/layout e vai pra paint imediatamente. shouldRepaint compara campo a campo. Sem alocação no hot loop: Paint, Path e TextPainter cacheados como fields static do painter.'**
+  String get caseStudy_decisionPaintersBody;
+
+  /// No description provided for @caseStudy_decisionStateEyebrow.
+  ///
+  /// In pt, this message translates to:
+  /// **'STATE'**
+  String get caseStudy_decisionStateEyebrow;
+
+  /// No description provided for @caseStudy_decisionStateTitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Bloc rico, set-a-set com RPE'**
+  String get caseStudy_decisionStateTitle;
+
+  /// No description provided for @caseStudy_decisionStateBody.
+  ///
+  /// In pt, this message translates to:
+  /// **'O estado antigo (mapa completedSets[weekday|exerciseId]) foi substituído por LoggedSession com SetEntry tipado: weight, reps, RPE, completed, notes. SetLogged move o strain accumulator em tempo real — set virando complete avança, virando incompleto recua. Sem freezed; Equatable dá o == que precisamos.'**
+  String get caseStudy_decisionStateBody;
+
+  /// No description provided for @caseStudy_takeawayEyebrow.
+  ///
+  /// In pt, this message translates to:
+  /// **'TAKEAWAY'**
+  String get caseStudy_takeawayEyebrow;
+
+  /// No description provided for @caseStudy_takeawayTitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Mocks do showcase não são demo de paleta — são prova de que o código aguenta uma virada de produto sem virar gambiarra.'**
+  String get caseStudy_takeawayTitle;
+
+  /// No description provided for @caseStudy_takeawayBody.
+  ///
+  /// In pt, this message translates to:
+  /// **'O pivot do Pulso trocou ~5K LOC de UI mantendo a hierarquia core → design_system → animations → feature_*, sem dep nova, sem regressão no resto do scroll. Os painters reusam tudo que já existia na própria sub-feature. O código que você vê aqui em cima está rodando exatamente como na sessão do Pulso — não tem espelho, não tem foto.'**
+  String get caseStudy_takeawayBody;
+
+  /// No description provided for @showcase_eyebrow.
+  ///
+  /// In pt, this message translates to:
+  /// **'Showcase'**
+  String get showcase_eyebrow;
+
+  /// No description provided for @showcase_title.
+  ///
+  /// In pt, this message translates to:
+  /// **'Cinco nichos,'**
+  String get showcase_title;
+
+  /// No description provided for @showcase_titleAccent.
+  ///
+  /// In pt, this message translates to:
+  /// **'cinco protótipos.'**
+  String get showcase_titleAccent;
+
+  /// No description provided for @showcase_subtitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Mocks funcionais por nicho — delivery, agendamento, fitness, imobiliária e investimentos. Toque num card pra abrir. Sem backend de verdade; demonstram o tipo de produto que consigo entregar.'**
+  String get showcase_subtitle;
+
+  /// No description provided for @showcase_financeLabel.
+  ///
+  /// In pt, this message translates to:
+  /// **'Investimentos'**
+  String get showcase_financeLabel;
+
+  /// No description provided for @showcase_financeDescription.
+  ///
+  /// In pt, this message translates to:
+  /// **'Mira — watchlist, candlestick interativo com crosshair, envio de ordem e portfolio com donut de alocação.'**
+  String get showcase_financeDescription;
+
+  /// No description provided for @showcase_deliveryLabel.
+  ///
+  /// In pt, this message translates to:
+  /// **'Delivery'**
+  String get showcase_deliveryLabel;
+
+  /// No description provided for @showcase_deliveryDescription.
+  ///
+  /// In pt, this message translates to:
+  /// **'Aurora — marketplace de hortifruti com mapa animado, timeline do pedido e histórico.'**
+  String get showcase_deliveryDescription;
+
+  /// No description provided for @showcase_schedulingLabel.
+  ///
+  /// In pt, this message translates to:
+  /// **'Agendamento'**
+  String get showcase_schedulingLabel;
+
+  /// No description provided for @showcase_schedulingDescription.
+  ///
+  /// In pt, this message translates to:
+  /// **'Vitral — estúdio de serviços com calendário interativo, relógio animado e confirmação com badge.'**
+  String get showcase_schedulingDescription;
+
+  /// No description provided for @showcase_fitnessLabel.
+  ///
+  /// In pt, this message translates to:
+  /// **'Fitness'**
+  String get showcase_fitnessLabel;
+
+  /// No description provided for @showcase_fitnessDescription.
+  ///
+  /// In pt, this message translates to:
+  /// **'Pulso — recovery dashboard, logger set-a-set com RPE e periodização de 8 semanas.'**
+  String get showcase_fitnessDescription;
+
+  /// No description provided for @showcase_realestateLabel.
+  ///
+  /// In pt, this message translates to:
+  /// **'Imobiliária'**
+  String get showcase_realestateLabel;
+
+  /// No description provided for @showcase_realestateDescription.
+  ///
+  /// In pt, this message translates to:
+  /// **'Listagem de imóveis com filtros por bairro, faixa de preço e número de quartos.'**
+  String get showcase_realestateDescription;
+
+  /// No description provided for @pulso_eyebrowTodayWorkout.
+  ///
+  /// In pt, this message translates to:
+  /// **'TREINO DE HOJE'**
+  String get pulso_eyebrowTodayWorkout;
+
+  /// No description provided for @pulso_eyebrowProgram.
+  ///
+  /// In pt, this message translates to:
+  /// **'PROGRAMA'**
+  String get pulso_eyebrowProgram;
+
+  /// No description provided for @pulso_eyebrowRecovery.
+  ///
+  /// In pt, this message translates to:
+  /// **'RECOVERY'**
+  String get pulso_eyebrowRecovery;
+
+  /// No description provided for @pulso_eyebrowContributors.
+  ///
+  /// In pt, this message translates to:
+  /// **'CONTRIBUINTES'**
+  String get pulso_eyebrowContributors;
+
+  /// No description provided for @pulso_eyebrowSleep.
+  ///
+  /// In pt, this message translates to:
+  /// **'SONO'**
+  String get pulso_eyebrowSleep;
+
+  /// No description provided for @pulso_eyebrowMuscleHeatmap.
+  ///
+  /// In pt, this message translates to:
+  /// **'HEATMAP MUSCULAR'**
+  String get pulso_eyebrowMuscleHeatmap;
+
+  /// No description provided for @pulso_eyebrowStrainHistory.
+  ///
+  /// In pt, this message translates to:
+  /// **'STRAIN · 7 DIAS'**
+  String get pulso_eyebrowStrainHistory;
+
+  /// No description provided for @pulso_eyebrowPrescribedLoad.
+  ///
+  /// In pt, this message translates to:
+  /// **'CARGA PRESCRITA'**
+  String get pulso_eyebrowPrescribedLoad;
+
+  /// No description provided for @pulso_eyebrowExecutionTempo.
+  ///
+  /// In pt, this message translates to:
+  /// **'TEMPO DE EXECUÇÃO'**
+  String get pulso_eyebrowExecutionTempo;
+
+  /// No description provided for @pulso_eyebrowLoadHistory.
+  ///
+  /// In pt, this message translates to:
+  /// **'HISTÓRICO DE CARGA'**
+  String get pulso_eyebrowLoadHistory;
+
+  /// No description provided for @pulso_eyebrowTakeaway.
+  ///
+  /// In pt, this message translates to:
+  /// **'TAKEAWAY'**
+  String get pulso_eyebrowTakeaway;
+
+  /// No description provided for @pulso_labelStrain.
+  ///
+  /// In pt, this message translates to:
+  /// **'STRAIN'**
+  String get pulso_labelStrain;
+
+  /// No description provided for @pulso_labelStrainTarget.
+  ///
+  /// In pt, this message translates to:
+  /// **'STRAIN ALVO'**
+  String get pulso_labelStrainTarget;
+
+  /// No description provided for @pulso_labelHrv.
+  ///
+  /// In pt, this message translates to:
+  /// **'HRV'**
+  String get pulso_labelHrv;
+
+  /// No description provided for @pulso_labelRhr.
+  ///
+  /// In pt, this message translates to:
+  /// **'RHR'**
+  String get pulso_labelRhr;
+
+  /// No description provided for @pulso_labelSleep.
+  ///
+  /// In pt, this message translates to:
+  /// **'SONO'**
+  String get pulso_labelSleep;
+
+  /// No description provided for @pulso_labelWeek.
+  ///
+  /// In pt, this message translates to:
+  /// **'SEMANA'**
+  String get pulso_labelWeek;
+
+  /// No description provided for @pulso_labelFocus.
+  ///
+  /// In pt, this message translates to:
+  /// **'FOCO'**
+  String get pulso_labelFocus;
+
+  /// No description provided for @pulso_labelIntensity.
+  ///
+  /// In pt, this message translates to:
+  /// **'INTENSIDADE'**
+  String get pulso_labelIntensity;
+
+  /// No description provided for @pulso_labelSets.
+  ///
+  /// In pt, this message translates to:
+  /// **'SETS'**
+  String get pulso_labelSets;
+
+  /// No description provided for @pulso_labelVolume.
+  ///
+  /// In pt, this message translates to:
+  /// **'VOLUME'**
+  String get pulso_labelVolume;
+
+  /// No description provided for @pulso_ctaStartWorkout.
+  ///
+  /// In pt, this message translates to:
+  /// **'Iniciar treino'**
+  String get pulso_ctaStartWorkout;
+
+  /// No description provided for @pulso_ctaFinish.
+  ///
+  /// In pt, this message translates to:
+  /// **'Finalizar'**
+  String get pulso_ctaFinish;
+
+  /// No description provided for @pulso_ctaSwapExercise.
+  ///
+  /// In pt, this message translates to:
+  /// **'Trocar exercício'**
+  String get pulso_ctaSwapExercise;
+
+  /// No description provided for @pulso_restDayTitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Dia de descanso'**
+  String get pulso_restDayTitle;
+
+  /// No description provided for @pulso_restDayBody.
+  ///
+  /// In pt, this message translates to:
+  /// **'Use o dia pra mobilidade leve e sono prolongado.'**
+  String get pulso_restDayBody;
+
+  /// No description provided for @pulso_errorSessionNotStarted.
+  ///
+  /// In pt, this message translates to:
+  /// **'Sessão não iniciada.'**
+  String get pulso_errorSessionNotStarted;
+
+  /// No description provided for @pulso_errorExerciseNotFound.
+  ///
+  /// In pt, this message translates to:
+  /// **'Exercício não encontrado.'**
+  String get pulso_errorExerciseNotFound;
+
+  /// No description provided for @pulso_snackbarSessionFinished.
+  ///
+  /// In pt, this message translates to:
+  /// **'Sessão finalizada. Strain registrado.'**
+  String get pulso_snackbarSessionFinished;
+
+  /// No description provided for @pulso_recoveryAdviceLow.
+  ///
+  /// In pt, this message translates to:
+  /// **'Corpo pede pausa. Aceite o stiff hoje, pegue intensidade amanhã.'**
+  String get pulso_recoveryAdviceLow;
+
+  /// No description provided for @pulso_recoveryAdviceMedium.
+  ///
+  /// In pt, this message translates to:
+  /// **'Banda média. Mantenha o volume planejado, sem buscar PR.'**
+  String get pulso_recoveryAdviceMedium;
+
+  /// No description provided for @pulso_recoveryAdviceHigh.
+  ///
+  /// In pt, this message translates to:
+  /// **'Tudo verde. Use a janela pra trabalho intenso no padrão do mesociclo.'**
+  String get pulso_recoveryAdviceHigh;
+
+  /// No description provided for @pulso_muscleAdviceLow.
+  ///
+  /// In pt, this message translates to:
+  /// **'Cadeia trashada. Foque em alongamento e hidratação.'**
+  String get pulso_muscleAdviceLow;
+
+  /// No description provided for @pulso_muscleAdviceMedium.
+  ///
+  /// In pt, this message translates to:
+  /// **'Banda média. Mantenha o trabalho na zona prescrita.'**
+  String get pulso_muscleAdviceMedium;
+
+  /// No description provided for @pulso_muscleAdviceHigh.
+  ///
+  /// In pt, this message translates to:
+  /// **'Boa janela. Use pra carga pesada se o plano pedir.'**
+  String get pulso_muscleAdviceHigh;
+
+  /// No description provided for @pulso_weekdayMon.
+  ///
+  /// In pt, this message translates to:
+  /// **'Segunda'**
+  String get pulso_weekdayMon;
+
+  /// No description provided for @pulso_weekdayTue.
+  ///
+  /// In pt, this message translates to:
+  /// **'Terça'**
+  String get pulso_weekdayTue;
+
+  /// No description provided for @pulso_weekdayWed.
+  ///
+  /// In pt, this message translates to:
+  /// **'Quarta'**
+  String get pulso_weekdayWed;
+
+  /// No description provided for @pulso_weekdayThu.
+  ///
+  /// In pt, this message translates to:
+  /// **'Quinta'**
+  String get pulso_weekdayThu;
+
+  /// No description provided for @pulso_weekdayFri.
+  ///
+  /// In pt, this message translates to:
+  /// **'Sexta'**
+  String get pulso_weekdayFri;
+
+  /// No description provided for @pulso_weekdaySat.
+  ///
+  /// In pt, this message translates to:
+  /// **'Sábado'**
+  String get pulso_weekdaySat;
+
+  /// No description provided for @pulso_weekdaySun.
+  ///
+  /// In pt, this message translates to:
+  /// **'Domingo'**
+  String get pulso_weekdaySun;
+
+  /// No description provided for @pulso_programSelectDay.
+  ///
+  /// In pt, this message translates to:
+  /// **'Selecione um dia'**
+  String get pulso_programSelectDay;
+
+  /// No description provided for @pulso_programTouchHint.
+  ///
+  /// In pt, this message translates to:
+  /// **'Toque uma célula do grid pra previsualizar a sessão.'**
+  String get pulso_programTouchHint;
+
+  /// No description provided for @pulso_recoveryHeaderTitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Como o corpo respondeu ontem.'**
+  String get pulso_recoveryHeaderTitle;
+
+  /// No description provided for @pulso_recoveryTodayLabel.
+  ///
+  /// In pt, this message translates to:
+  /// **'HOJE'**
+  String get pulso_recoveryTodayLabel;
+
+  /// No description provided for @pulso_recoveryRhrLabel.
+  ///
+  /// In pt, this message translates to:
+  /// **'Freq. cardíaca em repouso'**
+  String get pulso_recoveryRhrLabel;
+
+  /// No description provided for @pulso_recoveryRespiratoryLabel.
+  ///
+  /// In pt, this message translates to:
+  /// **'Respiratória'**
+  String get pulso_recoveryRespiratoryLabel;
+
+  /// No description provided for @pulso_sleepEfficiencySuffix.
+  ///
+  /// In pt, this message translates to:
+  /// **'% eficiência'**
+  String get pulso_sleepEfficiencySuffix;
+
+  /// No description provided for @pulso_sleepDeepLabel.
+  ///
+  /// In pt, this message translates to:
+  /// **'Profundo'**
+  String get pulso_sleepDeepLabel;
+
+  /// No description provided for @pulso_sleepRemLabel.
+  ///
+  /// In pt, this message translates to:
+  /// **'REM'**
+  String get pulso_sleepRemLabel;
+
+  /// No description provided for @pulso_sleepLightLabel.
+  ///
+  /// In pt, this message translates to:
+  /// **'Leve'**
+  String get pulso_sleepLightLabel;
+
+  /// No description provided for @pulso_muscleHeatmapGeneralLabel.
+  ///
+  /// In pt, this message translates to:
+  /// **'Geral'**
+  String get pulso_muscleHeatmapGeneralLabel;
+
+  /// No description provided for @pulso_exerciseDetailTitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Exercício'**
+  String get pulso_exerciseDetailTitle;
+
+  /// No description provided for @pulso_exerciseSwapTooltip.
+  ///
+  /// In pt, this message translates to:
+  /// **'Trocar'**
+  String get pulso_exerciseSwapTooltip;
+
+  /// No description provided for @pulso_sessionWeekSubtitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Semana {week} · {label}'**
+  String pulso_sessionWeekSubtitle(int week, String label);
+
+  /// No description provided for @pulso_swapExerciseTitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Trocar exercício'**
+  String get pulso_swapExerciseTitle;
+
+  /// No description provided for @pulso_swapExerciseSubtitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Alternativas que ativam a mesma cadeia muscular.'**
+  String get pulso_swapExerciseSubtitle;
+
+  /// No description provided for @pulso_swapExerciseEmpty.
+  ///
+  /// In pt, this message translates to:
+  /// **'Sem alternativas catalogadas pra este exercício.'**
+  String get pulso_swapExerciseEmpty;
+
+  /// No description provided for @aurora_closeDemoTooltip.
+  ///
+  /// In pt, this message translates to:
+  /// **'Fechar demo'**
+  String get aurora_closeDemoTooltip;
+
+  /// No description provided for @aurora_resetDemoTooltip.
+  ///
+  /// In pt, this message translates to:
+  /// **'Reiniciar demo'**
+  String get aurora_resetDemoTooltip;
+
+  /// No description provided for @aurora_historyTooltip.
+  ///
+  /// In pt, this message translates to:
+  /// **'Histórico de pedidos'**
+  String get aurora_historyTooltip;
+
+  /// No description provided for @aurora_categoriesEyebrow.
+  ///
+  /// In pt, this message translates to:
+  /// **'Categorias'**
+  String get aurora_categoriesEyebrow;
+
+  /// No description provided for @aurora_categoriesTitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'O que vai pro caixote'**
+  String get aurora_categoriesTitle;
+
+  /// No description provided for @aurora_vendorsEyebrow.
+  ///
+  /// In pt, this message translates to:
+  /// **'Bancas em destaque'**
+  String get aurora_vendorsEyebrow;
+
+  /// No description provided for @aurora_vendorsTitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Quem entrega hoje'**
+  String get aurora_vendorsTitle;
+
+  /// No description provided for @aurora_heroTag.
+  ///
+  /// In pt, this message translates to:
+  /// **'marketplace de hortifruti · são paulo'**
+  String get aurora_heroTag;
+
+  /// No description provided for @aurora_heroSubtitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Bancas de bairro, padarias e queijarias entregam no mesmo dia. Pedido pela manhã, na sua mesa no almoço.'**
+  String get aurora_heroSubtitle;
+
+  /// No description provided for @aurora_storesEyebrow.
+  ///
+  /// In pt, this message translates to:
+  /// **'bancas'**
+  String get aurora_storesEyebrow;
+
+  /// No description provided for @aurora_storesTitleAll.
+  ///
+  /// In pt, this message translates to:
+  /// **'Todas as bancas'**
+  String get aurora_storesTitleAll;
+
+  /// No description provided for @aurora_storesTitleFiltered.
+  ///
+  /// In pt, this message translates to:
+  /// **'Em {category}'**
+  String aurora_storesTitleFiltered(String category);
+
+  /// No description provided for @aurora_storesCountSingular.
+  ///
+  /// In pt, this message translates to:
+  /// **'1 banca'**
+  String get aurora_storesCountSingular;
+
+  /// No description provided for @aurora_storesCountPlural.
+  ///
+  /// In pt, this message translates to:
+  /// **'{count} bancas'**
+  String aurora_storesCountPlural(int count);
+
+  /// No description provided for @aurora_storesEmpty.
+  ///
+  /// In pt, this message translates to:
+  /// **'Nenhuma banca nessa categoria por enquanto.'**
+  String get aurora_storesEmpty;
+
+  /// No description provided for @aurora_orderTimelineTitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Onde está seu pedido'**
+  String get aurora_orderTimelineTitle;
+
+  /// No description provided for @aurora_orderItemsTitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Itens'**
+  String get aurora_orderItemsTitle;
+
+  /// No description provided for @vitral_closeDemoTooltip.
+  ///
+  /// In pt, this message translates to:
+  /// **'Fechar demo'**
+  String get vitral_closeDemoTooltip;
+
+  /// No description provided for @vitral_categoriesTitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'O que você precisa hoje'**
+  String get vitral_categoriesTitle;
+
+  /// No description provided for @vitral_specialistsTitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Quem está na agenda'**
+  String get vitral_specialistsTitle;
+
+  /// No description provided for @solar_closeDemoTooltip.
+  ///
+  /// In pt, this message translates to:
+  /// **'Fechar demo'**
+  String get solar_closeDemoTooltip;
+
+  /// No description provided for @solar_neighborhoodsEyebrow.
+  ///
+  /// In pt, this message translates to:
+  /// **'Bairros'**
+  String get solar_neighborhoodsEyebrow;
+
+  /// No description provided for @solar_neighborhoodsTitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Por onde você procura'**
+  String get solar_neighborhoodsTitle;
+
+  /// No description provided for @solar_featuredEyebrow.
+  ///
+  /// In pt, this message translates to:
+  /// **'Em destaque'**
+  String get solar_featuredEyebrow;
+
+  /// No description provided for @solar_featuredTitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Selecionados a mão'**
+  String get solar_featuredTitle;
+
+  /// No description provided for @solar_heroTag.
+  ///
+  /// In pt, this message translates to:
+  /// **'imobiliária · interior de são paulo'**
+  String get solar_heroTag;
+
+  /// No description provided for @solar_heroSubtitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Casas, chácaras, terrenos e apartamentos em cidades do interior — com curadoria, planta baixa e corretor local em cada anúncio.'**
+  String get solar_heroSubtitle;
+
+  /// No description provided for @solar_heroCta.
+  ///
+  /// In pt, this message translates to:
+  /// **'Ver imóveis'**
+  String get solar_heroCta;
+
+  /// No description provided for @mira_closeDemoTooltip.
+  ///
+  /// In pt, this message translates to:
+  /// **'Fechar demo'**
+  String get mira_closeDemoTooltip;
+
+  /// No description provided for @mira_portfolioTooltip.
+  ///
+  /// In pt, this message translates to:
+  /// **'Meu portfólio'**
+  String get mira_portfolioTooltip;
+
+  /// No description provided for @mira_historyTooltip.
+  ///
+  /// In pt, this message translates to:
+  /// **'Histórico de ordens'**
+  String get mira_historyTooltip;
+
+  /// No description provided for @mira_watchlistEyebrow.
+  ///
+  /// In pt, this message translates to:
+  /// **'WATCHLIST'**
+  String get mira_watchlistEyebrow;
+
+  /// No description provided for @mira_watchlistTitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Acompanhando'**
+  String get mira_watchlistTitle;
+
+  /// No description provided for @mira_catalogEyebrow.
+  ///
+  /// In pt, this message translates to:
+  /// **'CATÁLOGO'**
+  String get mira_catalogEyebrow;
+
+  /// No description provided for @mira_otherAssetsTitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Outros ativos'**
+  String get mira_otherAssetsTitle;
+
+  /// No description provided for @mira_marketStatusLabel.
+  ///
+  /// In pt, this message translates to:
+  /// **'B3 · TEMPO REAL'**
+  String get mira_marketStatusLabel;
+
+  /// No description provided for @mira_totalAssetsLabel.
+  ///
+  /// In pt, this message translates to:
+  /// **'PATRIMÔNIO TOTAL'**
+  String get mira_totalAssetsLabel;
+
+  /// No description provided for @locale_pt.
+  ///
+  /// In pt, this message translates to:
+  /// **'Português'**
+  String get locale_pt;
+
+  /// No description provided for @locale_en.
+  ///
+  /// In pt, this message translates to:
+  /// **'English'**
+  String get locale_en;
+
+  /// No description provided for @locale_es.
+  ///
+  /// In pt, this message translates to:
+  /// **'Español'**
+  String get locale_es;
+
+  /// No description provided for @locale_de.
+  ///
+  /// In pt, this message translates to:
+  /// **'Deutsch'**
+  String get locale_de;
+
+  /// No description provided for @locale_zh.
+  ///
+  /// In pt, this message translates to:
+  /// **'中文'**
+  String get locale_zh;
+
+  /// No description provided for @locale_ja.
+  ///
+  /// In pt, this message translates to:
+  /// **'日本語'**
+  String get locale_ja;
+
+  /// No description provided for @locale_it.
+  ///
+  /// In pt, this message translates to:
+  /// **'Italiano'**
+  String get locale_it;
+}
+
+class _AppLocalizationsDelegate
+    extends LocalizationsDelegate<AppLocalizations> {
+  const _AppLocalizationsDelegate();
+
+  @override
+  Future<AppLocalizations> load(Locale locale) {
+    return SynchronousFuture<AppLocalizations>(lookupAppLocalizations(locale));
+  }
+
+  @override
+  bool isSupported(Locale locale) => <String>[
+    'de',
+    'en',
+    'es',
+    'it',
+    'ja',
+    'pt',
+    'zh',
+  ].contains(locale.languageCode);
+
+  @override
+  bool shouldReload(_AppLocalizationsDelegate old) => false;
+}
+
+AppLocalizations lookupAppLocalizations(Locale locale) {
+  // Lookup logic when only language code is specified.
+  switch (locale.languageCode) {
+    case 'de':
+      return AppLocalizationsDe();
+    case 'en':
+      return AppLocalizationsEn();
+    case 'es':
+      return AppLocalizationsEs();
+    case 'it':
+      return AppLocalizationsIt();
+    case 'ja':
+      return AppLocalizationsJa();
+    case 'pt':
+      return AppLocalizationsPt();
+    case 'zh':
+      return AppLocalizationsZh();
+  }
+
+  throw FlutterError(
+    'AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
+    'an issue with the localizations generation tool. Please file an issue '
+    'on GitHub with a reproducible sample app and the gen-l10n configuration '
+    'that was used.',
+  );
+}

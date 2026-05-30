@@ -29,9 +29,13 @@ class TechBentoGrid extends StatelessWidget {
       _Slot(category: StackCategory.graphics, span: 5),
     ],
     [
+      _Slot(category: StackCategory.networking, span: 4),
       _Slot(category: StackCategory.persistence, span: 4),
-      _Slot(category: StackCategory.quality, span: 4),
-      _Slot(category: StackCategory.routing, span: 4),
+      _Slot(category: StackCategory.codegen, span: 4),
+    ],
+    [
+      _Slot(category: StackCategory.quality, span: 5),
+      _Slot(category: StackCategory.routing, span: 7),
     ],
     [
       _Slot(category: StackCategory.web, span: 5),
@@ -56,42 +60,16 @@ class TechBentoGrid extends StatelessWidget {
 
     if (isMobile) {
       const categories = StackCategory.values;
-      final rows = <Widget>[];
-      for (var i = 0; i < categories.length; i += 2) {
-        final hasSecond = i + 1 < categories.length;
-        rows.add(
-          IntrinsicHeight(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Expanded(
-                  child: _CategoryCard(
-                    category: categories[i],
-                    items: byCategory[categories[i]] ?? const [],
-                    onTechTap: (name) => _handleTechTap(context, name),
-                  ),
-                ),
-                if (hasSecond) ...[
-                  const SizedBox(width: AppSpacing.sm),
-                  Expanded(
-                    child: _CategoryCard(
-                      category: categories[i + 1],
-                      items: byCategory[categories[i + 1]] ?? const [],
-                      onTechTap: (name) => _handleTechTap(context, name),
-                    ),
-                  ),
-                ],
-              ],
-            ),
-          ),
-        );
-      }
       return Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          for (var i = 0; i < rows.length; i++) ...[
+          for (var i = 0; i < categories.length; i++) ...[
             if (i > 0) const SizedBox(height: AppSpacing.sm),
-            rows[i],
+            _CategoryCard(
+              category: categories[i],
+              items: byCategory[categories[i]] ?? const [],
+              onTechTap: (name) => _handleTechTap(context, name),
+            ),
           ],
         ],
       );

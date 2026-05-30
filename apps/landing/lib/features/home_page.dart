@@ -124,27 +124,27 @@ class _HomePageState extends State<HomePage> {
     final anchors = <HomeNavAnchor>[
       HomeNavAnchor(
         id: 'showcase',
-        label: 'Showcase',
+        label: context.l10n.nav_showcase,
         onTap: () => _scrollToKey(_showcaseKey),
       ),
       HomeNavAnchor(
         id: 'sobre',
-        label: 'Sobre',
+        label: context.l10n.nav_about,
         onTap: () => _scrollToKey(_aboutKey),
       ),
       HomeNavAnchor(
         id: 'engenharia',
-        label: 'Engenharia',
+        label: context.l10n.nav_engineering,
         onTap: () => _scrollToKey(_engineeringKey),
       ),
       HomeNavAnchor(
         id: 'estudo',
-        label: 'Estudo',
+        label: context.l10n.nav_caseStudy,
         onTap: () => _scrollToKey(_caseStudyKey),
       ),
       HomeNavAnchor(
         id: 'contato',
-        label: 'Contato',
+        label: context.l10n.nav_contact,
         onTap: () => _scrollToKey(_contactKey),
       ),
     ];

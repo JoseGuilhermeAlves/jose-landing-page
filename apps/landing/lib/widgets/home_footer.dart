@@ -23,7 +23,7 @@ class HomeFooter extends StatelessWidget {
         Icon(Icons.flutter_dash, size: 14, color: colors.onSurfaceMuted),
         const SizedBox(width: AppSpacing.xs),
         Text(
-          'Feito em Flutter',
+          context.l10n.footer_madeWith,
           style: textTheme.labelMedium?.copyWith(color: colors.onSurfaceMuted),
         ),
       ],

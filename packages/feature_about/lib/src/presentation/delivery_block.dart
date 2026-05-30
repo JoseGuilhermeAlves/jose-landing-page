@@ -11,56 +11,40 @@ import 'package:flutter/material.dart';
 class DeliveryBlock extends StatelessWidget {
   const DeliveryBlock({super.key});
 
-  static const List<_DeliveryCard> _cards = [
-    _DeliveryCard(
-      eyebrow: 'ENTREGA',
-      title: 'Escopo claro,',
-      titleAccent: 'expectativa alinhada.',
-      body:
-          'Cada projeto começa pelo recorte: o que entra, o que fica de '
-          'fora, e como cada decisão amarra um critério de aceite. Sem '
-          'isso, sprint vira corrida de prazo. Trabalho com PO e design '
-          'desde o kickoff pra que o backlog reflita o que vai pra '
-          'produção — não o que parece bonito no protótipo.',
-      glyph: _DeliveryGlyph.checklist,
-    ),
-    _DeliveryCard(
-      eyebrow: 'CRAFT',
-      title: 'Arquitetura e',
-      titleAccent: 'performance reais.',
-      body:
-          'Clean Architecture por feature, Bloc/Cubit pra estado, '
-          'CustomPainter quando vetor é mais barato que asset. Mede '
-          'tempo de frame em device real (não emulador), perfila build '
-          'time, audita rebuilds. Stack de produção sustenta '
-          'evolução — não emperra dois meses depois do MVP.',
-      glyph: _DeliveryGlyph.layers,
-    ),
-    _DeliveryCard(
-      eyebrow: 'COLABORAÇÃO',
-      title: 'No time de produto',
-      titleAccent: 'ou no Flutter inteiro.',
-      body:
-          'Em time grande entro como front end mobile com escopo de '
-          'feature ou stewardship arquitetural. Em time pequeno (varejo '
-          'B2B, 5 anos) cuidei do Flutter inteiro — do design ao '
-          'deploy, integrando APIs já existentes e ajudando a moldar '
-          'contratos novos quando o caminho era esse. Ajusto-me ao '
-          'tamanho do time, não ao contrário.',
-      glyph: _DeliveryGlyph.handshake,
-    ),
-  ];
-
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final cards = [
+      _DeliveryCard(
+        eyebrow: l10n.delivery_entrega_eyebrow,
+        title: l10n.delivery_entrega_title,
+        titleAccent: l10n.delivery_entrega_titleAccent,
+        body: l10n.delivery_entrega_body,
+        glyph: _DeliveryGlyph.checklist,
+      ),
+      _DeliveryCard(
+        eyebrow: l10n.delivery_craft_eyebrow,
+        title: l10n.delivery_craft_title,
+        titleAccent: l10n.delivery_craft_titleAccent,
+        body: l10n.delivery_craft_body,
+        glyph: _DeliveryGlyph.layers,
+      ),
+      _DeliveryCard(
+        eyebrow: l10n.delivery_collab_eyebrow,
+        title: l10n.delivery_collab_title,
+        titleAccent: l10n.delivery_collab_titleAccent,
+        body: l10n.delivery_collab_body,
+        glyph: _DeliveryGlyph.handshake,
+      ),
+    ];
     final isMobile = context.isMobile;
     if (isMobile) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          for (var i = 0; i < _cards.length; i++) ...[
+          for (var i = 0; i < cards.length; i++) ...[
             if (i > 0) const SizedBox(height: AppSpacing.md),
-            _cards[i],
+            cards[i],
           ],
         ],
       );
@@ -69,9 +53,9 @@ class DeliveryBlock extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          for (var i = 0; i < _cards.length; i++) ...[
+          for (var i = 0; i < cards.length; i++) ...[
             if (i > 0) const SizedBox(width: AppSpacing.md),
-            Expanded(child: _cards[i]),
+            Expanded(child: cards[i]),
           ],
         ],
       ),

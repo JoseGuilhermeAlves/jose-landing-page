@@ -1,0 +1,840 @@
+// ignore: unused_import
+import 'package:intl/intl.dart' as intl;
+import 'app_localizations.dart';
+
+// ignore_for_file: type=lint
+
+/// The translations for German (`de`).
+class AppLocalizationsDe extends AppLocalizations {
+  AppLocalizationsDe([String locale = 'de']) : super(locale);
+
+  @override
+  String get common_cancel => 'Abbrechen';
+
+  @override
+  String get common_back => 'Zurück';
+
+  @override
+  String get common_close => 'Schließen';
+
+  @override
+  String get common_continue => 'Weiter';
+
+  @override
+  String get common_confirm => 'Bestätigen';
+
+  @override
+  String get common_retry => 'Erneut versuchen';
+
+  @override
+  String get common_loadMore => 'Mehr laden';
+
+  @override
+  String get common_save => 'Speichern';
+
+  @override
+  String get common_delete => 'Löschen';
+
+  @override
+  String get common_edit => 'Bearbeiten';
+
+  @override
+  String get common_share => 'Teilen';
+
+  @override
+  String get common_loading => 'Wird geladen…';
+
+  @override
+  String get common_empty => 'Hier ist noch nichts.';
+
+  @override
+  String get common_genericError =>
+      'Etwas ist schiefgelaufen. Bitte versuchen Sie es gleich erneut.';
+
+  @override
+  String get common_openInNew => 'In neuem Tab öffnen';
+
+  @override
+  String get common_search => 'Suchen';
+
+  @override
+  String get common_semanticsClose => 'Schließen';
+
+  @override
+  String get common_semanticsLoadingSpinner => 'Inhalt wird geladen';
+
+  @override
+  String get hero_eyebrow => 'Verfügbar für Freelance';
+
+  @override
+  String get hero_headline1 => 'Mobile-Frontend mit Flutter.';
+
+  @override
+  String get hero_headline2 => 'Vom MVP zur Produktions-App.';
+
+  @override
+  String get hero_bio =>
+      '7+ Jahre Erfahrung im Aufbau des Frontends mobiler Apps (und Web, wenn sinnvoll) — von B2B-Retail bis hin zu Fintech-Produkten im großen Maßstab.';
+
+  @override
+  String get hero_scrollHint => 'scrollen um fortzufahren';
+
+  @override
+  String get hero_ctaWhatsapp => 'Über WhatsApp schreiben';
+
+  @override
+  String get hero_ctaProjects => 'Projekte ansehen';
+
+  @override
+  String get hero_trustYearsValue => '7+';
+
+  @override
+  String get hero_trustYearsLabel => 'Jahre Flutter';
+
+  @override
+  String get hero_trustDomainsValue => '5+';
+
+  @override
+  String get hero_trustDomainsLabel => 'Domänen bedient';
+
+  @override
+  String get hero_trustPlatformsValue => 'Mobile · Web';
+
+  @override
+  String get hero_trustPlatformsLabel => 'Zielplattformen';
+
+  @override
+  String get hero_portraitSemantics => 'Foto von Jose Guilherme Alves';
+
+  @override
+  String get about_eyebrow => 'Über mich';
+
+  @override
+  String get about_title => 'Wer Sie';
+
+  @override
+  String get about_titleAccent => 'betreut.';
+
+  @override
+  String get about_subtitle =>
+      'Mobile-Frontend mit Flutter seit 7+ Jahren. Fokus auf robuste Apps mit klarem Scope und abgestimmten Erwartungen ab Kickoff.';
+
+  @override
+  String get about_domainsMapLabel => 'Domänenkarte';
+
+  @override
+  String get about_domainsHint => '· tippen Sie auf einen Planeten';
+
+  @override
+  String get about_deliveryTitle => 'Wie ich liefere';
+
+  @override
+  String get about_bioName => 'José Guilherme Alves';
+
+  @override
+  String get about_bioTitle =>
+      'Mobile-Frontend · Flutter Developer · Brasilien';
+
+  @override
+  String get about_bioParagraph =>
+      'Die Karriere begann mit mobilen Retail-Apps — Flutter-Frontend vom Design bis zum Deploy, in einem kleinen Team, über 5 Jahre. Danach in Produktteams größerer Domänen: öffentlicher Sektor, interne Plattformen, Feldeinsatz und aktuell Fintech im großen Maßstab. Immer im mobilen Frontend, mit Flutter Web wenn das Produkt es erforderte. Konstanter Fokus auf Architektur, Performance und UX-Konsistenz auf realen Geräten.';
+
+  @override
+  String get delivery_entrega_eyebrow => 'LIEFERUNG';
+
+  @override
+  String get delivery_entrega_title => 'Klarer Scope,';
+
+  @override
+  String get delivery_entrega_titleAccent => 'abgestimmte Erwartungen.';
+
+  @override
+  String get delivery_entrega_body =>
+      'Jedes Projekt beginnt mit der Abgrenzung: was rein kommt, was draußen bleibt, und wie jede Entscheidung an ein Akzeptanzkriterium gebunden wird. Ohne das werden Sprints zu Deadline-Rennen. Ich arbeite mit PO und Design ab Kickoff, damit das Backlog widerspiegelt, was in Produktion geht — nicht was im Prototyp gut aussieht.';
+
+  @override
+  String get delivery_craft_eyebrow => 'CRAFT';
+
+  @override
+  String get delivery_craft_title => 'Echte Architektur';
+
+  @override
+  String get delivery_craft_titleAccent => 'und Performance.';
+
+  @override
+  String get delivery_craft_body =>
+      'Clean Architecture pro Feature, Bloc/Cubit für State, CustomPainter wenn Vektoren günstiger als Assets sind. Misst Frame-Zeiten auf realen Geräten (nicht Emulatoren), profiliert Build-Zeiten, prüft Rebuilds. Ein Produktions-Stack trägt Evolution — er blockiert nicht zwei Monate nach dem MVP.';
+
+  @override
+  String get delivery_collab_eyebrow => 'ZUSAMMENARBEIT';
+
+  @override
+  String get delivery_collab_title => 'Im Produktteam';
+
+  @override
+  String get delivery_collab_titleAccent => 'oder die gesamte Flutter-Seite.';
+
+  @override
+  String get delivery_collab_body =>
+      'In großen Teams komme ich als Mobile-Frontend mit Feature-Scope oder architektonischer Stewardship. In kleinen Teams (B2B-Retail, 5 Jahre) verantwortete ich die gesamte Flutter-Seite — vom Design bis zum Deploy, mit Integration bestehender APIs und Mitgestaltung neuer Verträge wenn nötig. Ich passe mich der Teamgröße an, nicht umgekehrt.';
+
+  @override
+  String get domain_fintech_label => 'Fintech';
+
+  @override
+  String get domain_fintech_blurb =>
+      'Mobile Kredit-Apps im großen Maßstab — aktive Basis von Millionen Nutzern.';
+
+  @override
+  String get domain_publicServices_label => 'Öffentlicher Sektor';
+
+  @override
+  String get domain_publicServices_blurb =>
+      'Digitale Bürgerdienste mit Integration staatlicher Identität.';
+
+  @override
+  String get domain_sanitation_label => 'Feldeinsatz';
+
+  @override
+  String get domain_sanitation_blurb =>
+      'Sammel- und Inspektions-Apps auf Industriegeräten mit Offline-first-Synchronisation.';
+
+  @override
+  String get domain_platform_label => 'Interne Plattform';
+
+  @override
+  String get domain_platform_blurb =>
+      'Interne Tools für Teammanagement und Unternehmensoperationen im großen Maßstab.';
+
+  @override
+  String get domain_retail_label => 'B2B-Retail';
+
+  @override
+  String get domain_retail_blurb =>
+      'Mobile Store-Operations-Apps, Bestandskontrolle und Bestellungen. Gesamtes Flutter-Frontend, kleines Team, über 5 Jahre.';
+
+  @override
+  String get services_eyebrow => 'Leistungen';
+
+  @override
+  String get services_title => 'Mobile-Frontend.';
+
+  @override
+  String get services_titleAccent => 'Vom Brief zum Deploy.';
+
+  @override
+  String get services_subtitle =>
+      'Mobile Apps mit Flutter, Web/PWA-Version wenn anwendbar, Integration mit bestehenden APIs und Architekturberatung. Backend und Infra bleiben beim Team des Kunden.';
+
+  @override
+  String get services_mobile_title => 'Mobile-Frontend';
+
+  @override
+  String get services_mobile_description =>
+      'Natives Android via Flutter — Performance und UX-Konsistenz auf realen Geräten.';
+
+  @override
+  String get services_web_title => 'Web Apps & PWA';
+
+  @override
+  String get services_web_description =>
+      'Derselbe Flutter-Code als Web-App — installierbar als PWA, schnell und responsiv.';
+
+  @override
+  String get services_integrations_title => 'API-Integration';
+
+  @override
+  String get services_integrations_description =>
+      'REST, OAuth, Bluetooth und NFC — ich integriere die mobile App mit bestehenden APIs und Peripheriegeräten.';
+
+  @override
+  String get services_maintenance_title => 'Wartung & Evolution';
+
+  @override
+  String get services_maintenance_description =>
+      'Refactoring, Stabilisierung und neue Features im Frontend von Apps bereits in Produktion.';
+
+  @override
+  String get services_consulting_title => 'Mobile Beratung';
+
+  @override
+  String get services_consulting_description =>
+      'Architektur, Code Review und Stack-Definition — technische Unterstützung bevor das Feature zur Schuld wird.';
+
+  @override
+  String get contact_eyebrow => 'Kontakt';
+
+  @override
+  String get contact_title => 'Sprechen wir';
+
+  @override
+  String get contact_titleAccent => 'miteinander?';
+
+  @override
+  String get contact_subtitle =>
+      'Senden Sie eine Nachricht hier oder direkt über die Kanäle unten. Ich antworte schnell unter der Woche.';
+
+  @override
+  String get contact_ctaWhatsapp => 'Direkt per WhatsApp';
+
+  @override
+  String get contact_ctaEmail => 'E-Mail';
+
+  @override
+  String get contact_ctaLinkedin => 'LinkedIn';
+
+  @override
+  String get contact_ctaGithub => 'GitHub';
+
+  @override
+  String get contact_orDirect => 'Oder direkt:';
+
+  @override
+  String get contact_formName => 'Name';
+
+  @override
+  String get contact_formEmail => 'E-Mail';
+
+  @override
+  String get contact_formProjectType => 'Projekttyp';
+
+  @override
+  String get contact_formMessage => 'Nachricht';
+
+  @override
+  String get contact_formSubmit => 'Über WhatsApp senden';
+
+  @override
+  String get contact_formSubmitting => 'Wird gesendet...';
+
+  @override
+  String get contact_projectNewApp => 'Neue App (von Null zum MVP)';
+
+  @override
+  String get contact_projectExisting => 'Bestehende App weiterentwickeln';
+
+  @override
+  String get contact_projectConsulting => 'Technische Beratung / Architektur';
+
+  @override
+  String get contact_projectOther => 'Sonstiges';
+
+  @override
+  String get nav_showcase => 'Showcase';
+
+  @override
+  String get nav_about => 'Über mich';
+
+  @override
+  String get nav_engineering => 'Technik';
+
+  @override
+  String get nav_caseStudy => 'Fallstudie';
+
+  @override
+  String get nav_contact => 'Kontakt';
+
+  @override
+  String get nav_backToTop => 'Nach oben';
+
+  @override
+  String get nav_ctaContact => 'Kontakt';
+
+  @override
+  String get footer_madeWith => 'Erstellt mit Flutter';
+
+  @override
+  String get engineering_eyebrow => 'Technik & Leistungen';
+
+  @override
+  String get engineering_title => 'Der Stack hinter';
+
+  @override
+  String get engineering_titleAccent => 'jeder Projektentscheidung.';
+
+  @override
+  String get engineering_subtitle =>
+      'Technologien, die ich beherrsche und in Produktion einsetze. Tippen Sie auf eine Kachel für Details.';
+
+  @override
+  String get engineering_githubButton => 'Repository auf GitHub ansehen';
+
+  @override
+  String get caseStudy_eyebrow => 'Fallstudie';
+
+  @override
+  String get caseStudy_title => 'Pulso umgeschrieben —';
+
+  @override
+  String get caseStudy_titleAccent => 'dark Whoop, von Grund auf.';
+
+  @override
+  String get caseStudy_subtitle =>
+      'Der Fitness-Mock begann cream/orange, Strava-Stil. Er wurde zu dark Recovery-first pivotiert, inspiriert von Whoop, nach einer kritischen Review-Session des Abschluss-Scrolls. Hier die Entscheidungen hinter dem neuen Pulso.';
+
+  @override
+  String get caseStudy_pivotEyebrow => 'DER PIVOT';
+
+  @override
+  String get caseStudy_pivotTitle => 'Vom leichten Logger zum Lese-Dashboard.';
+
+  @override
+  String get caseStudy_pivotPara1 =>
+      'Die erste Version von Pulso war ein gewöhnlicher Tracker: Tab Heute, Tab Woche, Tab Fortschritt. Alles funktionierte — Set-Dots, Rings, Volumen — aber die Erfahrung beschränkte sich auf \"Zahlen sehen\". Drei von vier Bildschirmen waren nur Lesemodus.';
+
+  @override
+  String get caseStudy_pivotPara2 =>
+      'Der Neubau kehrte den Fokus um: Recovery zuerst, Logger danach. 8-Wochen-Mesozyklus mit linearer Progression + Deload in der letzten. Jedes geloggte Set treibt einen Strain-Akkumulator in Echtzeit voran. Die cream/orange Palette wich dem Recovery-Grün #00D982 und Strain-Cyan #5AC8FA auf fast schwarzer Oberfläche — explizite Whoop-Referenz, ohne Originalität vorzutäuschen.';
+
+  @override
+  String get caseStudy_pivotPara3 =>
+      'Die Domäne wuchs: Program, ProgramWeek, SessionTemplate, PlannedExercise, SetEntry, LoggedSession, RecoverySnapshot, StrainScore, MuscleRecovery, SleepWindow. Alles plain Dart mit Equatable — kein freezed, kein Codegen — um den Workspace ohne build_runner zu halten.';
+
+  @override
+  String get caseStudy_recoveryLabel => 'PULSO · HEUTE';
+
+  @override
+  String get caseStudy_recoveryHint =>
+      'Alles grün. Nutzen Sie das Fenster für intensives Training\nim Mesozyklus-Muster.';
+
+  @override
+  String get caseStudy_painterStrainTitle => 'Strain Dial';
+
+  @override
+  String get caseStudy_painterStrainCaption =>
+      'Whoops logarithmische 0–21-Skala. Bogen mit blau → magenta Gradient. Zentrierte Monospace-Zahl für Geräte-Anzeige.';
+
+  @override
+  String get caseStudy_painterTempoTitle => 'Tempo Bars';
+
+  @override
+  String get caseStudy_painterTempoCaption =>
+      '4 Phasen — exzentrisch / Pause / konzentrisch / Pause — mit leuchtendem Cursor in Schleife. Läuft auf AnimationController direkt über CustomPainter via super(repaint:).';
+
+  @override
+  String get caseStudy_painterPeriodTitle => 'Periodization Grid';
+
+  @override
+  String get caseStudy_painterPeriodCaption =>
+      '8-Wochen × 7-Tage Mesozyklus. Hitze nach vorgeschriebener Intensität, Rand bei aktueller Woche, distinkte Deload-Färbung. Tippen auf Zelle zeigt die Session.';
+
+  @override
+  String get caseStudy_decisionArchEyebrow => 'ARCHITEKTUR';
+
+  @override
+  String get caseStudy_decisionArchTitle =>
+      'Clean Arch pro Mock, nicht pro Paket';
+
+  @override
+  String get caseStudy_decisionArchBody =>
+      'Jeder Showcase-Mock (Pulso, Garoa, Aurora, Vitral, Solar) hat sein eigenes data / domain / presentation Dreieck in lib/src/<mock>/. Mocks importieren nicht voneinander — nur von shared/. Wenn ein Mock an Entitäten wächst, passt alles in sein eigenes Dreieck.';
+
+  @override
+  String get caseStudy_decisionPaintersEyebrow => 'PAINTERS';
+
+  @override
+  String get caseStudy_decisionPaintersTitle =>
+      'super(repaint:) und striktes shouldRepaint';
+
+  @override
+  String get caseStudy_decisionPaintersBody =>
+      'Animierte Painter erhalten den AnimationController direkt in super(repaint:) — die Engine überspringt Build/Layout und geht direkt zu Paint. shouldRepaint vergleicht Feld für Feld. Keine Allokation im Hot Loop: Paint, Path und TextPainter als statische Felder des Painters gecacht.';
+
+  @override
+  String get caseStudy_decisionStateEyebrow => 'STATE';
+
+  @override
+  String get caseStudy_decisionStateTitle =>
+      'Reiches Bloc, Set-für-Set mit RPE';
+
+  @override
+  String get caseStudy_decisionStateBody =>
+      'Der alte State (Map completedSets[weekday|exerciseId]) wurde durch LoggedSession mit typisiertem SetEntry ersetzt: weight, reps, RPE, completed, notes. SetLogged bewegt den Strain-Akkumulator in Echtzeit — Set wird complete rückt vor, wird incomplete weicht zurück. Kein freezed; Equatable liefert das ==, das wir brauchen.';
+
+  @override
+  String get caseStudy_takeawayEyebrow => 'TAKEAWAY';
+
+  @override
+  String get caseStudy_takeawayTitle =>
+      'Showcase-Mocks sind keine Paletten-Demos — sie beweisen, dass der Code einen Produkt-Pivot aushält ohne zum Hack zu werden.';
+
+  @override
+  String get caseStudy_takeawayBody =>
+      'Der Pulso-Pivot tauschte ~5K LOC UI bei Beibehaltung der Hierarchie core → design_system → animations → feature_*, keine neue Abhängigkeit, keine Regression im Rest des Scrolls. Die Painter verwenden alles wieder, was in der Sub-Feature bereits existierte. Der Code oben läuft exakt wie in der Pulso-Session — kein Spiegel, kein Screenshot.';
+
+  @override
+  String get showcase_eyebrow => 'Showcase';
+
+  @override
+  String get showcase_title => 'Fünf Nischen,';
+
+  @override
+  String get showcase_titleAccent => 'fünf Prototypen.';
+
+  @override
+  String get showcase_subtitle =>
+      'Funktionale Mocks pro Nische — Lieferung, Terminplanung, Fitness, Immobilien und Investitionen. Tippen Sie auf eine Karte zum Öffnen. Kein echtes Backend; sie zeigen die Art von Produkt, die ich liefern kann.';
+
+  @override
+  String get showcase_financeLabel => 'Investitionen';
+
+  @override
+  String get showcase_financeDescription =>
+      'Mira — Watchlist, interaktiver Candlestick mit Crosshair, Order-Eingabe und Portfolio mit Allokations-Donut.';
+
+  @override
+  String get showcase_deliveryLabel => 'Lieferung';
+
+  @override
+  String get showcase_deliveryDescription =>
+      'Aurora — Obst- und Gemüsemarktplatz mit animierter Karte, Bestellzeitlinie und Verlauf.';
+
+  @override
+  String get showcase_schedulingLabel => 'Terminplanung';
+
+  @override
+  String get showcase_schedulingDescription =>
+      'Vitral — Service-Studio mit interaktivem Kalender, animierter Uhr und Bestätigungsbadge.';
+
+  @override
+  String get showcase_fitnessLabel => 'Fitness';
+
+  @override
+  String get showcase_fitnessDescription =>
+      'Pulso — Recovery-Dashboard, Set-für-Set-Logger mit RPE und 8-Wochen-Periodisierung.';
+
+  @override
+  String get showcase_realestateLabel => 'Immobilien';
+
+  @override
+  String get showcase_realestateDescription =>
+      'Immobilienanzeigen mit Filtern nach Stadtteil, Preisbereich und Zimmeranzahl.';
+
+  @override
+  String get pulso_eyebrowTodayWorkout => 'HEUTIGES TRAINING';
+
+  @override
+  String get pulso_eyebrowProgram => 'PROGRAMM';
+
+  @override
+  String get pulso_eyebrowRecovery => 'RECOVERY';
+
+  @override
+  String get pulso_eyebrowContributors => 'BEITRAGENDE';
+
+  @override
+  String get pulso_eyebrowSleep => 'SCHLAF';
+
+  @override
+  String get pulso_eyebrowMuscleHeatmap => 'MUSKEL-HEATMAP';
+
+  @override
+  String get pulso_eyebrowStrainHistory => 'STRAIN · 7 TAGE';
+
+  @override
+  String get pulso_eyebrowPrescribedLoad => 'VORGESCHRIEBENE LAST';
+
+  @override
+  String get pulso_eyebrowExecutionTempo => 'AUSFÜHRUNGSTEMPO';
+
+  @override
+  String get pulso_eyebrowLoadHistory => 'LASTVERLAUF';
+
+  @override
+  String get pulso_eyebrowTakeaway => 'TAKEAWAY';
+
+  @override
+  String get pulso_labelStrain => 'STRAIN';
+
+  @override
+  String get pulso_labelStrainTarget => 'ZIEL-STRAIN';
+
+  @override
+  String get pulso_labelHrv => 'HRV';
+
+  @override
+  String get pulso_labelRhr => 'RHR';
+
+  @override
+  String get pulso_labelSleep => 'SCHLAF';
+
+  @override
+  String get pulso_labelWeek => 'WOCHE';
+
+  @override
+  String get pulso_labelFocus => 'FOKUS';
+
+  @override
+  String get pulso_labelIntensity => 'INTENSITÄT';
+
+  @override
+  String get pulso_labelSets => 'SÄTZE';
+
+  @override
+  String get pulso_labelVolume => 'VOLUMEN';
+
+  @override
+  String get pulso_ctaStartWorkout => 'Training starten';
+
+  @override
+  String get pulso_ctaFinish => 'Beenden';
+
+  @override
+  String get pulso_ctaSwapExercise => 'Übung tauschen';
+
+  @override
+  String get pulso_restDayTitle => 'Ruhetag';
+
+  @override
+  String get pulso_restDayBody =>
+      'Nutzen Sie den Tag für leichte Mobilität und verlängerten Schlaf.';
+
+  @override
+  String get pulso_errorSessionNotStarted => 'Session nicht gestartet.';
+
+  @override
+  String get pulso_errorExerciseNotFound => 'Übung nicht gefunden.';
+
+  @override
+  String get pulso_snackbarSessionFinished =>
+      'Session beendet. Strain protokolliert.';
+
+  @override
+  String get pulso_recoveryAdviceLow =>
+      'Körper braucht Pause. Akzeptieren Sie die Steifheit heute, morgen Intensität.';
+
+  @override
+  String get pulso_recoveryAdviceMedium =>
+      'Mittleres Band. Geplantes Volumen halten, keinen PR jagen.';
+
+  @override
+  String get pulso_recoveryAdviceHigh =>
+      'Alles grün. Fenster für intensives Training im Mesozyklus-Muster nutzen.';
+
+  @override
+  String get pulso_muscleAdviceLow =>
+      'Kette am Ende. Fokus auf Dehnung und Flüssigkeit.';
+
+  @override
+  String get pulso_muscleAdviceMedium =>
+      'Mittleres Band. Arbeit in der vorgeschriebenen Zone halten.';
+
+  @override
+  String get pulso_muscleAdviceHigh =>
+      'Gutes Fenster. Für schwere Last nutzen wenn der Plan es vorsieht.';
+
+  @override
+  String get pulso_weekdayMon => 'Montag';
+
+  @override
+  String get pulso_weekdayTue => 'Dienstag';
+
+  @override
+  String get pulso_weekdayWed => 'Mittwoch';
+
+  @override
+  String get pulso_weekdayThu => 'Donnerstag';
+
+  @override
+  String get pulso_weekdayFri => 'Freitag';
+
+  @override
+  String get pulso_weekdaySat => 'Samstag';
+
+  @override
+  String get pulso_weekdaySun => 'Sonntag';
+
+  @override
+  String get pulso_programSelectDay => 'Wählen Sie einen Tag';
+
+  @override
+  String get pulso_programTouchHint =>
+      'Tippen Sie auf eine Zelle um die Session vorzuschauen.';
+
+  @override
+  String get pulso_recoveryHeaderTitle => 'Wie der Körper gestern reagierte.';
+
+  @override
+  String get pulso_recoveryTodayLabel => 'HEUTE';
+
+  @override
+  String get pulso_recoveryRhrLabel => 'Ruheherzfrequenz';
+
+  @override
+  String get pulso_recoveryRespiratoryLabel => 'Atemfrequenz';
+
+  @override
+  String get pulso_sleepEfficiencySuffix => '% Effizienz';
+
+  @override
+  String get pulso_sleepDeepLabel => 'Tief';
+
+  @override
+  String get pulso_sleepRemLabel => 'REM';
+
+  @override
+  String get pulso_sleepLightLabel => 'Leicht';
+
+  @override
+  String get pulso_muscleHeatmapGeneralLabel => 'Gesamt';
+
+  @override
+  String get pulso_exerciseDetailTitle => 'Übung';
+
+  @override
+  String get pulso_exerciseSwapTooltip => 'Tauschen';
+
+  @override
+  String pulso_sessionWeekSubtitle(int week, String label) {
+    return 'Woche $week · $label';
+  }
+
+  @override
+  String get pulso_swapExerciseTitle => 'Übung tauschen';
+
+  @override
+  String get pulso_swapExerciseSubtitle =>
+      'Alternativen, die dieselbe Muskelkette aktivieren.';
+
+  @override
+  String get pulso_swapExerciseEmpty =>
+      'Keine katalogisierten Alternativen für diese Übung.';
+
+  @override
+  String get aurora_closeDemoTooltip => 'Demo schließen';
+
+  @override
+  String get aurora_resetDemoTooltip => 'Demo zurücksetzen';
+
+  @override
+  String get aurora_historyTooltip => 'Bestellverlauf';
+
+  @override
+  String get aurora_categoriesEyebrow => 'Kategorien';
+
+  @override
+  String get aurora_categoriesTitle => 'Was in die Kiste kommt';
+
+  @override
+  String get aurora_vendorsEyebrow => 'Empfohlene Händler';
+
+  @override
+  String get aurora_vendorsTitle => 'Wer heute liefert';
+
+  @override
+  String get aurora_heroTag => 'Obst- und Gemüsemarktplatz · São Paulo';
+
+  @override
+  String get aurora_heroSubtitle =>
+      'Händler aus der Nachbarschaft, Bäckereien und Käsereien liefern am selben Tag. Morgens bestellt, mittags auf dem Tisch.';
+
+  @override
+  String get aurora_storesEyebrow => 'Händler';
+
+  @override
+  String get aurora_storesTitleAll => 'Alle Händler';
+
+  @override
+  String aurora_storesTitleFiltered(String category) {
+    return 'In $category';
+  }
+
+  @override
+  String get aurora_storesCountSingular => '1 Händler';
+
+  @override
+  String aurora_storesCountPlural(int count) {
+    return '$count Händler';
+  }
+
+  @override
+  String get aurora_storesEmpty => 'Noch keine Händler in dieser Kategorie.';
+
+  @override
+  String get aurora_orderTimelineTitle => 'Wo ist Ihre Bestellung';
+
+  @override
+  String get aurora_orderItemsTitle => 'Artikel';
+
+  @override
+  String get vitral_closeDemoTooltip => 'Demo schließen';
+
+  @override
+  String get vitral_categoriesTitle => 'Was brauchen Sie heute';
+
+  @override
+  String get vitral_specialistsTitle => 'Wer ist im Kalender';
+
+  @override
+  String get solar_closeDemoTooltip => 'Demo schließen';
+
+  @override
+  String get solar_neighborhoodsEyebrow => 'Stadtteile';
+
+  @override
+  String get solar_neighborhoodsTitle => 'Wo suchen Sie';
+
+  @override
+  String get solar_featuredEyebrow => 'Empfohlen';
+
+  @override
+  String get solar_featuredTitle => 'Handverlesen';
+
+  @override
+  String get solar_heroTag => 'Immobilien · Landesinnere São Paulo';
+
+  @override
+  String get solar_heroSubtitle =>
+      'Häuser, Landgüter, Grundstücke und Wohnungen in Städten des Landesinneren — mit Kuration, Grundriss und lokalem Makler bei jedem Inserat.';
+
+  @override
+  String get solar_heroCta => 'Immobilien ansehen';
+
+  @override
+  String get mira_closeDemoTooltip => 'Demo schließen';
+
+  @override
+  String get mira_portfolioTooltip => 'Mein Portfolio';
+
+  @override
+  String get mira_historyTooltip => 'Orderverlauf';
+
+  @override
+  String get mira_watchlistEyebrow => 'WATCHLIST';
+
+  @override
+  String get mira_watchlistTitle => 'Beobachtet';
+
+  @override
+  String get mira_catalogEyebrow => 'KATALOG';
+
+  @override
+  String get mira_otherAssetsTitle => 'Andere Anlagen';
+
+  @override
+  String get mira_marketStatusLabel => 'B3 · ECHTZEIT';
+
+  @override
+  String get mira_totalAssetsLabel => 'GESAMTVERMÖGEN';
+
+  @override
+  String get locale_pt => 'Português';
+
+  @override
+  String get locale_en => 'English';
+
+  @override
+  String get locale_es => 'Español';
+
+  @override
+  String get locale_de => 'Deutsch';
+
+  @override
+  String get locale_zh => '中文';
+
+  @override
+  String get locale_ja => '日本語';
+
+  @override
+  String get locale_it => 'Italiano';
+}

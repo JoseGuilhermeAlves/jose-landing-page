@@ -2,6 +2,8 @@ import 'dart:ui';
 
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:landing/presentation/locale_cubit.dart';
 
 /// Altura padrao do `HomeNav`. Exposta para que a `HomePage` reserve
 /// o mesmo espaco no topo do scroll view (pra que o conteudo nao
@@ -79,6 +81,16 @@ class HomeNav extends StatelessWidget {
                       const Spacer(),
                     ] else
                       const Spacer(),
+                    BlocBuilder<LocaleCubit, Locale>(
+                      builder: (context, locale) {
+                        return LocaleSwitcher(
+                          currentLocale: locale,
+                          onLocaleChanged: (l) =>
+                              context.read<LocaleCubit>().changeLocale(l),
+                        );
+                      },
+                    ),
+                    const SizedBox(width: AppSpacing.sm),
                     _Cta(onTap: onCtaTap),
                   ],
                 ),
@@ -109,7 +121,7 @@ class _Logo extends StatelessWidget {
     );
 
     return Tooltip(
-      message: 'Voltar ao topo',
+      message: context.l10n.nav_backToTop,
       child: MouseRegion(
         cursor: SystemMouseCursors.click,
         child: GestureDetector(
@@ -202,7 +214,7 @@ class _Cta extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppButton(
       key: const Key('home-nav-cta'),
-      label: 'Contato',
+      label: context.l10n.nav_ctaContact,
       onPressed: onTap,
       icon: Icons.mail_outline,
     );

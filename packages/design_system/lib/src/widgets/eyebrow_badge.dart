@@ -14,6 +14,7 @@ class EyebrowBadge extends StatelessWidget {
     required this.label,
     this.icon,
     this.showDot = true,
+    this.accentColor,
     super.key,
   });
 
@@ -26,10 +27,14 @@ class EyebrowBadge extends StatelessWidget {
   /// [icon] tambem null, o badge fica so com o texto.
   final bool showDot;
 
+  /// Cor de destaque customizada. Quando null, usa [AppColorScheme.primary].
+  final Color? accentColor;
+
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
     final textTheme = Theme.of(context).textTheme;
+    final color = accentColor ?? colors.primary;
 
     return Container(
       padding: const EdgeInsets.symmetric(
@@ -37,28 +42,25 @@ class EyebrowBadge extends StatelessWidget {
         vertical: AppSpacing.xs,
       ),
       decoration: BoxDecoration(
-        color: colors.primary.withValues(alpha: 0.08),
-        border: Border.all(color: colors.primary.withValues(alpha: 0.3)),
+        color: color.withValues(alpha: 0.08),
+        border: Border.all(color: color.withValues(alpha: 0.3)),
         borderRadius: BorderRadius.circular(AppRadius.full),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           if (showDot) ...[
-            _GlowDot(color: colors.primary),
+            _GlowDot(color: color),
             const SizedBox(width: AppSpacing.sm),
           ] else if (icon != null) ...[
-            Icon(icon, size: 12, color: colors.primary),
+            Icon(icon, size: 12, color: color),
             const SizedBox(width: AppSpacing.xs),
           ],
-          // Flexible + ellipsis garante que viewport apertado nao cause
-          // overflow horizontal do chip — labels muito longas degradam
-          // pra "..." em vez de quebrar layout.
           Flexible(
             child: Text(
               label.toUpperCase(),
               style: textTheme.labelSmall?.copyWith(
-                color: colors.primary,
+                color: color,
                 letterSpacing: 0.8,
               ),
               softWrap: false,

@@ -102,6 +102,20 @@ abstract final class TechDescriptionsCatalog {
           'cobre 404 sem rota nominal extra.',
       docsUrl: 'https://pub.dev/packages/go_router',
     ),
+    'flutter_modular': TechDescription(
+      title: 'flutter_modular',
+      tagline: 'Injeção de dependência e rotas modulares por feature.',
+      role: 'Rotas',
+      version: '^6.0.0',
+      body:
+          'Cada feature registra suas rotas e bindings num módulo isolado — o '
+          'shell compõe os módulos sem conhecer a implementação interna. '
+          'Injeção de dependência por escopo garante que repositórios e blocs '
+          'vivam apenas enquanto a feature está ativa, liberando recursos ao '
+          'sair. Combinado com lazy loading, módulos pesados só instanciam '
+          'quando o usuário navega até eles.',
+      docsUrl: 'https://pub.dev/packages/flutter_modular',
+    ),
     'CustomPainter': TechDescription(
       title: 'CustomPainter',
       tagline: 'Renderização 2D de baixo nivel no Canvas.',
@@ -320,6 +334,249 @@ abstract final class TechDescriptionsCatalog {
           'teste vira sinal vermelho imediato. Mantem a confianca no `main` '
           'sem depender de disciplina manual.',
       docsUrl: 'https://docs.github.com/actions',
+    ),
+    'flutter_test': TechDescription(
+      title: 'flutter_test',
+      tagline: 'Widget tests e bloc tests por feature.',
+      role: 'Qualidade',
+      version: 'Flutter SDK',
+      body:
+          'Framework de testes integrado ao SDK — cada feature nasce com seus '
+          'widget tests e bloc tests na mesma sessão de desenvolvimento. '
+          'Cobertura por camada: unit tests validam domain e data, widget tests '
+          'verificam interação e rendering, bloc tests cobrem transições de '
+          'estado. Execução via Melos em todos os pacotes com failFast.',
+      docsUrl: 'https://docs.flutter.dev/testing',
+    ),
+    'PWA': TechDescription(
+      title: 'PWA',
+      tagline: 'Instalável, indexável, com loading customizado.',
+      role: 'Web / PWA',
+      version: 'manifest + sitemap',
+      body:
+          'Progressive Web App com manifest completo (ícones 192/512 + maskable), '
+          'loading screen customizado em HTML/CSS puro que elimina a tela branca '
+          'de 2-4s no primeiro acesso, sitemap.xml e robots.txt para indexação. '
+          'Display standalone transforma o browser em shell nativo — o usuário '
+          'instala e abre como app sem perceber que é web.',
+    ),
+    'Melos': TechDescription(
+      title: 'Melos',
+      tagline: 'Orquestrador do monorepo Pub Workspaces.',
+      role: 'Tooling',
+      version: '7.3.0',
+      body:
+          'Orquestra bootstrap, análise, testes e build em todos os pacotes do '
+          'workspace com um único comando. Resolve dependências locais via path '
+          'sem publicar no pub.dev, executa scripts em paralelo com concurrency '
+          'configurável e filtra pacotes por dependência (ex.: rodar codegen só '
+          'em pacotes que usam build_runner). Substitui scripts shell frágeis '
+          'por configuração declarativa no pubspec.yaml raiz.',
+      docsUrl: 'https://melos.invertase.dev',
+    ),
+    'Provider': TechDescription(
+      title: 'Provider',
+      tagline: 'InheritedWidget simplificado para DI leve.',
+      role: 'Estado',
+      version: '^6.0.0',
+      body:
+          'Wrapper idiomático sobre InheritedWidget que simplifica injeção de '
+          'dependência e propagação de estado pela árvore. Ideal para escopos '
+          'simples onde Bloc seria excesso — configurações, temas, serviços '
+          'singleton. Combina bem com ChangeNotifier para view models leves '
+          'em projetos menores ou em contextos MVVM.',
+      docsUrl: 'https://pub.dev/packages/provider',
+    ),
+    'GetX': TechDescription(
+      title: 'GetX',
+      tagline: 'Estado reativo, rotas e DI integrados.',
+      role: 'Estado',
+      version: '^4.0.0',
+      body:
+          'Framework all-in-one que unifica gerenciamento de estado reativo, '
+          'navegação e injeção de dependência num único pacote. Observables '
+          'via .obs e GetBuilder para estado sem streams. Curva de entrada '
+          'rápida para MVPs e projetos com equipe enxuta — produtividade '
+          'alta quando o escopo é controlado.',
+      docsUrl: 'https://pub.dev/packages/get',
+    ),
+    'MobX': TechDescription(
+      title: 'MobX',
+      tagline: 'Observables e reactions transparentes.',
+      role: 'Estado',
+      version: '^2.0.0',
+      body:
+          'Estado reativo baseado em observables, actions e reactions — '
+          'mudanças propagam automaticamente para os observers sem '
+          'boilerplate manual de streams ou notifiers. Codegen via '
+          'build_runner gera o store tipado. Encaixa bem em projetos '
+          'com lógica de UI complexa e muitas dependências cruzadas '
+          'entre campos de estado.',
+      docsUrl: 'https://pub.dev/packages/flutter_mobx',
+    ),
+    'Dio': TechDescription(
+      title: 'Dio',
+      tagline: 'HTTP client robusto com interceptors.',
+      role: 'Rede',
+      version: '^5.0.0',
+      body:
+          'Cliente HTTP com interceptors em cadeia, cancel tokens, '
+          'upload/download com progresso e transformers customizáveis. '
+          'Interceptors centralizam auth token refresh, logging e retry '
+          'sem poluir cada chamada. FormData nativo para multipart. '
+          'Padrão de mercado para apps Flutter com integração REST '
+          'não trivial.',
+      docsUrl: 'https://pub.dev/packages/dio',
+    ),
+    'http': TechDescription(
+      title: 'http',
+      tagline: 'HTTP client leve do Dart team.',
+      role: 'Rede',
+      version: '^1.0.0',
+      body:
+          'Cliente HTTP minimalista mantido pelo Dart team — sem '
+          'dependências externas, API simples baseada em futures. '
+          'Suficiente para integrações REST diretas sem necessidade '
+          'de interceptors ou cancel tokens. Ideal para pacotes '
+          'internos que precisam de HTTP sem arrastar dependências '
+          'pesadas.',
+      docsUrl: 'https://pub.dev/packages/http',
+    ),
+    'shared_preferences': TechDescription(
+      title: 'shared_preferences',
+      tagline: 'Key-value persistente simples por plataforma.',
+      role: 'Persistência',
+      version: '^2.0.0',
+      body:
+          'Abstração cross-platform sobre NSUserDefaults (iOS), '
+          'SharedPreferences (Android) e localStorage (web). Persiste '
+          'flags, tokens e preferências do usuário com API síncrona '
+          'de leitura após init. Não substitui banco de dados — é o '
+          'complemento leve para estado que precisa sobreviver ao '
+          'restart do app.',
+      docsUrl: 'https://pub.dev/packages/shared_preferences',
+    ),
+    'Firebase': TechDescription(
+      title: 'Firebase',
+      tagline: 'Auth, Firestore, Analytics, Push, Crashlytics.',
+      role: 'Persistência',
+      version: 'FlutterFire',
+      body:
+          'Suite backend-as-a-service via plugins FlutterFire — '
+          'Authentication para login social e email, Cloud Firestore '
+          'para dados em tempo real, Analytics para métricas de uso, '
+          'Cloud Messaging para push notifications e Crashlytics para '
+          'crash reporting em produção. Integração direta sem servidor '
+          'próprio.',
+      docsUrl: 'https://firebase.google.com/docs/flutter/setup',
+    ),
+    'freezed': TechDescription(
+      title: 'freezed',
+      tagline: 'Unions, copyWith e serialização por codegen.',
+      role: 'Code Generation',
+      version: '^2.0.0',
+      body:
+          'Gerador de código que produz classes imutáveis com copyWith, '
+          'toString, equality e pattern matching via sealed unions — '
+          'tudo type-safe sem boilerplate manual. Integra com '
+          'json_serializable para fromJson/toJson automáticos. '
+          'Elimina centenas de linhas repetitivas em projetos com '
+          'muitas entities de domínio.',
+      docsUrl: 'https://pub.dev/packages/freezed',
+    ),
+    'json_serializable': TechDescription(
+      title: 'json_serializable',
+      tagline: 'Serialização JSON type-safe com codegen.',
+      role: 'Code Generation',
+      version: '^6.0.0',
+      body:
+          'Gera fromJson/toJson a partir de anotações — elimina '
+          'parsing manual e erros de typo em chaves de mapa. '
+          'Suporta nested objects, enums, DateTime, custom converters '
+          'e null safety completo. Roda via build_runner no CI, '
+          'garantindo que a serialização está sempre em sincronia com '
+          'os modelos de domínio.',
+      docsUrl: 'https://pub.dev/packages/json_serializable',
+    ),
+    'MVVM': TechDescription(
+      title: 'MVVM',
+      tagline: 'View-ViewModel binding reativo.',
+      role: 'Arquitetura',
+      version: 'Padrão',
+      body:
+          'Model-View-ViewModel separa lógica de apresentação da view '
+          'via binding reativo — a view observa o ViewModel sem '
+          'conhecer o model. Em Flutter, combina com ChangeNotifier '
+          'ou streams para atualização automática. Adequado para '
+          'projetos onde a camada de apresentação domina a complexidade '
+          'e Clean Architecture seria excesso.',
+    ),
+    'get_it': TechDescription(
+      title: 'get_it',
+      tagline: 'Service locator para inversão de dependência.',
+      role: 'Arquitetura',
+      version: '^8.0.0',
+      body:
+          'Service locator que registra e resolve dependências sem '
+          'depender da árvore de widgets — acessível de qualquer camada '
+          '(domain, data, presentation). Suporta singleton, lazy '
+          'singleton e factory. Leve e sem codegen, funciona como base '
+          'para injectable quando o projeto escala.',
+      docsUrl: 'https://pub.dev/packages/get_it',
+    ),
+    'injectable': TechDescription(
+      title: 'injectable',
+      tagline: 'DI por anotações com codegen sobre get_it.',
+      role: 'Arquitetura',
+      version: '^2.0.0',
+      body:
+          'Gerador de código que lê anotações (@injectable, @singleton, '
+          '@lazySingleton) e produz o registro de dependências no get_it '
+          'automaticamente. Elimina o boilerplate de registrar cada '
+          'serviço manualmente e mantém o grafo de dependências '
+          'verificável em tempo de compilação.',
+      docsUrl: 'https://pub.dev/packages/injectable',
+    ),
+    'mocktail': TechDescription(
+      title: 'mocktail',
+      tagline: 'Mocks sem codegen para testes unitários.',
+      role: 'Qualidade',
+      version: '^1.0.0',
+      body:
+          'Framework de mocking que usa extensão de classes em vez de '
+          'codegen — basta estender Mock e implementar a interface. '
+          'API fluente com when/verify inspirada no Mockito, sem '
+          'dependência de build_runner. Ideal para isolar repositórios '
+          'e datasources nos testes de Bloc e domain.',
+      docsUrl: 'https://pub.dev/packages/mocktail',
+    ),
+    'integration_test': TechDescription(
+      title: 'integration_test',
+      tagline: 'Testes E2E no device real ou emulador.',
+      role: 'Qualidade',
+      version: 'Flutter SDK',
+      body:
+          'Framework oficial para testes de integração que rodam no '
+          'device real ou emulador — validam fluxos completos de '
+          'navegação, interação e rendering. Complementam widget tests '
+          'cobrindo o que mocks não alcançam: performance de scroll, '
+          'transições de rota e integração com plugins nativos.',
+      docsUrl: 'https://docs.flutter.dev/testing/integration-tests',
+    ),
+    'Platform Channels': TechDescription(
+      title: 'Platform Channels',
+      tagline: 'Ponte nativa Dart ↔ Kotlin/Swift.',
+      role: 'Framework',
+      version: 'Flutter API',
+      body:
+          'Mecanismo de comunicação entre Dart e código nativo '
+          '(Kotlin/Java no Android, Swift/ObjC no iOS) via '
+          'MethodChannel, EventChannel e BasicMessageChannel. '
+          'Permite acessar APIs de plataforma sem plugin publicado — '
+          'sensores, biometria, armazenamento seguro, Bluetooth e '
+          'qualquer SDK nativo que ainda não tenha wrapper Flutter.',
+      docsUrl: 'https://docs.flutter.dev/platform-integration/'
+          'platform-channels',
     ),
   };
 }

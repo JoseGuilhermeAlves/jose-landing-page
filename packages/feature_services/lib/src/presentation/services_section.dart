@@ -12,21 +12,19 @@ class ServicesSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    final l10n = context.l10n;
+
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SectionHeader(
-          eyebrow: 'Servicos',
-          title: 'Front end mobile.',
-          titleAccent: 'Do brief ao deploy.',
-          subtitle:
-              'Apps mobile com Flutter, versao web/PWA quando '
-              'aplicavel, integracao com APIs existentes e consultoria '
-              'de arquitetura. Backend e infra permanecem com o time '
-              'do cliente.',
+          eyebrow: l10n.services_eyebrow,
+          title: l10n.services_title,
+          titleAccent: l10n.services_titleAccent,
+          subtitle: l10n.services_subtitle,
         ),
-        SizedBox(height: AppSpacing.xxl),
-        ServicesGrid(),
+        const SizedBox(height: AppSpacing.xxl),
+        const ServicesGrid(),
       ],
     );
   }

@@ -29,14 +29,11 @@ class AboutSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SectionHeader(
-          eyebrow: 'Sobre',
-          title: 'Quem te',
-          titleAccent: 'atende.',
-          subtitle:
-              'Front end mobile com Flutter ha 7+ anos. Foco em '
-              'entregar app robusto, com escopo claro e expectativa '
-              'alinhada desde o kickoff.',
+        SectionHeader(
+          eyebrow: context.l10n.about_eyebrow,
+          title: context.l10n.about_title,
+          titleAccent: context.l10n.about_titleAccent,
+          subtitle: context.l10n.about_subtitle,
         ),
         const SizedBox(height: AppSpacing.xxl),
         const _BioCard(),
@@ -44,12 +41,12 @@ class AboutSection extends StatelessWidget {
         Row(
           children: [
             Text(
-              'Mapa de dominios',
+              context.l10n.about_domainsMapLabel,
               style: tt.headlineSmall?.copyWith(color: colors.onSurface),
             ),
             const SizedBox(width: AppSpacing.sm),
             Text(
-              '· toque um planeta',
+              context.l10n.about_domainsHint,
               style: tt.labelMedium?.copyWith(
                 color: colors.onSurfaceMuted,
                 letterSpacing: 0.4,
@@ -61,7 +58,7 @@ class AboutSection extends StatelessWidget {
         const DomainConstellation(domains: DomainsCatalog.all),
         const SizedBox(height: AppSpacing.xxl),
         Text(
-          'Como eu entrego',
+          context.l10n.about_deliveryTitle,
           style: tt.headlineSmall?.copyWith(color: colors.onSurface),
         ),
         const SizedBox(height: AppSpacing.lg),
@@ -120,12 +117,12 @@ class _BioCardState extends State<_BioCard>
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  'José Guilherme Alves',
+                  context.l10n.about_bioName,
                   style: tt.titleLarge?.copyWith(color: colors.onSurface),
                 ),
                 const SizedBox(height: AppSpacing.xs),
                 Text(
-                  'Front end mobile · Flutter Developer · Brasil',
+                  context.l10n.about_bioTitle,
                   style: tt.labelMedium?.copyWith(
                     color: colors.primary,
                     letterSpacing: 0.4,
@@ -133,14 +130,7 @@ class _BioCardState extends State<_BioCard>
                 ),
                 const SizedBox(height: AppSpacing.md),
                 Text(
-                  'A carreira comecou em apps mobile de operacao varejista '
-                  '— front end Flutter do design ao deploy, em time pequeno, '
-                  'durante 5 anos. Em seguida, atuacao em times de produto '
-                  'em dominios maiores: setor publico, plataforma interna, '
-                  'operacao em campo e, atualmente, fintech em escala. '
-                  'Sempre no front end mobile, com Flutter web quando o '
-                  'produto demandou. Foco constante em arquitetura, '
-                  'performance e consistencia de UX em devices reais.',
+                  context.l10n.about_bioParagraph,
                   style: tt.bodyMedium?.copyWith(
                     color: colors.onSurfaceMuted,
                     height: 1.6,

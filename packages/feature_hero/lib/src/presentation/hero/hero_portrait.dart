@@ -12,47 +12,17 @@ import 'package:flutter/material.dart';
 ///
 /// Extraído de `hero_section.dart` (era a maior subárvore do arquivo
 /// 1789 LOC); agora vive como widget público importado pelo shell.
-class HeroPortrait extends StatefulWidget {
+class HeroPortrait extends StatelessWidget {
   const HeroPortrait({required this.isMobile, super.key});
 
   final bool isMobile;
 
   @override
-  State<HeroPortrait> createState() => _HeroPortraitState();
-}
-
-class _HeroPortraitState extends State<HeroPortrait>
-    with SingleTickerProviderStateMixin {
-  // Bob lento — 3.8s ida + 3.8s volta = ciclo 7.6s. Amplitude pequena
-  // (~7px), sinaliza "ambiente vivo" sem cair em mascote. A sombra
-  // sob a figura encolhe + perde alpha quando a figura sobe; quando
-  // desce, recupera ao tamanho cheio. Ler como peso, nao decoracao.
-  late final AnimationController _bob;
-
-  @override
-  void initState() {
-    super.initState();
-    _bob = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 3800),
-    )..repeat(reverse: true);
-  }
-
-  @override
-  void dispose() {
-    _bob.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final colors = context.colors;
-    final isMobile = widget.isMobile;
     final maxWidth = isMobile ? double.infinity : 460.0;
     final maxHeight = isMobile ? 380.0 : 600.0;
 
-    // Paleta da aura: violet/indigo da marca + um rosa-neon quente
-    // no halo proximo pra ecoar o gradient do headline.
     const farTint = Color(0xFF7132F5);
     const midTint = Color(0xFF5741D8);
     const closeTint = Color(0xFFFF2D95);
@@ -60,71 +30,51 @@ class _HeroPortraitState extends State<HeroPortrait>
     const assetPath = 'assets/images/foto_recortada.png';
 
     return Semantics(
-      label: 'Foto de Jose Guilherme Alves',
+      label: context.l10n.hero_portraitSemantics,
       image: true,
       child: ConstrainedBox(
         constraints: BoxConstraints(maxWidth: maxWidth, maxHeight: maxHeight),
         child: AspectRatio(
           aspectRatio: 3 / 4,
-          child: AnimatedBuilder(
-            animation: _bob,
-            builder: (context, _) {
-              // _bob oscila 0..1 (com reverse). easeInOut suaviza
-              // extremos. dy varia -7..+7 px; shadowScale e shadowAlpha
-              // se reduzem quando a figura sobe — vendendo peso ao
-              // assentar.
-              final eased = Curves.easeInOut.transform(_bob.value);
-              final dy = (eased - 0.5) * 14;
-              final lift = (eased - 0.5).abs() * 2; // 0..1
-              final shadowScale = 1 - lift * 0.3;
-              final shadowAlpha = 1 - lift * 0.35;
-              return Stack(
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Positioned.fill(
+                child: IgnorePointer(
+                  child: CustomPaint(
+                    painter: _GroundingPainter(color: colors.primary),
+                  ),
+                ),
+              ),
+              Positioned.fill(
+                child: IgnorePointer(
+                  child: CustomPaint(
+                    painter: _ContactShadowPainter(
+                      scale: 1,
+                      alpha: 1,
+                    ),
+                  ),
+                ),
+              ),
+              Stack(
                 alignment: Alignment.center,
                 children: [
-                  // 1. Floor glow estatico — ancora o plano da figura.
-                  Positioned.fill(
-                    child: IgnorePointer(
-                      child: CustomPaint(
-                        painter: _GroundingPainter(color: colors.primary),
-                      ),
-                    ),
+                  const _SilhouetteAura(
+                    assetPath: assetPath,
+                    farTint: farTint,
+                    midTint: midTint,
+                    closeTint: closeTint,
                   ),
-                  // 2. Contact shadow — escala inversa ao bob.
-                  Positioned.fill(
-                    child: IgnorePointer(
-                      child: CustomPaint(
-                        painter: _ContactShadowPainter(
-                          scale: shadowScale,
-                          alpha: shadowAlpha,
-                        ),
-                      ),
-                    ),
-                  ),
-                  // 3. Figura bobbando (aura + rim + crisp).
-                  Transform.translate(
-                    offset: Offset(0, dy),
-                    child: Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        const _SilhouetteAura(
-                          assetPath: assetPath,
-                          farTint: farTint,
-                          midTint: midTint,
-                          closeTint: closeTint,
-                        ),
-                        _RimLight(assetPath: assetPath, tint: colors.primary),
-                        Image.asset(
-                          assetPath,
-                          fit: BoxFit.contain,
-                          alignment: Alignment.bottomCenter,
-                          errorBuilder: (_, _, _) => const SizedBox.shrink(),
-                        ),
-                      ],
-                    ),
+                  _RimLight(assetPath: assetPath, tint: colors.primary),
+                  Image.asset(
+                    assetPath,
+                    fit: BoxFit.contain,
+                    alignment: Alignment.bottomCenter,
+                    errorBuilder: (_, _, _) => const SizedBox.shrink(),
                   ),
                 ],
-              );
-            },
+              ),
+            ],
           ),
         ),
       ),

@@ -20,7 +20,7 @@ class EngineeringSection extends StatelessWidget {
         : Padding(
             padding: const EdgeInsets.only(top: AppSpacing.xl),
             child: AppButton(
-              label: 'Ver repositório no GitHub',
+              label: context.l10n.engineering_githubButton,
               variant: AppButtonVariant.secondary,
               icon: Icons.open_in_new,
               onPressed: () => onOpenGithub?.call(githubUrl!),
@@ -31,13 +31,11 @@ class EngineeringSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        const SectionHeader(
-          eyebrow: 'Engenharia e serviços',
-          title: 'A stack que sustenta',
-          titleAccent: 'cada decisão do projeto.',
-          subtitle:
-              'Tecnologias que domino e aplico em producao. '
-              'Toque em qualquer tile para saber mais.',
+        SectionHeader(
+          eyebrow: context.l10n.engineering_eyebrow,
+          title: context.l10n.engineering_title,
+          titleAccent: context.l10n.engineering_titleAccent,
+          subtitle: context.l10n.engineering_subtitle,
         ),
         const SizedBox(height: AppSpacing.xxl),
         TechBentoGrid(onOpenDocs: onOpenGithub),

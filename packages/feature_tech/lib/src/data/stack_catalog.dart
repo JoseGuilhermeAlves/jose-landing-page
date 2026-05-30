@@ -25,6 +25,12 @@ abstract final class StackCatalog {
       role: 'Equality sem codegen pra value objects',
       category: StackCategory.framework,
     ),
+    StackItem(
+      name: 'Platform Channels',
+      version: 'Flutter API',
+      role: 'Ponte nativa Dart ↔ Kotlin/Swift',
+      category: StackCategory.framework,
+    ),
 
     // Estado
     StackItem(
@@ -34,9 +40,27 @@ abstract final class StackCatalog {
       category: StackCategory.state,
     ),
     StackItem(
+      name: 'Provider',
+      version: '6.x',
+      role: 'InheritedWidget simplificado, DI leve',
+      category: StackCategory.state,
+    ),
+    StackItem(
       name: 'Riverpod',
       version: '2.x',
       role: 'Estado reativo com code generation',
+      category: StackCategory.state,
+    ),
+    StackItem(
+      name: 'GetX',
+      version: '4.x',
+      role: 'Estado reativo, rotas e DI integrados',
+      category: StackCategory.state,
+    ),
+    StackItem(
+      name: 'MobX',
+      version: '2.x',
+      role: 'Observables e reactions transparentes',
       category: StackCategory.state,
     ),
     StackItem(
@@ -51,6 +75,12 @@ abstract final class StackCatalog {
       name: 'go_router',
       version: '16.2.4',
       role: 'Routing declarativo com deferred loading',
+      category: StackCategory.routing,
+    ),
+    StackItem(
+      name: 'flutter_modular',
+      version: '6.x',
+      role: 'DI + rotas modulares por feature',
       category: StackCategory.routing,
     ),
 
@@ -68,6 +98,20 @@ abstract final class StackCatalog {
       category: StackCategory.graphics,
     ),
 
+    // Rede
+    StackItem(
+      name: 'Dio',
+      version: '5.x',
+      role: 'HTTP client com interceptors e cancel tokens',
+      category: StackCategory.networking,
+    ),
+    StackItem(
+      name: 'http',
+      version: '1.x',
+      role: 'HTTP client leve do Dart team',
+      category: StackCategory.networking,
+    ),
+
     // Persistencia
     StackItem(
       name: 'SQLite',
@@ -81,12 +125,44 @@ abstract final class StackCatalog {
       role: 'Key-value store rapido, sem SQL',
       category: StackCategory.persistence,
     ),
+    StackItem(
+      name: 'shared_preferences',
+      version: '2.x',
+      role: 'Key-value persistente simples por plataforma',
+      category: StackCategory.persistence,
+    ),
+    StackItem(
+      name: 'Firebase',
+      version: 'FlutterFire',
+      role: 'Auth, Firestore, Analytics, Push, Crashlytics',
+      category: StackCategory.persistence,
+    ),
+
+    // Code Generation
+    StackItem(
+      name: 'freezed',
+      version: '2.x',
+      role: 'Unions, copyWith e serialização por codegen',
+      category: StackCategory.codegen,
+    ),
+    StackItem(
+      name: 'json_serializable',
+      version: '6.x',
+      role: 'Serialização JSON type-safe com codegen',
+      category: StackCategory.codegen,
+    ),
 
     // Arquitetura
     StackItem(
       name: 'Clean Architecture',
       version: 'Padrao',
       role: 'Camadas data / domain / presentation por feature',
+      category: StackCategory.architecture,
+    ),
+    StackItem(
+      name: 'MVVM',
+      version: 'Padrao',
+      role: 'View-ViewModel binding reativo',
       category: StackCategory.architecture,
     ),
     StackItem(
@@ -99,6 +175,18 @@ abstract final class StackCatalog {
       name: 'Monorepo',
       version: 'Pub Workspaces',
       role: 'Pacotes independentes com contratos explicitos',
+      category: StackCategory.architecture,
+    ),
+    StackItem(
+      name: 'get_it',
+      version: '8.x',
+      role: 'Service locator para inversao de dependencia',
+      category: StackCategory.architecture,
+    ),
+    StackItem(
+      name: 'injectable',
+      version: '2.x',
+      role: 'DI por anotações com codegen sobre get_it',
       category: StackCategory.architecture,
     ),
     StackItem(
@@ -131,6 +219,18 @@ abstract final class StackCatalog {
       name: 'flutter_test',
       version: 'SDK',
       role: 'Widget tests por feature + bloc tests',
+      category: StackCategory.quality,
+    ),
+    StackItem(
+      name: 'mocktail',
+      version: '1.x',
+      role: 'Mocks sem codegen pra testes unitarios',
+      category: StackCategory.quality,
+    ),
+    StackItem(
+      name: 'integration_test',
+      version: 'SDK',
+      role: 'Testes E2E no device real ou emulador',
       category: StackCategory.quality,
     ),
 

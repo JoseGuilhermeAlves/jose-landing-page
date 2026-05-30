@@ -30,6 +30,7 @@ dependencies:
     path: ../../packages/feature_tech
   flutter:
     sdk: flutter
+  flutter_bloc: ^9.1.1
   go_router: ^16.2.4
   url_launcher: ^6.3.0
 

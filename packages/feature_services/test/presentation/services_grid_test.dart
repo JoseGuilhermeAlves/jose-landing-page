@@ -7,6 +7,9 @@ void main() {
   Widget wrap(Widget child, {Size size = const Size(1280, 1200)}) {
     return MaterialApp(
       theme: AppTheme.dark(),
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      locale: const Locale('pt'),
       home: MediaQuery(
         data: MediaQueryData(size: size),
         child: Scaffold(
@@ -21,12 +24,9 @@ void main() {
       tester,
     ) async {
       await tester.pumpWidget(wrap(const ServicesGrid()));
-      await tester.pump(const Duration(milliseconds: 16));
+      await tester.pumpAndSettle();
 
-      expect(
-        find.byType(ServiceCard),
-        findsNWidgets(ServicesCatalog.all.length),
-      );
+      expect(find.byType(ServiceCard), findsNWidgets(5));
 
       await tester.pumpWidget(const SizedBox());
     });
@@ -35,16 +35,14 @@ void main() {
       await tester.pumpWidget(
         wrap(const ServicesGrid(), size: const Size(360, 1600)),
       );
-      await tester.pump(const Duration(milliseconds: 16));
+      await tester.pumpAndSettle();
 
       final cards = tester.widgetList<ServiceCard>(find.byType(ServiceCard));
       final rects = cards.map((c) => tester.getRect(find.byWidget(c))).toList();
 
-      // Todos os cards comecam na mesma coluna (left aprox igual).
       final firstLeft = rects.first.left;
       for (final r in rects.skip(1)) {
         expect((r.left - firstLeft).abs(), lessThan(2));
-        // E cada card subsequente esta abaixo do anterior.
         expect(r.top, greaterThan(rects.first.top));
       }
 
@@ -55,12 +53,11 @@ void main() {
       tester,
     ) async {
       await tester.pumpWidget(wrap(const ServicesGrid()));
-      await tester.pump(const Duration(milliseconds: 16));
+      await tester.pumpAndSettle();
 
       final cards = tester.widgetList<ServiceCard>(find.byType(ServiceCard));
       final rects = cards.map((c) => tester.getRect(find.byWidget(c))).toList();
 
-      // Pelo menos dois cards compartilham aprox a mesma linha (top igual).
       var sameRowPair = false;
       for (var i = 0; i < rects.length; i++) {
         for (var j = i + 1; j < rects.length; j++) {

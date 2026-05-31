@@ -63,19 +63,18 @@ class _ConstellationFieldState extends State<ConstellationField>
     final linkColor =
         widget.linkColor ?? colors.primary.withValues(alpha: 0.22);
 
-    return AnimatedBuilder(
-      animation: _controller,
-      builder: (_, _) => CustomPaint(
-        painter: ConstellationPainter(
-          tick: _controller.value,
-          starColor: starColor,
-          linkColor: linkColor,
-          constellations: widget.constellations,
-          starRadius: widget.starRadius,
-          flareLength: widget.flareLength,
-        ),
-        child: const SizedBox.expand(),
+    return CustomPaint(
+      isComplex: true,
+      willChange: true,
+      painter: ConstellationPainter(
+        animation: _controller,
+        starColor: starColor,
+        linkColor: linkColor,
+        constellations: widget.constellations,
+        starRadius: widget.starRadius,
+        flareLength: widget.flareLength,
       ),
+      child: const SizedBox.expand(),
     );
   }
 }

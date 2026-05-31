@@ -110,17 +110,20 @@ abstract final class KnownConstellations {
 /// - `shouldRepaint` so volta `true` quando algo do estado visual muda.
 class ConstellationPainter extends CustomPainter {
   ConstellationPainter({
-    required this.tick,
+    double? tick,
+    this.animation,
     required this.starColor,
     required this.linkColor,
     this.constellations = KnownConstellations.all,
     this.starRadius = 1.6,
     this.flareLength = 4.5,
     this.linkStrokeWidth = 0.5,
-  });
+  })  : _tick = tick ?? 0,
+        super(repaint: animation);
 
-  /// Fase global da animacao (0..1 em loop). Alimenta o twinkle.
-  final double tick;
+  final Animation<double>? animation;
+  final double _tick;
+  double get tick => animation?.value ?? _tick;
 
   final Color starColor;
   final Color linkColor;

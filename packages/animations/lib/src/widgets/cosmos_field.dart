@@ -522,27 +522,24 @@ class _CosmosFieldState extends State<CosmosField>
         widget.starColor ?? colors.onSurface.withValues(alpha: 0.75);
 
     return RepaintBoundary(
-      child: AnimatedBuilder(
-        animation: _controller,
-        builder: (_, _) => CustomPaint(
-          isComplex: true,
-          willChange: true,
-          painter: CosmosPainter(
-            tick: _controller.value,
-            starColor: starColor,
-            pixelSize: widget.pixelSize,
-            planets: planets,
-            nebulas: nebulas,
-            galaxies: galaxies,
-            pulsars: pulsars,
-            asteroidBelts: asteroidBelts,
-            wisps: wisps,
-            comet: comet,
-            shootingStars: shootingStars,
-            pixelStars: widget.pixelStars,
-          ),
-          child: const SizedBox.expand(),
+      child: CustomPaint(
+        isComplex: true,
+        willChange: true,
+        painter: CosmosPainter(
+          animation: _controller,
+          starColor: starColor,
+          pixelSize: widget.pixelSize,
+          planets: planets,
+          nebulas: nebulas,
+          galaxies: galaxies,
+          pulsars: pulsars,
+          asteroidBelts: asteroidBelts,
+          wisps: wisps,
+          comet: comet,
+          shootingStars: shootingStars,
+          pixelStars: widget.pixelStars,
         ),
+        child: const SizedBox.expand(),
       ),
     );
   }

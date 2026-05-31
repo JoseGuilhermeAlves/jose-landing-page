@@ -1,5 +1,6 @@
 import 'dart:math' as math;
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 /// Campo de particulas reativo ao mouse — usado como background do Hero
@@ -19,10 +20,12 @@ import 'package:flutter/material.dart';
 /// widget host (`ParticleField`) pra manter o painter puro e testavel.
 class ParticleFieldPainter extends CustomPainter {
   ParticleFieldPainter({
-    required this.tick,
+    this.tick = 0,
     required this.particleColor,
     required this.linkColor,
     this.pointer,
+    this.controller,
+    this.pointerListenable,
     this.particleCount = 36,
     this.seed = 7,
     this.linkDistance = 90,
@@ -30,14 +33,22 @@ class ParticleFieldPainter extends CustomPainter {
     this.pointerPushStrength = 18,
     this.particleRadius = 1.6,
     this.driftAmplitude = 14,
+    super.repaint,
   });
 
-  /// Fase global da animacao (0..1 em loop).
+  /// Fase global da animacao (0..1 em loop). Usado como fallback quando
+  /// [controller] nao e fornecido (ex.: testes unitarios).
   final double tick;
 
-  /// Posicao do ponteiro em coordenadas do canvas. `null` desativa
-  /// o efeito de empurrao.
+  /// Posicao do ponteiro em coordenadas do canvas. Usado como fallback
+  /// quando [pointerListenable] nao e fornecido (ex.: testes unitarios).
   final Offset? pointer;
+
+  /// Quando fornecido, `paint()` le `.value` ao vivo em vez de [tick].
+  final Animation<double>? controller;
+
+  /// Quando fornecido, `paint()` le `.value` ao vivo em vez de [pointer].
+  final ValueListenable<Offset?>? pointerListenable;
 
   final int particleCount;
   final int seed;
@@ -116,7 +127,7 @@ class ParticleFieldPainter extends CustomPainter {
       var p = anchor + Offset(dx, dy);
 
       // Empurrao radial pelo pointer — quanto mais perto, mais forte.
-      final pointer = this.pointer;
+      final pointer = pointerListenable?.value ?? this.pointer;
       if (pointer != null && pointerInfluence > 0) {
         final delta = p - pointer;
         final dist = delta.distance;
@@ -138,7 +149,7 @@ class ParticleFieldPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     if (size.isEmpty) return;
-    final positions = _computePositions(size, tick);
+    final positions = _computePositions(size, controller?.value ?? tick);
 
     // Linhas entre pares proximos. O custo e O(n^2) mas n <= 60.
     if (linkDistance > 0) {

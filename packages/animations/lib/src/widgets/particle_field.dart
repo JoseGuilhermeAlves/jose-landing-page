@@ -42,7 +42,8 @@ class _ParticleFieldState extends State<ParticleField>
     duration: widget.duration,
   )..repeat();
 
-  Offset? _pointer;
+  final ValueNotifier<Offset?> _pointer = ValueNotifier<Offset?>(null);
+  late final Listenable _repaint = Listenable.merge([_controller, _pointer]);
   Duration _lastPointerUpdate = Duration.zero;
 
   @override
@@ -56,6 +57,7 @@ class _ParticleFieldState extends State<ParticleField>
   @override
   void dispose() {
     _controller.dispose();
+    _pointer.dispose();
     super.dispose();
   }
 
@@ -70,8 +72,8 @@ class _ParticleFieldState extends State<ParticleField>
     // Limpar (null) sempre passa — saida da area precisa ser instantanea
     // pra animacao "soltar" o efeito de empurrao.
     if (next == null) {
-      if (_pointer != null) {
-        setState(() => _pointer = null);
+      if (_pointer.value != null) {
+        _pointer.value = null;
         _lastPointerUpdate = _now;
       }
       return;
@@ -80,7 +82,7 @@ class _ParticleFieldState extends State<ParticleField>
     final elapsed = _now - _lastPointerUpdate;
     if (elapsed < widget.pointerThrottle) return;
 
-    setState(() => _pointer = next);
+    _pointer.value = next;
     _lastPointerUpdate = _now;
   }
 
@@ -95,22 +97,20 @@ class _ParticleFieldState extends State<ParticleField>
       opaque: false,
       onHover: (event) => _setPointer(event.localPosition),
       onExit: (_) => _setPointer(null),
-      child: AnimatedBuilder(
-        animation: _controller,
-        builder: (_, _) => CustomPaint(
-          isComplex: true,
-          willChange: true,
-          painter: ParticleFieldPainter(
-            tick: _controller.value,
-            pointer: _pointer,
-            particleCount: widget.particleCount,
-            seed: widget.seed,
-            particleColor: particleColor,
-            linkColor: linkColor,
-            linkDistance: widget.linkDistance,
-          ),
-          child: const SizedBox.expand(),
+      child: CustomPaint(
+        isComplex: true,
+        willChange: true,
+        painter: ParticleFieldPainter(
+          controller: _controller,
+          pointerListenable: _pointer,
+          particleCount: widget.particleCount,
+          seed: widget.seed,
+          particleColor: particleColor,
+          linkColor: linkColor,
+          linkDistance: widget.linkDistance,
+          repaint: _repaint,
         ),
+        child: const SizedBox.expand(),
       ),
     );
   }

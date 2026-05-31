@@ -27,7 +27,8 @@ export 'cosmos_models.dart';
 /// Painter smooth + neon.
 class CosmosPainter extends CustomPainter {
   CosmosPainter({
-    required this.tick,
+    double? tick,
+    this.animation,
     required this.starColor,
     this.pixelSize = 2,
     this.planets = const [],
@@ -39,9 +40,19 @@ class CosmosPainter extends CustomPainter {
     this.comet,
     this.shootingStars = const [],
     this.pixelStars = const [],
-  });
+  })  : _tick = tick ?? 0,
+        super(repaint: animation);
 
-  final double tick;
+  /// Animacao que alimenta o tick. Quando presente, `tick` le o valor
+  /// corrente da animacao em cada frame (via `super(repaint:)`), pulando
+  /// build/layout no pipeline do Flutter.
+  final Animation<double>? animation;
+
+  final double _tick;
+
+  /// Progresso do ciclo (0..1). Prefere o valor vivo da [animation];
+  /// fallback pro valor estatico passado no construtor.
+  double get tick => animation?.value ?? _tick;
   final Color starColor;
 
   /// Fator de escala "unidade -> logical px". radiusPixels * pixelSize
@@ -58,8 +69,10 @@ class CosmosPainter extends CustomPainter {
   final List<CosmosComet> shootingStars;
   final List<Offset> pixelStars;
 
-  /// Paint mutavel reusado. AA on (default), fill.
   final Paint _paint = Paint()..style = PaintingStyle.fill;
+  final Paint _strokePaint = Paint()
+    ..style = PaintingStyle.stroke
+    ..strokeCap = StrokeCap.round;
 
   /// Stub pra compat com versao pixel-art anterior — sem cache em smooth.
   static void clearCache() {}
@@ -676,15 +689,11 @@ class CosmosPainter extends CustomPainter {
         c.color.withValues(alpha: (c.color.a * 0.85).clamp(0.0, 1.0)),
       ],
     ).createShader(Rect.fromPoints(tailEnd, head));
-    _paint
+    _strokePaint
       ..shader = tailShader
-      ..strokeCap = StrokeCap.round
-      ..strokeWidth = pixelSize * 2.0
-      ..style = PaintingStyle.stroke;
-    canvas.drawLine(tailEnd, head, _paint);
-    _paint
-      ..style = PaintingStyle.fill
-      ..shader = null;
+      ..strokeWidth = pixelSize * 2.0;
+    canvas.drawLine(tailEnd, head, _strokePaint);
+    _strokePaint.shader = null;
 
     // Head glow.
     final headR = pixelSize * 2.0;
@@ -1043,9 +1052,12 @@ class CosmosPainter extends CustomPainter {
     final rng = math.Random(w.seed * 173 + 11);
     const twoPi = 2 * math.pi;
 
+    // Pre-compute blob geometry and phases once per wisp (deterministic
+    // from seed). Avoids re-seeding Random inside the per-frame loop.
+    // Gradient stops are const; only colors vary by breath alpha.
+    const stops = [0.0, 0.40, 0.75, 1.0];
+
     for (var i = 0; i < w.blobCount; i++) {
-      // Cada blob tem ancora base (radial random dentro do envelope),
-      // tamanho proprio e fase de drift dessincronizada.
       final baseAng = rng.nextDouble() * twoPi;
       final baseDist = rng.nextDouble() * r * 0.55;
       final blobR = r * (0.45 + rng.nextDouble() * 0.45);
@@ -1054,42 +1066,26 @@ class CosmosPainter extends CustomPainter {
       final breathPhase = rng.nextDouble() * twoPi;
       final color = w.colors[i % w.colors.length];
 
-      // Drift turbulento via duas senoides em fases distintas — barato e
-      // suficientemente organico pra leitura de gas em movimento.
       final dx = math.sin(tick * twoPi + phaseX) * drift;
       final dy = math.cos(tick * twoPi * 0.83 + phaseY) * drift * 0.75;
-
-      // Breath de alpha: respira 0.75..1.0.
       final breath = 0.75 + 0.25 * math.sin(tick * twoPi + breathPhase);
 
-      final center = Offset(
-        math.cos(baseAng) * baseDist + dx,
-        math.sin(baseAng) * baseDist + dy,
+      final blobCenter = Offset(
+        cx + math.cos(baseAng) * baseDist + dx,
+        cy + math.sin(baseAng) * baseDist + dy,
       );
 
-      // Cada blob e um radial gradient denso no nucleo + falloff suave.
       final coreAlpha = (color.a * density * 0.75 * breath).clamp(0.0, 1.0);
-      final shader =
-          RadialGradient(
-            colors: [
-              color.withValues(alpha: coreAlpha),
-              color.withValues(alpha: coreAlpha * 0.55),
-              color.withValues(alpha: coreAlpha * 0.15),
-              color.withValues(alpha: 0),
-            ],
-            stops: const [0.0, 0.40, 0.75, 1.0],
-          ).createShader(
-            Rect.fromCircle(
-              center: Offset(cx + center.dx, cy + center.dy),
-              radius: blobR,
-            ),
-          );
-      _paint.shader = shader;
-      canvas.drawCircle(
-        Offset(cx + center.dx, cy + center.dy),
-        blobR,
-        _paint,
-      );
+      _paint.shader = RadialGradient(
+        colors: [
+          color.withValues(alpha: coreAlpha),
+          color.withValues(alpha: coreAlpha * 0.55),
+          color.withValues(alpha: coreAlpha * 0.15),
+          color.withValues(alpha: 0),
+        ],
+        stops: stops,
+      ).createShader(Rect.fromCircle(center: blobCenter, radius: blobR));
+      canvas.drawCircle(blobCenter, blobR, _paint);
       _paint.shader = null;
     }
   }
@@ -1140,7 +1136,7 @@ class CosmosPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant CosmosPainter old) {
-    return old.tick != tick ||
+    return old._tick != _tick ||
         old.starColor != starColor ||
         old.pixelSize != pixelSize ||
         !identical(old.planets, planets) ||

@@ -1,6 +1,8 @@
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:landing/presentation/locale_cubit.dart';
 import 'package:landing/router/app_router.dart';
 import 'package:landing/router/route_paths.dart';
 
@@ -10,7 +12,16 @@ void main() {
       final router = AppRouter.create();
 
       await tester.pumpWidget(
-        MaterialApp.router(theme: AppTheme.dark(), routerConfig: router),
+        BlocProvider(
+          create: (_) => LocaleCubit(),
+          child: MaterialApp.router(
+            theme: AppTheme.dark(),
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            locale: const Locale('pt'),
+            routerConfig: router,
+          ),
+        ),
       );
       await tester.pump(const Duration(milliseconds: 32));
 
@@ -23,7 +34,16 @@ void main() {
       final router = AppRouter.create(initialLocation: '/lugar-que-nao-existe');
 
       await tester.pumpWidget(
-        MaterialApp.router(theme: AppTheme.dark(), routerConfig: router),
+        BlocProvider(
+          create: (_) => LocaleCubit(),
+          child: MaterialApp.router(
+            theme: AppTheme.dark(),
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            locale: const Locale('pt'),
+            routerConfig: router,
+          ),
+        ),
       );
       await tester.pump(const Duration(milliseconds: 32));
 

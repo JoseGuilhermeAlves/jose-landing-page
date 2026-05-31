@@ -210,7 +210,6 @@ class _CosmosLivePreview extends StatelessWidget {
                     canvasAnchor: Offset(0.15, 0.30),
                     coreColor: Color(0xFF0AC4FF),
                     beamColor: Color(0xFF0AC4FF),
-                    coreRadiusPixels: 3,
                     beamLengthPixels: 35,
                     beamWidthRadians: 0.08,
                     phaseOffset: 0.2,

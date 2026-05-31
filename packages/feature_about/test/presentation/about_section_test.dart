@@ -7,6 +7,9 @@ void main() {
   Widget wrap(Widget child, {Size size = const Size(1280, 2400)}) {
     return MaterialApp(
       theme: AppTheme.dark(),
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      locale: const Locale('pt'),
       home: MediaQuery(
         data: MediaQueryData(size: size),
         child: Scaffold(

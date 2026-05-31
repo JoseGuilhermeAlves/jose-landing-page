@@ -36,7 +36,13 @@ void main() {
     ),
   ];
 
-  Widget wrap(Widget child) => MaterialApp(theme: AppTheme.dark(), home: child);
+  Widget wrap(Widget child) => MaterialApp(
+    theme: AppTheme.dark(),
+    localizationsDelegates: AppLocalizations.localizationsDelegates,
+    supportedLocales: AppLocalizations.supportedLocales,
+    locale: const Locale('pt'),
+    home: child,
+  );
 
   // Helper — abre o demo na home e empurra a listagem pelo CTA do hero.
   Future<void> openListings(WidgetTester tester) async {

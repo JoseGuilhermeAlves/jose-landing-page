@@ -4,12 +4,20 @@ import 'package:feature_contact/feature_contact.dart';
 import 'package:feature_hero/feature_hero.dart';
 import 'package:feature_showcase/feature_showcase.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:landing/features/home_page.dart';
+import 'package:landing/presentation/locale_cubit.dart';
 import 'package:landing/widgets/engineering_section.dart';
 
 void main() {
-  Widget wrap(Widget child) => MaterialApp(theme: AppTheme.dark(), home: child);
+  Widget wrap(Widget child) => MaterialApp(
+    theme: AppTheme.dark(),
+    localizationsDelegates: AppLocalizations.localizationsDelegates,
+    supportedLocales: AppLocalizations.supportedLocales,
+    locale: const Locale('pt'),
+    home: BlocProvider(create: (_) => LocaleCubit(), child: child),
+  );
 
   group('HomePage', () {
     testWidgets('compoe HeroSection no topo', (tester) async {

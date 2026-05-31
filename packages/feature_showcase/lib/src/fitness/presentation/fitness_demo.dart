@@ -37,7 +37,7 @@ class _FitnessDemoState extends State<FitnessDemo> {
     return Theme(
       data: FitnessBrand.buildTheme(context),
       child: BlocProvider(
-        create: (_) => FitnessBloc(),
+        create: (_) => FitnessBloc(initialDay: widget.today),
         child: Builder(
           builder: (context) {
             final colors = context.colors;
@@ -95,11 +95,7 @@ class _CloseDemoButton extends StatelessWidget {
             shape: BoxShape.circle,
             border: Border.all(color: colors.border),
           ),
-          child: Icon(
-            Icons.close_rounded,
-            color: colors.onSurface,
-            size: 20,
-          ),
+          child: Icon(Icons.close_rounded, color: colors.onSurface, size: 20),
         ),
       ),
     );

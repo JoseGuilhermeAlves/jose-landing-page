@@ -11,9 +11,9 @@ void main() {
   });
 
   group('ArchDecisionsCatalog', () {
-    test('expoe 7 decisoes com ids unicos', () {
+    test('expoe 6 decisoes com ids unicos', () {
       const all = ArchDecisionsCatalog.all;
-      expect(all, hasLength(7));
+      expect(all, hasLength(6));
       final ids = all.map((d) => d.id).toSet();
       expect(ids.length, all.length, reason: 'ids devem ser unicos');
     });
@@ -47,8 +47,7 @@ void main() {
     });
 
     test('itens estao distribuidos em mais de uma categoria', () {
-      final categories =
-          StackCatalog.all(l10n).map((i) => i.category).toSet();
+      final categories = StackCatalog.all(l10n).map((i) => i.category).toSet();
       expect(categories.length, greaterThan(1));
     });
   });

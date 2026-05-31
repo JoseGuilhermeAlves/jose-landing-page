@@ -10,7 +10,13 @@ void main() {
   // entao todos os pumps deste arquivo usam Duration explicito —
   // pumpAndSettle nunca terminaria.
 
-  Widget wrap(Widget child) => MaterialApp(theme: AppTheme.dark(), home: child);
+  Widget wrap(Widget child) => MaterialApp(
+    theme: AppTheme.dark(),
+    localizationsDelegates: AppLocalizations.localizationsDelegates,
+    supportedLocales: AppLocalizations.supportedLocales,
+    locale: const Locale('pt'),
+    home: child,
+  );
 
   /// Viewport mais alto pra que o hero + active card + categorias +
   /// vendors caibam sem precisar scrollar nos taps.
@@ -62,7 +68,7 @@ void main() {
 
         // Header com label "Onde esta seu pedido" e timeline renderizada
         // (todos os 4 status aparecem como titulos).
-        expect(find.text('Onde esta seu pedido'), findsOneWidget);
+        expect(find.text('Onde está seu pedido'), findsOneWidget);
         expect(find.text(DeliveryStatus.received.label), findsOneWidget);
         expect(find.text(DeliveryStatus.delivered.label), findsOneWidget);
       },

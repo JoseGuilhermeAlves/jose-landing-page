@@ -8,6 +8,9 @@ void main() {
   Widget wrap(Widget child, {Size size = const Size(1280, 800)}) {
     return MaterialApp(
       theme: AppTheme.dark(),
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      locale: const Locale('pt'),
       home: MediaQuery(
         data: MediaQueryData(size: size),
         child: Scaffold(
@@ -32,9 +35,9 @@ void main() {
       await tester.pump(const Duration(milliseconds: 16));
 
       // Headline em duas linhas; primeira deixa explicito o lado de
-      // atuacao (front end mobile). Subhead tem o "7+ anos" como ancora.
+      // atuacao (front end mobile). Subhead tem o "6 anos" como ancora.
       expect(find.textContaining('Front end mobile'), findsOneWidget);
-      expect(find.textContaining('7+ anos'), findsOneWidget);
+      expect(find.textContaining('6 anos'), findsOneWidget);
 
       await tester.pumpWidget(const SizedBox());
     });

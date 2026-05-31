@@ -8,6 +8,9 @@ void main() {
   Widget wrap(Widget child, {Size size = const Size(900, 1200)}) {
     return MaterialApp(
       theme: AppTheme.dark(),
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      locale: const Locale('pt'),
       home: MediaQuery(
         data: MediaQueryData(size: size),
         child: Scaffold(
@@ -83,9 +86,14 @@ void main() {
         );
 
         // Seleciona o projectType abrindo o dropdown e tocando na opcao.
+        final l10n = AppLocalizations.of(
+          tester.element(find.byKey(const Key('contact-form-project-type'))),
+        );
         await tester.tap(find.byKey(const Key('contact-form-project-type')));
         await tester.pumpAndSettle();
-        await tester.tap(find.text(ProjectType.newApp.label).last);
+        await tester.tap(
+          find.text(ProjectType.newApp.localizedLabel(l10n)).last,
+        );
         await tester.pumpAndSettle();
 
         await tester.tap(find.byKey(const Key('contact-form-submit')));

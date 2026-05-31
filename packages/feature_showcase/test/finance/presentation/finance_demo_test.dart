@@ -4,7 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  Widget wrap(Widget child) => MaterialApp(theme: AppTheme.dark(), home: child);
+  Widget wrap(Widget child) => MaterialApp(
+    theme: AppTheme.dark(),
+    localizationsDelegates: AppLocalizations.localizationsDelegates,
+    supportedLocales: AppLocalizations.supportedLocales,
+    locale: const Locale('pt'),
+    home: child,
+  );
 
   group('FinanceDemo (Mira, multi-tela)', () {
     testWidgets('home abre com hero do portfolio + watchlist', (tester) async {

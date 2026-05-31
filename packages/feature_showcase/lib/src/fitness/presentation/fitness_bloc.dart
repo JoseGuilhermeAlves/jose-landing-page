@@ -17,8 +17,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 /// RPE) **e o rest timer entre sets** — antes vivia em `setState`
 /// local no widget, agora reside aqui como `state.restTimer`.
 class FitnessBloc extends Bloc<FitnessEvent, FitnessState> {
-  FitnessBloc({Program? program, List<RecoverySnapshot>? recoveryHistory})
-    : super(_buildInitial(program, recoveryHistory)) {
+  FitnessBloc({
+    Program? program,
+    List<RecoverySnapshot>? recoveryHistory,
+    int? initialDay,
+  }) : super(_buildInitial(program, recoveryHistory, initialDay)) {
     on<SessionStarted>(_onSessionStarted);
     on<SetLogged>(_onSetLogged);
     on<ExerciseSwapped>(_onExerciseSwapped);
@@ -51,10 +54,11 @@ class FitnessBloc extends Bloc<FitnessEvent, FitnessState> {
   static FitnessState _buildInitial(
     Program? program,
     List<RecoverySnapshot>? history,
+    int? initialDay,
   ) {
     final p = program ?? MesocycleCatalog.build();
     final h = history ?? RecoveryCatalog.history();
-    final today = DateTime.now().weekday;
+    final today = initialDay ?? DateTime.now().weekday;
     return FitnessState(
       program: p,
       recoveryHistory: h,
@@ -253,7 +257,13 @@ class FitnessBloc extends Bloc<FitnessEvent, FitnessState> {
 
   void _onReset(FitnessReset event, Emitter<FitnessState> emit) {
     _cancelRestTimer();
-    emit(_buildInitial(state.program, state.recoveryHistory));
+    emit(
+      _buildInitial(
+        state.program,
+        state.recoveryHistory,
+        state.selectedProgramDay,
+      ),
+    );
   }
 
   void _cancelRestTimer() {

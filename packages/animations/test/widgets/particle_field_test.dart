@@ -42,9 +42,9 @@ void main() {
         wrap(const SizedBox(width: 200, height: 200, child: ParticleField())),
       );
       await tester.pump(const Duration(milliseconds: 16));
-      final t0 = currentPainter(tester).tick;
+      final t0 = currentPainter(tester).controller!.value;
       await tester.pump(const Duration(milliseconds: 200));
-      final t1 = currentPainter(tester).tick;
+      final t1 = currentPainter(tester).controller!.value;
       expect(t1, isNot(equals(t0)));
 
       await tester.pumpWidget(const SizedBox());
@@ -56,7 +56,7 @@ void main() {
       );
       await tester.pump(const Duration(milliseconds: 16));
 
-      expect(currentPainter(tester).pointer, isNull);
+      expect(currentPainter(tester).pointerListenable!.value, isNull);
 
       final gesture = await tester.createGesture(kind: PointerDeviceKind.mouse);
       await gesture.addPointer(location: Offset.zero);
@@ -65,12 +65,12 @@ void main() {
       await gesture.moveTo(tester.getCenter(find.byType(ParticleField)));
       await tester.pump(const Duration(milliseconds: 50));
 
-      expect(currentPainter(tester).pointer, isNotNull);
+      expect(currentPainter(tester).pointerListenable!.value, isNotNull);
 
       // sai da area limpa o pointer
       await gesture.moveTo(const Offset(-100, -100));
       await tester.pump(const Duration(milliseconds: 50));
-      expect(currentPainter(tester).pointer, isNull);
+      expect(currentPainter(tester).pointerListenable!.value, isNull);
 
       await tester.pumpWidget(const SizedBox());
     });
@@ -96,7 +96,7 @@ void main() {
         // Com throttle, o painter so ve a primeira posicao da janela.
         await gesture.moveTo(center);
         await tester.pump(const Duration(milliseconds: 4));
-        final firstPointer = currentPainter(tester).pointer;
+        final firstPointer = currentPainter(tester).pointerListenable!.value;
 
         await gesture.moveTo(center + const Offset(20, 0));
         await tester.pump(const Duration(milliseconds: 4));
@@ -105,13 +105,19 @@ void main() {
 
         // Dentro da janela de throttle (default ~16ms), o pointer ainda
         // deve ser igual ao primeiro registrado.
-        expect(currentPainter(tester).pointer, equals(firstPointer));
+        expect(
+          currentPainter(tester).pointerListenable!.value,
+          equals(firstPointer),
+        );
 
         // Apos passar a janela, o proximo movimento e aceito.
         await tester.pump(const Duration(milliseconds: 30));
         await gesture.moveTo(center + const Offset(60, 0));
         await tester.pump(const Duration(milliseconds: 4));
-        expect(currentPainter(tester).pointer, isNot(equals(firstPointer)));
+        expect(
+          currentPainter(tester).pointerListenable!.value,
+          isNot(equals(firstPointer)),
+        );
 
         await tester.pumpWidget(const SizedBox());
       },

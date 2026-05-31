@@ -8,7 +8,13 @@ void main() {
   // entao todos os pumps deste arquivo usam Duration explicito —
   // pumpAndSettle nao terminaria.
 
-  Widget wrap(Widget child) => MaterialApp(theme: AppTheme.dark(), home: child);
+  Widget wrap(Widget child) => MaterialApp(
+    theme: AppTheme.dark(),
+    localizationsDelegates: AppLocalizations.localizationsDelegates,
+    supportedLocales: AppLocalizations.supportedLocales,
+    locale: const Locale('pt'),
+    home: child,
+  );
 
   // Ancora deterministica.
   final today = DateTime(2026, 5, 4);

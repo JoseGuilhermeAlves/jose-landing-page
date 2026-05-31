@@ -356,102 +356,102 @@ class AppLocalizationsJa extends AppLocalizations {
   String get caseStudy_eyebrow => 'ケーススタディ';
 
   @override
-  String get caseStudy_title => 'Pulso 書き直し——';
+  String get caseStudy_title => 'Canvasのコスモス——';
 
   @override
-  String get caseStudy_titleAccent => 'ダークWhoop、ゼロから。';
+  String get caseStudy_titleAccent => 'CustomPainterで60fps。';
 
   @override
   String get caseStudy_subtitle =>
-      'フィットネスモックはクリーム/オレンジ、Stravaスタイルで始まりました。クロージングスクロールのクリティカルレビュー後、Whoopにインスパイアされたダーク・リカバリーファーストに転換。新しいPulsoを支える決定がここに。';
+      'このランディングページの背景は画像でもLottieでもない——7種類の天体がCustomPainterでリアルタイムに描画されています。フレームあたり140以上のdrawコール、seed決定論的、すべて単一のtickから派生。';
 
   @override
-  String get caseStudy_pivotEyebrow => 'ピボット';
+  String get caseStudy_pivotEyebrow => 'なぜ描画するのか';
 
   @override
-  String get caseStudy_pivotTitle => '軽量ロガーからリーディングダッシュボードへ。';
+  String get caseStudy_pivotTitle => 'ジオメトリがパラメータ化可能なら、Canvasがアセットを超える。';
 
   @override
   String get caseStudy_pivotPara1 =>
-      'Pulsoの初版は一般的なトラッカー：今日タブ、週タブ、進捗タブ。すべて動作——セットドット、リング、ボリューム——しかし体験は「数字を見る」に留まった。4画面中3画面が読み取り専用だった。';
+      '惑星の画像は静的——固定サイズ、固定色、軌道アニメーションなし。Lottieはアニメーションを解決するが、依存関係とバンドルが増え、バリエーションが制限される。CustomPainterはパラメータ（パレット、表面パターン、半径、seed）を受け取りライブで描画——各惑星がアセット追加コストなしでユニーク。';
 
   @override
   String get caseStudy_pivotPara2 =>
-      '書き直しでフォーカスを反転：リカバリーファースト、ロガーセカンド。8週メソサイクルで線形プログレッション＋最終週デロード。ログした各セットがリアルタイムでストレインアキュムレーターを進める。クリーム/オレンジパレットはリカバリーグリーン#00D982とストレインシアン#5AC8FAに、ほぼ黒のサーフェス上で——Whoopへの明確な参照、独創性を装わず。';
+      'CosmosPainterは7種類の天体をレンダリング：惑星（リングと衛星付き）、星雲、渦巻銀河、パルサー、小惑星帯、ガスウィスプ、時間窓付き彗星。単一のAnimationControllerがtick[0..1]を供給し、すべてのアニメーション——軌道、パルス、ドリフト——を並列タイマーや状態マシンなしで派生。';
 
   @override
   String get caseStudy_pivotPara3 =>
-      'ドメインが拡大：Program、ProgramWeek、SessionTemplate、PlannedExercise、SetEntry、LoggedSession、RecoverySnapshot、StrainScore、MuscleRecovery、SleepWindow。すべてプレーンDart＋Equatable——freezedなし、codegen なし——ワークスペースをbuild_runnerなしに保つため。';
+      '各惑星は6層の描画を経る：ブルーム（外部グロー）、大気リム、グラデーション付きソリッドボディ、表面パターン（bands、speckled、hemispheres）、ターミネーター（3D影）、ハイライト。結果：約15drawコールのネオン惑星がWebとモバイルで60fpsで動作。';
 
   @override
-  String get caseStudy_recoveryLabel => 'PULSO · 今日';
+  String get caseStudy_recoveryLabel => 'COSMOS · ライブ';
 
   @override
   String get caseStudy_recoveryHint =>
-      'オールグリーン。メソサイクルパターンに従い\n高強度トレーニングのウィンドウを活用。';
+      '上に見えるものはリアルタイムで描画されています。\n画像なし、静的アセットなし。';
 
   @override
-  String get caseStudy_painterStrainTitle => 'ストレインダイアル';
+  String get caseStudy_painterStrainTitle => '6層の惑星';
 
   @override
   String get caseStudy_painterStrainCaption =>
-      'Whoopの0–21対数スケール。ブルー→マゼンタグラデーションアーク。機器読み取りスタイルの中央モノスペース数値。';
+      'ブルーム → リム → ボディ → 表面 → ターミネーター → ハイライト。各層はcanvas.clipPathでジオメトリを分離したRadialGradient。5色パレットが自動補間。';
 
   @override
-  String get caseStudy_painterTempoTitle => 'テンポバー';
+  String get caseStudy_painterTempoTitle => '渦巻銀河';
 
   @override
   String get caseStudy_painterTempoCaption =>
-      '4フェーズ——エキセントリック / ポーズ / コンセントリック / ポーズ——光るカーソルがループ。AnimationControllerをsuper(repaint:)経由でCustomPainterに直接渡して実行。';
+      '対数螺旋の腕に最大320のダスト粒子。drawPoints()がサイズティアごとに3回のGPUコールに集約——個別drawCircleの100倍低いオーバーヘッド。';
 
   @override
-  String get caseStudy_painterPeriodTitle => 'ピリオダイゼーショングリッド';
+  String get caseStudy_painterPeriodTitle => '名前付き星座';
 
   @override
   String get caseStudy_painterPeriodCaption =>
-      '8週×7日メソサイクル。規定強度によるヒート、現在週のボーダー、デロード週の独自カラー。セルタップでセッションを表示。';
+      '南十字星、オリオン、みなみのさんかく座——パルスする星とペアを結ぶエッジ。AnimationControllerをsuper(repaint:)で——エンジンがbuild/layoutをスキップし直接paint。';
 
   @override
-  String get caseStudy_decisionArchEyebrow => 'アーキテクチャ';
+  String get caseStudy_decisionArchEyebrow => 'レンダリング';
 
   @override
-  String get caseStudy_decisionArchTitle => 'パッケージ単位でなくモック単位のClean Arch';
+  String get caseStudy_decisionArchTitle =>
+      'AnimatedBuilderの代わりにsuper(repaint:)';
 
   @override
   String get caseStudy_decisionArchBody =>
-      '各ショーケースモック（Pulso、Garoa、Aurora、Vitral、Solar）はlib/src/<mock>/内に独自のdata / domain / presentationトライアングルを持つ。モック間で相互インポートなし——shared/のみ。モックのエンティティが増えても、すべて自身のトライアングル内に収まる。';
+      'AnimationControllerはsuper(repaint:)を通じてCustomPainterに直接渡される。Flutterエンジンはパイプラインのbuildとlayoutフェーズをスキップし、各tickで直接paintへ。140以上のdrawコールの場面で、この節約は16msごとの不要なウィジェットリビルドを排除。';
 
   @override
-  String get caseStudy_decisionPaintersEyebrow => 'PAINTERS';
+  String get caseStudy_decisionPaintersEyebrow => '決定論';
 
   @override
-  String get caseStudy_decisionPaintersTitle =>
-      'super(repaint:) と厳格な shouldRepaint';
+  String get caseStudy_decisionPaintersTitle => 'Seedベース：同じ入力、同じシーン';
 
   @override
   String get caseStudy_decisionPaintersBody =>
-      'アニメーションペインターはsuper(repaint:)でAnimationControllerを直接受け取る——エンジンはbuild/layoutをスキップしてpaintに直行。shouldRepaintはフィールドごとに比較。ホットループでのアロケーションゼロ：Paint、Path、TextPainterはペインターの静的フィールドとしてキャッシュ。';
+      'すべての確率的位置——惑星の斑点、小惑星位置、ドリフト位相——はRandom(seed)を使用。コスモスは再現可能：同じseed、どのプラットフォームでも同じシーン。決定論的ビジュアルテストと一貫したスクリーンショットを可能に。';
 
   @override
-  String get caseStudy_decisionStateEyebrow => 'STATE';
+  String get caseStudy_decisionStateEyebrow => 'バッチ';
 
   @override
-  String get caseStudy_decisionStateTitle => 'リッチなBloc、RPE付きセットバイセット';
+  String get caseStudy_decisionStateTitle => 'drawPoints()でコストなしの密度';
 
   @override
   String get caseStudy_decisionStateBody =>
-      '旧ステート（completedSets[weekday|exerciseId]マップ）は型付きSetEntryを持つLoggedSessionに置換：weight、reps、RPE、completed、notes。SetLoggedがストレインアキュムレーターをリアルタイムで駆動——セット完了で前進、未完了で後退。freezedなし；Equatableが必要な==を提供。';
+      '渦巻銀河と小惑星帯はdrawPoints(PointMode.points, offsets, paint)で数百の粒子を1-3回のGPUコールでレンダリング。素朴なアプローチ（粒子ごとにdrawCircle）は320回のコール。バッチングが60fpsでの高密度シーンを実現。';
 
   @override
   String get caseStudy_takeawayEyebrow => 'テイクアウェイ';
 
   @override
   String get caseStudy_takeawayTitle =>
-      'ショーケースモックはパレットデモではない——コードがプロダクトピボットに耐えハックにならない証明。';
+      'このページのコスモスはコード——アセットでも、キャプチャでも、外部ライブラリでもない。';
 
   @override
   String get caseStudy_takeawayBody =>
-      'Pulsoピボットは約5K LOCのUIを入れ替えつつcore → design_system → animations → feature_*の階層を維持、新規依存なし、スクロールの残りに回帰なし。ペインターはサブフィーチャー内の既存のすべてを再利用。上で見えるコードはPulsoセッションと全く同じように実行中——ミラーなし、スクリーンショットなし。';
+      'Flutter SDK以外の依存なし、約1200LOCの純粋なペインター。Paintをフィールドとして再利用、shouldRepaintでプロパティ比較、各transformの周りでcanvas.save/restore。同じペインターがランディングのヒーローをレンダリングし、異なるパラメータでアプリの任意の画面で再利用可能。';
 
   @override
   String get showcase_eyebrow => 'ショーケース';

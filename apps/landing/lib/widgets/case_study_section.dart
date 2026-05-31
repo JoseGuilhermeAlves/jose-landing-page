@@ -1,18 +1,7 @@
+import 'package:animations/animations.dart';
 import 'package:design_system/design_system.dart';
-import 'package:feature_showcase/feature_showcase.dart';
 import 'package:flutter/material.dart';
 
-/// Secao de fechamento da landing — case study tecnico do Pulso, o
-/// mock de fitness recem-pivotado pra dark Whoop recovery-first. Em
-/// vez de fechar com hype, mostra **como pensar arquitetura**:
-/// narrativa do pivot + 3 painters ao vivo do proprio mock + bento
-/// de decisoes (arquitetura, performance de painter, state).
-///
-/// Os painters sao consumidos via barrel publico de `feature_showcase`
-/// (`PulsoRecoveryRing`, `PulsoStrainDial`, `PulsoPeriodizationTimeline`,
-/// `PulsoTempoBars`, `PulsoBodyDiagram`). Eles trazem a paleta dark
-/// Whoop deles mesmo — manter o look-and-feel do mock dentro do card
-/// da landing reforca o tom "esse codigo e o codigo real, nao foto".
 class CaseStudySection extends StatelessWidget {
   const CaseStudySection({super.key});
 
@@ -49,11 +38,11 @@ class _HeroBlock extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final narrative = _Narrative();
-    final ring = _PulsoLivePreview();
+    final preview = _CosmosLivePreview();
     if (isMobile) {
       return Column(
         children: [
-          ring,
+          preview,
           const SizedBox(height: AppSpacing.lg),
           narrative,
         ],
@@ -65,7 +54,7 @@ class _HeroBlock extends StatelessWidget {
         children: [
           Expanded(flex: 6, child: narrative),
           const SizedBox(width: AppSpacing.xl),
-          Expanded(flex: 4, child: ring),
+          Expanded(flex: 4, child: preview),
         ],
       ),
     );
@@ -134,62 +123,126 @@ class _Paragraph extends StatelessWidget {
   }
 }
 
-class _PulsoLivePreview extends StatefulWidget {
-  @override
-  State<_PulsoLivePreview> createState() => _PulsoLivePreviewState();
-}
-
-class _PulsoLivePreviewState extends State<_PulsoLivePreview>
-    with SingleTickerProviderStateMixin {
-  late final AnimationController _ringAnim;
-
-  @override
-  void initState() {
-    super.initState();
-    _ringAnim = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 1200),
-    )..forward();
-  }
-
-  @override
-  void dispose() {
-    _ringAnim.dispose();
-    super.dispose();
-  }
-
+class _CosmosLivePreview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     return Container(
       decoration: BoxDecoration(
         color: const Color(0xFF08080B),
         borderRadius: BorderRadius.circular(AppRadius.lg),
         border: Border.all(color: const Color(0xFF26262F)),
       ),
-      padding: const EdgeInsets.symmetric(
-        vertical: AppSpacing.xl,
-        horizontal: AppSpacing.lg,
-      ),
+      clipBehavior: Clip.antiAlias,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
-            context.l10n.caseStudy_recoveryLabel,
-            style: Theme.of(context).textTheme.labelSmall?.copyWith(
-              color: const Color(0xFF7E7E8A),
-              fontWeight: FontWeight.w800,
-              letterSpacing: 2,
+          Expanded(
+            child: RepaintBoundary(
+              child: CosmosField(
+                planets: const [
+                  CosmosPlanet(
+                    id: 'case-study-hero',
+                    canvasAnchor: Offset(0.50, 0.45),
+                    radiusPixels: 48,
+                    pattern: PlanetPattern.bands,
+                    seed: 42,
+                    palette: [
+                      Color(0xFF0A0420),
+                      Color(0xFF2E1466),
+                      Color(0xFF6B40E0),
+                      Color(0xFFB89BFF),
+                      Color(0xFFE6DCFF),
+                    ],
+                    ring: PlanetRing(
+                      innerRadiusPixels: 62,
+                      outerRadiusPixels: 82,
+                      color: Color(0xCC9D6BFF),
+                      tiltY: 0.22,
+                    ),
+                    moon: PlanetMoon(
+                      orbitRadiusPixels: 70,
+                      moonRadiusPixels: 6,
+                      color: Color(0xFFE6DCFF),
+                      phaseOffset: 0.3,
+                    ),
+                  ),
+                  CosmosPlanet(
+                    id: 'case-study-small',
+                    canvasAnchor: Offset(0.22, 0.70),
+                    radiusPixels: 18,
+                    pattern: PlanetPattern.speckled,
+                    seed: 7,
+                    palette: [
+                      Color(0xFF1A0008),
+                      Color(0xFF7A0E2A),
+                      Color(0xFFFF1F44),
+                      Color(0xFFFF6679),
+                      Color(0xFFFFDADE),
+                    ],
+                  ),
+                  CosmosPlanet(
+                    id: 'case-study-ice',
+                    canvasAnchor: Offset(0.80, 0.25),
+                    radiusPixels: 14,
+                    pattern: PlanetPattern.hemispheres,
+                    seed: 11,
+                    palette: [
+                      Color(0xFF010E1A),
+                      Color(0xFF0A446A),
+                      Color(0xFF0AC4FF),
+                      Color(0xFF7FE9FF),
+                      Color(0xFFE8FBFF),
+                    ],
+                  ),
+                ],
+                nebulas: const [
+                  CosmosNebula(
+                    canvasAnchor: Offset(0.75, 0.60),
+                    radiusPixels: 70,
+                    color: Color(0xFFFF2D95),
+                    density: 0.5,
+                    seed: 3,
+                  ),
+                ],
+                pulsars: const [
+                  CosmosPulsar(
+                    canvasAnchor: Offset(0.15, 0.30),
+                    coreColor: Color(0xFF0AC4FF),
+                    beamColor: Color(0xFF0AC4FF),
+                    coreRadiusPixels: 3,
+                    beamLengthPixels: 35,
+                    beamWidthRadians: 0.08,
+                    phaseOffset: 0.2,
+                    seed: 5,
+                  ),
+                ],
+                starColor: colors.primary,
+              ),
             ),
           ),
-          const SizedBox(height: AppSpacing.md),
-          PulsoRecoveryRing(percent: 79, diameter: 220, animation: _ringAnim),
-          const SizedBox(height: AppSpacing.md),
-          Text(
-            context.l10n.caseStudy_recoveryHint,
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              color: const Color(0xFFF2F2F5),
-              height: 1.5,
+          Padding(
+            padding: const EdgeInsets.all(AppSpacing.md),
+            child: Column(
+              children: [
+                Text(
+                  context.l10n.caseStudy_recoveryLabel,
+                  style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                    color: const Color(0xFF7E7E8A),
+                    fontWeight: FontWeight.w800,
+                    letterSpacing: 2,
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.xs),
+                Text(
+                  context.l10n.caseStudy_recoveryHint,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: const Color(0xFFF2F2F5),
+                    height: 1.5,
+                  ),
+                ),
+              ],
             ),
           ),
         ],
@@ -204,14 +257,39 @@ class _PainterShowcase extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     final cards = [
       _PainterCard(
         title: context.l10n.caseStudy_painterStrainTitle,
         caption: context.l10n.caseStudy_painterStrainCaption,
-        child: const SizedBox(
+        child: SizedBox(
           height: 200,
-          child: Center(
-            child: PulsoStrainDial(value: 14.2, target: 16, diameter: 180),
+          child: RepaintBoundary(
+            child: CosmosField(
+              planets: const [
+                CosmosPlanet(
+                  id: 'layers-demo',
+                  canvasAnchor: Offset(0.50, 0.50),
+                  radiusPixels: 42,
+                  pattern: PlanetPattern.bands,
+                  seed: 211,
+                  palette: [
+                    Color(0xFF0A0420),
+                    Color(0xFF2E1466),
+                    Color(0xFF6B40E0),
+                    Color(0xFFB89BFF),
+                    Color(0xFFE6DCFF),
+                  ],
+                  ring: PlanetRing(
+                    innerRadiusPixels: 56,
+                    outerRadiusPixels: 74,
+                    color: Color(0xCC9D6BFF),
+                    tiltY: 0.22,
+                  ),
+                ),
+              ],
+              starColor: colors.primary,
+            ),
           ),
         ),
       ),
@@ -220,10 +298,22 @@ class _PainterShowcase extends StatelessWidget {
         caption: context.l10n.caseStudy_painterTempoCaption,
         child: SizedBox(
           height: 200,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
-            child: const Center(
-              child: PulsoTempoBars(tempoSeconds: [2, 1, 2, 1]),
+          child: RepaintBoundary(
+            child: CosmosField(
+              galaxies: const [
+                CosmosGalaxy(
+                  canvasAnchor: Offset(0.50, 0.50),
+                  radiusPixels: 60,
+                  coreColor: Color(0xFFFFE0B2),
+                  armColor: Color(0xFF9D6BFF),
+                  armCount: 3,
+                  tiltY: 0.55,
+                  rotation: 0.3,
+                  dustCount: 200,
+                  seed: 42,
+                ),
+              ],
+              starColor: colors.primary,
             ),
           ),
         ),
@@ -233,9 +323,12 @@ class _PainterShowcase extends StatelessWidget {
         caption: context.l10n.caseStudy_painterPeriodCaption,
         child: SizedBox(
           height: 200,
-          child: PulsoPeriodizationTimeline(
-            program: MesocycleCatalog.build(),
-            height: 200,
+          child: RepaintBoundary(
+            child: ConstellationField(
+              constellations: const [KnownConstellations.cruzeiroDoSul],
+              starColor: colors.onSurface,
+              linkColor: colors.primary.withValues(alpha: 0.35),
+            ),
           ),
         ),
       ),
@@ -293,8 +386,8 @@ class _PainterCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.md),
           Text(
             title,
-            style: TextStyle(
-              color: const Color(0xFFF2F2F5),
+            style: const TextStyle(
+              color: Color(0xFFF2F2F5),
               fontSize: 15,
               fontWeight: FontWeight.w700,
             ),
@@ -302,8 +395,8 @@ class _PainterCard extends StatelessWidget {
           const SizedBox(height: 4),
           Text(
             caption,
-            style: TextStyle(
-              color: const Color(0xFF7E7E8A),
+            style: const TextStyle(
+              color: Color(0xFF7E7E8A),
               fontSize: 12,
               height: 1.5,
               fontWeight: FontWeight.w500,

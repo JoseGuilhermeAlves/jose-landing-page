@@ -362,104 +362,105 @@ class AppLocalizationsIt extends AppLocalizations {
   String get caseStudy_eyebrow => 'Case study';
 
   @override
-  String get caseStudy_title => 'Pulso riscritto —';
+  String get caseStudy_title => 'Cosmos su Canvas —';
 
   @override
-  String get caseStudy_titleAccent => 'dark Whoop, da zero.';
+  String get caseStudy_titleAccent => 'CustomPainter a 60 fps.';
 
   @override
   String get caseStudy_subtitle =>
-      'Il mock fitness è iniziato crema/arancione, stile Strava. È stato pivotato a dark recovery-first ispirato a Whoop dopo una sessione di revisione critica dello scroll di chiusura. Qui le decisioni che sostengono il nuovo Pulso.';
+      'Lo sfondo di questa landing non è un\'immagine né Lottie — sono 7 tipi di corpi celesti dipinti in tempo reale via CustomPainter. Oltre 140 draw call per frame, seed-deterministico, tutto derivato da un singolo tick.';
 
   @override
-  String get caseStudy_pivotEyebrow => 'IL PIVOT';
+  String get caseStudy_pivotEyebrow => 'PERCHÉ DIPINGERE';
 
   @override
   String get caseStudy_pivotTitle =>
-      'Da logger leggero a dashboard di lettura.';
+      'Canvas supera gli asset quando la geometria è parametrizzabile.';
 
   @override
   String get caseStudy_pivotPara1 =>
-      'La prima versione di Pulso era un tracker comune: tab Oggi, tab Settimana, tab Progressi. Tutto funzionava — set dots, rings, volume — ma l\'esperienza si riduceva a \"vedere numeri\". Tre schermate su quattro erano di sola lettura.';
+      'Immagini di pianeti sarebbero statiche — dimensione fissa, colore fisso, nessuna animazione orbitale. Lottie risolverebbe l\'animazione ma aggiungerebbe dipendenze, bundle e limiterebbe le variazioni. CustomPainter riceve parametri (palette, pattern superficiale, raggio, seed) e disegna dal vivo — ogni pianeta è unico senza costare un asset in più.';
 
   @override
   String get caseStudy_pivotPara2 =>
-      'La riscrittura ha invertito il focus: recovery prima, logger dopo. Mesociclo di 8 settimane con progressione lineare + deload nell\'ultima. Ogni set loggato avanza uno strain accumulator che reagisce in tempo reale. La palette crema/arancione ha ceduto il posto al verde recovery #00D982 e cyan strain #5AC8FA su superficie quasi nera — riferimento esplicito a Whoop, senza fingere originalità.';
+      'CosmosPainter renderizza 7 tipi di corpi: pianeti (con anelli e lune), nebulose, galassie a spirale, pulsar, cinture di asteroidi, wisp di gas e comete con finestra temporale. Un singolo AnimationController alimenta il tick [0..1] che deriva tutte le animazioni — orbite, pulsazioni, drift — senza timer paralleli né macchine a stati.';
 
   @override
   String get caseStudy_pivotPara3 =>
-      'Il dominio è cresciuto: Program, ProgramWeek, SessionTemplate, PlannedExercise, SetEntry, LoggedSession, RecoverySnapshot, StrainScore, MuscleRecovery, SleepWindow. Tutto plain Dart con Equatable — senza freezed, senza codegen — per mantenere il workspace senza build_runner.';
+      'Ogni pianeta attraversa 6 strati di pittura: bloom (glow esterno), rim atmosferico, corpo solido con gradient, pattern superficiale (bands, speckled o hemispheres), terminatore (ombra 3D) e highlight. Il risultato: un pianeta neon in ~15 draw call che gira a 60 fps su web e mobile.';
 
   @override
-  String get caseStudy_recoveryLabel => 'PULSO · OGGI';
+  String get caseStudy_recoveryLabel => 'COSMOS · DAL VIVO';
 
   @override
   String get caseStudy_recoveryHint =>
-      'Tutto verde. Usa la finestra per lavoro intenso\nseguendo il pattern del mesociclo.';
+      'Quello che vedi sopra viene dipinto in tempo reale.\nNessuna immagine, nessun asset statico.';
 
   @override
-  String get caseStudy_painterStrainTitle => 'Strain dial';
+  String get caseStudy_painterStrainTitle => 'Pianeta in 6 strati';
 
   @override
   String get caseStudy_painterStrainCaption =>
-      'Scala logaritmica 0–21 di Whoop. Arco con gradient blu → magenta. Numerale monospace centrato per lettura stile strumentazione.';
+      'Bloom → rim → corpo → superficie → terminatore → highlight. Ogni strato è un RadialGradient posizionato con canvas.clipPath che isola la geometria. Palette di 5 colori interpolata automaticamente.';
 
   @override
-  String get caseStudy_painterTempoTitle => 'Tempo bars';
+  String get caseStudy_painterTempoTitle => 'Galassia a spirale';
 
   @override
   String get caseStudy_painterTempoCaption =>
-      '4 fasi — eccentrica / pausa / concentrica / pausa — con cursore luminoso in loop. Gira su AnimationController passato direttamente al CustomPainter via super(repaint:).';
+      'Bracci a spirale logaritmica con fino a 320 particelle di polvere. drawPoints() raggruppa in 3 chiamate GPU per tier di dimensione — 100× meno overhead di drawCircle individuali.';
 
   @override
-  String get caseStudy_painterPeriodTitle => 'Periodization grid';
+  String get caseStudy_painterPeriodTitle => 'Costellazioni nominate';
 
   @override
   String get caseStudy_painterPeriodCaption =>
-      'Mesociclo 8 settimane × 7 giorni. Heat per intensità prescritta, bordo sulla settimana corrente, deload con colore distinto. Tap su qualsiasi cella mostra la sessione.';
+      'Croce del Sud, Orione e Triangolo Australe con stelle pulsanti e bordi che collegano coppie. AnimationController via super(repaint:) — il motore salta build/layout, dipinge direttamente.';
 
   @override
-  String get caseStudy_decisionArchEyebrow => 'ARCHITETTURA';
+  String get caseStudy_decisionArchEyebrow => 'RENDERING';
 
   @override
   String get caseStudy_decisionArchTitle =>
-      'Clean Arch per mock, non per pacchetto';
+      'super(repaint:) invece di AnimatedBuilder';
 
   @override
   String get caseStudy_decisionArchBody =>
-      'Ogni mock dello showcase (Pulso, Garoa, Aurora, Vitral, Solar) ha il proprio triangolo data / domain / presentation dentro lib/src/<mock>/. I mock non si importano tra loro — solo da shared/. Quando un mock cresce in entità, tutto sta nel proprio triangolo.';
+      'L\'AnimationController è passato direttamente al CustomPainter via super(repaint:). Il motore Flutter salta le fasi di build e layout della pipeline e va dritto al paint a ogni tick. In scene con 140+ draw call, questo risparmio elimina rebuild di widget inutili ogni 16ms.';
 
   @override
-  String get caseStudy_decisionPaintersEyebrow => 'PAINTERS';
+  String get caseStudy_decisionPaintersEyebrow => 'DETERMINISMO';
 
   @override
   String get caseStudy_decisionPaintersTitle =>
-      'super(repaint:) e shouldRepaint rigoroso';
+      'Seed-based: stesso input, stessa scena';
 
   @override
   String get caseStudy_decisionPaintersBody =>
-      'I painter animati ricevono l\'AnimationController direttamente in super(repaint:) — il motore salta build/layout e va dritto al paint. shouldRepaint confronta campo per campo. Zero allocazioni nel hot loop: Paint, Path e TextPainter cachati come campi statici del painter.';
+      'Ogni posizione stocastica — macchie planetarie, posizioni asteroidi, fasi di drift — usa Random(seed). Il cosmos è riproducibile: stesso seed, stessa scena su qualsiasi piattaforma. Permette test visivi deterministici e screenshot consistenti.';
 
   @override
-  String get caseStudy_decisionStateEyebrow => 'STATE';
+  String get caseStudy_decisionStateEyebrow => 'BATCH';
 
   @override
-  String get caseStudy_decisionStateTitle => 'Bloc ricco, set-per-set con RPE';
+  String get caseStudy_decisionStateTitle =>
+      'drawPoints() per densità senza costo';
 
   @override
   String get caseStudy_decisionStateBody =>
-      'Lo stato vecchio (mappa completedSets[weekday|exerciseId]) è stato sostituito da LoggedSession con SetEntry tipizzato: weight, reps, RPE, completed, notes. SetLogged muove lo strain accumulator in tempo reale — set che diventa complete avanza, incompleto retrocede. Senza freezed; Equatable dà l\'== di cui abbiamo bisogno.';
+      'Galassie a spirale e cinture di asteroidi usano drawPoints(PointMode.points, offsets, paint) per renderizzare centinaia di particelle in 1-3 chiamate GPU. L\'approccio ingenuo (un drawCircle per particella) costerebbe 320 chiamate. Il batching è ciò che rende possibili scene dense a 60 fps.';
 
   @override
   String get caseStudy_takeawayEyebrow => 'TAKEAWAY';
 
   @override
   String get caseStudy_takeawayTitle =>
-      'I mock dello showcase non sono demo di palette — sono la prova che il codice regge un pivot di prodotto senza diventare un hack.';
+      'Il cosmos che vedi in questa pagina è codice — non asset, non cattura, non libreria esterna.';
 
   @override
   String get caseStudy_takeawayBody =>
-      'Il pivot di Pulso ha scambiato ~5K LOC di UI mantenendo la gerarchia core → design_system → animations → feature_*, nessuna dipendenza nuova, nessuna regressione nel resto dello scroll. I painter riusano tutto ciò che già esisteva nella sotto-feature. Il codice che vedi sopra sta girando esattamente come nella sessione di Pulso — nessuno specchio, nessuno screenshot.';
+      'Circa 1200 LOC di painter puro, senza dipendenze fuori dal Flutter SDK. Paint riutilizzato come campo, shouldRepaint che confronta proprietà, canvas.save/restore attorno a ogni transform. Lo stesso painter renderizza l\'hero della landing e può essere riusato in qualsiasi schermata dell\'app con parametri diversi.';
 
   @override
   String get showcase_eyebrow => 'Showcase';

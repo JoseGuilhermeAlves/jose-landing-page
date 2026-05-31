@@ -352,101 +352,100 @@ class AppLocalizationsZh extends AppLocalizations {
   String get caseStudy_eyebrow => '案例研究';
 
   @override
-  String get caseStudy_title => 'Pulso 重写——';
+  String get caseStudy_title => 'Cosmos in Canvas —';
 
   @override
-  String get caseStudy_titleAccent => '暗色 Whoop 风格，从零开始。';
+  String get caseStudy_titleAccent => 'Custom Painters 60 fps 运行。';
 
   @override
   String get caseStudy_subtitle =>
-      '健身 mock 最初是奶油色/橙色，Strava 风格。经过一次关于页面结尾的评审，它被转向为暗色恢复优先设计，灵感来自 Whoop。以下是支撑新 Pulso 的决策。';
+      '这个 landing 的背景既非图片也非 Lottie——而是通过 CustomPainter 实时绘制的7种天体。每帧超过140次 draw call，seed 确定性，全部由单一 tick 驱动。';
 
   @override
-  String get caseStudy_pivotEyebrow => '转型';
+  String get caseStudy_pivotEyebrow => '为何手绘';
 
   @override
-  String get caseStudy_pivotTitle => '从轻量记录器到数据仪表盘。';
+  String get caseStudy_pivotTitle => '当几何可参数化时，Canvas 优于素材。';
 
   @override
   String get caseStudy_pivotPara1 =>
-      'Pulso 的第一版是一个普通追踪器：今日、本周、进度三个标签页。一切正常运行——组数标记、圆环、总量——但体验不过是\"看数字\"。四个页面中三个是只读的。';
+      '行星图片是静态的——固定尺寸、固定颜色、无轨道动画、无漂移。Lottie 能解决动画问题，但会增加依赖、增大包体积并限制变体。CustomPainter 接收参数（调色板、表面纹理、半径、seed）并实时绘制——每颗行星都独一无二，无需额外素材。';
 
   @override
   String get caseStudy_pivotPara2 =>
-      '重写翻转了焦点：先恢复，再记录。8周中周期配合线性递进+最后一周减量。每记录一组就推进一个实时响应的负荷累加器。奶油色/橙色调让位于恢复绿 #00D982 和负荷青 #5AC8FA，背景近乎纯黑——明确致敬 Whoop，不假装原创。';
+      'CosmosPainter 渲染7种天体：行星（含环与卫星）、星云、旋涡星系、脉冲星、小行星带、气态星云丝和带时间窗口的彗星。单一 AnimationController 输出 tick [0..1]，派生所有动画——轨道、脉冲、漂移——无并行 Timer，无状态机。';
 
   @override
   String get caseStudy_pivotPara3 =>
-      '领域模型扩展：Program、ProgramWeek、SessionTemplate、PlannedExercise、SetEntry、LoggedSession、RecoverySnapshot、StrainScore、MuscleRecovery、SleepWindow。全部使用纯 Dart 配合 Equatable——无 freezed，无代码生成——保持工作区不依赖 build_runner。';
+      '每颗行星经过6层绘制：bloom（外发光）、大气 rim、带渐变的实体、表面纹理（bands、speckled 或 hemispheres）、terminator（3D 阴影）和 highlight。最终呈现约15次 draw call 的霓虹行星，在 Web 和移动端均以 60 fps 运行。';
 
   @override
-  String get caseStudy_recoveryLabel => 'PULSO · 今日';
+  String get caseStudy_recoveryLabel => 'COSMOS · 实时';
 
   @override
-  String get caseStudy_recoveryHint => '全绿。按中周期模式\n利用窗口进行高强度训练。';
+  String get caseStudy_recoveryHint => '上方所见正在实时绘制。\n无图片，无静态素材。';
 
   @override
-  String get caseStudy_painterStrainTitle => '负荷表盘';
+  String get caseStudy_painterStrainTitle => '6层行星';
 
   @override
   String get caseStudy_painterStrainCaption =>
-      'Whoop 的 0–21 对数刻度。蓝→品红渐变弧线。居中等宽数字，仪表风格读数。';
+      'Bloom → rim → 实体 → 表面 → terminator → highlight。每层是一个 RadialGradient，通过 canvas.clipPath 隔离几何。5色调色板自动插值。';
 
   @override
-  String get caseStudy_painterTempoTitle => '节奏条';
+  String get caseStudy_painterTempoTitle => '旋涡星系';
 
   @override
   String get caseStudy_painterTempoCaption =>
-      '4个阶段——离心 / 暂停 / 向心 / 暂停——发光光标循环移动。在 AnimationController 上运行，通过 super(repaint:) 直接传递给 CustomPainter。';
+      '对数螺旋臂，最多320颗尘埃粒子。drawPoints() 按尺寸层级分3次 GPU 调用——比逐个 drawCircle 减少100倍开销。';
 
   @override
-  String get caseStudy_painterPeriodTitle => '周期化网格';
+  String get caseStudy_painterPeriodTitle => '命名星座';
 
   @override
   String get caseStudy_painterPeriodCaption =>
-      '8周 × 7天中周期。按规定强度热力图，当前周边框高亮，减量周颜色区分。点击任意单元格查看训练。';
+      '南十字、猎户座和南三角，带脉冲星和连接边。AnimationController 通过 super(repaint:) 传入——引擎跳过 build/layout，直接绘制。';
 
   @override
-  String get caseStudy_decisionArchEyebrow => '架构';
+  String get caseStudy_decisionArchEyebrow => '渲染';
 
   @override
-  String get caseStudy_decisionArchTitle => '每个 mock 独立 Clean Arch，非按包';
+  String get caseStudy_decisionArchTitle =>
+      'super(repaint:) 替代 AnimatedBuilder';
 
   @override
   String get caseStudy_decisionArchBody =>
-      '每个 showcase mock（Pulso、Garoa、Aurora、Vitral、Solar）在 lib/src/<mock>/ 内有自己的 data / domain / presentation 三角。mock 之间互不引用——只引用 shared/。当 mock 实体增长时，一切都在其三角内。';
+      'AnimationController 通过 super(repaint:) 直接传递给 CustomPainter。Flutter 引擎跳过流水线的 build 和 layout 阶段，每个 tick 直接进入 paint。在140+ draw call 的场景中，这种节省消除了每16ms 一次的无意义 widget 重建。';
 
   @override
-  String get caseStudy_decisionPaintersEyebrow => 'PAINTERS';
+  String get caseStudy_decisionPaintersEyebrow => '确定性';
 
   @override
-  String get caseStudy_decisionPaintersTitle =>
-      'super(repaint:) 与严格的 shouldRepaint';
+  String get caseStudy_decisionPaintersTitle => '基于 Seed：相同输入，相同场景';
 
   @override
   String get caseStudy_decisionPaintersBody =>
-      '动画 painter 直接在 super(repaint:) 中接收 AnimationController——引擎跳过 build/layout 直接进入 paint。shouldRepaint 逐字段比较。热循环中零分配：Paint、Path 和 TextPainter 作为 painter 的静态字段缓存。';
+      '所有随机位置——行星斑点、小行星位置、漂移相位——均使用 Random(seed)。宇宙可复现：相同 seed，任何平台、任何重启都得到相同场景。支持确定性视觉测试和一致的截图。';
 
   @override
-  String get caseStudy_decisionStateEyebrow => '状态';
+  String get caseStudy_decisionStateEyebrow => '批处理';
 
   @override
-  String get caseStudy_decisionStateTitle => '丰富的 Bloc，逐组记录含 RPE';
+  String get caseStudy_decisionStateTitle => 'drawPoints() 实现零成本高密度';
 
   @override
   String get caseStudy_decisionStateBody =>
-      '旧状态（completedSets[weekday|exerciseId] 映射）被替换为带类型化 SetEntry 的 LoggedSession：weight、reps、RPE、completed、notes。SetLogged 实时驱动负荷累加器——组完成则前进，未完成则后退。无 freezed；Equatable 提供我们需要的 ==。';
+      '旋涡星系和小行星带使用 drawPoints(PointMode.points, offsets, paint) 在1–3次 GPU 调用中渲染数百粒子。朴素做法（每个粒子一次 drawCircle）需320次调用。批处理是密集场景 60 fps 的关键。';
 
   @override
   String get caseStudy_takeawayEyebrow => '要点';
 
   @override
-  String get caseStudy_takeawayTitle =>
-      'Showcase mock 不是配色演示——它们证明代码能承受产品转型而不变成补丁。';
+  String get caseStudy_takeawayTitle => '您在本页看到的宇宙是代码——非素材，非截图，非外部库。';
 
   @override
   String get caseStudy_takeawayBody =>
-      'Pulso 转型替换了约5K行 UI 代码，同时保持 core → design_system → animations → feature_* 层级，无新依赖，滚动其余部分无回归。painter 复用子功能中已有的一切。上面看到的代码与 Pulso 会话中运行的完全一致——没有镜像，没有截图。';
+      '约1200行纯 painter 代码，不依赖 Flutter SDK 之外的任何库。Paint 作为字段复用，shouldRepaint 比较属性，canvas.save/restore 包裹每次变换。同一 painter 渲染 landing 的 hero，可在任何应用页面以不同参数复用。';
 
   @override
   String get showcase_eyebrow => '案例展示';

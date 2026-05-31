@@ -237,7 +237,7 @@ abstract class AppLocalizations {
   /// No description provided for @hero_bio.
   ///
   /// In pt, this message translates to:
-  /// **'7+ anos construindo o front end de apps mobile (e web quando faz sentido) — atuando do varejo B2B a produto fintech em escala.'**
+  /// **'6 anos construindo o front end de apps mobile (e web quando faz sentido) — atuando do varejo B2B a produto fintech em escala.'**
   String get hero_bio;
 
   /// No description provided for @hero_scrollHint.
@@ -261,7 +261,7 @@ abstract class AppLocalizations {
   /// No description provided for @hero_trustYearsValue.
   ///
   /// In pt, this message translates to:
-  /// **'7+'**
+  /// **'6'**
   String get hero_trustYearsValue;
 
   /// No description provided for @hero_trustYearsLabel.
@@ -321,7 +321,7 @@ abstract class AppLocalizations {
   /// No description provided for @about_subtitle.
   ///
   /// In pt, this message translates to:
-  /// **'Front end mobile com Flutter há 7+ anos. Foco em entregar app robusto, com escopo claro e expectativa alinhada desde o kickoff.'**
+  /// **'Front end mobile com Flutter há 6 anos. Foco em entregar app robusto, com escopo claro e expectativa alinhada desde o kickoff.'**
   String get about_subtitle;
 
   /// No description provided for @about_domainsMapLabel.

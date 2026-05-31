@@ -85,7 +85,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get hero_ctaProjects => 'プロジェクトを見る';
 
   @override
-  String get hero_trustYearsValue => '7+';
+  String get hero_trustYearsValue => '6';
 
   @override
   String get hero_trustYearsLabel => '年のFlutter経験';

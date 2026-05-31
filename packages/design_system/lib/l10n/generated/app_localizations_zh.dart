@@ -84,7 +84,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get hero_ctaProjects => '查看项目';
 
   @override
-  String get hero_trustYearsValue => '7+';
+  String get hero_trustYearsValue => '6';
 
   @override
   String get hero_trustYearsLabel => '年 Flutter 经验';

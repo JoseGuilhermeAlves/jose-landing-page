@@ -74,7 +74,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get hero_bio =>
-      '7+ Jahre Erfahrung im Aufbau des Frontends mobiler Apps (und Web, wenn sinnvoll) — von B2B-Retail bis hin zu Fintech-Produkten im großen Maßstab.';
+      '6 Jahre Erfahrung im Aufbau des Frontends mobiler Apps (und Web, wenn sinnvoll) — von B2B-Retail bis hin zu Fintech-Produkten im großen Maßstab.';
 
   @override
   String get hero_scrollHint => 'scrollen um fortzufahren';
@@ -86,7 +86,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get hero_ctaProjects => 'Projekte ansehen';
 
   @override
-  String get hero_trustYearsValue => '7+';
+  String get hero_trustYearsValue => '6';
 
   @override
   String get hero_trustYearsLabel => 'Jahre Flutter';
@@ -117,7 +117,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get about_subtitle =>
-      'Mobile-Frontend mit Flutter seit 7+ Jahren. Fokus auf robuste Apps mit klarem Scope und abgestimmten Erwartungen ab Kickoff.';
+      'Mobile-Frontend mit Flutter seit 6 Jahren. Fokus auf robuste Apps mit klarem Scope und abgestimmten Erwartungen ab Kickoff.';
 
   @override
   String get about_domainsMapLabel => 'Domänenkarte';

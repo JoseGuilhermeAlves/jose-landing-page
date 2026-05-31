@@ -817,6 +817,177 @@ class AppLocalizationsPt extends AppLocalizations {
   String get mira_totalAssetsLabel => 'PATRIMÔNIO TOTAL';
 
   @override
+  String get stack_cat_framework => 'Framework';
+
+  @override
+  String get stack_cat_state => 'Estado';
+
+  @override
+  String get stack_cat_routing => 'Rotas';
+
+  @override
+  String get stack_cat_graphics => 'Gráficos';
+
+  @override
+  String get stack_cat_networking => 'Rede';
+
+  @override
+  String get stack_cat_persistence => 'Persistência';
+
+  @override
+  String get stack_cat_codegen => 'Code Generation';
+
+  @override
+  String get stack_cat_architecture => 'Arquitetura';
+
+  @override
+  String get stack_cat_quality => 'Qualidade';
+
+  @override
+  String get stack_cat_web => 'Web / PWA';
+
+  @override
+  String get stack_cat_tooling => 'Tooling';
+
+  @override
+  String get stack_flutter_role => 'Framework base, Material 3 dark-only';
+
+  @override
+  String get stack_dart_role => 'SDK, null safety e records';
+
+  @override
+  String get stack_equatable_role => 'Equality sem codegen pra value objects';
+
+  @override
+  String get stack_platformChannels_role => 'Ponte nativa Dart ↔ Kotlin/Swift';
+
+  @override
+  String get stack_flutterBloc_role => 'Bloc + Cubit pros fluxos com eventos';
+
+  @override
+  String get stack_provider_role => 'InheritedWidget simplificado, DI leve';
+
+  @override
+  String get stack_riverpod_role => 'Estado reativo com code generation';
+
+  @override
+  String get stack_getx_role => 'Estado reativo, rotas e DI integrados';
+
+  @override
+  String get stack_mobx_role => 'Observables e reactions transparentes';
+
+  @override
+  String get stack_blocTest_role => 'Test harness pra blocs e cubits';
+
+  @override
+  String get stack_goRouter_role => 'Routing declarativo com deferred loading';
+
+  @override
+  String get stack_flutterModular_role => 'DI + rotas modulares por feature';
+
+  @override
+  String get stack_customPainter_role =>
+      'Renderização 2D de baixo nível no Canvas';
+
+  @override
+  String get stack_animations_role => 'Implícitas, explícitas e Tween chains';
+
+  @override
+  String get stack_dio_role => 'HTTP client com interceptors e cancel tokens';
+
+  @override
+  String get stack_http_role => 'HTTP client leve do Dart team';
+
+  @override
+  String get stack_sqlite_role => 'Banco relacional local no device';
+
+  @override
+  String get stack_hive_role => 'Key-value store rápido, sem SQL';
+
+  @override
+  String get stack_sharedPreferences_role =>
+      'Key-value persistente simples por plataforma';
+
+  @override
+  String get stack_firebase_role =>
+      'Auth, Firestore, Analytics, Push, Crashlytics';
+
+  @override
+  String get stack_freezed_role =>
+      'Unions, copyWith e serialização por codegen';
+
+  @override
+  String get stack_jsonSerializable_role =>
+      'Serialização JSON type-safe com codegen';
+
+  @override
+  String get stack_cleanArch_role =>
+      'Camadas data / domain / presentation por feature';
+
+  @override
+  String get stack_mvvm_role => 'View-ViewModel binding reativo';
+
+  @override
+  String get stack_solid_role =>
+      'Inversão de dependência e responsabilidade única';
+
+  @override
+  String get stack_monorepo_role =>
+      'Pacotes independentes com contratos explícitos';
+
+  @override
+  String get stack_getIt_role => 'Service locator para inversão de dependência';
+
+  @override
+  String get stack_injectable_role =>
+      'DI por anotações com codegen sobre get_it';
+
+  @override
+  String get stack_designSystem_role =>
+      'Cores, tipografia, spacing e componentes reutilizáveis';
+
+  @override
+  String get stack_sdui_role => 'UI dirigida por contrato remoto, sem deploy';
+
+  @override
+  String get stack_featureFirst_role =>
+      'Módulos isolados por domínio, sem dependência cruzada';
+
+  @override
+  String get stack_vga_role => 'Lints estritos com failFast no CI';
+
+  @override
+  String get stack_flutterTest_role => 'Widget tests por feature + bloc tests';
+
+  @override
+  String get stack_mocktail_role => 'Mocks sem codegen pra testes unitários';
+
+  @override
+  String get stack_integrationTest_role =>
+      'Testes E2E no device real ou emulador';
+
+  @override
+  String get stack_skwasm_role =>
+      'Renderer WASM, fallback CanvasKit automático';
+
+  @override
+  String get stack_pwa_role => 'Instalável, indexável, com loading custom';
+
+  @override
+  String get stack_urlLauncher_role =>
+      'Deep links externos (WhatsApp, mail, GitHub)';
+
+  @override
+  String get stack_melos_role => 'Orquestrador do monorepo Pub Workspaces';
+
+  @override
+  String get stack_githubActions_role =>
+      'Pipelines de analyze, test e build web';
+
+  @override
+  String get stack_fastlane_role => 'Automação de build, sign e deploy mobile';
+
+  @override
   String get locale_pt => 'Português';
 
   @override

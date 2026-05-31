@@ -8,6 +8,9 @@ void main() {
   Widget wrap(Widget child, {Size size = const Size(1280, 3200)}) {
     return MaterialApp(
       theme: AppTheme.dark(),
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      locale: const Locale('pt'),
       home: MediaQuery(
         data: MediaQueryData(size: size),
         child: Scaffold(
@@ -74,13 +77,15 @@ void main() {
       await tester.pumpWidget(wrap(const TechSection()));
       await tester.pump(const Duration(milliseconds: 16));
 
+      final l10n = await AppLocalizations.delegate.load(const Locale('pt'));
+      final byCategory = StackCatalog.byCategory(l10n);
       for (final cat in StackCategory.values) {
-        final items = StackCatalog.byCategory[cat] ?? const <StackItem>[];
+        final items = byCategory[cat] ?? const <StackItem>[];
         if (items.isEmpty) continue;
         expect(
-          find.text(cat.label.toUpperCase()),
+          find.text(cat.label(l10n).toUpperCase()),
           findsOneWidget,
-          reason: 'header da categoria ${cat.label} ausente',
+          reason: 'header da categoria ${cat.name} ausente',
         );
       }
 

@@ -796,6 +796,163 @@ class AppLocalizationsJa extends AppLocalizations {
   String get mira_totalAssetsLabel => '総資産';
 
   @override
+  String get stack_cat_framework => 'フレームワーク';
+
+  @override
+  String get stack_cat_state => '状態管理';
+
+  @override
+  String get stack_cat_routing => 'ルーティング';
+
+  @override
+  String get stack_cat_graphics => 'グラフィックス';
+
+  @override
+  String get stack_cat_networking => 'ネットワーク';
+
+  @override
+  String get stack_cat_persistence => '永続化';
+
+  @override
+  String get stack_cat_codegen => 'コード生成';
+
+  @override
+  String get stack_cat_architecture => 'アーキテクチャ';
+
+  @override
+  String get stack_cat_quality => '品質';
+
+  @override
+  String get stack_cat_web => 'Web / PWA';
+
+  @override
+  String get stack_cat_tooling => 'ツール';
+
+  @override
+  String get stack_flutter_role => '基盤フレームワーク、Material 3 ダークオンリー';
+
+  @override
+  String get stack_dart_role => 'SDK、null safety、records';
+
+  @override
+  String get stack_equatable_role => 'codegen不要のvalue object向けequality';
+
+  @override
+  String get stack_platformChannels_role => 'Dart ↔ Kotlin/Swiftネイティブブリッジ';
+
+  @override
+  String get stack_flutterBloc_role => 'イベント駆動フロー向けBloc + Cubit';
+
+  @override
+  String get stack_provider_role => '簡略化されたInheritedWidget、軽量DI';
+
+  @override
+  String get stack_riverpod_role => 'コード生成によるリアクティブステート';
+
+  @override
+  String get stack_getx_role => 'リアクティブステート、ルーティング、DI統合';
+
+  @override
+  String get stack_mobx_role => '透過的なobservableとreaction';
+
+  @override
+  String get stack_blocTest_role => 'BlocとCubit向けテストハーネス';
+
+  @override
+  String get stack_goRouter_role => 'deferred loading対応の宣言的ルーティング';
+
+  @override
+  String get stack_flutterModular_role => 'feature単位のモジュラーDI + ルーティング';
+
+  @override
+  String get stack_customPainter_role => 'Canvas上の低レベル2Dレンダリング';
+
+  @override
+  String get stack_animations_role => '暗黙的・明示的アニメーションとTweenチェーン';
+
+  @override
+  String get stack_dio_role => 'interceptorとcancel token対応HTTPクライアント';
+
+  @override
+  String get stack_http_role => 'Dartチーム製の軽量HTTPクライアント';
+
+  @override
+  String get stack_sqlite_role => 'デバイス上のローカルリレーショナルDB';
+
+  @override
+  String get stack_hive_role => 'SQLなしの高速key-valueストア';
+
+  @override
+  String get stack_sharedPreferences_role => 'プラットフォーム別のシンプルなkey-value永続化';
+
+  @override
+  String get stack_firebase_role => 'Auth、Firestore、Analytics、Push、Crashlytics';
+
+  @override
+  String get stack_freezed_role => 'codegen によるunion、copyWith、シリアライゼーション';
+
+  @override
+  String get stack_jsonSerializable_role => 'codegen による型安全なJSONシリアライゼーション';
+
+  @override
+  String get stack_cleanArch_role =>
+      'feature単位のdata / domain / presentationレイヤー';
+
+  @override
+  String get stack_mvvm_role => 'リアクティブなView-ViewModelバインディング';
+
+  @override
+  String get stack_solid_role => '依存性逆転と単一責任';
+
+  @override
+  String get stack_monorepo_role => '明示的な契約を持つ独立パッケージ群';
+
+  @override
+  String get stack_getIt_role => '依存性逆転のためのService Locator';
+
+  @override
+  String get stack_injectable_role => 'get_it上のアノテーションベースDI + codegen';
+
+  @override
+  String get stack_designSystem_role => 'カラー、タイポグラフィ、スペーシング、再利用可能コンポーネント';
+
+  @override
+  String get stack_sdui_role => 'リモート契約駆動のUI、デプロイ不要';
+
+  @override
+  String get stack_featureFirst_role => 'ドメイン単位の独立モジュール、依存関係なし';
+
+  @override
+  String get stack_vga_role => 'CI上でfailFastする厳格なlint';
+
+  @override
+  String get stack_flutterTest_role => 'feature単位のwidgetテスト + blocテスト';
+
+  @override
+  String get stack_mocktail_role => 'codegen不要のユニットテスト用モック';
+
+  @override
+  String get stack_integrationTest_role => '実機またはエミュレータでのE2Eテスト';
+
+  @override
+  String get stack_skwasm_role => 'WASMレンダラー、CanvasKit自動フォールバック';
+
+  @override
+  String get stack_pwa_role => 'インストール可能、インデックス可能、カスタムローディング';
+
+  @override
+  String get stack_urlLauncher_role => '外部ディープリンク（WhatsApp、メール、GitHub）';
+
+  @override
+  String get stack_melos_role => 'Pub Workspacesモノレポオーケストレーター';
+
+  @override
+  String get stack_githubActions_role => 'analyze、test、Web buildのパイプライン';
+
+  @override
+  String get stack_fastlane_role => 'モバイルのbuild、署名、デプロイ自動化';
+
+  @override
   String get locale_pt => 'Português';
 
   @override

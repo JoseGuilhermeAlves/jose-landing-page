@@ -60,7 +60,7 @@ class TechSection extends StatelessWidget {
           colors: colors,
         ),
         const SizedBox(height: AppSpacing.lg),
-        StackByCategory(itemsByCategory: StackCatalog.byCategory),
+        StackByCategory(itemsByCategory: StackCatalog.byCategory(context.l10n)),
         const SizedBox(height: AppSpacing.xxl),
         _Subhead(
           label: 'Constelacoes de pixels',

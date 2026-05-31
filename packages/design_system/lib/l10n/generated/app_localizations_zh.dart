@@ -787,6 +787,162 @@ class AppLocalizationsZh extends AppLocalizations {
   String get mira_totalAssetsLabel => '总资产';
 
   @override
+  String get stack_cat_framework => '框架';
+
+  @override
+  String get stack_cat_state => '状态管理';
+
+  @override
+  String get stack_cat_routing => '路由';
+
+  @override
+  String get stack_cat_graphics => '图形';
+
+  @override
+  String get stack_cat_networking => '网络';
+
+  @override
+  String get stack_cat_persistence => '持久化';
+
+  @override
+  String get stack_cat_codegen => '代码生成';
+
+  @override
+  String get stack_cat_architecture => '架构';
+
+  @override
+  String get stack_cat_quality => '质量';
+
+  @override
+  String get stack_cat_web => 'Web / PWA';
+
+  @override
+  String get stack_cat_tooling => '工具链';
+
+  @override
+  String get stack_flutter_role => '基础框架，Material 3 纯暗色模式';
+
+  @override
+  String get stack_dart_role => 'SDK、空安全与 Records';
+
+  @override
+  String get stack_equatable_role => '无需代码生成的值对象相等性';
+
+  @override
+  String get stack_platformChannels_role => '原生桥接 Dart ↔ Kotlin/Swift';
+
+  @override
+  String get stack_flutterBloc_role => 'Bloc + Cubit 用于事件驱动流程';
+
+  @override
+  String get stack_provider_role => '简化的 InheritedWidget，轻量 DI';
+
+  @override
+  String get stack_riverpod_role => '配合代码生成的响应式状态';
+
+  @override
+  String get stack_getx_role => '集成响应式状态、路由和 DI';
+
+  @override
+  String get stack_mobx_role => '透明的 Observables 与 Reactions';
+
+  @override
+  String get stack_blocTest_role => 'Bloc 和 Cubit 的测试工具';
+
+  @override
+  String get stack_goRouter_role => '声明式路由，支持延迟加载';
+
+  @override
+  String get stack_flutterModular_role => '按功能模块的 DI + 路由';
+
+  @override
+  String get stack_customPainter_role => 'Canvas 上的底层 2D 渲染';
+
+  @override
+  String get stack_animations_role => '隐式、显式及 Tween 链式动画';
+
+  @override
+  String get stack_dio_role => '支持拦截器和取消令牌的 HTTP 客户端';
+
+  @override
+  String get stack_http_role => 'Dart 团队的轻量 HTTP 客户端';
+
+  @override
+  String get stack_sqlite_role => '设备上的本地关系数据库';
+
+  @override
+  String get stack_hive_role => '无 SQL 的快速键值存储';
+
+  @override
+  String get stack_sharedPreferences_role => '简单的跨平台持久键值存储';
+
+  @override
+  String get stack_firebase_role => 'Auth、Firestore、Analytics、Push、Crashlytics';
+
+  @override
+  String get stack_freezed_role => '通过代码生成实现 Unions、copyWith 和序列化';
+
+  @override
+  String get stack_jsonSerializable_role => '类型安全的 JSON 序列化，配合代码生成';
+
+  @override
+  String get stack_cleanArch_role => '按功能分层 data / domain / presentation';
+
+  @override
+  String get stack_mvvm_role => '响应式 View-ViewModel 绑定';
+
+  @override
+  String get stack_solid_role => '依赖反转与单一职责';
+
+  @override
+  String get stack_monorepo_role => '独立包，显式契约';
+
+  @override
+  String get stack_getIt_role => '用于依赖反转的 Service Locator';
+
+  @override
+  String get stack_injectable_role => '基于注解的 DI，配合 get_it 代码生成';
+
+  @override
+  String get stack_designSystem_role => '颜色、字体、间距和可复用组件';
+
+  @override
+  String get stack_sdui_role => '由远程契约驱动的 UI，无需部署';
+
+  @override
+  String get stack_featureFirst_role => '按领域隔离的模块，无交叉依赖';
+
+  @override
+  String get stack_vga_role => '严格 Lint 规则，CI 中 failFast';
+
+  @override
+  String get stack_flutterTest_role => '按功能的 Widget 测试 + Bloc 测试';
+
+  @override
+  String get stack_mocktail_role => '无需代码生成的单元测试 Mock';
+
+  @override
+  String get stack_integrationTest_role => '真机或模拟器上的端到端测试';
+
+  @override
+  String get stack_skwasm_role => 'WASM 渲染器，自动回退 CanvasKit';
+
+  @override
+  String get stack_pwa_role => '可安装、可索引，自定义加载画面';
+
+  @override
+  String get stack_urlLauncher_role => '外部深度链接（WhatsApp、邮件、GitHub）';
+
+  @override
+  String get stack_melos_role => 'Monorepo Pub Workspaces 编排器';
+
+  @override
+  String get stack_githubActions_role => '分析、测试和 Web 构建流水线';
+
+  @override
+  String get stack_fastlane_role => '移动端构建、签名和部署自动化';
+
+  @override
   String get locale_pt => 'Português';
 
   @override

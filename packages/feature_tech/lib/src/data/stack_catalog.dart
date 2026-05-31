@@ -1,285 +1,272 @@
+import 'package:design_system/l10n/generated/app_localizations.dart';
 import 'package:feature_tech/src/domain/stack_category.dart';
 import 'package:feature_tech/src/domain/stack_item.dart';
 
-/// Stack real do projeto (versoes alinhadas com pubspec.yaml). Cada
-/// item declara a categoria que pertence — a `TechSection` agrupa por
-/// categoria pra escaneamento rapido.
 abstract final class StackCatalog {
-  static const List<StackItem> all = [
-    // Framework
+  static List<StackItem> all(AppLocalizations l10n) => [
     StackItem(
       name: 'Flutter',
       version: '>=3.38',
-      role: 'Framework base, Material 3 dark-only',
+      role: l10n.stack_flutter_role,
       category: StackCategory.framework,
     ),
     StackItem(
       name: 'Dart',
       version: '>=3.10',
-      role: 'SDK, null safety e records',
+      role: l10n.stack_dart_role,
       category: StackCategory.framework,
     ),
     StackItem(
       name: 'Equatable',
       version: '2.0.7',
-      role: 'Equality sem codegen pra value objects',
+      role: l10n.stack_equatable_role,
       category: StackCategory.framework,
     ),
     StackItem(
       name: 'Platform Channels',
       version: 'Flutter API',
-      role: 'Ponte nativa Dart ↔ Kotlin/Swift',
+      role: l10n.stack_platformChannels_role,
       category: StackCategory.framework,
     ),
 
-    // Estado
     StackItem(
       name: 'flutter_bloc',
       version: '9.x',
-      role: 'Bloc + Cubit pros fluxos com eventos',
+      role: l10n.stack_flutterBloc_role,
       category: StackCategory.state,
     ),
     StackItem(
       name: 'Provider',
       version: '6.x',
-      role: 'InheritedWidget simplificado, DI leve',
+      role: l10n.stack_provider_role,
       category: StackCategory.state,
     ),
     StackItem(
       name: 'Riverpod',
       version: '2.x',
-      role: 'Estado reativo com code generation',
+      role: l10n.stack_riverpod_role,
       category: StackCategory.state,
     ),
     StackItem(
       name: 'GetX',
       version: '4.x',
-      role: 'Estado reativo, rotas e DI integrados',
+      role: l10n.stack_getx_role,
       category: StackCategory.state,
     ),
     StackItem(
       name: 'MobX',
       version: '2.x',
-      role: 'Observables e reactions transparentes',
+      role: l10n.stack_mobx_role,
       category: StackCategory.state,
     ),
     StackItem(
       name: 'bloc_test',
       version: '10.x',
-      role: 'Test harness pra blocs e cubits',
+      role: l10n.stack_blocTest_role,
       category: StackCategory.quality,
     ),
 
-    // Rotas
     StackItem(
       name: 'go_router',
       version: '16.2.4',
-      role: 'Routing declarativo com deferred loading',
+      role: l10n.stack_goRouter_role,
       category: StackCategory.routing,
     ),
     StackItem(
       name: 'flutter_modular',
       version: '6.x',
-      role: 'DI + rotas modulares por feature',
+      role: l10n.stack_flutterModular_role,
       category: StackCategory.routing,
     ),
 
-    // Graficos
     StackItem(
       name: 'CustomPainter',
       version: 'Flutter API',
-      role: 'Renderizacao 2D de baixo nivel no Canvas',
+      role: l10n.stack_customPainter_role,
       category: StackCategory.graphics,
     ),
     StackItem(
       name: 'Animations',
       version: 'Flutter API',
-      role: 'Implicitas, explicitas e Tween chains',
+      role: l10n.stack_animations_role,
       category: StackCategory.graphics,
     ),
 
-    // Rede
     StackItem(
       name: 'Dio',
       version: '5.x',
-      role: 'HTTP client com interceptors e cancel tokens',
+      role: l10n.stack_dio_role,
       category: StackCategory.networking,
     ),
     StackItem(
       name: 'http',
       version: '1.x',
-      role: 'HTTP client leve do Dart team',
+      role: l10n.stack_http_role,
       category: StackCategory.networking,
     ),
 
-    // Persistencia
     StackItem(
       name: 'SQLite',
       version: 'sqflite',
-      role: 'Banco relacional local no device',
+      role: l10n.stack_sqlite_role,
       category: StackCategory.persistence,
     ),
     StackItem(
       name: 'Hive',
       version: '4.x',
-      role: 'Key-value store rapido, sem SQL',
+      role: l10n.stack_hive_role,
       category: StackCategory.persistence,
     ),
     StackItem(
       name: 'shared_preferences',
       version: '2.x',
-      role: 'Key-value persistente simples por plataforma',
+      role: l10n.stack_sharedPreferences_role,
       category: StackCategory.persistence,
     ),
     StackItem(
       name: 'Firebase',
       version: 'FlutterFire',
-      role: 'Auth, Firestore, Analytics, Push, Crashlytics',
+      role: l10n.stack_firebase_role,
       category: StackCategory.persistence,
     ),
 
-    // Code Generation
     StackItem(
       name: 'freezed',
       version: '2.x',
-      role: 'Unions, copyWith e serialização por codegen',
+      role: l10n.stack_freezed_role,
       category: StackCategory.codegen,
     ),
     StackItem(
       name: 'json_serializable',
       version: '6.x',
-      role: 'Serialização JSON type-safe com codegen',
+      role: l10n.stack_jsonSerializable_role,
       category: StackCategory.codegen,
     ),
 
-    // Arquitetura
     StackItem(
       name: 'Clean Architecture',
       version: 'Padrao',
-      role: 'Camadas data / domain / presentation por feature',
+      role: l10n.stack_cleanArch_role,
       category: StackCategory.architecture,
     ),
     StackItem(
       name: 'MVVM',
       version: 'Padrao',
-      role: 'View-ViewModel binding reativo',
+      role: l10n.stack_mvvm_role,
       category: StackCategory.architecture,
     ),
     StackItem(
       name: 'SOLID',
       version: 'Principios',
-      role: 'Inversao de dependencia e responsabilidade unica',
+      role: l10n.stack_solid_role,
       category: StackCategory.architecture,
     ),
     StackItem(
       name: 'Monorepo',
       version: 'Pub Workspaces',
-      role: 'Pacotes independentes com contratos explicitos',
+      role: l10n.stack_monorepo_role,
       category: StackCategory.architecture,
     ),
     StackItem(
       name: 'get_it',
       version: '8.x',
-      role: 'Service locator para inversao de dependencia',
+      role: l10n.stack_getIt_role,
       category: StackCategory.architecture,
     ),
     StackItem(
       name: 'injectable',
       version: '2.x',
-      role: 'DI por anotações com codegen sobre get_it',
+      role: l10n.stack_injectable_role,
       category: StackCategory.architecture,
     ),
     StackItem(
       name: 'Design System',
       version: 'Tokens',
-      role: 'Cores, tipografia, spacing e componentes reutilizáveis',
+      role: l10n.stack_designSystem_role,
       category: StackCategory.architecture,
     ),
     StackItem(
       name: 'SDUI',
       version: 'Server-Driven',
-      role: 'UI dirigida por contrato remoto, sem deploy',
+      role: l10n.stack_sdui_role,
       category: StackCategory.architecture,
     ),
     StackItem(
       name: 'Feature-First',
       version: 'Organizacao',
-      role: 'Modulos isolados por dominio, sem dependencia cruzada',
+      role: l10n.stack_featureFirst_role,
       category: StackCategory.architecture,
     ),
 
-    // Qualidade
     StackItem(
       name: 'very_good_analysis',
       version: '6.0.0',
-      role: 'Lints estritos com failFast no CI',
+      role: l10n.stack_vga_role,
       category: StackCategory.quality,
     ),
     StackItem(
       name: 'flutter_test',
       version: 'SDK',
-      role: 'Widget tests por feature + bloc tests',
+      role: l10n.stack_flutterTest_role,
       category: StackCategory.quality,
     ),
     StackItem(
       name: 'mocktail',
       version: '1.x',
-      role: 'Mocks sem codegen pra testes unitarios',
+      role: l10n.stack_mocktail_role,
       category: StackCategory.quality,
     ),
     StackItem(
       name: 'integration_test',
       version: 'SDK',
-      role: 'Testes E2E no device real ou emulador',
+      role: l10n.stack_integrationTest_role,
       category: StackCategory.quality,
     ),
 
-    // Web / PWA
     StackItem(
       name: 'Skwasm',
       version: '--wasm',
-      role: 'Renderer WASM, fallback CanvasKit automatico',
+      role: l10n.stack_skwasm_role,
       category: StackCategory.web,
     ),
     StackItem(
       name: 'PWA',
       version: 'manifest + sitemap',
-      role: 'Instalavel, indexavel, com loading custom',
+      role: l10n.stack_pwa_role,
       category: StackCategory.web,
     ),
     StackItem(
       name: 'url_launcher',
       version: '6.3.0',
-      role: 'Deep links externos (WhatsApp, mail, GitHub)',
+      role: l10n.stack_urlLauncher_role,
       category: StackCategory.web,
     ),
 
-    // Tooling
     StackItem(
       name: 'Melos',
       version: '7.3.0',
-      role: 'Orquestrador do monorepo Pub Workspaces',
+      role: l10n.stack_melos_role,
       category: StackCategory.tooling,
     ),
     StackItem(
       name: 'GitHub Actions',
       version: 'CI',
-      role: 'Pipelines de analyze, test e build web',
+      role: l10n.stack_githubActions_role,
       category: StackCategory.tooling,
     ),
     StackItem(
       name: 'Fastlane',
       version: 'CI/CD',
-      role: 'Automacao de build, sign e deploy mobile',
+      role: l10n.stack_fastlane_role,
       category: StackCategory.tooling,
     ),
   ];
 
-  /// Itens agrupados por categoria, preservando a ordem original.
-  static Map<StackCategory, List<StackItem>> get byCategory {
+  static Map<StackCategory, List<StackItem>> byCategory(AppLocalizations l10n) {
+    final items = all(l10n);
     final map = <StackCategory, List<StackItem>>{};
     for (final category in StackCategory.values) {
-      map[category] = all.where((i) => i.category == category).toList();
+      map[category] = items.where((i) => i.category == category).toList();
     }
     return map;
   }

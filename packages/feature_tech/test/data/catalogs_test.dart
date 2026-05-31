@@ -1,7 +1,15 @@
+import 'package:design_system/design_system.dart';
 import 'package:feature_tech/feature_tech.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
+  late AppLocalizations l10n;
+
+  setUpAll(() async {
+    l10n = await AppLocalizations.delegate.load(const Locale('pt'));
+  });
+
   group('ArchDecisionsCatalog', () {
     test('expoe 7 decisoes com ids unicos', () {
       const all = ArchDecisionsCatalog.all;
@@ -20,18 +28,18 @@ void main() {
 
   group('StackCatalog', () {
     test('byCategory cobre todas as categorias enum', () {
-      final byCategory = StackCatalog.byCategory;
+      final byCategory = StackCatalog.byCategory(l10n);
       for (final c in StackCategory.values) {
         expect(
           byCategory.containsKey(c),
           isTrue,
-          reason: 'categoria ${c.label} ausente do agrupamento',
+          reason: 'categoria ${c.name} ausente do agrupamento',
         );
       }
     });
 
     test('cada item carrega name + version + role + category', () {
-      for (final item in StackCatalog.all) {
+      for (final item in StackCatalog.all(l10n)) {
         expect(item.name, isNotEmpty);
         expect(item.version, isNotEmpty);
         expect(item.role, isNotEmpty);
@@ -39,7 +47,8 @@ void main() {
     });
 
     test('itens estao distribuidos em mais de uma categoria', () {
-      final categories = StackCatalog.all.map((i) => i.category).toSet();
+      final categories =
+          StackCatalog.all(l10n).map((i) => i.category).toSet();
       expect(categories.length, greaterThan(1));
     });
   });

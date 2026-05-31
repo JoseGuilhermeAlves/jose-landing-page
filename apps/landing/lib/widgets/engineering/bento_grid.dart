@@ -56,7 +56,7 @@ class TechBentoGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isMobile = context.isMobile;
-    final byCategory = StackCatalog.byCategory;
+    final byCategory = StackCatalog.byCategory(context.l10n);
 
     if (isMobile) {
       const categories = StackCategory.values;
@@ -165,7 +165,7 @@ class _CategoryCard extends StatelessWidget {
                 ),
                 const SizedBox(width: AppSpacing.sm),
                 Text(
-                  category.label.toUpperCase(),
+                  category.label(context.l10n).toUpperCase(),
                   style: textTheme.labelSmall?.copyWith(
                     color: accent,
                     letterSpacing: 1.2,

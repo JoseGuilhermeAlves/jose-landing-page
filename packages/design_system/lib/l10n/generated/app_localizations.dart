@@ -1602,6 +1602,318 @@ abstract class AppLocalizations {
   /// **'PATRIMÔNIO TOTAL'**
   String get mira_totalAssetsLabel;
 
+  /// No description provided for @stack_cat_framework.
+  ///
+  /// In pt, this message translates to:
+  /// **'Framework'**
+  String get stack_cat_framework;
+
+  /// No description provided for @stack_cat_state.
+  ///
+  /// In pt, this message translates to:
+  /// **'Estado'**
+  String get stack_cat_state;
+
+  /// No description provided for @stack_cat_routing.
+  ///
+  /// In pt, this message translates to:
+  /// **'Rotas'**
+  String get stack_cat_routing;
+
+  /// No description provided for @stack_cat_graphics.
+  ///
+  /// In pt, this message translates to:
+  /// **'Gráficos'**
+  String get stack_cat_graphics;
+
+  /// No description provided for @stack_cat_networking.
+  ///
+  /// In pt, this message translates to:
+  /// **'Rede'**
+  String get stack_cat_networking;
+
+  /// No description provided for @stack_cat_persistence.
+  ///
+  /// In pt, this message translates to:
+  /// **'Persistência'**
+  String get stack_cat_persistence;
+
+  /// No description provided for @stack_cat_codegen.
+  ///
+  /// In pt, this message translates to:
+  /// **'Code Generation'**
+  String get stack_cat_codegen;
+
+  /// No description provided for @stack_cat_architecture.
+  ///
+  /// In pt, this message translates to:
+  /// **'Arquitetura'**
+  String get stack_cat_architecture;
+
+  /// No description provided for @stack_cat_quality.
+  ///
+  /// In pt, this message translates to:
+  /// **'Qualidade'**
+  String get stack_cat_quality;
+
+  /// No description provided for @stack_cat_web.
+  ///
+  /// In pt, this message translates to:
+  /// **'Web / PWA'**
+  String get stack_cat_web;
+
+  /// No description provided for @stack_cat_tooling.
+  ///
+  /// In pt, this message translates to:
+  /// **'Tooling'**
+  String get stack_cat_tooling;
+
+  /// No description provided for @stack_flutter_role.
+  ///
+  /// In pt, this message translates to:
+  /// **'Framework base, Material 3 dark-only'**
+  String get stack_flutter_role;
+
+  /// No description provided for @stack_dart_role.
+  ///
+  /// In pt, this message translates to:
+  /// **'SDK, null safety e records'**
+  String get stack_dart_role;
+
+  /// No description provided for @stack_equatable_role.
+  ///
+  /// In pt, this message translates to:
+  /// **'Equality sem codegen pra value objects'**
+  String get stack_equatable_role;
+
+  /// No description provided for @stack_platformChannels_role.
+  ///
+  /// In pt, this message translates to:
+  /// **'Ponte nativa Dart ↔ Kotlin/Swift'**
+  String get stack_platformChannels_role;
+
+  /// No description provided for @stack_flutterBloc_role.
+  ///
+  /// In pt, this message translates to:
+  /// **'Bloc + Cubit pros fluxos com eventos'**
+  String get stack_flutterBloc_role;
+
+  /// No description provided for @stack_provider_role.
+  ///
+  /// In pt, this message translates to:
+  /// **'InheritedWidget simplificado, DI leve'**
+  String get stack_provider_role;
+
+  /// No description provided for @stack_riverpod_role.
+  ///
+  /// In pt, this message translates to:
+  /// **'Estado reativo com code generation'**
+  String get stack_riverpod_role;
+
+  /// No description provided for @stack_getx_role.
+  ///
+  /// In pt, this message translates to:
+  /// **'Estado reativo, rotas e DI integrados'**
+  String get stack_getx_role;
+
+  /// No description provided for @stack_mobx_role.
+  ///
+  /// In pt, this message translates to:
+  /// **'Observables e reactions transparentes'**
+  String get stack_mobx_role;
+
+  /// No description provided for @stack_blocTest_role.
+  ///
+  /// In pt, this message translates to:
+  /// **'Test harness pra blocs e cubits'**
+  String get stack_blocTest_role;
+
+  /// No description provided for @stack_goRouter_role.
+  ///
+  /// In pt, this message translates to:
+  /// **'Routing declarativo com deferred loading'**
+  String get stack_goRouter_role;
+
+  /// No description provided for @stack_flutterModular_role.
+  ///
+  /// In pt, this message translates to:
+  /// **'DI + rotas modulares por feature'**
+  String get stack_flutterModular_role;
+
+  /// No description provided for @stack_customPainter_role.
+  ///
+  /// In pt, this message translates to:
+  /// **'Renderização 2D de baixo nível no Canvas'**
+  String get stack_customPainter_role;
+
+  /// No description provided for @stack_animations_role.
+  ///
+  /// In pt, this message translates to:
+  /// **'Implícitas, explícitas e Tween chains'**
+  String get stack_animations_role;
+
+  /// No description provided for @stack_dio_role.
+  ///
+  /// In pt, this message translates to:
+  /// **'HTTP client com interceptors e cancel tokens'**
+  String get stack_dio_role;
+
+  /// No description provided for @stack_http_role.
+  ///
+  /// In pt, this message translates to:
+  /// **'HTTP client leve do Dart team'**
+  String get stack_http_role;
+
+  /// No description provided for @stack_sqlite_role.
+  ///
+  /// In pt, this message translates to:
+  /// **'Banco relacional local no device'**
+  String get stack_sqlite_role;
+
+  /// No description provided for @stack_hive_role.
+  ///
+  /// In pt, this message translates to:
+  /// **'Key-value store rápido, sem SQL'**
+  String get stack_hive_role;
+
+  /// No description provided for @stack_sharedPreferences_role.
+  ///
+  /// In pt, this message translates to:
+  /// **'Key-value persistente simples por plataforma'**
+  String get stack_sharedPreferences_role;
+
+  /// No description provided for @stack_firebase_role.
+  ///
+  /// In pt, this message translates to:
+  /// **'Auth, Firestore, Analytics, Push, Crashlytics'**
+  String get stack_firebase_role;
+
+  /// No description provided for @stack_freezed_role.
+  ///
+  /// In pt, this message translates to:
+  /// **'Unions, copyWith e serialização por codegen'**
+  String get stack_freezed_role;
+
+  /// No description provided for @stack_jsonSerializable_role.
+  ///
+  /// In pt, this message translates to:
+  /// **'Serialização JSON type-safe com codegen'**
+  String get stack_jsonSerializable_role;
+
+  /// No description provided for @stack_cleanArch_role.
+  ///
+  /// In pt, this message translates to:
+  /// **'Camadas data / domain / presentation por feature'**
+  String get stack_cleanArch_role;
+
+  /// No description provided for @stack_mvvm_role.
+  ///
+  /// In pt, this message translates to:
+  /// **'View-ViewModel binding reativo'**
+  String get stack_mvvm_role;
+
+  /// No description provided for @stack_solid_role.
+  ///
+  /// In pt, this message translates to:
+  /// **'Inversão de dependência e responsabilidade única'**
+  String get stack_solid_role;
+
+  /// No description provided for @stack_monorepo_role.
+  ///
+  /// In pt, this message translates to:
+  /// **'Pacotes independentes com contratos explícitos'**
+  String get stack_monorepo_role;
+
+  /// No description provided for @stack_getIt_role.
+  ///
+  /// In pt, this message translates to:
+  /// **'Service locator para inversão de dependência'**
+  String get stack_getIt_role;
+
+  /// No description provided for @stack_injectable_role.
+  ///
+  /// In pt, this message translates to:
+  /// **'DI por anotações com codegen sobre get_it'**
+  String get stack_injectable_role;
+
+  /// No description provided for @stack_designSystem_role.
+  ///
+  /// In pt, this message translates to:
+  /// **'Cores, tipografia, spacing e componentes reutilizáveis'**
+  String get stack_designSystem_role;
+
+  /// No description provided for @stack_sdui_role.
+  ///
+  /// In pt, this message translates to:
+  /// **'UI dirigida por contrato remoto, sem deploy'**
+  String get stack_sdui_role;
+
+  /// No description provided for @stack_featureFirst_role.
+  ///
+  /// In pt, this message translates to:
+  /// **'Módulos isolados por domínio, sem dependência cruzada'**
+  String get stack_featureFirst_role;
+
+  /// No description provided for @stack_vga_role.
+  ///
+  /// In pt, this message translates to:
+  /// **'Lints estritos com failFast no CI'**
+  String get stack_vga_role;
+
+  /// No description provided for @stack_flutterTest_role.
+  ///
+  /// In pt, this message translates to:
+  /// **'Widget tests por feature + bloc tests'**
+  String get stack_flutterTest_role;
+
+  /// No description provided for @stack_mocktail_role.
+  ///
+  /// In pt, this message translates to:
+  /// **'Mocks sem codegen pra testes unitários'**
+  String get stack_mocktail_role;
+
+  /// No description provided for @stack_integrationTest_role.
+  ///
+  /// In pt, this message translates to:
+  /// **'Testes E2E no device real ou emulador'**
+  String get stack_integrationTest_role;
+
+  /// No description provided for @stack_skwasm_role.
+  ///
+  /// In pt, this message translates to:
+  /// **'Renderer WASM, fallback CanvasKit automático'**
+  String get stack_skwasm_role;
+
+  /// No description provided for @stack_pwa_role.
+  ///
+  /// In pt, this message translates to:
+  /// **'Instalável, indexável, com loading custom'**
+  String get stack_pwa_role;
+
+  /// No description provided for @stack_urlLauncher_role.
+  ///
+  /// In pt, this message translates to:
+  /// **'Deep links externos (WhatsApp, mail, GitHub)'**
+  String get stack_urlLauncher_role;
+
+  /// No description provided for @stack_melos_role.
+  ///
+  /// In pt, this message translates to:
+  /// **'Orquestrador do monorepo Pub Workspaces'**
+  String get stack_melos_role;
+
+  /// No description provided for @stack_githubActions_role.
+  ///
+  /// In pt, this message translates to:
+  /// **'Pipelines de analyze, test e build web'**
+  String get stack_githubActions_role;
+
+  /// No description provided for @stack_fastlane_role.
+  ///
+  /// In pt, this message translates to:
+  /// **'Automação de build, sign e deploy mobile'**
+  String get stack_fastlane_role;
+
   /// No description provided for @locale_pt.
   ///
   /// In pt, this message translates to:

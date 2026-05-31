@@ -57,7 +57,7 @@ class _CategoryCluster extends StatelessWidget {
             ),
             const SizedBox(width: AppSpacing.sm),
             Text(
-              category.label.toUpperCase(),
+              category.label(context.l10n).toUpperCase(),
               style: textTheme.labelSmall?.copyWith(
                 color: colors.onSurfaceMuted,
                 letterSpacing: 1.8,

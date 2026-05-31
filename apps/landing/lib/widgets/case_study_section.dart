@@ -42,7 +42,9 @@ class _HeroBlock extends StatelessWidget {
     if (isMobile) {
       return Column(
         children: [
-          preview,
+          // Altura fixa: o preview usa Expanded internamente e no mobile
+          // nao ha pai com altura limitada (Row+IntrinsicHeight do desktop).
+          SizedBox(height: 360, child: preview),
           const SizedBox(height: AppSpacing.lg),
           narrative,
         ],

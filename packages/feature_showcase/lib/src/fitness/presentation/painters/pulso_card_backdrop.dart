@@ -57,6 +57,7 @@ class _PulsoCardBackdropPainter extends CustomPainter {
   static final Paint _glowPaint = Paint()
     ..color = const Color(0xFF00D982).withValues(alpha: 0.18)
     ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 22);
+  static final Paint _cursorPaint = Paint()..style = PaintingStyle.fill;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -97,16 +98,15 @@ class _PulsoCardBackdropPainter extends CustomPainter {
     final cursorX = size.width * 0.9;
     final cursorY = size.height * 0.78;
     final cursorPulse = (math.sin(t * math.pi * 4) + 1) / 2;
-    final cursorPaint = Paint()
-      ..color = Color.lerp(
-        const Color(0xFF5AC8FA),
-        const Color(0xFF00D982),
-        cursorPulse,
-      )!;
+    _cursorPaint.color = Color.lerp(
+      const Color(0xFF5AC8FA),
+      const Color(0xFF00D982),
+      cursorPulse,
+    )!;
     canvas.drawCircle(
       Offset(cursorX, cursorY),
       3 + cursorPulse * 2,
-      cursorPaint,
+      _cursorPaint,
     );
   }
 

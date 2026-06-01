@@ -218,6 +218,44 @@ class _AuroraDeliveryMapPainter extends CustomPainter {
     ..color = base
     ..style = PaintingStyle.fill;
 
+  late final Paint _treePaint = Paint()
+    ..color = park.withValues(alpha: 0.55)
+    ..style = PaintingStyle.fill;
+
+  late final Paint _basketHandlePaint = Paint()
+    ..color = base
+    ..style = PaintingStyle.stroke
+    ..strokeWidth = 1.6
+    ..strokeCap = StrokeCap.round;
+
+  late final Paint _courierStroke = Paint()
+    ..color = base
+    ..style = PaintingStyle.stroke
+    ..strokeWidth = 1.4;
+
+  late final Paint _onSurfaceFill = Paint()
+    ..color = onSurface
+    ..style = PaintingStyle.fill;
+
+  late final Paint _needleDownPaint = Paint()
+    ..color = onMuted.withValues(alpha: 0.5)
+    ..style = PaintingStyle.fill;
+
+  late final Paint _compassRingPaint = Paint()
+    ..color = street
+    ..style = PaintingStyle.stroke
+    ..strokeWidth = 1;
+
+  late final Paint _scaleOutlinePaint = Paint()
+    ..color = onSurface
+    ..style = PaintingStyle.stroke
+    ..strokeWidth = 0.8;
+
+  late final Paint _etaBubbleStroke = Paint()
+    ..color = route.withValues(alpha: 0.30)
+    ..style = PaintingStyle.stroke
+    ..strokeWidth = 1.2;
+
   late final TextPainter _etaPainter = TextPainter(
     textDirection: TextDirection.ltr,
     text: TextSpan(
@@ -393,9 +431,7 @@ class _AuroraDeliveryMapPainter extends CustomPainter {
     canvas.drawCircle(
       center,
       math.min(rect.width, rect.height) * 0.18,
-      Paint()
-        ..color = park.withValues(alpha: 0.55)
-        ..style = PaintingStyle.fill,
+      _treePaint,
     );
   }
 
@@ -445,23 +481,13 @@ class _AuroraDeliveryMapPainter extends CustomPainter {
         center.dx + 6,
         center.dy - 3,
       );
-    canvas.drawPath(
-      handle,
-      Paint()
-        ..color = base
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = 1.6
-        ..strokeCap = StrokeCap.round,
-    );
+    canvas.drawPath(handle, _basketHandlePaint);
 
     // Tres frutas como pontos.
-    final dot = Paint()
-      ..color = origin
-      ..style = PaintingStyle.fill;
     canvas
-      ..drawCircle(Offset(center.dx - 3, center.dy + 1), 1.6, dot)
-      ..drawCircle(Offset(center.dx + 3, center.dy + 1), 1.6, dot)
-      ..drawCircle(Offset(center.dx, center.dy + 3), 1.6, dot);
+      ..drawCircle(Offset(center.dx - 3, center.dy + 1), 1.6, _originFill)
+      ..drawCircle(Offset(center.dx + 3, center.dy + 1), 1.6, _originFill)
+      ..drawCircle(Offset(center.dx, center.dy + 3), 1.6, _originFill);
   }
 
   /// Destino (cliente) — pin gota verde com glyph de casa branco.
@@ -548,23 +574,12 @@ class _AuroraDeliveryMapPainter extends CustomPainter {
       ..close();
     canvas
       ..drawPath(body, _courierBody)
-      ..drawPath(
-        body,
-        Paint()
-          ..color = base
-          ..style = PaintingStyle.stroke
-          ..strokeWidth = 1.4,
-      )
+      ..drawPath(body, _courierStroke)
       // Tampa branca circular no centro (estilo capa de delivery).
-      ..drawCircle(Offset.zero, 3, _whiteFill);
-
-    // Rodas (frente e tras).
-    final wheel = Paint()
-      ..color = onSurface
-      ..style = PaintingStyle.fill;
-    canvas
-      ..drawCircle(const Offset(-5, 3.5), 1.6, wheel)
-      ..drawCircle(const Offset(6, 3.5), 1.6, wheel)
+      ..drawCircle(Offset.zero, 3, _whiteFill)
+      // Rodas (frente e tras).
+      ..drawCircle(const Offset(-5, 3.5), 1.6, _onSurfaceFill)
+      ..drawCircle(const Offset(6, 3.5), 1.6, _onSurfaceFill)
       ..restore();
 
     // Bolha de ETA: nao rotaciona, fica acima do courier.
@@ -598,10 +613,7 @@ class _AuroraDeliveryMapPainter extends CustomPainter {
       )
       ..drawRRect(
         RRect.fromRectAndRadius(bubbleRect, const Radius.circular(10)),
-        Paint()
-          ..color = route.withValues(alpha: 0.30)
-          ..style = PaintingStyle.stroke
-          ..strokeWidth = 1.2,
+        _etaBubbleStroke,
       );
 
     // Tail/triangulo apontando pro courier.
@@ -630,14 +642,7 @@ class _AuroraDeliveryMapPainter extends CustomPainter {
     canvas
       ..drawCircle(center.translate(0, 1), radius, _markerShadow)
       ..drawCircle(center, radius, _whiteFill)
-      ..drawCircle(
-        center,
-        radius,
-        Paint()
-          ..color = street
-          ..style = PaintingStyle.stroke
-          ..strokeWidth = 1,
-      );
+      ..drawCircle(center, radius, _compassRingPaint);
 
     // Seta apontando pra cima — meio vermelha, meio cinza claro.
     final needleUp = Path()
@@ -645,23 +650,13 @@ class _AuroraDeliveryMapPainter extends CustomPainter {
       ..lineTo(center.dx - 3, center.dy)
       ..lineTo(center.dx + 3, center.dy)
       ..close();
-    canvas.drawPath(
-      needleUp,
-      Paint()
-        ..color = origin
-        ..style = PaintingStyle.fill,
-    );
+    canvas.drawPath(needleUp, _originFill);
     final needleDown = Path()
       ..moveTo(center.dx, center.dy + radius - 3)
       ..lineTo(center.dx - 3, center.dy)
       ..lineTo(center.dx + 3, center.dy)
       ..close();
-    canvas.drawPath(
-      needleDown,
-      Paint()
-        ..color = onMuted.withValues(alpha: 0.5)
-        ..style = PaintingStyle.fill,
-    );
+    canvas.drawPath(needleDown, _needleDownPaint);
 
     _northPainter.paint(
       canvas,
@@ -680,25 +675,18 @@ class _AuroraDeliveryMapPainter extends CustomPainter {
     const left = 16.0;
     final top = size.height - 16;
 
-    final dark = Paint()
-      ..color = onSurface
-      ..style = PaintingStyle.fill;
-    final light = Paint()
-      ..color = base
-      ..style = PaintingStyle.fill;
-
     canvas
       ..drawRect(
         Rect.fromLTWH(left, top, barWidth, barHeight),
-        Paint()
-          ..color = onSurface
-          ..style = PaintingStyle.stroke
-          ..strokeWidth = 0.8,
+        _scaleOutlinePaint,
       )
-      ..drawRect(Rect.fromLTWH(left, top, barWidth / 2, barHeight), dark)
+      ..drawRect(
+        Rect.fromLTWH(left, top, barWidth / 2, barHeight),
+        _onSurfaceFill,
+      )
       ..drawRect(
         Rect.fromLTWH(left + barWidth / 2, top, barWidth / 2, barHeight),
-        light,
+        _whiteFill,
       );
 
     _scalePainter.paint(

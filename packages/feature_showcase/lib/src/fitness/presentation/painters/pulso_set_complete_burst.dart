@@ -64,6 +64,9 @@ class _BurstPainter extends CustomPainter {
 
   static const int _count = 14;
 
+  late final Paint _dotPaint = Paint()..style = PaintingStyle.fill;
+  late final Paint _ringPaint = Paint()..style = PaintingStyle.stroke;
+
   @override
   void paint(Canvas canvas, Size size) {
     final t = progress.value;
@@ -71,7 +74,7 @@ class _BurstPainter extends CustomPainter {
     final center = Offset(size.width / 2, size.height / 2);
     final maxR = size.shortestSide / 2;
     final eased = Curves.easeOutCubic.transform(t);
-    final paint = Paint()..style = PaintingStyle.fill;
+    _dotPaint.color = color.withValues(alpha: 1 - eased);
 
     for (var i = 0; i < _count; i++) {
       final angle = (i / _count) * math.pi * 2 + t * 0.6;
@@ -80,16 +83,14 @@ class _BurstPainter extends CustomPainter {
         center.dx + math.cos(angle) * dist,
         center.dy + math.sin(angle) * dist,
       );
-      paint.color = color.withValues(alpha: 1 - eased);
-      canvas.drawCircle(pos, 3 * (1 - eased * 0.6), paint);
+      canvas.drawCircle(pos, 3 * (1 - eased * 0.6), _dotPaint);
     }
 
     // Anel pulsante.
-    final ringPaint = Paint()
+    _ringPaint
       ..color = color.withValues(alpha: 1 - eased)
-      ..style = PaintingStyle.stroke
       ..strokeWidth = 2 * (1 - eased);
-    canvas.drawCircle(center, maxR * eased * 0.9, ringPaint);
+    canvas.drawCircle(center, maxR * eased * 0.9, _ringPaint);
   }
 
   @override

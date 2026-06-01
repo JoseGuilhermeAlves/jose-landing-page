@@ -12,8 +12,9 @@ import 'package:flutter/material.dart';
 /// Performance:
 /// - `Listenable` passado ao `super(repaint:)` direto, evita build/layout
 ///   no pipeline a cada frame;
-/// - `Path` da sparkline ghost recomputada por frame mas e barata (12
-///   pontos), nao vale cachear vs o custo de invalidate logic;
+/// - Paints (grid, ticks, glow, shaders) cacheados como campos; os pontos
+///   da sparkline ghost sao seedados (seed fixa, identicos todo frame),
+///   computados uma vez — so o scroll horizontal e o wobble variam;
 /// - `RepaintBoundary` no widget isola repaints da subarvore vizinha.
 class MiraHeroBackdrop extends StatefulWidget {
   const MiraHeroBackdrop({required this.height, super.key});
@@ -109,6 +110,39 @@ class _MiraHeroBackdropPainter extends CustomPainter {
     ..strokeCap = StrokeCap.round
     ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 1.4);
 
+  late final Paint _tickPaint = Paint()
+    ..color = mutedLine.withValues(alpha: 0.5)
+    ..strokeWidth = 1;
+
+  // Halo + core dos glow dots — cor mutada por dot/frame, objeto reusado.
+  final Paint _glowHaloPaint = Paint()
+    ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 4);
+  final Paint _glowCorePaint = Paint();
+
+  // Paints reusados pros shaders dependentes do rect (so o shader e
+  // recriado por frame, nao o objeto Paint).
+  final Paint _bgShaderPaint = Paint();
+  final Paint _overlayShaderPaint = Paint();
+
+  // Random-walk seedada (seed fixa) — identica todo frame, computada uma
+  // vez. So o scroll horizontal (shift) e o wobble dependem do tempo.
+  static const int _segmentCount = 36;
+  late final List<double> _sparkPoints = _buildSparkPoints();
+  final Path _sparkPath = Path();
+  final Path _sparkFillPath = Path();
+
+  static List<double> _buildSparkPoints() {
+    final rng = math.Random(7);
+    final points = <double>[];
+    var v = 0.5;
+    for (var i = 0; i < _segmentCount + 1; i++) {
+      v += (rng.nextDouble() - 0.45) * 0.18;
+      v = v.clamp(0.1, 0.9);
+      points.add(v);
+    }
+    return points;
+  }
+
   @override
   void paint(Canvas canvas, Size size) {
     if (size.width <= 0 || size.height <= 0) return;
@@ -125,10 +159,8 @@ class _MiraHeroBackdropPainter extends CustomPainter {
       ],
       stops: const [0, 0.55, 1],
     );
-    canvas.drawRect(
-      bgRect,
-      Paint()..shader = radialGradient.createShader(bgRect),
-    );
+    _bgShaderPaint.shader = radialGradient.createShader(bgRect);
+    canvas.drawRect(bgRect, _bgShaderPaint);
 
     _paintGrid(canvas, size);
     _paintTickMarks(canvas, size);
@@ -162,15 +194,12 @@ class _MiraHeroBackdropPainter extends CustomPainter {
   void _paintTickMarks(Canvas canvas, Size size) {
     final colSpacing = size.width / columnCount;
     final rowSpacing = size.height / rowCount;
-    final paint = Paint()
-      ..color = mutedLine.withValues(alpha: 0.5)
-      ..strokeWidth = 1;
 
     for (var i = 0; i <= rowCount; i++) {
       final y = i * rowSpacing;
       for (var j = 0; j <= columnCount; j += 2) {
         final x = j * colSpacing;
-        canvas.drawLine(Offset(x - 2, y), Offset(x + 2, y), paint);
+        canvas.drawLine(Offset(x - 2, y), Offset(x + 2, y), _tickPaint);
       }
     }
   }
@@ -179,39 +208,34 @@ class _MiraHeroBackdropPainter extends CustomPainter {
   /// com o tempo. Da sensacao de mercado vivo no fundo.
   void _paintGhostSparkline(Canvas canvas, Size size) {
     final progress = controller.value;
-    const segmentCount = 36;
-    final rng = math.Random(7); // seed estavel
-    final points = <double>[];
-    var v = 0.5;
-    for (var i = 0; i < segmentCount + 1; i++) {
-      v += (rng.nextDouble() - 0.45) * 0.18;
-      v = v.clamp(0.1, 0.9);
-      points.add(v);
-    }
+    final points = _sparkPoints;
 
-    final dx = size.width / segmentCount;
+    final dx = size.width / _segmentCount;
     final shift = progress * dx * 6; // velocidade do "scroll"
     final centerY = size.height * 0.62;
     final amplitude = size.height * 0.3;
 
-    final path = Path()
+    _sparkPath
+      ..reset()
       ..moveTo(-shift, centerY - (points[0] - 0.5) * amplitude);
     for (var i = 1; i < points.length; i++) {
       final x = i * dx - shift;
       // Adiciona oscilacao sutil temporal pra cada ponto se mover um pouco.
       final wobble = math.sin(progress * 2 * math.pi + i) * 2;
       final y = centerY - (points[i] - 0.5) * amplitude + wobble;
-      path.lineTo(x, y);
+      _sparkPath.lineTo(x, y);
     }
 
-    final fillPath = Path.from(path)
+    _sparkFillPath
+      ..reset()
+      ..addPath(_sparkPath, Offset.zero)
       ..lineTo(size.width + 20, size.height)
       ..lineTo(-shift, size.height)
       ..close();
 
     canvas
-      ..drawPath(fillPath, _sparklineFillPaint)
-      ..drawPath(path, _sparklineStrokePaint);
+      ..drawPath(_sparkFillPath, _sparklineFillPaint)
+      ..drawPath(_sparkPath, _sparklineStrokePaint);
   }
 
   /// Glow dots pulsando — marcadores de preco no eixo direito que
@@ -233,15 +257,11 @@ class _MiraHeroBackdropPainter extends CustomPainter {
       final radius = 2.5 + pulse * 1.8;
       final haloRadius = 6 + pulse * 6;
 
+      _glowHaloPaint.color = color.withValues(alpha: 0.18 * pulse);
+      _glowCorePaint.color = color;
       canvas
-        ..drawCircle(
-          Offset(x, y),
-          haloRadius,
-          Paint()
-            ..color = color.withValues(alpha: 0.18 * pulse)
-            ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 4),
-        )
-        ..drawCircle(Offset(x, y), radius, Paint()..color = color);
+        ..drawCircle(Offset(x, y), haloRadius, _glowHaloPaint)
+        ..drawCircle(Offset(x, y), radius, _glowCorePaint);
     }
   }
 
@@ -257,7 +277,8 @@ class _MiraHeroBackdropPainter extends CustomPainter {
       ],
       stops: const [0, 0.35, 1],
     );
-    canvas.drawRect(rect, Paint()..shader = overlay.createShader(rect));
+    _overlayShaderPaint.shader = overlay.createShader(rect);
+    canvas.drawRect(rect, _overlayShaderPaint);
   }
 
   @override

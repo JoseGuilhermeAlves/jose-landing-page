@@ -74,7 +74,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get hero_bio =>
-      '6 years building the front end of mobile apps (and web when it makes sense) — from B2B retail to fintech products at scale.';
+      'Mobile app front end with Flutter — feature-based architecture, Bloc for state, fluid UI on real devices. Six years delivering the same standard across distinct domains, always on the mobile layer.';
 
   @override
   String get hero_scrollHint => 'scroll to continue';
@@ -136,7 +136,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get about_bioParagraph =>
-      'Career started in retail mobile apps — Flutter front end from design to deploy, in a small team, over 5 years. Then moved to product teams across larger domains: public services, internal platforms, field operations, and currently fintech at scale. Always on the mobile front end, with Flutter web when the product demanded it. Constant focus on architecture, performance, and UX consistency on real devices.';
+      'I build the entire front end of Flutter apps — feature-based architecture, Bloc for state, performance on real devices and UX consistency. Six years applying this standard in different contexts: five owning the complete front end of retail-operations apps (inventory, distribution across units, sales and internal communication, from design to deploy, in a small team), then offline-first field data collection with syncing over an unstable network, a citizen-facing public service with a sensitive data flow, internal tools with gamification, and currently a large-scale financial product in a monorepo with its own design system. Distinct domains, same bar: a robust mobile front end, with Flutter web when the product called for it.';
 
   @override
   String get delivery_entrega_eyebrow => 'DELIVERY';
@@ -179,39 +179,39 @@ class AppLocalizationsEn extends AppLocalizations {
       'On large teams I join as mobile front end with feature scope or architectural stewardship. On small teams (B2B retail, 5 years) I owned the entire Flutter side — from design to deploy, integrating existing APIs and helping shape new contracts when needed. I adapt to the team size, not the other way around.';
 
   @override
-  String get domain_fintech_label => 'Fintech';
+  String get domain_fintech_label => 'Financial service';
 
   @override
   String get domain_fintech_blurb =>
-      'Mobile credit apps at scale — active base of millions of users.';
+      'Large-scale financial product on the Flutter front end — monorepo, its own design system and feature-based architecture, focused on correctness and consistency under high volume.';
 
   @override
   String get domain_publicServices_label => 'Public services';
 
   @override
   String get domain_publicServices_blurb =>
-      'Digital citizen services with government identity integration.';
+      'Citizen-facing public service — sensitive data flow with Bloc, focused on reliability and privacy.';
 
   @override
   String get domain_sanitation_label => 'Field operations';
 
   @override
   String get domain_sanitation_blurb =>
-      'Collection and inspection apps on industrial devices with offline-first sync.';
+      'Offline-first field data collection — Flutter Modular and Provider, reliable syncing over an unstable network.';
 
   @override
   String get domain_platform_label => 'Internal platform';
 
   @override
   String get domain_platform_blurb =>
-      'Internal tools for team management and large-scale corporate operations.';
+      'Internal tools in Flutter — gamification layer for team engagement.';
 
   @override
   String get domain_retail_label => 'B2B Retail';
 
   @override
   String get domain_retail_blurb =>
-      'Mobile store operation apps, inventory control, and orders. Entire Flutter front end, small team, over 5 years.';
+      'Entire Flutter front end — from design to deploy, in a small team, over five years. Five operations apps: inventory, distribution across units, sales and internal communication.';
 
   @override
   String get services_eyebrow => 'Services';
@@ -354,7 +354,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get engineering_subtitle =>
-      'Technologies I master and apply in production. Tap any tile to learn more.';
+      'Technologies I use in production and others I know closely. Tap any tile to learn more.';
 
   @override
   String get engineering_githubButton => 'View repository on GitHub';
@@ -1010,4 +1010,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get locale_it => 'Italiano';
+
+  @override
+  String get locale_fr => 'Français';
+
+  @override
+  String get locale_ru => 'Русский';
 }

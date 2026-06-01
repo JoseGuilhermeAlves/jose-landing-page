@@ -72,7 +72,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get hero_headline2 => '从 MVP 到生产级应用。';
 
   @override
-  String get hero_bio => '7年以上移动端应用前端开发经验（需要时也做Web）——从B2B零售到大规模金融科技产品。';
+  String get hero_bio =>
+      '用 Flutter 做移动应用前端——按功能架构、Bloc 管理状态、真机上流畅的 UI。六年在不同领域交付同一套标准，始终在移动端。';
 
   @override
   String get hero_scrollHint => '滚动以继续';
@@ -133,7 +134,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get about_bioParagraph =>
-      '职业生涯始于零售移动应用——小团队中负责 Flutter 前端从设计到部署，历时5年。随后加入更大领域的产品团队：公共服务、内部平台、现场运营，目前专注于大规模金融科技。始终在移动端前端，必要时兼顾 Flutter Web。持续关注架构、性能和真实设备上的用户体验一致性。';
+      '我负责 Flutter 应用的整个前端——按功能架构、Bloc 管理状态、真机性能和 UX 一致性。六年在不同场景中应用这套标准：五年负责零售运营应用的完整前端（库存、门店间调拨、销售和内部沟通，从设计到部署，在小团队中），随后是 offline-first 的现场数据采集、在不稳定网络下同步，一个流程涉及敏感数据的面向公民的公共服务，带游戏化的内部工具，如今则是一个以 monorepo 维护、拥有自有 design system 的大规模金融产品。领域各异，标准如一：稳健的移动端前端，产品需要时也做 Flutter web。';
 
   @override
   String get delivery_entrega_eyebrow => '交付';
@@ -175,35 +176,38 @@ class AppLocalizationsZh extends AppLocalizations {
       '大团队中，我以功能范围或架构管理的角色参与移动端前端。小团队中（B2B零售，5年），我负责整个 Flutter 端——从设计到部署，集成现有 API 并在需要时协助定义新接口。我适应团队规模，而非相反。';
 
   @override
-  String get domain_fintech_label => '金融科技';
+  String get domain_fintech_label => '金融服务';
 
   @override
-  String get domain_fintech_blurb => '大规模移动信贷应用——数百万活跃用户。';
+  String get domain_fintech_blurb =>
+      'Flutter 前端的大规模金融产品——monorepo、自有 design system、按功能架构，在高吞吐下注重正确性与一致性。';
 
   @override
   String get domain_publicServices_label => '公共服务';
 
   @override
-  String get domain_publicServices_blurb => '对接政府身份系统的数字化公民服务。';
+  String get domain_publicServices_blurb =>
+      '面向公民的公共服务——用 Bloc 处理敏感数据流程，注重可靠性与隐私。';
 
   @override
   String get domain_sanitation_label => '现场运营';
 
   @override
-  String get domain_sanitation_blurb => '工业设备上的收集与检查应用，支持离线优先同步。';
+  String get domain_sanitation_blurb =>
+      'offline-first 的现场数据采集——用 Flutter Modular 和 Provider，在不稳定网络下可靠同步。';
 
   @override
   String get domain_platform_label => '内部平台';
 
   @override
-  String get domain_platform_blurb => '大规模团队管理与企业运营的内部工具。';
+  String get domain_platform_blurb => 'Flutter 内部工具——用游戏化层提升团队参与度。';
 
   @override
   String get domain_retail_label => 'B2B 零售';
 
   @override
   String get domain_retail_blurb =>
-      '门店运营移动应用、库存管理与订单系统。小团队负责整个 Flutter 前端，历时5年。';
+      '完整的 Flutter 前端——从设计到部署，在小团队中，历时五年。五个运营应用：库存、门店间调拨、销售和内部沟通。';
 
   @override
   String get services_eyebrow => '服务';
@@ -343,7 +347,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get engineering_titleAccent => '项目决策的技术栈。';
 
   @override
-  String get engineering_subtitle => '我掌握并在生产中应用的技术。点击任意卡片了解更多。';
+  String get engineering_subtitle => '我在生产中使用的技术，以及其他我深入了解的技术。点击任意卡片了解更多。';
 
   @override
   String get engineering_githubButton => '在 GitHub 上查看仓库';
@@ -961,4 +965,10 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get locale_it => 'Italiano';
+
+  @override
+  String get locale_fr => 'Français';
+
+  @override
+  String get locale_ru => 'Русский';
 }

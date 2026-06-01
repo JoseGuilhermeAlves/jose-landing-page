@@ -23,7 +23,7 @@
   "hero_eyebrow": "フリーランス受付中",
   "hero_headline1": "Flutter モバイルフロントエンド。",
   "hero_headline2": "MVP から本番アプリまで。",
-  "hero_bio": "モバイルアプリのフロントエンド開発7年以上（必要に応じてWebも）——B2B小売からスケールするフィンテック製品まで。",
+  "hero_bio": "Flutterによるモバイルアプリのフロントエンド——feature単位のアーキテクチャ、Blocによる状態管理、実機での滑らかなUI。6年間、異なるドメインで同じ規律を貫き、常にモバイルレイヤーで。",
   "hero_scrollHint": "スクロールして続ける",
   "hero_ctaWhatsapp": "WhatsAppで連絡",
   "hero_ctaProjects": "プロジェクトを見る",
@@ -44,7 +44,7 @@
   "about_deliveryTitle": "デリバリー方法",
   "about_bioName": "José Guilherme Alves",
   "about_bioTitle": "モバイルフロントエンド · Flutter Developer · ブラジル",
-  "about_bioParagraph": "キャリアはリテールのモバイルアプリから始まりました。少人数チームでFlutterフロントエンドをデザインからデプロイまで5年間担当。その後、公共サービス、社内プラットフォーム、フィールドオペレーション、そして現在はスケールするフィンテックのプロダクトチームに参加。常にモバイルフロントエンド、必要時にFlutter Web。アーキテクチャ、パフォーマンス、実機でのUX一貫性に継続的に注力。",
+  "about_bioParagraph": "Flutterアプリのフロントエンドを丸ごと構築します——feature単位のアーキテクチャ、Blocによる状態管理、実機でのパフォーマンス、UXの一貫性。6年間、異なる文脈でこの規律を適用してきました：5年間は小売オペレーションのアプリ（在庫、店舗間の配分、販売、社内コミュニケーション）のフロントエンド全体をデザインからデプロイまで少人数チームで担当、その後は不安定なネットワーク下でも同期するoffline-firstの現場データ収集、機微なデータフローを扱う市民向け公共サービス、gamificationを備えた社内ツール、そして現在は独自のdesign systemを持つmonorepoの大規模な金融プロダクト。ドメインは異なれど、規律は同じ——堅牢なモバイルフロントエンド、製品が求めればFlutter webも。",
 
   "delivery_entrega_eyebrow": "デリバリー",
   "delivery_entrega_title": "明確なスコープ、",
@@ -59,16 +59,16 @@
   "delivery_collab_titleAccent": "またはFlutter全体を担当。",
   "delivery_collab_body": "大きなチームではフィーチャースコープまたはアーキテクチャスチュワードシップとしてモバイルフロントエンドに参加。小さなチーム（B2Bリテール、5年）ではFlutter全体を担当——デザインからデプロイまで、既存APIの統合と必要に応じた新しい契約の策定。チームサイズに合わせます。逆ではなく。",
 
-  "domain_fintech_label": "フィンテック",
-  "domain_fintech_blurb": "大規模モバイルクレジットアプリ——数百万のアクティブユーザー。",
+  "domain_fintech_label": "金融サービス",
+  "domain_fintech_blurb": "Flutterフロントエンドの大規模な金融プロダクト——monorepo、独自のdesign system、feature単位のアーキテクチャで、高負荷下での正確性と一貫性を重視。",
   "domain_publicServices_label": "公共サービス",
-  "domain_publicServices_blurb": "政府IDとの統合による市民向けデジタルサービス。",
+  "domain_publicServices_blurb": "市民向け公共サービス——Blocによる機微なデータフロー、信頼性とプライバシーを重視。",
   "domain_sanitation_label": "フィールドオペレーション",
-  "domain_sanitation_blurb": "オフラインファースト同期対応の産業用デバイス上の収集・検査アプリ。",
+  "domain_sanitation_blurb": "offline-firstの現場データ収集——Flutter ModularとProvider、不安定なネットワーク下でも確実に同期。",
   "domain_platform_label": "社内プラットフォーム",
-  "domain_platform_blurb": "大規模なチーム管理と企業オペレーションのための内部ツール。",
+  "domain_platform_blurb": "Flutterによる社内ツール——チームのエンゲージメント向上のためのgamificationレイヤー。",
   "domain_retail_label": "B2Bリテール",
-  "domain_retail_blurb": "店舗運営モバイルアプリ、在庫管理、受注。少人数チームでFlutterフロントエンド全体を5年間担当。",
+  "domain_retail_blurb": "Flutterフロントエンドを丸ごと——デザインからデプロイまで、少人数チームで5年間。オペレーションのアプリ5本：在庫、店舗間の配分、販売、社内コミュニケーション。",
 
   "services_eyebrow": "サービス",
   "services_title": "モバイルフロントエンド。",
@@ -117,7 +117,7 @@
   "engineering_eyebrow": "エンジニアリングとサービス",
   "engineering_title": "すべてのプロジェクト決定を",
   "engineering_titleAccent": "支える技術スタック。",
-  "engineering_subtitle": "本番で習熟し適用している技術。タイルをタップして詳細を確認。",
+  "engineering_subtitle": "本番で使用している技術と、近くで知る他の技術。タイルをタップして詳細を確認。",
   "engineering_githubButton": "GitHubでリポジトリを見る",
 
   "caseStudy_eyebrow": "ケーススタディ",
@@ -342,5 +342,7 @@
   "locale_de": "Deutsch",
   "locale_zh": "中文",
   "locale_ja": "日本語",
-  "locale_it": "Italiano"
+  "locale_it": "Italiano",
+  "locale_fr": "Français",
+  "locale_ru": "Русский"
 }

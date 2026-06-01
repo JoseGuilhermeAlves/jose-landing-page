@@ -8,9 +8,11 @@ import 'package:intl/intl.dart' as intl;
 import 'app_localizations_de.dart';
 import 'app_localizations_en.dart';
 import 'app_localizations_es.dart';
+import 'app_localizations_fr.dart';
 import 'app_localizations_it.dart';
 import 'app_localizations_ja.dart';
 import 'app_localizations_pt.dart';
+import 'app_localizations_ru.dart';
 import 'app_localizations_zh.dart';
 
 // ignore_for_file: type=lint
@@ -102,9 +104,11 @@ abstract class AppLocalizations {
     Locale('de'),
     Locale('en'),
     Locale('es'),
+    Locale('fr'),
     Locale('it'),
     Locale('ja'),
     Locale('pt'),
+    Locale('ru'),
     Locale('zh'),
   ];
 
@@ -219,7 +223,7 @@ abstract class AppLocalizations {
   /// No description provided for @hero_eyebrow.
   ///
   /// In pt, this message translates to:
-  /// **'Disponível para freelas'**
+  /// **'Disponível para freelance'**
   String get hero_eyebrow;
 
   /// No description provided for @hero_headline1.
@@ -237,7 +241,7 @@ abstract class AppLocalizations {
   /// No description provided for @hero_bio.
   ///
   /// In pt, this message translates to:
-  /// **'6 anos construindo o front end de apps mobile (e web quando faz sentido) — atuando do varejo B2B a produto fintech em escala.'**
+  /// **'Front end de apps mobile com Flutter — arquitetura por feature, estado com Bloc, UI fluida em device real. 6 anos entregando o mesmo padrão em domínios distintos, sempre na camada mobile.'**
   String get hero_bio;
 
   /// No description provided for @hero_scrollHint.
@@ -357,7 +361,7 @@ abstract class AppLocalizations {
   /// No description provided for @about_bioParagraph.
   ///
   /// In pt, this message translates to:
-  /// **'A carreira começou em apps mobile de operação varejista — front end Flutter do design ao deploy, em time pequeno, durante 5 anos. Em seguida, atuação em times de produto em domínios maiores: setor público, plataforma interna, operação em campo e, atualmente, fintech em escala. Sempre no front end mobile, com Flutter web quando o produto demandou. Foco constante em arquitetura, performance e consistência de UX em devices reais.'**
+  /// **'Construo o front end inteiro de apps Flutter — arquitetura por feature, estado com Bloc, performance em device real e consistência de UX. Seis anos aplicando esse padrão em contextos diferentes: cinco cuidando do front end completo de apps de operação de varejo (estoque, distribuição entre unidades, vendas e comunicação interna, do design ao deploy, em time pequeno), depois coleta de dados em campo offline-first com sincronização sob rede instável, um serviço público ao cidadão com fluxo sensível de dados, ferramentas internas com gamificação e, hoje, um produto financeiro de larga escala em monorepo com design system próprio. Domínios distintos, mesma régua: front end mobile robusto, com Flutter web quando o produto pediu.'**
   String get about_bioParagraph;
 
   /// No description provided for @delivery_entrega_eyebrow.
@@ -405,7 +409,7 @@ abstract class AppLocalizations {
   /// No description provided for @delivery_craft_body.
   ///
   /// In pt, this message translates to:
-  /// **'Clean Architecture por feature, Bloc/Cubit pra estado, CustomPainter quando vetor é mais barato que asset. Mede tempo de frame em device real (não emulador), perfila build time, audita rebuilds. Stack de produção sustenta evolução — não emperra dois meses depois do MVP.'**
+  /// **'Clean Architecture por feature, Bloc/Cubit para estado, CustomPainter quando vetor é mais barato que asset. Mede tempo de frame em device real (não emulador), perfila build time, audita rebuilds. Stack de produção sustenta evolução — não emperra dois meses depois do MVP.'**
   String get delivery_craft_body;
 
   /// No description provided for @delivery_collab_eyebrow.
@@ -435,13 +439,13 @@ abstract class AppLocalizations {
   /// No description provided for @domain_fintech_label.
   ///
   /// In pt, this message translates to:
-  /// **'Fintech'**
+  /// **'Serviço financeiro'**
   String get domain_fintech_label;
 
   /// No description provided for @domain_fintech_blurb.
   ///
   /// In pt, this message translates to:
-  /// **'Apps de crédito mobile em escala — base ativa de milhões de usuários.'**
+  /// **'Produto financeiro de larga escala no front end Flutter — monorepo, design system próprio e arquitetura por feature, foco em correção e consistência sob alto volume.'**
   String get domain_fintech_blurb;
 
   /// No description provided for @domain_publicServices_label.
@@ -453,7 +457,7 @@ abstract class AppLocalizations {
   /// No description provided for @domain_publicServices_blurb.
   ///
   /// In pt, this message translates to:
-  /// **'Serviços digitais ao cidadão com integração a identidade governamental.'**
+  /// **'Serviço público ao cidadão — fluxo sensível de dados com Bloc, foco em confiabilidade e privacidade.'**
   String get domain_publicServices_blurb;
 
   /// No description provided for @domain_sanitation_label.
@@ -465,7 +469,7 @@ abstract class AppLocalizations {
   /// No description provided for @domain_sanitation_blurb.
   ///
   /// In pt, this message translates to:
-  /// **'Apps de coleta e inspeção em devices industriais com sincronização offline-first.'**
+  /// **'Coleta de dados em campo offline-first — Flutter Modular e Provider, sincronização confiável sob rede instável.'**
   String get domain_sanitation_blurb;
 
   /// No description provided for @domain_platform_label.
@@ -477,7 +481,7 @@ abstract class AppLocalizations {
   /// No description provided for @domain_platform_blurb.
   ///
   /// In pt, this message translates to:
-  /// **'Ferramentas internas pra gestão de equipes e operação corporativa em larga escala.'**
+  /// **'Ferramentas internas em Flutter — camada de gamificação para engajamento de equipes.'**
   String get domain_platform_blurb;
 
   /// No description provided for @domain_retail_label.
@@ -489,7 +493,7 @@ abstract class AppLocalizations {
   /// No description provided for @domain_retail_blurb.
   ///
   /// In pt, this message translates to:
-  /// **'Apps mobile de operação de loja, controle de estoque, inventário e pedidos. Front end Flutter inteiro, em time pequeno, ao longo de 5 anos.'**
+  /// **'Front end Flutter inteiro — do design ao deploy, em time pequeno, por cinco anos. Cinco apps de operação: estoque, distribuição entre unidades, vendas e comunicação interna.'**
   String get domain_retail_blurb;
 
   /// No description provided for @services_eyebrow.
@@ -759,7 +763,7 @@ abstract class AppLocalizations {
   /// No description provided for @engineering_subtitle.
   ///
   /// In pt, this message translates to:
-  /// **'Tecnologias que domino e aplico em produção. Toque em qualquer tile para saber mais.'**
+  /// **'Tecnologias que uso em produção e outras que conheço de perto. Toque em qualquer tile para saber mais.'**
   String get engineering_subtitle;
 
   /// No description provided for @engineering_githubButton.
@@ -963,7 +967,7 @@ abstract class AppLocalizations {
   /// No description provided for @showcase_subtitle.
   ///
   /// In pt, this message translates to:
-  /// **'Mocks funcionais por nicho — delivery, agendamento, fitness, imobiliária e investimentos. Toque num card pra abrir. Sem backend de verdade; demonstram o tipo de produto que consigo entregar.'**
+  /// **'Mocks funcionais por nicho — delivery, agendamento, fitness, imobiliária e investimentos. Toque num card para abrir. Sem backend de verdade; demonstram o tipo de produto que consigo entregar.'**
   String get showcase_subtitle;
 
   /// No description provided for @showcase_financeLabel.
@@ -1955,6 +1959,18 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Italiano'**
   String get locale_it;
+
+  /// No description provided for @locale_fr.
+  ///
+  /// In pt, this message translates to:
+  /// **'Français'**
+  String get locale_fr;
+
+  /// No description provided for @locale_ru.
+  ///
+  /// In pt, this message translates to:
+  /// **'Русский'**
+  String get locale_ru;
 }
 
 class _AppLocalizationsDelegate
@@ -1971,9 +1987,11 @@ class _AppLocalizationsDelegate
     'de',
     'en',
     'es',
+    'fr',
     'it',
     'ja',
     'pt',
+    'ru',
     'zh',
   ].contains(locale.languageCode);
 
@@ -1990,12 +2008,16 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
       return AppLocalizationsEn();
     case 'es':
       return AppLocalizationsEs();
+    case 'fr':
+      return AppLocalizationsFr();
     case 'it':
       return AppLocalizationsIt();
     case 'ja':
       return AppLocalizationsJa();
     case 'pt':
       return AppLocalizationsPt();
+    case 'ru':
+      return AppLocalizationsRu();
     case 'zh':
       return AppLocalizationsZh();
   }

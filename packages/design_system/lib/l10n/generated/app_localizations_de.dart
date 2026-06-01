@@ -74,7 +74,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get hero_bio =>
-      '6 Jahre Erfahrung im Aufbau des Frontends mobiler Apps (und Web, wenn sinnvoll) — von B2B-Retail bis hin zu Fintech-Produkten im großen Maßstab.';
+      'Frontend mobiler Apps mit Flutter — Architektur pro Feature, State mit Bloc, flüssige UI auf realem Gerät. Sechs Jahre, in denen ich dasselbe Muster in unterschiedlichen Domänen liefere, stets in der Mobile-Schicht.';
 
   @override
   String get hero_scrollHint => 'scrollen um fortzufahren';
@@ -137,7 +137,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get about_bioParagraph =>
-      'Die Karriere begann mit mobilen Retail-Apps — Flutter-Frontend vom Design bis zum Deploy, in einem kleinen Team, über 5 Jahre. Danach in Produktteams größerer Domänen: öffentlicher Sektor, interne Plattformen, Feldeinsatz und aktuell Fintech im großen Maßstab. Immer im mobilen Frontend, mit Flutter Web wenn das Produkt es erforderte. Konstanter Fokus auf Architektur, Performance und UX-Konsistenz auf realen Geräten.';
+      'Ich baue das gesamte Frontend von Flutter-Apps — Architektur pro Feature, State mit Bloc, Performance auf realem Gerät und UX-Konsistenz. Sechs Jahre, in denen ich dieses Muster in unterschiedlichen Kontexten anwende: fünf davon mit der Verantwortung für das komplette Frontend von Apps für den Retail-Betrieb (Bestand, Distribution zwischen Filialen, Verkauf und interne Kommunikation, vom Design bis zum Deploy, in einem kleinen Team), danach Felderfassung offline-first mit Synchronisierung unter instabilem Netz, ein Bürgerdienst des öffentlichen Sektors mit sensiblem Datenfluss, interne Tools mit Gamification und heute ein Finanzprodukt im großen Maßstab im Monorepo mit eigenem Design System. Unterschiedliche Domänen, dasselbe Maß: robustes Mobile-Frontend, mit Flutter Web, wenn das Produkt es verlangte.';
 
   @override
   String get delivery_entrega_eyebrow => 'LIEFERUNG';
@@ -179,39 +179,39 @@ class AppLocalizationsDe extends AppLocalizations {
       'In großen Teams komme ich als Mobile-Frontend mit Feature-Scope oder architektonischer Stewardship. In kleinen Teams (B2B-Retail, 5 Jahre) verantwortete ich die gesamte Flutter-Seite — vom Design bis zum Deploy, mit Integration bestehender APIs und Mitgestaltung neuer Verträge wenn nötig. Ich passe mich der Teamgröße an, nicht umgekehrt.';
 
   @override
-  String get domain_fintech_label => 'Fintech';
+  String get domain_fintech_label => 'Finanzdienstleistung';
 
   @override
   String get domain_fintech_blurb =>
-      'Mobile Kredit-Apps im großen Maßstab — aktive Basis von Millionen Nutzern.';
+      'Finanzprodukt im großen Maßstab im Flutter-Frontend — Monorepo, eigenes Design System und Architektur pro Feature, Fokus auf Korrektheit und Konsistenz unter hohem Volumen.';
 
   @override
   String get domain_publicServices_label => 'Öffentlicher Sektor';
 
   @override
   String get domain_publicServices_blurb =>
-      'Digitale Bürgerdienste mit Integration staatlicher Identität.';
+      'Bürgerdienst des öffentlichen Sektors — sensibler Datenfluss mit Bloc, Fokus auf Zuverlässigkeit und Datenschutz.';
 
   @override
   String get domain_sanitation_label => 'Feldeinsatz';
 
   @override
   String get domain_sanitation_blurb =>
-      'Sammel- und Inspektions-Apps auf Industriegeräten mit Offline-first-Synchronisation.';
+      'Datenerfassung im Feld offline-first — Flutter Modular und Provider, zuverlässige Synchronisierung unter instabilem Netz.';
 
   @override
   String get domain_platform_label => 'Interne Plattform';
 
   @override
   String get domain_platform_blurb =>
-      'Interne Tools für Teammanagement und Unternehmensoperationen im großen Maßstab.';
+      'Interne Tools in Flutter — Gamification-Schicht zur Förderung des Team-Engagements.';
 
   @override
   String get domain_retail_label => 'B2B-Retail';
 
   @override
   String get domain_retail_blurb =>
-      'Mobile Store-Operations-Apps, Bestandskontrolle und Bestellungen. Gesamtes Flutter-Frontend, kleines Team, über 5 Jahre.';
+      'Gesamtes Flutter-Frontend — vom Design bis zum Deploy, in einem kleinen Team, fünf Jahre lang. Fünf Apps für den Betrieb: Bestand, Distribution zwischen Filialen, Verkauf und interne Kommunikation.';
 
   @override
   String get services_eyebrow => 'Leistungen';
@@ -354,7 +354,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get engineering_subtitle =>
-      'Technologien, die ich beherrsche und in Produktion einsetze. Tippen Sie auf eine Kachel für Details.';
+      'Technologien, die ich in Produktion einsetze, und weitere, die ich aus der Nähe kenne. Tippen Sie auf eine Kachel für Details.';
 
   @override
   String get engineering_githubButton => 'Repository auf GitHub ansehen';
@@ -1012,4 +1012,10 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get locale_it => 'Italiano';
+
+  @override
+  String get locale_fr => 'Français';
+
+  @override
+  String get locale_ru => 'Русский';
 }

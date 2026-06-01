@@ -64,7 +64,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get common_semanticsLoadingSpinner => 'Carregando conteúdo';
 
   @override
-  String get hero_eyebrow => 'Disponível para freelas';
+  String get hero_eyebrow => 'Disponível para freelance';
 
   @override
   String get hero_headline1 => 'Front end mobile com Flutter.';
@@ -74,7 +74,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get hero_bio =>
-      '6 anos construindo o front end de apps mobile (e web quando faz sentido) — atuando do varejo B2B a produto fintech em escala.';
+      'Front end de apps mobile com Flutter — arquitetura por feature, estado com Bloc, UI fluida em device real. 6 anos entregando o mesmo padrão em domínios distintos, sempre na camada mobile.';
 
   @override
   String get hero_scrollHint => 'role para continuar';
@@ -136,7 +136,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get about_bioParagraph =>
-      'A carreira começou em apps mobile de operação varejista — front end Flutter do design ao deploy, em time pequeno, durante 5 anos. Em seguida, atuação em times de produto em domínios maiores: setor público, plataforma interna, operação em campo e, atualmente, fintech em escala. Sempre no front end mobile, com Flutter web quando o produto demandou. Foco constante em arquitetura, performance e consistência de UX em devices reais.';
+      'Construo o front end inteiro de apps Flutter — arquitetura por feature, estado com Bloc, performance em device real e consistência de UX. Seis anos aplicando esse padrão em contextos diferentes: cinco cuidando do front end completo de apps de operação de varejo (estoque, distribuição entre unidades, vendas e comunicação interna, do design ao deploy, em time pequeno), depois coleta de dados em campo offline-first com sincronização sob rede instável, um serviço público ao cidadão com fluxo sensível de dados, ferramentas internas com gamificação e, hoje, um produto financeiro de larga escala em monorepo com design system próprio. Domínios distintos, mesma régua: front end mobile robusto, com Flutter web quando o produto pediu.';
 
   @override
   String get delivery_entrega_eyebrow => 'ENTREGA';
@@ -162,7 +162,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get delivery_craft_body =>
-      'Clean Architecture por feature, Bloc/Cubit pra estado, CustomPainter quando vetor é mais barato que asset. Mede tempo de frame em device real (não emulador), perfila build time, audita rebuilds. Stack de produção sustenta evolução — não emperra dois meses depois do MVP.';
+      'Clean Architecture por feature, Bloc/Cubit para estado, CustomPainter quando vetor é mais barato que asset. Mede tempo de frame em device real (não emulador), perfila build time, audita rebuilds. Stack de produção sustenta evolução — não emperra dois meses depois do MVP.';
 
   @override
   String get delivery_collab_eyebrow => 'COLABORAÇÃO';
@@ -178,39 +178,39 @@ class AppLocalizationsPt extends AppLocalizations {
       'Em time grande entro como front end mobile com escopo de feature ou stewardship arquitetural. Em time pequeno (varejo B2B, 5 anos) cuidei do Flutter inteiro — do design ao deploy, integrando APIs já existentes e ajudando a moldar contratos novos quando o caminho era esse. Ajusto-me ao tamanho do time, não ao contrário.';
 
   @override
-  String get domain_fintech_label => 'Fintech';
+  String get domain_fintech_label => 'Serviço financeiro';
 
   @override
   String get domain_fintech_blurb =>
-      'Apps de crédito mobile em escala — base ativa de milhões de usuários.';
+      'Produto financeiro de larga escala no front end Flutter — monorepo, design system próprio e arquitetura por feature, foco em correção e consistência sob alto volume.';
 
   @override
   String get domain_publicServices_label => 'Setor público';
 
   @override
   String get domain_publicServices_blurb =>
-      'Serviços digitais ao cidadão com integração a identidade governamental.';
+      'Serviço público ao cidadão — fluxo sensível de dados com Bloc, foco em confiabilidade e privacidade.';
 
   @override
   String get domain_sanitation_label => 'Operação em campo';
 
   @override
   String get domain_sanitation_blurb =>
-      'Apps de coleta e inspeção em devices industriais com sincronização offline-first.';
+      'Coleta de dados em campo offline-first — Flutter Modular e Provider, sincronização confiável sob rede instável.';
 
   @override
   String get domain_platform_label => 'Plataforma interna';
 
   @override
   String get domain_platform_blurb =>
-      'Ferramentas internas pra gestão de equipes e operação corporativa em larga escala.';
+      'Ferramentas internas em Flutter — camada de gamificação para engajamento de equipes.';
 
   @override
   String get domain_retail_label => 'Varejo B2B';
 
   @override
   String get domain_retail_blurb =>
-      'Apps mobile de operação de loja, controle de estoque, inventário e pedidos. Front end Flutter inteiro, em time pequeno, ao longo de 5 anos.';
+      'Front end Flutter inteiro — do design ao deploy, em time pequeno, por cinco anos. Cinco apps de operação: estoque, distribuição entre unidades, vendas e comunicação interna.';
 
   @override
   String get services_eyebrow => 'Serviços';
@@ -353,7 +353,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get engineering_subtitle =>
-      'Tecnologias que domino e aplico em produção. Toque em qualquer tile para saber mais.';
+      'Tecnologias que uso em produção e outras que conheço de perto. Toque em qualquer tile para saber mais.';
 
   @override
   String get engineering_githubButton => 'Ver repositório no GitHub';
@@ -473,7 +473,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get showcase_subtitle =>
-      'Mocks funcionais por nicho — delivery, agendamento, fitness, imobiliária e investimentos. Toque num card pra abrir. Sem backend de verdade; demonstram o tipo de produto que consigo entregar.';
+      'Mocks funcionais por nicho — delivery, agendamento, fitness, imobiliária e investimentos. Toque num card para abrir. Sem backend de verdade; demonstram o tipo de produto que consigo entregar.';
 
   @override
   String get showcase_financeLabel => 'Investimentos';
@@ -1009,4 +1009,10 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get locale_it => 'Italiano';
+
+  @override
+  String get locale_fr => 'Français';
+
+  @override
+  String get locale_ru => 'Русский';
 }

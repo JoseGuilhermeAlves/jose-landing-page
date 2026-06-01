@@ -23,7 +23,7 @@
   "hero_eyebrow": "Available for freelance",
   "hero_headline1": "Mobile front end with Flutter.",
   "hero_headline2": "From MVP to production app.",
-  "hero_bio": "6 years building the front end of mobile apps (and web when it makes sense) — from B2B retail to fintech products at scale.",
+  "hero_bio": "Mobile app front end with Flutter — feature-based architecture, Bloc for state, fluid UI on real devices. Six years delivering the same standard across distinct domains, always on the mobile layer.",
   "hero_scrollHint": "scroll to continue",
   "hero_ctaWhatsapp": "Chat on WhatsApp",
   "hero_ctaProjects": "See projects",
@@ -44,7 +44,7 @@
   "about_deliveryTitle": "How I deliver",
   "about_bioName": "José Guilherme Alves",
   "about_bioTitle": "Mobile front end · Flutter Developer · Brazil",
-  "about_bioParagraph": "Career started in retail mobile apps — Flutter front end from design to deploy, in a small team, over 5 years. Then moved to product teams across larger domains: public services, internal platforms, field operations, and currently fintech at scale. Always on the mobile front end, with Flutter web when the product demanded it. Constant focus on architecture, performance, and UX consistency on real devices.",
+  "about_bioParagraph": "I build the entire front end of Flutter apps — feature-based architecture, Bloc for state, performance on real devices and UX consistency. Six years applying this standard in different contexts: five owning the complete front end of retail-operations apps (inventory, distribution across units, sales and internal communication, from design to deploy, in a small team), then offline-first field data collection with syncing over an unstable network, a citizen-facing public service with a sensitive data flow, internal tools with gamification, and currently a large-scale financial product in a monorepo with its own design system. Distinct domains, same bar: a robust mobile front end, with Flutter web when the product called for it.",
 
   "delivery_entrega_eyebrow": "DELIVERY",
   "delivery_entrega_title": "Clear scope,",
@@ -59,16 +59,16 @@
   "delivery_collab_titleAccent": "or owning the entire Flutter side.",
   "delivery_collab_body": "On large teams I join as mobile front end with feature scope or architectural stewardship. On small teams (B2B retail, 5 years) I owned the entire Flutter side — from design to deploy, integrating existing APIs and helping shape new contracts when needed. I adapt to the team size, not the other way around.",
 
-  "domain_fintech_label": "Fintech",
-  "domain_fintech_blurb": "Mobile credit apps at scale — active base of millions of users.",
+  "domain_fintech_label": "Financial service",
+  "domain_fintech_blurb": "Large-scale financial product on the Flutter front end — monorepo, its own design system and feature-based architecture, focused on correctness and consistency under high volume.",
   "domain_publicServices_label": "Public services",
-  "domain_publicServices_blurb": "Digital citizen services with government identity integration.",
+  "domain_publicServices_blurb": "Citizen-facing public service — sensitive data flow with Bloc, focused on reliability and privacy.",
   "domain_sanitation_label": "Field operations",
-  "domain_sanitation_blurb": "Collection and inspection apps on industrial devices with offline-first sync.",
+  "domain_sanitation_blurb": "Offline-first field data collection — Flutter Modular and Provider, reliable syncing over an unstable network.",
   "domain_platform_label": "Internal platform",
-  "domain_platform_blurb": "Internal tools for team management and large-scale corporate operations.",
+  "domain_platform_blurb": "Internal tools in Flutter — gamification layer for team engagement.",
   "domain_retail_label": "B2B Retail",
-  "domain_retail_blurb": "Mobile store operation apps, inventory control, and orders. Entire Flutter front end, small team, over 5 years.",
+  "domain_retail_blurb": "Entire Flutter front end — from design to deploy, in a small team, over five years. Five operations apps: inventory, distribution across units, sales and internal communication.",
 
   "services_eyebrow": "Services",
   "services_title": "Mobile front end.",
@@ -117,7 +117,7 @@
   "engineering_eyebrow": "Engineering & services",
   "engineering_title": "The stack behind",
   "engineering_titleAccent": "every project decision.",
-  "engineering_subtitle": "Technologies I master and apply in production. Tap any tile to learn more.",
+  "engineering_subtitle": "Technologies I use in production and others I know closely. Tap any tile to learn more.",
   "engineering_githubButton": "View repository on GitHub",
 
   "caseStudy_eyebrow": "Case study",
@@ -342,5 +342,7 @@
   "locale_de": "Deutsch",
   "locale_zh": "中文",
   "locale_ja": "日本語",
-  "locale_it": "Italiano"
+  "locale_it": "Italiano",
+  "locale_fr": "Français",
+  "locale_ru": "Русский"
 }

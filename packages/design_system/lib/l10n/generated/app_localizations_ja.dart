@@ -73,7 +73,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get hero_bio =>
-      'モバイルアプリのフロントエンド開発7年以上（必要に応じてWebも）——B2B小売からスケールするフィンテック製品まで。';
+      'Flutterによるモバイルアプリのフロントエンド——feature単位のアーキテクチャ、Blocによる状態管理、実機での滑らかなUI。6年間、異なるドメインで同じ規律を貫き、常にモバイルレイヤーで。';
 
   @override
   String get hero_scrollHint => 'スクロールして続ける';
@@ -135,7 +135,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get about_bioParagraph =>
-      'キャリアはリテールのモバイルアプリから始まりました。少人数チームでFlutterフロントエンドをデザインからデプロイまで5年間担当。その後、公共サービス、社内プラットフォーム、フィールドオペレーション、そして現在はスケールするフィンテックのプロダクトチームに参加。常にモバイルフロントエンド、必要時にFlutter Web。アーキテクチャ、パフォーマンス、実機でのUX一貫性に継続的に注力。';
+      'Flutterアプリのフロントエンドを丸ごと構築します——feature単位のアーキテクチャ、Blocによる状態管理、実機でのパフォーマンス、UXの一貫性。6年間、異なる文脈でこの規律を適用してきました：5年間は小売オペレーションのアプリ（在庫、店舗間の配分、販売、社内コミュニケーション）のフロントエンド全体をデザインからデプロイまで少人数チームで担当、その後は不安定なネットワーク下でも同期するoffline-firstの現場データ収集、機微なデータフローを扱う市民向け公共サービス、gamificationを備えた社内ツール、そして現在は独自のdesign systemを持つmonorepoの大規模な金融プロダクト。ドメインは異なれど、規律は同じ——堅牢なモバイルフロントエンド、製品が求めればFlutter webも。';
 
   @override
   String get delivery_entrega_eyebrow => 'デリバリー';
@@ -177,35 +177,39 @@ class AppLocalizationsJa extends AppLocalizations {
       '大きなチームではフィーチャースコープまたはアーキテクチャスチュワードシップとしてモバイルフロントエンドに参加。小さなチーム（B2Bリテール、5年）ではFlutter全体を担当——デザインからデプロイまで、既存APIの統合と必要に応じた新しい契約の策定。チームサイズに合わせます。逆ではなく。';
 
   @override
-  String get domain_fintech_label => 'フィンテック';
+  String get domain_fintech_label => '金融サービス';
 
   @override
-  String get domain_fintech_blurb => '大規模モバイルクレジットアプリ——数百万のアクティブユーザー。';
+  String get domain_fintech_blurb =>
+      'Flutterフロントエンドの大規模な金融プロダクト——monorepo、独自のdesign system、feature単位のアーキテクチャで、高負荷下での正確性と一貫性を重視。';
 
   @override
   String get domain_publicServices_label => '公共サービス';
 
   @override
-  String get domain_publicServices_blurb => '政府IDとの統合による市民向けデジタルサービス。';
+  String get domain_publicServices_blurb =>
+      '市民向け公共サービス——Blocによる機微なデータフロー、信頼性とプライバシーを重視。';
 
   @override
   String get domain_sanitation_label => 'フィールドオペレーション';
 
   @override
-  String get domain_sanitation_blurb => 'オフラインファースト同期対応の産業用デバイス上の収集・検査アプリ。';
+  String get domain_sanitation_blurb =>
+      'offline-firstの現場データ収集——Flutter ModularとProvider、不安定なネットワーク下でも確実に同期。';
 
   @override
   String get domain_platform_label => '社内プラットフォーム';
 
   @override
-  String get domain_platform_blurb => '大規模なチーム管理と企業オペレーションのための内部ツール。';
+  String get domain_platform_blurb =>
+      'Flutterによる社内ツール——チームのエンゲージメント向上のためのgamificationレイヤー。';
 
   @override
   String get domain_retail_label => 'B2Bリテール';
 
   @override
   String get domain_retail_blurb =>
-      '店舗運営モバイルアプリ、在庫管理、受注。少人数チームでFlutterフロントエンド全体を5年間担当。';
+      'Flutterフロントエンドを丸ごと——デザインからデプロイまで、少人数チームで5年間。オペレーションのアプリ5本：在庫、店舗間の配分、販売、社内コミュニケーション。';
 
   @override
   String get services_eyebrow => 'サービス';
@@ -347,7 +351,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get engineering_titleAccent => '支える技術スタック。';
 
   @override
-  String get engineering_subtitle => '本番で習熟し適用している技術。タイルをタップして詳細を確認。';
+  String get engineering_subtitle => '本番で使用している技術と、近くで知る他の技術。タイルをタップして詳細を確認。';
 
   @override
   String get engineering_githubButton => 'GitHubでリポジトリを見る';
@@ -972,4 +976,10 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get locale_it => 'Italiano';
+
+  @override
+  String get locale_fr => 'Français';
+
+  @override
+  String get locale_ru => 'Русский';
 }

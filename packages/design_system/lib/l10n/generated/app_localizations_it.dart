@@ -74,7 +74,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get hero_bio =>
-      '6 anni di sviluppo front end per app mobile (e web quando ha senso) — dal retail B2B ai prodotti fintech su larga scala.';
+      'Front end di app mobile con Flutter — architettura per feature, stato con Bloc, UI fluida su device reale. Sei anni a consegnare lo stesso standard in domini distinti, sempre nel layer mobile.';
 
   @override
   String get hero_scrollHint => 'scorri per continuare';
@@ -136,7 +136,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get about_bioParagraph =>
-      'La carriera è iniziata nelle app mobile retail — front end Flutter dal design al deploy, in un team piccolo, per 5 anni. Poi in team di prodotto in domini più grandi: settore pubblico, piattaforma interna, operazioni sul campo e attualmente fintech su larga scala. Sempre nel front end mobile, con Flutter web quando il prodotto lo richiedeva. Focus costante su architettura, performance e coerenza UX su dispositivi reali.';
+      'Costruisco l\'intero front end di app Flutter — architettura per feature, stato con Bloc, performance su device reale e coerenza di UX. Sei anni ad applicare questo standard in contesti diversi: cinque a curare il front end completo di app per operazioni retail (inventario, distribuzione tra unità, vendite e comunicazione interna, dal design al deploy, in un team piccolo), poi raccolta di dati sul campo offline-first con sincronizzazione su rete instabile, un servizio pubblico al cittadino con flusso di dati sensibili, strumenti interni con gamification e, oggi, un prodotto finanziario su larga scala in monorepo con design system proprio. Domini distinti, stessa misura: front end mobile robusto, con Flutter web quando il prodotto lo richiedeva.';
 
   @override
   String get delivery_entrega_eyebrow => 'CONSEGNA';
@@ -178,39 +178,39 @@ class AppLocalizationsIt extends AppLocalizations {
       'In team grandi entro come front end mobile con ambito feature o stewardship architetturale. In team piccoli (retail B2B, 5 anni) ho gestito tutto il Flutter — dal design al deploy, integrando API esistenti e contribuendo a definire nuovi contratti quando necessario. Mi adatto alla dimensione del team, non il contrario.';
 
   @override
-  String get domain_fintech_label => 'Fintech';
+  String get domain_fintech_label => 'Servizio finanziario';
 
   @override
   String get domain_fintech_blurb =>
-      'App di credito mobile su larga scala — base attiva di milioni di utenti.';
+      'Prodotto finanziario su larga scala nel front end Flutter — monorepo, design system proprio e architettura per feature, focus su correttezza e coerenza sotto alto volume.';
 
   @override
   String get domain_publicServices_label => 'Settore pubblico';
 
   @override
   String get domain_publicServices_blurb =>
-      'Servizi digitali al cittadino con integrazione dell\'identità governativa.';
+      'Servizio pubblico al cittadino — flusso di dati sensibili con Bloc, focus su affidabilità e privacy.';
 
   @override
   String get domain_sanitation_label => 'Operazioni sul campo';
 
   @override
   String get domain_sanitation_blurb =>
-      'App di raccolta e ispezione su dispositivi industriali con sincronizzazione offline-first.';
+      'Raccolta di dati sul campo offline-first — Flutter Modular e Provider, sincronizzazione affidabile su rete instabile.';
 
   @override
   String get domain_platform_label => 'Piattaforma interna';
 
   @override
   String get domain_platform_blurb =>
-      'Strumenti interni per la gestione dei team e le operazioni aziendali su larga scala.';
+      'Strumenti interni in Flutter — layer di gamification per l\'engagement dei team.';
 
   @override
   String get domain_retail_label => 'Retail B2B';
 
   @override
   String get domain_retail_blurb =>
-      'App mobile per operazioni di negozio, controllo inventario e ordini. Intero front end Flutter, team piccolo, per 5 anni.';
+      'Intero front end Flutter — dal design al deploy, in un team piccolo, per cinque anni. Cinque app di operazioni: inventario, distribuzione tra unità, vendite e comunicazione interna.';
 
   @override
   String get services_eyebrow => 'Servizi';
@@ -353,7 +353,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get engineering_subtitle =>
-      'Tecnologie che padroneggio e applico in produzione. Tocca qualsiasi tile per saperne di più.';
+      'Tecnologie che uso in produzione e altre che conosco da vicino. Tocca qualsiasi tile per saperne di più.';
 
   @override
   String get engineering_githubButton => 'Vedi repository su GitHub';
@@ -1009,4 +1009,10 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get locale_it => 'Italiano';
+
+  @override
+  String get locale_fr => 'Français';
+
+  @override
+  String get locale_ru => 'Русский';
 }

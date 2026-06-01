@@ -24,6 +24,8 @@ class LocaleSwitcher extends StatelessWidget {
     Locale('zh'),
     Locale('ja'),
     Locale('it'),
+    Locale('fr'),
+    Locale('ru'),
   ];
 
   String _localeName(BuildContext context, Locale locale) {
@@ -36,6 +38,8 @@ class LocaleSwitcher extends StatelessWidget {
       'zh' => l10n.locale_zh,
       'ja' => l10n.locale_ja,
       'it' => l10n.locale_it,
+      'fr' => l10n.locale_fr,
+      'ru' => l10n.locale_ru,
       _ => locale.languageCode.toUpperCase(),
     };
   }

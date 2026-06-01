@@ -23,7 +23,7 @@
   "hero_eyebrow": "Disponible para freelance",
   "hero_headline1": "Front end mobile con Flutter.",
   "hero_headline2": "Del MVP a la app en producción.",
-  "hero_bio": "6 años construyendo el front end de apps mobile (y web cuando tiene sentido) — del retail B2B a producto fintech a escala.",
+  "hero_bio": "Front end de apps mobile con Flutter — arquitectura por feature, estado con Bloc, UI fluida en dispositivo real. Seis años entregando el mismo estándar en dominios distintos, siempre en la capa mobile.",
   "hero_scrollHint": "desplaza para continuar",
   "hero_ctaWhatsapp": "Hablar por WhatsApp",
   "hero_ctaProjects": "Ver proyectos",
@@ -44,7 +44,7 @@
   "about_deliveryTitle": "Cómo entrego",
   "about_bioName": "José Guilherme Alves",
   "about_bioTitle": "Front end mobile · Flutter Developer · Brasil",
-  "about_bioParagraph": "La carrera empezó en apps mobile de operación retail — front end Flutter del diseño al deploy, en equipo pequeño, durante 5 años. Luego, en equipos de producto en dominios mayores: sector público, plataforma interna, operación en campo y, actualmente, fintech a escala. Siempre en el front end mobile, con Flutter web cuando el producto lo demandó. Foco constante en arquitectura, performance y consistencia de UX en dispositivos reales.",
+  "about_bioParagraph": "Construyo el front end entero de apps Flutter — arquitectura por feature, estado con Bloc, performance en dispositivo real y consistencia de UX. Seis años aplicando este estándar en contextos distintos: cinco a cargo del front end completo de apps de operación de retail (inventario, distribución entre unidades, ventas y comunicación interna, del diseño al deploy, en equipo pequeño), luego recolección de datos en campo offline-first con sincronización bajo red inestable, un servicio público al ciudadano con flujo sensible de datos, herramientas internas con gamificación y, hoy, un producto financiero de gran escala en monorepo con design system propio. Dominios distintos, la misma vara: front end mobile robusto, con Flutter web cuando el producto lo pidió.",
 
   "delivery_entrega_eyebrow": "ENTREGA",
   "delivery_entrega_title": "Alcance claro,",
@@ -59,16 +59,16 @@
   "delivery_collab_titleAccent": "o en todo el Flutter.",
   "delivery_collab_body": "En equipos grandes entro como front end mobile con alcance de feature o stewardship arquitectural. En equipos pequeños (retail B2B, 5 años) me encargué de todo el Flutter — del diseño al deploy, integrando APIs existentes y ayudando a definir contratos nuevos cuando era necesario. Me adapto al tamaño del equipo, no al revés.",
 
-  "domain_fintech_label": "Fintech",
-  "domain_fintech_blurb": "Apps de crédito mobile a escala — base activa de millones de usuarios.",
+  "domain_fintech_label": "Servicio financiero",
+  "domain_fintech_blurb": "Producto financiero de gran escala en el front end Flutter — monorepo, design system propio y arquitectura por feature, foco en corrección y consistencia bajo alto volumen.",
   "domain_publicServices_label": "Sector público",
-  "domain_publicServices_blurb": "Servicios digitales al ciudadano con integración de identidad gubernamental.",
+  "domain_publicServices_blurb": "Servicio público al ciudadano — flujo sensible de datos con Bloc, foco en fiabilidad y privacidad.",
   "domain_sanitation_label": "Operación en campo",
-  "domain_sanitation_blurb": "Apps de recolección e inspección en dispositivos industriales con sincronización offline-first.",
+  "domain_sanitation_blurb": "Recolección de datos en campo offline-first — Flutter Modular y Provider, sincronización fiable bajo red inestable.",
   "domain_platform_label": "Plataforma interna",
-  "domain_platform_blurb": "Herramientas internas para gestión de equipos y operación corporativa a gran escala.",
+  "domain_platform_blurb": "Herramientas internas en Flutter — capa de gamificación para el engagement de equipos.",
   "domain_retail_label": "Retail B2B",
-  "domain_retail_blurb": "Apps mobile de operación de tienda, control de inventario y pedidos. Front end Flutter completo, equipo pequeño, durante 5 años.",
+  "domain_retail_blurb": "Front end Flutter entero — del diseño al deploy, en equipo pequeño, durante cinco años. Cinco apps de operación: inventario, distribución entre unidades, ventas y comunicación interna.",
 
   "services_eyebrow": "Servicios",
   "services_title": "Front end mobile.",
@@ -117,7 +117,7 @@
   "engineering_eyebrow": "Ingeniería y servicios",
   "engineering_title": "El stack detrás de",
   "engineering_titleAccent": "cada decisión del proyecto.",
-  "engineering_subtitle": "Tecnologías que domino y aplico en producción. Toca cualquier tile para saber más.",
+  "engineering_subtitle": "Tecnologías que uso en producción y otras que conozco de cerca. Toca cualquier tile para saber más.",
   "engineering_githubButton": "Ver repositorio en GitHub",
 
   "caseStudy_eyebrow": "Caso de estudio",
@@ -342,5 +342,7 @@
   "locale_de": "Deutsch",
   "locale_zh": "中文",
   "locale_ja": "日本語",
-  "locale_it": "Italiano"
+  "locale_it": "Italiano",
+  "locale_fr": "Français",
+  "locale_ru": "Русский"
 }

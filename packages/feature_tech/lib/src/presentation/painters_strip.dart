@@ -10,8 +10,10 @@ class PaintersStrip extends StatelessWidget {
 
   final List<PainterHighlight> painters;
 
+  // Cards de painter sao compactos (nome + role + chip, sem icone), entao
+  // cabem 2 por linha ja no mobile — encurta a lista de 9 pela metade.
   int _columnsFor(Breakpoint bp) => switch (bp) {
-    Breakpoint.mobile => 1,
+    Breakpoint.mobile => 2,
     Breakpoint.tablet => 2,
     Breakpoint.desktop || Breakpoint.wide => 3,
   };

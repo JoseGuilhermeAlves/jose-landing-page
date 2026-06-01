@@ -144,9 +144,10 @@ class _DomainConstellationState extends State<DomainConstellation>
     return LayoutBuilder(
       builder: (context, c) {
         final width = c.maxWidth;
-        // Cena em aspect ratio ~16:9 desktop, ~4:3 mobile pra
-        // acomodar planetas + balao sem cortar.
-        final height = isMobile ? width * 0.95 : width * 0.55;
+        // Desktop ~16:9. Mobile mais baixo que largo (era quase quadrado
+        // 0.95 e comia tela demais) — mantem planetas + balao legiveis
+        // sem virar bloco gigante.
+        final height = isMobile ? width * 0.82 : width * 0.55;
         return GestureDetector(
           behavior: HitTestBehavior.opaque,
           // Tap em area vazia fecha o balao.

@@ -12,11 +12,16 @@ import 'package:flutter/material.dart';
 /// de cada mock com as cores da marca — leve o suficiente para rodar
 /// 5 instancias simultaneas na home sem comprometer frame budget.
 class ShowcaseCardPreview extends StatelessWidget {
-  const ShowcaseCardPreview({required this.templateId, super.key});
+  const ShowcaseCardPreview({
+    required this.templateId,
+    this.height = defaultHeight,
+    super.key,
+  });
 
   final String templateId;
+  final double height;
 
-  static const double height = 120;
+  static const double defaultHeight = 120;
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +65,7 @@ class ShowcaseCardPreview extends StatelessWidget {
   Widget? _backdropFor(String id) => switch (id) {
     'finance' => _themed(
       MiraBrand.palette,
-      const MiraHeroBackdrop(height: height),
+      MiraHeroBackdrop(height: height),
     ),
     'delivery' => const AuroraHeroBackdrop(
       waveColor: Color(0xFF2F6B3F),

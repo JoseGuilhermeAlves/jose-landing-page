@@ -88,6 +88,7 @@ class _ShowcaseCardState extends State<ShowcaseCard>
     final colors = context.colors;
     final textTheme = Theme.of(context).textTheme;
     final disabled = !widget.template.hasDemo;
+    final isMobile = context.isMobile;
 
     final card = AnimatedBuilder(
       animation: _controller,
@@ -119,31 +120,38 @@ class _ShowcaseCardState extends State<ShowcaseCard>
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                ShowcaseCardPreview(templateId: widget.template.id),
+                ShowcaseCardPreview(
+                  templateId: widget.template.id,
+                  height: isMobile ? 92 : ShowcaseCardPreview.defaultHeight,
+                ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(
-                    AppSpacing.lg,
+                  padding: EdgeInsets.fromLTRB(
+                    isMobile ? AppSpacing.md : AppSpacing.lg,
                     AppSpacing.sm,
-                    AppSpacing.lg,
-                    AppSpacing.lg,
+                    isMobile ? AppSpacing.md : AppSpacing.lg,
+                    isMobile ? AppSpacing.md : AppSpacing.lg,
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Container(
-                        padding: const EdgeInsets.all(AppSpacing.sm),
-                        decoration: BoxDecoration(
-                          gradient: AppGradients.brandSoft(colors),
-                          borderRadius: BorderRadius.circular(AppRadius.md),
+                      // Mobile: o preview ja da identidade visual, entao o
+                      // chip de icone vira redundante — omitido pra encurtar.
+                      if (!isMobile) ...[
+                        Container(
+                          padding: const EdgeInsets.all(AppSpacing.sm),
+                          decoration: BoxDecoration(
+                            gradient: AppGradients.brandSoft(colors),
+                            borderRadius: BorderRadius.circular(AppRadius.md),
+                          ),
+                          child: Icon(
+                            widget.template.icon,
+                            color: colors.primary,
+                            size: 22,
+                          ),
                         ),
-                        child: Icon(
-                          widget.template.icon,
-                          color: colors.primary,
-                          size: 22,
-                        ),
-                      ),
-                      const SizedBox(height: AppSpacing.md),
+                        const SizedBox(height: AppSpacing.md),
+                      ],
                       Wrap(
                         spacing: AppSpacing.sm,
                         runSpacing: AppSpacing.xs,

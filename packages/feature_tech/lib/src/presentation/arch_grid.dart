@@ -66,10 +66,72 @@ class _ArchCardState extends State<ArchCard>
     super.dispose();
   }
 
+  /// Conteudo do card. Em mobile vira layout horizontal (icone a
+  /// esquerda, texto a direita) pra reduzir altura — retangulo baixo
+  /// em vez de bloco alto. Desktop mantem icone no topo.
+  Widget _content({
+    required bool isMobile,
+    required AppColorScheme colors,
+    required TextTheme textTheme,
+  }) {
+    final iconBox = Container(
+      padding: const EdgeInsets.all(AppSpacing.sm),
+      decoration: BoxDecoration(
+        gradient: AppGradients.brandSoft(colors),
+        borderRadius: BorderRadius.circular(AppRadius.md),
+        border: Border.all(color: colors.primary.withValues(alpha: 0.35)),
+      ),
+      child: Icon(widget.decision.icon, color: colors.primary, size: 22),
+    );
+    final title = Text(
+      widget.decision.title,
+      style: textTheme.titleSmall?.copyWith(
+        color: colors.onSurface,
+        fontWeight: FontWeight.w700,
+      ),
+    );
+    final body = Text(
+      widget.decision.body,
+      style: textTheme.bodySmall?.copyWith(
+        color: colors.onSurfaceMuted,
+        height: 1.55,
+      ),
+    );
+
+    if (isMobile) {
+      return Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          iconBox,
+          const SizedBox(width: AppSpacing.md),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [title, const SizedBox(height: AppSpacing.xs), body],
+            ),
+          ),
+        ],
+      );
+    }
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        iconBox,
+        const SizedBox(height: AppSpacing.md),
+        title,
+        const SizedBox(height: AppSpacing.xs),
+        body,
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
     final textTheme = Theme.of(context).textTheme;
+    final isMobile = context.isMobile;
 
     return MouseRegion(
       onEnter: (_) => _controller.forward(),
@@ -89,48 +151,16 @@ class _ArchCardState extends State<ArchCard>
         },
         child: Container(
           key: Key('arch-card-${widget.decision.id}'),
-          padding: const EdgeInsets.all(AppSpacing.lg),
+          padding: EdgeInsets.all(isMobile ? AppSpacing.md : AppSpacing.lg),
           decoration: BoxDecoration(
             color: colors.surface,
             borderRadius: BorderRadius.circular(AppRadius.lg),
             border: Border.all(color: colors.border),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                padding: const EdgeInsets.all(AppSpacing.sm),
-                decoration: BoxDecoration(
-                  gradient: AppGradients.brandSoft(colors),
-                  borderRadius: BorderRadius.circular(AppRadius.md),
-                  border: Border.all(
-                    color: colors.primary.withValues(alpha: 0.35),
-                  ),
-                ),
-                child: Icon(
-                  widget.decision.icon,
-                  color: colors.primary,
-                  size: 22,
-                ),
-              ),
-              const SizedBox(height: AppSpacing.md),
-              Text(
-                widget.decision.title,
-                style: textTheme.titleSmall?.copyWith(
-                  color: colors.onSurface,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-              const SizedBox(height: AppSpacing.xs),
-              Text(
-                widget.decision.body,
-                style: textTheme.bodySmall?.copyWith(
-                  color: colors.onSurfaceMuted,
-                  height: 1.55,
-                ),
-              ),
-            ],
+          child: _content(
+            isMobile: isMobile,
+            colors: colors,
+            textTheme: textTheme,
           ),
         ),
       ),

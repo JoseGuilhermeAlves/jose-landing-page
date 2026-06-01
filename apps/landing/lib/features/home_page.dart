@@ -278,10 +278,11 @@ class _SectionSlot extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.symmetric(
           horizontal: horizontalPadding,
-          // Spacing reduzido (96 -> 64) pra que a transicao entre
-          // secoes nao "engula" tanto viewport — senao o usuario
-          // mobile fica confuso sobre onde acaba uma e comeca outra.
-          vertical: AppSpacing.huge,
+          // Desktop usa 64 (reduzido de 96) pra dar respiro entre secoes.
+          // Mobile aperta pra 32 — viewport curto nao pode gastar 128px
+          // (topo+base) de whitespace por secao, senao o scroll vira um
+          // tunel vazio entre blocos.
+          vertical: context.isMobile ? AppSpacing.xl : AppSpacing.huge,
         ),
         child: Center(
           child: ConstrainedBox(

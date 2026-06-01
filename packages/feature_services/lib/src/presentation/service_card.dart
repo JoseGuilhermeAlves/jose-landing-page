@@ -43,10 +43,73 @@ class _ServiceCardState extends State<ServiceCard>
     }
   }
 
+  /// Conteudo do card. Em mobile vira layout horizontal (icone a
+  /// esquerda, texto a direita) pra reduzir altura — o card fica um
+  /// retangulo baixo em vez de bloco alto full-width. Desktop mantem
+  /// o empilhamento vertical com icone no topo.
+  Widget _content({
+    required bool isMobile,
+    required AppColorScheme colors,
+    required TextTheme textTheme,
+  }) {
+    final iconBox = Container(
+      padding: const EdgeInsets.all(AppSpacing.sm),
+      decoration: BoxDecoration(
+        color: colors.primary.withValues(alpha: 0.12),
+        borderRadius: BorderRadius.circular(AppRadius.md),
+      ),
+      child: Icon(widget.service.icon, color: colors.primary, size: 22),
+    );
+    final title = Text(
+      widget.service.title,
+      style: textTheme.titleLarge?.copyWith(color: colors.onSurface),
+    );
+    final description = Text(
+      widget.service.description,
+      style: textTheme.bodyMedium?.copyWith(
+        color: colors.onSurfaceMuted,
+        height: 1.5,
+      ),
+    );
+
+    if (isMobile) {
+      return Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          iconBox,
+          const SizedBox(width: AppSpacing.md),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                title,
+                const SizedBox(height: AppSpacing.xs),
+                description,
+              ],
+            ),
+          ),
+        ],
+      );
+    }
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        iconBox,
+        const SizedBox(height: AppSpacing.md),
+        title,
+        const SizedBox(height: AppSpacing.sm),
+        description,
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
     final textTheme = Theme.of(context).textTheme;
+    final isMobile = context.isMobile;
 
     final card = AnimatedBuilder(
       animation: _controller,
@@ -58,44 +121,16 @@ class _ServiceCardState extends State<ServiceCard>
             borderRadius: _radius,
           ),
           child: Container(
-            padding: const EdgeInsets.all(AppSpacing.lg),
+            padding: EdgeInsets.all(isMobile ? AppSpacing.md : AppSpacing.lg),
             decoration: BoxDecoration(
               color: colors.surface,
               borderRadius: BorderRadius.circular(_radius),
               border: Border.all(color: colors.border),
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(AppSpacing.sm),
-                  decoration: BoxDecoration(
-                    color: colors.primary.withValues(alpha: 0.12),
-                    borderRadius: BorderRadius.circular(AppRadius.md),
-                  ),
-                  child: Icon(
-                    widget.service.icon,
-                    color: colors.primary,
-                    size: 22,
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.md),
-                Text(
-                  widget.service.title,
-                  style: textTheme.titleLarge?.copyWith(
-                    color: colors.onSurface,
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.sm),
-                Text(
-                  widget.service.description,
-                  style: textTheme.bodyMedium?.copyWith(
-                    color: colors.onSurfaceMuted,
-                    height: 1.5,
-                  ),
-                ),
-              ],
+            child: _content(
+              isMobile: isMobile,
+              colors: colors,
+              textTheme: textTheme,
             ),
           ),
         );

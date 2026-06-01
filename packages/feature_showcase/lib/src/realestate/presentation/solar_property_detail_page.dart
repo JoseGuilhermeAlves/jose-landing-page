@@ -1,5 +1,6 @@
 import 'package:design_system/design_system.dart';
 import 'package:feature_showcase/src/shared/presentation/mock_body_constraint.dart';
+import 'package:feature_showcase/src/shared/presentation/mock_section_label.dart';
 import 'package:feature_showcase/src/realestate/data/solar_brokers_catalog.dart';
 import 'package:feature_showcase/src/realestate/domain/broker.dart';
 import 'package:feature_showcase/src/realestate/domain/property.dart';
@@ -111,11 +112,13 @@ class _SolarPropertyDetailPageState extends State<SolarPropertyDetailPage> {
                 ],
                 if (property.features.isNotEmpty) ...[
                   const SizedBox(height: AppSpacing.xl),
-                  _SectionLabel(
+                  MockSectionLabel(
                     eyebrow: 'Caracteristicas',
                     title: 'O que o imovel oferece',
                     colors: colors,
                     textTheme: textTheme,
+                    titleFontFamily: SolarBrand.displayFontFamily,
+                    titleFontWeight: FontWeight.w600,
                   ),
                   const SizedBox(height: AppSpacing.md),
                   _FeaturesGrid(
@@ -126,21 +129,25 @@ class _SolarPropertyDetailPageState extends State<SolarPropertyDetailPage> {
                 ],
                 if (property.type != PropertyType.land) ...[
                   const SizedBox(height: AppSpacing.xl),
-                  _SectionLabel(
+                  MockSectionLabel(
                     eyebrow: 'Planta baixa',
                     title: 'Planta esquematica do imovel',
                     colors: colors,
                     textTheme: textTheme,
+                    titleFontFamily: SolarBrand.displayFontFamily,
+                    titleFontWeight: FontWeight.w600,
                   ),
                   const SizedBox(height: AppSpacing.md),
                   _FloorPlanCard(property: property, colors: colors),
                 ],
                 const SizedBox(height: AppSpacing.xl),
-                _SectionLabel(
+                MockSectionLabel(
                   eyebrow: 'Localizacao',
                   title: 'Onde fica',
                   colors: colors,
                   textTheme: textTheme,
+                  titleFontFamily: SolarBrand.displayFontFamily,
+                  titleFontWeight: FontWeight.w600,
                 ),
                 const SizedBox(height: AppSpacing.md),
                 _MapCard(
@@ -150,11 +157,13 @@ class _SolarPropertyDetailPageState extends State<SolarPropertyDetailPage> {
                 ),
                 if (broker != null) ...[
                   const SizedBox(height: AppSpacing.xl),
-                  _SectionLabel(
+                  MockSectionLabel(
                     eyebrow: 'Corretor responsavel',
                     title: 'Quem te acompanha',
                     colors: colors,
                     textTheme: textTheme,
+                    titleFontFamily: SolarBrand.displayFontFamily,
+                    titleFontWeight: FontWeight.w600,
                   ),
                   const SizedBox(height: AppSpacing.md),
                   _BrokerCard(
@@ -720,42 +729,3 @@ class _BrokerCard extends StatelessWidget {
 // SECTION LABEL (reusada em varias secoes)
 // =============================================================================
 
-class _SectionLabel extends StatelessWidget {
-  const _SectionLabel({
-    required this.eyebrow,
-    required this.title,
-    required this.colors,
-    required this.textTheme,
-  });
-
-  final String eyebrow;
-  final String title;
-  final AppColorScheme colors;
-  final TextTheme textTheme;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          eyebrow.toUpperCase(),
-          style: textTheme.labelSmall?.copyWith(
-            color: colors.accent,
-            letterSpacing: 1.2,
-          ),
-        ),
-        const SizedBox(height: AppSpacing.xxs),
-        Text(
-          title,
-          style: textTheme.titleLarge?.copyWith(
-            color: colors.onSurface,
-            fontFamily: SolarBrand.displayFontFamily,
-            fontWeight: FontWeight.w600,
-            letterSpacing: -0.2,
-          ),
-        ),
-      ],
-    );
-  }
-}

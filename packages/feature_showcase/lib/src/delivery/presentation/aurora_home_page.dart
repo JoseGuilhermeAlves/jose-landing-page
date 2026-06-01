@@ -1,5 +1,6 @@
 import 'package:design_system/design_system.dart';
 import 'package:feature_showcase/src/shared/presentation/mock_body_constraint.dart';
+import 'package:feature_showcase/src/shared/presentation/mock_section_label.dart';
 import 'package:feature_showcase/src/delivery/data/aurora_vendors_catalog.dart';
 import 'package:feature_showcase/src/delivery/domain/delivery_order.dart';
 import 'package:feature_showcase/src/delivery/domain/market_category.dart';
@@ -98,20 +99,24 @@ class AuroraHomePage extends StatelessWidget {
                   },
                 ),
                 const SizedBox(height: AppSpacing.xl),
-                _SectionLabel(
+                MockSectionLabel(
                   eyebrow: context.l10n.aurora_categoriesEyebrow,
                   title: context.l10n.aurora_categoriesTitle,
                   colors: colors,
                   textTheme: textTheme,
+                  titleFontFamily: AuroraBrand.displayFontFamily,
+                  titleFontWeight: FontWeight.w600,
                 ),
                 const SizedBox(height: AppSpacing.md),
                 _CategoriesStrip(colors: colors, textTheme: textTheme),
                 const SizedBox(height: AppSpacing.xl),
-                _SectionLabel(
+                MockSectionLabel(
                   eyebrow: context.l10n.aurora_vendorsEyebrow,
                   title: context.l10n.aurora_vendorsTitle,
                   colors: colors,
                   textTheme: textTheme,
+                  titleFontFamily: AuroraBrand.displayFontFamily,
+                  titleFontWeight: FontWeight.w600,
                 ),
                 const SizedBox(height: AppSpacing.md),
                 _VendorsList(colors: colors, textTheme: textTheme),
@@ -695,42 +700,3 @@ class _AboutBlock extends StatelessWidget {
   }
 }
 
-class _SectionLabel extends StatelessWidget {
-  const _SectionLabel({
-    required this.eyebrow,
-    required this.title,
-    required this.colors,
-    required this.textTheme,
-  });
-
-  final String eyebrow;
-  final String title;
-  final AppColorScheme colors;
-  final TextTheme textTheme;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          eyebrow.toUpperCase(),
-          style: textTheme.labelSmall?.copyWith(
-            color: colors.accent,
-            letterSpacing: 1.2,
-          ),
-        ),
-        const SizedBox(height: AppSpacing.xxs),
-        Text(
-          title,
-          style: textTheme.titleLarge?.copyWith(
-            color: colors.onSurface,
-            fontFamily: AuroraBrand.displayFontFamily,
-            fontWeight: FontWeight.w600,
-            letterSpacing: -0.2,
-          ),
-        ),
-      ],
-    );
-  }
-}

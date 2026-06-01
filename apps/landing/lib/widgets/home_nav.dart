@@ -30,12 +30,13 @@ class HomeNavAnchor {
 
 /// Barra de navegacao fixa no topo da home. Translucida com blur de
 /// fundo (BackdropFilter) — pattern Linear/Vercel/Stripe — composta
-/// por logo (esquerda), lista de ancoras (centro, >= tablet) e CTA
+/// por logo (esquerda), lista de ancoras (centro, >= 1180px) e CTA
 /// "Falar" (direita).
 ///
-/// Em mobile so o logo e o CTA aparecem; as ancoras seriam apertadas
-/// demais. O CTA passa a ser o caminho rapido pra Contact e o logo
-/// volta pro topo.
+/// Abaixo de 1180px as ancoras inline nao cabem na altura fixa da
+/// barra; colapsam num menu overflow (icone a direita) que lista as
+/// mesmas secoes. Assim tablet e mobile mantem navegacao in-page em
+/// vez de depender so do CTA.
 class HomeNav extends StatelessWidget {
   const HomeNav({
     required this.anchors,
@@ -92,6 +93,10 @@ class HomeNav extends StatelessWidget {
                     ),
                     const SizedBox(width: AppSpacing.sm),
                     _Cta(onTap: onCtaTap),
+                    if (isCompact && anchors.isNotEmpty) ...[
+                      const SizedBox(width: AppSpacing.xs),
+                      _AnchorsMenu(anchors: anchors),
+                    ],
                   ],
                 ),
               ),
@@ -202,6 +207,34 @@ class _AnchorButtonState extends State<_AnchorButton> {
           ),
         ),
       ),
+    );
+  }
+}
+
+/// Menu overflow das ancoras pra viewports compactas (< 1180px), onde
+/// a lista inline nao cabe na altura fixa da barra. O `PopupMenuButton`
+/// ja traz tooltip localizado ("Mostrar menu") via `MaterialLocalizations`,
+/// entao nao precisa de string propria.
+class _AnchorsMenu extends StatelessWidget {
+  const _AnchorsMenu({required this.anchors});
+  final List<HomeNavAnchor> anchors;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+    return PopupMenuButton<HomeNavAnchor>(
+      key: const Key('home-nav-menu'),
+      icon: Icon(Icons.menu_rounded, color: colors.onSurface),
+      color: colors.surface,
+      onSelected: (anchor) => anchor.onTap(),
+      itemBuilder: (context) => [
+        for (final a in anchors)
+          PopupMenuItem<HomeNavAnchor>(
+            key: Key('home-nav-menu-${a.id}'),
+            value: a,
+            child: Text(a.label),
+          ),
+      ],
     );
   }
 }

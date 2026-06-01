@@ -185,33 +185,37 @@ class _CtaTile extends StatelessWidget {
         cursor: SystemMouseCursors.click,
         child: GestureDetector(
           onTap: onTap,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
-            child: Row(
-              children: [
-                Icon(icon, size: 18, color: colors.primary),
-                const SizedBox(width: AppSpacing.sm),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        label,
-                        style: textTheme.labelLarge?.copyWith(
-                          color: colors.onSurface,
+          behavior: HitTestBehavior.opaque,
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(minHeight: 44),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
+              child: Row(
+                children: [
+                  Icon(icon, size: 18, color: colors.primary),
+                  const SizedBox(width: AppSpacing.sm),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          label,
+                          style: textTheme.labelLarge?.copyWith(
+                            color: colors.onSurface,
+                          ),
                         ),
-                      ),
-                      Text(
-                        helper,
-                        style: textTheme.bodySmall?.copyWith(
-                          color: colors.onSurfaceMuted,
+                        Text(
+                          helper,
+                          style: textTheme.bodySmall?.copyWith(
+                            color: colors.onSurfaceMuted,
+                          ),
+                          overflow: TextOverflow.ellipsis,
                         ),
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

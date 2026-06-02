@@ -19,13 +19,33 @@ class CaseStudySection extends StatelessWidget {
           titleAccent: context.l10n.caseStudy_titleAccent,
           subtitle: context.l10n.caseStudy_subtitle,
         ),
-        SizedBox(height: isMobile ? AppSpacing.lg : AppSpacing.xxl),
+        SizedBox(
+          height: context.responsive(
+            mobile: AppSpacing.lg,
+            desktop: AppSpacing.xxl,
+          ),
+        ),
         _HeroBlock(isMobile: isMobile),
-        SizedBox(height: isMobile ? AppSpacing.lg : AppSpacing.xxl),
+        SizedBox(
+          height: context.responsive(
+            mobile: AppSpacing.lg,
+            desktop: AppSpacing.xxl,
+          ),
+        ),
         _PainterShowcase(isMobile: isMobile),
-        SizedBox(height: isMobile ? AppSpacing.lg : AppSpacing.xxl),
+        SizedBox(
+          height: context.responsive(
+            mobile: AppSpacing.lg,
+            desktop: AppSpacing.xxl,
+          ),
+        ),
         _DecisionsGrid(isMobile: isMobile),
-        SizedBox(height: isMobile ? AppSpacing.lg : AppSpacing.xxl),
+        SizedBox(
+          height: context.responsive(
+            mobile: AppSpacing.lg,
+            desktop: AppSpacing.xxl,
+          ),
+        ),
         const _ClosingTakeaway(),
       ],
     );
@@ -189,7 +209,7 @@ class _PainterShowcase extends StatelessWidget {
     final colors = context.colors;
     // Canvas decorativo encolhe no mobile — 3 cartoes empilhados a 200px
     // cada viram parede de scroll; 140px mantem o painter legivel.
-    final canvasHeight = isMobile ? 140.0 : 200.0;
+    final canvasHeight = context.responsive<double>(mobile: 140, desktop: 200);
     final cards = [
       _PainterCard(
         title: context.l10n.caseStudy_painterStrainTitle,

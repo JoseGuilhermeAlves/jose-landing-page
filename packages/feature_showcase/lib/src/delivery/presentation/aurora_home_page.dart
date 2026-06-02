@@ -37,7 +37,6 @@ class AuroraHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = context.colors;
     final textTheme = Theme.of(context).textTheme;
-    final isMobile = context.isMobile;
 
     return Scaffold(
       backgroundColor: colors.background,
@@ -84,7 +83,12 @@ class AuroraHomePage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _HeroCard(colors: colors, textTheme: textTheme),
-                SizedBox(height: isMobile ? AppSpacing.lg : AppSpacing.xl),
+                SizedBox(
+                  height: context.responsive(
+                    mobile: AppSpacing.lg,
+                    desktop: AppSpacing.xl,
+                  ),
+                ),
                 BlocBuilder<DeliveryBloc, DeliveryState>(
                   builder: (context, state) {
                     final order = state.activeOrder;
@@ -101,7 +105,12 @@ class AuroraHomePage extends StatelessWidget {
                     );
                   },
                 ),
-                SizedBox(height: isMobile ? AppSpacing.lg : AppSpacing.xl),
+                SizedBox(
+                  height: context.responsive(
+                    mobile: AppSpacing.lg,
+                    desktop: AppSpacing.xl,
+                  ),
+                ),
                 MockSectionLabel(
                   eyebrow: context.l10n.aurora_categoriesEyebrow,
                   title: context.l10n.aurora_categoriesTitle,
@@ -112,7 +121,12 @@ class AuroraHomePage extends StatelessWidget {
                 ),
                 const SizedBox(height: AppSpacing.md),
                 _CategoriesStrip(colors: colors, textTheme: textTheme),
-                SizedBox(height: isMobile ? AppSpacing.lg : AppSpacing.xl),
+                SizedBox(
+                  height: context.responsive(
+                    mobile: AppSpacing.lg,
+                    desktop: AppSpacing.xl,
+                  ),
+                ),
                 MockSectionLabel(
                   eyebrow: context.l10n.aurora_vendorsEyebrow,
                   title: context.l10n.aurora_vendorsTitle,
@@ -123,7 +137,12 @@ class AuroraHomePage extends StatelessWidget {
                 ),
                 const SizedBox(height: AppSpacing.md),
                 _VendorsList(colors: colors, textTheme: textTheme),
-                SizedBox(height: isMobile ? AppSpacing.lg : AppSpacing.xxl),
+                SizedBox(
+                  height: context.responsive(
+                    mobile: AppSpacing.lg,
+                    desktop: AppSpacing.xxl,
+                  ),
+                ),
                 _AboutBlock(colors: colors, textTheme: textTheme),
               ],
             ),

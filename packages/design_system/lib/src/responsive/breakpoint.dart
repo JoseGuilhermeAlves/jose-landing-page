@@ -31,4 +31,13 @@ extension BreakpointContext on BuildContext {
   bool get isTablet => breakpoint.isTablet;
   bool get isDesktop => breakpoint.isDesktop;
   bool get isHandheld => breakpoint.isHandheld;
+
+  /// Seleciona um valor por breakpoint. Hoje so divide mobile vs resto
+  /// — centraliza o branch `isMobile ?` espalhado em spacing, fontes,
+  /// alturas e aspect ratios. Args nomeados removem a ambiguidade de
+  /// ordem do ternario. Funciona com qualquer T (double, TextStyle?,
+  /// int, etc.). Se um dia entrar um terceiro ponto de corte, e o unico
+  /// lugar a mudar.
+  T responsive<T>({required T mobile, required T desktop}) =>
+      isMobile ? mobile : desktop;
 }

@@ -56,8 +56,10 @@ class _PulsoRecoveryPageState extends State<PulsoRecoveryPage>
         child: BlocBuilder<FitnessBloc, FitnessState>(
           builder: (context, state) {
             final snapshot = state.selectedRecoverySnapshot;
-            final isMobile = context.isMobile;
-            final cardGap = isMobile ? AppSpacing.md : AppSpacing.lg;
+            final cardGap = context.responsive(
+              mobile: AppSpacing.md,
+              desktop: AppSpacing.lg,
+            );
             return RefreshIndicator(
               onRefresh: () async {
                 context.read<FitnessBloc>().add(const RecoveryRefreshed());
@@ -82,7 +84,10 @@ class _PulsoRecoveryPageState extends State<PulsoRecoveryPage>
                   Center(
                     child: PulsoRecoveryRing(
                       percent: snapshot.recoveryPercent,
-                      diameter: isMobile ? 184 : 240,
+                      diameter: context.responsive<double>(
+                        mobile: 184,
+                        desktop: 240,
+                      ),
                       animation: _ringAnim,
                     ),
                   ),

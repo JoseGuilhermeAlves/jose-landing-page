@@ -36,13 +36,17 @@ class HeroSection extends StatelessWidget {
     final colors = context.colors;
     final textTheme = Theme.of(context).textTheme;
 
-    final headlineStyle =
-        (isMobile ? textTheme.displaySmall : textTheme.displayMedium)?.copyWith(
+    final headlineStyle = context
+        .responsive(
+          mobile: textTheme.displaySmall,
+          desktop: textTheme.displayMedium,
+        )
+        ?.copyWith(
           color: colors.onSurface,
           height: 1.05,
           // -1.2 cabe no display de 48px do desktop, mas crunch no 36px
           // mobile — afrouxa pra -0.4 pra nao colar as letras no estreito.
-          letterSpacing: isMobile ? -0.4 : -1.2,
+          letterSpacing: context.responsive(mobile: -0.4, desktop: -1.2),
         );
 
     // Com a foto presente em desktop, o eixo de leitura passa a ser
@@ -62,7 +66,12 @@ class HeroSection extends StatelessWidget {
           label: context.l10n.hero_eyebrow,
           accentColor: context.colors.success,
         ),
-        SizedBox(height: isMobile ? AppSpacing.lg : AppSpacing.xl),
+        SizedBox(
+          height: context.responsive(
+            mobile: AppSpacing.lg,
+            desktop: AppSpacing.xl,
+          ),
+        ),
         Semantics(
           header: true,
           child: Column(
@@ -131,17 +140,25 @@ class HeroSection extends StatelessWidget {
 
     final content = Padding(
       padding: EdgeInsets.symmetric(
-        horizontal: isMobile ? AppSpacing.lg : AppSpacing.huge,
+        horizontal: context.responsive(
+          mobile: AppSpacing.lg,
+          desktop: AppSpacing.huge,
+        ),
         // Mobile corta o vertical pra lg — 64px topo+base dentro de um
         // hero ja alto empurra trust strip e CTAs pra fora do fold.
-        vertical: isMobile ? AppSpacing.lg : AppSpacing.huge,
+        vertical: context.responsive(
+          mobile: AppSpacing.lg,
+          desktop: AppSpacing.huge,
+        ),
       ),
       child: ConstrainedBox(
         // Limite reduzido (1180 -> 1080) pra que em viewport ultra-wide
         // foto+texto fiquem agrupados ao inves de boiando isolados no
         // centro. Gap entre foto e texto tambem cai pra xxl pelo mesmo
         // motivo.
-        constraints: BoxConstraints(maxWidth: isMobile ? 920 : 1080),
+        constraints: BoxConstraints(
+          maxWidth: context.responsive<double>(mobile: 920, desktop: 1080),
+        ),
         child: inner,
       ),
     );
@@ -200,7 +217,7 @@ class HeroSection extends StatelessWidget {
           child: IgnorePointer(
             child: Center(
               child: SizedBox(
-                width: isMobile ? 1280 : 1600,
+                width: context.responsive<double>(mobile: 1280, desktop: 1600),
                 child: CosmosField(
                   planets: heroPlanets(colors, isMobile: isMobile),
                   nebulas: heroNebulas(isMobile: isMobile),
@@ -259,7 +276,6 @@ class HeroSection extends StatelessWidget {
     );
   }
 }
-
 
 /// Headline animado com gradient neon deslizando — combina com o tema
 /// cosmos (cores hot-pink, magenta, violet, cyan e electric-blue sao as
@@ -468,9 +484,18 @@ class _TrustStrip extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final stats = [
-      _TrustStat(value: l10n.hero_trustYearsValue, label: l10n.hero_trustYearsLabel),
-      _TrustStat(value: l10n.hero_trustDomainsValue, label: l10n.hero_trustDomainsLabel),
-      _TrustStat(value: l10n.hero_trustPlatformsValue, label: l10n.hero_trustPlatformsLabel),
+      _TrustStat(
+        value: l10n.hero_trustYearsValue,
+        label: l10n.hero_trustYearsLabel,
+      ),
+      _TrustStat(
+        value: l10n.hero_trustDomainsValue,
+        label: l10n.hero_trustDomainsLabel,
+      ),
+      _TrustStat(
+        value: l10n.hero_trustPlatformsValue,
+        label: l10n.hero_trustPlatformsLabel,
+      ),
     ];
     // Sempre start-aligned: o hero agora lidera com a foto a esquerda,
     // entao centralizar a trust strip quebraria o eixo de leitura.

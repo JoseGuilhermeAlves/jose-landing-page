@@ -15,12 +15,14 @@ class EngineeringSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isMobile = context.isMobile;
     final ctaBlock = githubUrl == null
         ? const SizedBox.shrink()
         : Padding(
             padding: EdgeInsets.only(
-              top: isMobile ? AppSpacing.lg : AppSpacing.xl,
+              top: context.responsive(
+                mobile: AppSpacing.lg,
+                desktop: AppSpacing.xl,
+              ),
             ),
             child: AppButton(
               label: context.l10n.engineering_githubButton,
@@ -40,7 +42,12 @@ class EngineeringSection extends StatelessWidget {
           titleAccent: context.l10n.engineering_titleAccent,
           subtitle: context.l10n.engineering_subtitle,
         ),
-        SizedBox(height: isMobile ? AppSpacing.lg : AppSpacing.xxl),
+        SizedBox(
+          height: context.responsive(
+            mobile: AppSpacing.lg,
+            desktop: AppSpacing.xxl,
+          ),
+        ),
         TechBentoGrid(onOpenDocs: onOpenGithub),
         ctaBlock,
       ],

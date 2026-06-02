@@ -111,7 +111,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
-    final isMobile = context.isMobile;
     final viewportHeight = MediaQuery.sizeOf(context).height;
 
     // Hero ocupa a viewport inteira (clamped) — sensacao "fold" classica
@@ -119,7 +118,10 @@ class _HomePageState extends State<HomePage> {
     // pra emendar com a primeira secao.
     final heroHeight = viewportHeight.clamp(640.0, 920.0);
 
-    final horizontalPadding = isMobile ? AppSpacing.lg : AppSpacing.huge;
+    final horizontalPadding = context.responsive(
+      mobile: AppSpacing.lg,
+      desktop: AppSpacing.huge,
+    );
 
     final anchors = <HomeNavAnchor>[
       HomeNavAnchor(
@@ -282,7 +284,10 @@ class _SectionSlot extends StatelessWidget {
           // Mobile aperta pra 24 — viewport curto nao pode gastar 128px
           // (topo+base) de whitespace por secao, senao o scroll vira um
           // tunel vazio entre blocos.
-          vertical: context.isMobile ? AppSpacing.lg : AppSpacing.huge,
+          vertical: context.responsive(
+            mobile: AppSpacing.lg,
+            desktop: AppSpacing.huge,
+          ),
         ),
         child: Center(
           child: ConstrainedBox(

@@ -68,7 +68,10 @@ class AuroraOrderDetailPage extends StatelessWidget {
                       child: Stack(
                         children: [
                           AuroraDeliveryMap(
-                            height: context.isMobile ? 150 : 220,
+                            height: context.responsive<double>(
+                              mobile: 150,
+                              desktop: 220,
+                            ),
                           ),
                           Positioned(
                             left: AppSpacing.sm,

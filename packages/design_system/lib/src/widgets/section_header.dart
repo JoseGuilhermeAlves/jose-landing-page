@@ -37,15 +37,12 @@ class SectionHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = context.colors;
     final textTheme = Theme.of(context).textTheme;
-    final isMobile = context.isMobile;
-
-    final headlineStyle =
-        (isMobile ? textTheme.headlineMedium : textTheme.displaySmall)
-            ?.copyWith(
-              color: colors.onSurface,
-              height: 1.1,
-              letterSpacing: -0.6,
-            );
+    final headlineStyle = context
+        .responsive(
+          mobile: textTheme.headlineMedium,
+          desktop: textTheme.displaySmall,
+        )
+        ?.copyWith(color: colors.onSurface, height: 1.1, letterSpacing: -0.6);
 
     final textAlign = switch (alignment) {
       CrossAxisAlignment.center => TextAlign.center,
@@ -84,7 +81,11 @@ class SectionHeader extends StatelessWidget {
               subtitle!,
               // Mobile cai pra bodyMedium (16) — bodyLarge (18) com wrap
               // em 720px gera subtitles de 4+ linhas no estreito.
-              style: (isMobile ? textTheme.bodyMedium : textTheme.bodyLarge)
+              style: context
+                  .responsive(
+                    mobile: textTheme.bodyMedium,
+                    desktop: textTheme.bodyLarge,
+                  )
                   ?.copyWith(color: colors.onSurfaceMuted, height: 1.55),
               textAlign: textAlign,
             ),

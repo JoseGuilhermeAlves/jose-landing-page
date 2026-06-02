@@ -16,8 +16,7 @@ class _PortfolioHero extends StatelessWidget {
     final pnl = state.unrealizedPnlCents;
     final pnlBps = state.unrealizedPnlBps;
     final isUp = pnl >= 0;
-    final isMobile = context.isMobile;
-    final heroHeight = isMobile ? 248.0 : 320.0;
+    final heroHeight = context.responsive<double>(mobile: 248, desktop: 320);
 
     return SizedBox(
       key: const Key('mira-portfolio-hero'),
@@ -65,19 +64,18 @@ class _PortfolioHero extends StatelessWidget {
                   const SizedBox(height: AppSpacing.xs),
                   Text(
                     formatMiraTotal(value),
-                    style:
-                        (isMobile
-                                ? textTheme.displaySmall
-                                : textTheme.displayMedium)
-                            ?.copyWith(
-                              color: colors.onSurface,
-                              fontFamily: MiraBrand.monoFontFamily,
-                              fontWeight: FontWeight.w800,
-                              fontFeatures: const [
-                                FontFeature.tabularFigures(),
-                              ],
-                              height: 1.05,
-                            ),
+                    style: context
+                        .responsive(
+                          mobile: textTheme.displaySmall,
+                          desktop: textTheme.displayMedium,
+                        )
+                        ?.copyWith(
+                          color: colors.onSurface,
+                          fontFamily: MiraBrand.monoFontFamily,
+                          fontWeight: FontWeight.w800,
+                          fontFeatures: const [FontFeature.tabularFigures()],
+                          height: 1.05,
+                        ),
                   ),
                   const SizedBox(height: AppSpacing.sm),
                   Row(

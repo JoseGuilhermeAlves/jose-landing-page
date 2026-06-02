@@ -61,9 +61,10 @@ class _SectionWaveDividerState extends State<SectionWaveDivider>
     // Mobile encolhe o divisor — 56px x5 dividers = 280px de decoracao
     // pura num viewport curto. Cap em 32 corta isso quase pela metade
     // sem perder a transicao ondulada entre secoes.
-    final effectiveHeight = context.isMobile
-        ? widget.height.clamp(0.0, 32.0)
-        : widget.height;
+    final effectiveHeight = context.responsive(
+      mobile: widget.height.clamp(0.0, 32.0),
+      desktop: widget.height,
+    );
 
     return IgnorePointer(
       child: RepaintBoundary(

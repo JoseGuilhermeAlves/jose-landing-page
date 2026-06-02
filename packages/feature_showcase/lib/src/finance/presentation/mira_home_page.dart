@@ -83,8 +83,6 @@ class MiraHomePage extends StatelessWidget {
             final others = MiraAssetsCatalog.all
                 .where((a) => !favoriteIds.contains(a.id))
                 .toList();
-            final isMobile = context.isMobile;
-
             return Column(
               children: [
                 const MiraTickerTape(),
@@ -95,7 +93,10 @@ class MiraHomePage extends StatelessWidget {
                       children: [
                         _PortfolioHero(state: state),
                         SizedBox(
-                          height: isMobile ? AppSpacing.xl : AppSpacing.xxl,
+                          height: context.responsive(
+                            mobile: AppSpacing.xl,
+                            desktop: AppSpacing.xxl,
+                          ),
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(
@@ -117,9 +118,10 @@ class MiraHomePage extends StatelessWidget {
                                   (a) => _AssetRow(asset: a, isFavorite: true),
                                 ),
                               SizedBox(
-                                height: isMobile
-                                    ? AppSpacing.xl
-                                    : AppSpacing.xxl,
+                                height: context.responsive(
+                                  mobile: AppSpacing.xl,
+                                  desktop: AppSpacing.xxl,
+                                ),
                               ),
                               _SectionHeader(
                                 eyebrow: context.l10n.mira_catalogEyebrow,
@@ -131,9 +133,10 @@ class MiraHomePage extends StatelessWidget {
                                 (a) => _AssetRow(asset: a, isFavorite: false),
                               ),
                               SizedBox(
-                                height: isMobile
-                                    ? AppSpacing.xl
-                                    : AppSpacing.xxl,
+                                height: context.responsive(
+                                  mobile: AppSpacing.xl,
+                                  desktop: AppSpacing.xxl,
+                                ),
                               ),
                               const _BrandFootnote(),
                               const SizedBox(height: AppSpacing.xl),

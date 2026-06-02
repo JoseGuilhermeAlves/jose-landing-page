@@ -12,7 +12,6 @@ class _HeroCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isMobile = context.isMobile;
     return DecoratedBox(
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -36,7 +35,12 @@ class _HeroCard extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.all(isMobile ? AppSpacing.lg : AppSpacing.xl),
+              padding: EdgeInsets.all(
+                context.responsive(
+                  mobile: AppSpacing.lg,
+                  desktop: AppSpacing.xl,
+                ),
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
@@ -61,17 +65,18 @@ class _HeroCard extends StatelessWidget {
                   const SizedBox(height: AppSpacing.md),
                   Text(
                     SolarBrand.tagline,
-                    style:
-                        (isMobile
-                                ? textTheme.headlineMedium
-                                : textTheme.displaySmall)
-                            ?.copyWith(
-                              color: colors.onSurface,
-                              fontFamily: SolarBrand.displayFontFamily,
-                              fontWeight: FontWeight.w600,
-                              letterSpacing: -0.4,
-                              height: 1.1,
-                            ),
+                    style: context
+                        .responsive(
+                          mobile: textTheme.headlineMedium,
+                          desktop: textTheme.displaySmall,
+                        )
+                        ?.copyWith(
+                          color: colors.onSurface,
+                          fontFamily: SolarBrand.displayFontFamily,
+                          fontWeight: FontWeight.w600,
+                          letterSpacing: -0.4,
+                          height: 1.1,
+                        ),
                   ),
                   const SizedBox(height: AppSpacing.sm),
                   Text(

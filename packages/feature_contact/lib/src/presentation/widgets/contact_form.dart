@@ -50,10 +50,12 @@ class _ContactFormState extends State<ContactForm> {
         final submitting = state.submission is ContactSubmissionSubmitting;
         final bloc = context.read<ContactBloc>();
         final l10n = context.l10n;
-        final isMobile = context.isMobile;
-        final fieldStyle =
-            (isMobile ? textTheme.bodyMedium : textTheme.bodyLarge)
-                ?.copyWith(color: colors.onSurface);
+        final fieldStyle = context
+            .responsive(
+              mobile: textTheme.bodyMedium,
+              desktop: textTheme.bodyLarge,
+            )
+            ?.copyWith(color: colors.onSurface);
 
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -114,7 +116,7 @@ class _ContactFormState extends State<ContactForm> {
               key: const Key('contact-form-message'),
               controller: _message,
               enabled: !submitting,
-              minLines: isMobile ? 2 : 3,
+              minLines: context.responsive(mobile: 2, desktop: 3),
               maxLines: 5,
               style: fieldStyle,
               onChanged: (v) => bloc.add(ContactMessageChanged(v)),
@@ -132,7 +134,10 @@ class _ContactFormState extends State<ContactForm> {
                   : l10n.contact_formSubmit,
               onPressed: submitting ? null : _submit,
               icon: Icons.chat_bubble_outline,
-              size: isMobile ? AppButtonSize.medium : AppButtonSize.large,
+              size: context.responsive(
+                mobile: AppButtonSize.medium,
+                desktop: AppButtonSize.large,
+              ),
               expand: true,
             ),
             if (state.submission is ContactSubmissionFailure) ...[

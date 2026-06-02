@@ -122,14 +122,26 @@ class _ShowcaseCardState extends State<ShowcaseCard>
               children: [
                 ShowcaseCardPreview(
                   templateId: widget.template.id,
-                  height: isMobile ? 92 : ShowcaseCardPreview.defaultHeight,
+                  height: context.responsive<double>(
+                    mobile: 92,
+                    desktop: ShowcaseCardPreview.defaultHeight,
+                  ),
                 ),
                 Padding(
                   padding: EdgeInsets.fromLTRB(
-                    isMobile ? AppSpacing.md : AppSpacing.lg,
+                    context.responsive(
+                      mobile: AppSpacing.md,
+                      desktop: AppSpacing.lg,
+                    ),
                     AppSpacing.sm,
-                    isMobile ? AppSpacing.md : AppSpacing.lg,
-                    isMobile ? AppSpacing.md : AppSpacing.lg,
+                    context.responsive(
+                      mobile: AppSpacing.md,
+                      desktop: AppSpacing.lg,
+                    ),
+                    context.responsive(
+                      mobile: AppSpacing.md,
+                      desktop: AppSpacing.lg,
+                    ),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -173,8 +185,11 @@ class _ShowcaseCardState extends State<ShowcaseCard>
                         widget.template.description,
                         // Mobile corta em 2 linhas — descricao cheia em 16px
                         // empilha 3-4 linhas por card x5, scroll longo.
-                        maxLines: isMobile ? 2 : null,
-                        overflow: isMobile ? TextOverflow.ellipsis : null,
+                        maxLines: context.responsive(mobile: 2, desktop: null),
+                        overflow: context.responsive(
+                          mobile: TextOverflow.ellipsis,
+                          desktop: null,
+                        ),
                         style: textTheme.bodyMedium?.copyWith(
                           color: colors.onSurfaceMuted,
                           height: 1.5,

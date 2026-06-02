@@ -26,8 +26,10 @@ class AboutSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final tt = Theme.of(context).textTheme;
     final colors = context.colors;
-    final isMobile = context.isMobile;
-    final blockGap = isMobile ? AppSpacing.lg : AppSpacing.xxl;
+    final blockGap = context.responsive(
+      mobile: AppSpacing.lg,
+      desktop: AppSpacing.xxl,
+    );
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

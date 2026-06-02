@@ -219,7 +219,9 @@ class _CategoryCardState extends State<_CategoryCard> {
         border: Border.all(color: colors.border),
       ),
       child: Padding(
-        padding: EdgeInsets.all(isMobile ? AppSpacing.md : AppSpacing.lg),
+        padding: EdgeInsets.all(
+          context.responsive(mobile: AppSpacing.md, desktop: AppSpacing.lg),
+        ),
         child: AnimatedSize(
           duration: AppDuration.fast,
           curve: Curves.easeOut,
@@ -230,7 +232,12 @@ class _CategoryCardState extends State<_CategoryCard> {
             children: [
               eyebrow,
               if (showTiles) ...[
-                SizedBox(height: isMobile ? AppSpacing.sm : AppSpacing.md),
+                SizedBox(
+                  height: context.responsive(
+                    mobile: AppSpacing.sm,
+                    desktop: AppSpacing.md,
+                  ),
+                ),
                 _TileGrid(items: widget.items, onTechTap: widget.onTechTap),
               ],
             ],
@@ -252,8 +259,10 @@ class _TileGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isMobile = context.isMobile;
-    final cols = isMobile ? items.length.clamp(1, 2) : items.length.clamp(1, 3);
+    final cols = context.responsive(
+      mobile: items.length.clamp(1, 2),
+      desktop: items.length.clamp(1, 3),
+    );
 
     final rows = <Widget>[];
     for (var i = 0; i < items.length; i += cols) {
@@ -349,7 +358,7 @@ class _TechTileState extends State<_TechTile> {
             duration: AppDuration.fast,
             curve: Curves.easeOut,
             padding: EdgeInsets.all(
-              context.isMobile ? AppSpacing.sm : AppSpacing.md,
+              context.responsive(mobile: AppSpacing.sm, desktop: AppSpacing.md),
             ),
             decoration: BoxDecoration(
               // Gradient sutil com a cor brand — alpha baixo pra nao
@@ -406,7 +415,7 @@ class _TechTileState extends State<_TechTile> {
                     color: colors.onSurfaceMuted,
                     height: 1.4,
                   ),
-                  maxLines: context.isMobile ? 1 : 2,
+                  maxLines: context.responsive(mobile: 1, desktop: 2),
                   overflow: TextOverflow.ellipsis,
                 ),
               ],

@@ -104,9 +104,10 @@ class _MiraOrderEntryPageState extends State<MiraOrderEntryPage> {
                       children: [
                         const _AssetSummary(),
                         SizedBox(
-                          height: context.isMobile
-                              ? AppSpacing.lg
-                              : AppSpacing.xl,
+                          height: context.responsive(
+                            mobile: AppSpacing.lg,
+                            desktop: AppSpacing.xl,
+                          ),
                         ),
                         const _Label(text: 'Quantidade'),
                         const SizedBox(height: AppSpacing.sm),
@@ -123,9 +124,10 @@ class _MiraOrderEntryPageState extends State<MiraOrderEntryPage> {
                           ),
                         ],
                         SizedBox(
-                          height: context.isMobile
-                              ? AppSpacing.lg
-                              : AppSpacing.xl,
+                          height: context.responsive(
+                            mobile: AppSpacing.lg,
+                            desktop: AppSpacing.xl,
+                          ),
                         ),
                         const _Label(text: 'Tipo de ordem'),
                         const SizedBox(height: AppSpacing.sm),
@@ -143,9 +145,10 @@ class _MiraOrderEntryPageState extends State<MiraOrderEntryPage> {
                           ),
                         ],
                         SizedBox(
-                          height: context.isMobile
-                              ? AppSpacing.lg
-                              : AppSpacing.xl,
+                          height: context.responsive(
+                            mobile: AppSpacing.lg,
+                            desktop: AppSpacing.xl,
+                          ),
                         ),
                         _TotalCard(
                           priceCents: priceCents,

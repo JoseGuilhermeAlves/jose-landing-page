@@ -86,7 +86,6 @@ class _RecoveryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
-    final isMobile = context.isMobile;
     return Container(
       decoration: BoxDecoration(
         color: colors.surface,
@@ -94,12 +93,18 @@ class _RecoveryCard extends StatelessWidget {
         border: Border.all(color: colors.border),
       ),
       padding: EdgeInsets.symmetric(
-        vertical: isMobile ? AppSpacing.lg : AppSpacing.xl,
+        vertical: context.responsive(
+          mobile: AppSpacing.lg,
+          desktop: AppSpacing.xl,
+        ),
         horizontal: AppSpacing.lg,
       ),
       child: Column(
         children: [
-          PulsoRecoveryRing(percent: percent, diameter: isMobile ? 168 : 220),
+          PulsoRecoveryRing(
+            percent: percent,
+            diameter: context.responsive<double>(mobile: 168, desktop: 220),
+          ),
           const SizedBox(height: AppSpacing.md),
           Text(
             PulsoCopy(context.l10n).recoveryAdvice(percent),
@@ -141,7 +146,10 @@ class _StrainAndProgramRow extends StatelessWidget {
                 child: PulsoStrainDial(
                   value: strain.accumulated,
                   target: strain.target,
-                  diameter: context.isMobile ? 124 : 160,
+                  diameter: context.responsive<double>(
+                    mobile: 124,
+                    desktop: 160,
+                  ),
                 ),
               ),
             ),
@@ -383,7 +391,7 @@ class _SessionCtaCard extends StatelessWidget {
             template.label,
             style: TextStyle(
               color: colors.onSurface,
-              fontSize: context.isMobile ? 23 : 28,
+              fontSize: context.responsive<double>(mobile: 23, desktop: 28),
               fontWeight: FontWeight.w700,
               letterSpacing: -0.5,
             ),

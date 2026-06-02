@@ -21,11 +21,16 @@ class HomeNavAnchor {
     required this.id,
     required this.label,
     required this.onTap,
+    this.icon,
   });
 
   final String id;
   final String label;
   final VoidCallback onTap;
+
+  /// Icone exibido na bottom bar mobile. Ignorado pela nav desktop
+  /// (inline) e pelo menu overflow do tablet.
+  final IconData? icon;
 }
 
 /// Barra de navegacao fixa no topo da home. Translucida com blur de
@@ -93,7 +98,10 @@ class HomeNav extends StatelessWidget {
                     ),
                     const SizedBox(width: AppSpacing.sm),
                     _Cta(onTap: onCtaTap),
-                    if (isCompact && anchors.isNotEmpty) ...[
+                    // Tablet (600-1180px) colapsa ancoras num menu overflow.
+                    // Mobile (<600px) NAO — usa a `HomeBottomNav` fixa no
+                    // rodape, entao o menu hamburger seria redundante.
+                    if (isCompact && !isMobile && anchors.isNotEmpty) ...[
                       const SizedBox(width: AppSpacing.xs),
                       _AnchorsMenu(anchors: anchors),
                     ],

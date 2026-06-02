@@ -8,6 +8,7 @@ import 'package:flutter/rendering.dart';
 import 'package:landing/config/app_config.dart';
 import 'package:landing/widgets/case_study_section.dart';
 import 'package:landing/widgets/engineering_section.dart';
+import 'package:landing/widgets/home_bottom_nav.dart';
 import 'package:landing/widgets/home_footer.dart';
 import 'package:landing/widgets/home_nav.dart';
 import 'package:landing/widgets/section_wave_divider.dart';
@@ -38,6 +39,10 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final _scrollController = ScrollController();
 
+  /// Indice da ancora ativa pra bottom nav mobile (scroll-spy). -1 = hero
+  /// (nenhuma secao destacada ainda).
+  final ValueNotifier<int> _activeIndex = ValueNotifier<int>(-1);
+
   // Uma `GlobalKey` por secao navegavel — ancorada na arvore via
   // `KeyedSubtree`. As 5 ancoras do `HomeNav` (showcase, sobre,
   // engenharia, estudo, contato) usam estas pra calcular offset de
@@ -49,9 +54,45 @@ class _HomePageState extends State<HomePage> {
   final _contactKey = GlobalKey(debugLabel: 'home-anchor-contact');
 
   @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_onScroll);
+  }
+
+  @override
   void dispose() {
-    _scrollController.dispose();
+    _scrollController
+      ..removeListener(_onScroll)
+      ..dispose();
+    _activeIndex.dispose();
     super.dispose();
+  }
+
+  /// Scroll-spy pra bottom nav mobile: descobre qual secao esta sob o
+  /// nav. Recalcula o offset de revelacao de cada ancora (mesmo metodo do
+  /// `_scrollToKey`) e marca a ultima cujo topo ja passou pelo nav.
+  void _onScroll() {
+    if (!_scrollController.hasClients) return;
+    final current = _scrollController.offset;
+    final keys = [
+      _showcaseKey,
+      _aboutKey,
+      _engineeringKey,
+      _caseStudyKey,
+      _contactKey,
+    ];
+    var active = -1;
+    for (var i = 0; i < keys.length; i++) {
+      final ctx = keys[i].currentContext;
+      if (ctx == null) continue;
+      final renderObject = ctx.findRenderObject();
+      if (renderObject == null) continue;
+      final reveal = RenderAbstractViewport.of(
+        renderObject,
+      ).getOffsetToReveal(renderObject, 0).offset;
+      if (current >= reveal - kHomeNavHeight - 140) active = i;
+    }
+    if (active != _activeIndex.value) _activeIndex.value = active;
   }
 
   /// Anima o scroll ate que a secao identificada por [key] fique logo
@@ -111,6 +152,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
+    final isMobile = context.isMobile;
     final viewportHeight = MediaQuery.sizeOf(context).height;
 
     // Hero ocupa a viewport inteira (clamped) — sensacao "fold" classica
@@ -127,26 +169,31 @@ class _HomePageState extends State<HomePage> {
       HomeNavAnchor(
         id: 'showcase',
         label: context.l10n.nav_showcase,
+        icon: Icons.grid_view_rounded,
         onTap: () => _scrollToKey(_showcaseKey),
       ),
       HomeNavAnchor(
         id: 'sobre',
         label: context.l10n.nav_about,
+        icon: Icons.person_outline_rounded,
         onTap: () => _scrollToKey(_aboutKey),
       ),
       HomeNavAnchor(
         id: 'engenharia',
         label: context.l10n.nav_engineering,
+        icon: Icons.terminal_rounded,
         onTap: () => _scrollToKey(_engineeringKey),
       ),
       HomeNavAnchor(
         id: 'estudo',
         label: context.l10n.nav_caseStudy,
+        icon: Icons.auto_awesome_rounded,
         onTap: () => _scrollToKey(_caseStudyKey),
       ),
       HomeNavAnchor(
         id: 'contato',
         label: context.l10n.nav_contact,
+        icon: Icons.mail_outline_rounded,
         onTap: () => _scrollToKey(_contactKey),
       ),
     ];
@@ -239,6 +286,16 @@ class _HomePageState extends State<HomePage> {
                   name: 'Jose Guilherme Alves',
                 ),
               ),
+              // Mobile: reserva espaco no fim pra o footer nao ficar atras
+              // da HomeBottomNav fixa.
+              if (isMobile)
+                SliverToBoxAdapter(
+                  child: SizedBox(
+                    height:
+                        kHomeBottomNavHeight +
+                        MediaQuery.paddingOf(context).bottom,
+                  ),
+                ),
             ],
           ),
           Positioned(
@@ -251,6 +308,18 @@ class _HomePageState extends State<HomePage> {
               onCtaTap: () => _scrollToKey(_contactKey),
             ),
           ),
+          // Bottom nav so na visao mobile — substitui o menu hamburger.
+          if (isMobile)
+            Positioned(
+              left: 0,
+              right: 0,
+              bottom: 0,
+              child: ValueListenableBuilder<int>(
+                valueListenable: _activeIndex,
+                builder: (_, active, _) =>
+                    HomeBottomNav(anchors: anchors, activeIndex: active),
+              ),
+            ),
         ],
       ),
     );

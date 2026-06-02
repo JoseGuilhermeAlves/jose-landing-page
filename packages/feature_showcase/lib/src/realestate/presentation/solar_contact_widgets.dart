@@ -70,7 +70,12 @@ class _FormState extends StatelessWidget {
             const SizedBox(height: AppSpacing.lg),
             _BrokerRow(broker: broker!, colors: colors, textTheme: textTheme),
           ],
-          const SizedBox(height: AppSpacing.xl),
+          SizedBox(
+            height: context.responsive(
+              mobile: AppSpacing.lg,
+              desktop: AppSpacing.xl,
+            ),
+          ),
           Form(
             key: formKey,
             child: Column(
@@ -112,7 +117,12 @@ class _FormState extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: AppSpacing.xl),
+          SizedBox(
+            height: context.responsive(
+              mobile: AppSpacing.lg,
+              desktop: AppSpacing.xl,
+            ),
+          ),
           AppButton(
             key: const Key('solar-contact-submit'),
             label: 'Enviar pedido de contato',
@@ -329,7 +339,12 @@ class _SuccessState extends StatelessWidget {
               height: 1.5,
             ),
           ),
-          const SizedBox(height: AppSpacing.xl),
+          SizedBox(
+            height: context.responsive(
+              mobile: AppSpacing.lg,
+              desktop: AppSpacing.xl,
+            ),
+          ),
           Container(
             padding: const EdgeInsets.all(AppSpacing.md),
             decoration: BoxDecoration(
@@ -370,7 +385,12 @@ class _SuccessState extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: AppSpacing.xl),
+          SizedBox(
+            height: context.responsive(
+              mobile: AppSpacing.lg,
+              desktop: AppSpacing.xl,
+            ),
+          ),
           AppButton(
             key: const Key('solar-contact-success-back'),
             label: 'Voltar ao imovel',

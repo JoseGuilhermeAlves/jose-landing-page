@@ -328,9 +328,15 @@ class _AssetRow extends StatelessWidget {
             ),
           ),
           child: Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.lg,
-              vertical: AppSpacing.md,
+            padding: EdgeInsets.symmetric(
+              horizontal: context.responsive(
+                mobile: AppSpacing.md,
+                desktop: AppSpacing.lg,
+              ),
+              vertical: context.responsive(
+                mobile: AppSpacing.sm,
+                desktop: AppSpacing.md,
+              ),
             ),
             decoration: BoxDecoration(
               border: Border.all(color: colors.border),

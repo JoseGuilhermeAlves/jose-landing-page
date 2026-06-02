@@ -377,7 +377,9 @@ class _EmptyState extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     return Padding(
-      padding: const EdgeInsets.all(AppSpacing.xxl),
+      padding: EdgeInsets.all(
+        context.responsive(mobile: AppSpacing.xl, desktop: AppSpacing.xxl),
+      ),
       child: Column(
         children: [
           Icon(Icons.search_off, size: 48, color: colors.onSurfaceMuted),

@@ -54,11 +54,14 @@ class _VitralServiceListPageState extends State<VitralServiceListPage> {
         child: SafeArea(
           top: false,
           child: SingleChildScrollView(
-            padding: const EdgeInsets.fromLTRB(
+            padding: EdgeInsets.fromLTRB(
               AppSpacing.lg,
               AppSpacing.md,
               AppSpacing.lg,
-              AppSpacing.xxl,
+              context.responsive(
+                mobile: AppSpacing.xl,
+                desktop: AppSpacing.xxl,
+              ),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

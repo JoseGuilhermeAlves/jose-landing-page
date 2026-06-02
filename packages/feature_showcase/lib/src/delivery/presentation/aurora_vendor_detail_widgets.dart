@@ -143,8 +143,8 @@ class _ProductCard extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            width: 48,
-            height: 48,
+            width: context.responsive<double>(mobile: 40, desktop: 48),
+            height: context.responsive<double>(mobile: 40, desktop: 48),
             decoration: BoxDecoration(
               color: colors.surfaceMuted,
               borderRadius: BorderRadius.circular(AppRadius.md),

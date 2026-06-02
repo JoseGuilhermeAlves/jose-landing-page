@@ -229,7 +229,10 @@ class _StatsCard extends StatelessWidget {
         border: Border.all(color: colors.border),
       ),
       child: Wrap(
-        spacing: AppSpacing.xl,
+        spacing: context.responsive(
+          mobile: AppSpacing.lg,
+          desktop: AppSpacing.xl,
+        ),
         runSpacing: AppSpacing.md,
         children: [
           for (final e in entries)

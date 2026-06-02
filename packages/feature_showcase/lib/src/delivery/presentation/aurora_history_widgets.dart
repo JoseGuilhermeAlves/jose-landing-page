@@ -38,8 +38,8 @@ class _HistoryCard extends StatelessWidget {
             children: [
               if (vendor != null)
                 Container(
-                  width: 56,
-                  height: 56,
+                  width: context.responsive<double>(mobile: 44, desktop: 56),
+                  height: context.responsive<double>(mobile: 44, desktop: 56),
                   decoration: BoxDecoration(
                     color: colors.surfaceMuted,
                     borderRadius: BorderRadius.circular(AppRadius.md),

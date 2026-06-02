@@ -334,7 +334,7 @@ class _CategoryChip extends StatelessWidget {
           ),
         ),
         child: Container(
-          width: 150,
+          width: context.responsive<double>(mobile: 124, desktop: 150),
           padding: const EdgeInsets.all(AppSpacing.md),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(AppRadius.md),
@@ -446,8 +446,8 @@ class AuroraVendorCard extends StatelessWidget {
           child: Row(
             children: [
               Container(
-                width: 64,
-                height: 64,
+                width: context.responsive<double>(mobile: 48, desktop: 64),
+                height: context.responsive<double>(mobile: 48, desktop: 64),
                 decoration: BoxDecoration(
                   color: colors.surfaceMuted,
                   borderRadius: BorderRadius.circular(AppRadius.md),
@@ -568,10 +568,12 @@ class _AboutBlock extends StatelessWidget {
             'Conectamos bancas e padarias de bairro com voce. Pedido pela '
             'manha vira entrega no almoco. Sem CD intermediario, sem '
             'paracetamol pra produto que ja parou na prateleira.',
-            style: textTheme.bodyMedium?.copyWith(
-              color: colors.onSurfaceMuted,
-              height: 1.55,
-            ),
+            style: context
+                .responsive(
+                  mobile: textTheme.bodySmall,
+                  desktop: textTheme.bodyMedium,
+                )
+                ?.copyWith(color: colors.onSurfaceMuted, height: 1.55),
           ),
         ],
       ),

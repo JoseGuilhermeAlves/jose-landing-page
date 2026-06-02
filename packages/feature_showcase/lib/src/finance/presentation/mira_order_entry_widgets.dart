@@ -125,7 +125,7 @@ class _QuantityRow extends StatelessWidget {
                 value.toString(),
                 style: TextStyle(
                   color: colors.onSurface,
-                  fontSize: 24,
+                  fontSize: context.responsive<double>(mobile: 20, desktop: 24),
                   fontWeight: FontWeight.w800,
                   fontFamily: MiraBrand.monoFontFamily,
                   fontFeatures: const [FontFeature.tabularFigures()],

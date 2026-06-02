@@ -97,12 +97,16 @@ class VitralConfirmationPage extends StatelessWidget {
                 Text(
                   'Confirmar agendamento?',
                   key: const Key('vitral-confirmation-title'),
-                  style: textTheme.displaySmall?.copyWith(
-                    color: colors.onSurface,
-                    fontWeight: FontWeight.w800,
-                    letterSpacing: -0.4,
-                    height: 1.1,
-                  ),
+                  style:
+                      (context.isMobile
+                              ? textTheme.headlineMedium
+                              : textTheme.displaySmall)
+                          ?.copyWith(
+                            color: colors.onSurface,
+                            fontWeight: FontWeight.w800,
+                            letterSpacing: -0.4,
+                            height: 1.1,
+                          ),
                 ),
                 const SizedBox(height: AppSpacing.sm),
                 Text(

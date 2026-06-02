@@ -19,13 +19,13 @@ class CaseStudySection extends StatelessWidget {
           titleAccent: context.l10n.caseStudy_titleAccent,
           subtitle: context.l10n.caseStudy_subtitle,
         ),
-        const SizedBox(height: AppSpacing.xxl),
+        SizedBox(height: isMobile ? AppSpacing.lg : AppSpacing.xxl),
         _HeroBlock(isMobile: isMobile),
-        const SizedBox(height: AppSpacing.xxl),
+        SizedBox(height: isMobile ? AppSpacing.lg : AppSpacing.xxl),
         _PainterShowcase(isMobile: isMobile),
-        const SizedBox(height: AppSpacing.xxl),
+        SizedBox(height: isMobile ? AppSpacing.lg : AppSpacing.xxl),
         _DecisionsGrid(isMobile: isMobile),
-        const SizedBox(height: AppSpacing.xxl),
+        SizedBox(height: isMobile ? AppSpacing.lg : AppSpacing.xxl),
         const _ClosingTakeaway(),
       ],
     );
@@ -45,7 +45,7 @@ class _HeroBlock extends StatelessWidget {
         children: [
           // Altura fixa: o preview usa Expanded internamente e no mobile
           // nao ha pai com altura limitada (Row+IntrinsicHeight do desktop).
-          SizedBox(height: 360, child: preview),
+          SizedBox(height: 260, child: preview),
           const SizedBox(height: AppSpacing.lg),
           narrative,
         ],
@@ -187,12 +187,15 @@ class _PainterShowcase extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
+    // Canvas decorativo encolhe no mobile — 3 cartoes empilhados a 200px
+    // cada viram parede de scroll; 140px mantem o painter legivel.
+    final canvasHeight = isMobile ? 140.0 : 200.0;
     final cards = [
       _PainterCard(
         title: context.l10n.caseStudy_painterStrainTitle,
         caption: context.l10n.caseStudy_painterStrainCaption,
         child: SizedBox(
-          height: 200,
+          height: canvasHeight,
           child: RepaintBoundary(
             child: CosmosField(
               planets: CaseStudyCosmos.layersPlanets,
@@ -205,7 +208,7 @@ class _PainterShowcase extends StatelessWidget {
         title: context.l10n.caseStudy_painterTempoTitle,
         caption: context.l10n.caseStudy_painterTempoCaption,
         child: SizedBox(
-          height: 200,
+          height: canvasHeight,
           child: RepaintBoundary(
             child: CosmosField(
               galaxies: CaseStudyCosmos.spiralGalaxies,
@@ -218,7 +221,7 @@ class _PainterShowcase extends StatelessWidget {
         title: context.l10n.caseStudy_painterPeriodTitle,
         caption: context.l10n.caseStudy_painterPeriodCaption,
         child: SizedBox(
-          height: 200,
+          height: canvasHeight,
           child: RepaintBoundary(
             child: ConstellationField(
               constellations: const [KnownConstellations.cruzeiroDoSul],

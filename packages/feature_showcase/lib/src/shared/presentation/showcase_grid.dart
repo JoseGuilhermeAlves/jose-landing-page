@@ -171,12 +171,18 @@ class _ShowcaseCardState extends State<ShowcaseCard>
                       const SizedBox(height: AppSpacing.sm),
                       Text(
                         widget.template.description,
+                        // Mobile corta em 2 linhas — descricao cheia em 16px
+                        // empilha 3-4 linhas por card x5, scroll longo.
+                        maxLines: isMobile ? 2 : null,
+                        overflow: isMobile ? TextOverflow.ellipsis : null,
                         style: textTheme.bodyMedium?.copyWith(
                           color: colors.onSurfaceMuted,
                           height: 1.5,
                         ),
                       ),
-                      if (!disabled) ...[
+                      // "Abrir demo" omitido no mobile — o card inteiro ja e
+                      // tappable, a linha so adicionava altura.
+                      if (!disabled && !isMobile) ...[
                         const SizedBox(height: AppSpacing.md),
                         Row(
                           children: [

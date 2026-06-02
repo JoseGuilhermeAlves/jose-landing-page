@@ -56,10 +56,10 @@ class ContactSection extends StatelessWidget {
           titleAccent: l10n.contact_titleAccent,
           subtitle: l10n.contact_subtitle,
         ),
-        const SizedBox(height: AppSpacing.xxl),
+        SizedBox(height: isMobile ? AppSpacing.lg : AppSpacing.xxl),
         if (isMobile) ...[
           form,
-          const SizedBox(height: AppSpacing.xl),
+          const SizedBox(height: AppSpacing.lg),
           ctas,
         ] else
           Row(
@@ -134,7 +134,9 @@ class _AlternateCtas extends StatelessWidget {
     ];
 
     return Container(
-      padding: const EdgeInsets.all(AppSpacing.lg),
+      padding: EdgeInsets.all(
+        context.isMobile ? AppSpacing.md : AppSpacing.lg,
+      ),
       decoration: BoxDecoration(
         color: colors.surface,
         borderRadius: BorderRadius.circular(AppRadius.lg),

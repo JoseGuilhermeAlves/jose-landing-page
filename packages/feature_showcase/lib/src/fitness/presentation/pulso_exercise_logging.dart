@@ -212,39 +212,10 @@ class _SetRowState extends State<_SetRow> {
         child: Stack(
           alignment: Alignment.centerRight,
           children: [
-            Row(
-              children: [
-                _SetIndex(index: widget.setIndex, completed: isComplete),
-                const SizedBox(width: AppSpacing.sm),
-                Expanded(
-                  child: _Stepper(
-                    label: 'kg',
-                    value: _weight,
-                    onChange: (v) => setState(() => _weight = v),
-                    step: 2.5,
-                  ),
-                ),
-                const SizedBox(width: AppSpacing.xs),
-                Expanded(
-                  child: _Stepper(
-                    label: 'reps',
-                    value: _reps.toDouble(),
-                    onChange: (v) => setState(() => _reps = v.round()),
-                    step: 1,
-                    integerOnly: true,
-                  ),
-                ),
-                const SizedBox(width: AppSpacing.xs),
-                Expanded(
-                  child: _RpeSelector(
-                    rpe: _rpe,
-                    onChange: (v) => setState(() => _rpe = v),
-                  ),
-                ),
-                const SizedBox(width: AppSpacing.xs),
-                _CheckButton(completed: isComplete, onPressed: _toggleComplete),
-              ],
-            ),
+            if (context.isMobile)
+              _buildMobile(isComplete)
+            else
+              _buildDesktop(isComplete),
             if (_showBurst)
               Positioned(
                 right: 0,
@@ -258,6 +229,89 @@ class _SetRowState extends State<_SetRow> {
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildDesktop(bool isComplete) {
+    return Row(
+      children: [
+        _SetIndex(index: widget.setIndex, completed: isComplete),
+        const SizedBox(width: AppSpacing.sm),
+        Expanded(
+          child: _Stepper(
+            label: 'kg',
+            value: _weight,
+            onChange: (v) => setState(() => _weight = v),
+            step: 2.5,
+          ),
+        ),
+        const SizedBox(width: AppSpacing.xs),
+        Expanded(
+          child: _Stepper(
+            label: 'reps',
+            value: _reps.toDouble(),
+            onChange: (v) => setState(() => _reps = v.round()),
+            step: 1,
+            integerOnly: true,
+          ),
+        ),
+        const SizedBox(width: AppSpacing.xs),
+        Expanded(
+          child: _RpeSelector(
+            rpe: _rpe,
+            onChange: (v) => setState(() => _rpe = v),
+          ),
+        ),
+        const SizedBox(width: AppSpacing.xs),
+        _CheckButton(completed: isComplete, onPressed: _toggleComplete),
+      ],
+    );
+  }
+
+  Widget _buildMobile(bool isComplete) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        // Linha 1: indice + RPE + botao de conclusao.
+        Row(
+          children: [
+            _SetIndex(index: widget.setIndex, completed: isComplete),
+            const SizedBox(width: AppSpacing.sm),
+            Expanded(
+              child: _RpeSelector(
+                rpe: _rpe,
+                onChange: (v) => setState(() => _rpe = v),
+              ),
+            ),
+            const SizedBox(width: AppSpacing.sm),
+            _CheckButton(completed: isComplete, onPressed: _toggleComplete),
+          ],
+        ),
+        const SizedBox(height: AppSpacing.xs),
+        // Linha 2: steppers de carga e repeticoes.
+        Row(
+          children: [
+            Expanded(
+              child: _Stepper(
+                label: 'kg',
+                value: _weight,
+                onChange: (v) => setState(() => _weight = v),
+                step: 2.5,
+              ),
+            ),
+            const SizedBox(width: AppSpacing.sm),
+            Expanded(
+              child: _Stepper(
+                label: 'reps',
+                value: _reps.toDouble(),
+                onChange: (v) => setState(() => _reps = v.round()),
+                step: 1,
+                integerOnly: true,
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

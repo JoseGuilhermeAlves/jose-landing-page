@@ -28,7 +28,7 @@ class ShowcaseSection extends StatelessWidget {
           titleAccent: context.l10n.showcase_titleAccent,
           subtitle: context.l10n.showcase_subtitle,
         ),
-        const SizedBox(height: AppSpacing.xxl),
+        SizedBox(height: context.isMobile ? AppSpacing.lg : AppSpacing.xxl),
         ShowcaseGrid(
           templates: ShowcaseCatalog.all(context.l10n),
           onTemplateTapped: (t) => _openDemo(context, t),

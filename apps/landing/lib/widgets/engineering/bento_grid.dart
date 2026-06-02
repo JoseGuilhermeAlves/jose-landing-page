@@ -113,8 +113,10 @@ class _Slot {
 }
 
 /// Card de uma categoria — eyebrow chip colorido + label + grid de
-/// `_TechTile` por tech.
-class _CategoryCard extends StatelessWidget {
+/// `_TechTile` por tech. Em mobile o corpo colapsa por padrao; o header
+/// vira tappable com chevron + contagem. Em desktop fica sempre expandido
+/// e nao interativo.
+class _CategoryCard extends StatefulWidget {
   const _CategoryCard({
     required this.category,
     required this.items,
@@ -125,14 +127,90 @@ class _CategoryCard extends StatelessWidget {
   final List<StackItem> items;
   final void Function(String techName) onTechTap;
 
+  @override
+  State<_CategoryCard> createState() => _CategoryCardState();
+}
+
+class _CategoryCardState extends State<_CategoryCard> {
+  bool _expanded = false;
+
   Color _categoryColor() =>
-      CategoryBrandColors.byCategory[category.name] ?? const Color(0xFF9497A9);
+      CategoryBrandColors.byCategory[widget.category.name] ??
+      const Color(0xFF9497A9);
 
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
     final textTheme = Theme.of(context).textTheme;
     final accent = _categoryColor();
+    final isMobile = context.isMobile;
+    // Desktop: sempre expandido. Mobile: gated por _expanded.
+    final showTiles = !isMobile || _expanded;
+
+    // Eyebrow: dot colorido + label uppercase. Em mobile ganha contagem
+    // + chevron rotativo e vira tappable.
+    Widget eyebrow = Row(
+      children: [
+        Container(
+          width: 8,
+          height: 8,
+          decoration: BoxDecoration(
+            color: accent,
+            shape: BoxShape.circle,
+            boxShadow: [
+              BoxShadow(color: accent.withValues(alpha: 0.6), blurRadius: 8),
+            ],
+          ),
+        ),
+        const SizedBox(width: AppSpacing.sm),
+        Text(
+          widget.category.label(context.l10n).toUpperCase(),
+          style: textTheme.labelSmall?.copyWith(
+            color: accent,
+            letterSpacing: 1.2,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        if (isMobile) ...[
+          const SizedBox(width: AppSpacing.sm),
+          Text(
+            '${widget.items.length}',
+            style: textTheme.labelSmall?.copyWith(
+              color: colors.onSurfaceMuted,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          const Spacer(),
+          AnimatedRotation(
+            turns: _expanded ? 0.5 : 0,
+            duration: AppDuration.fast,
+            curve: Curves.easeOut,
+            child: Icon(
+              Icons.keyboard_arrow_down,
+              size: 20,
+              color: colors.onSurfaceMuted,
+            ),
+          ),
+        ],
+      ],
+    );
+
+    if (isMobile) {
+      eyebrow = Semantics(
+        button: true,
+        expanded: _expanded,
+        label:
+            '${widget.category.label(context.l10n)}. '
+            '${widget.items.length} tecnologias. '
+            'Toque pra ${_expanded ? 'recolher' : 'expandir'}.',
+        excludeSemantics: true,
+        child: GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: () => setState(() => _expanded = !_expanded),
+          child: eyebrow,
+        ),
+      );
+    }
 
     return DecoratedBox(
       decoration: BoxDecoration(
@@ -141,42 +219,22 @@ class _CategoryCard extends StatelessWidget {
         border: Border.all(color: colors.border),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.lg),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Eyebrow: dot colorido + label uppercase.
-            Row(
-              children: [
-                Container(
-                  width: 8,
-                  height: 8,
-                  decoration: BoxDecoration(
-                    color: accent,
-                    shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                        color: accent.withValues(alpha: 0.6),
-                        blurRadius: 8,
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(width: AppSpacing.sm),
-                Text(
-                  category.label(context.l10n).toUpperCase(),
-                  style: textTheme.labelSmall?.copyWith(
-                    color: accent,
-                    letterSpacing: 1.2,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
+        padding: EdgeInsets.all(isMobile ? AppSpacing.md : AppSpacing.lg),
+        child: AnimatedSize(
+          duration: AppDuration.fast,
+          curve: Curves.easeOut,
+          alignment: Alignment.topCenter,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              eyebrow,
+              if (showTiles) ...[
+                SizedBox(height: isMobile ? AppSpacing.sm : AppSpacing.md),
+                _TileGrid(items: widget.items, onTechTap: widget.onTechTap),
               ],
-            ),
-            const SizedBox(height: AppSpacing.md),
-            _TileGrid(items: items, onTechTap: onTechTap),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -288,73 +346,74 @@ class _TechTileState extends State<_TechTile> {
           child: AnimatedContainer(
             // AnimatedContainer body abaixo — fechamento extra abaixo
             // pra balancear o wrapper Semantics adicional.
-          duration: AppDuration.fast,
-          curve: Curves.easeOut,
-          padding: const EdgeInsets.all(AppSpacing.md),
-          decoration: BoxDecoration(
-            // Gradient sutil com a cor brand — alpha baixo pra nao
-            // brigar com o surface dark do card.
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                brand.withValues(alpha: _hovered ? 0.16 : 0.08),
-                brand.withValues(alpha: 0),
-              ],
+            duration: AppDuration.fast,
+            curve: Curves.easeOut,
+            padding: EdgeInsets.all(
+              context.isMobile ? AppSpacing.sm : AppSpacing.md,
             ),
-            borderRadius: BorderRadius.circular(AppRadius.md),
-            border: Border.all(color: borderColor),
-            boxShadow: shadows,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Row(
-                children: [
-                  Container(
-                    width: 10,
-                    height: 10,
-                    decoration: BoxDecoration(
-                      color: brand,
-                      shape: BoxShape.circle,
-                      boxShadow: [
-                        BoxShadow(
-                          color: brand.withValues(alpha: 0.6),
-                          blurRadius: 6,
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(width: AppSpacing.sm),
-                  Flexible(
-                    child: Text(
-                      widget.techName,
-                      style: textTheme.titleSmall?.copyWith(
-                        color: colors.onSurface,
-                        fontWeight: FontWeight.w600,
-                      ),
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
+            decoration: BoxDecoration(
+              // Gradient sutil com a cor brand — alpha baixo pra nao
+              // brigar com o surface dark do card.
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  brand.withValues(alpha: _hovered ? 0.16 : 0.08),
+                  brand.withValues(alpha: 0),
                 ],
               ),
-              const SizedBox(height: AppSpacing.xs),
-              Text(
-                widget.role,
-                style: textTheme.bodySmall?.copyWith(
-                  color: colors.onSurfaceMuted,
-                  height: 1.4,
+              borderRadius: BorderRadius.circular(AppRadius.md),
+              border: Border.all(color: borderColor),
+              boxShadow: shadows,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  children: [
+                    Container(
+                      width: 10,
+                      height: 10,
+                      decoration: BoxDecoration(
+                        color: brand,
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                            color: brand.withValues(alpha: 0.6),
+                            blurRadius: 6,
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(width: AppSpacing.sm),
+                    Flexible(
+                      child: Text(
+                        widget.techName,
+                        style: textTheme.titleSmall?.copyWith(
+                          color: colors.onSurface,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ],
                 ),
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ],
+                const SizedBox(height: AppSpacing.xs),
+                Text(
+                  widget.role,
+                  style: textTheme.bodySmall?.copyWith(
+                    color: colors.onSurfaceMuted,
+                    height: 1.4,
+                  ),
+                  maxLines: context.isMobile ? 1 : 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
+            ),
           ),
         ),
-          ),
-        ),
+      ),
     );
-    
   }
 }

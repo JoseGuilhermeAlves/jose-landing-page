@@ -83,6 +83,7 @@ class MiraHomePage extends StatelessWidget {
             final others = MiraAssetsCatalog.all
                 .where((a) => !favoriteIds.contains(a.id))
                 .toList();
+            final isMobile = context.isMobile;
 
             return Column(
               children: [
@@ -93,7 +94,9 @@ class MiraHomePage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         _PortfolioHero(state: state),
-                        const SizedBox(height: AppSpacing.xxl),
+                        SizedBox(
+                          height: isMobile ? AppSpacing.xl : AppSpacing.xxl,
+                        ),
                         Padding(
                           padding: const EdgeInsets.symmetric(
                             horizontal: AppSpacing.lg,
@@ -113,7 +116,11 @@ class MiraHomePage extends StatelessWidget {
                                 ...watchlist.map(
                                   (a) => _AssetRow(asset: a, isFavorite: true),
                                 ),
-                              const SizedBox(height: AppSpacing.xxl),
+                              SizedBox(
+                                height: isMobile
+                                    ? AppSpacing.xl
+                                    : AppSpacing.xxl,
+                              ),
                               _SectionHeader(
                                 eyebrow: context.l10n.mira_catalogEyebrow,
                                 title: context.l10n.mira_otherAssetsTitle,
@@ -123,7 +130,11 @@ class MiraHomePage extends StatelessWidget {
                               ...others.map(
                                 (a) => _AssetRow(asset: a, isFavorite: false),
                               ),
-                              const SizedBox(height: AppSpacing.xxl),
+                              SizedBox(
+                                height: isMobile
+                                    ? AppSpacing.xl
+                                    : AppSpacing.xxl,
+                              ),
                               const _BrandFootnote(),
                               const SizedBox(height: AppSpacing.xl),
                             ],

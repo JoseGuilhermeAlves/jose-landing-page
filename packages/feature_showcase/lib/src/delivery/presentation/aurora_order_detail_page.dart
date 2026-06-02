@@ -67,7 +67,9 @@ class AuroraOrderDetailPage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(AppRadius.lg),
                       child: Stack(
                         children: [
-                          const AuroraDeliveryMap(height: 220),
+                          AuroraDeliveryMap(
+                            height: context.isMobile ? 150 : 220,
+                          ),
                           Positioned(
                             left: AppSpacing.sm,
                             bottom: AppSpacing.sm,

@@ -50,6 +50,10 @@ class _ContactFormState extends State<ContactForm> {
         final submitting = state.submission is ContactSubmissionSubmitting;
         final bloc = context.read<ContactBloc>();
         final l10n = context.l10n;
+        final isMobile = context.isMobile;
+        final fieldStyle =
+            (isMobile ? textTheme.bodyMedium : textTheme.bodyLarge)
+                ?.copyWith(color: colors.onSurface);
 
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -58,7 +62,7 @@ class _ContactFormState extends State<ContactForm> {
               key: const Key('contact-form-name'),
               controller: _name,
               enabled: !submitting,
-              style: textTheme.bodyLarge?.copyWith(color: colors.onSurface),
+              style: fieldStyle,
               onChanged: (v) => bloc.add(ContactNameChanged(v)),
               decoration: _decoration(
                 colors: colors,
@@ -73,7 +77,7 @@ class _ContactFormState extends State<ContactForm> {
               controller: _email,
               enabled: !submitting,
               keyboardType: TextInputType.emailAddress,
-              style: textTheme.bodyLarge?.copyWith(color: colors.onSurface),
+              style: fieldStyle,
               onChanged: (v) => bloc.add(ContactEmailChanged(v)),
               decoration: _decoration(
                 colors: colors,
@@ -87,7 +91,7 @@ class _ContactFormState extends State<ContactForm> {
               key: const Key('contact-form-project-type'),
               initialValue: state.projectType,
               isExpanded: true,
-              style: textTheme.bodyLarge?.copyWith(color: colors.onSurface),
+              style: fieldStyle,
               dropdownColor: colors.surface,
               decoration: _decoration(
                 colors: colors,
@@ -110,9 +114,9 @@ class _ContactFormState extends State<ContactForm> {
               key: const Key('contact-form-message'),
               controller: _message,
               enabled: !submitting,
-              minLines: 3,
+              minLines: isMobile ? 2 : 3,
               maxLines: 5,
-              style: textTheme.bodyLarge?.copyWith(color: colors.onSurface),
+              style: fieldStyle,
               onChanged: (v) => bloc.add(ContactMessageChanged(v)),
               decoration: _decoration(
                 colors: colors,
@@ -128,7 +132,7 @@ class _ContactFormState extends State<ContactForm> {
                   : l10n.contact_formSubmit,
               onPressed: submitting ? null : _submit,
               icon: Icons.chat_bubble_outline,
-              size: AppButtonSize.large,
+              size: isMobile ? AppButtonSize.medium : AppButtonSize.large,
               expand: true,
             ),
             if (state.submission is ContactSubmissionFailure) ...[

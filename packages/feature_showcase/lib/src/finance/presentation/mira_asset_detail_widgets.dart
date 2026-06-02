@@ -129,7 +129,10 @@ class _ChartCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: AppSpacing.sm),
-          MiraCandlestickChart(candles: candles, height: 260),
+          MiraCandlestickChart(
+            candles: candles,
+            height: context.isMobile ? 210 : 260,
+          ),
         ],
       ),
     );
@@ -171,8 +174,8 @@ class _StatsGrid extends StatelessWidget {
     return GridView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 3,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: context.isMobile ? 2 : 3,
         crossAxisSpacing: AppSpacing.md,
         mainAxisSpacing: AppSpacing.md,
         childAspectRatio: 1.8,

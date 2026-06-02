@@ -80,7 +80,7 @@ class _PulsoRecoveryPageState extends State<PulsoRecoveryPage>
                   Center(
                     child: PulsoRecoveryRing(
                       percent: snapshot.recoveryPercent,
-                      diameter: 240,
+                      diameter: context.isMobile ? 184 : 240,
                       animation: _ringAnim,
                     ),
                   ),

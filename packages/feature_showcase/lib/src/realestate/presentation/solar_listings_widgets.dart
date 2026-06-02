@@ -48,13 +48,24 @@ class _ListingsHeader extends StatelessWidget {
   }
 }
 
-class _Filters extends StatelessWidget {
+class _Filters extends StatefulWidget {
   const _Filters();
+
+  @override
+  State<_Filters> createState() => _FiltersState();
+}
+
+class _FiltersState extends State<_Filters> {
+  // Mobile arranca colapsado pra nao engolir a tela antes dos resultados.
+  bool _expanded = false;
 
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
     final textTheme = Theme.of(context).textTheme;
+    final isMobile = context.isMobile;
+    // Desktop sempre expandido; mobile respeita o toggle.
+    final showBody = !isMobile || _expanded;
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
       padding: const EdgeInsets.all(AppSpacing.md),
@@ -66,18 +77,112 @@ class _Filters extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _FilterLabel('Bairro', colors: colors, textTheme: textTheme),
-          const SizedBox(height: AppSpacing.sm),
-          const _NeighborhoodChips(),
-          const SizedBox(height: AppSpacing.md),
-          _FilterLabel('Quartos', colors: colors, textTheme: textTheme),
-          const SizedBox(height: AppSpacing.sm),
-          const _BedroomChips(),
-          const SizedBox(height: AppSpacing.md),
-          _FilterLabel('Preco maximo', colors: colors, textTheme: textTheme),
-          const _PriceSlider(),
+          if (isMobile) ...[
+            _FiltersHeader(
+              expanded: _expanded,
+              onTap: () => setState(() => _expanded = !_expanded),
+              colors: colors,
+              textTheme: textTheme,
+            ),
+            AnimatedSize(
+              duration: AppDuration.fast,
+              alignment: Alignment.topCenter,
+              child: showBody
+                  ? const Padding(
+                      padding: EdgeInsets.only(top: AppSpacing.md),
+                      child: _FilterBody(),
+                    )
+                  : const SizedBox(width: double.infinity),
+            ),
+          ] else
+            const _FilterBody(),
         ],
       ),
+    );
+  }
+}
+
+class _FiltersHeader extends StatelessWidget {
+  const _FiltersHeader({
+    required this.expanded,
+    required this.onTap,
+    required this.colors,
+    required this.textTheme,
+  });
+
+  final bool expanded;
+  final VoidCallback onTap;
+  final AppColorScheme colors;
+  final TextTheme textTheme;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      key: const Key('solar-filters-toggle'),
+      onTap: onTap,
+      behavior: HitTestBehavior.opaque,
+      child: Row(
+        children: [
+          Icon(Icons.tune, size: 18, color: colors.onSurfaceMuted),
+          const SizedBox(width: AppSpacing.sm),
+          Text(
+            'Filtros',
+            style: textTheme.labelLarge?.copyWith(
+              color: colors.onSurface,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          const SizedBox(width: AppSpacing.sm),
+          BlocBuilder<RealEstateBloc, RealEstateState>(
+            buildWhen: (a, b) => a.hasActiveFilters != b.hasActiveFilters,
+            builder: (context, state) {
+              if (!state.hasActiveFilters) return const SizedBox.shrink();
+              return Container(
+                width: 8,
+                height: 8,
+                decoration: BoxDecoration(
+                  color: colors.primary,
+                  shape: BoxShape.circle,
+                ),
+              );
+            },
+          ),
+          const Spacer(),
+          AnimatedRotation(
+            duration: AppDuration.fast,
+            turns: expanded ? 0.5 : 0,
+            child: Icon(
+              Icons.keyboard_arrow_down,
+              color: colors.onSurfaceMuted,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _FilterBody extends StatelessWidget {
+  const _FilterBody();
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+    final textTheme = Theme.of(context).textTheme;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _FilterLabel('Bairro', colors: colors, textTheme: textTheme),
+        const SizedBox(height: AppSpacing.sm),
+        const _NeighborhoodChips(),
+        const SizedBox(height: AppSpacing.md),
+        _FilterLabel('Quartos', colors: colors, textTheme: textTheme),
+        const SizedBox(height: AppSpacing.sm),
+        const _BedroomChips(),
+        const SizedBox(height: AppSpacing.md),
+        _FilterLabel('Preco maximo', colors: colors, textTheme: textTheme),
+        const _PriceSlider(),
+      ],
     );
   }
 }

@@ -26,7 +26,7 @@ class _Gallery extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         AspectRatio(
-          aspectRatio: 1.6,
+          aspectRatio: context.isMobile ? 1.95 : 1.6,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(AppRadius.lg),
             child: ColoredBox(
@@ -158,12 +158,16 @@ class _Header extends StatelessWidget {
         Text(
           property.formattedPrice,
           key: const Key('solar-detail-price'),
-          style: textTheme.displaySmall?.copyWith(
-            color: colors.primary,
-            fontFamily: SolarBrand.displayFontFamily,
-            fontWeight: FontWeight.w700,
-            letterSpacing: -0.4,
-          ),
+          style:
+              (context.isMobile
+                      ? textTheme.headlineMedium
+                      : textTheme.displaySmall)
+                  ?.copyWith(
+                    color: colors.primary,
+                    fontFamily: SolarBrand.displayFontFamily,
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: -0.4,
+                  ),
         ),
       ],
     );
@@ -365,7 +369,7 @@ class _FloorPlanCard extends StatelessWidget {
         border: Border.all(color: colors.border),
       ),
       child: AspectRatio(
-        aspectRatio: 1.5,
+        aspectRatio: context.isMobile ? 1.9 : 1.5,
         child: SolarFloorPlan(
           property: property,
           foregroundColor: colors.onSurface,
@@ -406,7 +410,7 @@ class _MapCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           AspectRatio(
-            aspectRatio: 1.7,
+            aspectRatio: context.isMobile ? 2.0 : 1.7,
             child: SolarNeighborhoodMap(
               propertySeed: solarMapSeedFor(property.id),
               blockColor: colors.surfaceMuted,

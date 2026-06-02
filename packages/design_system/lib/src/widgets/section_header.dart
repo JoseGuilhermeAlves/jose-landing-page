@@ -82,10 +82,10 @@ class SectionHeader extends StatelessWidget {
             constraints: BoxConstraints(maxWidth: subtitleMaxWidth),
             child: Text(
               subtitle!,
-              style: textTheme.bodyLarge?.copyWith(
-                color: colors.onSurfaceMuted,
-                height: 1.55,
-              ),
+              // Mobile cai pra bodyMedium (16) — bodyLarge (18) com wrap
+              // em 720px gera subtitles de 4+ linhas no estreito.
+              style: (isMobile ? textTheme.bodyMedium : textTheme.bodyLarge)
+                  ?.copyWith(color: colors.onSurfaceMuted, height: 1.55),
               textAlign: textAlign,
             ),
           ),

@@ -9,7 +9,7 @@ class _Illustration extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AspectRatio(
-      aspectRatio: 1.7,
+      aspectRatio: context.isMobile ? 2.2 : 1.7,
       child: ClipRRect(
         borderRadius: const BorderRadius.vertical(
           top: Radius.circular(AppRadius.lg),

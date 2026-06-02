@@ -26,6 +26,8 @@ class AboutSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final tt = Theme.of(context).textTheme;
     final colors = context.colors;
+    final isMobile = context.isMobile;
+    final blockGap = isMobile ? AppSpacing.lg : AppSpacing.xxl;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -35,16 +37,20 @@ class AboutSection extends StatelessWidget {
           titleAccent: context.l10n.about_titleAccent,
           subtitle: context.l10n.about_subtitle,
         ),
-        const SizedBox(height: AppSpacing.xxl),
+        SizedBox(height: blockGap),
         const _BioCard(),
-        const SizedBox(height: AppSpacing.xxl),
-        Row(
+        SizedBox(height: blockGap),
+        // Wrap em vez de Row — no mobile o hint nao cabe ao lado do label
+        // headlineSmall e estourava; aqui ele quebra pra linha de baixo.
+        Wrap(
+          crossAxisAlignment: WrapCrossAlignment.center,
+          spacing: AppSpacing.sm,
+          runSpacing: AppSpacing.xs,
           children: [
             Text(
               context.l10n.about_domainsMapLabel,
               style: tt.headlineSmall?.copyWith(color: colors.onSurface),
             ),
-            const SizedBox(width: AppSpacing.sm),
             Text(
               context.l10n.about_domainsHint,
               style: tt.labelMedium?.copyWith(
@@ -56,7 +62,7 @@ class AboutSection extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.lg),
         DomainConstellation(domains: DomainsCatalog.all(context.l10n)),
-        const SizedBox(height: AppSpacing.xxl),
+        SizedBox(height: blockGap),
         Text(
           context.l10n.about_deliveryTitle,
           style: tt.headlineSmall?.copyWith(color: colors.onSurface),

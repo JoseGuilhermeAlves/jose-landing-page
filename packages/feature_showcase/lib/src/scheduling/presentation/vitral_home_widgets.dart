@@ -12,6 +12,68 @@ class _HeroCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isMobile = context.isMobile;
+    final textColumn = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppSpacing.sm,
+            vertical: AppSpacing.xxs,
+          ),
+          decoration: BoxDecoration(
+            color: colors.primary.withValues(alpha: 0.12),
+            borderRadius: BorderRadius.circular(AppRadius.full),
+          ),
+          child: Text(
+            'estudio de servicos · sao paulo',
+            style: textTheme.labelSmall?.copyWith(
+              color: colors.primary,
+              letterSpacing: 0.8,
+            ),
+          ),
+        ),
+        const SizedBox(height: AppSpacing.md),
+        Text(
+          VitralBrand.tagline,
+          style: (isMobile ? textTheme.headlineMedium : textTheme.displaySmall)
+              ?.copyWith(
+                color: colors.onSurface,
+                fontWeight: FontWeight.w700,
+                letterSpacing: -0.4,
+                height: 1.1,
+              ),
+        ),
+        const SizedBox(height: AppSpacing.sm),
+        Text(
+          'Consultoria, fotografia, design e marketing. '
+          'Marque a sessao em dois toques.',
+          style: textTheme.bodyMedium?.copyWith(
+            color: colors.onSurfaceMuted,
+            height: 1.5,
+          ),
+        ),
+        const SizedBox(height: AppSpacing.lg),
+        AppButton(
+          key: const Key('vitral-cta-services'),
+          label: 'Ver serviços',
+          icon: Icons.arrow_forward_rounded,
+          size: AppButtonSize.large,
+          onPressed: () => Navigator.of(context).push(
+            MaterialPageRoute<void>(
+              builder: (_) =>
+                  vitralWithDemoBloc(context, const VitralServiceListPage()),
+            ),
+          ),
+        ),
+      ],
+    );
+    final clock = VitralClockPainter(
+      hour: 10,
+      minute: 8,
+      size: isMobile ? 72 : 96,
+    );
     return DecoratedBox(
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -33,76 +95,34 @@ class _HeroCard extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(AppSpacing.xl),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: Column(
+              padding: EdgeInsets.all(isMobile ? AppSpacing.lg : AppSpacing.xl),
+              child: isMobile
+                  // Mobile: relogio acima, coluna de texto full-width abaixo.
+                  ? Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
                       children: [
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: AppSpacing.sm,
-                            vertical: AppSpacing.xxs,
-                          ),
-                          decoration: BoxDecoration(
-                            color: colors.primary.withValues(alpha: 0.12),
-                            borderRadius: BorderRadius.circular(AppRadius.full),
-                          ),
-                          child: Text(
-                            'estudio de servicos · sao paulo',
-                            style: textTheme.labelSmall?.copyWith(
-                              color: colors.primary,
-                              letterSpacing: 0.8,
+                        Center(
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                              bottom: AppSpacing.lg,
                             ),
+                            child: clock,
                           ),
                         ),
-                        const SizedBox(height: AppSpacing.md),
-                        Text(
-                          VitralBrand.tagline,
-                          style: textTheme.displaySmall?.copyWith(
-                            color: colors.onSurface,
-                            fontWeight: FontWeight.w700,
-                            letterSpacing: -0.4,
-                            height: 1.1,
-                          ),
-                        ),
-                        const SizedBox(height: AppSpacing.sm),
-                        Text(
-                          'Consultoria, fotografia, design e marketing. '
-                          'Marque a sessao em dois toques.',
-                          style: textTheme.bodyMedium?.copyWith(
-                            color: colors.onSurfaceMuted,
-                            height: 1.5,
-                          ),
-                        ),
-                        const SizedBox(height: AppSpacing.lg),
-                        AppButton(
-                          key: const Key('vitral-cta-services'),
-                          label: 'Ver serviços',
-                          icon: Icons.arrow_forward_rounded,
-                          size: AppButtonSize.large,
-                          onPressed: () => Navigator.of(context).push(
-                            MaterialPageRoute<void>(
-                              builder: (_) => vitralWithDemoBloc(
-                                context,
-                                const VitralServiceListPage(),
-                              ),
-                            ),
-                          ),
+                        textColumn,
+                      ],
+                    )
+                  // Desktop: texto a esquerda, relogio analogico a direita.
+                  : Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(child: textColumn),
+                        Padding(
+                          padding: const EdgeInsets.only(left: AppSpacing.lg),
+                          child: clock,
                         ),
                       ],
                     ),
-                  ),
-                  // Relogio analogico na lateral direita do hero.
-                  const Padding(
-                    padding: EdgeInsets.only(left: AppSpacing.lg),
-                    child: VitralClockPainter(hour: 10, minute: 8, size: 96),
-                  ),
-                ],
-              ),
             ),
           ],
         ),

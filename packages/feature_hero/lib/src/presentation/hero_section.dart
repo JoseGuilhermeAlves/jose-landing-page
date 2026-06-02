@@ -40,7 +40,9 @@ class HeroSection extends StatelessWidget {
         (isMobile ? textTheme.displaySmall : textTheme.displayMedium)?.copyWith(
           color: colors.onSurface,
           height: 1.05,
-          letterSpacing: -1.2,
+          // -1.2 cabe no display de 48px do desktop, mas crunch no 36px
+          // mobile — afrouxa pra -0.4 pra nao colar as letras no estreito.
+          letterSpacing: isMobile ? -0.4 : -1.2,
         );
 
     // Com a foto presente em desktop, o eixo de leitura passa a ser
@@ -130,7 +132,9 @@ class HeroSection extends StatelessWidget {
     final content = Padding(
       padding: EdgeInsets.symmetric(
         horizontal: isMobile ? AppSpacing.lg : AppSpacing.huge,
-        vertical: AppSpacing.huge,
+        // Mobile corta o vertical pra lg — 64px topo+base dentro de um
+        // hero ja alto empurra trust strip e CTAs pra fora do fold.
+        vertical: isMobile ? AppSpacing.lg : AppSpacing.huge,
       ),
       child: ConstrainedBox(
         // Limite reduzido (1180 -> 1080) pra que em viewport ultra-wide

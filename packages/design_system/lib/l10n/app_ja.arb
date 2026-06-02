@@ -124,6 +124,7 @@
   "caseStudy_title": "Canvasのコスモス——",
   "caseStudy_titleAccent": "CustomPainterで60fps。",
   "caseStudy_subtitle": "このランディングページの背景は画像でもLottieでもない——7種類の天体がCustomPainterでリアルタイムに描画されています。フレームあたり140以上のdrawコール、seed決定論的、すべて単一のtickから派生。",
+  "caseStudy_ctaExplore": "ケーススタディを見る",
   "caseStudy_pivotEyebrow": "なぜ描画するのか",
   "caseStudy_pivotTitle": "ジオメトリがパラメータ化可能なら、Canvasがアセットを超える。",
   "caseStudy_pivotPara1": "惑星の画像は静的——固定サイズ、固定色、軌道アニメーションなし。Lottieはアニメーションを解決するが、依存関係とバンドルが増え、バリエーションが制限される。CustomPainterはパラメータ（パレット、表面パターン、半径、seed）を受け取りライブで描画——各惑星がアセット追加コストなしでユニーク。",

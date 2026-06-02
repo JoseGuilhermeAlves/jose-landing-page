@@ -374,6 +374,9 @@ class AppLocalizationsRu extends AppLocalizations {
       'Фон этого лендинга — не изображение и не Lottie, а 7 типов небесных тел, отрисованных в реальном времени через CustomPainter. Более 140 draw calls на кадр, seed-детерминированно, всё выводится из единственного тика.';
 
   @override
+  String get caseStudy_ctaExplore => 'Открыть полный кейс';
+
+  @override
   String get caseStudy_pivotEyebrow => 'ПОЧЕМУ РИСОВАТЬ';
 
   @override

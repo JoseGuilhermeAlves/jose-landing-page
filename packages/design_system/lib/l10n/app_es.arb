@@ -124,6 +124,7 @@
   "caseStudy_title": "Cosmos en Canvas —",
   "caseStudy_titleAccent": "Custom Painters a 60 fps.",
   "caseStudy_subtitle": "El fondo de esta landing no es imagen ni Lottie — son 7 tipos de cuerpos celestes pintados en tiempo real vía CustomPainter. Más de 140 draw calls por frame, seed-determinístico, todo derivado de un único tick.",
+  "caseStudy_ctaExplore": "Explorar el caso completo",
   "caseStudy_pivotEyebrow": "POR QUE PINTAR",
   "caseStudy_pivotTitle": "Canvas supera assets cuando la geometría es parametrizable.",
   "caseStudy_pivotPara1": "Las imágenes de planetas serían estáticas — tamaño fijo, color fijo, sin animación de órbita ni drift. Lottie resolvería la animación pero añadiría dependencia, peso de bundle y limitaría las variaciones. CustomPainter recibe parámetros (paleta, patrón de superficie, radio, seed) y dibuja en vivo — cada planeta es único sin costar un asset adicional.",

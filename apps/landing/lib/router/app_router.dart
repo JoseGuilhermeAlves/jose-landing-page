@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:landing/features/case_study/case_study_page.dart';
 import 'package:landing/features/home_page.dart';
 import 'package:landing/features/not_found_page.dart';
 import 'package:landing/router/route_paths.dart';
@@ -17,6 +18,10 @@ abstract final class AppRouter {
         GoRoute(
           path: RoutePaths.home,
           pageBuilder: (_, state) => const NoTransitionPage(child: HomePage()),
+        ),
+        GoRoute(
+          path: RoutePaths.caseStudy,
+          builder: (_, _) => const CaseStudyPage(),
         ),
         GoRoute(
           path: RoutePaths.notFoundFallback,

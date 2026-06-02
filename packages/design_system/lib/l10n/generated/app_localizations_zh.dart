@@ -366,6 +366,9 @@ class AppLocalizationsZh extends AppLocalizations {
       '这个 landing 的背景既非图片也非 Lottie——而是通过 CustomPainter 实时绘制的7种天体。每帧超过140次 draw call，seed 确定性，全部由单一 tick 驱动。';
 
   @override
+  String get caseStudy_ctaExplore => '查看完整案例研究';
+
+  @override
   String get caseStudy_pivotEyebrow => '为何手绘';
 
   @override

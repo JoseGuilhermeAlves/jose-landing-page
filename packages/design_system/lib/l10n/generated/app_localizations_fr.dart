@@ -372,6 +372,9 @@ class AppLocalizationsFr extends AppLocalizations {
       'Le fond de cette landing n\'est ni une image ni du Lottie — ce sont 7 types de corps célestes peints en temps réel via CustomPainter. Plus de 140 draw calls par frame, seed-déterministe, le tout dérivé d\'un unique tick.';
 
   @override
+  String get caseStudy_ctaExplore => 'Voir l\'étude complète';
+
+  @override
   String get caseStudy_pivotEyebrow => 'POURQUOI PEINDRE';
 
   @override

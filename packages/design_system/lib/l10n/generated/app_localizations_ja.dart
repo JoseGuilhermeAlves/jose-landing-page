@@ -370,6 +370,9 @@ class AppLocalizationsJa extends AppLocalizations {
       'このランディングページの背景は画像でもLottieでもない——7種類の天体がCustomPainterでリアルタイムに描画されています。フレームあたり140以上のdrawコール、seed決定論的、すべて単一のtickから派生。';
 
   @override
+  String get caseStudy_ctaExplore => 'ケーススタディを見る';
+
+  @override
   String get caseStudy_pivotEyebrow => 'なぜ描画するのか';
 
   @override

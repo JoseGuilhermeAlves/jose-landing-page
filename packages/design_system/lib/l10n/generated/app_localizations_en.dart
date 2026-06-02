@@ -373,6 +373,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'The background of this landing is not an image or Lottie — it is 7 types of celestial bodies painted in real time via CustomPainter. Over 140 draw calls per frame, seed-deterministic, all derived from a single tick.';
 
   @override
+  String get caseStudy_ctaExplore => 'Explore the full case study';
+
+  @override
   String get caseStudy_pivotEyebrow => 'WHY PAINT';
 
   @override

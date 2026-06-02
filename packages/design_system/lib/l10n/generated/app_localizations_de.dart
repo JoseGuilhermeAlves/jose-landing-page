@@ -373,6 +373,9 @@ class AppLocalizationsDe extends AppLocalizations {
       'Der Hintergrund dieser Landing ist weder Bild noch Lottie — es sind 7 Typen von Himmelskörpern, in Echtzeit via CustomPainter gemalt. Über 140 Draw Calls pro Frame, seed-deterministisch, alles aus einem einzigen Tick abgeleitet.';
 
   @override
+  String get caseStudy_ctaExplore => 'Zur vollständigen Fallstudie';
+
+  @override
   String get caseStudy_pivotEyebrow => 'WARUM MALEN';
 
   @override

@@ -796,6 +796,12 @@ abstract class AppLocalizations {
   /// **'O fundo desta landing não é imagem nem Lottie — são 7 tipos de corpos celestes pintados em tempo real via CustomPainter. Mais de 140 draw calls por frame, seed-determinístico, tudo derivado de um único tick.'**
   String get caseStudy_subtitle;
 
+  /// No description provided for @caseStudy_ctaExplore.
+  ///
+  /// In pt, this message translates to:
+  /// **'Explorar o estudo completo'**
+  String get caseStudy_ctaExplore;
+
   /// No description provided for @caseStudy_pivotEyebrow.
   ///
   /// In pt, this message translates to:

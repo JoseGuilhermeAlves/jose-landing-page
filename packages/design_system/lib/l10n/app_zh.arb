@@ -124,6 +124,7 @@
   "caseStudy_title": "Cosmos in Canvas —",
   "caseStudy_titleAccent": "Custom Painters 60 fps 运行。",
   "caseStudy_subtitle": "这个 landing 的背景既非图片也非 Lottie——而是通过 CustomPainter 实时绘制的7种天体。每帧超过140次 draw call，seed 确定性，全部由单一 tick 驱动。",
+  "caseStudy_ctaExplore": "查看完整案例研究",
   "caseStudy_pivotEyebrow": "为何手绘",
   "caseStudy_pivotTitle": "当几何可参数化时，Canvas 优于素材。",
   "caseStudy_pivotPara1": "行星图片是静态的——固定尺寸、固定颜色、无轨道动画、无漂移。Lottie 能解决动画问题，但会增加依赖、增大包体积并限制变体。CustomPainter 接收参数（调色板、表面纹理、半径、seed）并实时绘制——每颗行星都独一无二，无需额外素材。",

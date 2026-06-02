@@ -56,6 +56,7 @@ class _PulsoProgramPageState extends State<PulsoProgramPage> {
                   padding: const EdgeInsets.all(AppSpacing.md),
                   child: PulsoPeriodizationTimeline(
                     program: program,
+                    height: context.isMobile ? 184 : 240,
                     selectedWeek: _selectedWeek ?? program.currentWeekIndex,
                     selectedWeekday: _selectedWeekday ?? 0,
                     onCellTap: (w, d) {

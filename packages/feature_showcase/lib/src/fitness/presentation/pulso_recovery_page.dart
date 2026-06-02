@@ -56,6 +56,8 @@ class _PulsoRecoveryPageState extends State<PulsoRecoveryPage>
         child: BlocBuilder<FitnessBloc, FitnessState>(
           builder: (context, state) {
             final snapshot = state.selectedRecoverySnapshot;
+            final isMobile = context.isMobile;
+            final cardGap = isMobile ? AppSpacing.md : AppSpacing.lg;
             return RefreshIndicator(
               onRefresh: () async {
                 context.read<FitnessBloc>().add(const RecoveryRefreshed());
@@ -76,25 +78,25 @@ class _PulsoRecoveryPageState extends State<PulsoRecoveryPage>
                       RecoveryHistorySelected(offset),
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.lg),
+                  SizedBox(height: cardGap),
                   Center(
                     child: PulsoRecoveryRing(
                       percent: snapshot.recoveryPercent,
-                      diameter: context.isMobile ? 184 : 240,
+                      diameter: isMobile ? 184 : 240,
                       animation: _ringAnim,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.lg),
+                  SizedBox(height: cardGap),
                   _BreakdownCard(snapshot: snapshot),
-                  const SizedBox(height: AppSpacing.lg),
+                  SizedBox(height: cardGap),
                   _SleepCard(snapshot: snapshot),
-                  const SizedBox(height: AppSpacing.lg),
+                  SizedBox(height: cardGap),
                   _MuscleHeatmapCard(
                     snapshot: snapshot,
                     focus: _muscleFocus,
                     onPick: (group) => setState(() => _muscleFocus = group),
                   ),
-                  const SizedBox(height: AppSpacing.lg),
+                  SizedBox(height: cardGap),
                   _StrainHistoryCard(),
                 ],
               ),

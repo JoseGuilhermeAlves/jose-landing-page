@@ -87,9 +87,13 @@ class MiraPortfolioPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   MiraAllocationDonut(slices: slices, totalCents: marketValue),
-                  const SizedBox(height: AppSpacing.xxl),
+                  SizedBox(
+                    height: context.isMobile ? AppSpacing.xl : AppSpacing.xxl,
+                  ),
                   _PortfolioStatsRow(state: state),
-                  const SizedBox(height: AppSpacing.xl),
+                  SizedBox(
+                    height: context.isMobile ? AppSpacing.lg : AppSpacing.xl,
+                  ),
                   const _SectionTitle(text: 'Posicoes'),
                   const SizedBox(height: AppSpacing.md),
                   ...holdingViews.map((v) => _HoldingRow(view: v)),

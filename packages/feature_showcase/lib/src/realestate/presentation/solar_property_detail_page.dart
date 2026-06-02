@@ -46,6 +46,7 @@ class _SolarPropertyDetailPageState extends State<SolarPropertyDetailPage> {
     final textTheme = Theme.of(context).textTheme;
     final property = widget.property;
     final broker = SolarBrokersCatalog.byId(property.brokerId);
+    final isMobile = context.isMobile;
 
     return Scaffold(
       backgroundColor: colors.background,
@@ -113,7 +114,7 @@ class _SolarPropertyDetailPageState extends State<SolarPropertyDetailPage> {
                   ),
                 ],
                 if (property.features.isNotEmpty) ...[
-                  const SizedBox(height: AppSpacing.xl),
+                  SizedBox(height: isMobile ? AppSpacing.lg : AppSpacing.xl),
                   MockSectionLabel(
                     eyebrow: 'Caracteristicas',
                     title: 'O que o imovel oferece',
@@ -130,7 +131,7 @@ class _SolarPropertyDetailPageState extends State<SolarPropertyDetailPage> {
                   ),
                 ],
                 if (property.type != PropertyType.land) ...[
-                  const SizedBox(height: AppSpacing.xl),
+                  SizedBox(height: isMobile ? AppSpacing.lg : AppSpacing.xl),
                   MockSectionLabel(
                     eyebrow: 'Planta baixa',
                     title: 'Planta esquematica do imovel',
@@ -142,7 +143,7 @@ class _SolarPropertyDetailPageState extends State<SolarPropertyDetailPage> {
                   const SizedBox(height: AppSpacing.md),
                   _FloorPlanCard(property: property, colors: colors),
                 ],
-                const SizedBox(height: AppSpacing.xl),
+                SizedBox(height: isMobile ? AppSpacing.lg : AppSpacing.xl),
                 MockSectionLabel(
                   eyebrow: 'Localizacao',
                   title: 'Onde fica',
@@ -158,7 +159,7 @@ class _SolarPropertyDetailPageState extends State<SolarPropertyDetailPage> {
                   textTheme: textTheme,
                 ),
                 if (broker != null) ...[
-                  const SizedBox(height: AppSpacing.xl),
+                  SizedBox(height: isMobile ? AppSpacing.lg : AppSpacing.xl),
                   MockSectionLabel(
                     eyebrow: 'Corretor responsavel',
                     title: 'Quem te acompanha',
@@ -174,7 +175,7 @@ class _SolarPropertyDetailPageState extends State<SolarPropertyDetailPage> {
                     textTheme: textTheme,
                   ),
                 ],
-                const SizedBox(height: AppSpacing.xl),
+                SizedBox(height: isMobile ? AppSpacing.lg : AppSpacing.xl),
                 BlocBuilder<RealEstateBloc, RealEstateState>(
                   buildWhen: (a, b) =>
                       a.hasSentContact(property.id) !=

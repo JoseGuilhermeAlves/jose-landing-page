@@ -248,7 +248,7 @@ class _SleepCard extends StatelessWidget {
                 sleep.asleepLabel,
                 style: TextStyle(
                   color: colors.onSurface,
-                  fontSize: 36,
+                  fontSize: context.isMobile ? 28 : 36,
                   fontWeight: FontWeight.w400,
                   fontFamily: FitnessBrand.displayMonoFontFamily,
                   letterSpacing: -1,
@@ -432,7 +432,7 @@ class _MuscleHeatmapCard extends StatelessWidget {
                   '${score.toStringAsFixed(0)}%',
                   style: TextStyle(
                     color: FitnessBrand.recoveryColor(score),
-                    fontSize: 42,
+                    fontSize: context.isMobile ? 32 : 42,
                     fontWeight: FontWeight.w300,
                     fontFamily: FitnessBrand.displayMonoFontFamily,
                     letterSpacing: -2,

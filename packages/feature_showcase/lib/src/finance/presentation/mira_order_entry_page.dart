@@ -103,7 +103,11 @@ class _MiraOrderEntryPageState extends State<MiraOrderEntryPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const _AssetSummary(),
-                        const SizedBox(height: AppSpacing.xl),
+                        SizedBox(
+                          height: context.isMobile
+                              ? AppSpacing.lg
+                              : AppSpacing.xl,
+                        ),
                         const _Label(text: 'Quantidade'),
                         const SizedBox(height: AppSpacing.sm),
                         _QuantityRow(
@@ -118,7 +122,11 @@ class _MiraOrderEntryPageState extends State<MiraOrderEntryPage> {
                             onPicked: (v) => setState(() => _quantity = v),
                           ),
                         ],
-                        const SizedBox(height: AppSpacing.xl),
+                        SizedBox(
+                          height: context.isMobile
+                              ? AppSpacing.lg
+                              : AppSpacing.xl,
+                        ),
                         const _Label(text: 'Tipo de ordem'),
                         const SizedBox(height: AppSpacing.sm),
                         _TypeSegment(
@@ -134,7 +142,11 @@ class _MiraOrderEntryPageState extends State<MiraOrderEntryPage> {
                             onChanged: (_) => setState(() {}),
                           ),
                         ],
-                        const SizedBox(height: AppSpacing.xl),
+                        SizedBox(
+                          height: context.isMobile
+                              ? AppSpacing.lg
+                              : AppSpacing.xl,
+                        ),
                         _TotalCard(
                           priceCents: priceCents,
                           quantity: _quantity,

@@ -103,7 +103,7 @@ class _FormState extends StatelessWidget {
                   controller: messageController,
                   label: 'Mensagem',
                   hint: 'Conte rapidamente o que quer saber',
-                  maxLines: 4,
+                  maxLines: context.isMobile ? 3 : 4,
                   validator: (v) => (v == null || v.trim().length < 10)
                       ? 'Mensagem curta demais'
                       : null,

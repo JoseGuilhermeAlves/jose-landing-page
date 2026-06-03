@@ -100,7 +100,7 @@ class _ChartCard extends StatelessWidget {
         AppSpacing.md,
       ),
       decoration: BoxDecoration(
-        color: colors.surface,
+        gradient: MiraBrand.litGlassGradient(colors.surface),
         borderRadius: BorderRadius.circular(AppRadius.lg),
         border: Border.all(color: colors.border),
       ),
@@ -242,7 +242,7 @@ class _MyPositionCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(AppSpacing.lg),
       decoration: BoxDecoration(
-        color: colors.surface,
+        gradient: MiraBrand.litGlassGradient(colors.surface),
         borderRadius: BorderRadius.circular(AppRadius.lg),
         border: Border.all(color: colors.border),
       ),

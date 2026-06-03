@@ -21,15 +21,19 @@ abstract final class VitralBrand {
 
   /// Paleta indigo / off-white / cinza. Indigo escuro como primary
   /// (CTAs, destaque), off-white frio como background, cinza neutro
-  /// pro texto secundario e bordas. Ocre quente como accent para
-  /// timestamps e detalhes editoriais. Pao `#F2DDB6` resta apenas em
-  /// `onPrimary` — toque de marca no texto sobre CTA indigo.
+  /// pro texto secundario e bordas. Ambar saturado como accent para
+  /// labels de categoria, roles, ratings e cursor do hero — destaque
+  /// editorial intencional, separado de `warning` (semantico). Pao
+  /// `#F2DDB6` aparece em `onPrimary` (texto sobre CTA indigo) e tinge
+  /// o mostrador do relogio do hero pra ter presenca de marca.
   static const AppColorScheme palette = AppColorScheme(
     primary: Color(0xFF2A3B70),
     primaryHover: Color(0xFF3A4D8C),
     onPrimary: Color(0xFFF2DDB6),
-    accent: Color(0xFFB07A2C),
-    onAccent: Color(0xFFFFFFFF),
+    // Ambar saturado: le como destaque editorial intencional sobre creme,
+    // diferente do ocre antigo que sumia. Separado de `warning` (semantico).
+    accent: Color(0xFFD9911F),
+    onAccent: Color(0xFF1F243A),
     background: Color(0xFFF4F1EA),
     surface: Color(0xFFFBFAF6),
     surfaceMuted: Color(0xFFE7E1D2),
@@ -37,7 +41,9 @@ abstract final class VitralBrand {
     onSurface: Color(0xFF1F243A),
     onSurfaceMuted: Color(0xFF6B6F75),
     success: Color(0xFF2F6B3F),
-    warning: Color(0xFFB07A2C),
+    // `warning` ganha valor proprio (laranja semantico) — antes colidia
+    // com o accent de marca.
+    warning: Color(0xFFC9631C),
     error: Color(0xFFA0392E),
     info: Color(0xFF2A3B70),
   );

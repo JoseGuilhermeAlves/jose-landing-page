@@ -63,42 +63,48 @@ class _Chip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: selected ? colors.primary : colors.surface,
+      color: selected ? colors.primary : auroraCardFill(colors),
       borderRadius: BorderRadius.circular(AppRadius.full),
       child: InkWell(
         key: Key('aurora-filter-${icon?.name ?? 'all'}'),
         borderRadius: BorderRadius.circular(AppRadius.full),
         onTap: onTap,
-        child: Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.md,
-            vertical: AppSpacing.sm,
-          ),
+        child: DecoratedBox(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(AppRadius.full),
-            border: Border.all(
-              color: selected ? colors.primary : colors.border,
-            ),
+            boxShadow: selected ? null : auroraCardShadow(colors),
           ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              if (icon != null) ...[
-                AuroraCategoryIcon(
-                  category: icon!,
-                  color: selected ? colors.onPrimary : colors.primary,
-                  size: 16,
-                ),
-                const SizedBox(width: AppSpacing.xs),
-              ],
-              Text(
-                label,
-                style: textTheme.labelMedium?.copyWith(
-                  color: selected ? colors.onPrimary : colors.onSurface,
-                  letterSpacing: 0.2,
-                ),
+          child: Container(
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppSpacing.md,
+              vertical: AppSpacing.sm,
+            ),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(AppRadius.full),
+              border: Border.all(
+                color: selected ? colors.primary : colors.border,
               ),
-            ],
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (icon != null) ...[
+                  AuroraCategoryIcon(
+                    category: icon!,
+                    color: selected ? colors.onPrimary : colors.accent,
+                    size: 16,
+                  ),
+                  const SizedBox(width: AppSpacing.xs),
+                ],
+                Text(
+                  label,
+                  style: textTheme.labelMedium?.copyWith(
+                    color: selected ? colors.onPrimary : colors.onSurface,
+                    letterSpacing: 0.2,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

@@ -57,13 +57,22 @@ class _VitralClockPainterState extends State<VitralClockPainter>
             controller: _controller,
             hour: widget.hour,
             minute: widget.minute,
-            faceColor: scheme.surface,
+            // Mostrador tingido com o pao da marca (`onPrimary`) misturado
+            // na surface — leve calor sem virar amarelo gritante. Da
+            // presenca ao tom de marca que so vivia no texto dos CTAs.
+            faceColor: Color.alphaBlend(
+              scheme.onPrimary.withValues(alpha: 0.45),
+              scheme.surface,
+            ),
+            // Anel em primary; ponteiros meio passo mais escuros (onSurface)
+            // pra ler com profundidade em vez de sumir no anel. Segundos em
+            // accent (ambar) pro detalhe vivo girando.
             ringColor: scheme.primary,
             tickColor: scheme.outline,
-            hourHandColor: scheme.primary,
-            minuteHandColor: scheme.primary,
+            hourHandColor: scheme.onSurface,
+            minuteHandColor: scheme.onSurface,
             secondHandColor: scheme.secondary,
-            centerColor: scheme.primary,
+            centerColor: scheme.onSurface,
           ),
         ),
       ),

@@ -241,9 +241,10 @@ class _NoActiveOrderCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(AppSpacing.lg),
       decoration: BoxDecoration(
-        color: colors.surface,
+        color: auroraCardFill(colors),
         borderRadius: BorderRadius.circular(AppRadius.lg),
         border: Border.all(color: colors.border),
+        boxShadow: auroraCardShadow(colors),
       ),
       child: Row(
         children: [
@@ -306,6 +307,11 @@ class _CategoriesStrip extends StatelessWidget {
   }
 }
 
+/// Pill de categoria do strip da home. Mesma gramatica visual do
+/// `_Chip` da lista de bancas (pill arredondada + icone + label) pra
+/// unificar a taxonomia entre as duas telas. O glifo da categoria sai
+/// em ocre accent — promove a terceira cor da paleta, que antes so
+/// aparecia no mapa.
 class _CategoryChip extends StatelessWidget {
   const _CategoryChip({
     required this.category,
@@ -320,11 +326,11 @@ class _CategoryChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: colors.surface,
-      borderRadius: BorderRadius.circular(AppRadius.md),
+      color: auroraCardFill(colors),
+      borderRadius: BorderRadius.circular(AppRadius.full),
       child: InkWell(
         key: Key('aurora-category-${category.name}'),
-        borderRadius: BorderRadius.circular(AppRadius.md),
+        borderRadius: BorderRadius.circular(AppRadius.full),
         onTap: () => Navigator.of(context).push(
           MaterialPageRoute<void>(
             builder: (_) => auroraWithDemoBloc(
@@ -333,50 +339,39 @@ class _CategoryChip extends StatelessWidget {
             ),
           ),
         ),
-        child: Container(
-          width: context.responsive<double>(mobile: 124, desktop: 150),
-          padding: const EdgeInsets.all(AppSpacing.md),
+        child: DecoratedBox(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(AppRadius.md),
-            border: Border.all(color: colors.border),
+            borderRadius: BorderRadius.circular(AppRadius.full),
+            boxShadow: auroraCardShadow(colors),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                width: 40,
-                height: 40,
-                decoration: BoxDecoration(
-                  color: colors.surfaceMuted,
-                  borderRadius: BorderRadius.circular(AppRadius.sm),
-                ),
-                alignment: Alignment.center,
-                child: AuroraCategoryIcon(
+          child: Container(
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppSpacing.md,
+              vertical: AppSpacing.sm,
+            ),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(AppRadius.full),
+              border: Border.all(color: colors.border),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                AuroraCategoryIcon(
                   category: category,
-                  color: colors.primary,
+                  color: colors.accent,
+                  size: 18,
                 ),
-              ),
-              const SizedBox(height: AppSpacing.md),
-              Text(
-                category.label,
-                style: textTheme.titleSmall?.copyWith(
-                  color: colors.onSurface,
-                  fontFamily: AuroraBrand.displayFontFamily,
-                  fontWeight: FontWeight.w600,
+                const SizedBox(width: AppSpacing.xs),
+                Text(
+                  category.label,
+                  style: textTheme.labelMedium?.copyWith(
+                    color: colors.onSurface,
+                    fontWeight: FontWeight.w600,
+                    letterSpacing: 0.2,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 2),
-              Text(
-                category.description,
-                style: textTheme.labelSmall?.copyWith(
-                  color: colors.onSurfaceMuted,
-                  letterSpacing: 0,
-                  height: 1.35,
-                ),
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -422,7 +417,7 @@ class AuroraVendorCard extends StatelessWidget {
     final colors = context.colors;
     final textTheme = Theme.of(context).textTheme;
     return Material(
-      color: colors.surface,
+      color: auroraCardFill(colors),
       borderRadius: BorderRadius.circular(AppRadius.lg),
       child: InkWell(
         key: Key('aurora-vendor-card-${vendor.id}'),
@@ -437,96 +432,102 @@ class AuroraVendorCard extends StatelessWidget {
                 ),
               ),
             ),
-        child: Container(
-          padding: const EdgeInsets.all(AppSpacing.md),
+        child: DecoratedBox(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(AppRadius.lg),
-            border: Border.all(color: colors.border),
+            boxShadow: auroraCardShadow(colors),
           ),
-          child: Row(
-            children: [
-              Container(
-                width: context.responsive<double>(mobile: 48, desktop: 64),
-                height: context.responsive<double>(mobile: 48, desktop: 64),
-                decoration: BoxDecoration(
-                  color: colors.surfaceMuted,
-                  borderRadius: BorderRadius.circular(AppRadius.md),
+          child: Container(
+            padding: const EdgeInsets.all(AppSpacing.md),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(AppRadius.lg),
+              border: Border.all(color: colors.border),
+            ),
+            child: Row(
+              children: [
+                Container(
+                  width: context.responsive<double>(mobile: 48, desktop: 64),
+                  height: context.responsive<double>(mobile: 48, desktop: 64),
+                  decoration: BoxDecoration(
+                    color: colors.surfaceMuted,
+                    borderRadius: BorderRadius.circular(AppRadius.md),
+                  ),
+                  padding: const EdgeInsets.all(AppSpacing.sm),
+                  child: AuroraProductIllustration(
+                    category: vendor.primaryCategory,
+                    foregroundColor: colors.primary,
+                    accentColor: colors.accent,
+                  ),
                 ),
-                padding: const EdgeInsets.all(AppSpacing.sm),
-                child: AuroraProductIllustration(
-                  category: vendor.primaryCategory,
-                  foregroundColor: colors.primary,
-                  accentColor: colors.accent,
-                ),
-              ),
-              const SizedBox(width: AppSpacing.md),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      vendor.name,
-                      style: textTheme.titleSmall?.copyWith(
-                        color: colors.onSurface,
-                        fontFamily: AuroraBrand.displayFontFamily,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    const SizedBox(height: 2),
-                    Text(
-                      vendor.tagline,
-                      style: textTheme.labelSmall?.copyWith(
-                        color: colors.onSurfaceMuted,
-                        letterSpacing: 0,
-                        height: 1.35,
-                      ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    const SizedBox(height: AppSpacing.xs),
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.schedule_outlined,
-                          size: 12,
-                          color: colors.onSurfaceMuted,
+                const SizedBox(width: AppSpacing.md),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        vendor.name,
+                        style: textTheme.titleSmall?.copyWith(
+                          color: colors.onSurface,
+                          fontFamily: AuroraBrand.displayFontFamily,
+                          fontWeight: FontWeight.w600,
                         ),
-                        const SizedBox(width: 4),
-                        Text(
-                          '${vendor.etaMinutes} min',
-                          style: textTheme.labelSmall?.copyWith(
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        vendor.tagline,
+                        style: textTheme.labelSmall?.copyWith(
+                          color: colors.onSurfaceMuted,
+                          letterSpacing: 0,
+                          height: 1.35,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      const SizedBox(height: AppSpacing.xs),
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.schedule_outlined,
+                            size: 12,
                             color: colors.onSurfaceMuted,
                           ),
-                        ),
-                        const SizedBox(width: AppSpacing.sm),
-                        Icon(
-                          Icons.local_shipping_outlined,
-                          size: 12,
-                          color: colors.onSurfaceMuted,
-                        ),
-                        const SizedBox(width: 4),
-                        Text(
-                          vendor.formattedDeliveryFee,
-                          style: textTheme.labelSmall?.copyWith(
-                            color: vendor.deliveryFeeCents == 0
-                                ? colors.primary
-                                : colors.onSurfaceMuted,
-                            fontWeight: vendor.deliveryFeeCents == 0
-                                ? FontWeight.w700
-                                : FontWeight.w400,
+                          const SizedBox(width: 4),
+                          Text(
+                            '${vendor.etaMinutes} min',
+                            style: textTheme.labelSmall?.copyWith(
+                              color: colors.onSurfaceMuted,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
+                          const SizedBox(width: AppSpacing.sm),
+                          Icon(
+                            Icons.local_shipping_outlined,
+                            size: 12,
+                            color: colors.onSurfaceMuted,
+                          ),
+                          const SizedBox(width: 4),
+                          Text(
+                            vendor.formattedDeliveryFee,
+                            style: textTheme.labelSmall?.copyWith(
+                              color: vendor.deliveryFeeCents == 0
+                                  ? colors.primary
+                                  : colors.onSurfaceMuted,
+                              fontWeight: vendor.deliveryFeeCents == 0
+                                  ? FontWeight.w700
+                                  : FontWeight.w400,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              Icon(
-                Icons.chevron_right_rounded,
-                color: colors.onSurfaceMuted,
-                size: 20,
-              ),
-            ],
+                Icon(
+                  Icons.chevron_right_rounded,
+                  color: colors.onSurfaceMuted,
+                  size: 20,
+                ),
+              ],
+            ),
           ),
         ),
       ),

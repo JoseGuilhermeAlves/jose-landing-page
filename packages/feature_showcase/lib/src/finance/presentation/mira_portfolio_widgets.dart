@@ -13,7 +13,7 @@ class _PortfolioStatsRow extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(AppSpacing.lg),
       decoration: BoxDecoration(
-        color: colors.surface,
+        gradient: MiraBrand.litGlassGradient(colors.surface),
         borderRadius: BorderRadius.circular(AppRadius.lg),
         border: Border.all(color: colors.border),
       ),
@@ -154,6 +154,10 @@ class _HoldingRow extends StatelessWidget {
               vertical: AppSpacing.md,
             ),
             decoration: BoxDecoration(
+              // Highlight interno no topo (branco @ 0.04) pro look "lit
+              // glass" premium-dark, em vez de card chapado num fundo
+              // tambem escuro.
+              gradient: MiraBrand.litGlassGradient(colors.surface),
               border: Border.all(color: colors.border),
               borderRadius: BorderRadius.circular(AppRadius.md),
             ),

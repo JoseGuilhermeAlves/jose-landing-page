@@ -120,6 +120,7 @@ class _MiraOrderEntryPageState extends State<MiraOrderEntryPage> {
                           const SizedBox(height: AppSpacing.sm),
                           _QuickPicks(
                             max: maxSellable,
+                            current: _quantity,
                             onPicked: (v) => setState(() => _quantity = v),
                           ),
                         ],

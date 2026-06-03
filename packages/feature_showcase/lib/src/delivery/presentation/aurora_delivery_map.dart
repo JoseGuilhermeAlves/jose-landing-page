@@ -437,17 +437,27 @@ class _AuroraDeliveryMapPainter extends CustomPainter {
 
   /// Rio cortando o canto superior direito — Bezier suave com a cor
   /// info (azul-petroleo) em alpha baixo. Ancora a leitura como mapa
-  /// urbano (cidade tem rio).
+  /// urbano (cidade tem rio). Entra pela borda superior e sai pela
+  /// borda direita (edge-to-edge), serpenteando — sem stub solto no
+  /// canto.
   void _paintRiver(Canvas canvas, Size size) {
     final path = Path()
-      ..moveTo(size.width * 1.05, size.height * 0.06)
+      ..moveTo(size.width * 0.66, -size.height * 0.05)
       ..cubicTo(
-        size.width * 0.78,
-        size.height * 0.04,
-        size.width * 0.72,
+        size.width * 0.74,
+        size.height * 0.10,
+        size.width * 0.86,
+        size.height * 0.10,
+        size.width * 0.90,
         size.height * 0.22,
+      )
+      ..cubicTo(
+        size.width * 0.94,
+        size.height * 0.32,
+        size.width * 1.02,
+        size.height * 0.34,
         size.width * 1.05,
-        size.height * 0.28,
+        size.height * 0.40,
       );
     canvas.drawPath(path, _riverPaint);
   }

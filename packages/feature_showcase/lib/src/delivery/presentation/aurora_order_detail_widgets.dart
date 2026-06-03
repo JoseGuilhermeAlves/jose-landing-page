@@ -114,9 +114,10 @@ class _DeliveryEtaCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(AppSpacing.lg),
       decoration: BoxDecoration(
-        color: colors.surface,
+        color: auroraCardFill(colors),
         borderRadius: BorderRadius.circular(AppRadius.lg),
         border: Border.all(color: colors.border),
+        boxShadow: auroraCardShadow(colors),
       ),
       child: Row(
         children: [
@@ -385,9 +386,10 @@ class _TotalsCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(AppSpacing.lg),
       decoration: BoxDecoration(
-        color: colors.surface,
+        color: auroraCardFill(colors),
         borderRadius: BorderRadius.circular(AppRadius.lg),
         border: Border.all(color: colors.border),
+        boxShadow: auroraCardShadow(colors),
       ),
       child: Column(
         children: [

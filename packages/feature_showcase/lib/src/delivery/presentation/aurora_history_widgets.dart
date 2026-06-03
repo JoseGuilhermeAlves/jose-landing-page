@@ -15,7 +15,7 @@ class _HistoryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final vendor = AuroraVendorsCatalog.byId(order.vendorId);
     return Material(
-      color: colors.surface,
+      color: auroraCardFill(colors),
       borderRadius: BorderRadius.circular(AppRadius.lg),
       child: InkWell(
         key: Key('aurora-history-card-${order.id}'),
@@ -28,87 +28,93 @@ class _HistoryCard extends StatelessWidget {
             ),
           ),
         ),
-        child: Container(
-          padding: const EdgeInsets.all(AppSpacing.md),
+        child: DecoratedBox(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(AppRadius.lg),
-            border: Border.all(color: colors.border),
+            boxShadow: auroraCardShadow(colors),
           ),
-          child: Row(
-            children: [
-              if (vendor != null)
-                Container(
-                  width: context.responsive<double>(mobile: 44, desktop: 56),
-                  height: context.responsive<double>(mobile: 44, desktop: 56),
-                  decoration: BoxDecoration(
-                    color: colors.surfaceMuted,
-                    borderRadius: BorderRadius.circular(AppRadius.md),
+          child: Container(
+            padding: const EdgeInsets.all(AppSpacing.md),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(AppRadius.lg),
+              border: Border.all(color: colors.border),
+            ),
+            child: Row(
+              children: [
+                if (vendor != null)
+                  Container(
+                    width: context.responsive<double>(mobile: 44, desktop: 56),
+                    height: context.responsive<double>(mobile: 44, desktop: 56),
+                    decoration: BoxDecoration(
+                      color: colors.surfaceMuted,
+                      borderRadius: BorderRadius.circular(AppRadius.md),
+                    ),
+                    padding: const EdgeInsets.all(AppSpacing.sm),
+                    child: AuroraProductIllustration(
+                      category: vendor.primaryCategory,
+                      foregroundColor: colors.primary,
+                      accentColor: colors.accent,
+                    ),
                   ),
-                  padding: const EdgeInsets.all(AppSpacing.sm),
-                  child: AuroraProductIllustration(
-                    category: vendor.primaryCategory,
-                    foregroundColor: colors.primary,
-                    accentColor: colors.accent,
+                if (vendor != null) const SizedBox(width: AppSpacing.md),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        vendor?.name ?? order.customerName,
+                        style: textTheme.titleSmall?.copyWith(
+                          color: colors.onSurface,
+                          fontFamily: AuroraBrand.displayFontFamily,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        order.placedAtLabel.isEmpty
+                            ? '${order.lineItems.length} itens'
+                            : '${order.placedAtLabel} · ${order.lineItems.length} itens',
+                        style: textTheme.labelSmall?.copyWith(
+                          color: colors.onSurfaceMuted,
+                          letterSpacing: 0,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              if (vendor != null) const SizedBox(width: AppSpacing.md),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                const SizedBox(width: AppSpacing.sm),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(
-                      vendor?.name ?? order.customerName,
+                      formatBrl(_safeTotal(order)),
                       style: textTheme.titleSmall?.copyWith(
-                        color: colors.onSurface,
-                        fontFamily: AuroraBrand.displayFontFamily,
-                        fontWeight: FontWeight.w600,
+                        color: colors.primary,
+                        fontWeight: FontWeight.w700,
                       ),
                     ),
                     const SizedBox(height: 2),
-                    Text(
-                      order.placedAtLabel.isEmpty
-                          ? '${order.lineItems.length} itens'
-                          : '${order.placedAtLabel} · ${order.lineItems.length} itens',
-                      style: textTheme.labelSmall?.copyWith(
-                        color: colors.onSurfaceMuted,
-                        letterSpacing: 0,
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: AppSpacing.xs,
+                        vertical: 2,
+                      ),
+                      decoration: BoxDecoration(
+                        color: colors.primary.withValues(alpha: 0.10),
+                        borderRadius: BorderRadius.circular(AppRadius.full),
+                      ),
+                      child: Text(
+                        order.status.label.toLowerCase(),
+                        style: textTheme.labelSmall?.copyWith(
+                          color: colors.primary,
+                          letterSpacing: 0.4,
+                        ),
                       ),
                     ),
                   ],
                 ),
-              ),
-              const SizedBox(width: AppSpacing.sm),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Text(
-                    formatBrl(_safeTotal(order)),
-                    style: textTheme.titleSmall?.copyWith(
-                      color: colors.primary,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  const SizedBox(height: 2),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: AppSpacing.xs,
-                      vertical: 2,
-                    ),
-                    decoration: BoxDecoration(
-                      color: colors.primary.withValues(alpha: 0.10),
-                      borderRadius: BorderRadius.circular(AppRadius.full),
-                    ),
-                    child: Text(
-                      order.status.label.toLowerCase(),
-                      style: textTheme.labelSmall?.copyWith(
-                        color: colors.primary,
-                        letterSpacing: 0.4,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

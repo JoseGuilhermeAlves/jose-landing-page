@@ -20,8 +20,10 @@ class SolarPropertyIllustration extends StatelessWidget {
 
   final PropertyType type;
 
-  /// Variacao do angulo na galeria do detalhe — 0 padrao (frente), 1
-  /// perspectiva lateral, 2 vista superior. Cards usam sempre 0.
+  /// Variacao do angulo na galeria do detalhe — cada variant
+  /// re-compoe a cena: 0 = fachada frontal (frente), 1 = perspectiva
+  /// 3/4 com volume e arvore (lateral), 2 = vista aerea/implantacao
+  /// (topo). Cards usam sempre 0.
   final int variant;
 
   /// Cor principal da silhueta. Default = primary do tema.
@@ -82,8 +84,40 @@ class _SolarPropertyIllustrationPainter extends CustomPainter {
     ..color = foregroundColor.withValues(alpha: 0.75)
     ..style = PaintingStyle.fill;
 
+  /// Lado iluminado do telhado — clareia o foreground rumo ao branco.
+  late final Paint _roofLitFill = Paint()
+    ..color = Color.lerp(foregroundColor, const Color(0xFFFFFFFF), 0.22)!
+    ..style = PaintingStyle.fill;
+
+  /// Lado sombreado do telhado / beiral — escurece o foreground.
+  late final Paint _roofShadeFill = Paint()
+    ..color = Color.lerp(foregroundColor, const Color(0xFF000000), 0.28)!
+    ..style = PaintingStyle.fill;
+
+  /// Verde de gramado/terreno — clareia o accent rumo a um verde mais
+  /// vivo pra nao virar um bloco barrento sobre o creme.
+  late final Paint _lawnFill = Paint()
+    ..color = Color.lerp(accentColor, const Color(0xFFB8D17A), 0.45)!
+    ..style = PaintingStyle.fill;
+
+  /// Verde de gramado mais escuro pro plano de fundo (mata/colina).
+  late final Paint _lawnDeepFill = Paint()
+    ..color = Color.lerp(accentColor, const Color(0xFF000000), 0.12)!
+    ..style = PaintingStyle.fill;
+
   late final Paint _windowFill = Paint()
     ..color = backgroundColor
+    ..style = PaintingStyle.fill;
+
+  /// Caixilho/divisoria das janelas (mullions) — foreground sutil.
+  late final Paint _mullionPaint = Paint()
+    ..color = foregroundColor.withValues(alpha: 0.55)
+    ..style = PaintingStyle.stroke
+    ..strokeWidth = 1.2;
+
+  /// Sombra de contato sob a casa — escurece o accent do chao.
+  late final Paint _contactShadowFill = Paint()
+    ..color = const Color(0xFF000000).withValues(alpha: 0.16)
     ..style = PaintingStyle.fill;
 
   @override
@@ -114,62 +148,224 @@ class _SolarPropertyIllustrationPainter extends CustomPainter {
     }
   }
 
-  /// Casa — silhueta de telhado triangular + corpo retangular + porta
-  /// + janelas. Variants reposicionam o sol e adicionam arvore lateral.
+  /// Casa — cada variant e um enquadramento diferente da mesma casa:
+  /// 0 = fachada frontal (frente), 1 = perspectiva 3/4 (lateral) com
+  /// arvore, 2 = vista aerea / planta de implantacao (topo). Telhado
+  /// ganha aguas com sombreado e beiral; janelas tem caixilho; sombra
+  /// de contato no chao.
   void _paintHouse(Canvas canvas, Size size) {
+    switch (variant) {
+      case 2:
+        _paintHouseAerial(canvas, size);
+      case 1:
+        _paintHousePerspective(canvas, size);
+      default:
+        _paintHouseFront(canvas, size);
+    }
+  }
+
+  /// Fachada frontal — duas aguas de telhado com beiral, porta central,
+  /// duas janelas com caixilho, chamine, sombra de contato.
+  void _paintHouseFront(Canvas canvas, Size size) {
     final w = size.width;
     final h = size.height;
-    // Chao.
-    final ground = Rect.fromLTWH(0, h * 0.78, w, h * 0.22);
-    canvas.drawRect(ground, _shadeFill);
+    // Gramado.
+    canvas.drawRect(Rect.fromLTWH(0, h * 0.78, w, h * 0.22), _lawnFill);
+    // Sol no canto.
+    canvas.drawCircle(Offset(w * 0.80, h * 0.20), h * 0.06, _accentFill);
 
-    // Sol — posicao varia por variant.
-    final sunCx = variant == 1 ? w * 0.22 : w * 0.78;
-    final sunCy = h * (variant == 2 ? 0.18 : 0.22);
-    canvas.drawCircle(Offset(sunCx, sunCy), h * 0.06, _accentFill);
+    final bodyL = w * 0.20;
+    final bodyR = w * 0.68;
+    // Sombra de contato sob a casa.
+    canvas.drawOval(
+      Rect.fromCenter(
+        center: Offset((bodyL + bodyR) / 2, h * 0.80),
+        width: (bodyR - bodyL) * 1.25,
+        height: h * 0.05,
+      ),
+      _contactShadowFill,
+    );
 
-    // Arvore lateral no variant 1.
-    if (variant == 1) {
-      _paintTree(canvas, Offset(w * 0.85, h * 0.78), h * 0.22);
-    }
-    if (variant == 2) {
-      // Vista "superior" — adiciona piscina simbolica ao lado.
-      final pool = Rect.fromLTWH(w * 0.62, h * 0.62, w * 0.20, h * 0.12);
-      canvas.drawRRect(
-        RRect.fromRectAndRadius(pool, const Radius.circular(6)),
-        Paint()..color = accentColor.withValues(alpha: 0.5),
-      );
-    }
+    // Corpo.
+    canvas.drawRect(Rect.fromLTRB(bodyL, h * 0.44, bodyR, h * 0.78), _fill);
 
-    // Corpo da casa.
-    final body = Rect.fromLTWH(w * 0.18, h * 0.45, w * 0.50, h * 0.33);
-    canvas.drawRect(body, _fill);
+    // Chamine (atras do telhado).
+    canvas.drawRect(
+      Rect.fromLTWH(w * 0.56, h * 0.24, w * 0.045, h * 0.12),
+      _roofShadeFill,
+    );
 
-    // Telhado triangular.
-    final roof = Path()
-      ..moveTo(w * 0.12, h * 0.45)
-      ..lineTo(w * 0.43, h * 0.20)
-      ..lineTo(w * 0.74, h * 0.45)
+    // Telhado em duas aguas com beiral (extrapola o corpo).
+    final ridgeX = (bodyL + bodyR) / 2;
+    final eaveL = bodyL - w * 0.06;
+    final eaveR = bodyR + w * 0.06;
+    final apexY = h * 0.20;
+    final eaveY = h * 0.44;
+    // Agua esquerda (iluminada).
+    final roofLit = Path()
+      ..moveTo(eaveL, eaveY)
+      ..lineTo(ridgeX, apexY)
+      ..lineTo(ridgeX, eaveY)
       ..close();
-    canvas.drawPath(roof, _accentFill);
+    // Agua direita (sombreada).
+    final roofShade = Path()
+      ..moveTo(ridgeX, apexY)
+      ..lineTo(eaveR, eaveY)
+      ..lineTo(ridgeX, eaveY)
+      ..close();
+    canvas
+      ..drawPath(roofLit, _roofLitFill)
+      ..drawPath(roofShade, _roofShadeFill)
+      // Faixa de beiral (sombra fina sob a linha do telhado).
+      ..drawRect(
+        Rect.fromLTRB(eaveL, eaveY, eaveR, eaveY + h * 0.02),
+        _roofShadeFill,
+      );
 
-    // Chamine.
-    final chimney = Rect.fromLTWH(w * 0.55, h * 0.26, w * 0.04, h * 0.10);
-    canvas.drawRect(chimney, _fill);
-
-    // Porta.
-    final door = Rect.fromLTWH(w * 0.38, h * 0.60, w * 0.10, h * 0.18);
-    // Janelas.
+    // Porta central com painel.
+    final door = Rect.fromLTWH(w * 0.40, h * 0.58, w * 0.08, h * 0.20);
     canvas
       ..drawRect(door, _accentFill)
+      ..drawRect(door.deflate(w * 0.012), _roofShadeFill);
+
+    // Janelas com caixilho.
+    _paintMullionedWindow(
+      canvas,
+      Rect.fromLTWH(w * 0.25, h * 0.52, w * 0.10, h * 0.11),
+    );
+    _paintMullionedWindow(
+      canvas,
+      Rect.fromLTWH(w * 0.53, h * 0.52, w * 0.10, h * 0.11),
+    );
+  }
+
+  /// Perspectiva 3/4 — fachada + parede lateral em sombra, dando volume,
+  /// com arvore ao lado. Le claramente diferente da fachada frontal.
+  void _paintHousePerspective(Canvas canvas, Size size) {
+    final w = size.width;
+    final h = size.height;
+    canvas.drawRect(Rect.fromLTWH(0, h * 0.78, w, h * 0.22), _lawnFill);
+    canvas.drawCircle(Offset(w * 0.22, h * 0.20), h * 0.06, _accentFill);
+
+    _paintTree(canvas, Offset(w * 0.86, h * 0.78), h * 0.26);
+
+    final faceL = w * 0.16;
+    final faceR = w * 0.50;
+    const faceTop = 0.44;
+    const faceBottom = 0.78;
+    // Sombra de contato.
+    canvas.drawOval(
+      Rect.fromCenter(
+        center: Offset(w * 0.42, h * 0.80),
+        width: w * 0.62,
+        height: h * 0.05,
+      ),
+      _contactShadowFill,
+    );
+
+    // Parede lateral (em fuga, sombreada).
+    final side = Path()
+      ..moveTo(faceR, h * faceTop)
+      ..lineTo(w * 0.70, h * 0.40)
+      ..lineTo(w * 0.70, h * 0.72)
+      ..lineTo(faceR, h * faceBottom)
+      ..close();
+    canvas.drawPath(side, _roofShadeFill);
+
+    // Fachada.
+    canvas.drawRect(
+      Rect.fromLTRB(faceL, h * faceTop, faceR, h * faceBottom),
+      _fill,
+    );
+
+    // Telhado em fuga (duas faces).
+    final roofFront = Path()
+      ..moveTo(faceL - w * 0.04, h * faceTop)
+      ..lineTo(w * 0.33, h * 0.22)
+      ..lineTo(faceR + w * 0.02, h * faceTop)
+      ..close();
+    final roofSide = Path()
+      ..moveTo(w * 0.33, h * 0.22)
+      ..lineTo(w * 0.50, h * 0.18)
+      ..lineTo(w * 0.70, h * 0.40)
+      ..lineTo(faceR + w * 0.02, h * faceTop)
+      ..close();
+    canvas
+      ..drawPath(roofFront, _roofLitFill)
+      ..drawPath(roofSide, _roofShadeFill);
+
+    // Porta + janela na fachada.
+    final door = Rect.fromLTWH(w * 0.20, h * 0.60, w * 0.07, h * 0.18);
+    canvas
+      ..drawRect(door, _accentFill)
+      ..drawRect(door.deflate(w * 0.01), _roofShadeFill);
+    _paintMullionedWindow(
+      canvas,
+      Rect.fromLTWH(w * 0.33, h * 0.52, w * 0.10, h * 0.11),
+    );
+  }
+
+  /// Vista aerea / implantacao — telhado visto de cima, jardim, piscina,
+  /// calcada e arvores. Composicao totalmente distinta das elevacoes.
+  void _paintHouseAerial(Canvas canvas, Size size) {
+    final w = size.width;
+    final h = size.height;
+    // Lote inteiro como gramado.
+    canvas.drawRect(Offset.zero & size, _lawnFill);
+
+    // Calcada/entrada.
+    canvas.drawRect(
+      Rect.fromLTWH(w * 0.44, h * 0.74, w * 0.12, h * 0.26),
+      _shadeFill,
+    );
+
+    // Telhado visto de cima — duas aguas separadas pela cumeeira.
+    final roofRect = Rect.fromLTWH(w * 0.16, h * 0.18, w * 0.46, h * 0.50);
+    canvas
       ..drawRect(
-        Rect.fromLTWH(w * 0.22, h * 0.52, w * 0.10, h * 0.10),
-        _windowFill,
+        Rect.fromLTRB(
+          roofRect.left,
+          roofRect.top,
+          roofRect.center.dx,
+          roofRect.bottom,
+        ),
+        _roofLitFill,
       )
       ..drawRect(
-        Rect.fromLTWH(w * 0.54, h * 0.52, w * 0.10, h * 0.10),
-        _windowFill,
+        Rect.fromLTRB(
+          roofRect.center.dx,
+          roofRect.top,
+          roofRect.right,
+          roofRect.bottom,
+        ),
+        _roofShadeFill,
+      )
+      // Linha de cumeeira.
+      ..drawLine(
+        Offset(roofRect.center.dx, roofRect.top),
+        Offset(roofRect.center.dx, roofRect.bottom),
+        Paint()
+          ..color = foregroundColor
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = 1.6,
       );
+
+    // Piscina ao lado.
+    canvas.drawRRect(
+      RRect.fromRectAndRadius(
+        Rect.fromLTWH(w * 0.68, h * 0.30, w * 0.20, h * 0.26),
+        const Radius.circular(6),
+      ),
+      Paint()..color = Color.lerp(accentColor, Colors.white, 0.35)!,
+    );
+
+    // Arvores espalhadas (copas vistas de cima).
+    canvas
+      ..drawCircle(Offset(w * 0.78, h * 0.72), h * 0.07, _lawnDeepFill)
+      ..drawCircle(Offset(w * 0.10, h * 0.40), h * 0.06, _lawnDeepFill);
+
+    // Sol.
+    canvas.drawCircle(Offset(w * 0.88, h * 0.12), h * 0.05, _accentFill);
   }
 
   /// Chacara — casa menor + arvores + horizonte com colina.
@@ -191,21 +387,36 @@ class _SolarPropertyIllustrationPainter extends CustomPainter {
     // Casa central pequena.
     final bodyX = variant == 1 ? w * 0.40 : w * 0.30;
     final body = Rect.fromLTWH(bodyX, h * 0.55, w * 0.30, h * 0.30);
-    final roof = Path()
+    // Telhado em duas aguas sombreadas, como nas casas.
+    final apexX = bodyX + w * 0.15;
+    final roofLit = Path()
       ..moveTo(bodyX - w * 0.04, h * 0.55)
-      ..lineTo(bodyX + w * 0.15, h * 0.36)
+      ..lineTo(apexX, h * 0.36)
+      ..lineTo(apexX, h * 0.55)
+      ..close();
+    final roofShade = Path()
+      ..moveTo(apexX, h * 0.36)
       ..lineTo(bodyX + w * 0.34, h * 0.55)
+      ..lineTo(apexX, h * 0.55)
       ..close();
     canvas
-      ..drawPath(hill, _shadeFill)
-      // Chao.
-      ..drawRect(
-        Rect.fromLTWH(0, h * 0.85, w, h * 0.15),
-        Paint()..color = accentColor.withValues(alpha: 0.85),
-      )
+      // Colina ao fundo em verde mais profundo (nao marrom).
+      ..drawPath(hill, _lawnDeepFill)
+      // Chao em gramado vivo.
+      ..drawRect(Rect.fromLTWH(0, h * 0.85, w, h * 0.15), _lawnFill)
       ..drawCircle(Offset(sunCx, h * 0.20), h * 0.05, _accentFill)
+      // Sombra de contato sob a casa.
+      ..drawOval(
+        Rect.fromCenter(
+          center: Offset(bodyX + w * 0.15, h * 0.86),
+          width: w * 0.40,
+          height: h * 0.035,
+        ),
+        _contactShadowFill,
+      )
       ..drawRect(body, _fill)
-      ..drawPath(roof, _accentFill)
+      ..drawPath(roofLit, _roofLitFill)
+      ..drawPath(roofShade, _roofShadeFill)
       ..drawRect(
         Rect.fromLTWH(bodyX + w * 0.04, h * 0.62, w * 0.08, h * 0.08),
         _windowFill,
@@ -238,12 +449,10 @@ class _SolarPropertyIllustrationPainter extends CustomPainter {
       ..lineTo(0, h * 0.65)
       ..close();
     canvas
-      ..drawPath(mata, _shadeFill)
-      // Chao em accent.
-      ..drawRect(
-        Rect.fromLTWH(0, h * 0.65, w, h * 0.35),
-        Paint()..color = accentColor.withValues(alpha: 0.75),
-      )
+      // Mata ao fundo em verde mais profundo.
+      ..drawPath(mata, _lawnDeepFill)
+      // Terreno em verde de gramado vivo.
+      ..drawRect(Rect.fromLTWH(0, h * 0.65, w, h * 0.35), _lawnFill)
       // Sol.
       ..drawCircle(Offset(w * 0.78, h * 0.22), h * 0.05, _accentFill);
 
@@ -285,8 +494,8 @@ class _SolarPropertyIllustrationPainter extends CustomPainter {
     final w = size.width;
     final h = size.height;
 
-    // Chao.
-    canvas.drawRect(Rect.fromLTWH(0, h * 0.82, w, h * 0.18), _shadeFill);
+    // Chao em gramado.
+    canvas.drawRect(Rect.fromLTWH(0, h * 0.82, w, h * 0.18), _lawnFill);
 
     // Sol.
     final sunCx = variant == 1 ? w * 0.18 : w * 0.82;
@@ -294,8 +503,22 @@ class _SolarPropertyIllustrationPainter extends CustomPainter {
     final body = Rect.fromLTWH(w * 0.25, h * 0.18, w * 0.50, h * 0.64);
     canvas
       ..drawCircle(Offset(sunCx, h * 0.20), h * 0.05, _accentFill)
+      // Sombra de contato sob o predio.
+      ..drawOval(
+        Rect.fromCenter(
+          center: Offset(w * 0.50, h * 0.83),
+          width: w * 0.62,
+          height: h * 0.04,
+        ),
+        _contactShadowFill,
+      )
       ..drawRect(body, _fill)
-      // Cobertura — faixa accent no topo.
+      // Parede direita em sombra pra dar volume.
+      ..drawRect(
+        Rect.fromLTWH(w * 0.63, h * 0.18, w * 0.12, h * 0.64),
+        _roofShadeFill,
+      )
+      // Cobertura — laje com beiral no topo.
       ..drawRect(
         Rect.fromLTWH(w * 0.22, h * 0.18, w * 0.56, h * 0.04),
         _accentFill,
@@ -328,6 +551,32 @@ class _SolarPropertyIllustrationPainter extends CustomPainter {
       ),
       Paint()..color = accentColor.withValues(alpha: 0.7),
     );
+  }
+
+  /// Janela com caixilho (mullions) — vidro de fundo + cruz divisoria +
+  /// moldura. Le como janela real em vez de quadrado chapado.
+  void _paintMullionedWindow(Canvas canvas, Rect rect) {
+    canvas
+      ..drawRect(rect, _windowFill)
+      // Cruz divisoria.
+      ..drawLine(
+        Offset(rect.center.dx, rect.top),
+        Offset(rect.center.dx, rect.bottom),
+        _mullionPaint,
+      )
+      ..drawLine(
+        Offset(rect.left, rect.center.dy),
+        Offset(rect.right, rect.center.dy),
+        _mullionPaint,
+      )
+      // Moldura externa.
+      ..drawRect(
+        rect,
+        Paint()
+          ..color = foregroundColor.withValues(alpha: 0.7)
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = 1.4,
+      );
   }
 
   /// Arvore esquematica — copa circular + tronco. Centro [base] no

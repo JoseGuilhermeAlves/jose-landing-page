@@ -1,5 +1,18 @@
 part of 'vitral_home_page.dart';
 
+/// Sombra sutil compartilhada pelos cards primarios da home (proximo
+/// agendamento, lista secundaria, vazio, sobre). Antes so o card do
+/// proximo agendamento tinha sombra (24px), destoando dos demais flat —
+/// agora todos compartilham a mesma elevacao leve pra coerencia.
+List<BoxShadow> _vitralCardShadow(AppColorScheme colors) => [
+  BoxShadow(
+    color: colors.primary.withValues(alpha: 0.06),
+    blurRadius: 12,
+    spreadRadius: -6,
+    offset: const Offset(0, 6),
+  ),
+];
+
 // =============================================================================
 // HERO
 // =============================================================================
@@ -227,14 +240,7 @@ class _NextAppointmentCard extends StatelessWidget {
         color: colors.surface,
         borderRadius: BorderRadius.circular(AppRadius.lg),
         border: Border.all(color: colors.primary.withValues(alpha: 0.35)),
-        boxShadow: [
-          BoxShadow(
-            color: colors.primary.withValues(alpha: 0.08),
-            blurRadius: 24,
-            spreadRadius: -8,
-            offset: const Offset(0, 12),
-          ),
-        ],
+        boxShadow: _vitralCardShadow(colors),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -388,6 +394,7 @@ class _OtherAppointmentsList extends StatelessWidget {
         color: colors.surface,
         borderRadius: BorderRadius.circular(AppRadius.lg),
         border: Border.all(color: colors.border),
+        boxShadow: _vitralCardShadow(colors),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -486,6 +493,7 @@ class _NoAppointmentCard extends StatelessWidget {
         color: colors.surface,
         borderRadius: BorderRadius.circular(AppRadius.lg),
         border: Border.all(color: colors.border),
+        boxShadow: _vitralCardShadow(colors),
       ),
       child: Row(
         children: [

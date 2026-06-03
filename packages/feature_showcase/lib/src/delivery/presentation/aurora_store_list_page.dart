@@ -83,7 +83,9 @@ class _AuroraStoreListPageState extends State<AuroraStoreListPage> {
                 Text(
                   _category == null
                       ? context.l10n.aurora_storesTitleAll
-                      : context.l10n.aurora_storesTitleFiltered(_category!.label.toLowerCase()),
+                      : context.l10n.aurora_storesTitleFiltered(
+                          _category!.label.toLowerCase(),
+                        ),
                   style: textTheme.headlineMedium?.copyWith(
                     color: colors.onSurface,
                     fontFamily: AuroraBrand.displayFontFamily,

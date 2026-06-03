@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:feature_showcase/src/realestate/domain/property.dart';
 import 'package:feature_showcase/src/realestate/domain/property_feature.dart';
 import 'package:feature_showcase/src/realestate/domain/property_type.dart';
@@ -72,11 +74,23 @@ enum _RoomKind {
   final String label;
 }
 
+/// Parede onde a porta do comodo abre. Determina o canto-dobradica e o
+/// quadrante do arco de abertura.
+enum _DoorWall { top, bottom, left, right }
+
 /// Retangulo de um comodo na planta (coordenadas relativas 0..1).
 class _Room {
-  const _Room({required this.rect, required this.kind});
+  const _Room({
+    required this.rect,
+    required this.kind,
+    this.door = _DoorWall.bottom,
+  });
   final Rect rect;
   final _RoomKind kind;
+
+  /// Parede onde a porta abre. Varia por comodo pra que a planta nao
+  /// tenha todas as portas na mesma base (mais legivel e realista).
+  final _DoorWall door;
 }
 
 class _SolarFloorPlanPainter extends CustomPainter {
@@ -121,7 +135,15 @@ class _SolarFloorPlanPainter extends CustomPainter {
   late final Paint _doorPaint = Paint()
     ..color = accentColor
     ..style = PaintingStyle.stroke
-    ..strokeWidth = 1.5;
+    ..strokeWidth = 1.5
+    ..strokeCap = StrokeCap.round;
+
+  /// Arco de abertura da porta — mesmo accent, mais fino e translucido
+  /// pra ler como o "swing" e nao competir com a folha.
+  late final Paint _doorArcPaint = Paint()
+    ..color = accentColor.withValues(alpha: 0.55)
+    ..style = PaintingStyle.stroke
+    ..strokeWidth = 1;
 
   late final Paint _waterPaint = Paint()
     ..color = accentColor.withValues(alpha: 0.55)
@@ -152,7 +174,7 @@ class _SolarFloorPlanPainter extends CustomPainter {
         room.rect.right * size.width,
         room.rect.bottom * size.height,
       );
-      _paintRoom(canvas, rect, room.kind);
+      _paintRoom(canvas, rect, room);
     }
 
     // Marcador "N" para norte no canto.
@@ -186,8 +208,9 @@ class _SolarFloorPlanPainter extends CustomPainter {
     );
   }
 
-  void _paintRoom(Canvas canvas, Rect rect, _RoomKind kind) {
+  void _paintRoom(Canvas canvas, Rect rect, _Room room) {
     if (rect.width <= 0 || rect.height <= 0) return;
+    final kind = room.kind;
     // Fundo leve do comodo conforme tipo.
     switch (kind) {
       case _RoomKind.pool:
@@ -202,18 +225,60 @@ class _SolarFloorPlanPainter extends CustomPainter {
       default:
         break;
     }
-    // Paredes do comodo + marcador de porta na base.
-    canvas
-      ..drawRect(rect, _innerWallPaint)
-      ..drawLine(
-        Offset(rect.left + rect.width * 0.40, rect.bottom),
-        Offset(rect.left + rect.width * 0.60, rect.bottom),
-        _doorPaint,
-      );
+    // Paredes do comodo + porta com arco de abertura (areas externas
+    // sem comodo fechado — piscina/jardim — nao ganham porta).
+    canvas.drawRect(rect, _innerWallPaint);
+    if (kind != _RoomKind.pool && kind != _RoomKind.garden) {
+      _paintDoor(canvas, rect, room.door);
+    }
     // Rotulo centralizado (pula em comodos muito pequenos).
     if (rect.width >= 36 && rect.height >= 22) {
       _paintLabel(canvas, rect, kind.label);
     }
+  }
+
+  /// Porta como arco de quarto-de-circulo (door swing) — folha reta do
+  /// batente ate a ponta + arco varrendo o quadrante interno. Le como
+  /// porta de planta de arquitetura, nao um tracinho na parede.
+  void _paintDoor(Canvas canvas, Rect rect, _DoorWall wall) {
+    // Vao = ~40% do menor lado, limitado pra nao estourar comodo pequeno.
+    final span = rect.shortestSide * 0.40;
+    if (span < 4) return;
+
+    // hinge = canto-dobradica; leafEnd = ponta da folha aberta;
+    // sweep = angulo inicial do arco (quadrante interno ao comodo).
+    final Offset hinge;
+    final Offset leafEnd;
+    final double startAngle;
+    switch (wall) {
+      case _DoorWall.bottom:
+        hinge = Offset(rect.left + rect.width * 0.30, rect.bottom);
+        leafEnd = Offset(hinge.dx, hinge.dy - span);
+        startAngle = -math.pi / 2; // abre pra cima (dentro)
+      case _DoorWall.top:
+        hinge = Offset(rect.left + rect.width * 0.30, rect.top);
+        leafEnd = Offset(hinge.dx, hinge.dy + span);
+        startAngle = 0; // abre pra baixo
+      case _DoorWall.left:
+        hinge = Offset(rect.left, rect.top + rect.height * 0.30);
+        leafEnd = Offset(hinge.dx + span, hinge.dy);
+        startAngle = -math.pi / 2; // abre pra dentro/baixo
+      case _DoorWall.right:
+        hinge = Offset(rect.right, rect.top + rect.height * 0.30);
+        leafEnd = Offset(hinge.dx - span, hinge.dy);
+        startAngle = math.pi / 2;
+    }
+    canvas
+      // Folha da porta.
+      ..drawLine(hinge, leafEnd, _doorPaint)
+      // Arco de abertura (quarto de circulo).
+      ..drawArc(
+        Rect.fromCircle(center: hinge, radius: span),
+        startAngle,
+        math.pi / 2,
+        false,
+        _doorArcPaint,
+      );
   }
 
   void _paintLabel(Canvas canvas, Rect rect, String label) {
@@ -302,14 +367,16 @@ class _SolarFloorPlanPainter extends CustomPainter {
     const bottomRowH = houseH * 0.55;
 
     final rooms = <_Room>[
-      // Sala — 50% da faixa superior.
+      // Sala — 50% da faixa superior. Porta na base, para o hall.
       _Room(
         kind: _RoomKind.living,
+        door: _DoorWall.bottom,
         rect: Rect.fromLTWH(houseLeft, houseTop, houseW * 0.50, topRowH),
       ),
-      // Cozinha — 32%.
+      // Cozinha — 32%. Porta a esquerda, comunicando com a sala.
       _Room(
         kind: _RoomKind.kitchen,
+        door: _DoorWall.left,
         rect: Rect.fromLTWH(
           houseLeft + houseW * 0.50,
           houseTop,
@@ -317,9 +384,10 @@ class _SolarFloorPlanPainter extends CustomPainter {
           topRowH,
         ),
       ),
-      // Banheiro social — 18%.
+      // Banheiro social — 18%. Porta a esquerda.
       _Room(
         kind: _RoomKind.bath,
+        door: _DoorWall.left,
         rect: Rect.fromLTWH(
           houseLeft + houseW * 0.82,
           houseTop,
@@ -342,6 +410,8 @@ class _SolarFloorPlanPainter extends CustomPainter {
         rooms.add(
           _Room(
             kind: kind,
+            // Quartos abrem pra cima, no hall que separa as duas faixas.
+            door: _DoorWall.top,
             rect: Rect.fromLTWH(
               houseLeft + colW * i,
               houseTop + topRowH,
@@ -359,6 +429,8 @@ class _SolarFloorPlanPainter extends CustomPainter {
       rooms.add(
         _Room(
           kind: _RoomKind.balcony,
+          // Varanda abre pra baixo, comunicando com a sala.
+          door: _DoorWall.bottom,
           rect: Rect.fromLTRB(
             houseLeft,
             houseTop - 0.06,
@@ -374,6 +446,8 @@ class _SolarFloorPlanPainter extends CustomPainter {
       rooms.add(
         _Room(
           kind: _RoomKind.garage,
+          // Garagem abre a direita, pra dentro da casa.
+          door: _DoorWall.right,
           rect: Rect.fromLTRB(
             houseLeft - 0.18,
             houseTop + houseH * 0.10,

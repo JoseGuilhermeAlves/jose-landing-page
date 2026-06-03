@@ -16,9 +16,10 @@ class _VendorHeader extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(AppSpacing.lg),
       decoration: BoxDecoration(
-        color: colors.surface,
+        color: auroraCardFill(colors),
         borderRadius: BorderRadius.circular(AppRadius.lg),
         border: Border.all(color: colors.border),
+        boxShadow: auroraCardShadow(colors),
       ),
       child: Row(
         children: [
@@ -134,11 +135,12 @@ class _ProductCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(AppSpacing.md),
       decoration: BoxDecoration(
-        color: colors.surface,
+        color: auroraCardFill(colors),
         borderRadius: BorderRadius.circular(AppRadius.lg),
         border: Border.all(
           color: inCart ? colors.primary.withValues(alpha: 0.4) : colors.border,
         ),
+        boxShadow: auroraCardShadow(colors),
       ),
       child: Row(
         children: [

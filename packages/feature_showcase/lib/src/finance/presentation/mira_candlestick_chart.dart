@@ -166,12 +166,12 @@ class _MiraCandlestickPainter extends CustomPainter {
   late final Paint _upWick = Paint()
     ..color = upColor
     ..style = PaintingStyle.stroke
-    ..strokeWidth = 1;
+    ..strokeWidth = 1.3;
 
   late final Paint _downWick = Paint()
     ..color = downColor
     ..style = PaintingStyle.stroke
-    ..strokeWidth = 1;
+    ..strokeWidth = 1.3;
 
   late final Paint _crosshairPaint = Paint()
     ..color = textColor.withValues(alpha: 0.45)

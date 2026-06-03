@@ -446,16 +446,15 @@ class _SectorBadge extends StatelessWidget {
   }
 
   Color _toneForSector(Asset asset) {
-    // Hash simples do nome do setor pra um indice na paleta.
+    // Hash simples do nome do setor pra um indice numa paleta curada de
+    // 4 swatches tiradas da marca (mint, azul-info, dourado, violeta
+    // suave) — sem candy colors off-brand, pra os badges lerem como
+    // sistema intencional num fintech de 3 cores e nao acidental.
     final palette = [
       const Color(0xFF22D17E),
       const Color(0xFF4FB8FF),
       const Color(0xFFF7B233),
-      const Color(0xFFA78BFA),
-      const Color(0xFF10E3A6),
-      const Color(0xFFFF8A65),
-      const Color(0xFFEC4899),
-      const Color(0xFF60A5FA),
+      const Color(0xFF8B7CF0),
     ];
     var seed = 0;
     for (final c in asset.sector.name.codeUnits) {

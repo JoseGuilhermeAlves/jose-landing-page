@@ -91,14 +91,22 @@ class _SolarNeighborhoodMapPainter extends CustomPainter {
     ..color = blockColor
     ..style = PaintingStyle.fill;
 
+  /// Cor das vias — cinza claro frio derivado do asfalto pra contrastar
+  /// com os quarteiroes (que usam `blockColor`, um tan/creme).
+  late final Color _streetInkColor = Color.lerp(
+    streetColor,
+    const Color(0xFFD7DCE2),
+    0.70,
+  )!;
+
   late final Paint _streetPaint = Paint()
-    ..color = streetColor
+    ..color = _streetInkColor
     ..style = PaintingStyle.stroke
     ..strokeWidth = 3
     ..strokeCap = StrokeCap.round;
 
   late final Paint _streetThinPaint = Paint()
-    ..color = streetColor
+    ..color = _streetInkColor
     ..style = PaintingStyle.stroke
     ..strokeWidth = 1.4;
 
@@ -110,15 +118,21 @@ class _SolarNeighborhoodMapPainter extends CustomPainter {
     ..color = pinColor
     ..style = PaintingStyle.fill;
 
+  /// Asfalto/fundo do mapa — cinza azulado frio derivado do
+  /// `streetColor` (que e um tan da borda). Lerpamos rumo a um slate
+  /// frio pra que o fundo NAO seja so um tan-sobre-tan: os
+  /// quarteiroes/ruas passam a separar de verdade.
+  late final Paint _asphaltPaint = Paint()
+    ..color = Color.lerp(streetColor, const Color(0xFF5B6470), 0.62)!
+    ..style = PaintingStyle.fill;
+
   @override
   void paint(Canvas canvas, Size size) {
     if (size.width <= 0 || size.height <= 0) return;
 
-    // Fundo (pseudo-asfalto) = street color saturado.
-    canvas.drawRect(
-      Offset.zero & size,
-      Paint()..color = streetColor.withValues(alpha: 0.55),
-    );
+    // Fundo (asfalto) = cinza azulado frio distinto, nao um tint do
+    // tan da borda — garante que os quarteiroes (creme) separem.
+    canvas.drawRect(Offset.zero & size, _asphaltPaint);
 
     // Grade 5x4 de quarteiroes. Algumas celulas viram parque baseado
     // no seed.

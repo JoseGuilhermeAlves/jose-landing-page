@@ -19,7 +19,7 @@ class _AssetSummary extends StatelessWidget {
         return Container(
           padding: const EdgeInsets.all(AppSpacing.lg),
           decoration: BoxDecoration(
-            color: colors.surface,
+            gradient: MiraBrand.litGlassGradient(colors.surface),
             borderRadius: BorderRadius.circular(AppRadius.lg),
             border: Border.all(color: colors.border),
           ),
@@ -146,9 +146,14 @@ class _QuantityRow extends StatelessWidget {
 }
 
 class _QuickPicks extends StatelessWidget {
-  const _QuickPicks({required this.max, required this.onPicked});
+  const _QuickPicks({
+    required this.max,
+    required this.current,
+    required this.onPicked,
+  });
 
   final int max;
+  final int current;
   final ValueChanged<int> onPicked;
 
   @override
@@ -164,24 +169,43 @@ class _QuickPicks extends StatelessWidget {
       children: [
         for (final opt in options) ...[
           Expanded(
-            child: OutlinedButton(
-              onPressed: opt.$2 > 0 ? () => onPicked(opt.$2) : null,
-              style: OutlinedButton.styleFrom(
-                foregroundColor: colors.onSurfaceMuted,
-                side: BorderSide(color: colors.border),
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(AppRadius.sm),
-                ),
-              ),
-              child: Text(
-                opt.$1,
-                style: const TextStyle(
-                  fontSize: 11,
-                  fontWeight: FontWeight.w700,
-                  letterSpacing: 0.4,
-                ),
-              ),
+            child: Builder(
+              builder: (context) {
+                // O pick que casa com a quantidade corrente fica ativo
+                // em mint/primary — sinaliza selecao em vez de ler como
+                // botao desabilitado cinza.
+                final isSelected = opt.$2 > 0 && opt.$2 == current;
+                return OutlinedButton(
+                  onPressed: opt.$2 > 0 ? () => onPicked(opt.$2) : null,
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: isSelected
+                        ? colors.primary
+                        : colors.onSurfaceMuted,
+                    backgroundColor: isSelected
+                        ? colors.primary.withValues(alpha: 0.12)
+                        : null,
+                    side: BorderSide(
+                      color: isSelected
+                          ? colors.primary.withValues(alpha: 0.55)
+                          : colors.border,
+                    ),
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(AppRadius.sm),
+                    ),
+                  ),
+                  child: Text(
+                    opt.$1,
+                    style: TextStyle(
+                      fontSize: 11,
+                      fontWeight: isSelected
+                          ? FontWeight.w800
+                          : FontWeight.w700,
+                      letterSpacing: 0.4,
+                    ),
+                  ),
+                );
+              },
             ),
           ),
           if (opt != options.last) const SizedBox(width: AppSpacing.xs),
@@ -307,7 +331,7 @@ class _TotalCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(AppSpacing.lg),
       decoration: BoxDecoration(
-        color: colors.surface,
+        gradient: MiraBrand.litGlassGradient(colors.surface),
         borderRadius: BorderRadius.circular(AppRadius.lg),
         border: Border.all(color: colors.border),
       ),

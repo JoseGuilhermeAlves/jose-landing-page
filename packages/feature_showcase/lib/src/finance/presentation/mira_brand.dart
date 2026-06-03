@@ -37,10 +37,31 @@ abstract final class MiraBrand {
     info: Color(0xFF4FB8FF),
   );
 
-  /// Cor neon-mint usada em destaques editoriais — sparklines do hero,
-  /// glow accents. NAO faz parte do AppColorScheme (que ja esta
-  /// saturado de slots), e exclusiva da Mira.
-  static const Color neonMint = Color(0xFF10E3A6);
+  /// Cor neon-mint usada em destaques editoriais — eyebrows, divisores
+  /// de secao, glow accents. NAO faz parte do AppColorScheme (que ja
+  /// esta saturado de slots), e exclusiva da Mira. Empurrada
+  /// deliberadamente pro lado cyan/aqua (vs. o `success` #22D17E
+  /// semantico de "ativo subiu") pra ler como highlight editorial
+  /// intencional, e nao como um segundo verde acidental ao lado das
+  /// sparklines verdes.
+  static const Color neonMint = Color(0xFF2BF5C4);
+
+  /// Gradiente "lit glass" pros cards principais — passo sutil de
+  /// luminosidade (branco @ 0.04 no topo, [surface] no resto) que cria
+  /// um highlight interno de 1px no topo do card. Sem ele, cards
+  /// `surface` + borda de baixo contraste mal se separam do fundo
+  /// escuro; com ele ganham o look premium-dark de vidro iluminado.
+  static LinearGradient litGlassGradient(Color surface) {
+    return LinearGradient(
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+      colors: [
+        Color.alphaBlend(Colors.white.withValues(alpha: 0.04), surface),
+        surface,
+      ],
+      stops: const [0.0, 0.18],
+    );
+  }
 
   /// `fontFamily` sans default — Mira nao puxa serif. Em prod, seria
   /// "Inter" via google_fonts. Aqui resolve no sans do sistema.

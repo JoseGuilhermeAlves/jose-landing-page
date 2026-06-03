@@ -19,11 +19,17 @@ abstract final class SolarBrand {
   /// como accent (success natural pra "disponivel"), creme como
   /// background. Onde se contrasta com terracota fundo, usa-se um
   /// tom mais escuro de marrom-tijolo pra texto.
+  ///
+  /// O `accent` (e `info`) usam um oliva/sage mais claro e saturado
+  /// (`#6E8B4A`) pra ler como verde fresco sobre o creme — o musgo
+  /// antigo (`#4B5D3A`) virava cinza-marrom morto. O musgo escuro fica
+  /// reservado pro `success`, onde texto verde precisa de contraste no
+  /// fundo claro.
   static const AppColorScheme palette = AppColorScheme(
     primary: Color(0xFFB25A38),
     primaryHover: Color(0xFFC66A45),
     onPrimary: Color(0xFFF4EDDA),
-    accent: Color(0xFF4B5D3A),
+    accent: Color(0xFF6E8B4A),
     onAccent: Color(0xFFFFFFFF),
     background: Color(0xFFF4EDDA),
     surface: Color(0xFFFBF5E5),
@@ -34,7 +40,7 @@ abstract final class SolarBrand {
     success: Color(0xFF4B5D3A),
     warning: Color(0xFFB07A2C),
     error: Color(0xFFA0392E),
-    info: Color(0xFF4B5D3A),
+    info: Color(0xFF6E8B4A),
   );
 
   /// Fonte serif do sistema — Flutter resolve pro serif default

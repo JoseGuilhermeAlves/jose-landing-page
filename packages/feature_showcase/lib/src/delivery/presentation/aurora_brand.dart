@@ -121,3 +121,22 @@ abstract final class AuroraBrand {
     );
   }
 }
+
+/// Sombra warm uniforme dos cards padrao do Aurora. Tinta verde primary
+/// em alpha baixo pra que os cards "levantem" do background creme sem
+/// virar drop-shadow cinza generico — segue a chave do card de pedido
+/// ativo, mas mais sutil. Reutilizada por vendor card, chip de
+/// categoria, cards de pedido/historico e demais superficies padrao.
+List<BoxShadow> auroraCardShadow(AppColorScheme colors) => [
+  BoxShadow(
+    color: colors.primary.withValues(alpha: 0.06),
+    blurRadius: 16,
+    offset: const Offset(0, 6),
+  ),
+];
+
+/// Preenchimento dos cards padrao. Nudge sutil do `surface` (creme
+/// morno) rumo ao branco pra dar mais contraste contra o background
+/// creme — os cards separam melhor sem perder o calor da marca.
+Color auroraCardFill(AppColorScheme colors) =>
+    Color.lerp(colors.surface, const Color(0xFFFFFFFF), 0.55)!;

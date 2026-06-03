@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:feature_showcase/src/delivery/domain/market_category.dart';
 import 'package:flutter/material.dart';
 
@@ -50,8 +52,25 @@ class _AuroraProductIllustrationPainter extends CustomPainter {
     ..color = foregroundColor
     ..style = PaintingStyle.fill;
 
+  // Tom de sombra do foreground — versao escurecida pra dar volume no
+  // lado inferior/direito das silhuetas.
+  late final Paint _shadeFill = Paint()
+    ..color = Color.lerp(foregroundColor, const Color(0xFF000000), 0.22)!
+    ..style = PaintingStyle.fill;
+
+  // Tom de brilho do foreground — versao clareada pro highlight no
+  // lado superior/esquerdo.
+  late final Paint _highlightFill = Paint()
+    ..color = Color.lerp(foregroundColor, const Color(0xFFFFFFFF), 0.28)!
+    ..style = PaintingStyle.fill;
+
   late final Paint _accentFill = Paint()
     ..color = accentColor
+    ..style = PaintingStyle.fill;
+
+  // Tom de brilho do accent — usado na fatia/rotulo pra nao ficar chapado.
+  late final Paint _accentHighlightFill = Paint()
+    ..color = Color.lerp(accentColor, const Color(0xFFFFFFFF), 0.30)!
     ..style = PaintingStyle.fill;
 
   late final Paint _stroke = Paint()
@@ -97,14 +116,16 @@ class _AuroraProductIllustrationPainter extends CustomPainter {
     Offset Function(double, double) rel,
     double unit,
   ) {
+    final bodyRect = Rect.fromCircle(center: rel(0, 0.05), radius: unit * 0.30);
     canvas
       ..drawCircle(rel(0, 0.05), unit * 0.30, _fillPaint)
+      // Sombra — meia-lua escura no lado inferior-direito (volume).
+      ..save()
+      ..clipPath(Path()..addOval(bodyRect))
+      ..drawCircle(rel(0.14, 0.13), unit * 0.26, _shadeFill)
+      ..restore()
       // Brilho — meia-lua clara em cima a esquerda.
-      ..drawCircle(
-        rel(-0.10, -0.10),
-        unit * 0.05,
-        Paint()..color = foregroundColor.withValues(alpha: 0.40),
-      );
+      ..drawCircle(rel(-0.10, -0.06), unit * 0.07, _highlightFill);
 
     // Haste e folha em accent.
     final stem = Path()
@@ -153,6 +174,15 @@ class _AuroraProductIllustrationPainter extends CustomPainter {
       ..close();
     canvas
       ..drawPath(leaf, _fillPaint)
+      // Metade direita em tom de sombra — separa as duas faces pela
+      // nervura central, dando dimensao a folha chapada.
+      ..save()
+      ..clipPath(leaf)
+      ..drawRect(
+        Rect.fromLTWH(rel(0, 0).dx, rel(0, -0.40).dy, unit * 0.40, unit * 0.80),
+        _shadeFill,
+      )
+      ..restore()
       // Nervura central.
       ..drawLine(rel(0, -0.30), rel(0, 0.30), _accentStroke);
     // Nervuras laterais.
@@ -181,6 +211,20 @@ class _AuroraProductIllustrationPainter extends CustomPainter {
     );
     canvas
       ..drawOval(rect, _fillPaint)
+      // Sombra na metade inferior da casca (volume do pao).
+      ..save()
+      ..clipPath(Path()..addOval(rect))
+      ..drawOval(rect.shift(Offset(0, unit * 0.06)), _shadeFill)
+      // Brilho na parte de cima.
+      ..drawOval(
+        Rect.fromCenter(
+          center: Offset(0, -unit * 0.10),
+          width: unit * 0.52,
+          height: unit * 0.16,
+        ),
+        _highlightFill,
+      )
+      ..restore()
       // Risco da casca: 3 cortes diagonais.
       ..drawLine(
         Offset(-unit * 0.20, -unit * 0.05),
@@ -207,15 +251,27 @@ class _AuroraProductIllustrationPainter extends CustomPainter {
     double unit,
   ) {
     final r = unit * 0.30;
+    final circleRect = Rect.fromCircle(center: rel(0, 0), radius: r);
+    // Fatia simetrica centrada no eixo vertical (aponta pra cima),
+    // setor de ~57° (1 rad) — start = -pi/2 - sweep/2.
+    const wedgeSweep = 1.0;
+    const wedgeStart = -math.pi / 2 - wedgeSweep / 2;
     canvas
       ..drawCircle(rel(0, 0), r, _fillPaint)
-      // Fatia em accent (setor 60°).
+      // Sombra na metade inferior da roda (volume).
+      ..save()
+      ..clipPath(Path()..addOval(circleRect))
+      ..drawOval(circleRect.shift(Offset(0, r * 0.30)), _shadeFill)
+      ..restore()
+      // Fatia em accent (setor centrado).
+      ..drawArc(circleRect, wedgeStart, wedgeSweep, true, _accentFill)
+      // Brilho na fatia.
       ..drawArc(
-        Rect.fromCircle(center: rel(0, 0), radius: r),
-        -0.5,
-        1,
+        Rect.fromCircle(center: rel(0, 0), radius: r * 0.6),
+        wedgeStart,
+        wedgeSweep,
         true,
-        _accentFill,
+        _accentHighlightFill,
       )
       // Furos.
       ..drawCircle(rel(-0.10, 0.04), r * 0.10, _accentFill)
@@ -248,6 +304,23 @@ class _AuroraProductIllustrationPainter extends CustomPainter {
     );
     canvas
       ..drawRRect(body, _fillPaint)
+      // Volume no vidro: sombra na faixa direita, brilho na esquerda.
+      ..save()
+      ..clipRRect(body)
+      ..drawRect(
+        Rect.fromLTRB(rel(0.08, -0.18).dx, body.top, body.right, body.bottom),
+        _shadeFill,
+      )
+      ..drawRect(
+        Rect.fromLTRB(
+          rel(-0.20, -0.18).dx,
+          body.top,
+          rel(-0.13, 0.30).dx,
+          body.bottom,
+        ),
+        _highlightFill,
+      )
+      ..restore()
       ..drawRRect(lid, _accentFill);
 
     // Rotulo: faixa horizontal em accent.
@@ -259,6 +332,11 @@ class _AuroraProductIllustrationPainter extends CustomPainter {
     );
     canvas
       ..drawRect(label, _accentFill)
+      // Brilho no topo do rotulo.
+      ..drawRect(
+        Rect.fromLTRB(label.left, label.top, label.right, label.center.dy),
+        _accentHighlightFill,
+      )
       // Linha do "produto" dentro do rotulo.
       ..drawLine(rel(-0.12, 0.05), rel(0.12, 0.05), _stroke);
   }

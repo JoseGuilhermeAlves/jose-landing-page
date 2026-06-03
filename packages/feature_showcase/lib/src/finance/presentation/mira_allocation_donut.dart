@@ -139,24 +139,48 @@ class _MiraDonutPainter extends CustomPainter {
     var startAngle = -math.pi / 2;
     final p = progress.value.clamp(0.0, 1.0);
 
+    // Folga de ~2deg entre slices pra criar respiro visual em vez de
+    // costura dura. Round caps suavizam as pontas. So aplicamos a folga
+    // quando ha mais de um slice (donut de 1 ativo continua um anel
+    // fechado).
+    final gap = slices.length > 1 ? 2 * math.pi / 180 : 0.0;
+
     for (final slice in slices) {
       final sliceSweep = (slice.weight / totalWeight) * 2 * math.pi;
-      final sweep = sliceSweep * p;
+      // Tira a folga do sweep visivel, deixando metade de cada lado, e
+      // nunca deixa o trecho ficar negativo em slices muito finos.
+      final visibleSweep = math.max(0.0, sliceSweep - gap);
+      final sweep = visibleSweep * p;
       if (sweep <= 0) {
         startAngle += sliceSweep;
         continue;
       }
+      final arcStart = startAngle + gap / 2;
+
+      // Separador escuro por baixo — leve sombra interna que da
+      // profundidade e marca a fronteira entre slices.
+      canvas.drawArc(
+        rect,
+        arcStart,
+        sweep,
+        false,
+        Paint()
+          ..color = const Color(0x33000000)
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = ringWidth
+          ..strokeCap = StrokeCap.round,
+      );
 
       canvas.drawArc(
         rect,
-        startAngle,
+        arcStart,
         sweep,
         false,
         Paint()
           ..color = slice.color
           ..style = PaintingStyle.stroke
-          ..strokeWidth = ringWidth
-          ..strokeCap = StrokeCap.butt,
+          ..strokeWidth = ringWidth - 1.5
+          ..strokeCap = StrokeCap.round,
       );
       startAngle += sliceSweep;
     }

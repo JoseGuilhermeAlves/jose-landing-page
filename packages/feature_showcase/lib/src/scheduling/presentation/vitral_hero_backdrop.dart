@@ -80,6 +80,10 @@ class _VitralHeroBackdropPainter extends CustomPainter {
     ..color = cursorColor
     ..style = PaintingStyle.fill;
 
+  late final Paint _markerPaint = Paint()
+    ..color = cursorColor.withValues(alpha: 0.7)
+    ..style = PaintingStyle.fill;
+
   @override
   void paint(Canvas canvas, Size size) {
     if (size.width <= 0 || size.height <= 0) return;
@@ -111,14 +115,14 @@ class _VitralHeroBackdropPainter extends CustomPainter {
     );
     canvas.drawRect(cursorRect, _cursorPaint);
 
-    // Marcador pulsante na intersecao do cursor com a coluna 2.
-    final markerX = size.width * 0.50;
-    final pulseR = 5 + 3 * math.sin(phase * 2 * math.pi * 4);
-    canvas.drawCircle(
-      Offset(markerX, cursorY - size.height * 0.01),
-      pulseR,
-      Paint()..color = cursorColor.withValues(alpha: 0.7),
-    );
+    // Marcador pulsante ancorado na intersecao do cursor com a coluna
+    // central (i=2 das 4 verticais em i/4, ou seja x=0.50) — o cursor
+    // varre por essa coluna, entao o ponto acompanha a faixa em vez de
+    // flutuar solto. Um unico pulso lento por varredura (antes eram 4
+    // pulsos nervosos com `sin(phase*2pi*4)`).
+    final markerX = size.width * (2 / 4);
+    final pulseR = 5 + 3 * math.sin(phase * 2 * math.pi);
+    canvas.drawCircle(Offset(markerX, cursorY), pulseR, _markerPaint);
   }
 
   @override

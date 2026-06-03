@@ -1,5 +1,17 @@
 part of 'solar_property_detail_page.dart';
 
+/// Sombra warm unica que da hierarquia focal ao detalhe — tinta o
+/// terracota `primary` em alpha baixo pra que galeria e bloco de preco
+/// "levantem" do creme como pagina de revista de arquitetura, sem virar
+/// drop-shadow cinza generico. Usada so nos dois pontos focais.
+List<BoxShadow> _solarFocalShadow(AppColorScheme colors) => [
+  BoxShadow(
+    color: colors.primary.withValues(alpha: 0.14),
+    blurRadius: 28,
+    offset: const Offset(0, 12),
+  ),
+];
+
 // =============================================================================
 // GALERIA
 // =============================================================================
@@ -27,17 +39,24 @@ class _Gallery extends StatelessWidget {
       children: [
         AspectRatio(
           aspectRatio: context.responsive(mobile: 1.95, desktop: 1.6),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(AppRadius.lg),
-            child: ColoredBox(
-              color: colors.surfaceMuted,
-              child: SolarPropertyIllustration(
-                key: ValueKey('solar-detail-illustration-$galleryIndex'),
-                type: property.type,
-                variant: galleryIndex,
-                foregroundColor: colors.primary,
-                accentColor: colors.accent,
-                backgroundColor: colors.surface,
+          child: DecoratedBox(
+            // Sombra warm focal — a galeria e o ponto de entrada visual.
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(AppRadius.lg),
+              boxShadow: _solarFocalShadow(colors),
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(AppRadius.lg),
+              child: ColoredBox(
+                color: colors.surfaceMuted,
+                child: SolarPropertyIllustration(
+                  key: ValueKey('solar-detail-illustration-$galleryIndex'),
+                  type: property.type,
+                  variant: galleryIndex,
+                  foregroundColor: colors.primary,
+                  accentColor: colors.accent,
+                  backgroundColor: colors.surface,
+                ),
               ),
             ),
           ),
@@ -154,21 +173,35 @@ class _Header extends StatelessWidget {
             height: 1.15,
           ),
         ),
-        const SizedBox(height: AppSpacing.sm),
-        Text(
-          property.formattedPrice,
-          key: const Key('solar-detail-price'),
-          style: context
-              .responsive(
-                mobile: textTheme.headlineMedium,
-                desktop: textTheme.displaySmall,
-              )
-              ?.copyWith(
-                color: colors.primary,
-                fontFamily: SolarBrand.displayFontFamily,
-                fontWeight: FontWeight.w700,
-                letterSpacing: -0.4,
-              ),
+        const SizedBox(height: AppSpacing.md),
+        // Bloco de preco como ponto focal — superficie levantada com a
+        // mesma sombra warm da galeria pra dar hierarquia de revista.
+        Container(
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppSpacing.base,
+            vertical: AppSpacing.md,
+          ),
+          decoration: BoxDecoration(
+            color: colors.surface,
+            borderRadius: BorderRadius.circular(AppRadius.lg),
+            border: Border.all(color: colors.border),
+            boxShadow: _solarFocalShadow(colors),
+          ),
+          child: Text(
+            property.formattedPrice,
+            key: const Key('solar-detail-price'),
+            style: context
+                .responsive(
+                  mobile: textTheme.headlineMedium,
+                  desktop: textTheme.displaySmall,
+                )
+                ?.copyWith(
+                  color: colors.primary,
+                  fontFamily: SolarBrand.displayFontFamily,
+                  fontWeight: FontWeight.w700,
+                  letterSpacing: -0.4,
+                ),
+          ),
         ),
       ],
     );

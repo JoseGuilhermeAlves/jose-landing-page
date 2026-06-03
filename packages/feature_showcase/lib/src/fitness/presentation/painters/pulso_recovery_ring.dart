@@ -102,9 +102,10 @@ class _RecoveryRingPainter extends CustomPainter {
     final numberStyle = TextStyle(
       color: color,
       fontSize: 80,
-      fontWeight: FontWeight.w300,
-      letterSpacing: -3,
+      fontWeight: FontWeight.w600,
+      letterSpacing: -1.5,
       fontFamily: FitnessBrand.displayMonoFontFamily,
+      fontFeatures: FitnessBrand.numFeatures,
     );
     final big = TextPainter(
       text: TextSpan(text: '$value', style: numberStyle),

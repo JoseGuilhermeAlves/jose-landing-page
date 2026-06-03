@@ -86,11 +86,30 @@ class _RecoveryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
+    // Card hero do recovery — ganha profundidade (gradient + sombra +
+    // glow verde sutil) pra ser o ponto focal da tela. Os cards
+    // secundarios seguem flat, criando hierarquia.
     return Container(
       decoration: BoxDecoration(
-        color: colors.surface,
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [colors.surfaceMuted, colors.surface],
+        ),
         borderRadius: BorderRadius.circular(AppRadius.lg),
         border: Border.all(color: colors.border),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.45),
+            blurRadius: 24,
+            offset: const Offset(0, 12),
+          ),
+          BoxShadow(
+            color: colors.primary.withValues(alpha: 0.1),
+            blurRadius: 36,
+            spreadRadius: -10,
+          ),
+        ],
       ),
       padding: EdgeInsets.symmetric(
         vertical: context.responsive(

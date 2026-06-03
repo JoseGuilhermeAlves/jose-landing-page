@@ -72,9 +72,19 @@ class _StrainDialPainter extends CustomPainter {
 
   static final Paint _targetPaint = Paint()
     ..color = const Color(0xFFF2F2F5)
+    ..style = PaintingStyle.fill;
+
+  // Halo escuro atras do bead pra separa-lo do arco colorido.
+  static final Paint _targetHaloPaint = Paint()
+    ..color = const Color(0xFF08080B)
+    ..style = PaintingStyle.fill;
+
+  // Glow difuso sob o arco colorido — mesma linguagem do recovery ring.
+  static final Paint _glowPaint = Paint()
     ..style = PaintingStyle.stroke
-    ..strokeWidth = 3
-    ..strokeCap = StrokeCap.round;
+    ..strokeWidth = 22
+    ..strokeCap = StrokeCap.round
+    ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 12);
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -116,25 +126,25 @@ class _StrainDialPainter extends CustomPainter {
         stops: const [0.0, 0.45, 0.78, 1.0],
         transform: GradientRotation(_startAngle),
       ).createShader(rect);
+      _glowPaint.color = FitnessBrand.strainColor(value).withValues(alpha: 0.3);
+      canvas.drawArc(rect, _startAngle, sweep, false, _glowPaint);
+
       _arcPaint.shader = shader;
       canvas.drawArc(rect, _startAngle, sweep, false, _arcPaint);
     }
 
-    // Marca do target — pequeno tracinho branco no arco.
+    // Marca do target — bead arredondado sobre o arco (antes era um
+    // tracinho branco que parecia glitch de render).
     if (target > 0 && target <= _maxStrain) {
       final t = target / _maxStrain;
       final angle = _startAngle + _sweepFull * t;
-      final innerR = radius - 18;
-      final outerR = radius + 4;
-      final start = Offset(
-        center.dx + math.cos(angle) * innerR,
-        center.dy + math.sin(angle) * innerR,
+      final pos = Offset(
+        center.dx + math.cos(angle) * radius,
+        center.dy + math.sin(angle) * radius,
       );
-      final end = Offset(
-        center.dx + math.cos(angle) * outerR,
-        center.dy + math.sin(angle) * outerR,
-      );
-      canvas.drawLine(start, end, _targetPaint);
+      canvas
+        ..drawCircle(pos, 6, _targetHaloPaint)
+        ..drawCircle(pos, 3.5, _targetPaint);
     }
 
     // Numeral centralizado — usa monospace pra leitura tipo display.
@@ -148,9 +158,10 @@ class _StrainDialPainter extends CustomPainter {
         style: TextStyle(
           color: FitnessBrand.strainColor(value),
           fontSize: 56,
-          fontWeight: FontWeight.w300,
-          letterSpacing: -2,
+          fontWeight: FontWeight.w600,
+          letterSpacing: -1,
           fontFamily: FitnessBrand.displayMonoFontFamily,
+          fontFeatures: FitnessBrand.numFeatures,
         ),
       ),
       textDirection: TextDirection.ltr,

@@ -15,11 +15,16 @@ abstract final class FitnessBrand {
   static const String name = 'Pulso';
   static const String tagline = 'Treinar com leitura.';
 
-  /// Tipografias display da marca — numerais grandes monoespacados
-  /// pros KPIs (recovery, strain) e sans pro corpo. Sem dep externa:
-  /// 'monospace' resolve pra SF Mono / Cascadia / Courier conforme
-  /// plataforma; aceitavel pro mock.
-  static const String displayMonoFontFamily = 'monospace';
+  /// Familia dos numerais grandes (recovery, strain, biometrics). Usa a
+  /// IBMPlexSans bundlada (mesma do design_system) com tabular figures
+  /// via [numFeatures] — antes era o fallback 'monospace', que resolvia
+  /// pra Courier/Cascadia e dava cara de prototipo. Plex tabular entrega
+  /// digitos alinhados e premium na propria face da landing.
+  static const String displayMonoFontFamily = 'IBMPlexSans';
+
+  /// Tabular figures pros KPIs — digitos de largura fixa pra os numeros
+  /// nao "pularem" quando o valor muda.
+  static const List<FontFeature> numFeatures = [FontFeature.tabularFigures()];
 
   /// Paleta dark recovery-first — referencia: Whoop. Superficies
   /// quase pretas pra que os accents (verde recovery, cyan strain)
@@ -37,7 +42,7 @@ abstract final class FitnessBrand {
     onSurface: Color(0xFFF2F2F5),
     onSurfaceMuted: Color(0xFF7E7E8A),
     success: Color(0xFF00D982),
-    warning: Color(0xFFFFB020),
+    warning: Color(0xFFE0A93D),
     error: Color(0xFFFF5C5C),
     info: Color(0xFF5AC8FA),
   );
@@ -47,7 +52,7 @@ abstract final class FitnessBrand {
   /// que combinam com a paleta dark.
   static Color recoveryColor(double percent) {
     if (percent < 34) return const Color(0xFFFF5C5C);
-    if (percent < 67) return const Color(0xFFFFB020);
+    if (percent < 67) return const Color(0xFFE0A93D);
     return const Color(0xFF00D982);
   }
 

@@ -283,7 +283,12 @@ class _Scene extends StatelessWidget {
     final isActive = (hoverId ?? selectedId) == d.id;
     final spec = specs[d.id];
     if (spec == null) return const SizedBox.shrink();
-    final baseSize = d.isEndToEnd ? 86.0 : 70.0;
+    // Web (desktop) aumenta os planetas consideravelmente — a cena e
+    // ~16:9 e comportava planetas maiores; mobile mantem o tamanho pra
+    // nao estourar o quadro mais alto.
+    final baseSize =
+        (d.isEndToEnd ? 86.0 : 70.0) *
+        context.responsive<double>(mobile: 1, desktop: 1.7);
     final boxSize = baseSize + (isActive ? 14 : 0);
     final center = Offset(pos.dx * sceneSize.width, pos.dy * sceneSize.height);
     return Positioned(

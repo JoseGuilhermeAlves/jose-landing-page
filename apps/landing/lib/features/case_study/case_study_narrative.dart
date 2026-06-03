@@ -56,9 +56,9 @@ class _Paragraph extends StatelessWidget {
       constraints: const BoxConstraints(maxWidth: 720),
       child: Text(
         text,
-        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
           color: colors.onSurfaceMuted,
-          height: 1.65,
+          height: 1.6,
         ),
       ),
     );
@@ -149,7 +149,9 @@ class _DecisionCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(AppRadius.lg),
         border: Border.all(color: colors.border),
       ),
-      padding: const EdgeInsets.all(AppSpacing.lg),
+      padding: EdgeInsets.all(
+        context.responsive(mobile: AppSpacing.md, desktop: AppSpacing.lg),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,

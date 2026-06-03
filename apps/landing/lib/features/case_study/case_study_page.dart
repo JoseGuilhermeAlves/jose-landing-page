@@ -34,8 +34,8 @@ class CaseStudyPage extends StatelessWidget {
       desktop: AppSpacing.huge,
     );
     final blockGap = context.responsive(
-      mobile: AppSpacing.xl,
-      desktop: AppSpacing.huge,
+      mobile: AppSpacing.lg,
+      desktop: AppSpacing.xl,
     );
 
     return Scaffold(

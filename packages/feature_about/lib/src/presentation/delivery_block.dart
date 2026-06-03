@@ -94,7 +94,9 @@ class _DeliveryCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(AppRadius.lg),
         border: Border.all(color: colors.border),
       ),
-      padding: const EdgeInsets.all(AppSpacing.lg),
+      padding: EdgeInsets.all(
+        context.responsive(mobile: AppSpacing.md, desktop: AppSpacing.lg),
+      ),
       child: Stack(
         children: [
           Positioned(
@@ -102,8 +104,8 @@ class _DeliveryCard extends StatelessWidget {
             right: -8,
             child: IgnorePointer(
               child: SizedBox(
-                width: 90,
-                height: 90,
+                width: 72,
+                height: 72,
                 child: CustomPaint(
                   painter: _DeliveryGlyphPainter(
                     glyph: glyph,
@@ -157,13 +159,12 @@ class _DeliveryCard extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: AppSpacing.md),
+              const SizedBox(height: AppSpacing.sm),
               Text(
                 body,
-                style: tt.bodyMedium?.copyWith(
-                  color: colors.onSurfaceMuted,
-                  height: 1.65,
-                ),
+                style: context
+                    .responsive(mobile: tt.bodySmall, desktop: tt.bodyMedium)
+                    ?.copyWith(color: colors.onSurfaceMuted, height: 1.5),
               ),
             ],
           ),

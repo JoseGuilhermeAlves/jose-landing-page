@@ -122,6 +122,17 @@ class _DomainConstellationState extends State<DomainConstellation>
       vsync: this,
       duration: const Duration(seconds: 8),
     )..repeat();
+    // Abre um balao por padrao pra deixar a interacao obvia — prefere o
+    // dominio end-to-end (retail, planeta de maior destaque); senao, o
+    // primeiro disponivel.
+    if (widget.domains.isNotEmpty) {
+      _selectedId = widget.domains
+          .firstWhere(
+            (d) => d.id == 'retail',
+            orElse: () => widget.domains.first,
+          )
+          .id;
+    }
   }
 
   @override

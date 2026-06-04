@@ -328,9 +328,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get nav_engineering => 'Ingénierie';
 
   @override
-  String get nav_caseStudy => 'Étude';
-
-  @override
   String get nav_contact => 'Contact';
 
   @override
@@ -357,113 +354,6 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get engineering_githubButton => 'Voir le dépôt sur GitHub';
-
-  @override
-  String get caseStudy_eyebrow => 'Case study';
-
-  @override
-  String get caseStudy_title => 'Cosmos sur Canvas —';
-
-  @override
-  String get caseStudy_titleAccent => 'Custom Painters à 60 fps.';
-
-  @override
-  String get caseStudy_subtitle =>
-      'Le fond de cette landing n\'est ni une image ni du Lottie — ce sont 7 types de corps célestes peints en temps réel via CustomPainter. Plus de 140 draw calls par frame, seed-déterministe, le tout dérivé d\'un unique tick.';
-
-  @override
-  String get caseStudy_ctaExplore => 'Voir l\'étude complète';
-
-  @override
-  String get caseStudy_pivotEyebrow => 'POURQUOI PEINDRE';
-
-  @override
-  String get caseStudy_pivotTitle =>
-      'Le Canvas surpasse les assets quand la géométrie est paramétrable.';
-
-  @override
-  String get caseStudy_pivotPara1 =>
-      'Des images de planètes seraient statiques — taille fixe, couleur fixe, sans animation d\'orbite ni drift. Lottie résoudrait l\'animation mais ajouterait une dépendance, du bundle et limiterait les variations. CustomPainter reçoit des paramètres (palette, motif de surface, rayon, seed) et dessine en direct — chaque planète est unique sans coûter un asset de plus.';
-
-  @override
-  String get caseStudy_pivotPara2 =>
-      'Le CosmosPainter rend 7 types de corps : planètes (avec anneaux et lunes), nébuleuses, galaxies spirales, pulsars, ceintures d\'astéroïdes, wisps de gaz et comètes avec fenêtre temporelle. Un unique AnimationController alimente le tick [0..1] qui dérive toutes les animations — orbites, pulsations, drifts — sans timers parallèles ni machines à états.';
-
-  @override
-  String get caseStudy_pivotPara3 =>
-      'Chaque planète passe par 6 couches de peinture : bloom (glow externe), rim atmosphérique, corps solide avec gradient, motif de surface (bands, speckled ou hemispheres), terminateur (ombre 3D) et highlight. Le résultat est une planète néon en ~15 draw calls qui tourne à 60 fps sur web et mobile.';
-
-  @override
-  String get caseStudy_recoveryLabel => 'COSMOS · EN DIRECT';
-
-  @override
-  String get caseStudy_recoveryHint =>
-      'Ce que vous voyez ci-dessus est peint en temps réel.\nAucune image, aucun asset statique.';
-
-  @override
-  String get caseStudy_painterStrainTitle => 'Planète en 6 couches';
-
-  @override
-  String get caseStudy_painterStrainCaption =>
-      'Bloom → rim → corps → surface → terminateur → highlight. Chaque couche est un RadialGradient positionné avec canvas.clipPath isolant la géométrie. Palette de 5 couleurs interpolée automatiquement.';
-
-  @override
-  String get caseStudy_painterTempoTitle => 'Galaxie spirale';
-
-  @override
-  String get caseStudy_painterTempoCaption =>
-      'Bras en spirale logarithmique avec jusqu\'à 320 particules de poussière. drawPoints() regroupe en 3 appels GPU par tier de taille — 100× moins d\'overhead que drawCircle individuel.';
-
-  @override
-  String get caseStudy_painterPeriodTitle => 'Constellations nommées';
-
-  @override
-  String get caseStudy_painterPeriodCaption =>
-      'Croix du Sud, Orion et Triangle Austral avec des étoiles pulsantes et des arêtes reliant les paires. AnimationController via super(repaint:) — l\'engine saute build/layout, peint directement.';
-
-  @override
-  String get caseStudy_decisionArchEyebrow => 'RENDERING';
-
-  @override
-  String get caseStudy_decisionArchTitle =>
-      'super(repaint:) plutôt qu\'AnimatedBuilder';
-
-  @override
-  String get caseStudy_decisionArchBody =>
-      'L\'AnimationController est passé directement au CustomPainter via super(repaint:). L\'engine de Flutter saute les phases de build et de layout du pipeline et va droit au paint à chaque tick. Dans des scènes de 140+ draw calls, cette économie élimine des rebuilds de widget inutiles toutes les 16 ms.';
-
-  @override
-  String get caseStudy_decisionPaintersEyebrow => 'DÉTERMINISME';
-
-  @override
-  String get caseStudy_decisionPaintersTitle =>
-      'Seed-based : même entrée, même scène';
-
-  @override
-  String get caseStudy_decisionPaintersBody =>
-      'Toute position stochastique — taches de planète, positions d\'astéroïdes, phases de drift — utilise Random(seed). Le cosmos est reproductible : même seed, même scène sur n\'importe quelle plateforme, à n\'importe quel redémarrage. Cela permet un test visuel déterministe et des screenshots cohérents.';
-
-  @override
-  String get caseStudy_decisionStateEyebrow => 'BATCH';
-
-  @override
-  String get caseStudy_decisionStateTitle =>
-      'drawPoints() pour la densité sans coût';
-
-  @override
-  String get caseStudy_decisionStateBody =>
-      'Les galaxies spirales et les ceintures d\'astéroïdes utilisent drawPoints(PointMode.points, offsets, paint) pour rendre des centaines de particules en 1 à 3 appels GPU. L\'approche naïve (un drawCircle par particule) coûterait 320 appels. Le batching est ce qui rend viables des scènes denses à 60 fps.';
-
-  @override
-  String get caseStudy_takeawayEyebrow => 'TAKEAWAY';
-
-  @override
-  String get caseStudy_takeawayTitle =>
-      'Le cosmos que vous voyez sur cette page est du code — pas un asset, pas une capture, pas une bibliothèque externe.';
-
-  @override
-  String get caseStudy_takeawayBody =>
-      'Ce sont ~1200 LOC de painter pur, sans dépendance hors du Flutter SDK. Paint réutilisé comme champ, shouldRepaint comparant les propriétés, canvas.save/restore autour de chaque transform. Le même painter rend le hero de la landing et peut être réutilisé sur n\'importe quel écran de l\'app avec des paramètres différents.';
 
   @override
   String get showcase_eyebrow => 'Showcase';

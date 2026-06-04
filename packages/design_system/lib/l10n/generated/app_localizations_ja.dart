@@ -327,9 +327,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get nav_engineering => 'エンジニアリング';
 
   @override
-  String get nav_caseStudy => 'ケーススタディ';
-
-  @override
   String get nav_contact => 'お問い合わせ';
 
   @override
@@ -355,110 +352,6 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get engineering_githubButton => 'GitHubでリポジトリを見る';
-
-  @override
-  String get caseStudy_eyebrow => 'ケーススタディ';
-
-  @override
-  String get caseStudy_title => 'Canvasのコスモス——';
-
-  @override
-  String get caseStudy_titleAccent => 'CustomPainterで60fps。';
-
-  @override
-  String get caseStudy_subtitle =>
-      'このランディングページの背景は画像でもLottieでもない——7種類の天体がCustomPainterでリアルタイムに描画されています。フレームあたり140以上のdrawコール、seed決定論的、すべて単一のtickから派生。';
-
-  @override
-  String get caseStudy_ctaExplore => 'ケーススタディを見る';
-
-  @override
-  String get caseStudy_pivotEyebrow => 'なぜ描画するのか';
-
-  @override
-  String get caseStudy_pivotTitle => 'ジオメトリがパラメータ化可能なら、Canvasがアセットを超える。';
-
-  @override
-  String get caseStudy_pivotPara1 =>
-      '惑星の画像は静的——固定サイズ、固定色、軌道アニメーションなし。Lottieはアニメーションを解決するが、依存関係とバンドルが増え、バリエーションが制限される。CustomPainterはパラメータ（パレット、表面パターン、半径、seed）を受け取りライブで描画——各惑星がアセット追加コストなしでユニーク。';
-
-  @override
-  String get caseStudy_pivotPara2 =>
-      'CosmosPainterは7種類の天体をレンダリング：惑星（リングと衛星付き）、星雲、渦巻銀河、パルサー、小惑星帯、ガスウィスプ、時間窓付き彗星。単一のAnimationControllerがtick[0..1]を供給し、すべてのアニメーション——軌道、パルス、ドリフト——を並列タイマーや状態マシンなしで派生。';
-
-  @override
-  String get caseStudy_pivotPara3 =>
-      '各惑星は6層の描画を経る：ブルーム（外部グロー）、大気リム、グラデーション付きソリッドボディ、表面パターン（bands、speckled、hemispheres）、ターミネーター（3D影）、ハイライト。結果：約15drawコールのネオン惑星がWebとモバイルで60fpsで動作。';
-
-  @override
-  String get caseStudy_recoveryLabel => 'COSMOS · ライブ';
-
-  @override
-  String get caseStudy_recoveryHint =>
-      '上に見えるものはリアルタイムで描画されています。\n画像なし、静的アセットなし。';
-
-  @override
-  String get caseStudy_painterStrainTitle => '6層の惑星';
-
-  @override
-  String get caseStudy_painterStrainCaption =>
-      'ブルーム → リム → ボディ → 表面 → ターミネーター → ハイライト。各層はcanvas.clipPathでジオメトリを分離したRadialGradient。5色パレットが自動補間。';
-
-  @override
-  String get caseStudy_painterTempoTitle => '渦巻銀河';
-
-  @override
-  String get caseStudy_painterTempoCaption =>
-      '対数螺旋の腕に最大320のダスト粒子。drawPoints()がサイズティアごとに3回のGPUコールに集約——個別drawCircleの100倍低いオーバーヘッド。';
-
-  @override
-  String get caseStudy_painterPeriodTitle => '名前付き星座';
-
-  @override
-  String get caseStudy_painterPeriodCaption =>
-      '南十字星、オリオン、みなみのさんかく座——パルスする星とペアを結ぶエッジ。AnimationControllerをsuper(repaint:)で——エンジンがbuild/layoutをスキップし直接paint。';
-
-  @override
-  String get caseStudy_decisionArchEyebrow => 'レンダリング';
-
-  @override
-  String get caseStudy_decisionArchTitle =>
-      'AnimatedBuilderの代わりにsuper(repaint:)';
-
-  @override
-  String get caseStudy_decisionArchBody =>
-      'AnimationControllerはsuper(repaint:)を通じてCustomPainterに直接渡される。Flutterエンジンはパイプラインのbuildとlayoutフェーズをスキップし、各tickで直接paintへ。140以上のdrawコールの場面で、この節約は16msごとの不要なウィジェットリビルドを排除。';
-
-  @override
-  String get caseStudy_decisionPaintersEyebrow => '決定論';
-
-  @override
-  String get caseStudy_decisionPaintersTitle => 'Seedベース：同じ入力、同じシーン';
-
-  @override
-  String get caseStudy_decisionPaintersBody =>
-      'すべての確率的位置——惑星の斑点、小惑星位置、ドリフト位相——はRandom(seed)を使用。コスモスは再現可能：同じseed、どのプラットフォームでも同じシーン。決定論的ビジュアルテストと一貫したスクリーンショットを可能に。';
-
-  @override
-  String get caseStudy_decisionStateEyebrow => 'バッチ';
-
-  @override
-  String get caseStudy_decisionStateTitle => 'drawPoints()でコストなしの密度';
-
-  @override
-  String get caseStudy_decisionStateBody =>
-      '渦巻銀河と小惑星帯はdrawPoints(PointMode.points, offsets, paint)で数百の粒子を1-3回のGPUコールでレンダリング。素朴なアプローチ（粒子ごとにdrawCircle）は320回のコール。バッチングが60fpsでの高密度シーンを実現。';
-
-  @override
-  String get caseStudy_takeawayEyebrow => 'テイクアウェイ';
-
-  @override
-  String get caseStudy_takeawayTitle =>
-      'このページのコスモスはコード——アセットでも、キャプチャでも、外部ライブラリでもない。';
-
-  @override
-  String get caseStudy_takeawayBody =>
-      'Flutter SDK以外の依存なし、約1200LOCの純粋なペインター。Paintをフィールドとして再利用、shouldRepaintでプロパティ比較、各transformの周りでcanvas.save/restore。同じペインターがランディングのヒーローをレンダリングし、異なるパラメータでアプリの任意の画面で再利用可能。';
 
   @override
   String get showcase_eyebrow => 'ショーケース';

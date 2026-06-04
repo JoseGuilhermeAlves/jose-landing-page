@@ -323,9 +323,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get nav_engineering => '工程';
 
   @override
-  String get nav_caseStudy => '案例';
-
-  @override
   String get nav_contact => '联系';
 
   @override
@@ -351,108 +348,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get engineering_githubButton => '在 GitHub 上查看仓库';
-
-  @override
-  String get caseStudy_eyebrow => '案例研究';
-
-  @override
-  String get caseStudy_title => 'Cosmos in Canvas —';
-
-  @override
-  String get caseStudy_titleAccent => 'Custom Painters 60 fps 运行。';
-
-  @override
-  String get caseStudy_subtitle =>
-      '这个 landing 的背景既非图片也非 Lottie——而是通过 CustomPainter 实时绘制的7种天体。每帧超过140次 draw call，seed 确定性，全部由单一 tick 驱动。';
-
-  @override
-  String get caseStudy_ctaExplore => '查看完整案例研究';
-
-  @override
-  String get caseStudy_pivotEyebrow => '为何手绘';
-
-  @override
-  String get caseStudy_pivotTitle => '当几何可参数化时，Canvas 优于素材。';
-
-  @override
-  String get caseStudy_pivotPara1 =>
-      '行星图片是静态的——固定尺寸、固定颜色、无轨道动画、无漂移。Lottie 能解决动画问题，但会增加依赖、增大包体积并限制变体。CustomPainter 接收参数（调色板、表面纹理、半径、seed）并实时绘制——每颗行星都独一无二，无需额外素材。';
-
-  @override
-  String get caseStudy_pivotPara2 =>
-      'CosmosPainter 渲染7种天体：行星（含环与卫星）、星云、旋涡星系、脉冲星、小行星带、气态星云丝和带时间窗口的彗星。单一 AnimationController 输出 tick [0..1]，派生所有动画——轨道、脉冲、漂移——无并行 Timer，无状态机。';
-
-  @override
-  String get caseStudy_pivotPara3 =>
-      '每颗行星经过6层绘制：bloom（外发光）、大气 rim、带渐变的实体、表面纹理（bands、speckled 或 hemispheres）、terminator（3D 阴影）和 highlight。最终呈现约15次 draw call 的霓虹行星，在 Web 和移动端均以 60 fps 运行。';
-
-  @override
-  String get caseStudy_recoveryLabel => 'COSMOS · 实时';
-
-  @override
-  String get caseStudy_recoveryHint => '上方所见正在实时绘制。\n无图片，无静态素材。';
-
-  @override
-  String get caseStudy_painterStrainTitle => '6层行星';
-
-  @override
-  String get caseStudy_painterStrainCaption =>
-      'Bloom → rim → 实体 → 表面 → terminator → highlight。每层是一个 RadialGradient，通过 canvas.clipPath 隔离几何。5色调色板自动插值。';
-
-  @override
-  String get caseStudy_painterTempoTitle => '旋涡星系';
-
-  @override
-  String get caseStudy_painterTempoCaption =>
-      '对数螺旋臂，最多320颗尘埃粒子。drawPoints() 按尺寸层级分3次 GPU 调用——比逐个 drawCircle 减少100倍开销。';
-
-  @override
-  String get caseStudy_painterPeriodTitle => '命名星座';
-
-  @override
-  String get caseStudy_painterPeriodCaption =>
-      '南十字、猎户座和南三角，带脉冲星和连接边。AnimationController 通过 super(repaint:) 传入——引擎跳过 build/layout，直接绘制。';
-
-  @override
-  String get caseStudy_decisionArchEyebrow => '渲染';
-
-  @override
-  String get caseStudy_decisionArchTitle =>
-      'super(repaint:) 替代 AnimatedBuilder';
-
-  @override
-  String get caseStudy_decisionArchBody =>
-      'AnimationController 通过 super(repaint:) 直接传递给 CustomPainter。Flutter 引擎跳过流水线的 build 和 layout 阶段，每个 tick 直接进入 paint。在140+ draw call 的场景中，这种节省消除了每16ms 一次的无意义 widget 重建。';
-
-  @override
-  String get caseStudy_decisionPaintersEyebrow => '确定性';
-
-  @override
-  String get caseStudy_decisionPaintersTitle => '基于 Seed：相同输入，相同场景';
-
-  @override
-  String get caseStudy_decisionPaintersBody =>
-      '所有随机位置——行星斑点、小行星位置、漂移相位——均使用 Random(seed)。宇宙可复现：相同 seed，任何平台、任何重启都得到相同场景。支持确定性视觉测试和一致的截图。';
-
-  @override
-  String get caseStudy_decisionStateEyebrow => '批处理';
-
-  @override
-  String get caseStudy_decisionStateTitle => 'drawPoints() 实现零成本高密度';
-
-  @override
-  String get caseStudy_decisionStateBody =>
-      '旋涡星系和小行星带使用 drawPoints(PointMode.points, offsets, paint) 在1–3次 GPU 调用中渲染数百粒子。朴素做法（每个粒子一次 drawCircle）需320次调用。批处理是密集场景 60 fps 的关键。';
-
-  @override
-  String get caseStudy_takeawayEyebrow => '要点';
-
-  @override
-  String get caseStudy_takeawayTitle => '您在本页看到的宇宙是代码——非素材，非截图，非外部库。';
-
-  @override
-  String get caseStudy_takeawayBody =>
-      '约1200行纯 painter 代码，不依赖 Flutter SDK 之外的任何库。Paint 作为字段复用，shouldRepaint 比较属性，canvas.save/restore 包裹每次变换。同一 painter 渲染 landing 的 hero，可在任何应用页面以不同参数复用。';
 
   @override
   String get showcase_eyebrow => '案例展示';

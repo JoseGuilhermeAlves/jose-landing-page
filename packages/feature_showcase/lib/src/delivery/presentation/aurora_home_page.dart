@@ -15,6 +15,7 @@ import 'package:feature_showcase/src/delivery/presentation/aurora_navigation.dar
 import 'package:feature_showcase/src/delivery/presentation/aurora_order_detail_page.dart';
 import 'package:feature_showcase/src/delivery/presentation/aurora_product_illustration.dart';
 import 'package:feature_showcase/src/delivery/presentation/aurora_store_list_page.dart';
+import 'package:feature_showcase/src/delivery/presentation/aurora_vendor_detail_page.dart';
 import 'package:feature_showcase/src/delivery/presentation/delivery_bloc.dart';
 import 'package:feature_showcase/src/delivery/presentation/delivery_event.dart';
 import 'package:feature_showcase/src/delivery/presentation/delivery_state.dart';

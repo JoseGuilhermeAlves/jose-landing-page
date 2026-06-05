@@ -125,5 +125,27 @@ void main() {
       }
       expect(find.text('Pedidos anteriores'), findsOneWidget);
     });
+
+    testWidgets(
+      'tap em card de banca na home abre o detalhe da banca com produtos',
+      (tester) async {
+        await useLargeSurface(tester);
+        await tester.pumpWidget(wrap(const DeliveryDemo()));
+        await tester.pump(const Duration(milliseconds: 16));
+
+        final card = find.byKey(const Key('aurora-vendor-card-v-mario'));
+        await tester.ensureVisible(card);
+        await tester.pump(const Duration(milliseconds: 16));
+        await tester.tap(card);
+        for (var i = 0; i < 20; i++) {
+          await tester.pump(const Duration(milliseconds: 50));
+        }
+
+        // Vai direto pro detalhe da banca (secao "Produtos" + carrinho),
+        // nao pra lista de lojas filtrada (que teria os chips de filtro).
+        expect(find.text('Produtos'), findsOneWidget);
+        expect(find.byKey(const Key('aurora-filter-all')), findsNothing);
+      },
+    );
   });
 }

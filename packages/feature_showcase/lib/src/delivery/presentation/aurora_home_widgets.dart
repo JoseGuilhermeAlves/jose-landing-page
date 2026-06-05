@@ -408,8 +408,9 @@ class _VendorsList extends StatelessWidget {
 
 /// Card de banca reutilizado pela home e pela lista de lojas. Mostra
 /// ilustracao da categoria principal + nome + tagline + ETA + frete.
-/// Tap empurra a lista de lojas com a categoria selecionada (proxy pro
-/// detalhe sem flow completo de produto).
+/// Tap (default) abre o detalhe da banca com produtos e carrinho — o
+/// mesmo destino da lista de lojas. Quem precisar de outro destino
+/// passa `onTap` explicito.
 class AuroraVendorCard extends StatelessWidget {
   const AuroraVendorCard({required this.vendor, this.onTap, super.key});
 
@@ -432,7 +433,7 @@ class AuroraVendorCard extends StatelessWidget {
               MaterialPageRoute<void>(
                 builder: (_) => auroraWithDemoBloc(
                   context,
-                  AuroraStoreListPage(initialCategory: vendor.primaryCategory),
+                  AuroraVendorDetailPage(vendor: vendor),
                 ),
               ),
             ),

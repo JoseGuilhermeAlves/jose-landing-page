@@ -511,58 +511,74 @@ class _BrokerCard extends StatelessWidget {
     required this.broker,
     required this.colors,
     required this.textTheme,
+    this.onTap,
   });
 
   final Broker broker;
   final AppColorScheme colors;
   final TextTheme textTheme;
 
+  /// Abre o perfil do corretor. Null mantem o card estatico (compat).
+  final VoidCallback? onTap;
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(AppSpacing.md),
-      decoration: BoxDecoration(
-        color: colors.surface,
+    return Material(
+      color: colors.surface,
+      borderRadius: BorderRadius.circular(AppRadius.lg),
+      child: InkWell(
+        key: const Key('solar-broker-card'),
+        onTap: onTap,
         borderRadius: BorderRadius.circular(AppRadius.lg),
-        border: Border.all(color: colors.border),
-      ),
-      child: Row(
-        children: [
-          SolarBrokerAvatar(
-            monogram: broker.monogram,
-            size: 56,
-            backgroundColor: colors.primary,
-            foregroundColor: colors.onPrimary,
+        child: Ink(
+          padding: const EdgeInsets.all(AppSpacing.md),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(AppRadius.lg),
+            border: Border.all(color: colors.border),
           ),
-          const SizedBox(width: AppSpacing.md),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  broker.name,
-                  style: textTheme.titleSmall?.copyWith(
-                    color: colors.onSurface,
-                    fontFamily: SolarBrand.displayFontFamily,
-                    fontWeight: FontWeight.w700,
-                  ),
+          child: Row(
+            children: [
+              SolarBrokerAvatar(
+                monogram: broker.monogram,
+                size: 56,
+                backgroundColor: colors.primary,
+                foregroundColor: colors.onPrimary,
+              ),
+              const SizedBox(width: AppSpacing.md),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      broker.name,
+                      style: textTheme.titleSmall?.copyWith(
+                        color: colors.onSurface,
+                        fontFamily: SolarBrand.displayFontFamily,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    Text(
+                      broker.creci,
+                      style: textTheme.labelSmall?.copyWith(
+                        color: colors.onSurfaceMuted,
+                        letterSpacing: 0.4,
+                      ),
+                    ),
+                    const SizedBox(height: AppSpacing.xs),
+                    Text(
+                      onTap == null ? broker.phone : 'Ver perfil completo',
+                      style: textTheme.labelMedium?.copyWith(
+                        color: colors.accent,
+                      ),
+                    ),
+                  ],
                 ),
-                Text(
-                  broker.creci,
-                  style: textTheme.labelSmall?.copyWith(
-                    color: colors.onSurfaceMuted,
-                    letterSpacing: 0.4,
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.xs),
-                Text(
-                  broker.phone,
-                  style: textTheme.labelMedium?.copyWith(color: colors.accent),
-                ),
-              ],
-            ),
+              ),
+              if (onTap != null)
+                Icon(Icons.chevron_right_rounded, color: colors.onSurfaceMuted),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

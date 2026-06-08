@@ -199,4 +199,79 @@ void main() {
       expect(find.byKey(const Key('solar-detail-contact-cta')), findsOneWidget);
     });
   });
+
+  group('SolarBrokerPage', () {
+    testWidgets('tap no card do corretor abre o perfil com carteira', (
+      tester,
+    ) async {
+      tester.view.physicalSize = const Size(900, 4000);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.resetPhysicalSize);
+
+      await tester.pumpWidget(wrap(const RealEstateDemo()));
+      await tester.pump(const Duration(milliseconds: 16));
+      await tester.tap(find.byKey(const Key('solar-cta-listings')));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.byKey(const Key('solar-property-card-p-1001')));
+      await tester.pump(const Duration(milliseconds: 100));
+      await tester.pump(const Duration(milliseconds: 400));
+
+      // O card do corretor fica no fim da detalhe — garante visivel antes
+      // do tap (a detalhe roda painter em loop, sem pumpAndSettle).
+      await tester.ensureVisible(find.byKey(const Key('solar-broker-card')));
+      await tester.pump(const Duration(milliseconds: 100));
+      await tester.tap(find.byKey(const Key('solar-broker-card')));
+      await tester.pump(const Duration(milliseconds: 100));
+      await tester.pump(const Duration(milliseconds: 400));
+
+      expect(find.byKey(const Key('solar-broker-page')), findsOneWidget);
+      expect(find.byKey(const Key('solar-broker-name')), findsOneWidget);
+      expect(find.byKey(const Key('solar-broker-listings')), findsOneWidget);
+    });
+  });
+
+  group('SolarSavedPage', () {
+    testWidgets('action de salvos abre vazia quando nao ha favoritos', (
+      tester,
+    ) async {
+      tester.view.physicalSize = const Size(900, 2400);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.resetPhysicalSize);
+
+      await tester.pumpWidget(wrap(const RealEstateDemo(properties: sample)));
+      await tester.pump(const Duration(milliseconds: 16));
+
+      await tester.tap(find.byKey(const Key('solar-saved-action')));
+      await tester.pump(const Duration(milliseconds: 100));
+      await tester.pump(const Duration(milliseconds: 400));
+
+      expect(find.byKey(const Key('solar-saved-empty')), findsOneWidget);
+    });
+
+    testWidgets('favoritar um imovel faz ele aparecer nos salvos', (
+      tester,
+    ) async {
+      tester.view.physicalSize = const Size(900, 3200);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.resetPhysicalSize);
+
+      await openListings(tester);
+
+      await tester.tap(find.byKey(const Key('solar-favorite-a')));
+      await tester.pump(const Duration(milliseconds: 50));
+
+      await tester.tap(find.byKey(const Key('solar-saved-action')));
+      await tester.pump(const Duration(milliseconds: 100));
+      await tester.pump(const Duration(milliseconds: 400));
+
+      // O card-a tambem existe na listagem por baixo da rota empilhada;
+      // afere o estado pela contagem, que so a SolarSavedPage renderiza.
+      expect(find.byKey(const Key('solar-saved-title')), findsOneWidget);
+      expect(
+        find.text('1 imovel guardado pra ver depois.'),
+        findsOneWidget,
+      );
+    });
+  });
 }

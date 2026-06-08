@@ -11,6 +11,7 @@ import 'package:feature_showcase/src/realestate/presentation/realestate_state.da
 import 'package:feature_showcase/src/realestate/presentation/solar_app_bar.dart';
 import 'package:feature_showcase/src/realestate/presentation/solar_brand.dart';
 import 'package:feature_showcase/src/realestate/presentation/solar_broker_avatar.dart';
+import 'package:feature_showcase/src/realestate/presentation/solar_broker_page.dart';
 import 'package:feature_showcase/src/realestate/presentation/solar_contact_page.dart';
 import 'package:feature_showcase/src/realestate/presentation/solar_feature_icon.dart';
 import 'package:feature_showcase/src/realestate/presentation/solar_floor_plan.dart';
@@ -193,6 +194,14 @@ class _SolarPropertyDetailPageState extends State<SolarPropertyDetailPage> {
                     broker: broker,
                     colors: colors,
                     textTheme: textTheme,
+                    onTap: () => Navigator.of(context).push(
+                      MaterialPageRoute<void>(
+                        builder: (_) => solarWithDemoBloc(
+                          context,
+                          SolarBrokerPage(broker: broker),
+                        ),
+                      ),
+                    ),
                   ),
                 ],
                 SizedBox(

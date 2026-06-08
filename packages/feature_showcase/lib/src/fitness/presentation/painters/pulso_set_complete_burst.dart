@@ -94,5 +94,6 @@ class _BurstPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(_BurstPainter old) => false;
+  bool shouldRepaint(_BurstPainter old) =>
+      old.color != color || old.progress != progress;
 }

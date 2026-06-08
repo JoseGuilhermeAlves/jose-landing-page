@@ -26,3 +26,12 @@ dev_dependencies:
     sdk: flutter
 
 flutter:
+  # Fotos de licenca livre (Unsplash/Pexels) por mock, em WebP. So onde
+  # agregam credibilidade (imovel, profissional, comida, atleta). Mira
+  # nao usa fotos — data-viz e nativo do nicho. Carregadas via
+  # ShowcasePhoto com fallback pro painter vetorial.
+  assets:
+    - assets/realestate/
+    - assets/scheduling/
+    - assets/fitness/
+    - assets/delivery/

@@ -111,5 +111,6 @@ class _PulsoCardBackdropPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(_PulsoCardBackdropPainter old) => false;
+  bool shouldRepaint(_PulsoCardBackdropPainter old) =>
+      old.progress != progress;
 }

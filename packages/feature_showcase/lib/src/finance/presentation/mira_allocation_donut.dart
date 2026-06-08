@@ -107,6 +107,19 @@ class _MiraDonutPainter extends CustomPainter {
   final Color textColor;
   final Color mutedColor;
 
+  // Paints reusados — instanciados uma vez, props mutaveis (strokeWidth,
+  // color) ajustadas no paint(). Evita alocacao no hot loop.
+  late final Paint _trackPaint = Paint()
+    ..color = backgroundColor
+    ..style = PaintingStyle.stroke;
+  late final Paint _separatorPaint = Paint()
+    ..color = const Color(0x33000000)
+    ..style = PaintingStyle.stroke
+    ..strokeCap = StrokeCap.round;
+  late final Paint _slicePaint = Paint()
+    ..style = PaintingStyle.stroke
+    ..strokeCap = StrokeCap.round;
+
   @override
   void paint(Canvas canvas, Size size) {
     if (size.width <= 0 || size.height <= 0) return;
@@ -118,14 +131,8 @@ class _MiraDonutPainter extends CustomPainter {
     final midRadius = (outer + inner) / 2;
 
     // Trilho de fundo do anel.
-    canvas.drawCircle(
-      center,
-      midRadius,
-      Paint()
-        ..color = backgroundColor
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = ringWidth,
-    );
+    _trackPaint.strokeWidth = ringWidth;
+    canvas.drawCircle(center, midRadius, _trackPaint);
 
     // Soma efetiva pra normalizar (caso o caller passe pesos que nao
     // fecham em 1).
@@ -159,29 +166,13 @@ class _MiraDonutPainter extends CustomPainter {
 
       // Separador escuro por baixo — leve sombra interna que da
       // profundidade e marca a fronteira entre slices.
-      canvas.drawArc(
-        rect,
-        arcStart,
-        sweep,
-        false,
-        Paint()
-          ..color = const Color(0x33000000)
-          ..style = PaintingStyle.stroke
-          ..strokeWidth = ringWidth
-          ..strokeCap = StrokeCap.round,
-      );
+      _separatorPaint.strokeWidth = ringWidth;
+      canvas.drawArc(rect, arcStart, sweep, false, _separatorPaint);
 
-      canvas.drawArc(
-        rect,
-        arcStart,
-        sweep,
-        false,
-        Paint()
-          ..color = slice.color
-          ..style = PaintingStyle.stroke
-          ..strokeWidth = ringWidth - 1.5
-          ..strokeCap = StrokeCap.round,
-      );
+      _slicePaint
+        ..color = slice.color
+        ..strokeWidth = ringWidth - 1.5;
+      canvas.drawArc(rect, arcStart, sweep, false, _slicePaint);
       startAngle += sliceSweep;
     }
 

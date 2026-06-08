@@ -31,6 +31,11 @@ abstract final class PropertiesCatalog {
       ],
       brokerId: 'b-maria',
       photosCount: 14,
+      photoAssets: [
+        'assets/realestate/casa_centro_historico_frente.webp',
+        'assets/realestate/casa_centro_historico_lateral.webp',
+        'assets/realestate/casa_centro_historico_topo.webp',
+      ],
     ),
     Property(
       id: 'p-1002',
@@ -58,6 +63,11 @@ abstract final class PropertiesCatalog {
       ],
       brokerId: 'b-carlos',
       photosCount: 22,
+      photoAssets: [
+        'assets/realestate/chacara_itu_frente.webp',
+        'assets/realestate/chacara_itu_piscina.webp',
+        'assets/realestate/chacara_itu_topo.webp',
+      ],
     ),
     Property(
       id: 'p-1003',
@@ -84,6 +94,11 @@ abstract final class PropertiesCatalog {
       ],
       brokerId: 'b-renata',
       photosCount: 18,
+      photoAssets: [
+        'assets/realestate/casa_atibaia_frente.webp',
+        'assets/realestate/casa_atibaia_varanda.webp',
+        'assets/realestate/casa_atibaia_topo.webp',
+      ],
     ),
     Property(
       id: 'p-1004',
@@ -103,6 +118,11 @@ abstract final class PropertiesCatalog {
       features: [PropertyFeature.borehole, PropertyFeature.garden],
       brokerId: 'b-maria',
       photosCount: 8,
+      photoAssets: [
+        'assets/realestate/terreno_mata_velha_frente.webp',
+        'assets/realestate/terreno_mata_velha_fundo.webp',
+        'assets/realestate/terreno_mata_velha_topo.webp',
+      ],
     ),
     Property(
       id: 'p-1005',
@@ -128,6 +148,11 @@ abstract final class PropertiesCatalog {
       ],
       brokerId: 'b-renata',
       photosCount: 16,
+      photoAssets: [
+        'assets/realestate/sobrado_vila_nova_frente.webp',
+        'assets/realestate/sobrado_vila_nova_lateral.webp',
+        'assets/realestate/sobrado_vila_nova_topo.webp',
+      ],
     ),
     Property(
       id: 'p-1006',
@@ -156,6 +181,11 @@ abstract final class PropertiesCatalog {
       ],
       brokerId: 'b-carlos',
       photosCount: 28,
+      photoAssets: [
+        'assets/realestate/chacara_joanopolis_frente.webp',
+        'assets/realestate/chacara_joanopolis_lago.webp',
+        'assets/realestate/chacara_joanopolis_topo.webp',
+      ],
     ),
     Property(
       id: 'p-1007',
@@ -179,6 +209,11 @@ abstract final class PropertiesCatalog {
       ],
       brokerId: 'b-maria',
       photosCount: 12,
+      photoAssets: [
+        'assets/realestate/apto_praca_sala.webp',
+        'assets/realestate/apto_praca_cozinha.webp',
+        'assets/realestate/apto_praca_fachada.webp',
+      ],
     ),
     Property(
       id: 'p-1008',
@@ -206,6 +241,11 @@ abstract final class PropertiesCatalog {
       ],
       brokerId: 'b-renata',
       photosCount: 24,
+      photoAssets: [
+        'assets/realestate/casa_familiar_frente.webp',
+        'assets/realestate/casa_familiar_varanda.webp',
+        'assets/realestate/casa_familiar_topo.webp',
+      ],
     ),
     Property(
       id: 'p-1009',
@@ -225,6 +265,11 @@ abstract final class PropertiesCatalog {
       features: [PropertyFeature.garden],
       brokerId: 'b-carlos',
       photosCount: 6,
+      photoAssets: [
+        'assets/realestate/terreno_vista_alegre_frente.webp',
+        'assets/realestate/terreno_vista_alegre_serra.webp',
+        'assets/realestate/terreno_vista_alegre_topo.webp',
+      ],
     ),
     Property(
       id: 'p-1010',
@@ -243,6 +288,11 @@ abstract final class PropertiesCatalog {
       features: [PropertyFeature.balcony],
       brokerId: 'b-maria',
       photosCount: 9,
+      photoAssets: [
+        'assets/realestate/studio_centro_interior.webp',
+        'assets/realestate/studio_centro_janela.webp',
+        'assets/realestate/studio_centro_predio.webp',
+      ],
     ),
   ];
 

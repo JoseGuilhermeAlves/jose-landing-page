@@ -17,6 +17,7 @@ import 'package:feature_showcase/src/realestate/presentation/solar_floor_plan.da
 import 'package:feature_showcase/src/realestate/presentation/solar_navigation.dart';
 import 'package:feature_showcase/src/realestate/presentation/solar_neighborhood_map.dart';
 import 'package:feature_showcase/src/realestate/presentation/solar_property_illustration.dart';
+import 'package:feature_showcase/src/shared/presentation/showcase_photo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

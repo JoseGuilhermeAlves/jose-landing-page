@@ -24,6 +24,7 @@ class SchedulingBloc extends Bloc<SchedulingEvent, SchedulingState> {
     on<SchedulingSlotCancelled>(_onSlotCancelled);
     on<SchedulingAppointmentConfirmed>(_onAppointmentConfirmed);
     on<SchedulingAppointmentCancelled>(_onAppointmentCancelled);
+    on<SchedulingAppointmentRescheduled>(_onAppointmentRescheduled);
   }
 
   void _onDateSelected(
@@ -93,6 +94,41 @@ class SchedulingBloc extends Bloc<SchedulingEvent, SchedulingState> {
         userBookedSlots: {
           for (final s in state.userBookedSlots)
             if (s != appt.slot) s,
+        },
+      ),
+    );
+  }
+
+  void _onAppointmentRescheduled(
+    SchedulingAppointmentRescheduled event,
+    Emitter<SchedulingState> emit,
+  ) {
+    final current = state.confirmedAppointments
+        .where((a) => a.id == event.appointmentId)
+        .cast<Appointment?>()
+        .firstWhere((a) => true, orElse: () => null);
+    if (current == null) return;
+    // Mesmo slot — nada muda.
+    if (current.slot == event.newSlot) return;
+    // Novo slot indisponivel (pre-bloqueado ou ja reservado por outro
+    // agendamento que nao seja o que estamos movendo) — no-op.
+    if (state.preBookedSlots.contains(event.newSlot)) return;
+    final takenByOther = state.confirmedAppointments.any(
+      (a) => a.id != current.id && a.slot == event.newSlot,
+    );
+    if (takenByOther) return;
+
+    final updated = current.copyWith(slot: event.newSlot);
+    emit(
+      state.copyWith(
+        confirmedAppointments: [
+          for (final a in state.confirmedAppointments)
+            if (a.id == current.id) updated else a,
+        ],
+        userBookedSlots: {
+          for (final s in state.userBookedSlots)
+            if (s != current.slot) s,
+          event.newSlot,
         },
       ),
     );

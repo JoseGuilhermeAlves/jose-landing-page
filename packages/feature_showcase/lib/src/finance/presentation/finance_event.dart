@@ -40,6 +40,17 @@ class FinanceTradeExecuted extends FinanceEvent {
   List<Object?> get props => [assetId, side, quantity, priceCents];
 }
 
+/// Altera o termo de busca da watchlist/catalogo na home. String vazia
+/// limpa o filtro e volta a separacao watchlist / outros ativos. O
+/// match e feito por simbolo, nome e setor do ativo.
+class FinanceSearchQueryChanged extends FinanceEvent {
+  const FinanceSearchQueryChanged(this.query);
+  final String query;
+
+  @override
+  List<Object?> get props => [query];
+}
+
 /// Reseta o portfolio e o historico de trades pros valores iniciais
 /// do catalogo. Util pro botao "Resetar demo" e pra testes.
 class FinanceReset extends FinanceEvent {

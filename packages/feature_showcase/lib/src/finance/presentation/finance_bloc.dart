@@ -38,6 +38,7 @@ class FinanceBloc extends Bloc<FinanceEvent, FinanceState> {
        ) {
     on<FinanceFavoriteToggled>(_onFavoriteToggled);
     on<FinanceTradeExecuted>(_onTradeExecuted);
+    on<FinanceSearchQueryChanged>(_onSearchQueryChanged);
     on<FinanceReset>(_onReset);
   }
 
@@ -135,6 +136,14 @@ class FinanceBloc extends Bloc<FinanceEvent, FinanceState> {
         trades: List.unmodifiable([newTrade, ...state.trades]),
       ),
     );
+  }
+
+  void _onSearchQueryChanged(
+    FinanceSearchQueryChanged event,
+    Emitter<FinanceState> emit,
+  ) {
+    if (event.query == state.searchQuery) return;
+    emit(state.copyWith(searchQuery: event.query));
   }
 
   void _onReset(FinanceReset event, Emitter<FinanceState> emit) {

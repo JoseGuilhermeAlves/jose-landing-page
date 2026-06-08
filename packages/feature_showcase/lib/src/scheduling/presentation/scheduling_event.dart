@@ -53,3 +53,21 @@ class SchedulingAppointmentCancelled extends SchedulingEvent {
   @override
   List<Object?> get props => [appointmentId];
 }
+
+/// Remarca um agendamento confirmado para um novo slot, preservando o
+/// mesmo id (o usuario "moveu" a sessao, nao criou outra). Libera o
+/// slot antigo em `userBookedSlots` e reserva o novo. No-op quando o id
+/// nao bate, quando o novo slot e igual ao atual, ou quando o novo slot
+/// ja esta pre-bloqueado ou ocupado por outro agendamento.
+class SchedulingAppointmentRescheduled extends SchedulingEvent {
+  const SchedulingAppointmentRescheduled({
+    required this.appointmentId,
+    required this.newSlot,
+  });
+
+  final String appointmentId;
+  final DateTime newSlot;
+
+  @override
+  List<Object?> get props => [appointmentId, newSlot];
+}

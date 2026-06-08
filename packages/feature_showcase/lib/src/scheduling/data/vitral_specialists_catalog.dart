@@ -14,6 +14,7 @@ abstract final class VitralSpecialistsCatalog {
       categories: [ServiceCategory.consulting, ServiceCategory.marketing],
       rating: 4.9,
       reviewCount: 142,
+      photoAsset: 'assets/scheduling/sofia_a.webp',
     ),
     Specialist(
       id: 's-lucas',
@@ -23,6 +24,7 @@ abstract final class VitralSpecialistsCatalog {
       categories: [ServiceCategory.photography],
       rating: 4.8,
       reviewCount: 87,
+      photoAsset: 'assets/scheduling/lucas_m.webp',
     ),
     Specialist(
       id: 's-renata',
@@ -32,6 +34,7 @@ abstract final class VitralSpecialistsCatalog {
       categories: [ServiceCategory.design],
       rating: 5,
       reviewCount: 64,
+      photoAsset: 'assets/scheduling/renata_b.webp',
     ),
     Specialist(
       id: 's-pedro',
@@ -41,6 +44,7 @@ abstract final class VitralSpecialistsCatalog {
       categories: [ServiceCategory.design, ServiceCategory.marketing],
       rating: 4.7,
       reviewCount: 39,
+      photoAsset: 'assets/scheduling/pedro_v.webp',
     ),
     Specialist(
       id: 's-marina',
@@ -50,6 +54,7 @@ abstract final class VitralSpecialistsCatalog {
       categories: [ServiceCategory.marketing],
       rating: 4.6,
       reviewCount: 53,
+      photoAsset: 'assets/scheduling/marina_g.webp',
     ),
     Specialist(
       id: 's-rafael',
@@ -59,6 +64,7 @@ abstract final class VitralSpecialistsCatalog {
       categories: [ServiceCategory.photography],
       rating: 4.9,
       reviewCount: 121,
+      photoAsset: 'assets/scheduling/rafael_t.webp',
     ),
   ];
 

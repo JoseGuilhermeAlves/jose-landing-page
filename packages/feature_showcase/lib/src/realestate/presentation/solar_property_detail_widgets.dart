@@ -49,13 +49,22 @@ class _Gallery extends StatelessWidget {
               borderRadius: BorderRadius.circular(AppRadius.lg),
               child: ColoredBox(
                 color: colors.surfaceMuted,
-                child: SolarPropertyIllustration(
-                  key: ValueKey('solar-detail-illustration-$galleryIndex'),
-                  type: property.type,
-                  variant: galleryIndex,
-                  foregroundColor: colors.primary,
-                  accentColor: colors.accent,
-                  backgroundColor: colors.surface,
+                // Foto do angulo selecionado; cai na ilustracao da
+                // variant correspondente quando o .webp falta.
+                child: ShowcasePhoto(
+                  key: ValueKey('solar-detail-photo-$galleryIndex'),
+                  assetPath: property.photoAt(galleryIndex),
+                  semanticLabel:
+                      '${property.headline.isEmpty ? property.type.label : property.headline}'
+                      ' — angulo ${galleryIndex + 1}',
+                  fallback: SolarPropertyIllustration(
+                    key: ValueKey('solar-detail-illustration-$galleryIndex'),
+                    type: property.type,
+                    variant: galleryIndex,
+                    foregroundColor: colors.primary,
+                    accentColor: colors.accent,
+                    backgroundColor: colors.surface,
+                  ),
                 ),
               ),
             ),

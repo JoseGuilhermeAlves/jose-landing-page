@@ -29,6 +29,10 @@ void main() {
       await tester.pumpWidget(wrap(const FinanceDemo()));
       await tester.pump(const Duration(milliseconds: 50));
 
+      // O campo de busca empurra a watchlist pra baixo da viewport de
+      // teste (800x600) — garante o row visivel antes do tap.
+      await tester.ensureVisible(find.byKey(const Key('mira-asset-row-PETR4')));
+      await tester.pump();
       await tester.tap(find.byKey(const Key('mira-asset-row-PETR4')));
       // pumpAndSettle nao serve por causa do reveal infinito + candlestick.
       await tester.pump(const Duration(milliseconds: 100));
@@ -76,6 +80,12 @@ void main() {
       // PETR4 esta na watchlist por default.
       expect(find.byKey(const Key('mira-asset-row-PETR4')), findsOneWidget);
 
+      // Campo de busca empurra o toggle pra baixo da viewport de teste —
+      // garante visibilidade antes do tap.
+      await tester.ensureVisible(
+        find.byKey(const Key('mira-favorite-toggle-PETR4')),
+      );
+      await tester.pump();
       await tester.tap(find.byKey(const Key('mira-favorite-toggle-PETR4')));
       await tester.pump();
 

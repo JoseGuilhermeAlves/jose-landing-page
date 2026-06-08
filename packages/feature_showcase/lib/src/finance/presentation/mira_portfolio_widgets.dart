@@ -89,19 +89,51 @@ class _Stat extends StatelessWidget {
 }
 
 class _SectionTitle extends StatelessWidget {
-  const _SectionTitle({required this.text});
+  const _SectionTitle({required this.text, this.count});
   final String text;
+  final int? count;
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
-    return Text(
-      text,
-      style: TextStyle(
-        color: colors.onSurfaceMuted,
-        fontSize: 11,
-        letterSpacing: 1.6,
-        fontWeight: FontWeight.w800,
-      ),
+    return Row(
+      children: [
+        Text(
+          text,
+          style: TextStyle(
+            color: colors.onSurfaceMuted,
+            fontSize: 11,
+            letterSpacing: 1.6,
+            fontWeight: FontWeight.w800,
+          ),
+        ),
+        const SizedBox(width: AppSpacing.sm),
+        Expanded(
+          child: Container(
+            height: 1.2,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  MiraBrand.neonMint.withValues(alpha: 0.45),
+                  Colors.transparent,
+                ],
+              ),
+            ),
+          ),
+        ),
+        if (count != null) ...[
+          const SizedBox(width: AppSpacing.sm),
+          Text(
+            count.toString().padLeft(2, '0'),
+            style: TextStyle(
+              color: colors.onSurfaceMuted,
+              fontSize: 11,
+              fontWeight: FontWeight.w700,
+              fontFamily: MiraBrand.monoFontFamily,
+              fontFeatures: const [FontFeature.tabularFigures()],
+            ),
+          ),
+        ],
+      ],
     );
   }
 }
@@ -230,11 +262,65 @@ class _HoldingRow extends StatelessWidget {
                         fontFamily: MiraBrand.monoFontFamily,
                       ),
                     ),
+                    const SizedBox(height: AppSpacing.sm),
+                    _SellPositionButton(view: view),
                   ],
                 ),
               ],
             ),
           ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Botao "Vender" de uma posicao — abre o form de ordem ja como venda,
+/// pre-preenchido com a quantidade total do holding. Fecha o gap de
+/// nao ter como vender direto a partir do portfolio (antes so dava pra
+/// chegar no form passando pelo detalhe do ativo).
+class _SellPositionButton extends StatelessWidget {
+  const _SellPositionButton({required this.view});
+
+  final _HoldingView view;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+    return OutlinedButton(
+      key: Key('mira-sell-position-${view.asset.id}'),
+      onPressed: () => Navigator.of(context).push(
+        MaterialPageRoute<void>(
+          builder: (_) => miraWithDemoBloc(
+            context,
+            MiraOrderEntryPage(
+              assetId: view.asset.id,
+              side: OrderSide.sell,
+              initialQuantity: view.holding.quantity,
+            ),
+          ),
+        ),
+      ),
+      style: OutlinedButton.styleFrom(
+        foregroundColor: colors.error,
+        side: BorderSide(color: colors.error.withValues(alpha: 0.6)),
+        visualDensity: VisualDensity.compact,
+        minimumSize: Size.zero,
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppSpacing.md,
+          vertical: 6,
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppRadius.sm),
+        ),
+        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+      ),
+      child: const Text(
+        'Vender',
+        style: TextStyle(
+          fontSize: 11,
+          fontWeight: FontWeight.w800,
+          letterSpacing: 0.6,
         ),
       ),
     );

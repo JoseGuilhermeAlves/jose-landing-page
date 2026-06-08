@@ -76,13 +76,6 @@ class MiraHomePage extends StatelessWidget {
       body: MockBodyConstraint(
         child: BlocBuilder<FinanceBloc, FinanceState>(
           builder: (context, state) {
-            final favoriteIds = state.favoriteIds;
-            final watchlist = MiraAssetsCatalog.all
-                .where((a) => favoriteIds.contains(a.id))
-                .toList();
-            final others = MiraAssetsCatalog.all
-                .where((a) => !favoriteIds.contains(a.id))
-                .toList();
             return Column(
               children: [
                 const MiraTickerTape(),
@@ -94,55 +87,38 @@ class MiraHomePage extends StatelessWidget {
                         _PortfolioHero(state: state),
                         SizedBox(
                           height: context.responsive(
-                            mobile: AppSpacing.xl,
-                            desktop: AppSpacing.xxl,
+                            mobile: AppSpacing.lg,
+                            desktop: AppSpacing.xl,
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(
                             horizontal: AppSpacing.lg,
                           ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              _SectionHeader(
-                                eyebrow: context.l10n.mira_watchlistEyebrow,
-                                title: context.l10n.mira_watchlistTitle,
-                                count: null,
-                              ),
-                              const SizedBox(height: AppSpacing.md),
-                              if (watchlist.isEmpty)
-                                const _EmptyFavoritesNote()
-                              else
-                                ...watchlist.map(
-                                  (a) => _AssetRow(asset: a, isFavorite: true),
-                                ),
-                              SizedBox(
-                                height: context.responsive(
-                                  mobile: AppSpacing.xl,
-                                  desktop: AppSpacing.xxl,
-                                ),
-                              ),
-                              _SectionHeader(
-                                eyebrow: context.l10n.mira_catalogEyebrow,
-                                title: context.l10n.mira_otherAssetsTitle,
-                                count: others.length,
-                              ),
-                              const SizedBox(height: AppSpacing.md),
-                              ...others.map(
-                                (a) => _AssetRow(asset: a, isFavorite: false),
-                              ),
-                              SizedBox(
-                                height: context.responsive(
-                                  mobile: AppSpacing.xl,
-                                  desktop: AppSpacing.xxl,
-                                ),
-                              ),
-                              const _BrandFootnote(),
-                              const SizedBox(height: AppSpacing.xl),
-                            ],
+                          child: _AssetSearchField(query: state.searchQuery),
+                        ),
+                        SizedBox(
+                          height: context.responsive(
+                            mobile: AppSpacing.lg,
+                            desktop: AppSpacing.xl,
                           ),
                         ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: AppSpacing.lg,
+                          ),
+                          child: state.hasSearchQuery
+                              ? _SearchResults(state: state)
+                              : _WatchlistAndCatalog(state: state),
+                        ),
+                        SizedBox(
+                          height: context.responsive(
+                            mobile: AppSpacing.xl,
+                            desktop: AppSpacing.xxl,
+                          ),
+                        ),
+                        const _BrandFootnote(),
+                        const SizedBox(height: AppSpacing.xl),
                       ],
                     ),
                   ),

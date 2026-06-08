@@ -40,6 +40,21 @@ class Appointment extends Equatable {
   /// Final do agendamento (slot + duracao).
   DateTime get endsAt => slot.add(Duration(minutes: durationMinutes));
 
+  /// Copia trocando apenas o slot — usado ao remarcar (o id e o resto do
+  /// snapshot ficam intactos).
+  Appointment copyWith({DateTime? slot}) {
+    return Appointment(
+      id: id,
+      serviceId: serviceId,
+      serviceName: serviceName,
+      specialistId: specialistId,
+      specialistName: specialistName,
+      slot: slot ?? this.slot,
+      durationMinutes: durationMinutes,
+      priceCents: priceCents,
+    );
+  }
+
   @override
   List<Object?> get props => [
     id,

@@ -28,6 +28,7 @@ class Property extends Equatable {
     this.brokerId = '',
     this.city = '',
     this.photosCount = 0,
+    this.photoAssets = const [],
   });
 
   final String id;
@@ -68,6 +69,25 @@ class Property extends Equatable {
   /// "+12 fotos" no card; nao implica em assets reais.
   final int photosCount;
 
+  /// Caminhos dos assets de foto (relativos ao pacote `feature_showcase`,
+  /// ex.: `assets/realestate/casa1_frente.webp`). Em ordem de angulo
+  /// (frente, lateral, topo). Vazio cai no `SolarPropertyIllustration`
+  /// via `ShowcasePhoto` — entao o painter continua como rede de
+  /// seguranca quando os `.webp` ainda nao existem. Aditivo: default
+  /// vazio preserva compat com testes legados.
+  final List<String> photoAssets;
+
+  /// Caminho do asset de foto da [variant] (angulo) — null quando nao
+  /// ha foto cadastrada pra aquele angulo. Cards usam `coverPhoto`.
+  String? photoAt(int variant) {
+    if (variant < 0 || variant >= photoAssets.length) return null;
+    return photoAssets[variant];
+  }
+
+  /// Foto de capa (primeiro angulo) — usada nos cards. Null quando nao
+  /// ha fotos cadastradas.
+  String? get coverPhoto => photoAssets.isEmpty ? null : photoAssets.first;
+
   /// Preco formatado em BRL ("R\$ 1.250.000,00").
   String get formattedPrice {
     final reais = priceCents / 100;
@@ -107,6 +127,7 @@ class Property extends Equatable {
     brokerId,
     city,
     photosCount,
+    photoAssets,
   ];
 
   @override

@@ -26,11 +26,17 @@ class MiraOrderEntryPage extends StatefulWidget {
   const MiraOrderEntryPage({
     required this.assetId,
     required this.side,
+    this.initialQuantity,
     super.key,
   });
 
   final String assetId;
   final OrderSide side;
+
+  /// Quantidade inicial do form. Quando nula, usa o default de 100.
+  /// Preenchida pelo fluxo de venda direta a partir de uma posicao do
+  /// portfolio (vem com a quantidade total do holding).
+  final int? initialQuantity;
 
   @override
   State<MiraOrderEntryPage> createState() => _MiraOrderEntryPageState();
@@ -44,7 +50,7 @@ class _MiraOrderEntryPageState extends State<MiraOrderEntryPage> {
   @override
   void initState() {
     super.initState();
-    _quantity = 100;
+    _quantity = widget.initialQuantity ?? 100;
     final asset = MiraAssetsCatalog.byId(widget.assetId);
     _limitController = TextEditingController(
       text: (asset.currentPriceCents / 100).toStringAsFixed(2),

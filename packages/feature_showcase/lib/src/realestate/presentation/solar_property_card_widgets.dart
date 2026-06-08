@@ -19,11 +19,19 @@ class _Illustration extends StatelessWidget {
             Positioned.fill(
               child: ColoredBox(
                 color: colors.surfaceMuted,
-                child: SolarPropertyIllustration(
-                  type: property.type,
-                  foregroundColor: colors.primary,
-                  accentColor: colors.accent,
-                  backgroundColor: colors.surface,
+                // Foto de capa quando ha asset; cai no painter da
+                // silhueta enquanto os .webp nao existem.
+                child: ShowcasePhoto(
+                  assetPath: property.coverPhoto,
+                  semanticLabel: property.headline.isEmpty
+                      ? 'Foto do imovel em ${property.neighborhood}'
+                      : property.headline,
+                  fallback: SolarPropertyIllustration(
+                    type: property.type,
+                    foregroundColor: colors.primary,
+                    accentColor: colors.accent,
+                    backgroundColor: colors.surface,
+                  ),
                 ),
               ),
             ),

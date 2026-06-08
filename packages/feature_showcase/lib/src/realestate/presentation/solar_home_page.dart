@@ -10,6 +10,7 @@ import 'package:feature_showcase/src/realestate/presentation/solar_hero_backdrop
 import 'package:feature_showcase/src/realestate/presentation/solar_listings_page.dart';
 import 'package:feature_showcase/src/realestate/presentation/solar_navigation.dart';
 import 'package:feature_showcase/src/realestate/presentation/solar_property_card.dart';
+import 'package:feature_showcase/src/realestate/presentation/solar_saved_action.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -36,6 +37,7 @@ class SolarHomePage extends StatelessWidget {
           icon: const Icon(Icons.close_rounded),
           onPressed: () => Navigator.of(context).maybePop(),
         ),
+        actions: const [SolarSavedAction()],
       ),
       body: MockBodyConstraint(
         child: SafeArea(

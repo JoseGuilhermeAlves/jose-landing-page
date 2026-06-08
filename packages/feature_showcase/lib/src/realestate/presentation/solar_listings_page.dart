@@ -6,6 +6,7 @@ import 'package:feature_showcase/src/realestate/presentation/realestate_state.da
 import 'package:feature_showcase/src/realestate/presentation/solar_app_bar.dart';
 import 'package:feature_showcase/src/realestate/presentation/solar_brand.dart';
 import 'package:feature_showcase/src/realestate/presentation/solar_property_card.dart';
+import 'package:feature_showcase/src/realestate/presentation/solar_saved_action.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -37,6 +38,7 @@ class SolarListingsPage extends StatelessWidget {
               );
             },
           ),
+          const SolarSavedAction(),
         ],
       ),
       body: MockBodyConstraint(

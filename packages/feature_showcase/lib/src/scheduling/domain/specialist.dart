@@ -14,6 +14,7 @@ class Specialist extends Equatable {
     required this.categories,
     required this.rating,
     required this.reviewCount,
+    this.photoAsset,
   });
 
   final String id;
@@ -37,6 +38,14 @@ class Specialist extends Equatable {
   /// Numero de avaliacoes (mock).
   final int reviewCount;
 
+  /// Caminho do asset de headshot (relativo ao pacote `feature_showcase`,
+  /// ex.: `assets/scheduling/sofia_a.webp`). Null cai no
+  /// `VitralSpecialistAvatar` via `ShowcasePhoto` — entao o painter de
+  /// monograma continua como rede de seguranca quando os `.webp` ainda
+  /// nao existem. Aditivo: default null preserva compat com testes
+  /// legados.
+  final String? photoAsset;
+
   /// Categoria principal (primeira da lista).
   ServiceCategory get primaryCategory => categories.first;
 
@@ -58,5 +67,6 @@ class Specialist extends Equatable {
     categories,
     rating,
     reviewCount,
+    photoAsset,
   ];
 }

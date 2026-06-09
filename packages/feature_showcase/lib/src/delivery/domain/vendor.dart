@@ -15,6 +15,7 @@ class Vendor extends Equatable {
     required this.etaMinutes,
     required this.deliveryFeeCents,
     required this.rating,
+    this.photoAsset,
   });
 
   final String id;
@@ -37,6 +38,13 @@ class Vendor extends Equatable {
   /// Nota de 0 a 5 (mock, sem reviews reais).
   final double rating;
 
+  /// Caminho do banner de foto da banca (ex.:
+  /// `assets/delivery/banca_hortifruti.webp`). Null cai na ilustracao
+  /// vetorial (`AuroraProductIllustration`) via `ShowcasePhoto` — entao
+  /// o painter continua como rede de seguranca enquanto os `.webp`
+  /// ainda nao existem. Aditivo: default null preserva compat.
+  final String? photoAsset;
+
   /// Categoria principal (primeira da lista).
   MarketCategory get primaryCategory => categories.first;
 
@@ -58,5 +66,6 @@ class Vendor extends Equatable {
     etaMinutes,
     deliveryFeeCents,
     rating,
+    photoAsset,
   ];
 }

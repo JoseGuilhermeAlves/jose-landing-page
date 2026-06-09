@@ -68,8 +68,8 @@ class _BarbellPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final cy = size.height / 2;
-    final barHeight = 6.0;
-    final sleeveHeight = 12.0;
+    const barHeight = 6.0;
+    const sleeveHeight = 12.0;
     final centerWidth = size.width * 0.42;
     final sleeveWidth = (size.width - centerWidth) / 2;
     final leftSleeveStart = (size.width - centerWidth) / 2 - sleeveWidth;
@@ -101,14 +101,15 @@ class _BarbellPainter extends CustomPainter {
       sleeveWidth,
       sleeveHeight,
     );
-    canvas.drawRRect(
-      RRect.fromRectAndRadius(leftSleeve, const Radius.circular(3)),
-      _sleevePaint,
-    );
-    canvas.drawRRect(
-      RRect.fromRectAndRadius(rightSleeve, const Radius.circular(3)),
-      _sleevePaint,
-    );
+    canvas
+      ..drawRRect(
+        RRect.fromRectAndRadius(leftSleeve, const Radius.circular(3)),
+        _sleevePaint,
+      )
+      ..drawRRect(
+        RRect.fromRectAndRadius(rightSleeve, const Radius.circular(3)),
+        _sleevePaint,
+      );
 
     final perSide = ((totalKg - barWeightKg) / 2).clamp(0, double.infinity);
     final loadout = _packPlates(perSide.toDouble());
@@ -124,26 +125,28 @@ class _BarbellPainter extends CustomPainter {
       _platePaint.color = _plateColor(plate);
       // Esquerda.
       final leftRect = Rect.fromLTWH(leftCursor - width, cy - h / 2, width, h);
-      canvas.drawRRect(
-        RRect.fromRectAndRadius(leftRect, const Radius.circular(3)),
-        _platePaint,
-      );
-      canvas.drawRRect(
-        RRect.fromRectAndRadius(leftRect, const Radius.circular(3)),
-        _plateBorderPaint,
-      );
+      canvas
+        ..drawRRect(
+          RRect.fromRectAndRadius(leftRect, const Radius.circular(3)),
+          _platePaint,
+        )
+        ..drawRRect(
+          RRect.fromRectAndRadius(leftRect, const Radius.circular(3)),
+          _plateBorderPaint,
+        );
       leftCursor -= width + 2;
 
       // Direita (espelho).
       final rightRect = Rect.fromLTWH(rightCursor, cy - h / 2, width, h);
-      canvas.drawRRect(
-        RRect.fromRectAndRadius(rightRect, const Radius.circular(3)),
-        _platePaint,
-      );
-      canvas.drawRRect(
-        RRect.fromRectAndRadius(rightRect, const Radius.circular(3)),
-        _plateBorderPaint,
-      );
+      canvas
+        ..drawRRect(
+          RRect.fromRectAndRadius(rightRect, const Radius.circular(3)),
+          _platePaint,
+        )
+        ..drawRRect(
+          RRect.fromRectAndRadius(rightRect, const Radius.circular(3)),
+          _plateBorderPaint,
+        );
       rightCursor += width + 2;
     }
 

@@ -5,10 +5,13 @@ import 'package:feature_showcase/src/fitness/presentation/fitness_bloc.dart';
 import 'package:feature_showcase/src/fitness/presentation/fitness_brand.dart';
 import 'package:feature_showcase/src/fitness/presentation/fitness_event.dart';
 import 'package:feature_showcase/src/fitness/presentation/fitness_state.dart';
+import 'package:feature_showcase/src/fitness/presentation/painters/pulso_card_backdrop.dart';
 import 'package:feature_showcase/src/fitness/presentation/painters/pulso_recovery_ring.dart';
 import 'package:feature_showcase/src/fitness/presentation/painters/pulso_strain_dial.dart';
 import 'package:feature_showcase/src/fitness/presentation/pulso_copy.dart';
+import 'package:feature_showcase/src/fitness/presentation/pulso_history_page.dart';
 import 'package:feature_showcase/src/fitness/presentation/pulso_session_logger_page.dart';
+import 'package:feature_showcase/src/shared/presentation/showcase_photo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

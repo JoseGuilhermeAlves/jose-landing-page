@@ -1,6 +1,4 @@
 import 'package:design_system/design_system.dart';
-import 'package:feature_showcase/src/shared/presentation/mock_body_constraint.dart';
-import 'package:feature_showcase/src/shared/presentation/mock_section_label.dart';
 import 'package:feature_showcase/src/delivery/data/aurora_vendors_catalog.dart';
 import 'package:feature_showcase/src/delivery/domain/delivery_order.dart';
 import 'package:feature_showcase/src/delivery/domain/market_category.dart';
@@ -19,6 +17,9 @@ import 'package:feature_showcase/src/delivery/presentation/aurora_vendor_detail_
 import 'package:feature_showcase/src/delivery/presentation/delivery_bloc.dart';
 import 'package:feature_showcase/src/delivery/presentation/delivery_event.dart';
 import 'package:feature_showcase/src/delivery/presentation/delivery_state.dart';
+import 'package:feature_showcase/src/shared/presentation/mock_body_constraint.dart';
+import 'package:feature_showcase/src/shared/presentation/mock_section_label.dart';
+import 'package:feature_showcase/src/shared/presentation/showcase_photo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

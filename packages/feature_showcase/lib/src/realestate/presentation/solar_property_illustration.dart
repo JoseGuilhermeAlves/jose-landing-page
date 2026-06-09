@@ -169,31 +169,31 @@ class _SolarPropertyIllustrationPainter extends CustomPainter {
   void _paintHouseFront(Canvas canvas, Size size) {
     final w = size.width;
     final h = size.height;
-    // Gramado.
-    canvas.drawRect(Rect.fromLTWH(0, h * 0.78, w, h * 0.22), _lawnFill);
-    // Sol no canto.
-    canvas.drawCircle(Offset(w * 0.80, h * 0.20), h * 0.06, _accentFill);
+    canvas
+      // Gramado.
+      ..drawRect(Rect.fromLTWH(0, h * 0.78, w, h * 0.22), _lawnFill)
+      // Sol no canto.
+      ..drawCircle(Offset(w * 0.80, h * 0.20), h * 0.06, _accentFill);
 
     final bodyL = w * 0.20;
     final bodyR = w * 0.68;
-    // Sombra de contato sob a casa.
-    canvas.drawOval(
-      Rect.fromCenter(
-        center: Offset((bodyL + bodyR) / 2, h * 0.80),
-        width: (bodyR - bodyL) * 1.25,
-        height: h * 0.05,
-      ),
-      _contactShadowFill,
-    );
-
-    // Corpo.
-    canvas.drawRect(Rect.fromLTRB(bodyL, h * 0.44, bodyR, h * 0.78), _fill);
-
-    // Chamine (atras do telhado).
-    canvas.drawRect(
-      Rect.fromLTWH(w * 0.56, h * 0.24, w * 0.045, h * 0.12),
-      _roofShadeFill,
-    );
+    canvas
+      // Sombra de contato sob a casa.
+      ..drawOval(
+        Rect.fromCenter(
+          center: Offset((bodyL + bodyR) / 2, h * 0.80),
+          width: (bodyR - bodyL) * 1.25,
+          height: h * 0.05,
+        ),
+        _contactShadowFill,
+      )
+      // Corpo.
+      ..drawRect(Rect.fromLTRB(bodyL, h * 0.44, bodyR, h * 0.78), _fill)
+      // Chamine (atras do telhado).
+      ..drawRect(
+        Rect.fromLTWH(w * 0.56, h * 0.24, w * 0.045, h * 0.12),
+        _roofShadeFill,
+      );
 
     // Telhado em duas aguas com beiral (extrapola o corpo).
     final ridgeX = (bodyL + bodyR) / 2;
@@ -244,8 +244,9 @@ class _SolarPropertyIllustrationPainter extends CustomPainter {
   void _paintHousePerspective(Canvas canvas, Size size) {
     final w = size.width;
     final h = size.height;
-    canvas.drawRect(Rect.fromLTWH(0, h * 0.78, w, h * 0.22), _lawnFill);
-    canvas.drawCircle(Offset(w * 0.22, h * 0.20), h * 0.06, _accentFill);
+    canvas
+      ..drawRect(Rect.fromLTWH(0, h * 0.78, w, h * 0.22), _lawnFill)
+      ..drawCircle(Offset(w * 0.22, h * 0.20), h * 0.06, _accentFill);
 
     _paintTree(canvas, Offset(w * 0.86, h * 0.78), h * 0.26);
 
@@ -270,13 +271,13 @@ class _SolarPropertyIllustrationPainter extends CustomPainter {
       ..lineTo(w * 0.70, h * 0.72)
       ..lineTo(faceR, h * faceBottom)
       ..close();
-    canvas.drawPath(side, _roofShadeFill);
-
-    // Fachada.
-    canvas.drawRect(
-      Rect.fromLTRB(faceL, h * faceTop, faceR, h * faceBottom),
-      _fill,
-    );
+    canvas
+      ..drawPath(side, _roofShadeFill)
+      // Fachada.
+      ..drawRect(
+        Rect.fromLTRB(faceL, h * faceTop, faceR, h * faceBottom),
+        _fill,
+      );
 
     // Telhado em fuga (duas faces).
     final roofFront = Path()
@@ -310,14 +311,14 @@ class _SolarPropertyIllustrationPainter extends CustomPainter {
   void _paintHouseAerial(Canvas canvas, Size size) {
     final w = size.width;
     final h = size.height;
-    // Lote inteiro como gramado.
-    canvas.drawRect(Offset.zero & size, _lawnFill);
-
-    // Calcada/entrada.
-    canvas.drawRect(
-      Rect.fromLTWH(w * 0.44, h * 0.74, w * 0.12, h * 0.26),
-      _shadeFill,
-    );
+    canvas
+      // Lote inteiro como gramado.
+      ..drawRect(Offset.zero & size, _lawnFill)
+      // Calcada/entrada.
+      ..drawRect(
+        Rect.fromLTWH(w * 0.44, h * 0.74, w * 0.12, h * 0.26),
+        _shadeFill,
+      );
 
     // Telhado visto de cima — duas aguas separadas pela cumeeira.
     final roofRect = Rect.fromLTWH(w * 0.16, h * 0.18, w * 0.46, h * 0.50);
@@ -348,24 +349,20 @@ class _SolarPropertyIllustrationPainter extends CustomPainter {
           ..color = foregroundColor
           ..style = PaintingStyle.stroke
           ..strokeWidth = 1.6,
-      );
-
-    // Piscina ao lado.
-    canvas.drawRRect(
-      RRect.fromRectAndRadius(
-        Rect.fromLTWH(w * 0.68, h * 0.30, w * 0.20, h * 0.26),
-        const Radius.circular(6),
-      ),
-      Paint()..color = Color.lerp(accentColor, Colors.white, 0.35)!,
-    );
-
-    // Arvores espalhadas (copas vistas de cima).
-    canvas
+      )
+      // Piscina ao lado.
+      ..drawRRect(
+        RRect.fromRectAndRadius(
+          Rect.fromLTWH(w * 0.68, h * 0.30, w * 0.20, h * 0.26),
+          const Radius.circular(6),
+        ),
+        Paint()..color = Color.lerp(accentColor, Colors.white, 0.35)!,
+      )
+      // Arvores espalhadas (copas vistas de cima).
       ..drawCircle(Offset(w * 0.78, h * 0.72), h * 0.07, _lawnDeepFill)
-      ..drawCircle(Offset(w * 0.10, h * 0.40), h * 0.06, _lawnDeepFill);
-
-    // Sol.
-    canvas.drawCircle(Offset(w * 0.88, h * 0.12), h * 0.05, _accentFill);
+      ..drawCircle(Offset(w * 0.10, h * 0.40), h * 0.06, _lawnDeepFill)
+      // Sol.
+      ..drawCircle(Offset(w * 0.88, h * 0.12), h * 0.05, _accentFill);
   }
 
   /// Chacara — casa menor + arvores + horizonte com colina.

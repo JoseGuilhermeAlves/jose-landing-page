@@ -10,6 +10,7 @@ import 'package:feature_showcase/src/fitness/presentation/fitness_state.dart';
 import 'package:feature_showcase/src/fitness/presentation/painters/pulso_set_complete_burst.dart';
 import 'package:feature_showcase/src/fitness/presentation/pulso_copy.dart';
 import 'package:feature_showcase/src/fitness/presentation/pulso_exercise_detail_page.dart';
+import 'package:feature_showcase/src/fitness/presentation/pulso_session_summary_page.dart';
 import 'package:feature_showcase/src/fitness/presentation/pulso_swap_exercise_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -96,11 +97,26 @@ class PulsoSessionLoggerPage extends StatelessWidget {
   }
 
   void _finishSession(BuildContext context) {
-    context.read<FitnessBloc>().add(SessionFinished(now: DateTime.now()));
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Sessão finalizada. Strain registrado.')),
+    final navigator = Navigator.of(context);
+    final bloc = context.read<FitnessBloc>()
+      ..add(SessionFinished(now: DateTime.now()));
+    final session = bloc.state.activeSession;
+    final template = bloc.state.todaysTemplate;
+    // Sem sessao/template congelados (defensivo) — so volta pro Today.
+    if (session == null || template == null) {
+      navigator.pop();
+      return;
+    }
+    // Substitui o logger pelo resumo: o atleta nao volta pro logger via
+    // back, cai direto no Today. O resumo e o payoff do loop de logging.
+    navigator.pushReplacement(
+      MaterialPageRoute<void>(
+        builder: (_) => BlocProvider.value(
+          value: bloc,
+          child: PulsoSessionSummaryPage(session: session, template: template),
+        ),
+      ),
     );
-    Navigator.of(context).pop();
   }
 }
 

@@ -14,8 +14,9 @@ enum MarketUnit {
   final String shortLabel;
 }
 
-/// Item do catalogo Aurora. Sem imagem real — ilustracao via Custom
-/// Painter usando [MarketCategory] como discriminador.
+/// Item do catalogo Aurora. Foto real (`photoAsset`) quando disponivel,
+/// com fallback pra ilustracao via Custom Painter usando
+/// [MarketCategory] como discriminador.
 @immutable
 class MarketItem extends Equatable {
   const MarketItem({
@@ -26,6 +27,8 @@ class MarketItem extends Equatable {
     required this.unit,
     required this.category,
     this.subtitle = '',
+    this.description = '',
+    this.photoAsset,
   });
 
   final String id;
@@ -42,6 +45,16 @@ class MarketItem extends Equatable {
 
   /// Linha curta de catalogo (ex.: "Organico", "Da quinta de Atibaia").
   final String subtitle;
+
+  /// Descricao longa exibida no detalhe do item (sheet). Vazio cai num
+  /// texto generico por categoria. Aditivo: default vazio preserva
+  /// compat com testes legados.
+  final String description;
+
+  /// Caminho da foto do item (ex.: `assets/delivery/banana.webp`). Null
+  /// cai na `AuroraProductIllustration` via `ShowcasePhoto`. Aditivo:
+  /// default null preserva compat.
+  final String? photoAsset;
 
   /// Formatado como "R$ 12,90/kg" quando ha unidade especificada.
   String get formattedPrice {
@@ -60,5 +73,7 @@ class MarketItem extends Equatable {
     unit,
     category,
     subtitle,
+    description,
+    photoAsset,
   ];
 }

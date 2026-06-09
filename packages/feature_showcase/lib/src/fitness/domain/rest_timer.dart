@@ -1,4 +1,6 @@
 import 'package:equatable/equatable.dart';
+import 'package:feature_showcase/feature_showcase.dart' show RestExtended;
+import 'package:feature_showcase/src/fitness/presentation/fitness_event.dart' show RestExtended;
 import 'package:flutter/foundation.dart';
 
 /// Estado do rest timer entre sets. Vive como sub-state do

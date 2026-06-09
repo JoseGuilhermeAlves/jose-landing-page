@@ -116,6 +116,7 @@ class _ProductCard extends StatelessWidget {
   const _ProductCard({
     required this.item,
     required this.quantity,
+    required this.onTap,
     required this.onIncrement,
     required this.onDecrement,
     required this.colors,
@@ -124,6 +125,7 @@ class _ProductCard extends StatelessWidget {
 
   final MarketItem item;
   final int quantity;
+  final VoidCallback onTap;
   final VoidCallback onIncrement;
   final VoidCallback onDecrement;
   final AppColorScheme colors;
@@ -132,74 +134,99 @@ class _ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final inCart = quantity > 0;
-    return Container(
-      padding: const EdgeInsets.all(AppSpacing.md),
-      decoration: BoxDecoration(
-        color: auroraCardFill(colors),
+    final thumb = context.responsive<double>(mobile: 56, desktop: 68);
+    return Material(
+      color: auroraCardFill(colors),
+      borderRadius: BorderRadius.circular(AppRadius.lg),
+      child: InkWell(
+        key: Key('aurora-product-card-${item.id}'),
         borderRadius: BorderRadius.circular(AppRadius.lg),
-        border: Border.all(
-          color: inCart ? colors.primary.withValues(alpha: 0.4) : colors.border,
-        ),
-        boxShadow: auroraCardShadow(colors),
-      ),
-      child: Row(
-        children: [
-          Container(
-            width: context.responsive<double>(mobile: 40, desktop: 48),
-            height: context.responsive<double>(mobile: 40, desktop: 48),
-            decoration: BoxDecoration(
-              color: colors.surfaceMuted,
-              borderRadius: BorderRadius.circular(AppRadius.md),
-            ),
-            padding: const EdgeInsets.all(AppSpacing.xs),
-            child: AuroraProductIllustration(
-              category: item.category,
-              foregroundColor: colors.primary,
-              accentColor: colors.accent,
-            ),
+        onTap: onTap,
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(AppRadius.lg),
+            boxShadow: auroraCardShadow(colors),
           ),
-          const SizedBox(width: AppSpacing.md),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+          child: Container(
+            padding: const EdgeInsets.all(AppSpacing.md),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(AppRadius.lg),
+              border: Border.all(
+                color: inCart
+                    ? colors.primary.withValues(alpha: 0.4)
+                    : colors.border,
+              ),
+            ),
+            child: Row(
               children: [
-                Text(
-                  item.name,
-                  style: textTheme.titleSmall?.copyWith(
-                    color: colors.onSurface,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                if (item.subtitle.isNotEmpty) ...[
-                  const SizedBox(height: 2),
-                  Text(
-                    item.subtitle,
-                    style: textTheme.labelSmall?.copyWith(
-                      color: colors.onSurfaceMuted,
-                      letterSpacing: 0,
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(AppRadius.md),
+                  child: SizedBox(
+                    width: thumb,
+                    height: thumb,
+                    child: ColoredBox(
+                      color: colors.surfaceMuted,
+                      child: ShowcasePhoto(
+                        key: Key('aurora-product-photo-${item.id}'),
+                        assetPath: item.photoAsset,
+                        semanticLabel: item.name,
+                        fallback: Padding(
+                          padding: const EdgeInsets.all(AppSpacing.xs),
+                          child: AuroraProductIllustration(
+                            category: item.category,
+                            foregroundColor: colors.primary,
+                            accentColor: colors.accent,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
-                ],
-                const SizedBox(height: AppSpacing.xxs),
-                Text(
-                  item.formattedPrice,
-                  style: textTheme.labelMedium?.copyWith(
-                    color: colors.primary,
-                    fontWeight: FontWeight.w700,
+                ),
+                const SizedBox(width: AppSpacing.md),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        item.name,
+                        style: textTheme.titleSmall?.copyWith(
+                          color: colors.onSurface,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      if (item.subtitle.isNotEmpty) ...[
+                        const SizedBox(height: 2),
+                        Text(
+                          item.subtitle,
+                          style: textTheme.labelSmall?.copyWith(
+                            color: colors.onSurfaceMuted,
+                            letterSpacing: 0,
+                          ),
+                        ),
+                      ],
+                      const SizedBox(height: AppSpacing.xxs),
+                      Text(
+                        item.formattedPrice,
+                        style: textTheme.labelMedium?.copyWith(
+                          color: colors.primary,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ],
                   ),
+                ),
+                const SizedBox(width: AppSpacing.sm),
+                _QtyStepper(
+                  quantity: quantity,
+                  onIncrement: onIncrement,
+                  onDecrement: onDecrement,
+                  colors: colors,
+                  textTheme: textTheme,
                 ),
               ],
             ),
           ),
-          const SizedBox(width: AppSpacing.sm),
-          _QtyStepper(
-            quantity: quantity,
-            onIncrement: onIncrement,
-            onDecrement: onDecrement,
-            colors: colors,
-            textTheme: textTheme,
-          ),
-        ],
+        ),
       ),
     );
   }
@@ -347,7 +374,7 @@ class _CartBar extends StatelessWidget {
               const SizedBox(width: AppSpacing.md),
               Expanded(
                 child: Text(
-                  'Fazer pedido',
+                  'Continuar',
                   style: textTheme.titleSmall?.copyWith(
                     color: colors.onPrimary,
                     fontWeight: FontWeight.w700,

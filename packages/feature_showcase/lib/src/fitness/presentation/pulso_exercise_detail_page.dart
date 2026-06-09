@@ -2,7 +2,6 @@ import 'dart:math' as math;
 
 import 'package:design_system/design_system.dart';
 import 'package:feature_showcase/src/fitness/data/exercises_catalog.dart';
-import 'package:feature_showcase/src/fitness/presentation/pulso_copy.dart';
 import 'package:feature_showcase/src/fitness/domain/session_template.dart';
 import 'package:feature_showcase/src/fitness/presentation/fitness_bloc.dart';
 import 'package:feature_showcase/src/fitness/presentation/fitness_brand.dart';
@@ -10,6 +9,7 @@ import 'package:feature_showcase/src/fitness/presentation/fitness_state.dart';
 import 'package:feature_showcase/src/fitness/presentation/painters/exercise_load_history_chart.dart';
 import 'package:feature_showcase/src/fitness/presentation/painters/pulso_barbell_loader.dart';
 import 'package:feature_showcase/src/fitness/presentation/painters/pulso_tempo_bars.dart';
+import 'package:feature_showcase/src/fitness/presentation/pulso_copy.dart';
 import 'package:feature_showcase/src/fitness/presentation/pulso_swap_exercise_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -77,7 +77,7 @@ class PulsoExerciseDetailPage extends StatelessWidget {
                   vertical: AppSpacing.lg,
                   horizontal: AppSpacing.md,
                 ),
-                child: PulsoBarbellLoader(totalKg: prescribed, height: 100),
+                child: PulsoBarbellLoader(totalKg: prescribed),
               ),
               const SizedBox(height: AppSpacing.lg),
               _SectionLabel(label: PulsoCopy(context.l10n).eyebrowExecutionTempo),

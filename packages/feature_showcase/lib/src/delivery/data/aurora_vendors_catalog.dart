@@ -13,6 +13,7 @@ abstract final class AuroraVendorsCatalog {
       etaMinutes: 35,
       deliveryFeeCents: 690,
       rating: 4.8,
+      photoAsset: 'assets/delivery/banca_hortifruti.webp',
     ),
     Vendor(
       id: 'v-padaria-centro',
@@ -22,6 +23,7 @@ abstract final class AuroraVendorsCatalog {
       etaMinutes: 25,
       deliveryFeeCents: 590,
       rating: 4.9,
+      photoAsset: 'assets/delivery/padaria.webp',
     ),
     Vendor(
       id: 'v-queijaria',
@@ -31,6 +33,7 @@ abstract final class AuroraVendorsCatalog {
       etaMinutes: 50,
       deliveryFeeCents: 990,
       rating: 4.7,
+      photoAsset: 'assets/delivery/queijaria.webp',
     ),
     Vendor(
       id: 'v-empório-aurora',
@@ -40,6 +43,7 @@ abstract final class AuroraVendorsCatalog {
       etaMinutes: 40,
       deliveryFeeCents: 0,
       rating: 4.6,
+      photoAsset: 'assets/delivery/emporio.webp',
     ),
     Vendor(
       id: 'v-feira-itinerante',
@@ -49,6 +53,7 @@ abstract final class AuroraVendorsCatalog {
       etaMinutes: 60,
       deliveryFeeCents: 0,
       rating: 4.5,
+      photoAsset: 'assets/delivery/feira.webp',
     ),
     Vendor(
       id: 'v-padoca-bairro',
@@ -58,6 +63,7 @@ abstract final class AuroraVendorsCatalog {
       etaMinutes: 20,
       deliveryFeeCents: 490,
       rating: 4.8,
+      photoAsset: 'assets/delivery/padoca.webp',
     ),
   ];
 

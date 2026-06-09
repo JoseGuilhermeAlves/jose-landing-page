@@ -15,7 +15,7 @@ abstract final class RecoveryCatalog {
     final today = referenceDate ?? DateTime.now();
     final base = DateTime(today.year, today.month, today.day);
     final samples = <_Sample>[
-      _Sample(
+      const _Sample(
         offsetDays: -6,
         recovery: 72,
         hrv: 58,
@@ -38,7 +38,7 @@ abstract final class RecoveryCatalog {
           MuscleGroup.core: 85,
         },
       ),
-      _Sample(
+      const _Sample(
         offsetDays: -5,
         recovery: 65,
         hrv: 52,
@@ -61,7 +61,7 @@ abstract final class RecoveryCatalog {
           MuscleGroup.core: 80,
         },
       ),
-      _Sample(
+      const _Sample(
         offsetDays: -4,
         recovery: 58,
         hrv: 47,
@@ -84,7 +84,7 @@ abstract final class RecoveryCatalog {
           MuscleGroup.core: 68,
         },
       ),
-      _Sample(
+      const _Sample(
         offsetDays: -3,
         recovery: 81,
         hrv: 64,
@@ -107,7 +107,7 @@ abstract final class RecoveryCatalog {
           MuscleGroup.core: 92,
         },
       ),
-      _Sample(
+      const _Sample(
         offsetDays: -2,
         recovery: 75,
         hrv: 60,
@@ -130,7 +130,7 @@ abstract final class RecoveryCatalog {
           MuscleGroup.core: 85,
         },
       ),
-      _Sample(
+      const _Sample(
         offsetDays: -1,
         recovery: 68,
         hrv: 55,
@@ -153,7 +153,7 @@ abstract final class RecoveryCatalog {
           MuscleGroup.core: 78,
         },
       ),
-      _Sample(
+      const _Sample(
         offsetDays: 0,
         recovery: 79,
         hrv: 62,

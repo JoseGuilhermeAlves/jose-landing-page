@@ -101,7 +101,7 @@ class _TempoBarsPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     const gap = 6.0;
-    final barHeight = 14.0;
+    const barHeight = 14.0;
     final barY = (size.height - barHeight) / 2;
     final total = tempo.fold<int>(0, (acc, v) => acc + v);
     if (total == 0) return;
@@ -169,8 +169,8 @@ class _TempoBarsPainter extends CustomPainter {
         final secs = TextPainter(
           text: TextSpan(
             text: tempo[i].toString(),
-            style: TextStyle(
-              color: const Color(0xFFF2F2F5),
+            style: const TextStyle(
+              color: Color(0xFFF2F2F5),
               fontSize: 13,
               fontWeight: FontWeight.w600,
               fontFamily: FitnessBrand.displayMonoFontFamily,

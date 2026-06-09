@@ -69,7 +69,9 @@ class FitnessBloc extends Bloc<FitnessEvent, FitnessState> {
   }
 
   void _onSessionStarted(SessionStarted event, Emitter<FitnessState> emit) {
-    if (state.activeSession != null) return;
+    // So bloqueia se ja ha sessao *em andamento*. Uma sessao congelada
+    // (finishedAt setado) ja foi arquivada — pode iniciar a proxima.
+    if (state.activeSession?.isLive ?? false) return;
     final template = state.program.sessionForToday(event.weekday);
     if (template == null) return;
     final week = state.program.currentWeek;
@@ -110,17 +112,18 @@ class FitnessBloc extends Bloc<FitnessEvent, FitnessState> {
       }
     }
     if (!found) {
-      existingSets.add(
-        SetEntry(
-          id: '${event.exerciseId}-${event.setIndex}',
-          index: event.setIndex,
-          weightKg: event.weightKg,
-          reps: event.reps,
-          rpe: event.rpe,
-          completed: event.completed,
-        ),
-      );
-      existingSets.sort((a, b) => a.index.compareTo(b.index));
+      existingSets
+        ..add(
+          SetEntry(
+            id: '${event.exerciseId}-${event.setIndex}',
+            index: event.setIndex,
+            weightKg: event.weightKg,
+            reps: event.reps,
+            rpe: event.rpe,
+            completed: event.completed,
+          ),
+        )
+        ..sort((a, b) => a.index.compareTo(b.index));
     }
     final nextSets = Map<String, List<SetEntry>>.from(session.sets);
     nextSets[event.exerciseId] = existingSets;
@@ -158,7 +161,7 @@ class FitnessBloc extends Bloc<FitnessEvent, FitnessState> {
     final swaps = Map<String, String>.from(state.lastSwaps);
     swaps[event.originalExerciseId] = event.replacementExerciseId;
     final session = state.activeSession;
-    LoggedSession? Function() activeFn = () => session;
+    var activeFn = () => session;
     if (session != null) {
       final sessionSwaps = Map<String, String>.from(session.swappedExercises);
       sessionSwaps[event.originalExerciseId] = event.replacementExerciseId;
@@ -171,10 +174,21 @@ class FitnessBloc extends Bloc<FitnessEvent, FitnessState> {
     final session = state.activeSession;
     if (session == null) return;
     _cancelRestTimer();
+    final finished = session.copyWith(finishedAt: event.now);
+    // Arquiva no historico (mais recente primeiro), substituindo
+    // qualquer entrada com o mesmo id pra que finalizar de novo nao
+    // duplique. `activeSession` continua apontando pra sessao congelada
+    // — o resumo pos-treino le dela e o Today renderiza o CTA de novo
+    // so quando uma nova sessao e iniciada.
+    final history = [
+      finished,
+      ...state.completedSessions.where((s) => s.id != finished.id),
+    ];
     emit(
       state.copyWith(
-        activeSession: () => session.copyWith(finishedAt: event.now),
+        activeSession: () => finished,
         restTimer: () => null,
+        completedSessions: history,
       ),
     );
   }

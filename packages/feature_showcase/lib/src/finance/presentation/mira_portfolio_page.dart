@@ -1,5 +1,4 @@
 import 'package:design_system/design_system.dart';
-import 'package:feature_showcase/src/shared/presentation/mock_body_constraint.dart';
 import 'package:feature_showcase/src/finance/data/mira_assets_catalog.dart';
 import 'package:feature_showcase/src/finance/domain/asset.dart';
 import 'package:feature_showcase/src/finance/domain/order_side.dart';
@@ -14,6 +13,7 @@ import 'package:feature_showcase/src/finance/presentation/mira_change_pill.dart'
 import 'package:feature_showcase/src/finance/presentation/mira_navigation.dart';
 import 'package:feature_showcase/src/finance/presentation/mira_order_entry_page.dart';
 import 'package:feature_showcase/src/finance/util/mira_format.dart';
+import 'package:feature_showcase/src/shared/presentation/mock_body_constraint.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

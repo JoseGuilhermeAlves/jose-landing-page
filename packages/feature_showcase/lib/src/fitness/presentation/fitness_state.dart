@@ -22,6 +22,7 @@ class FitnessState extends Equatable {
     this.activeSession,
     this.lastSwaps = const {},
     this.restTimer,
+    this.completedSessions = const [],
   });
 
   /// Mesociclo carregado do catalogo.
@@ -54,6 +55,13 @@ class FitnessState extends Equatable {
   /// migrou pro bloc pra eliminar gambiarra de `Timer.periodic` no
   /// widget.
   final RestTimer? restTimer;
+
+  /// Sessoes finalizadas nesta sessao de uso, da mais recente pra mais
+  /// antiga. Cada `SessionFinished` arquiva a sessao ativa aqui pra que
+  /// o historico (`PulsoHistoryPage`) e o resumo pos-treino tenham uma
+  /// fonte de leitura. Vazio no inicio — o mock comeca sem treinos
+  /// registrados na sessao corrente.
+  final List<LoggedSession> completedSessions;
 
   /// Snapshot do dia mais recente — usado no hero do TodayPage.
   RecoverySnapshot get todaySnapshot => recoveryHistory.last;
@@ -139,6 +147,7 @@ class FitnessState extends Equatable {
     LoggedSession? Function()? activeSession,
     Map<String, String>? lastSwaps,
     RestTimer? Function()? restTimer,
+    List<LoggedSession>? completedSessions,
   }) {
     return FitnessState(
       program: program ?? this.program,
@@ -152,6 +161,7 @@ class FitnessState extends Equatable {
           : this.activeSession,
       lastSwaps: lastSwaps ?? this.lastSwaps,
       restTimer: restTimer != null ? restTimer() : this.restTimer,
+      completedSessions: completedSessions ?? this.completedSessions,
     );
   }
 
@@ -165,5 +175,6 @@ class FitnessState extends Equatable {
     activeSession,
     lastSwaps,
     restTimer,
+    completedSessions,
   ];
 }

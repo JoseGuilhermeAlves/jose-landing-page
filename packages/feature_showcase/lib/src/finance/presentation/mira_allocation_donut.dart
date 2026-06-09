@@ -156,7 +156,7 @@ class _MiraDonutPainter extends CustomPainter {
       final sliceSweep = (slice.weight / totalWeight) * 2 * math.pi;
       // Tira a folga do sweep visivel, deixando metade de cada lado, e
       // nunca deixa o trecho ficar negativo em slices muito finos.
-      final visibleSweep = math.max(0.0, sliceSweep - gap);
+      final visibleSweep = math.max(0, sliceSweep - gap);
       final sweep = visibleSweep * p;
       if (sweep <= 0) {
         startAngle += sliceSweep;

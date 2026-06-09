@@ -75,11 +75,12 @@ class _PulsoCardBackdropPainter extends CustomPainter {
     // Glow central pulsante.
     final t = progress.value;
     final pulse = 0.7 + 0.3 * math.sin(t * math.pi * 2);
-    canvas.save();
-    canvas.translate(size.width * 0.62, size.height * 0.52);
-    canvas.scale(pulse);
-    canvas.drawCircle(Offset.zero, 60, _glowPaint);
-    canvas.restore();
+    canvas
+      ..save()
+      ..translate(size.width * 0.62, size.height * 0.52)
+      ..scale(pulse)
+      ..drawCircle(Offset.zero, 60, _glowPaint)
+      ..restore();
 
     // Sweep horizontal lento — varre uma faixa luminosa de cima a baixo.
     final sweepY = (t * size.height * 1.4) - 30;
@@ -111,6 +112,5 @@ class _PulsoCardBackdropPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(_PulsoCardBackdropPainter old) =>
-      old.progress != progress;
+  bool shouldRepaint(_PulsoCardBackdropPainter old) => old.progress != progress;
 }

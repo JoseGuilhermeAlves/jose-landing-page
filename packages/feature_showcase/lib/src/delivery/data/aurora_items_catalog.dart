@@ -14,6 +14,11 @@ abstract final class AuroraItemsCatalog {
       unit: MarketUnit.kg,
       category: MarketCategory.fruits,
       subtitle: 'Madura, doce',
+      description:
+          'Banana prata colhida no ponto na quinta de Atibaia. Casca '
+          'firme, polpa doce — boa pra comer in natura ou amassar na '
+          'vitamina da manhã.',
+      photoAsset: 'assets/delivery/banana.webp',
     ),
     MarketItem(
       id: 'i-maca',
@@ -23,6 +28,10 @@ abstract final class AuroraItemsCatalog {
       unit: MarketUnit.kg,
       category: MarketCategory.fruits,
       subtitle: 'Crocante',
+      description:
+          'Maçã fuji crocante e suculenta, com aquele equilíbrio entre '
+          'doce e levemente ácido. Selecionada uma a uma na banca.',
+      photoAsset: 'assets/delivery/maca.webp',
     ),
     MarketItem(
       id: 'i-laranja',
@@ -32,6 +41,10 @@ abstract final class AuroraItemsCatalog {
       unit: MarketUnit.kg,
       category: MarketCategory.fruits,
       subtitle: 'Suco fresco',
+      description:
+          'Laranja pera de mesa, casca fina e bem suculenta. Rende um '
+          'suco fresco generoso — e o açúcar vem da própria fruta.',
+      photoAsset: 'assets/delivery/laranja.webp',
     ),
     MarketItem(
       id: 'i-alface',
@@ -41,6 +54,10 @@ abstract final class AuroraItemsCatalog {
       unit: MarketUnit.unit,
       category: MarketCategory.greens,
       subtitle: 'Folhas firmes',
+      description:
+          'Pé de alface crespa colhido pela manhã, folhas firmes e sem '
+          'murchar. Lavada e pronta pra montar a salada do almoço.',
+      photoAsset: 'assets/delivery/alface.webp',
     ),
     MarketItem(
       id: 'i-tomate',
@@ -50,6 +67,10 @@ abstract final class AuroraItemsCatalog {
       unit: MarketUnit.kg,
       category: MarketCategory.greens,
       subtitle: 'Pra molho',
+      description:
+          'Tomate italiano maduro, polpa carnuda e poucas sementes — o '
+          'preferido pra molho lento de domingo.',
+      photoAsset: 'assets/delivery/tomate.webp',
     ),
     MarketItem(
       id: 'i-cenoura',
@@ -59,6 +80,10 @@ abstract final class AuroraItemsCatalog {
       unit: MarketUnit.kg,
       category: MarketCategory.greens,
       subtitle: 'Boa pra refogar',
+      description:
+          'Cenoura fresca de raiz lisa, doce no ponto certo. Ótima '
+          'refogada, no bolo ou ralada na salada.',
+      photoAsset: 'assets/delivery/cenoura.webp',
     ),
 
     // Padaria do Centro
@@ -70,6 +95,10 @@ abstract final class AuroraItemsCatalog {
       unit: MarketUnit.kg,
       category: MarketCategory.bakery,
       subtitle: 'Saido do forno',
+      description:
+          'Pão francês de casca dourada e miolo macio, assado em fornadas '
+          'ao longo do dia. Vai quentinho na sacola.',
+      photoAsset: 'assets/delivery/pao_frances.webp',
     ),
     MarketItem(
       id: 'i-baguete',
@@ -79,6 +108,10 @@ abstract final class AuroraItemsCatalog {
       unit: MarketUnit.unit,
       category: MarketCategory.bakery,
       subtitle: 'Fermentacao natural',
+      description:
+          'Baguete de fermentação natural, crosta crocante e alvéolos '
+          'abertos. Levou mais de 18 horas de descanso da massa.',
+      photoAsset: 'assets/delivery/baguete.webp',
     ),
 
     // Queijaria da Serra
@@ -90,6 +123,10 @@ abstract final class AuroraItemsCatalog {
       unit: MarketUnit.kg,
       category: MarketCategory.dairy,
       subtitle: 'Da serra de Minas',
+      description:
+          'Queijo minas frescal artesanal, leve e levemente salgado. '
+          'Produzido em pequenos lotes na serra mineira.',
+      photoAsset: 'assets/delivery/queijo_minas.webp',
     ),
     MarketItem(
       id: 'i-manteiga',
@@ -99,6 +136,10 @@ abstract final class AuroraItemsCatalog {
       unit: MarketUnit.pack,
       category: MarketCategory.dairy,
       subtitle: 'Pote de 250g',
+      description:
+          'Manteiga artesanal batida em pequenas porções, sabor encorpado '
+          'e textura cremosa. Pote de 250g.',
+      photoAsset: 'assets/delivery/manteiga.webp',
     ),
 
     // Emporio Aurora
@@ -110,6 +151,10 @@ abstract final class AuroraItemsCatalog {
       unit: MarketUnit.kg,
       category: MarketCategory.pantry,
       subtitle: 'A granel',
+      description:
+          'Feijão carioca a granel, safra nova e grão graúdo. Cozinha '
+          'rápido e fica no caldo cremoso de sempre.',
+      photoAsset: 'assets/delivery/feijao.webp',
     ),
     MarketItem(
       id: 'i-azeite',
@@ -119,6 +164,10 @@ abstract final class AuroraItemsCatalog {
       unit: MarketUnit.pack,
       category: MarketCategory.pantry,
       subtitle: 'Garrafa 500ml',
+      description:
+          'Azeite extra virgem de acidez baixa, frutado e marcante. '
+          'Garrafa escura de 500ml pra preservar o aroma.',
+      photoAsset: 'assets/delivery/azeite.webp',
     ),
 
     // Feira Itinerante — caixote da semana
@@ -130,6 +179,11 @@ abstract final class AuroraItemsCatalog {
       unit: MarketUnit.pack,
       category: MarketCategory.fruits,
       subtitle: 'Sortimento sazonal',
+      description:
+          'Caixote sortido com o melhor da semana — frutas e verduras da '
+          'estação, escolhidas pela feira. A composição muda conforme a '
+          'colheita.',
+      photoAsset: 'assets/delivery/caixote.webp',
     ),
 
     // Padoca do Bairro
@@ -141,6 +195,10 @@ abstract final class AuroraItemsCatalog {
       unit: MarketUnit.unit,
       category: MarketCategory.bakery,
       subtitle: 'Recheado',
+      description:
+          'Pão doce fofinho com recheio cremoso, daqueles que somem antes '
+          'do café esfriar. Saído do forno da padoca.',
+      photoAsset: 'assets/delivery/pao_doce.webp',
     ),
   ];
 

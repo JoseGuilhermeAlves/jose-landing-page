@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:feature_showcase/src/delivery/data/aurora_checkout_catalog.dart';
 import 'package:feature_showcase/src/delivery/data/aurora_items_catalog.dart';
 import 'package:feature_showcase/src/delivery/data/aurora_vendors_catalog.dart';
 import 'package:feature_showcase/src/delivery/domain/delivery_order.dart';
@@ -143,6 +144,16 @@ class DeliveryBloc extends Bloc<DeliveryEvent, DeliveryState> {
       (sum, li) => sum + li.subtotalCents,
     );
 
+    // Sem checkout: usa o endereco/pagamento default do catalogo pra o
+    // pedido nunca sair sem essas linhas. Com checkout: usa o que o
+    // cliente escolheu.
+    final addressLine = event.addressLine.isNotEmpty
+        ? event.addressLine
+        : AuroraCheckoutCatalog.addresses.first.oneLine;
+    final paymentLabel = event.paymentLabel.isNotEmpty
+        ? event.paymentLabel
+        : AuroraCheckoutCatalog.paymentMethods.first.oneLine;
+
     final orderId = '#A-${_orderCounter++}';
     final order = DeliveryOrder(
       id: orderId,
@@ -153,8 +164,10 @@ class DeliveryBloc extends Bloc<DeliveryEvent, DeliveryState> {
       vendorId: vendor.id,
       lineItems: lineItems,
       totalCents: subtotalCents + vendor.deliveryFeeCents,
-      addressLine: 'Rua das Palmeiras, 240 · Pinheiros · SP',
+      addressLine: addressLine,
       placedAtLabel: 'Agora',
+      paymentLabel: paymentLabel,
+      notes: event.notes,
     );
 
     emit(state.copyWith(orders: [order, ...state.orders]));

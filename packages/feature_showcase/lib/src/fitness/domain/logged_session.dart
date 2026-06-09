@@ -1,4 +1,6 @@
 import 'package:equatable/equatable.dart';
+import 'package:feature_showcase/feature_showcase.dart' show SessionTemplate;
+import 'package:feature_showcase/src/fitness/domain/session_template.dart' show SessionTemplate;
 import 'package:feature_showcase/src/fitness/domain/set_entry.dart';
 import 'package:flutter/foundation.dart';
 
@@ -45,7 +47,7 @@ class LoggedSession extends Equatable {
   bool get isLive => finishedAt == null;
 
   Duration? get duration =>
-      finishedAt == null ? null : finishedAt!.difference(startedAt);
+      finishedAt?.difference(startedAt);
 
   /// Total de sets concluidos na sessao (independente do exercicio).
   int get completedSetsCount {

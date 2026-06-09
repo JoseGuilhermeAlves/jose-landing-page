@@ -370,7 +370,6 @@ class _SolarFloorPlanPainter extends CustomPainter {
       // Sala — 50% da faixa superior. Porta na base, para o hall.
       _Room(
         kind: _RoomKind.living,
-        door: _DoorWall.bottom,
         rect: Rect.fromLTWH(houseLeft, houseTop, houseW * 0.50, topRowH),
       ),
       // Cozinha — 32%. Porta a esquerda, comunicando com a sala.
@@ -429,8 +428,6 @@ class _SolarFloorPlanPainter extends CustomPainter {
       rooms.add(
         _Room(
           kind: _RoomKind.balcony,
-          // Varanda abre pra baixo, comunicando com a sala.
-          door: _DoorWall.bottom,
           rect: Rect.fromLTRB(
             houseLeft,
             houseTop - 0.06,

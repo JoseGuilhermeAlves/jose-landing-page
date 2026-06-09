@@ -30,18 +30,39 @@ class DeliveryOrderPlaced extends DeliveryEvent {
 }
 
 /// Cria pedido a partir de selecao manual de itens (carrinho).
-/// [quantities] mapeia `itemId` → quantidade selecionada.
+/// [quantities] mapeia `itemId` → quantidade selecionada. Os campos de
+/// checkout ([addressLine], [paymentLabel], [notes]) sao opcionais —
+/// quando vazios o bloc usa o endereco/pagamento default do mock,
+/// preservando compat com chamadas que pulam o checkout.
 class DeliveryOrderPlacedWithCart extends DeliveryEvent {
   const DeliveryOrderPlacedWithCart({
     required this.vendorId,
     required this.quantities,
+    this.addressLine = '',
+    this.paymentLabel = '',
+    this.notes = '',
   });
 
   final String vendorId;
   final Map<String, int> quantities;
 
+  /// Endereco de entrega escolhido no checkout. Vazio = default do mock.
+  final String addressLine;
+
+  /// Forma de pagamento escolhida no checkout. Vazio = default do mock.
+  final String paymentLabel;
+
+  /// Observacao do pedido. Vazio = sem nota.
+  final String notes;
+
   @override
-  List<Object?> get props => [vendorId, quantities];
+  List<Object?> get props => [
+    vendorId,
+    quantities,
+    addressLine,
+    paymentLabel,
+    notes,
+  ];
 }
 
 /// Cancela o pedido com `orderId`. Marca status como `cancelled` (que

@@ -16,7 +16,6 @@ abstract final class ExercisesCatalog {
     targetSets: 4,
     targetReps: 8,
     suggestedWeightKg: 80,
-    tempoSeconds: [2, 1, 2, 1],
     restSeconds: 120,
     alternateIds: ['incline-db-press', 'cable-fly'],
   );
@@ -29,7 +28,6 @@ abstract final class ExercisesCatalog {
     targetReps: 10,
     suggestedWeightKg: 28,
     tempoSeconds: [2, 1, 1, 1],
-    restSeconds: 90,
     alternateIds: ['bench-press', 'cable-fly'],
   );
 
@@ -125,7 +123,6 @@ abstract final class ExercisesCatalog {
     targetReps: 12,
     suggestedWeightKg: 60,
     tempoSeconds: [2, 1, 1, 1],
-    restSeconds: 90,
     alternateIds: ['pull-up', 'cable-row'],
   );
 
@@ -149,7 +146,6 @@ abstract final class ExercisesCatalog {
     targetReps: 12,
     suggestedWeightKg: 55,
     tempoSeconds: [2, 1, 1, 1],
-    restSeconds: 90,
     alternateIds: ['barbell-row', 'lat-pulldown'],
   );
 
@@ -249,7 +245,6 @@ abstract final class ExercisesCatalog {
     targetReps: 12,
     suggestedWeightKg: 20,
     tempoSeconds: [2, 0, 1, 0],
-    restSeconds: 90,
     alternateIds: ['leg-press', 'back-squat'],
   );
 
@@ -298,7 +293,6 @@ abstract final class ExercisesCatalog {
     suggestedWeightKg: 60,
     tempoSeconds: [2, 1, 1, 1],
     restSeconds: 60,
-    alternateIds: [],
   );
 
   static const PlannedExercise hangingLegRaise = PlannedExercise(

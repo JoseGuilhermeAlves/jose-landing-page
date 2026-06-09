@@ -165,5 +165,83 @@ void main() {
         },
       );
     });
+
+    group('SchedulingAppointmentRescheduled', () {
+      final appointment = Appointment(
+        id: 'VIT-0001',
+        serviceId: 'sv-discovery',
+        serviceName: 'Discovery 1h',
+        specialistId: 's-sofia',
+        specialistName: 'Sofia A.',
+        slot: morning,
+        durationMinutes: 60,
+        priceCents: 28000,
+      );
+
+      blocTest<SchedulingBloc, SchedulingState>(
+        'move o appt pro novo slot e troca a reserva',
+        build: makeBloc,
+        act: (bloc) => bloc
+          ..add(SchedulingAppointmentConfirmed(appointment))
+          ..add(
+            SchedulingAppointmentRescheduled(
+              appointmentId: 'VIT-0001',
+              newSlot: afternoon,
+            ),
+          ),
+        verify: (bloc) {
+          expect(bloc.state.confirmedAppointments.single.slot, afternoon);
+          expect(bloc.state.userBookedSlots, contains(afternoon));
+          expect(bloc.state.userBookedSlots, isNot(contains(morning)));
+        },
+      );
+
+      blocTest<SchedulingBloc, SchedulingState>(
+        'reagendar pro mesmo slot eh no-op',
+        build: makeBloc,
+        act: (bloc) => bloc
+          ..add(SchedulingAppointmentConfirmed(appointment))
+          ..add(
+            SchedulingAppointmentRescheduled(
+              appointmentId: 'VIT-0001',
+              newSlot: morning,
+            ),
+          ),
+        verify: (bloc) =>
+            expect(bloc.state.confirmedAppointments.single.slot, morning),
+      );
+
+      blocTest<SchedulingBloc, SchedulingState>(
+        'reagendar pra slot pre-bloqueado eh no-op',
+        build: () => makeBloc(preBooked: {afternoon}),
+        act: (bloc) => bloc
+          ..add(SchedulingAppointmentConfirmed(appointment))
+          ..add(
+            SchedulingAppointmentRescheduled(
+              appointmentId: 'VIT-0001',
+              newSlot: afternoon,
+            ),
+          ),
+        verify: (bloc) {
+          expect(bloc.state.confirmedAppointments.single.slot, morning);
+          expect(bloc.state.userBookedSlots, contains(morning));
+        },
+      );
+
+      blocTest<SchedulingBloc, SchedulingState>(
+        'reagendar id desconhecido eh no-op',
+        build: makeBloc,
+        act: (bloc) => bloc
+          ..add(SchedulingAppointmentConfirmed(appointment))
+          ..add(
+            SchedulingAppointmentRescheduled(
+              appointmentId: 'VIT-9999',
+              newSlot: afternoon,
+            ),
+          ),
+        verify: (bloc) =>
+            expect(bloc.state.confirmedAppointments.single.slot, morning),
+      );
+    });
   });
 }

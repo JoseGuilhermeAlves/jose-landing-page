@@ -406,11 +406,13 @@ class _VendorsList extends StatelessWidget {
   }
 }
 
-/// Card de banca reutilizado pela home e pela lista de lojas. Mostra
-/// ilustracao da categoria principal + nome + tagline + ETA + frete.
-/// Tap (default) abre o detalhe da banca com produtos e carrinho — o
-/// mesmo destino da lista de lojas. Quem precisar de outro destino
-/// passa `onTap` explicito.
+/// Card de banca reutilizado pela home e pela lista de lojas. Lidera
+/// com um banner de foto da banca (`ShowcasePhoto`, cai na
+/// `AuroraProductIllustration` enquanto o `.webp` nao existe), nome +
+/// tagline sobre o banner e uma faixa inferior com ETA + frete +
+/// rating. Tap (default) abre o detalhe da banca com produtos e
+/// carrinho — o mesmo destino da lista de lojas. Quem precisar de outro
+/// destino passa `onTap` explicito.
 class AuroraVendorCard extends StatelessWidget {
   const AuroraVendorCard({required this.vendor, this.onTap, super.key});
 
@@ -443,98 +445,165 @@ class AuroraVendorCard extends StatelessWidget {
             boxShadow: auroraCardShadow(colors),
           ),
           child: Container(
-            padding: const EdgeInsets.all(AppSpacing.md),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(AppRadius.lg),
               border: Border.all(color: colors.border),
             ),
-            child: Row(
-              children: [
-                Container(
-                  width: context.responsive<double>(mobile: 48, desktop: 64),
-                  height: context.responsive<double>(mobile: 48, desktop: 64),
-                  decoration: BoxDecoration(
-                    color: colors.surfaceMuted,
-                    borderRadius: BorderRadius.circular(AppRadius.md),
-                  ),
-                  padding: const EdgeInsets.all(AppSpacing.sm),
-                  child: AuroraProductIllustration(
-                    category: vendor.primaryCategory,
-                    foregroundColor: colors.primary,
-                    accentColor: colors.accent,
-                  ),
-                ),
-                const SizedBox(width: AppSpacing.md),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        vendor.name,
-                        style: textTheme.titleSmall?.copyWith(
-                          color: colors.onSurface,
-                          fontFamily: AuroraBrand.displayFontFamily,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      const SizedBox(height: 2),
-                      Text(
-                        vendor.tagline,
-                        style: textTheme.labelSmall?.copyWith(
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(AppRadius.lg),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  AuroraVendorBanner(vendor: vendor, colors: colors),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(
+                      AppSpacing.md,
+                      AppSpacing.sm,
+                      AppSpacing.md,
+                      AppSpacing.md,
+                    ),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.schedule_outlined,
+                          size: 13,
                           color: colors.onSurfaceMuted,
-                          letterSpacing: 0,
-                          height: 1.35,
                         ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      const SizedBox(height: AppSpacing.xs),
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.schedule_outlined,
-                            size: 12,
+                        const SizedBox(width: 4),
+                        Text(
+                          '${vendor.etaMinutes} min',
+                          style: textTheme.labelSmall?.copyWith(
                             color: colors.onSurfaceMuted,
                           ),
-                          const SizedBox(width: 4),
-                          Text(
-                            '${vendor.etaMinutes} min',
-                            style: textTheme.labelSmall?.copyWith(
-                              color: colors.onSurfaceMuted,
-                            ),
+                        ),
+                        const SizedBox(width: AppSpacing.sm),
+                        Icon(
+                          Icons.local_shipping_outlined,
+                          size: 13,
+                          color: colors.onSurfaceMuted,
+                        ),
+                        const SizedBox(width: 4),
+                        Text(
+                          vendor.formattedDeliveryFee,
+                          style: textTheme.labelSmall?.copyWith(
+                            color: vendor.deliveryFeeCents == 0
+                                ? colors.primary
+                                : colors.onSurfaceMuted,
+                            fontWeight: vendor.deliveryFeeCents == 0
+                                ? FontWeight.w700
+                                : FontWeight.w400,
                           ),
-                          const SizedBox(width: AppSpacing.sm),
-                          Icon(
-                            Icons.local_shipping_outlined,
-                            size: 12,
-                            color: colors.onSurfaceMuted,
+                        ),
+                        const Spacer(),
+                        Icon(Icons.star_rounded, size: 14, color: colors.accent),
+                        const SizedBox(width: 2),
+                        Text(
+                          vendor.rating.toStringAsFixed(1),
+                          style: textTheme.labelSmall?.copyWith(
+                            color: colors.onSurface,
+                            fontWeight: FontWeight.w700,
                           ),
-                          const SizedBox(width: 4),
-                          Text(
-                            vendor.formattedDeliveryFee,
-                            style: textTheme.labelSmall?.copyWith(
-                              color: vendor.deliveryFeeCents == 0
-                                  ? colors.primary
-                                  : colors.onSurfaceMuted,
-                              fontWeight: vendor.deliveryFeeCents == 0
-                                  ? FontWeight.w700
-                                  : FontWeight.w400,
-                            ),
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Banner superior do card de banca — foto real (`ShowcasePhoto`) com
+/// nome + tagline em overlay sobre um scrim escuro. Cai na
+/// `AuroraProductIllustration` da categoria principal enquanto o
+/// `.webp` nao existe, entao o painter continua como rede de seguranca.
+class AuroraVendorBanner extends StatelessWidget {
+  const AuroraVendorBanner({
+    required this.vendor,
+    required this.colors,
+    super.key,
+  });
+
+  final Vendor vendor;
+  final AppColorScheme colors;
+
+  @override
+  Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+    return AspectRatio(
+      aspectRatio: context.responsive(mobile: 2.6, desktop: 3),
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          ColoredBox(
+            color: colors.surfaceMuted,
+            child: ShowcasePhoto(
+              key: Key('aurora-vendor-photo-${vendor.id}'),
+              assetPath: vendor.photoAsset,
+              semanticLabel: 'Banca ${vendor.name}',
+              fallback: Padding(
+                padding: const EdgeInsets.all(AppSpacing.lg),
+                child: AuroraProductIllustration(
+                  category: vendor.primaryCategory,
+                  foregroundColor: colors.primary,
+                  accentColor: colors.accent,
+                ),
+              ),
+            ),
+          ),
+          // Scrim pra garantir contraste do texto sobre qualquer foto.
+          const DecoratedBox(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [Colors.transparent, Colors.transparent, Colors.black54],
+                stops: [0, 0.45, 1],
+              ),
+            ),
+          ),
+          Positioned(
+            left: AppSpacing.md,
+            right: AppSpacing.md,
+            bottom: AppSpacing.sm,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  vendor.name,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: textTheme.titleMedium?.copyWith(
+                    color: Colors.white,
+                    fontFamily: AuroraBrand.displayFontFamily,
+                    fontWeight: FontWeight.w700,
+                    shadows: const [
+                      Shadow(blurRadius: 8, color: Colors.black54),
                     ],
                   ),
                 ),
-                Icon(
-                  Icons.chevron_right_rounded,
-                  color: colors.onSurfaceMuted,
-                  size: 20,
+                Text(
+                  vendor.tagline,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: textTheme.labelSmall?.copyWith(
+                    color: Colors.white.withValues(alpha: 0.92),
+                    letterSpacing: 0,
+                    height: 1.3,
+                    shadows: const [
+                      Shadow(blurRadius: 6, color: Colors.black54),
+                    ],
+                  ),
                 ),
               ],
             ),
           ),
-        ),
+        ],
       ),
     );
   }

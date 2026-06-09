@@ -1,6 +1,4 @@
 import 'package:design_system/design_system.dart';
-import 'package:feature_showcase/src/shared/presentation/mock_body_constraint.dart';
-import 'package:feature_showcase/src/shared/presentation/mock_section_label.dart';
 import 'package:feature_showcase/src/realestate/presentation/realestate_bloc.dart';
 import 'package:feature_showcase/src/realestate/presentation/realestate_event.dart';
 import 'package:feature_showcase/src/realestate/presentation/realestate_state.dart';
@@ -11,6 +9,8 @@ import 'package:feature_showcase/src/realestate/presentation/solar_listings_page
 import 'package:feature_showcase/src/realestate/presentation/solar_navigation.dart';
 import 'package:feature_showcase/src/realestate/presentation/solar_property_card.dart';
 import 'package:feature_showcase/src/realestate/presentation/solar_saved_action.dart';
+import 'package:feature_showcase/src/shared/presentation/mock_body_constraint.dart';
+import 'package:feature_showcase/src/shared/presentation/mock_section_label.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

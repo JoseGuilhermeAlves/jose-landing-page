@@ -117,14 +117,14 @@ class _StrainDialPainter extends CustomPainter {
       final shader = SweepGradient(
         startAngle: _startAngle,
         endAngle: _startAngle + sweep,
-        colors: [
-          const Color(0xFF5AC8FA),
-          const Color(0xFF7B8FFF),
-          const Color(0xFFB47BFF),
-          const Color(0xFFFF5CC8),
+        colors: const [
+          Color(0xFF5AC8FA),
+          Color(0xFF7B8FFF),
+          Color(0xFFB47BFF),
+          Color(0xFFFF5CC8),
         ],
         stops: const [0.0, 0.45, 0.78, 1.0],
-        transform: GradientRotation(_startAngle),
+        transform: const GradientRotation(_startAngle),
       ).createShader(rect);
       _glowPaint.color = FitnessBrand.strainColor(value).withValues(alpha: 0.3);
       canvas.drawArc(rect, _startAngle, sweep, false, _glowPaint);
@@ -171,8 +171,8 @@ class _StrainDialPainter extends CustomPainter {
       Offset(center.dx - big.width / 2, center.dy - big.height / 2 - 6),
     );
 
-    final captionStyle = TextStyle(
-      color: const Color(0xFF7E7E8A),
+    const captionStyle = TextStyle(
+      color: Color(0xFF7E7E8A),
       fontSize: 11,
       fontWeight: FontWeight.w600,
       letterSpacing: 1.6,

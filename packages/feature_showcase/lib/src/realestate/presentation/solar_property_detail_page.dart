@@ -1,6 +1,4 @@
 import 'package:design_system/design_system.dart';
-import 'package:feature_showcase/src/shared/presentation/mock_body_constraint.dart';
-import 'package:feature_showcase/src/shared/presentation/mock_section_label.dart';
 import 'package:feature_showcase/src/realestate/data/solar_brokers_catalog.dart';
 import 'package:feature_showcase/src/realestate/domain/broker.dart';
 import 'package:feature_showcase/src/realestate/domain/property.dart';
@@ -18,6 +16,8 @@ import 'package:feature_showcase/src/realestate/presentation/solar_floor_plan.da
 import 'package:feature_showcase/src/realestate/presentation/solar_navigation.dart';
 import 'package:feature_showcase/src/realestate/presentation/solar_neighborhood_map.dart';
 import 'package:feature_showcase/src/realestate/presentation/solar_property_illustration.dart';
+import 'package:feature_showcase/src/shared/presentation/mock_body_constraint.dart';
+import 'package:feature_showcase/src/shared/presentation/mock_section_label.dart';
 import 'package:feature_showcase/src/shared/presentation/showcase_photo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

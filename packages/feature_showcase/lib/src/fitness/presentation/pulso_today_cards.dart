@@ -70,10 +70,58 @@ class _TodayHeader extends StatelessWidget {
               ],
             ),
           ),
+          // Atalho pro historico de treinos.
+          _HistoryButton(onTap: () => _openHistory(context)),
           // Espaco reservado pro botao de fechar do shell — evita que o
           // titulo encoste no overlay do Stack pai.
-          const SizedBox(width: 48),
+          const SizedBox(width: 44),
         ],
+      ),
+    );
+  }
+
+  void _openHistory(BuildContext context) {
+    final bloc = context.read<FitnessBloc>();
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        builder: (_) => BlocProvider.value(
+          value: bloc,
+          child: const PulsoHistoryPage(),
+        ),
+      ),
+    );
+  }
+}
+
+class _HistoryButton extends StatelessWidget {
+  const _HistoryButton({required this.onTap});
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(20),
+        child: Tooltip(
+          message: 'Histórico de treinos',
+          child: Container(
+            width: 40,
+            height: 40,
+            decoration: BoxDecoration(
+              color: colors.surface,
+              shape: BoxShape.circle,
+              border: Border.all(color: colors.border),
+            ),
+            child: Icon(
+              Icons.history_rounded,
+              color: colors.onSurface,
+              size: 20,
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -392,79 +440,43 @@ class _SessionCtaCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(AppRadius.lg),
         border: Border.all(color: colors.primary.withValues(alpha: 0.36)),
       ),
-      padding: const EdgeInsets.all(AppSpacing.lg),
+      clipBehavior: Clip.antiAlias,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            PulsoCopy(context.l10n).eyebrowTodayWorkout,
-            style: TextStyle(
-              color: colors.primary,
-              fontSize: 10,
-              fontWeight: FontWeight.w800,
-              letterSpacing: 1.6,
-            ),
-          ),
-          const SizedBox(height: AppSpacing.sm),
-          Text(
-            template.label,
-            style: TextStyle(
-              color: colors.onSurface,
-              fontSize: context.responsive<double>(mobile: 23, desktop: 28),
-              fontWeight: FontWeight.w700,
-              letterSpacing: -0.5,
-            ),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            muscles,
-            style: TextStyle(
-              color: colors.onSurfaceMuted,
-              fontSize: 13,
-              fontWeight: FontWeight.w500,
-              letterSpacing: 0.4,
-            ),
-          ),
-          const SizedBox(height: AppSpacing.md),
-          Row(
-            children: [
-              _TagChip(
-                icon: Icons.timer_outlined,
-                text: '${template.estimatedMinutes} min',
-              ),
-              const SizedBox(width: AppSpacing.xs),
-              _TagChip(
-                icon: Icons.format_list_bulleted_rounded,
-                text: '${template.exercises.length} ex.',
-              ),
-              const SizedBox(width: AppSpacing.xs),
-              _TagChip(
-                icon: Icons.bolt_outlined,
-                text: '${template.totalTargetSets} sets',
-              ),
-            ],
-          ),
-          const SizedBox(height: AppSpacing.lg),
-          SizedBox(
-            width: double.infinity,
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: colors.primary,
-                foregroundColor: colors.onPrimary,
-                padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(AppRadius.md),
+          const _SessionHeroPhoto(),
+          Padding(
+            padding: const EdgeInsets.all(AppSpacing.lg),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _SessionCtaBody(template: template, muscles: muscles),
+                const SizedBox(height: AppSpacing.lg),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: colors.primary,
+                      foregroundColor: colors.onPrimary,
+                      padding: const EdgeInsets.symmetric(
+                        vertical: AppSpacing.md,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(AppRadius.md),
+                      ),
+                    ),
+                    onPressed: () => _startSession(context),
+                    child: Text(
+                      PulsoCopy(context.l10n).startWorkout,
+                      style: const TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w700,
+                        letterSpacing: 0.4,
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-              onPressed: () => _startSession(context),
-              child: Text(
-                PulsoCopy(context.l10n).startWorkout,
-                style: const TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w700,
-                  letterSpacing: 0.4,
-                ),
-              ),
+              ],
             ),
           ),
         ],
@@ -473,8 +485,8 @@ class _SessionCtaCard extends StatelessWidget {
   }
 
   void _startSession(BuildContext context) {
-    final bloc = context.read<FitnessBloc>();
-    bloc.add(SessionStarted(weekday: weekday, now: DateTime.now()));
+    final bloc = context.read<FitnessBloc>()
+      ..add(SessionStarted(weekday: weekday, now: DateTime.now()));
     Navigator.of(context).push(
       MaterialPageRoute<void>(
         builder: (_) => BlocProvider.value(
@@ -482,6 +494,115 @@ class _SessionCtaCard extends StatelessWidget {
           child: const PulsoSessionLoggerPage(),
         ),
       ),
+    );
+  }
+}
+
+/// Banner do atleta no topo do card de treino do dia. Foto real
+/// (`assets/fitness/athlete_today.webp`) com `ShowcasePhoto`, caindo no
+/// `PulsoCardBackdrop` animado enquanto o `.webp` nao existe — o painter
+/// segue como rede de seguranca, nada de caixa quebrada.
+class _SessionHeroPhoto extends StatelessWidget {
+  const _SessionHeroPhoto();
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+    return SizedBox(
+      height: 132,
+      width: double.infinity,
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          const ShowcasePhoto(
+            assetPath: 'assets/fitness/athlete_today.webp',
+            semanticLabel: 'Atleta em treino de força',
+            fallback: PulsoCardBackdrop(),
+          ),
+          // Gradiente de leitura — garante contraste do texto do card
+          // logo abaixo independente da foto.
+          DecoratedBox(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Colors.transparent,
+                  colors.background.withValues(alpha: 0.55),
+                ],
+                stops: const [0.55, 1],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Corpo textual do card de treino do dia (eyebrow + titulo + musculos
+/// + chips). Extraido pra deixar o build do card hero legivel agora que
+/// ele empilha foto + conteudo.
+class _SessionCtaBody extends StatelessWidget {
+  const _SessionCtaBody({required this.template, required this.muscles});
+  final SessionTemplate template;
+  final String muscles;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          PulsoCopy(context.l10n).eyebrowTodayWorkout,
+          style: TextStyle(
+            color: colors.primary,
+            fontSize: 10,
+            fontWeight: FontWeight.w800,
+            letterSpacing: 1.6,
+          ),
+        ),
+        const SizedBox(height: AppSpacing.sm),
+        Text(
+          template.label,
+          style: TextStyle(
+            color: colors.onSurface,
+            fontSize: context.responsive<double>(mobile: 23, desktop: 28),
+            fontWeight: FontWeight.w700,
+            letterSpacing: -0.5,
+          ),
+        ),
+        const SizedBox(height: 4),
+        Text(
+          muscles,
+          style: TextStyle(
+            color: colors.onSurfaceMuted,
+            fontSize: 13,
+            fontWeight: FontWeight.w500,
+            letterSpacing: 0.4,
+          ),
+        ),
+        const SizedBox(height: AppSpacing.md),
+        Row(
+          children: [
+            _TagChip(
+              icon: Icons.timer_outlined,
+              text: '${template.estimatedMinutes} min',
+            ),
+            const SizedBox(width: AppSpacing.xs),
+            _TagChip(
+              icon: Icons.format_list_bulleted_rounded,
+              text: '${template.exercises.length} ex.',
+            ),
+            const SizedBox(width: AppSpacing.xs),
+            _TagChip(
+              icon: Icons.bolt_outlined,
+              text: '${template.totalTargetSets} sets',
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

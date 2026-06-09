@@ -1,5 +1,4 @@
 import 'package:design_system/design_system.dart';
-import 'package:feature_showcase/src/shared/presentation/mock_body_constraint.dart';
 import 'package:feature_showcase/src/delivery/data/aurora_vendors_catalog.dart';
 import 'package:feature_showcase/src/delivery/domain/market_category.dart';
 import 'package:feature_showcase/src/delivery/domain/vendor.dart';
@@ -10,6 +9,7 @@ import 'package:feature_showcase/src/delivery/presentation/aurora_home_page.dart
     show AuroraVendorCard;
 import 'package:feature_showcase/src/delivery/presentation/aurora_navigation.dart';
 import 'package:feature_showcase/src/delivery/presentation/aurora_vendor_detail_page.dart';
+import 'package:feature_showcase/src/shared/presentation/mock_body_constraint.dart';
 import 'package:flutter/material.dart';
 
 part 'aurora_store_list_widgets.dart';

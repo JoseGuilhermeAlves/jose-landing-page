@@ -1,6 +1,7 @@
+import 'dart:async';
+
 import 'package:design_system/design_system.dart';
 import 'package:feature_showcase/src/fitness/data/recovery_catalog.dart';
-import 'package:feature_showcase/src/fitness/presentation/pulso_copy.dart';
 import 'package:feature_showcase/src/fitness/domain/muscle_group.dart';
 import 'package:feature_showcase/src/fitness/domain/recovery_snapshot.dart';
 import 'package:feature_showcase/src/fitness/domain/sleep_window.dart';
@@ -10,6 +11,7 @@ import 'package:feature_showcase/src/fitness/presentation/fitness_event.dart';
 import 'package:feature_showcase/src/fitness/presentation/fitness_state.dart';
 import 'package:feature_showcase/src/fitness/presentation/painters/pulso_body_diagram.dart';
 import 'package:feature_showcase/src/fitness/presentation/painters/pulso_recovery_ring.dart';
+import 'package:feature_showcase/src/fitness/presentation/pulso_copy.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -63,9 +65,8 @@ class _PulsoRecoveryPageState extends State<PulsoRecoveryPage>
             return RefreshIndicator(
               onRefresh: () async {
                 context.read<FitnessBloc>().add(const RecoveryRefreshed());
-                _ringAnim
-                  ..reset()
-                  ..forward();
+                _ringAnim.reset();
+                unawaited(_ringAnim.forward());
                 await Future<void>.delayed(const Duration(milliseconds: 400));
               },
               child: ListView(

@@ -87,13 +87,13 @@ class _LoadHistoryPainter extends CustomPainter {
     // Labels Y (min e max).
     _drawAxisLabel(
       canvas,
-      '${maxWeight.toStringAsFixed(0)}',
-      Offset(leftPad - 4, topPad - 8),
+      maxWeight.toStringAsFixed(0),
+      const Offset(leftPad - 4, topPad - 8),
       anchorRight: true,
     );
     _drawAxisLabel(
       canvas,
-      '${minWeight.toStringAsFixed(0)}',
+      minWeight.toStringAsFixed(0),
       Offset(leftPad - 4, topPad + chartH - 8),
       anchorRight: true,
     );
@@ -113,15 +113,16 @@ class _LoadHistoryPainter extends CustomPainter {
         barW,
         barHeight,
       );
-      canvas.drawRRect(
-        RRect.fromRectAndRadius(barRect, const Radius.circular(3)),
-        _barPaint,
-      );
-      // Cap luminoso topo da barra.
-      canvas.drawRect(
-        Rect.fromLTWH(cx - barW / 2, barRect.top, barW, 2.5),
-        _barCapPaint,
-      );
+      canvas
+        ..drawRRect(
+          RRect.fromRectAndRadius(barRect, const Radius.circular(3)),
+          _barPaint,
+        )
+        // Cap luminoso topo da barra.
+        ..drawRect(
+          Rect.fromLTWH(cx - barW / 2, barRect.top, barW, 2.5),
+          _barCapPaint,
+        );
 
       // X label.
       _drawAxisLabel(

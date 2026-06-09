@@ -57,6 +57,8 @@ class DeliveryOrder extends Equatable {
     this.totalCents = 0,
     this.addressLine = '',
     this.placedAtLabel = '',
+    this.paymentLabel = '',
+    this.notes = '',
   });
 
   final String id;
@@ -86,6 +88,14 @@ class DeliveryOrder extends Equatable {
   /// Horario do pedido formatado mock ("hoje as 09:42").
   final String placedAtLabel;
 
+  /// Forma de pagamento escolhida no checkout ("Pix · Aprovacao na
+  /// hora"). Vazio no delivery generico legado.
+  final String paymentLabel;
+
+  /// Observacao do pedido escolhida no checkout ("Trocar se faltar"
+  /// etc.). Vazio quando o cliente nao deixou nota.
+  final String notes;
+
   DeliveryOrder copyWith({
     String? id,
     String? customerName,
@@ -97,6 +107,8 @@ class DeliveryOrder extends Equatable {
     double? totalCents,
     String? addressLine,
     String? placedAtLabel,
+    String? paymentLabel,
+    String? notes,
   }) {
     return DeliveryOrder(
       id: id ?? this.id,
@@ -109,6 +121,8 @@ class DeliveryOrder extends Equatable {
       totalCents: totalCents ?? this.totalCents,
       addressLine: addressLine ?? this.addressLine,
       placedAtLabel: placedAtLabel ?? this.placedAtLabel,
+      paymentLabel: paymentLabel ?? this.paymentLabel,
+      notes: notes ?? this.notes,
     );
   }
 
@@ -124,6 +138,8 @@ class DeliveryOrder extends Equatable {
     totalCents,
     addressLine,
     placedAtLabel,
+    paymentLabel,
+    notes,
   ];
 
   @override

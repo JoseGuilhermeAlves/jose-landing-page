@@ -491,10 +491,9 @@ class _AuroraDeliveryMapPainter extends CustomPainter {
         center.dx + 6,
         center.dy - 3,
       );
-    canvas.drawPath(handle, _basketHandlePaint);
-
-    // Tres frutas como pontos.
+    // Alca + tres frutas como pontos.
     canvas
+      ..drawPath(handle, _basketHandlePaint)
       ..drawCircle(Offset(center.dx - 3, center.dy + 1), 1.6, _originFill)
       ..drawCircle(Offset(center.dx + 3, center.dy + 1), 1.6, _originFill)
       ..drawCircle(Offset(center.dx, center.dy + 3), 1.6, _originFill);

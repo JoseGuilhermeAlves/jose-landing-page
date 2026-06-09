@@ -1,6 +1,4 @@
 import 'package:design_system/design_system.dart';
-import 'package:feature_showcase/src/shared/presentation/mock_body_constraint.dart';
-import 'package:feature_showcase/src/shared/presentation/mock_section_label.dart';
 import 'package:feature_showcase/src/scheduling/data/vitral_specialists_catalog.dart';
 import 'package:feature_showcase/src/scheduling/domain/appointment.dart';
 import 'package:feature_showcase/src/scheduling/domain/service_category.dart';
@@ -15,6 +13,8 @@ import 'package:feature_showcase/src/scheduling/presentation/vitral_hero_backdro
 import 'package:feature_showcase/src/scheduling/presentation/vitral_navigation.dart';
 import 'package:feature_showcase/src/scheduling/presentation/vitral_service_list_page.dart';
 import 'package:feature_showcase/src/scheduling/presentation/vitral_specialist_card.dart';
+import 'package:feature_showcase/src/shared/presentation/mock_body_constraint.dart';
+import 'package:feature_showcase/src/shared/presentation/mock_section_label.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -89,6 +89,8 @@ class VitralHomePage extends StatelessWidget {
                             next.id,
                             next.serviceName,
                           ),
+                          onReschedule: () =>
+                              _rescheduleAppointment(context, next),
                         ),
                         if (others.isNotEmpty) ...[
                           const SizedBox(height: AppSpacing.md),
@@ -98,6 +100,8 @@ class VitralHomePage extends StatelessWidget {
                             textTheme: textTheme,
                             onCancel: (id, label) =>
                                 _confirmCancelAppointment(context, id, label),
+                            onReschedule: (appt) =>
+                                _rescheduleAppointment(context, appt),
                           ),
                         ],
                       ],

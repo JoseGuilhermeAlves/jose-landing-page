@@ -116,21 +116,22 @@ class _RecoveryRingPainter extends CustomPainter {
       Offset(center.dx - big.width / 2, center.dy - big.height / 2 - 10),
     );
 
-    final pct = TextPainter(
-      text: const TextSpan(
-        text: '%',
-        style: TextStyle(
-          color: Color(0xFF7E7E8A),
-          fontSize: 22,
-          fontWeight: FontWeight.w400,
+    TextPainter(
+        text: const TextSpan(
+          text: '%',
+          style: TextStyle(
+            color: Color(0xFF7E7E8A),
+            fontSize: 22,
+            fontWeight: FontWeight.w400,
+          ),
         ),
-      ),
-      textDirection: TextDirection.ltr,
-    )..layout();
-    pct.paint(
-      canvas,
-      Offset(center.dx + big.width / 2 + 2, center.dy - big.height / 2 + 14),
-    );
+        textDirection: TextDirection.ltr,
+      )
+      ..layout()
+      ..paint(
+        canvas,
+        Offset(center.dx + big.width / 2 + 2, center.dy - big.height / 2 + 14),
+      );
 
     final caption = TextPainter(
       text: TextSpan(

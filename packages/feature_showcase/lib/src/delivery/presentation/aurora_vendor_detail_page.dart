@@ -1,25 +1,25 @@
 import 'package:design_system/design_system.dart';
-import 'package:feature_showcase/src/shared/presentation/mock_body_constraint.dart';
 import 'package:feature_showcase/src/delivery/data/aurora_items_catalog.dart';
 import 'package:feature_showcase/src/delivery/domain/market_item.dart';
 import 'package:feature_showcase/src/delivery/domain/vendor.dart';
 import 'package:feature_showcase/src/delivery/presentation/aurora_app_bar.dart';
 import 'package:feature_showcase/src/delivery/presentation/aurora_brand.dart';
+import 'package:feature_showcase/src/delivery/presentation/aurora_checkout_page.dart';
+import 'package:feature_showcase/src/delivery/presentation/aurora_item_detail_sheet.dart';
 import 'package:feature_showcase/src/delivery/presentation/aurora_navigation.dart';
-import 'package:feature_showcase/src/delivery/presentation/aurora_order_detail_page.dart';
 import 'package:feature_showcase/src/delivery/presentation/aurora_product_illustration.dart';
-import 'package:feature_showcase/src/delivery/presentation/delivery_bloc.dart';
-import 'package:feature_showcase/src/delivery/presentation/delivery_event.dart';
+import 'package:feature_showcase/src/shared/presentation/mock_body_constraint.dart';
+import 'package:feature_showcase/src/shared/presentation/showcase_photo.dart';
 import 'package:feature_showcase/src/shared/util/money_format.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'aurora_vendor_detail_widgets.dart';
 
 /// Detalhe de uma banca — mostra header do vendor + lista de produtos
-/// com stepper de quantidade + barra flutuante de carrinho. Tap em
-/// "Fazer pedido" dispara [DeliveryOrderPlaced] com os itens
-/// selecionados e navega pro [AuroraOrderDetailPage].
+/// com stepper de quantidade + barra flutuante de carrinho. Tap no card
+/// do produto abre o [AuroraItemDetailSheet] (foto + descricao +
+/// quantidade). Tap em "Continuar" leva ao [AuroraCheckoutPage], onde o
+/// pedido e de fato fechado.
 class AuroraVendorDetailPage extends StatefulWidget {
   const AuroraVendorDetailPage({required this.vendor, super.key});
 
@@ -59,21 +59,32 @@ class _AuroraVendorDetailPageState extends State<AuroraVendorDetailPage> {
     });
   }
 
-  void _placeOrder() {
-    if (_cart.isEmpty) return;
-    final bloc = context.read<DeliveryBloc>();
-    final orderId = DeliveryBloc.peekNextOrderId();
-    bloc.add(
-      DeliveryOrderPlacedWithCart(
-        vendorId: widget.vendor.id,
-        quantities: Map.unmodifiable(_cart),
-      ),
+  /// Abre o sheet de detalhe do item. O sheet devolve a quantidade
+  /// escolhida, que sobrescreve a linha do carrinho (substitui em vez
+  /// de somar — o stepper do sheet ja parte da qty atual).
+  Future<void> _openItemDetail(MarketItem item) async {
+    final chosen = await AuroraItemDetailSheet.show(
+      context,
+      item: item,
+      initialQuantity: _cart[item.id] ?? 0,
     );
+    if (chosen == null || !mounted) return;
+    setState(() => _cart[item.id] = chosen);
+  }
+
+  /// Vai pra etapa de checkout (endereco + pagamento + observacao). O
+  /// pedido so e criado la, ao confirmar — aqui apenas carregamos a
+  /// selecao do carrinho.
+  void _goToCheckout() {
+    if (_cart.isEmpty) return;
     Navigator.of(context).push(
       MaterialPageRoute<void>(
         builder: (_) => auroraWithDemoBloc(
           context,
-          AuroraOrderDetailPage(orderId: orderId),
+          AuroraCheckoutPage(
+            vendor: widget.vendor,
+            quantities: Map.unmodifiable(_cart),
+          ),
         ),
       ),
     );
@@ -132,6 +143,7 @@ class _AuroraVendorDetailPageState extends State<AuroraVendorDetailPage> {
                       _ProductCard(
                         item: items[i],
                         quantity: _cart[items[i].id] ?? 0,
+                        onTap: () => _openItemDetail(items[i]),
                         onIncrement: () => _increment(items[i].id),
                         onDecrement: () => _decrement(items[i].id),
                         colors: colors,
@@ -151,7 +163,7 @@ class _AuroraVendorDetailPageState extends State<AuroraVendorDetailPage> {
                   totalItems: _totalItems,
                   subtotalCents: _subtotalCents,
                   deliveryFeeCents: widget.vendor.deliveryFeeCents,
-                  onTap: _placeOrder,
+                  onTap: _goToCheckout,
                   colors: colors,
                   textTheme: textTheme,
                 ),

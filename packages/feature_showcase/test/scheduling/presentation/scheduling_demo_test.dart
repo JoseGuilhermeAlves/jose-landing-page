@@ -134,5 +134,72 @@ void main() {
         );
       },
     );
+
+    testWidgets('tap em profissional abre o perfil dele', (tester) async {
+      await useLargeSurface(tester);
+      await tester.pumpWidget(wrap(SchedulingDemo(today: today)));
+      await tester.pump(const Duration(milliseconds: 16));
+
+      await tester.ensureVisible(
+        find.byKey(const Key('vitral-specialist-card-s-sofia')),
+      );
+      await tester.pump(const Duration(milliseconds: 50));
+      await tester.tap(find.byKey(const Key('vitral-specialist-card-s-sofia')));
+      for (var i = 0; i < 20; i++) {
+        await tester.pump(const Duration(milliseconds: 50));
+      }
+
+      expect(find.byKey(const Key('vitral-specialist-page')), findsOneWidget);
+    });
+
+    testWidgets('reagendar o proximo agendamento mostra confirmacao', (
+      tester,
+    ) async {
+      await useLargeSurface(tester);
+      await tester.pumpWidget(
+        wrap(SchedulingDemo(today: today, preBookedSlots: const {})),
+      );
+      await tester.pump(const Duration(milliseconds: 16));
+
+      // Reaproveita o fluxo de booking pra ter um agendamento confirmado.
+      await tester.tap(find.byKey(const Key('vitral-cta-services')));
+      for (var i = 0; i < 20; i++) {
+        await tester.pump(const Duration(milliseconds: 50));
+      }
+      await tester.tap(find.byKey(const Key('vitral-service-card-sv-discovery')));
+      for (var i = 0; i < 20; i++) {
+        await tester.pump(const Duration(milliseconds: 50));
+      }
+      await tester.tap(find.byKey(const Key('scheduling-slot-tile')).first);
+      await tester.pump(const Duration(milliseconds: 50));
+      await tester.tap(find.byKey(const Key('vitral-calendar-continue')));
+      for (var i = 0; i < 20; i++) {
+        await tester.pump(const Duration(milliseconds: 50));
+      }
+      await tester.tap(find.byKey(const Key('vitral-confirmation-confirm')));
+      for (var i = 0; i < 20; i++) {
+        await tester.pump(const Duration(milliseconds: 50));
+      }
+      expect(
+        find.byKey(const Key('vitral-next-appointment-card')),
+        findsOneWidget,
+      );
+
+      // Abre o sheet de remarcacao e escolhe o primeiro horario livre.
+      await tester.tap(find.byKey(const Key('vitral-reschedule-next-button')));
+      for (var i = 0; i < 12; i++) {
+        await tester.pump(const Duration(milliseconds: 50));
+      }
+      expect(
+        find.byKey(const Key('vitral-reschedule-slot-0')),
+        findsOneWidget,
+      );
+      await tester.tap(find.byKey(const Key('vitral-reschedule-slot-0')));
+      for (var i = 0; i < 12; i++) {
+        await tester.pump(const Duration(milliseconds: 50));
+      }
+
+      expect(find.text('Agendamento remarcado.'), findsOneWidget);
+    });
   });
 }

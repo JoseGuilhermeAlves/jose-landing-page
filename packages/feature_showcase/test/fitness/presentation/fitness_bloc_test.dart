@@ -31,20 +31,21 @@ void main() {
       'SessionStarted segunda vez e no-op',
       build: FitnessBloc.new,
       seed: () {
-        final bloc = FitnessBloc();
-        bloc.add(SessionStarted(weekday: 1, now: fixedNow));
+        final bloc = FitnessBloc()
+          ..add(SessionStarted(weekday: 1, now: fixedNow));
         return bloc.state.copyWith(
           activeSession: () => bloc.state.activeSession,
         );
       },
       act: (bloc) {
-        bloc.add(SessionStarted(weekday: 1, now: fixedNow));
-        bloc.add(
-          SessionStarted(
-            weekday: 1,
-            now: fixedNow.add(const Duration(seconds: 5)),
-          ),
-        );
+        bloc
+          ..add(SessionStarted(weekday: 1, now: fixedNow))
+          ..add(
+            SessionStarted(
+              weekday: 1,
+              now: fixedNow.add(const Duration(seconds: 5)),
+            ),
+          );
       },
       verify: (bloc) {
         expect(bloc.state.activeSession, isNotNull);
@@ -151,6 +152,60 @@ void main() {
     );
 
     blocTest<FitnessBloc, FitnessState>(
+      'SessionFinished arquiva a sessao no historico',
+      build: FitnessBloc.new,
+      act: (bloc) async {
+        bloc.add(SessionStarted(weekday: 1, now: fixedNow));
+        await Future<void>.delayed(Duration.zero);
+        bloc.add(
+          SessionFinished(now: fixedNow.add(const Duration(minutes: 50))),
+        );
+      },
+      verify: (bloc) {
+        expect(bloc.state.completedSessions, hasLength(1));
+        final archived = bloc.state.completedSessions.first;
+        expect(archived.templateId, 'push-a');
+        expect(archived.finishedAt, isNotNull);
+      },
+    );
+
+    blocTest<FitnessBloc, FitnessState>(
+      'SessionFinished sem sessao ativa e no-op',
+      build: FitnessBloc.new,
+      act: (bloc) => bloc.add(SessionFinished(now: fixedNow)),
+      verify: (bloc) {
+        expect(bloc.state.completedSessions, isEmpty);
+        expect(bloc.state.activeSession, isNull);
+      },
+    );
+
+    blocTest<FitnessBloc, FitnessState>(
+      'iniciar novo treino apos finalizar substitui a sessao congelada',
+      build: FitnessBloc.new,
+      act: (bloc) async {
+        bloc.add(SessionStarted(weekday: 1, now: fixedNow));
+        await Future<void>.delayed(Duration.zero);
+        bloc.add(
+          SessionFinished(now: fixedNow.add(const Duration(minutes: 40))),
+        );
+        await Future<void>.delayed(Duration.zero);
+        bloc.add(
+          SessionStarted(
+            weekday: 2,
+            now: fixedNow.add(const Duration(days: 1)),
+          ),
+        );
+      },
+      verify: (bloc) {
+        // Historico preserva a primeira; nova sessao esta viva.
+        expect(bloc.state.completedSessions, hasLength(1));
+        expect(bloc.state.activeSession, isNotNull);
+        expect(bloc.state.activeSession!.isLive, isTrue);
+        expect(bloc.state.activeSession!.templateId, 'pull-a');
+      },
+    );
+
+    blocTest<FitnessBloc, FitnessState>(
       'ProgramDaySelected atualiza foco',
       build: FitnessBloc.new,
       act: (bloc) => bloc.add(const ProgramDaySelected(3)),
@@ -188,7 +243,7 @@ void main() {
       bloc.add(const FitnessReset());
       await Future<void>.delayed(Duration.zero);
       expect(bloc.state.activeSession, isNull);
-      bloc.close();
+      await bloc.close();
     });
   });
 

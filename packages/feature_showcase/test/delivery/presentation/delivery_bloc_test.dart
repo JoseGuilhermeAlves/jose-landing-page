@@ -142,6 +142,77 @@ void main() {
       expect: () => <DeliveryState>[],
     );
 
+    group('DeliveryOrderPlacedWithCart (checkout)', () {
+      setUp(DeliveryBloc.resetOrderCounter);
+
+      blocTest<DeliveryBloc, DeliveryState>(
+        'sem campos de checkout usa endereco/pagamento default do catalogo',
+        build: () => DeliveryBloc(initialOrders: orders),
+        act: (bloc) => bloc.add(
+          const DeliveryOrderPlacedWithCart(
+            vendorId: 'v-mario',
+            quantities: {'i-banana': 2},
+          ),
+        ),
+        verify: (bloc) {
+          final placed = bloc.state.orders.first;
+          expect(placed.vendorId, 'v-mario');
+          expect(placed.status, DeliveryStatus.received);
+          expect(placed.lineItems, hasLength(1));
+          expect(placed.lineItems.first.quantity, 2);
+          // Default vem do AuroraCheckoutCatalog (primeiro endereco/pagto).
+          expect(placed.addressLine, isNotEmpty);
+          expect(placed.paymentLabel, isNotEmpty);
+          expect(placed.notes, isEmpty);
+        },
+      );
+
+      blocTest<DeliveryBloc, DeliveryState>(
+        'com campos de checkout grava endereco, pagamento e observacao',
+        build: () => DeliveryBloc(initialOrders: orders),
+        act: (bloc) => bloc.add(
+          const DeliveryOrderPlacedWithCart(
+            vendorId: 'v-mario',
+            quantities: {'i-banana': 1, 'i-maca': 3},
+            addressLine: 'Rua Harmonia, 88 · Vila Madalena · SP',
+            paymentLabel: 'Pix · Aprovação na hora',
+            notes: 'Deixar na portaria',
+          ),
+        ),
+        verify: (bloc) {
+          final placed = bloc.state.orders.first;
+          expect(placed.lineItems, hasLength(2));
+          expect(placed.addressLine, 'Rua Harmonia, 88 · Vila Madalena · SP');
+          expect(placed.paymentLabel, 'Pix · Aprovação na hora');
+          expect(placed.notes, 'Deixar na portaria');
+        },
+      );
+
+      blocTest<DeliveryBloc, DeliveryState>(
+        'quantities vazio (nenhum item do vendor) nao emite pedido',
+        build: () => DeliveryBloc(initialOrders: orders),
+        act: (bloc) => bloc.add(
+          const DeliveryOrderPlacedWithCart(
+            vendorId: 'v-mario',
+            quantities: {'item-inexistente': 1},
+          ),
+        ),
+        expect: () => <DeliveryState>[],
+      );
+
+      blocTest<DeliveryBloc, DeliveryState>(
+        'vendor inexistente nao emite pedido',
+        build: () => DeliveryBloc(initialOrders: orders),
+        act: (bloc) => bloc.add(
+          const DeliveryOrderPlacedWithCart(
+            vendorId: 'v-fantasma',
+            quantities: {'i-banana': 1},
+          ),
+        ),
+        expect: () => <DeliveryState>[],
+      );
+    });
+
     test('ticker stream dispara ticks automaticamente', () async {
       final controller = StreamController<void>.broadcast();
       final bloc = DeliveryBloc(

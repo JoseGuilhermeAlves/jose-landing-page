@@ -131,15 +131,13 @@ class _BodyDiagramPainter extends CustomPainter {
       _cachedSize = size;
     }
 
-    // Background sutil pra destacar silhueta sem peso.
-    canvas.drawRRect(_bgRRect, _bgPaint);
-
-    // Silhueta continua anti-aliased atras das regioes.
-    canvas.drawPath(_silhouette, _silhouetteFill);
-    canvas.drawPath(_silhouette, _silhouetteStroke);
-
-    // Cabeca.
     canvas
+      // Background sutil pra destacar silhueta sem peso.
+      ..drawRRect(_bgRRect, _bgPaint)
+      // Silhueta continua anti-aliased atras das regioes.
+      ..drawPath(_silhouette, _silhouetteFill)
+      ..drawPath(_silhouette, _silhouetteStroke)
+      // Cabeca.
       ..drawOval(_headRect, _neutralFill)
       ..drawOval(_headRect, _silhouetteStroke);
 
@@ -151,7 +149,6 @@ class _BodyDiagramPainter extends CustomPainter {
       // profundidade sem fugir da cor de recovery mapeada.
       _regionFill.shader =
           RadialGradient(
-            center: Alignment.center,
             radius: 0.95,
             colors: [
               base.withValues(alpha: 0.72),

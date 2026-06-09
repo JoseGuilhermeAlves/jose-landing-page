@@ -293,7 +293,7 @@ class _AssetSearchFieldState extends State<_AssetSearchField> {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppRadius.md),
-          borderSide: BorderSide(color: MiraBrand.neonMint, width: 1.4),
+          borderSide: const BorderSide(color: MiraBrand.neonMint, width: 1.4),
         ),
       ),
     );

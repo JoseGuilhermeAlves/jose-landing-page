@@ -196,18 +196,209 @@ Future<void> _confirmCancelAppointment(
   }
 }
 
+/// Abre o sheet de remarcacao — lista horarios livres dos proximos dias
+/// a partir da data do agendamento e dispara
+/// `SchedulingAppointmentRescheduled` ao escolher um.
+Future<void> _rescheduleAppointment(
+  BuildContext context,
+  Appointment appointment,
+) {
+  return showModalBottomSheet<void>(
+    context: context,
+    isScrollControlled: true,
+    backgroundColor: Colors.transparent,
+    builder: (_) => vitralWithDemoBloc(
+      context,
+      _VitralRescheduleSheet(appointment: appointment),
+    ),
+  );
+}
+
+class _VitralRescheduleSheet extends StatelessWidget {
+  const _VitralRescheduleSheet({required this.appointment});
+
+  final Appointment appointment;
+
+  static const _weekdayNames = [
+    '',
+    'seg',
+    'ter',
+    'qua',
+    'qui',
+    'sex',
+    'sab',
+    'dom',
+  ];
+
+  String _dateLabel(DateTime d) =>
+      '${_weekdayNames[d.weekday]} ${d.day.toString().padLeft(2, '0')}/'
+      '${d.month.toString().padLeft(2, '0')}';
+
+  String _timeLabel(DateTime d) =>
+      '${d.hour.toString().padLeft(2, '0')}:'
+      '${d.minute.toString().padLeft(2, '0')}';
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+    final textTheme = Theme.of(context).textTheme;
+    return BlocBuilder<SchedulingBloc, SchedulingState>(
+      builder: (context, state) {
+        final base = DateTime(
+          appointment.slot.year,
+          appointment.slot.month,
+          appointment.slot.day,
+        );
+        final options = <DateTime>[];
+        for (var dayOffset = 0; dayOffset < 3; dayOffset++) {
+          final day = base.add(Duration(days: dayOffset));
+          for (final slot in state.slotsFor(day)) {
+            if (slot.status == SlotStatus.free &&
+                slot.start != appointment.slot) {
+              options.add(slot.start);
+            }
+          }
+        }
+        final shown = options.take(14).toList();
+        return Container(
+          decoration: BoxDecoration(
+            color: colors.surface,
+            borderRadius: const BorderRadius.vertical(
+              top: Radius.circular(AppRadius.lg),
+            ),
+          ),
+          child: SafeArea(
+            top: false,
+            child: Padding(
+              padding: const EdgeInsets.all(AppSpacing.lg),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Remarcar ${appointment.serviceName}',
+                    style: textTheme.titleMedium?.copyWith(
+                      color: colors.onSurface,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  const SizedBox(height: AppSpacing.xxs),
+                  Text(
+                    'Escolha um novo horario para ${appointment.id}.',
+                    style: textTheme.bodySmall?.copyWith(
+                      color: colors.onSurfaceMuted,
+                    ),
+                  ),
+                  const SizedBox(height: AppSpacing.md),
+                  if (shown.isEmpty)
+                    Text(
+                      'Sem horarios livres nos proximos dias.',
+                      key: const Key('vitral-reschedule-empty'),
+                      style: textTheme.bodyMedium?.copyWith(
+                        color: colors.onSurfaceMuted,
+                      ),
+                    )
+                  else
+                    Wrap(
+                      spacing: AppSpacing.sm,
+                      runSpacing: AppSpacing.sm,
+                      children: [
+                        for (var i = 0; i < shown.length; i++)
+                          _RescheduleSlotChip(
+                            key: Key('vitral-reschedule-slot-$i'),
+                            label: '${_dateLabel(shown[i])} · '
+                                '${_timeLabel(shown[i])}',
+                            colors: colors,
+                            textTheme: textTheme,
+                            onTap: () {
+                              final messenger = ScaffoldMessenger.of(context);
+                              context.read<SchedulingBloc>().add(
+                                SchedulingAppointmentRescheduled(
+                                  appointmentId: appointment.id,
+                                  newSlot: shown[i],
+                                ),
+                              );
+                              Navigator.of(context).pop();
+                              // Limpa um snackbar anterior (ex.: o de
+                              // confirmacao, que dura 4s) pra que o aviso
+                              // de remarcacao apareca na hora em vez de
+                              // ficar na fila atras dele.
+                              messenger
+                                ..clearSnackBars()
+                                ..showSnackBar(
+                                  const SnackBar(
+                                    content: Text('Agendamento remarcado.'),
+                                  ),
+                                );
+                            },
+                          ),
+                      ],
+                    ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+class _RescheduleSlotChip extends StatelessWidget {
+  const _RescheduleSlotChip({
+    required this.label,
+    required this.colors,
+    required this.textTheme,
+    required this.onTap,
+    super.key,
+  });
+
+  final String label;
+  final AppColorScheme colors;
+  final TextTheme textTheme;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: colors.primary.withValues(alpha: 0.10),
+      borderRadius: BorderRadius.circular(AppRadius.full),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(AppRadius.full),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppSpacing.md,
+            vertical: AppSpacing.sm,
+          ),
+          child: Text(
+            label,
+            style: textTheme.labelMedium?.copyWith(
+              color: colors.primary,
+              fontFamily: VitralBrand.monoFontFamily,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class _NextAppointmentCard extends StatelessWidget {
   const _NextAppointmentCard({
     required this.appointment,
     required this.colors,
     required this.textTheme,
     required this.onCancel,
+    required this.onReschedule,
   });
 
   final Appointment appointment;
   final AppColorScheme colors;
   final TextTheme textTheme;
   final VoidCallback onCancel;
+  final VoidCallback onReschedule;
 
   static const _weekdayNames = [
     '',
@@ -271,6 +462,22 @@ class _NextAppointmentCard extends StatelessWidget {
                   color: colors.onSurfaceMuted,
                   fontFamily: VitralBrand.monoFontFamily,
                 ),
+              ),
+              IconButton(
+                key: const Key('vitral-reschedule-next-button'),
+                visualDensity: VisualDensity.compact,
+                padding: EdgeInsets.zero,
+                constraints: const BoxConstraints.tightFor(
+                  width: 32,
+                  height: 32,
+                ),
+                tooltip: 'Remarcar agendamento',
+                icon: Icon(
+                  Icons.edit_calendar_outlined,
+                  size: 18,
+                  color: colors.primary,
+                ),
+                onPressed: onReschedule,
               ),
               IconButton(
                 key: const Key('vitral-cancel-next-button'),
@@ -354,12 +561,14 @@ class _OtherAppointmentsList extends StatelessWidget {
     required this.colors,
     required this.textTheme,
     required this.onCancel,
+    required this.onReschedule,
   });
 
   final List<Appointment> appointments;
   final AppColorScheme colors;
   final TextTheme textTheme;
   final void Function(String id, String serviceLabel) onCancel;
+  final void Function(Appointment appointment) onReschedule;
 
   static const _weekdayNames = [
     '',
@@ -450,6 +659,22 @@ class _OtherAppointmentsList extends StatelessWidget {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
+                  ),
+                  IconButton(
+                    key: Key('vitral-other-reschedule-${appointments[i].id}'),
+                    visualDensity: VisualDensity.compact,
+                    padding: EdgeInsets.zero,
+                    constraints: const BoxConstraints.tightFor(
+                      width: 28,
+                      height: 28,
+                    ),
+                    tooltip: 'Remarcar',
+                    icon: Icon(
+                      Icons.edit_calendar_outlined,
+                      size: 15,
+                      color: colors.primary,
+                    ),
+                    onPressed: () => onReschedule(appointments[i]),
                   ),
                   IconButton(
                     key: Key('vitral-other-cancel-${appointments[i].id}'),

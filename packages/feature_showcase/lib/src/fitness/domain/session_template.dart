@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:feature_showcase/feature_showcase.dart' show LoggedSession, SetEntry;
 import 'package:feature_showcase/src/fitness/domain/muscle_group.dart';
 import 'package:flutter/foundation.dart';
 

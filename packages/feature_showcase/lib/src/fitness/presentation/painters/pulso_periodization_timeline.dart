@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 /// Heatmap de periodizacao: 8 colunas (semanas) x 7 linhas (dias).
 /// Celulas coloridas por intensidade prescrita; coluna da semana
-/// atual destacada com borda. Tap em qualquer celula chama [onTap]
+/// atual destacada com borda. Tap em qualquer celula chama [onCellTap]
 /// com (weekIndex, weekday) — UI externa controla detalhes.
 class PulsoPeriodizationTimeline extends StatelessWidget {
   const PulsoPeriodizationTimeline({
@@ -209,8 +209,8 @@ class _TimelinePainter extends CustomPainter {
     // Mapeia 1.00..1.15 -> 0..1.
     final norm = ((multiplier - 1.0) / 0.15).clamp(0, 1).toDouble();
     // Blend de verde escuro -> verde brilhante.
-    final base = const Color(0xFF1A3F2A);
-    final hot = const Color(0xFF00D982);
+    const base = Color(0xFF1A3F2A);
+    const hot = Color(0xFF00D982);
     return Color.lerp(base, hot, norm) ?? base;
   }
 

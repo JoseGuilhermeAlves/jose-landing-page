@@ -1,5 +1,4 @@
 import 'package:design_system/design_system.dart';
-import 'package:feature_showcase/src/shared/presentation/mock_body_constraint.dart';
 import 'package:feature_showcase/src/scheduling/data/vitral_specialists_catalog.dart';
 import 'package:feature_showcase/src/scheduling/domain/service.dart';
 import 'package:feature_showcase/src/scheduling/presentation/scheduling_bloc.dart';
@@ -9,6 +8,7 @@ import 'package:feature_showcase/src/scheduling/presentation/vitral_app_bar.dart
 import 'package:feature_showcase/src/scheduling/presentation/vitral_brand.dart';
 import 'package:feature_showcase/src/scheduling/presentation/vitral_confirmation_page.dart';
 import 'package:feature_showcase/src/scheduling/presentation/vitral_navigation.dart';
+import 'package:feature_showcase/src/shared/presentation/mock_body_constraint.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

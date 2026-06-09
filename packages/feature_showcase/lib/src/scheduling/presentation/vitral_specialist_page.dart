@@ -39,6 +39,7 @@ class VitralSpecialistPage extends StatelessWidget {
     final reviews = VitralReviewsCatalog.bySpecialist(specialist.id);
 
     return Scaffold(
+      key: const Key('vitral-specialist-page'),
       backgroundColor: colors.background,
       appBar: const VitralAppBar(),
       body: MockBodyConstraint(

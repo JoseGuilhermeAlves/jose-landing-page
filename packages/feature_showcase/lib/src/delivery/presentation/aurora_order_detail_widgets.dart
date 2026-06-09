@@ -154,6 +154,54 @@ class _DeliveryEtaCard extends StatelessWidget {
                     height: 1.4,
                   ),
                 ),
+                if (order.paymentLabel.isNotEmpty) ...[
+                  const SizedBox(height: AppSpacing.xs),
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.account_balance_wallet_outlined,
+                        size: 13,
+                        color: colors.onSurfaceMuted,
+                      ),
+                      const SizedBox(width: 4),
+                      Expanded(
+                        child: Text(
+                          order.paymentLabel,
+                          style: textTheme.labelSmall?.copyWith(
+                            color: colors.onSurfaceMuted,
+                            letterSpacing: 0,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+                if (order.notes.isNotEmpty) ...[
+                  const SizedBox(height: AppSpacing.xs),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Icon(
+                        Icons.sticky_note_2_outlined,
+                        size: 13,
+                        color: colors.onSurfaceMuted,
+                      ),
+                      const SizedBox(width: 4),
+                      Expanded(
+                        child: Text(
+                          order.notes,
+                          style: textTheme.labelSmall?.copyWith(
+                            color: colors.onSurfaceMuted,
+                            letterSpacing: 0,
+                            height: 1.3,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ],
             ),
           ),

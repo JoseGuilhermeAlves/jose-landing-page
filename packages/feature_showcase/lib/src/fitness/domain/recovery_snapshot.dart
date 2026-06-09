@@ -1,6 +1,8 @@
 import 'package:equatable/equatable.dart';
+import 'package:feature_showcase/feature_showcase.dart' show FitnessBrand;
 import 'package:feature_showcase/src/fitness/domain/muscle_recovery.dart';
 import 'package:feature_showcase/src/fitness/domain/sleep_window.dart';
+import 'package:feature_showcase/src/fitness/presentation/fitness_brand.dart' show FitnessBrand;
 import 'package:flutter/foundation.dart';
 
 /// Snapshot diario de recovery — agrega as biometricas que o mock

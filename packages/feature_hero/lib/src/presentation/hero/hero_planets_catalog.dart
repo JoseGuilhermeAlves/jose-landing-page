@@ -1,6 +1,6 @@
 import 'package:animations/animations.dart';
 import 'package:design_system/design_system.dart';
-import 'package:flutter/material.dart' show Offset, Color;
+import 'package:flutter/material.dart' show Color, Offset;
 
 /// Catálogo dos corpos celestes do hero: planetas, nebulosas, galáxias,
 /// pulsares, cinturões de asteroides e wisps. Cada função entrega a
@@ -754,7 +754,6 @@ List<CosmosWisp> heroWisps({required bool isMobile}) {
       canvasAnchor: Offset(0.20, 0.62),
       radiusPixels: 90,
       colors: [Color(0xFFFF1F8B), Color(0xFFFF66F5), Color(0xFFFFCFF8)],
-      driftPixels: 12,
       density: 0.45,
       seed: 37,
     ),

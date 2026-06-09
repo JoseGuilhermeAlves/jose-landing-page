@@ -63,7 +63,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get common_semanticsLoadingSpinner => 'コンテンツを読み込み中';
 
   @override
-  String get hero_eyebrow => 'フリーランス受付中';
+  String get hero_eyebrow => 'Flutterモバイル開発者';
 
   @override
   String get hero_headline1 => 'Flutter モバイルフロントエンド。';

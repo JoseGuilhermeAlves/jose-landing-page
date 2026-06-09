@@ -64,7 +64,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get common_semanticsLoadingSpinner => 'Inhalt wird geladen';
 
   @override
-  String get hero_eyebrow => 'Verfügbar für Freelance';
+  String get hero_eyebrow => 'Flutter Mobile-Entwickler';
 
   @override
   String get hero_headline1 => 'Mobile-Frontend mit Flutter.';

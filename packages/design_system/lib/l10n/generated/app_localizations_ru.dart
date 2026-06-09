@@ -64,7 +64,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get common_semanticsLoadingSpinner => 'Загрузка содержимого';
 
   @override
-  String get hero_eyebrow => 'Доступен для фриланса';
+  String get hero_eyebrow => 'Мобильный разработчик Flutter';
 
   @override
   String get hero_headline1 => 'Мобильный фронтенд на Flutter.';

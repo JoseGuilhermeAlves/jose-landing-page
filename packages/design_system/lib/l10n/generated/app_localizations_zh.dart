@@ -63,7 +63,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get common_semanticsLoadingSpinner => '正在加载内容';
 
   @override
-  String get hero_eyebrow => '接受自由职业';
+  String get hero_eyebrow => 'Flutter 移动开发者';
 
   @override
   String get hero_headline1 => 'Flutter 移动端前端开发。';

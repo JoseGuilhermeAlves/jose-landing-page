@@ -64,7 +64,7 @@ class HeroSection extends StatelessWidget {
       children: [
         EyebrowBadge(
           label: context.l10n.hero_eyebrow,
-          accentColor: context.colors.success,
+          accentColor: context.colors.primary,
         ),
         SizedBox(
           height: context.responsive(

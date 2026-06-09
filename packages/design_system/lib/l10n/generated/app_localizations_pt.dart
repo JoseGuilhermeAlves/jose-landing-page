@@ -64,7 +64,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get common_semanticsLoadingSpinner => 'Carregando conteúdo';
 
   @override
-  String get hero_eyebrow => 'Disponível para freelance';
+  String get hero_eyebrow => 'Desenvolvedor mobile Flutter';
 
   @override
   String get hero_headline1 => 'Front end mobile com Flutter.';

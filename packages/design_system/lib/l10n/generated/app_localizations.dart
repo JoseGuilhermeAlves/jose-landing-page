@@ -223,7 +223,7 @@ abstract class AppLocalizations {
   /// No description provided for @hero_eyebrow.
   ///
   /// In pt, this message translates to:
-  /// **'Disponível para freelance'**
+  /// **'Desenvolvedor mobile Flutter'**
   String get hero_eyebrow;
 
   /// No description provided for @hero_headline1.

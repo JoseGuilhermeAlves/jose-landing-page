@@ -63,23 +63,26 @@ class AppLocalizationsZh extends AppLocalizations {
   String get common_semanticsLoadingSpinner => '正在加载内容';
 
   @override
-  String get hero_eyebrow => 'Flutter 移动开发者';
+  String get hero_eyebrow => '移动端前端 · Flutter';
 
   @override
-  String get hero_headline1 => 'Flutter 移动端前端开发。';
+  String get hero_headline1 => '六年 Flutter。';
 
   @override
-  String get hero_headline2 => '从 MVP 到生产级应用。';
+  String get hero_headline2 => '五款零售应用在生产环境运行。';
 
   @override
   String get hero_bio =>
-      '用 Flutter 做移动应用前端——按功能架构、Bloc 管理状态、真机上流畅的 UI。六年在不同领域交付同一套标准，始终在移动端。';
+      '我构建了五款 B2B 零售运营应用的完整前端——从设计到部署——目前在做一个大规模金融产品。按功能划分架构、Bloc 管理状态、真机上流畅运行。';
+
+  @override
+  String get hero_scopeLine => '后端留给团队——我交付完整的移动端前端，并与任何现有 API 对接。';
 
   @override
   String get hero_scrollHint => '滚动以继续';
 
   @override
-  String get hero_ctaWhatsapp => 'WhatsApp 联系';
+  String get hero_ctaContact => '联系我';
 
   @override
   String get hero_ctaProjects => '查看项目';
@@ -91,16 +94,16 @@ class AppLocalizationsZh extends AppLocalizations {
   String get hero_trustYearsLabel => '年 Flutter 经验';
 
   @override
-  String get hero_trustDomainsValue => '5+';
+  String get hero_trustAppsValue => '5';
 
   @override
-  String get hero_trustDomainsLabel => '服务领域';
+  String get hero_trustAppsLabel => '款零售应用在生产环境';
 
   @override
-  String get hero_trustPlatformsValue => 'Mobile · Web';
+  String get hero_trustCanvasValue => '0';
 
   @override
-  String get hero_trustPlatformsLabel => '目标平台';
+  String get hero_trustCanvasLabel => '动画素材——一切皆由 Canvas 绘制';
 
   @override
   String get hero_portraitSemantics => 'Jose Guilherme Alves 照片';
@@ -109,13 +112,13 @@ class AppLocalizationsZh extends AppLocalizations {
   String get about_eyebrow => '关于我';
 
   @override
-  String get about_title => '为您';
+  String get about_title => '谁来';
 
   @override
-  String get about_titleAccent => '服务。';
+  String get about_titleAccent => '交付。';
 
   @override
-  String get about_subtitle => 'Flutter 移动端前端开发7年以上。专注交付稳健应用，从启动就明确范围、对齐预期。';
+  String get about_subtitle => 'Flutter 移动端前端开发6年。专注交付稳健应用，从启动就明确范围、对齐预期。';
 
   @override
   String get about_domainsMapLabel => '领域地图';
@@ -133,8 +136,41 @@ class AppLocalizationsZh extends AppLocalizations {
   String get about_bioTitle => '移动端前端 · Flutter 开发者 · 巴西';
 
   @override
-  String get about_bioParagraph =>
-      '我负责 Flutter 应用的整个前端——按功能架构、Bloc 管理状态、真机性能和 UX 一致性。六年在不同场景中应用这套标准：五年负责零售运营应用的完整前端（库存、门店间调拨、销售和内部沟通，从设计到部署，在小团队中），随后是 offline-first 的现场数据采集、在不稳定网络下同步，一个流程涉及敏感数据的面向公民的公共服务，带游戏化的内部工具，如今则是一个以 monorepo 维护、拥有自有 design system 的大规模金融产品。领域各异，标准如一：稳健的移动端前端，产品需要时也做 Flutter web。';
+  String get about_bioLead => '六年坚持同一把尺子——Flutter 移动端前端——应用在彼此截然不同的场景。';
+
+  @override
+  String get about_factRetailTitle => 'B2B 零售（5 年）';
+
+  @override
+  String get about_factRetailBody =>
+      '五款运营应用的完整前端：库存、门店间调拨、销售和内部沟通。从设计到部署，小团队完成。';
+
+  @override
+  String get about_factFieldTitle => '离线优先的外勤';
+
+  @override
+  String get about_factFieldBody => '在不稳定网络下同步的数据采集。';
+
+  @override
+  String get about_factPublicTitle => '公共部门';
+
+  @override
+  String get about_factPublicBody => '涉及敏感数据流的市民服务。';
+
+  @override
+  String get about_factToolsTitle => '内部工具';
+
+  @override
+  String get about_factToolsBody => '结合游戏化的生产力工具。';
+
+  @override
+  String get about_factFintechTitle => '大规模金融科技（现任）';
+
+  @override
+  String get about_factFintechBody => 'Monorepo 架构、自有设计系统的金融产品。';
+
+  @override
+  String get about_bioClose => '领域各异，交付一致：完整的移动端前端。后端留给团队——我负责与之对接。';
 
   @override
   String get delivery_entrega_eyebrow => '交付';
@@ -266,7 +302,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get contact_titleAccent => '聊？';
 
   @override
-  String get contact_subtitle => '在此留言或通过下方渠道直接联系。工作日快速回复。';
+  String get contact_subtitle =>
+      '正在寻找高级 Flutter 开发者的机会——全职或合同均可。Email 和 LinkedIn 是最快的渠道；一个工作日内回复。';
 
   @override
   String get contact_ctaWhatsapp => 'WhatsApp 直联';
@@ -275,7 +312,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get contact_ctaEmail => '邮件';
 
   @override
-  String get contact_ctaLinkedin => 'LinkedIn';
+  String get contact_ctaLinkedin => 'LinkedIn — 完整履历';
 
   @override
   String get contact_ctaGithub => 'GitHub';
@@ -296,19 +333,19 @@ class AppLocalizationsZh extends AppLocalizations {
   String get contact_formMessage => '留言';
 
   @override
-  String get contact_formSubmit => '通过 WhatsApp 发送';
+  String get contact_formSubmit => '通过电子邮件发送';
 
   @override
   String get contact_formSubmitting => '发送中...';
 
   @override
-  String get contact_projectNewApp => '新应用（从零到 MVP）';
+  String get contact_projectPosition => '职位（全职）';
 
   @override
-  String get contact_projectExisting => '迭代现有应用';
+  String get contact_projectContract => '项目或合同';
 
   @override
-  String get contact_projectConsulting => '技术咨询 / 架构';
+  String get contact_projectConsulting => '临时咨询';
 
   @override
   String get contact_projectOther => '其他';
@@ -347,7 +384,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get engineering_subtitle => '我在生产中使用的技术，以及其他我深入了解的技术。点击任意卡片了解更多。';
 
   @override
-  String get engineering_githubButton => '在 GitHub 上查看仓库';
+  String get engineering_githubButton => '看我的 GitHub';
 
   @override
   String get showcase_eyebrow => '案例展示';
@@ -360,7 +397,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get showcase_subtitle =>
-      '按细分领域的功能 mock——配送、预约、健身、房产和投资。点击卡片打开。无真实后端；展示我能交付的产品类型。';
+      '五个虚构品牌、五套视觉识别、二十多个可导航页面——后端为零，刻意如此。这里一切会动的都是 Flutter 前端：Bloc 状态管理和专属 Custom Painter。点击卡片打开。';
 
   @override
   String get showcase_financeLabel => '投资';
@@ -391,7 +428,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get showcase_realestateLabel => '房产';
 
   @override
-  String get showcase_realestateDescription => '按社区、价格范围和房间数筛选的房产列表。';
+  String get showcase_realestateDescription =>
+      'Solar——数据生成的户型图、社区地图，以及从搜索到联系经纪人的完整流程。';
 
   @override
   String get pulso_eyebrowTodayWorkout => '今日训练';

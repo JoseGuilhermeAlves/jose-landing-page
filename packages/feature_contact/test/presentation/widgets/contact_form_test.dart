@@ -26,7 +26,7 @@ void main() {
   Widget pumpForm({ValueChanged<Uri>? onSuccess}) {
     return wrap(
       BlocProvider(
-        create: (_) => ContactBloc(whatsappNumber: '5571999990000'),
+        create: (_) => ContactBloc(email: 'contato@example.com'),
         child: ContactForm(onSubmissionSuccess: onSuccess),
       ),
     );
@@ -65,8 +65,15 @@ void main() {
       },
     );
 
+    testWidgets('CTA de submit comunica envio por email', (tester) async {
+      await tester.pumpWidget(pumpForm());
+      await tester.pump(const Duration(milliseconds: 16));
+
+      expect(find.text('Enviar por email'), findsOneWidget);
+    });
+
     testWidgets(
-      'preencher e submeter chama onSubmissionSuccess com Uri wa.me',
+      'preencher e submeter chama onSubmissionSuccess com Uri mailto',
       (tester) async {
         Uri? captured;
         await tester.pumpWidget(pumpForm(onSuccess: (uri) => captured = uri));
@@ -92,7 +99,7 @@ void main() {
         await tester.tap(find.byKey(const Key('contact-form-project-type')));
         await tester.pumpAndSettle();
         await tester.tap(
-          find.text(ProjectType.newApp.localizedLabel(l10n)).last,
+          find.text(ProjectType.position.localizedLabel(l10n)).last,
         );
         await tester.pumpAndSettle();
 
@@ -100,7 +107,10 @@ void main() {
         await tester.pumpAndSettle();
 
         expect(captured, isNotNull);
-        expect(captured!.toString(), contains('wa.me/5571999990000'));
+        expect(captured!.scheme, 'mailto');
+        expect(captured!.path, 'contato@example.com');
+        expect(captured!.toString(), contains('subject='));
+        expect(captured!.toString(), contains('body='));
       },
     );
   });

@@ -47,12 +47,25 @@ class HomeNav extends StatelessWidget {
     required this.anchors,
     required this.onLogoTap,
     required this.onCtaTap,
+    this.githubUrl,
+    this.linkedinUrl,
+    this.onOpenSocial,
     super.key,
   });
 
   final List<HomeNavAnchor> anchors;
   final VoidCallback onLogoTap;
   final VoidCallback onCtaTap;
+
+  /// Perfil GitHub — exibido como icone a direita (>= 600px). Funil
+  /// tech/recruiter: o avaliador chega no codigo em um clique.
+  final String? githubUrl;
+
+  /// Perfil LinkedIn — idem.
+  final String? linkedinUrl;
+
+  /// Abre a URL dos icones sociais. O shell decide o launcher.
+  final ValueChanged<String>? onOpenSocial;
 
   @override
   Widget build(BuildContext context) {
@@ -87,6 +100,26 @@ class HomeNav extends StatelessWidget {
                       const Spacer(),
                     ] else
                       const Spacer(),
+                    // Links sociais antes do language switcher — funil
+                    // tech/recruiter. Mobile fica de fora: a largura e
+                    // curta e a secao de contato ja lista os perfis.
+                    if (!isMobile) ...[
+                      if (githubUrl != null)
+                        _SocialIcon(
+                          key: const Key('home-nav-github'),
+                          icon: Icons.code,
+                          tooltip: 'GitHub',
+                          onTap: () => onOpenSocial?.call(githubUrl!),
+                        ),
+                      if (linkedinUrl != null)
+                        _SocialIcon(
+                          key: const Key('home-nav-linkedin'),
+                          icon: Icons.work_outline,
+                          tooltip: 'LinkedIn',
+                          onTap: () => onOpenSocial?.call(linkedinUrl!),
+                        ),
+                      const SizedBox(width: AppSpacing.xs),
+                    ],
                     BlocBuilder<LocaleCubit, Locale>(
                       builder: (context, locale) {
                         return LocaleSwitcher(
@@ -181,16 +214,30 @@ class _AnchorButton extends StatefulWidget {
 
 class _AnchorButtonState extends State<_AnchorButton> {
   bool _hovering = false;
+  bool _focused = false;
 
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
     final textTheme = Theme.of(context).textTheme;
+    final highlighted = _hovering || _focused;
 
-    return MouseRegion(
-      cursor: SystemMouseCursors.click,
-      onEnter: (_) => setState(() => _hovering = true),
-      onExit: (_) => setState(() => _hovering = false),
+    // FocusableActionDetector entrega foco por Tab + ativacao por
+    // Enter/Espaco (ActivateIntent ja vem mapeado pros dois) + hover —
+    // substitui o MouseRegion puro, que deixava a nav fora do alcance
+    // do teclado.
+    return FocusableActionDetector(
+      mouseCursor: SystemMouseCursors.click,
+      onShowHoverHighlight: (v) => setState(() => _hovering = v),
+      onShowFocusHighlight: (v) => setState(() => _focused = v),
+      actions: {
+        ActivateIntent: CallbackAction<ActivateIntent>(
+          onInvoke: (_) {
+            widget.anchor.onTap();
+            return null;
+          },
+        ),
+      },
       child: GestureDetector(
         key: Key('home-nav-anchor-${widget.anchor.id}'),
         onTap: widget.anchor.onTap,
@@ -201,20 +248,55 @@ class _AnchorButtonState extends State<_AnchorButton> {
             vertical: AppSpacing.xs,
           ),
           decoration: BoxDecoration(
-            color: _hovering
+            color: highlighted
                 ? colors.surface.withValues(alpha: 0.8)
                 : Colors.transparent,
             borderRadius: BorderRadius.circular(AppRadius.sm),
+            // Focus ring discreto — so aparece em navegacao por teclado.
+            border: Border.all(
+              color: _focused
+                  ? colors.primary.withValues(alpha: 0.7)
+                  : Colors.transparent,
+            ),
           ),
           child: Text(
             widget.anchor.label,
             style: textTheme.labelMedium?.copyWith(
-              color: _hovering ? colors.onSurface : colors.onSurfaceMuted,
+              color: highlighted ? colors.onSurface : colors.onSurfaceMuted,
               letterSpacing: 0.2,
             ),
           ),
         ),
       ),
+    );
+  }
+}
+
+/// Icone social da nav (GitHub/LinkedIn). `IconButton` ja entrega foco
+/// por teclado, ativacao por Enter/Espaco e tooltip — nao precisa de
+/// detector custom.
+class _SocialIcon extends StatelessWidget {
+  const _SocialIcon({
+    required this.icon,
+    required this.tooltip,
+    required this.onTap,
+    super.key,
+  });
+
+  final IconData icon;
+  final String tooltip;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+    return IconButton(
+      onPressed: onTap,
+      tooltip: tooltip,
+      icon: Icon(icon, size: 20, color: colors.onSurfaceMuted),
+      hoverColor: colors.surface.withValues(alpha: 0.8),
+      focusColor: colors.primary.withValues(alpha: 0.18),
+      visualDensity: VisualDensity.compact,
     );
   }
 }

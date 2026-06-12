@@ -133,7 +133,7 @@ class _ContactFormState extends State<ContactForm> {
                   ? l10n.contact_formSubmitting
                   : l10n.contact_formSubmit,
               onPressed: submitting ? null : _submit,
-              icon: Icons.chat_bubble_outline,
+              icon: Icons.mail_outline,
               size: context.responsive(
                 mobile: AppButtonSize.medium,
                 desktop: AppButtonSize.large,

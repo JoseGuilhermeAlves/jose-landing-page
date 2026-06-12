@@ -1,26 +1,27 @@
 import 'package:design_system/l10n/generated/app_localizations.dart';
 
-/// Tipo de projeto que o cliente quer discutir. Eh o conjunto fixo do
-/// dropdown do form de contato (PROJECT.md §4.5). Labels resolvidos
-/// via l10n em [localizedLabel].
+/// Contexto da conversa que o visitante quer abrir. Conjunto fixo do
+/// dropdown do form de contato, orientado ao funil recrutador/tech
+/// lead (vaga, contrato, consultoria). Labels resolvidos via l10n em
+/// [localizedLabel].
 enum ProjectType {
-  newApp,
-  existingApp,
+  position,
+  contractProject,
   consulting,
   other;
 
-  /// Label fixo pt-BR usado no corpo da mensagem WhatsApp (sem contexto).
+  /// Label fixo pt-BR usado no corpo do mailto (sem contexto).
   String get label => switch (this) {
-    ProjectType.newApp => 'App novo',
-    ProjectType.existingApp => 'Evoluir app existente',
-    ProjectType.consulting => 'Consultoria',
+    ProjectType.position => 'Vaga (CLT/PJ)',
+    ProjectType.contractProject => 'Projeto ou contrato',
+    ProjectType.consulting => 'Consultoria pontual',
     ProjectType.other => 'Outro',
   };
 
   /// Label localizado para UI com BuildContext disponivel.
   String localizedLabel(AppLocalizations l10n) => switch (this) {
-    ProjectType.newApp => l10n.contact_projectNewApp,
-    ProjectType.existingApp => l10n.contact_projectExisting,
+    ProjectType.position => l10n.contact_projectPosition,
+    ProjectType.contractProject => l10n.contact_projectContract,
     ProjectType.consulting => l10n.contact_projectConsulting,
     ProjectType.other => l10n.contact_projectOther,
   };

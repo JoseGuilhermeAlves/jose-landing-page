@@ -27,7 +27,9 @@ class HeroPortrait extends StatelessWidget {
     const midTint = Color(0xFF5741D8);
     const closeTint = Color(0xFFFF2D95);
 
-    const assetPath = 'assets/images/foto_recortada.png';
+    // WebP (q85, ~80 KB) no lugar do PNG de 892 KB — corta o peso do
+    // asset no caminho do LCP sem perda visivel (alpha preservado).
+    const assetPath = 'assets/images/foto_recortada.webp';
 
     return Semantics(
       label: context.l10n.hero_portraitSemantics,
@@ -49,10 +51,7 @@ class HeroPortrait extends StatelessWidget {
               Positioned.fill(
                 child: IgnorePointer(
                   child: CustomPaint(
-                    painter: _ContactShadowPainter(
-                      scale: 1,
-                      alpha: 1,
-                    ),
+                    painter: _ContactShadowPainter(scale: 1, alpha: 1),
                   ),
                 ),
               ),

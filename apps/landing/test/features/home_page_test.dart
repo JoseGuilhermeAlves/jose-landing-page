@@ -9,8 +9,15 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:landing/features/home_page.dart';
 import 'package:landing/presentation/locale_cubit.dart';
 import 'package:landing/widgets/engineering_section.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 
 void main() {
+  // Sem isso o VisibilityDetector (SectionVisibility da home) agenda um
+  // Timer de 500ms que fica pendente quando o teste descarta a arvore.
+  setUpAll(() {
+    VisibilityDetectorController.instance.updateInterval = Duration.zero;
+  });
+
   Widget wrap(Widget child) => MaterialApp(
     theme: AppTheme.dark(),
     localizationsDelegates: AppLocalizations.localizationsDelegates,

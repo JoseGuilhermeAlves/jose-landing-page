@@ -34,10 +34,15 @@ void main() {
       await tester.pumpWidget(wrap(const HeroSection()));
       await tester.pump(const Duration(milliseconds: 16));
 
-      // Headline em duas linhas; primeira deixa explicito o lado de
-      // atuacao (front end mobile). Subhead tem o "6 anos" como ancora.
-      expect(find.textContaining('Front end mobile'), findsOneWidget);
-      expect(find.textContaining('6 anos'), findsOneWidget);
+      // Headline em duas linhas com os dois fatos mais fortes: tempo de
+      // stack e artefato em producao. A linha de escopo (backend e
+      // integracao) aparece logo abaixo da bio.
+      expect(find.text('Seis anos de Flutter.'), findsOneWidget);
+      expect(
+        find.text('Cinco apps de varejo em produção.'),
+        findsOneWidget,
+      );
+      expect(find.textContaining('Backend permanece com o time'), findsOneWidget);
 
       await tester.pumpWidget(const SizedBox());
     });
@@ -62,19 +67,19 @@ void main() {
       await tester.pumpWidget(const SizedBox());
     });
 
-    testWidgets('renderiza dois CTAs: WhatsApp (primario) + Ver projetos', (
+    testWidgets('renderiza dois CTAs: Ver projetos (primario) + Falar comigo', (
       tester,
     ) async {
       await tester.pumpWidget(wrap(const HeroSection()));
       await tester.pump(const Duration(milliseconds: 16));
 
-      expect(find.text('Falar no WhatsApp'), findsOneWidget);
       expect(find.text('Ver projetos'), findsOneWidget);
+      expect(find.text('Falar comigo'), findsOneWidget);
 
       await tester.pumpWidget(const SizedBox());
     });
 
-    testWidgets('CTA do WhatsApp dispara onContactPressed', (tester) async {
+    testWidgets('CTA "Falar comigo" dispara onContactPressed', (tester) async {
       await useDesktopSurface(tester);
       var taps = 0;
       await tester.pumpWidget(
@@ -82,7 +87,7 @@ void main() {
       );
       await tester.pump(const Duration(milliseconds: 16));
 
-      await tester.tap(find.text('Falar no WhatsApp'));
+      await tester.tap(find.text('Falar comigo'));
       expect(taps, 1);
 
       await tester.pumpWidget(const SizedBox());
@@ -115,11 +120,11 @@ void main() {
 
         // Sem onPressed, AppButton vira Semantics.isEnabled = false.
         expect(
-          tester.getSemantics(find.bySemanticsLabel('Falar no WhatsApp')),
+          tester.getSemantics(find.bySemanticsLabel('Falar comigo')),
           matchesSemantics(
             isButton: true,
             hasEnabledState: true,
-            label: 'Falar no WhatsApp',
+            label: 'Falar comigo',
           ),
         );
       } finally {
@@ -148,11 +153,11 @@ void main() {
       );
       await tester.pump(const Duration(milliseconds: 16));
 
-      final whatsappRect = tester.getRect(find.text('Falar no WhatsApp'));
       final projectsRect = tester.getRect(find.text('Ver projetos'));
+      final contactRect = tester.getRect(find.text('Falar comigo'));
 
-      // Em mobile, "Ver projetos" fica abaixo do WhatsApp.
-      expect(projectsRect.top, greaterThan(whatsappRect.bottom - 1));
+      // Em mobile, "Falar comigo" fica abaixo de "Ver projetos".
+      expect(contactRect.top, greaterThan(projectsRect.bottom - 1));
 
       await tester.pumpWidget(const SizedBox());
     });
@@ -176,13 +181,13 @@ void main() {
             w is Image &&
             w.image is AssetImage &&
             (w.image as AssetImage).assetName ==
-                'assets/images/foto_recortada.png',
+                'assets/images/foto_recortada.webp',
       );
       expect(photoFinder, findsOneWidget);
 
       final photoRect = tester.getRect(photoFinder);
       final headlineRect = tester.getRect(
-        find.textContaining('Front end mobile'),
+        find.text('Seis anos de Flutter.'),
       );
 
       // Foto fica a esquerda do headline.

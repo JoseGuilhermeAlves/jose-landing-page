@@ -64,23 +64,27 @@ class AppLocalizationsFr extends AppLocalizations {
   String get common_semanticsLoadingSpinner => 'Chargement du contenu';
 
   @override
-  String get hero_eyebrow => 'Développeur mobile Flutter';
+  String get hero_eyebrow => 'Front end mobile · Flutter';
 
   @override
-  String get hero_headline1 => 'Front end mobile avec Flutter.';
+  String get hero_headline1 => 'Six ans de Flutter.';
 
   @override
-  String get hero_headline2 => 'Du MVP à l\'app en production.';
+  String get hero_headline2 => 'Cinq apps retail en production.';
 
   @override
   String get hero_bio =>
-      'Front end d\'apps mobiles avec Flutter — architecture par feature, état avec Bloc, UI fluide sur appareil réel. Six ans à livrer le même standard dans des domaines variés, toujours sur la couche mobile.';
+      'J\'ai construit le front end complet de cinq apps d\'opérations retail B2B — du design au déploiement — et je travaille aujourd\'hui sur un produit financier à grande échelle. Architecture par feature, état avec Bloc, fluidité sur appareil réel.';
+
+  @override
+  String get hero_scopeLine =>
+      'Le backend reste à l\'équipe — je livre le front end mobile entier et m\'intègre à n\'importe quelle API existante.';
 
   @override
   String get hero_scrollHint => 'faites défiler pour continuer';
 
   @override
-  String get hero_ctaWhatsapp => 'Parler sur WhatsApp';
+  String get hero_ctaContact => 'Me contacter';
 
   @override
   String get hero_ctaProjects => 'Voir les projets';
@@ -92,16 +96,16 @@ class AppLocalizationsFr extends AppLocalizations {
   String get hero_trustYearsLabel => 'ans de Flutter';
 
   @override
-  String get hero_trustDomainsValue => '5+';
+  String get hero_trustAppsValue => '5';
 
   @override
-  String get hero_trustDomainsLabel => 'domaines abordés';
+  String get hero_trustAppsLabel => 'apps retail en production';
 
   @override
-  String get hero_trustPlatformsValue => 'Mobile · Web';
+  String get hero_trustCanvasValue => '0';
 
   @override
-  String get hero_trustPlatformsLabel => 'plateformes cibles';
+  String get hero_trustCanvasLabel => 'asset d\'animation — tout est Canvas';
 
   @override
   String get hero_portraitSemantics => 'Photo de Jose Guilherme Alves';
@@ -110,10 +114,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get about_eyebrow => 'À propos';
 
   @override
-  String get about_title => 'Qui vous';
+  String get about_title => 'Qui';
 
   @override
-  String get about_titleAccent => 'accompagne.';
+  String get about_titleAccent => 'construit.';
 
   @override
   String get about_subtitle =>
@@ -135,11 +139,49 @@ class AppLocalizationsFr extends AppLocalizations {
   String get about_bioTitle => 'Front end mobile · Flutter Developer · Brésil';
 
   @override
-  String get about_bioParagraph =>
-      'Je construis tout le front end d\'apps Flutter — architecture par feature, état avec Bloc, performance sur appareil réel et cohérence de l\'UX. Six ans à appliquer ce standard dans des contextes différents : cinq à m\'occuper du front end complet d\'apps d\'opération du retail (stock, distribution entre unités, ventes et communication interne, du design au déploiement, en petite équipe), puis collecte de données sur le terrain offline-first avec synchronisation sous réseau instable, un service public au citoyen avec un flux sensible de données, des outils internes avec gamification et, aujourd\'hui, un produit financier à grande échelle en monorepo avec design system propre. Domaines variés, même exigence : front end mobile robuste, avec Flutter web quand le produit l\'a demandé.';
+  String get about_bioLead =>
+      'Six ans avec la même exigence — le front end mobile en Flutter — appliquée à des contextes qui ne se ressemblent pas.';
 
   @override
-  String get delivery_entrega_eyebrow => 'LIVRAISON';
+  String get about_factRetailTitle => 'Retail B2B (5 ans)';
+
+  @override
+  String get about_factRetailBody =>
+      'Front end complet de cinq apps d\'opérations : stock, distribution entre unités, ventes et communication interne. Du design au déploiement, en petite équipe.';
+
+  @override
+  String get about_factFieldTitle => 'Terrain offline-first';
+
+  @override
+  String get about_factFieldBody =>
+      'Collecte de données avec synchronisation sous réseau instable.';
+
+  @override
+  String get about_factPublicTitle => 'Secteur public';
+
+  @override
+  String get about_factPublicBody =>
+      'Service au citoyen avec un flux sensible de données.';
+
+  @override
+  String get about_factToolsTitle => 'Outils internes';
+
+  @override
+  String get about_factToolsBody => 'Productivité avec gamification.';
+
+  @override
+  String get about_factFintechTitle => 'Fintech à grande échelle (actuel)';
+
+  @override
+  String get about_factFintechBody =>
+      'Produit financier en monorepo avec son propre design system.';
+
+  @override
+  String get about_bioClose =>
+      'Des domaines distincts, une même livraison : le front end mobile entier. Le backend reste à l\'équipe — je m\'y intègre.';
+
+  @override
+  String get delivery_entrega_eyebrow => 'RÉALISATION';
 
   @override
   String get delivery_entrega_title => 'Périmètre clair,';
@@ -271,7 +313,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get contact_subtitle =>
-      'Envoyez un message ici ou directement via les canaux ci-dessous. Je réponds vite en semaine.';
+      'Ouvert aux opportunités comme développeur Flutter senior — CDI ou contrat. Email et LinkedIn sont les canaux les plus rapides ; je réponds sous un jour ouvré.';
 
   @override
   String get contact_ctaWhatsapp => 'WhatsApp direct';
@@ -280,7 +322,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get contact_ctaEmail => 'Email';
 
   @override
-  String get contact_ctaLinkedin => 'LinkedIn';
+  String get contact_ctaLinkedin => 'LinkedIn — parcours complet';
 
   @override
   String get contact_ctaGithub => 'GitHub';
@@ -301,19 +343,19 @@ class AppLocalizationsFr extends AppLocalizations {
   String get contact_formMessage => 'Message';
 
   @override
-  String get contact_formSubmit => 'Envoyer via WhatsApp';
+  String get contact_formSubmit => 'Envoyer par email';
 
   @override
   String get contact_formSubmitting => 'Envoi...';
 
   @override
-  String get contact_projectNewApp => 'Nouvelle app (de zéro au MVP)';
+  String get contact_projectPosition => 'Poste (CDI)';
 
   @override
-  String get contact_projectExisting => 'Faire évoluer une app existante';
+  String get contact_projectContract => 'Projet ou contrat';
 
   @override
-  String get contact_projectConsulting => 'Conseil technique / architecture';
+  String get contact_projectConsulting => 'Conseil ponctuel';
 
   @override
   String get contact_projectOther => 'Autre';
@@ -353,7 +395,7 @@ class AppLocalizationsFr extends AppLocalizations {
       'Des technologies que j\'utilise en production et d\'autres que je connais de près. Touchez n\'importe quelle tuile pour en savoir plus.';
 
   @override
-  String get engineering_githubButton => 'Voir le dépôt sur GitHub';
+  String get engineering_githubButton => 'Voir mon GitHub';
 
   @override
   String get showcase_eyebrow => 'Showcase';
@@ -366,7 +408,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get showcase_subtitle =>
-      'Des mocks fonctionnels par niche — delivery, prise de rendez-vous, fitness, immobilier et investissements. Touchez une carte pour ouvrir. Sans vrai backend ; ils démontrent le type de produit que je sais livrer.';
+      'Cinq marques fictives, cinq identités visuelles, plus de vingt écrans navigables — et zéro backend, par choix. Tout ce qui bouge ici est du front end Flutter : état avec Bloc et Custom Painters dédiés. Touchez une carte pour ouvrir.';
 
   @override
   String get showcase_financeLabel => 'Investissements';
@@ -401,7 +443,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get showcase_realestateDescription =>
-      'Listing de biens avec filtres par quartier, fourchette de prix et nombre de chambres.';
+      'Solar — immobilier avec plan généré par les données, carte de quartier et parcours de la recherche au contact.';
 
   @override
   String get pulso_eyebrowTodayWorkout => 'SÉANCE DU JOUR';

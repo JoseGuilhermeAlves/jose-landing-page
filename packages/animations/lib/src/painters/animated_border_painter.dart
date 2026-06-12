@@ -15,14 +15,24 @@ import 'package:flutter/material.dart';
 /// - `isComplex = false` (geometria leve, ~1 path) e `willChange = true`.
 class AnimatedBorderPainter extends CustomPainter {
   AnimatedBorderPainter({
-    required double progress,
+    double progress = 0,
     required this.color,
     this.strokeWidth = 1.5,
     this.borderRadius = 12,
-  }) : progress = progress.clamp(0.0, 1.0);
+    this.animation,
+  }) : progress = progress.clamp(0.0, 1.0),
+       // `repaint:` faz o RenderCustomPaint ouvir o Listenable direto e
+       // pular build/layout a cada tick — preferivel a AnimatedBuilder
+       // em loops de 60 Hz.
+       super(repaint: animation);
 
   /// Quanto da borda esta visivel — 0 (escondida) ate 1 (perimetro completo).
+  /// Ignorado quando [animation] e fornecido.
   final double progress;
+
+  /// Quando fornecido, `paint()` le `.value` ao vivo a cada frame e o
+  /// painter repinta via `super(repaint:)` — sem rebuild do widget host.
+  final Animation<double>? animation;
   final Color color;
   final double strokeWidth;
   final double borderRadius;
@@ -36,7 +46,8 @@ class AnimatedBorderPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    if (size.isEmpty || progress == 0) return;
+    final effectiveProgress = (animation?.value ?? progress).clamp(0.0, 1.0);
+    if (size.isEmpty || effectiveProgress == 0) return;
 
     // Recolhe um pouco a borda pra ficar dentro dos limites do widget,
     // evitando que metade do trace caia fora ao usar StrokeCap.round.
@@ -58,7 +69,7 @@ class AnimatedBorderPainter extends CustomPainter {
     final revealed = Path();
     for (final metric in metrics) {
       revealed.addPath(
-        metric.extractPath(0, metric.length * progress),
+        metric.extractPath(0, metric.length * effectiveProgress),
         Offset.zero,
       );
     }
@@ -71,7 +82,8 @@ class AnimatedBorderPainter extends CustomPainter {
     return old.progress != progress ||
         old.color != color ||
         old.strokeWidth != strokeWidth ||
-        old.borderRadius != borderRadius;
+        old.borderRadius != borderRadius ||
+        !identical(old.animation, animation);
   }
 
   /// Hint para o `CustomPaint` host: geometria leve, nao vale rasterizar.

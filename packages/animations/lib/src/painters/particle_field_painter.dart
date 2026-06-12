@@ -13,8 +13,7 @@ import 'package:flutter/material.dart';
 ///   testavel e estavel entre reinicios);
 /// - [Paint] cacheados como campos finais (regra invariavel do projeto);
 /// - `shouldRepaint` so volta `true` quando `tick` ou `pointer` mudam;
-/// - `willChange = true` (anima continuamente);
-/// - `isComplex = true` (com 50+ particulas vale rasterizar em layer).
+/// - buffer de posicoes reusado entre frames (zero alocacao em `paint`).
 ///
 /// Throttle de eventos do ponteiro NAO acontece aqui — fica a cargo do
 /// widget host (`ParticleField`) pra manter o painter puro e testavel.
@@ -88,11 +87,19 @@ class ParticleFieldPainter extends CustomPainter {
     });
   }
 
+  /// Buffer de posicoes reusado a cada frame — `paint()` roda 60+ Hz e
+  /// alocar uma lista nova por frame gera pressao de GC desnecessaria.
+  late final List<Offset> _positions = List<Offset>.filled(
+    _seeds.length,
+    Offset.zero,
+  );
+
   /// Calcula posicoes finais para o frame atual em [size].
   /// O parametro [t] permite override em testes (default usa `tick`).
+  /// Retorna uma copia — o buffer interno e reusado entre chamadas.
   @visibleForTesting
   List<Offset> debugPositionsAt(Size size, {double? t}) {
-    return _computePositions(size, t ?? tick);
+    return List<Offset>.of(_computePositions(size, t ?? tick));
   }
 
   /// Posicoes ancora antes do drift (uteis para asserts deterministicos
@@ -112,8 +119,12 @@ class ParticleFieldPainter extends CustomPainter {
   List<Offset> _computePositions(Size size, double t) {
     if (size.isEmpty) return const [];
 
-    final result = List<Offset>.filled(_seeds.length, Offset.zero);
+    final result = _positions;
     final phaseTime = t * 2 * math.pi;
+    // Pointer lido UMA vez por frame (fora do loop por particula) — o
+    // valor nao muda durante o frame e a leitura do listenable nao e
+    // gratuita.
+    final pointer = pointerListenable?.value ?? this.pointer;
 
     for (var i = 0; i < _seeds.length; i++) {
       final s = _seeds[i];
@@ -127,7 +138,6 @@ class ParticleFieldPainter extends CustomPainter {
       var p = anchor + Offset(dx, dy);
 
       // Empurrao radial pelo pointer — quanto mais perto, mais forte.
-      final pointer = pointerListenable?.value ?? this.pointer;
       if (pointer != null && pointerInfluence > 0) {
         final delta = p - pointer;
         final dist = delta.distance;
@@ -181,13 +191,6 @@ class ParticleFieldPainter extends CustomPainter {
         old.particleCount != particleCount ||
         old.seed != seed;
   }
-
-  /// Hint para o `CustomPaint` host: com 24+ particulas vale rasterizar
-  /// em layer.
-  bool get isComplex => particleCount >= 24;
-
-  /// Hint para o `CustomPaint` host: anima continuamente.
-  bool get willChange => true;
 }
 
 class _Seed {

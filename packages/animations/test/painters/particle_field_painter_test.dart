@@ -85,15 +85,6 @@ void main() {
       expect(positions, hasLength(50));
     });
 
-    test(
-      'isComplex e willChange refletem animacao continua e geometria pesada',
-      () {
-        final p = make(particleCount: 60);
-        expect(p.willChange, isTrue);
-        expect(p.isComplex, isTrue);
-      },
-    );
-
     test('paint executa sem lancar para Size zero', () {
       final painter = make();
       final canvas = Canvas(PictureRecorder());

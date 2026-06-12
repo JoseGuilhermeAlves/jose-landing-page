@@ -63,23 +63,27 @@ class AppLocalizationsJa extends AppLocalizations {
   String get common_semanticsLoadingSpinner => 'コンテンツを読み込み中';
 
   @override
-  String get hero_eyebrow => 'Flutterモバイル開発者';
+  String get hero_eyebrow => 'モバイルフロントエンド · Flutter';
 
   @override
-  String get hero_headline1 => 'Flutter モバイルフロントエンド。';
+  String get hero_headline1 => 'Flutter歴6年。';
 
   @override
-  String get hero_headline2 => 'MVP から本番アプリまで。';
+  String get hero_headline2 => 'リテールアプリ5本が本番稼働中。';
 
   @override
   String get hero_bio =>
-      'Flutterによるモバイルアプリのフロントエンド——feature単位のアーキテクチャ、Blocによる状態管理、実機での滑らかなUI。6年間、異なるドメインで同じ規律を貫き、常にモバイルレイヤーで。';
+      'B2Bリテール業務アプリ5本のフロントエンドを、デザインからデプロイまで丸ごと構築。現在は大規模金融プロダクトに携わっています。feature単位のアーキテクチャ、Blocによる状態管理、実機での滑らかな動作。';
+
+  @override
+  String get hero_scopeLine =>
+      'バックエンドはチームに任せ、私はモバイルフロントエンド全体を提供し、既存のあらゆるAPIと統合します。';
 
   @override
   String get hero_scrollHint => 'スクロールして続ける';
 
   @override
-  String get hero_ctaWhatsapp => 'WhatsAppで連絡';
+  String get hero_ctaContact => '問い合わせる';
 
   @override
   String get hero_ctaProjects => 'プロジェクトを見る';
@@ -91,16 +95,16 @@ class AppLocalizationsJa extends AppLocalizations {
   String get hero_trustYearsLabel => '年のFlutter経験';
 
   @override
-  String get hero_trustDomainsValue => '5+';
+  String get hero_trustAppsValue => '5';
 
   @override
-  String get hero_trustDomainsLabel => '対応ドメイン';
+  String get hero_trustAppsLabel => '本のリテールアプリが本番稼働';
 
   @override
-  String get hero_trustPlatformsValue => 'Mobile · Web';
+  String get hero_trustCanvasValue => '0';
 
   @override
-  String get hero_trustPlatformsLabel => 'ターゲットプラットフォーム';
+  String get hero_trustCanvasLabel => 'アニメーションアセット — すべてCanvas描画';
 
   @override
   String get hero_portraitSemantics => 'Jose Guilherme Alvesの写真';
@@ -109,14 +113,14 @@ class AppLocalizationsJa extends AppLocalizations {
   String get about_eyebrow => 'About';
 
   @override
-  String get about_title => '担当する';
+  String get about_title => '誰が';
 
   @override
-  String get about_titleAccent => 'のは。';
+  String get about_titleAccent => 'つくるのか。';
 
   @override
   String get about_subtitle =>
-      'Flutter モバイルフロントエンド7年以上。キックオフから明確なスコープと期待値の整合に焦点。';
+      'Flutter モバイルフロントエンド6年。キックオフから明確なスコープと期待値の整合に焦点。';
 
   @override
   String get about_domainsMapLabel => 'ドメインマップ';
@@ -134,11 +138,46 @@ class AppLocalizationsJa extends AppLocalizations {
   String get about_bioTitle => 'モバイルフロントエンド · Flutter Developer · ブラジル';
 
   @override
-  String get about_bioParagraph =>
-      'Flutterアプリのフロントエンドを丸ごと構築します——feature単位のアーキテクチャ、Blocによる状態管理、実機でのパフォーマンス、UXの一貫性。6年間、異なる文脈でこの規律を適用してきました：5年間は小売オペレーションのアプリ（在庫、店舗間の配分、販売、社内コミュニケーション）のフロントエンド全体をデザインからデプロイまで少人数チームで担当、その後は不安定なネットワーク下でも同期するoffline-firstの現場データ収集、機微なデータフローを扱う市民向け公共サービス、gamificationを備えた社内ツール、そして現在は独自のdesign systemを持つmonorepoの大規模な金融プロダクト。ドメインは異なれど、規律は同じ——堅牢なモバイルフロントエンド、製品が求めればFlutter webも。';
+  String get about_bioLead =>
+      '6年間、同じ基準——Flutterのモバイルフロントエンド——を、互いに似ていない文脈に適用してきました。';
 
   @override
-  String get delivery_entrega_eyebrow => 'デリバリー';
+  String get about_factRetailTitle => 'B2Bリテール（5年）';
+
+  @override
+  String get about_factRetailBody =>
+      '業務アプリ5本のフロントエンドを丸ごと担当：在庫、拠点間の配分、販売、社内コミュニケーション。少人数チームでデザインからデプロイまで。';
+
+  @override
+  String get about_factFieldTitle => 'オフラインファーストの現場';
+
+  @override
+  String get about_factFieldBody => '不安定なネットワーク下で同期するデータ収集。';
+
+  @override
+  String get about_factPublicTitle => '公共セクター';
+
+  @override
+  String get about_factPublicBody => '機微なデータフローを扱う市民向けサービス。';
+
+  @override
+  String get about_factToolsTitle => '社内ツール';
+
+  @override
+  String get about_factToolsBody => 'ゲーミフィケーションによる生産性向上。';
+
+  @override
+  String get about_factFintechTitle => '大規模フィンテック（現職）';
+
+  @override
+  String get about_factFintechBody => '独自のデザインシステムを持つモノレポ構成の金融プロダクト。';
+
+  @override
+  String get about_bioClose =>
+      'ドメインは違っても、提供するものは同じ——モバイルフロントエンド全体。バックエンドはチームに残り、私はそれと統合します。';
+
+  @override
+  String get delivery_entrega_eyebrow => '成果';
 
   @override
   String get delivery_entrega_title => '明確なスコープ、';
@@ -270,7 +309,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get contact_subtitle =>
-      'こちらからメッセージを送るか、以下のチャネルで直接ご連絡ください。平日は迅速に返信します。';
+      'シニアFlutterエンジニアとしての機会を探しています——正社員・業務委託いずれも可。EmailとLinkedInが最速のチャネルです。1営業日以内に返信します。';
 
   @override
   String get contact_ctaWhatsapp => 'WhatsAppで直接';
@@ -279,7 +318,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get contact_ctaEmail => 'メール';
 
   @override
-  String get contact_ctaLinkedin => 'LinkedIn';
+  String get contact_ctaLinkedin => 'LinkedIn — 詳細な経歴';
 
   @override
   String get contact_ctaGithub => 'GitHub';
@@ -300,19 +339,19 @@ class AppLocalizationsJa extends AppLocalizations {
   String get contact_formMessage => 'メッセージ';
 
   @override
-  String get contact_formSubmit => 'WhatsAppで送信';
+  String get contact_formSubmit => 'メールで送信';
 
   @override
   String get contact_formSubmitting => '送信中...';
 
   @override
-  String get contact_projectNewApp => '新規アプリ（ゼロからMVPまで）';
+  String get contact_projectPosition => '求人（正社員）';
 
   @override
-  String get contact_projectExisting => '既存アプリの進化';
+  String get contact_projectContract => 'プロジェクト・業務委託';
 
   @override
-  String get contact_projectConsulting => '技術コンサルティング / アーキテクチャ';
+  String get contact_projectConsulting => 'スポットコンサルティング';
 
   @override
   String get contact_projectOther => 'その他';
@@ -351,7 +390,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get engineering_subtitle => '本番で使用している技術と、近くで知る他の技術。タイルをタップして詳細を確認。';
 
   @override
-  String get engineering_githubButton => 'GitHubでリポジトリを見る';
+  String get engineering_githubButton => '私のGitHubを見る';
 
   @override
   String get showcase_eyebrow => 'ショーケース';
@@ -364,7 +403,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get showcase_subtitle =>
-      'ニッチ別の機能モック——デリバリー、予約、フィットネス、不動産、投資。カードをタップして開く。実際のバックエンドなし；デリバリー可能なプロダクトタイプを示す。';
+      '架空ブランド5つ、ビジュアルアイデンティティ5種、20を超える画面——そしてバックエンドはあえてゼロ。ここで動くものはすべてFlutterのフロントエンド：Blocによる状態管理と専用のCustom Painter。カードをタップして開いてください。';
 
   @override
   String get showcase_financeLabel => '投資';
@@ -398,7 +437,8 @@ class AppLocalizationsJa extends AppLocalizations {
   String get showcase_realestateLabel => '不動産';
 
   @override
-  String get showcase_realestateDescription => '地域、価格帯、部屋数でフィルター可能な物件リスト。';
+  String get showcase_realestateDescription =>
+      'Solar——データから描画する間取り図、周辺マップ、検索から問い合わせまでの導線を備えた不動産。';
 
   @override
   String get pulso_eyebrowTodayWorkout => '今日のトレーニング';

@@ -64,23 +64,27 @@ class AppLocalizationsRu extends AppLocalizations {
   String get common_semanticsLoadingSpinner => 'Загрузка содержимого';
 
   @override
-  String get hero_eyebrow => 'Мобильный разработчик Flutter';
+  String get hero_eyebrow => 'Мобильный фронтенд · Flutter';
 
   @override
-  String get hero_headline1 => 'Мобильный фронтенд на Flutter.';
+  String get hero_headline1 => 'Шесть лет Flutter.';
 
   @override
-  String get hero_headline2 => 'От MVP до приложения в продакшене.';
+  String get hero_headline2 => 'Пять ритейл-приложений в продакшене.';
 
   @override
   String get hero_bio =>
-      'Фронтенд мобильных приложений на Flutter — архитектура по фичам, состояние на Bloc, плавный UI на реальных устройствах. Шесть лет выдаю один и тот же стандарт в разных доменах, всегда на мобильном слое.';
+      'Я построил весь фронтенд пяти приложений для операций B2B-ритейла — от дизайна до деплоя — и сегодня работаю над крупномасштабным финансовым продуктом. Архитектура по фичам, состояние на Bloc, плавность на реальных устройствах.';
+
+  @override
+  String get hero_scopeLine =>
+      'Бэкенд остаётся за командой — я выдаю весь мобильный фронтенд и интегрируюсь с любым существующим API.';
 
   @override
   String get hero_scrollHint => 'листайте, чтобы продолжить';
 
   @override
-  String get hero_ctaWhatsapp => 'Написать в WhatsApp';
+  String get hero_ctaContact => 'Связаться со мной';
 
   @override
   String get hero_ctaProjects => 'Смотреть проекты';
@@ -92,16 +96,16 @@ class AppLocalizationsRu extends AppLocalizations {
   String get hero_trustYearsLabel => 'лет с Flutter';
 
   @override
-  String get hero_trustDomainsValue => '5+';
+  String get hero_trustAppsValue => '5';
 
   @override
-  String get hero_trustDomainsLabel => 'доменов в работе';
+  String get hero_trustAppsLabel => 'ритейл-приложений в продакшене';
 
   @override
-  String get hero_trustPlatformsValue => 'Mobile · Web';
+  String get hero_trustCanvasValue => '0';
 
   @override
-  String get hero_trustPlatformsLabel => 'целевые платформы';
+  String get hero_trustCanvasLabel => 'ассетов анимации — всё на Canvas';
 
   @override
   String get hero_portraitSemantics => 'Фото Жозе Гильерме Алвеса';
@@ -110,10 +114,10 @@ class AppLocalizationsRu extends AppLocalizations {
   String get about_eyebrow => 'Обо мне';
 
   @override
-  String get about_title => 'Кто вас';
+  String get about_title => 'Кто';
 
   @override
-  String get about_titleAccent => 'обслуживает.';
+  String get about_titleAccent => 'строит.';
 
   @override
   String get about_subtitle =>
@@ -136,11 +140,49 @@ class AppLocalizationsRu extends AppLocalizations {
       'Мобильный фронтенд · Flutter Developer · Бразилия';
 
   @override
-  String get about_bioParagraph =>
-      'Я строю весь фронтенд приложений на Flutter — архитектура по фичам, состояние на Bloc, производительность на реальных устройствах и единообразный UX. Шесть лет применяю этот подход в разных контекстах: пять лет вёл полный фронтенд приложений для розничных операций (склад, распределение между точками, продажи и внутренние коммуникации, от дизайна до деплоя, в небольшой команде), затем сбор данных в полевых условиях offline-first с синхронизацией при нестабильной сети, государственная услуга для граждан с чувствительным потоком данных, внутренние инструменты с геймификацией и сегодня — крупный финансовый продукт в монорепозитории с собственным design system. Разные домены, одна планка: надёжный мобильный фронтенд, с Flutter web там, где этого требовал продукт.';
+  String get about_bioLead =>
+      'Шесть лет с одной и той же планкой — мобильный фронтенд на Flutter — в контекстах, которые не похожи друг на друга.';
 
   @override
-  String get delivery_entrega_eyebrow => 'ДОСТАВКА';
+  String get about_factRetailTitle => 'B2B-ритейл (5 лет)';
+
+  @override
+  String get about_factRetailBody =>
+      'Весь фронтенд пяти операционных приложений: склад, распределение между точками, продажи и внутренние коммуникации. От дизайна до деплоя, в небольшой команде.';
+
+  @override
+  String get about_factFieldTitle => 'Полевые работы offline-first';
+
+  @override
+  String get about_factFieldBody =>
+      'Сбор данных с синхронизацией при нестабильной сети.';
+
+  @override
+  String get about_factPublicTitle => 'Госсектор';
+
+  @override
+  String get about_factPublicBody =>
+      'Сервис для граждан с чувствительным потоком данных.';
+
+  @override
+  String get about_factToolsTitle => 'Внутренние инструменты';
+
+  @override
+  String get about_factToolsBody => 'Продуктивность с геймификацией.';
+
+  @override
+  String get about_factFintechTitle => 'Крупномасштабный финтех (сейчас)';
+
+  @override
+  String get about_factFintechBody =>
+      'Финансовый продукт в монорепозитории с собственной дизайн-системой.';
+
+  @override
+  String get about_bioClose =>
+      'Разные домены, одна и та же поставка: весь мобильный фронтенд. Бэкенд остаётся за командой — я с ним интегрируюсь.';
+
+  @override
+  String get delivery_entrega_eyebrow => 'РЕЗУЛЬТАТ';
 
   @override
   String get delivery_entrega_title => 'Чёткий объём,';
@@ -272,7 +314,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get contact_subtitle =>
-      'Напишите здесь или сразу через каналы ниже. Отвечаю быстро в течение недели.';
+      'Открыт к предложениям как senior Flutter-разработчик — в штат или по контракту. Email и LinkedIn — самые быстрые каналы; отвечаю в течение одного рабочего дня.';
 
   @override
   String get contact_ctaWhatsapp => 'WhatsApp напрямую';
@@ -281,7 +323,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get contact_ctaEmail => 'Email';
 
   @override
-  String get contact_ctaLinkedin => 'LinkedIn';
+  String get contact_ctaLinkedin => 'LinkedIn — полный послужной список';
 
   @override
   String get contact_ctaGithub => 'GitHub';
@@ -302,20 +344,19 @@ class AppLocalizationsRu extends AppLocalizations {
   String get contact_formMessage => 'Сообщение';
 
   @override
-  String get contact_formSubmit => 'Отправить через WhatsApp';
+  String get contact_formSubmit => 'Отправить по email';
 
   @override
   String get contact_formSubmitting => 'Отправка...';
 
   @override
-  String get contact_projectNewApp => 'Новое приложение (с нуля до MVP)';
+  String get contact_projectPosition => 'Вакансия (в штат)';
 
   @override
-  String get contact_projectExisting => 'Развитие существующего приложения';
+  String get contact_projectContract => 'Проект или контракт';
 
   @override
-  String get contact_projectConsulting =>
-      'Технический консалтинг / архитектура';
+  String get contact_projectConsulting => 'Разовая консультация';
 
   @override
   String get contact_projectOther => 'Другое';
@@ -355,7 +396,7 @@ class AppLocalizationsRu extends AppLocalizations {
       'Технологии, которые я использую в продакшене, и другие, которые знаю вблизи. Коснитесь любого тайла, чтобы узнать больше.';
 
   @override
-  String get engineering_githubButton => 'Смотреть репозиторий на GitHub';
+  String get engineering_githubButton => 'Смотреть мой GitHub';
 
   @override
   String get showcase_eyebrow => 'Showcase';
@@ -368,7 +409,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get showcase_subtitle =>
-      'Рабочие моки по нишам — доставка, бронирование, фитнес, недвижимость и инвестиции. Коснитесь карточки, чтобы открыть. Без реального бэкенда; они демонстрируют тип продукта, который я могу выдать.';
+      'Пять вымышленных брендов, пять визуальных идентичностей, больше двадцати экранов с навигацией — и ноль бэкенда, сознательно. Всё, что здесь движется, — фронтенд Flutter: состояние на Bloc и выделенные Custom Painter. Коснитесь карточки, чтобы открыть.';
 
   @override
   String get showcase_financeLabel => 'Инвестиции';
@@ -403,7 +444,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get showcase_realestateDescription =>
-      'Листинг объектов с фильтрами по району, диапазону цен и количеству комнат.';
+      'Solar — недвижимость с планом, построенным по данным, картой района и путём от поиска до контакта.';
 
   @override
   String get pulso_eyebrowTodayWorkout => 'ТРЕНИРОВКА НА СЕГОДНЯ';

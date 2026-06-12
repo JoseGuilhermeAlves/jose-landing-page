@@ -22,11 +22,11 @@ class HeroSection extends StatelessWidget {
     super.key,
   });
 
-  /// Disparado pelo CTA primario "Falar no WhatsApp". Espera-se que o
-  /// shell abra `wa.me/...` (PROJECT.md §4.1).
+  /// Disparado pelo CTA secundario "Falar comigo". Espera-se que o
+  /// shell scrolle ate a secao de contato.
   final VoidCallback? onContactPressed;
 
-  /// Disparado pelo CTA secundario "Ver projetos". Espera-se que o
+  /// Disparado pelo CTA primario "Ver projetos". Espera-se que o
   /// shell scrolle ate a secao de showcase.
   final VoidCallback? onSeeProjectsPressed;
 
@@ -100,6 +100,21 @@ class HeroSection extends StatelessWidget {
               color: colors.onSurfaceMuted,
               height: 1.5,
               fontWeight: FontWeight.w400,
+            ),
+            textAlign: textAlign,
+          ),
+        ),
+        const SizedBox(height: AppSpacing.md),
+        // Linha de posicionamento — fronteira de responsabilidade
+        // (backend e integracao, nunca construcao) visivel na primeira
+        // dobra, em corpo menor pra nao competir com a bio.
+        ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 680),
+          child: Text(
+            context.l10n.hero_scopeLine,
+            style: textTheme.bodySmall?.copyWith(
+              color: colors.onSurfaceMuted.withValues(alpha: 0.85),
+              height: 1.5,
             ),
             textAlign: textAlign,
           ),
@@ -334,23 +349,32 @@ class _AnimatedNeonHeadlineState extends State<_AnimatedNeonHeadline>
 
   @override
   Widget build(BuildContext context) {
+    // O Text vai no `child:` do AnimatedBuilder — e reutilizado entre
+    // frames (mesma Element, sem relayout do texto). So o ShaderMask e
+    // reconstruido por tick, atualizacao barata do shader no render
+    // object existente.
     return AnimatedBuilder(
       animation: _controller,
-      builder: (_, _) {
+      child: Text(
+        widget.text,
+        style: widget.style,
+        textAlign: widget.textAlign,
+        textWidthBasis: TextWidthBasis.parent,
+      ),
+      builder: (_, child) {
         // Slide horizontal — gradient axis se move 4 alignment units por
         // loop, com tileMode mirror pra repetir seamless.
         final shift = _controller.value * 4;
-        return GradientText(
-          text: widget.text,
-          style: widget.style,
-          textAlign: widget.textAlign,
-          gradient: LinearGradient(
+        return ShaderMask(
+          shaderCallback: LinearGradient(
             begin: Alignment(-3 + shift, 0),
             end: Alignment(3 + shift, 0),
             colors: _neonColors,
             stops: _neonStops,
             tileMode: TileMode.mirror,
-          ),
+          ).createShader,
+          blendMode: BlendMode.srcIn,
+          child: child,
         );
       },
     );
@@ -429,20 +453,22 @@ class _CtaRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final whatsapp = AppButton(
-      label: context.l10n.hero_ctaWhatsapp,
-      onPressed: onContactPressed,
-      size: AppButtonSize.large,
-      icon: Icons.chat_bubble_outline,
-      expand: isMobile,
-    );
-
+    // Funil recrutador/tech lead: o primario leva ao artefato
+    // (showcase), o secundario abre a conversa (scroll ate Contact).
     final projects = AppButton(
       label: context.l10n.hero_ctaProjects,
       onPressed: onSeeProjectsPressed,
       size: AppButtonSize.large,
+      icon: Icons.arrow_downward,
+      expand: isMobile,
+    );
+
+    final contact = AppButton(
+      label: context.l10n.hero_ctaContact,
+      onPressed: onContactPressed,
+      size: AppButtonSize.large,
       variant: AppButtonVariant.secondary,
-      icon: Icons.arrow_forward,
+      icon: Icons.mail_outline,
       expand: isMobile,
     );
 
@@ -455,9 +481,9 @@ class _CtaRow extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            whatsapp,
-            const SizedBox(height: AppSpacing.md),
             projects,
+            const SizedBox(height: AppSpacing.md),
+            contact,
           ],
         ),
       );
@@ -469,7 +495,7 @@ class _CtaRow extends StatelessWidget {
       spacing: AppSpacing.md,
       runSpacing: AppSpacing.md,
       crossAxisAlignment: WrapCrossAlignment.center,
-      children: [whatsapp, projects],
+      children: [projects, contact],
     );
   }
 }
@@ -489,12 +515,12 @@ class _TrustStrip extends StatelessWidget {
         label: l10n.hero_trustYearsLabel,
       ),
       _TrustStat(
-        value: l10n.hero_trustDomainsValue,
-        label: l10n.hero_trustDomainsLabel,
+        value: l10n.hero_trustAppsValue,
+        label: l10n.hero_trustAppsLabel,
       ),
       _TrustStat(
-        value: l10n.hero_trustPlatformsValue,
-        label: l10n.hero_trustPlatformsLabel,
+        value: l10n.hero_trustCanvasValue,
+        label: l10n.hero_trustCanvasLabel,
       ),
     ];
     // Sempre start-aligned: o hero agora lidera com a foto a esquerda,

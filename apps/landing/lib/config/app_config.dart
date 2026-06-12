@@ -6,9 +6,20 @@
 /// - segredos (chaves de API, etc.) — usar `--dart-define` no build;
 /// - copy de UI — copy mora dentro de cada feature.
 abstract final class AppConfig {
-  /// URL do repositorio publico do projeto. Exibida em `LabsPage`
-  /// (botao "Ver repo no GitHub"). Atualize aqui quando o remote for
-  /// criado, e o conteudo da landing automaticamente seguira.
-  static const String githubRepoUrl =
-      'https://github.com/JoseGuilhermeAlves/jose-landing-page';
+  /// Numero do WhatsApp em E.164 sem `+` (ex.: `5514...`). Usado pelo
+  /// CTA do Hero e pelo tile alternativo da secao de contato.
+  static const String whatsappNumber = '5514991163009';
+
+  /// Email de contato — canal primario do funil tech/recruiter.
+  static const String email = 'contato.joseguilhermealves@gmail.com';
+
+  /// Perfil do LinkedIn — exibido na nav e na secao de contato.
+  static const String linkedinUrl =
+      'https://www.linkedin.com/in/jos%C3%A9-guilherme-alves-10a17b138/';
+
+  /// Perfil do GitHub — usado na nav, na secao Engineering e no
+  /// contato. Decisao do Jose (2026-06-11): apontar pro perfil, nao
+  /// pra um repositorio especifico.
+  static const String githubProfileUrl =
+      'https://github.com/JoseGuilhermeAlves';
 }

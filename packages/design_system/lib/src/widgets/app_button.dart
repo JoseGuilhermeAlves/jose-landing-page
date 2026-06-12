@@ -36,6 +36,7 @@ class AppButton extends StatefulWidget {
 
 class _AppButtonState extends State<AppButton> {
   bool _hovering = false;
+  bool _focused = false;
 
   bool get _disabled => widget.onPressed == null;
 
@@ -83,6 +84,19 @@ class _AppButtonState extends State<AppButton> {
             ),
           ]
         : <BoxShadow>[];
+
+    // Focus ring discreto — glow no token primary, visivel apenas em
+    // navegacao por teclado (onShowFocusHighlight ja filtra foco por
+    // toque/clique).
+    if (_focused && !_disabled) {
+      shadows.add(
+        BoxShadow(
+          color: colors.primary.withValues(alpha: 0.55),
+          blurRadius: 0,
+          spreadRadius: 2,
+        ),
+      );
+    }
 
     final padding = switch (widget.size) {
       AppButtonSize.medium => const EdgeInsets.symmetric(
@@ -142,12 +156,24 @@ class _AppButtonState extends State<AppButton> {
       ),
     );
 
-    return MouseRegion(
-      cursor: _disabled
+    // FocusableActionDetector adiciona foco por Tab e ativacao por
+    // Enter/Espaco (ActivateIntent cobre os dois atalhos por padrao) —
+    // o GestureDetector sozinho deixava o botao inacessivel por teclado.
+    return FocusableActionDetector(
+      enabled: !_disabled,
+      mouseCursor: _disabled
           ? SystemMouseCursors.forbidden
           : SystemMouseCursors.click,
-      onEnter: (_) => setState(() => _hovering = true),
-      onExit: (_) => setState(() => _hovering = false),
+      onShowHoverHighlight: (v) => setState(() => _hovering = v),
+      onShowFocusHighlight: (v) => setState(() => _focused = v),
+      actions: {
+        ActivateIntent: CallbackAction<ActivateIntent>(
+          onInvoke: (_) {
+            widget.onPressed?.call();
+            return null;
+          },
+        ),
+      },
       child: GestureDetector(
         onTap: widget.onPressed,
         child: Semantics(

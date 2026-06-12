@@ -154,11 +154,6 @@ void main() {
       );
     });
 
-    test('hints: complexo + animando (willChange true)', () {
-      expect(make().isComplex, isTrue);
-      expect(make().willChange, isTrue);
-    });
-
     test('paint nao lanca em Size zero', () {
       final recorder = PictureRecorder();
       final canvas = Canvas(recorder);

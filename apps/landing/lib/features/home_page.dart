@@ -10,14 +10,17 @@ import 'package:landing/widgets/engineering_section.dart';
 import 'package:landing/widgets/home_bottom_nav.dart';
 import 'package:landing/widgets/home_footer.dart';
 import 'package:landing/widgets/home_nav.dart';
+import 'package:landing/widgets/section_visibility.dart';
 import 'package:landing/widgets/section_wave_divider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 /// Home da landing — composta pelas feature_* na ordem do scroll.
 /// Plugadas: Hero (§12.6) + Showcase (§12.10) + About (§12.8) +
-/// Engineering (services + tech merged) + Case study (Pulso behind-
-/// the-scenes) + Contact (§12.9), separadas por `SectionWaveDivider`
-/// e envoltas em `GlowBackdrop` alternados.
+/// Engineering (services + tech merged) + Contact (§12.9), separadas
+/// por `SectionWaveDivider` e envoltas em `GlowBackdrop` alternados.
+/// Cada secao vai dentro de um `SectionVisibility` que pausa os
+/// tickers quando ela sai do viewport (e quando o sistema pede
+/// animacoes reduzidas).
 ///
 /// O `HomeNav` flutua no topo via Stack overlay, com 5 ancoras que
 /// rolam a posicao via `ScrollController.animateTo`. O calculo do
@@ -65,12 +68,22 @@ class _HomePageState extends State<HomePage> {
     super.dispose();
   }
 
+  /// Ultimo offset processado pelo scroll-spy — usado pra throttle.
+  double? _lastSpyOffset;
+
   /// Scroll-spy pra bottom nav mobile: descobre qual secao esta sob o
   /// nav. Recalcula o offset de revelacao de cada ancora (mesmo metodo do
   /// `_scrollToKey`) e marca a ultima cujo topo ja passou pelo nav.
+  ///
+  /// Throttle por delta: `getOffsetToReveal` x4 por notificacao e caro;
+  /// como a janela de decisao tem folga de 140px, recalcular so a cada
+  /// 24px de deslocamento nao muda o resultado percebido.
   void _onScroll() {
     if (!_scrollController.hasClients) return;
     final current = _scrollController.offset;
+    final last = _lastSpyOffset;
+    if (last != null && (current - last).abs() < 24) return;
+    _lastSpyOffset = current;
     final keys = [
       _showcaseKey,
       _aboutKey,
@@ -196,13 +209,18 @@ class _HomePageState extends State<HomePage> {
             controller: _scrollController,
             slivers: [
               SliverToBoxAdapter(
-                child: SizedBox(
-                  height: heroHeight,
-                  child: HeroSection(
-                    onContactPressed: () => _openExternalUri(
-                      Uri.parse('https://wa.me/5514991163009'),
+                child: SectionVisibility(
+                  id: 'hero',
+                  child: SizedBox(
+                    height: heroHeight,
+                    child: HeroSection(
+                      // Funil recrutador: ambos os CTAs rolam dentro da
+                      // pagina — primario pro showcase, secundario pro
+                      // contato. WhatsApp continua disponivel apenas na
+                      // secao Contact.
+                      onContactPressed: () => _scrollToKey(_contactKey),
+                      onSeeProjectsPressed: () => _scrollToKey(_showcaseKey),
                     ),
-                    onSeeProjectsPressed: () => _scrollToKey(_showcaseKey),
                   ),
                 ),
               ),
@@ -210,50 +228,68 @@ class _HomePageState extends State<HomePage> {
                 child: KeyedSubtree(
                   key: _showcaseKey,
                   child: _SectionSlot(
+                    id: 'showcase',
                     horizontalPadding: horizontalPadding,
                     glowAlignment: Alignment.topLeft,
                     child: const ShowcaseSection(),
                   ),
                 ),
               ),
-              const SliverToBoxAdapter(child: SectionWaveDivider()),
+              const SliverToBoxAdapter(
+                child: SectionVisibility(
+                  id: 'divider-showcase-about',
+                  child: SectionWaveDivider(),
+                ),
+              ),
               SliverToBoxAdapter(
                 child: KeyedSubtree(
                   key: _aboutKey,
                   child: _SectionSlot(
+                    id: 'about',
                     horizontalPadding: horizontalPadding,
                     glowAlignment: Alignment.centerRight,
                     child: const AboutSection(),
                   ),
                 ),
               ),
-              const SliverToBoxAdapter(child: SectionWaveDivider()),
+              const SliverToBoxAdapter(
+                child: SectionVisibility(
+                  id: 'divider-about-engineering',
+                  child: SectionWaveDivider(),
+                ),
+              ),
               SliverToBoxAdapter(
                 child: KeyedSubtree(
                   key: _engineeringKey,
                   child: _SectionSlot(
+                    id: 'engineering',
                     horizontalPadding: horizontalPadding,
                     glowAlignment: Alignment.bottomRight,
                     child: EngineeringSection(
-                      githubUrl: AppConfig.githubRepoUrl,
+                      githubUrl: AppConfig.githubProfileUrl,
                       onOpenGithub: (url) => _openExternalUri(Uri.parse(url)),
                     ),
                   ),
                 ),
               ),
-              const SliverToBoxAdapter(child: SectionWaveDivider()),
+              const SliverToBoxAdapter(
+                child: SectionVisibility(
+                  id: 'divider-engineering-contact',
+                  child: SectionWaveDivider(),
+                ),
+              ),
               SliverToBoxAdapter(
                 child: KeyedSubtree(
                   key: _contactKey,
                   child: _SectionSlot(
+                    id: 'contact',
                     horizontalPadding: horizontalPadding,
                     glowAlignment: Alignment.centerLeft,
                     child: ContactSection(
-                      whatsappNumber: '5514991163009',
-                      email: 'contato.joseguilhermealves@gmail.com',
-                      linkedinUrl:
-                          'https://www.linkedin.com/in/jos%C3%A9-guilherme-alves-10a17b138/',
-                      githubUrl: 'https://github.com/JoseGuilhermeAlves',
+                      whatsappNumber: AppConfig.whatsappNumber,
+                      email: AppConfig.email,
+                      linkedinUrl: AppConfig.linkedinUrl,
+                      githubUrl: AppConfig.githubProfileUrl,
                       onOpenUri: _openExternalUri,
                     ),
                   ),
@@ -285,6 +321,9 @@ class _HomePageState extends State<HomePage> {
               anchors: anchors,
               onLogoTap: _scrollToTop,
               onCtaTap: () => _scrollToKey(_contactKey),
+              githubUrl: AppConfig.githubProfileUrl,
+              linkedinUrl: AppConfig.linkedinUrl,
+              onOpenSocial: (url) => _openExternalUri(Uri.parse(url)),
             ),
           ),
           // Bottom nav so na visao mobile — substitui o menu hamburger.
@@ -306,14 +345,19 @@ class _HomePageState extends State<HomePage> {
 }
 
 /// Wrapper de secao: padding lateral + max-width centralizado +
-/// GlowBackdrop sutil atras do conteudo. Centraliza o ritmo de spacing
-/// e o "fundo decorativo" de cada secao num lugar so.
+/// GlowBackdrop sutil atras do conteudo + `SectionVisibility` que pausa
+/// os tickers da secao quando ela sai do viewport. Centraliza o ritmo
+/// de spacing e o "fundo decorativo" de cada secao num lugar so.
 class _SectionSlot extends StatelessWidget {
   const _SectionSlot({
+    required this.id,
     required this.child,
     required this.horizontalPadding,
     required this.glowAlignment,
   });
+
+  /// Identificador estavel da secao — repassado ao `SectionVisibility`.
+  final String id;
 
   final Widget child;
   final double horizontalPadding;
@@ -321,6 +365,13 @@ class _SectionSlot extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return SectionVisibility(
+      id: id,
+      child: _buildSlot(context),
+    );
+  }
+
+  Widget _buildSlot(BuildContext context) {
     return GlowBackdrop(
       alignment: glowAlignment,
       intensity: 0.08,

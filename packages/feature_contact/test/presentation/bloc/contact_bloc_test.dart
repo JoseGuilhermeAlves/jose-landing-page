@@ -3,11 +3,11 @@ import 'package:feature_contact/feature_contact.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  /// WhatsApp number do Jose. Numero ficticio aqui — em produto vem
-  /// de uma constante do shell.
-  const whatsappNumber = '5571999990000';
+  /// Email de destino do mailto. Ficticio aqui — em produto vem de uma
+  /// constante do shell (AppConfig.email).
+  const email = 'contato@example.com';
 
-  ContactBloc makeBloc() => ContactBloc(whatsappNumber: whatsappNumber);
+  ContactBloc makeBloc() => ContactBloc(email: email);
 
   group('ContactBloc', () {
     test('estado inicial e ContactState.initial()', () {
@@ -71,13 +71,13 @@ void main() {
     );
 
     blocTest<ContactBloc, ContactState>(
-      'submit com form valido emite Submitting -> Success com wa.me URI',
+      'submit com form valido emite Submitting -> Success com mailto URI',
       build: makeBloc,
       seed: () => const ContactState(
-        name: 'Cliente Teste',
-        email: 'cliente@teste.com',
-        message: 'Quero conversar sobre app novo de delivery.',
-        projectType: ProjectType.newApp,
+        name: 'Recrutadora Teste',
+        email: 'recrutadora@teste.com',
+        message: 'Quero conversar sobre uma vaga Flutter senior.',
+        projectType: ProjectType.position,
       ),
       act: (bloc) => bloc.add(const ContactSubmitted()),
       expect: () => [
@@ -90,16 +90,24 @@ void main() {
           (s) => s.submission,
           'submission',
           isA<ContactSubmissionSuccess>().having(
-            (sub) => sub.target.toString(),
+            (sub) => sub.target,
             'target',
-            allOf(contains('wa.me/$whatsappNumber'), contains('text=')),
+            isA<Uri>()
+                .having((u) => u.scheme, 'scheme', 'mailto')
+                .having((u) => u.path, 'path', email)
+                .having(
+                  (u) => u.toString(),
+                  'toString',
+                  allOf(contains('subject='), contains('body=')),
+                ),
           ),
         ),
       ],
     );
 
     blocTest<ContactBloc, ContactState>(
-      'wa.me URI inclui nome, email, tipo e mensagem (encoded)',
+      'mailto URI inclui nome (no subject), email, tipo e mensagem '
+      '(encoded, espacos como %20)',
       build: makeBloc,
       seed: () => const ContactState(
         name: 'Cliente & Cia',
@@ -112,11 +120,17 @@ void main() {
         final sub = bloc.state.submission;
         expect(sub, isA<ContactSubmissionSuccess>());
         final uri = (sub as ContactSubmissionSuccess).target;
-        final decoded = Uri.decodeComponent(uri.queryParameters['text'] ?? '');
-        expect(decoded, contains('Cliente & Cia'));
-        expect(decoded, contains('cliente@teste.com'));
-        expect(decoded, contains('cao & gato'));
-        expect(decoded, contains(ProjectType.consulting.label));
+        final subject = uri.queryParameters['subject'] ?? '';
+        final body = uri.queryParameters['body'] ?? '';
+        expect(subject, contains('Cliente & Cia'));
+        expect(body, contains('Cliente & Cia'));
+        expect(body, contains('cliente@teste.com'));
+        expect(body, contains('cao & gato'));
+        expect(body, contains(ProjectType.consulting.label));
+        // Espacos devem ser %20 na forma crua (clientes de email exibem
+        // `+` literal quando codificado via queryParameters).
+        expect(uri.toString(), isNot(contains('+')));
+        expect(uri.toString(), contains('%20'));
       },
     );
 
@@ -127,8 +141,8 @@ void main() {
         name: 'a',
         email: 'a@b.com',
         message: 'mensagem grande aqui',
-        projectType: ProjectType.newApp,
-        submission: ContactSubmissionSuccess(Uri.parse('https://wa.me/x')),
+        projectType: ProjectType.position,
+        submission: ContactSubmissionSuccess(Uri.parse('mailto:x@y.com')),
       ),
       act: (bloc) => bloc.add(const ContactReset()),
       expect: () => [const ContactState.initial()],

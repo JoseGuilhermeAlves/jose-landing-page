@@ -23,12 +23,26 @@ void main() {
   }
 
   group('AboutSection', () {
-    testWidgets('renderiza bio com nome e parágrafo', (tester) async {
+    testWidgets('renderiza bio com nome, lead e linhas-fato', (tester) async {
       await tester.pumpWidget(wrap(const AboutSection()));
       await tester.pump(const Duration(milliseconds: 32));
 
       expect(find.textContaining('José Guilherme'), findsWidgets);
       expect(find.textContaining('Flutter Developer'), findsWidgets);
+      // Lead + linhas-fato escaneaveis + fecho de escopo.
+      expect(find.textContaining('mesma régua'), findsOneWidget);
+      expect(
+        find.textContaining('Varejo B2B', findRichText: true),
+        findsWidgets,
+      );
+      expect(
+        find.textContaining('Fintech de larga escala', findRichText: true),
+        findsWidgets,
+      );
+      expect(
+        find.textContaining('Backend permanece com o time'),
+        findsOneWidget,
+      );
 
       await tester.pumpWidget(const SizedBox());
     });

@@ -21,20 +21,29 @@ import 'package:flutter/material.dart';
 /// - `shouldRepaint` minimo.
 class WaveDividerPainter extends CustomPainter {
   WaveDividerPainter({
-    required double phase,
+    double phase = 0,
     required this.color,
     this.amplitude = 8,
     this.frequency = 2,
     this.style = PaintingStyle.stroke,
     this.strokeWidth = 1.5,
     this.sampleStep = 2,
+    this.animation,
   }) : assert(amplitude >= 0, 'Amplitude negativa nao faz sentido'),
        assert(frequency > 0, 'Frequencia deve ser positiva'),
        assert(sampleStep > 0, 'sampleStep deve ser positivo'),
        // Phase e ciclica: aceita qualquer real, normaliza pra [0, 1).
-       phase = _wrapUnit(phase);
+       phase = _wrapUnit(phase),
+       // `repaint:` faz o RenderCustomPaint ouvir o Listenable direto e
+       // pular build/layout a cada tick.
+       super(repaint: animation);
 
+  /// Fase estatica — ignorada quando [animation] e fornecido.
   final double phase;
+
+  /// Quando fornecido, `paint()` le `.value` ao vivo a cada frame e o
+  /// painter repinta via `super(repaint:)` — sem rebuild do widget host.
+  final Animation<double>? animation;
   final Color color;
   final double amplitude;
   final double frequency;
@@ -60,7 +69,10 @@ class WaveDividerPainter extends CustomPainter {
 
     final width = size.width;
     final midY = size.height / 2;
-    final phaseOffset = phase * 2 * math.pi;
+    final effectivePhase = animation != null
+        ? _wrapUnit(animation!.value)
+        : phase;
+    final phaseOffset = effectivePhase * 2 * math.pi;
     final omega = (frequency * 2 * math.pi) / width;
 
     final path = Path();
@@ -94,6 +106,7 @@ class WaveDividerPainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant WaveDividerPainter old) {
     return old.phase != phase ||
+        !identical(old.animation, animation) ||
         old.color != color ||
         old.amplitude != amplitude ||
         old.frequency != frequency ||

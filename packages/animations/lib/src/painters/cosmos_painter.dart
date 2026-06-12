@@ -1149,9 +1149,6 @@ class CosmosPainter extends CustomPainter {
         !identical(old.shootingStars, shootingStars) ||
         !identical(old.pixelStars, pixelStars);
   }
-
-  bool get isComplex => true;
-  bool get willChange => true;
 }
 
 // =============================================================================

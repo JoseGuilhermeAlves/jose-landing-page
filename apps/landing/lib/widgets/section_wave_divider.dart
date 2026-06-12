@@ -66,23 +66,23 @@ class _SectionWaveDividerState extends State<SectionWaveDivider>
       desktop: widget.height,
     );
 
+    // O painter recebe o controller via `animation:` (repaint direto no
+    // RenderCustomPaint) — sem AnimatedBuilder reconstruindo a subarvore
+    // a cada frame.
     return IgnorePointer(
       child: RepaintBoundary(
         child: SizedBox(
           height: effectiveHeight,
-          child: AnimatedBuilder(
-            animation: _controller,
-            builder: (_, _) => CustomPaint(
-              painter: WaveDividerPainter(
-                phase: _controller.value,
-                color: color,
-                amplitude: widget.amplitude,
-                frequency: widget.frequency,
-                strokeWidth: 1,
-              ),
-              willChange: true,
-              child: const SizedBox.expand(),
+          child: CustomPaint(
+            painter: WaveDividerPainter(
+              animation: _controller,
+              color: color,
+              amplitude: widget.amplitude,
+              frequency: widget.frequency,
+              strokeWidth: 1,
             ),
+            willChange: true,
+            child: const SizedBox.expand(),
           ),
         ),
       ),

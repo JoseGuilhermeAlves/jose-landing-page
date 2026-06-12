@@ -91,6 +91,11 @@ class _BioCardState extends State<_BioCard>
     with SingleTickerProviderStateMixin {
   late final AnimationController _border;
 
+  /// Mapeia o loop 0..1 do controller pra um sweep triangular 0..1..0
+  /// (desenha e apaga) — substitui o calculo que antes vivia dentro do
+  /// builder de um AnimatedBuilder.
+  late final Animation<double> _sweep;
+
   @override
   void initState() {
     super.initState();
@@ -98,6 +103,12 @@ class _BioCardState extends State<_BioCard>
       vsync: this,
       duration: const Duration(seconds: 9),
     )..repeat();
+    _sweep = _border.drive(
+      TweenSequence<double>([
+        TweenSequenceItem(tween: Tween(begin: 0, end: 1), weight: 1),
+        TweenSequenceItem(tween: Tween(begin: 1, end: 0), weight: 1),
+      ]),
+    );
   }
 
   @override
@@ -110,6 +121,20 @@ class _BioCardState extends State<_BioCard>
   Widget build(BuildContext context) {
     final colors = context.colors;
     final tt = Theme.of(context).textTheme;
+    final l10n = context.l10n;
+
+    // Estrutura escaneavel (publico recrutador/tech lead): lead em
+    // destaque + 5 linhas-fato (dominio em peso forte, corpo curto) +
+    // fecho de escopo em corpo menor. Substitui o paragrafo unico de
+    // ~110 palavras que ninguem escaneava.
+    final facts = <(String, String)>[
+      (l10n.about_factRetailTitle, l10n.about_factRetailBody),
+      (l10n.about_factFieldTitle, l10n.about_factFieldBody),
+      (l10n.about_factPublicTitle, l10n.about_factPublicBody),
+      (l10n.about_factToolsTitle, l10n.about_factToolsBody),
+      (l10n.about_factFintechTitle, l10n.about_factFintechBody),
+    ];
+
     return RepaintBoundary(
       child: Stack(
         children: [
@@ -125,12 +150,12 @@ class _BioCardState extends State<_BioCard>
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  context.l10n.about_bioName,
+                  l10n.about_bioName,
                   style: tt.titleLarge?.copyWith(color: colors.onSurface),
                 ),
                 const SizedBox(height: AppSpacing.xs),
                 Text(
-                  context.l10n.about_bioTitle,
+                  l10n.about_bioTitle,
                   style: tt.labelMedium?.copyWith(
                     color: colors.primary,
                     letterSpacing: 0.4,
@@ -138,34 +163,42 @@ class _BioCardState extends State<_BioCard>
                 ),
                 const SizedBox(height: AppSpacing.md),
                 Text(
-                  context.l10n.about_bioParagraph,
-                  style: tt.bodyMedium?.copyWith(
+                  l10n.about_bioLead,
+                  style: tt.titleMedium?.copyWith(
+                    color: colors.onSurface,
+                    height: 1.45,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.lg),
+                for (var i = 0; i < facts.length; i++) ...[
+                  if (i > 0) const SizedBox(height: AppSpacing.sm),
+                  _FactRow(title: facts[i].$1, body: facts[i].$2),
+                ],
+                const SizedBox(height: AppSpacing.lg),
+                Text(
+                  l10n.about_bioClose,
+                  style: tt.bodySmall?.copyWith(
                     color: colors.onSurfaceMuted,
-                    height: 1.6,
+                    height: 1.55,
                   ),
                 ),
               ],
             ),
           ),
           // Borda animada por cima — pinta um trace gradient sweepando
-          // o perimetro num loop continuo.
+          // o perimetro num loop continuo. O painter ouve a animation
+          // direto via `repaint:` — sem AnimatedBuilder reconstruindo a
+          // subarvore a cada frame.
           Positioned.fill(
             child: IgnorePointer(
-              child: AnimatedBuilder(
-                animation: _border,
-                builder: (_, _) {
-                  // Sweep on/off: 0..1 desenha, 1..0 apaga.
-                  final raw = _border.value * 2;
-                  final progress = raw < 1 ? raw : 2 - raw;
-                  return CustomPaint(
-                    painter: AnimatedBorderPainter(
-                      progress: progress,
-                      color: colors.primary.withValues(alpha: 0.85),
-                      strokeWidth: 1.6,
-                      borderRadius: AppRadius.lg,
-                    ),
-                  );
-                },
+              child: CustomPaint(
+                painter: AnimatedBorderPainter(
+                  animation: _sweep,
+                  color: colors.primary.withValues(alpha: 0.85),
+                  strokeWidth: 1.6,
+                  borderRadius: AppRadius.lg,
+                ),
               ),
             ),
           ),
@@ -182,6 +215,42 @@ class _BioCardState extends State<_BioCard>
                   strokeWidth: 1.8,
                 ),
               ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Linha-fato da bio: dominio em peso forte seguido do corpo curto na
+/// mesma linha (RichText) — cada fato escaneavel em uma leitura.
+class _FactRow extends StatelessWidget {
+  const _FactRow({required this.title, required this.body});
+
+  final String title;
+  final String body;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+    final tt = Theme.of(context).textTheme;
+    return Text.rich(
+      TextSpan(
+        children: [
+          TextSpan(
+            text: '$title — ',
+            style: tt.bodyMedium?.copyWith(
+              color: colors.onSurface,
+              fontWeight: FontWeight.w700,
+              height: 1.55,
+            ),
+          ),
+          TextSpan(
+            text: body,
+            style: tt.bodyMedium?.copyWith(
+              color: colors.onSurfaceMuted,
+              height: 1.55,
             ),
           ),
         ],

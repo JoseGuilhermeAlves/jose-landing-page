@@ -2,12 +2,13 @@ import 'package:feature_contact/src/presentation/bloc/contact_event.dart';
 import 'package:feature_contact/src/presentation/bloc/contact_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-/// Bloc do form de contato. Submissao monta um `wa.me/<numero>?text=...`
-/// — quem efetivamente abre a URL e o app shell (a feature so produz
-/// a Uri).
+/// Bloc do form de contato. Submissao monta um `mailto:` com subject e
+/// body pre-preenchidos — quem efetivamente abre a URI e o app shell
+/// (a feature so produz a Uri). Email e o canal primario do funil
+/// recrutador/tech lead; o form coleta o email do remetente e ele entra
+/// no corpo da mensagem.
 class ContactBloc extends Bloc<ContactEvent, ContactState> {
-  ContactBloc({required this.whatsappNumber})
-    : super(const ContactState.initial()) {
+  ContactBloc({required this.email}) : super(const ContactState.initial()) {
     on<ContactNameChanged>(_onNameChanged);
     on<ContactEmailChanged>(_onEmailChanged);
     on<ContactMessageChanged>(_onMessageChanged);
@@ -16,9 +17,8 @@ class ContactBloc extends Bloc<ContactEvent, ContactState> {
     on<ContactReset>(_onReset);
   }
 
-  /// Numero E.164 sem `+` nem espacos (ex.: `5571999990000`). Usado na
-  /// URI `wa.me/<numero>`.
-  final String whatsappNumber;
+  /// Endereco de destino do `mailto:` (email do Jose).
+  final String email;
 
   void _onNameChanged(ContactNameChanged event, Emitter<ContactState> emit) {
     emit(state.copyWith(name: event.name));
@@ -63,7 +63,7 @@ class ContactBloc extends Bloc<ContactEvent, ContactState> {
       ),
     );
 
-    final uri = _buildWhatsappUri(state);
+    final uri = _buildMailtoUri(state);
     emit(state.copyWith(submission: ContactSubmissionSuccess(uri)));
   }
 
@@ -71,18 +71,24 @@ class ContactBloc extends Bloc<ContactEvent, ContactState> {
     emit(const ContactState.initial());
   }
 
-  Uri _buildWhatsappUri(ContactState s) {
+  Uri _buildMailtoUri(ContactState s) {
     final type = s.projectType?.label ?? '—';
+    final subject = 'Contato via site — ${s.name.trim()}';
     final body =
         '''
-Ola, Jose! Vim pelo seu site.
-
 Nome: ${s.name.trim()}
 Email: ${s.email.trim()}
 Tipo: $type
 
 ${s.message.trim()}
 ''';
-    return Uri.https('wa.me', '/$whatsappNumber', {'text': body});
+    // Montagem manual em vez de `Uri(queryParameters:)` — o construtor
+    // codifica espaco como `+`, que clientes de email exibem literal.
+    // `Uri.encodeComponent` usa `%20`, interpretado corretamente.
+    return Uri.parse(
+      'mailto:$email'
+      '?subject=${Uri.encodeComponent(subject)}'
+      '&body=${Uri.encodeComponent(body)}',
+    );
   }
 }

@@ -2,8 +2,15 @@ import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:landing/app.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 
 void main() {
+  // Sem isso o VisibilityDetector (SectionVisibility da home) agenda um
+  // Timer de 500ms que fica pendente quando o teste descarta a arvore.
+  setUpAll(() {
+    VisibilityDetectorController.instance.updateInterval = Duration.zero;
+  });
+
   group('LandingApp', () {
     testWidgets('builda sem lancar e aplica AppTheme dark', (tester) async {
       await tester.pumpWidget(const LandingApp());

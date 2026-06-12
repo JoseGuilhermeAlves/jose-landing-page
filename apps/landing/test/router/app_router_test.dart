@@ -5,8 +5,15 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:landing/presentation/locale_cubit.dart';
 import 'package:landing/router/app_router.dart';
 import 'package:landing/router/route_paths.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 
 void main() {
+  // Sem isso o VisibilityDetector (SectionVisibility da home) agenda um
+  // Timer de 500ms que fica pendente quando o teste descarta a arvore.
+  setUpAll(() {
+    VisibilityDetectorController.instance.updateInterval = Duration.zero;
+  });
+
   group('AppRouter', () {
     testWidgets('rota inicial / renderiza HomePage', (tester) async {
       final router = AppRouter.create();

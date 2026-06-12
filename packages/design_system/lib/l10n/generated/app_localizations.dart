@@ -223,26 +223,32 @@ abstract class AppLocalizations {
   /// No description provided for @hero_eyebrow.
   ///
   /// In pt, this message translates to:
-  /// **'Desenvolvedor mobile Flutter'**
+  /// **'Front end mobile · Flutter'**
   String get hero_eyebrow;
 
   /// No description provided for @hero_headline1.
   ///
   /// In pt, this message translates to:
-  /// **'Front end mobile com Flutter.'**
+  /// **'Seis anos de Flutter.'**
   String get hero_headline1;
 
   /// No description provided for @hero_headline2.
   ///
   /// In pt, this message translates to:
-  /// **'Do MVP ao app em produção.'**
+  /// **'Cinco apps de varejo em produção.'**
   String get hero_headline2;
 
   /// No description provided for @hero_bio.
   ///
   /// In pt, this message translates to:
-  /// **'Front end de apps mobile com Flutter — arquitetura por feature, estado com Bloc, UI fluida em device real. 6 anos entregando o mesmo padrão em domínios distintos, sempre na camada mobile.'**
+  /// **'Construí o front end completo de cinco apps de operação de varejo B2B — do design ao deploy — e hoje atuo em um produto financeiro de larga escala. Arquitetura por feature, estado com Bloc, fluidez em device real.'**
   String get hero_bio;
+
+  /// No description provided for @hero_scopeLine.
+  ///
+  /// In pt, this message translates to:
+  /// **'Backend permanece com o time — eu entrego o front end mobile inteiro e integro com qualquer API existente.'**
+  String get hero_scopeLine;
 
   /// No description provided for @hero_scrollHint.
   ///
@@ -250,11 +256,11 @@ abstract class AppLocalizations {
   /// **'role para continuar'**
   String get hero_scrollHint;
 
-  /// No description provided for @hero_ctaWhatsapp.
+  /// No description provided for @hero_ctaContact.
   ///
   /// In pt, this message translates to:
-  /// **'Falar no WhatsApp'**
-  String get hero_ctaWhatsapp;
+  /// **'Falar comigo'**
+  String get hero_ctaContact;
 
   /// No description provided for @hero_ctaProjects.
   ///
@@ -274,29 +280,29 @@ abstract class AppLocalizations {
   /// **'anos de Flutter'**
   String get hero_trustYearsLabel;
 
-  /// No description provided for @hero_trustDomainsValue.
+  /// No description provided for @hero_trustAppsValue.
   ///
   /// In pt, this message translates to:
-  /// **'5+'**
-  String get hero_trustDomainsValue;
+  /// **'5'**
+  String get hero_trustAppsValue;
 
-  /// No description provided for @hero_trustDomainsLabel.
+  /// No description provided for @hero_trustAppsLabel.
   ///
   /// In pt, this message translates to:
-  /// **'domínios atuados'**
-  String get hero_trustDomainsLabel;
+  /// **'apps de varejo em produção'**
+  String get hero_trustAppsLabel;
 
-  /// No description provided for @hero_trustPlatformsValue.
+  /// No description provided for @hero_trustCanvasValue.
   ///
   /// In pt, this message translates to:
-  /// **'Mobile · Web'**
-  String get hero_trustPlatformsValue;
+  /// **'0'**
+  String get hero_trustCanvasValue;
 
-  /// No description provided for @hero_trustPlatformsLabel.
+  /// No description provided for @hero_trustCanvasLabel.
   ///
   /// In pt, this message translates to:
-  /// **'plataformas-alvo'**
-  String get hero_trustPlatformsLabel;
+  /// **'assets de animação — tudo é Canvas'**
+  String get hero_trustCanvasLabel;
 
   /// No description provided for @hero_portraitSemantics.
   ///
@@ -313,13 +319,13 @@ abstract class AppLocalizations {
   /// No description provided for @about_title.
   ///
   /// In pt, this message translates to:
-  /// **'Quem te'**
+  /// **'Quem'**
   String get about_title;
 
   /// No description provided for @about_titleAccent.
   ///
   /// In pt, this message translates to:
-  /// **'atende.'**
+  /// **'entrega.'**
   String get about_titleAccent;
 
   /// No description provided for @about_subtitle.
@@ -358,11 +364,77 @@ abstract class AppLocalizations {
   /// **'Front end mobile · Flutter Developer · Brasil'**
   String get about_bioTitle;
 
-  /// No description provided for @about_bioParagraph.
+  /// No description provided for @about_bioLead.
   ///
   /// In pt, this message translates to:
-  /// **'Construo o front end inteiro de apps Flutter — arquitetura por feature, estado com Bloc, performance em device real e consistência de UX. Seis anos aplicando esse padrão em contextos diferentes: cinco cuidando do front end completo de apps de operação de varejo (estoque, distribuição entre unidades, vendas e comunicação interna, do design ao deploy, em time pequeno), depois coleta de dados em campo offline-first com sincronização sob rede instável, um serviço público ao cidadão com fluxo sensível de dados, ferramentas internas com gamificação e, hoje, um produto financeiro de larga escala em monorepo com design system próprio. Domínios distintos, mesma régua: front end mobile robusto, com Flutter web quando o produto pediu.'**
-  String get about_bioParagraph;
+  /// **'Seis anos com a mesma régua — front end mobile em Flutter — aplicada em contextos que não se parecem.'**
+  String get about_bioLead;
+
+  /// No description provided for @about_factRetailTitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Varejo B2B (5 anos)'**
+  String get about_factRetailTitle;
+
+  /// No description provided for @about_factRetailBody.
+  ///
+  /// In pt, this message translates to:
+  /// **'Front end completo de cinco apps de operação: estoque, distribuição entre unidades, vendas e comunicação interna. Do design ao deploy, em time pequeno.'**
+  String get about_factRetailBody;
+
+  /// No description provided for @about_factFieldTitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Campo offline-first'**
+  String get about_factFieldTitle;
+
+  /// No description provided for @about_factFieldBody.
+  ///
+  /// In pt, this message translates to:
+  /// **'Coleta de dados com sincronização sob rede instável.'**
+  String get about_factFieldBody;
+
+  /// No description provided for @about_factPublicTitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Setor público'**
+  String get about_factPublicTitle;
+
+  /// No description provided for @about_factPublicBody.
+  ///
+  /// In pt, this message translates to:
+  /// **'Serviço ao cidadão com fluxo sensível de dados.'**
+  String get about_factPublicBody;
+
+  /// No description provided for @about_factToolsTitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Ferramentas internas'**
+  String get about_factToolsTitle;
+
+  /// No description provided for @about_factToolsBody.
+  ///
+  /// In pt, this message translates to:
+  /// **'Produtividade com gamificação.'**
+  String get about_factToolsBody;
+
+  /// No description provided for @about_factFintechTitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Fintech de larga escala (atual)'**
+  String get about_factFintechTitle;
+
+  /// No description provided for @about_factFintechBody.
+  ///
+  /// In pt, this message translates to:
+  /// **'Produto financeiro em monorepo com design system próprio.'**
+  String get about_factFintechBody;
+
+  /// No description provided for @about_bioClose.
+  ///
+  /// In pt, this message translates to:
+  /// **'Domínios distintos, mesma entrega: o front end mobile inteiro. Backend permanece com o time — eu integro com ele.'**
+  String get about_bioClose;
 
   /// No description provided for @delivery_entrega_eyebrow.
   ///
@@ -385,7 +457,7 @@ abstract class AppLocalizations {
   /// No description provided for @delivery_entrega_body.
   ///
   /// In pt, this message translates to:
-  /// **'Cada projeto começa pelo recorte: o que entra, o que fica de fora, e como cada decisão amarra um critério de aceite. Sem isso, sprint vira corrida de prazo. Trabalho com PO e design desde o kickoff pra que o backlog reflita o que vai pra produção — não o que parece bonito no protótipo.'**
+  /// **'Cada projeto começa pelo recorte: o que entra, o que fica de fora, e como cada decisão amarra um critério de aceite. Sem isso, sprint vira corrida de prazo. Trabalho com PO e design desde o kickoff para que o backlog reflita o que vai para produção — não o que parece bonito no protótipo.'**
   String get delivery_entrega_body;
 
   /// No description provided for @delivery_craft_eyebrow.
@@ -601,7 +673,7 @@ abstract class AppLocalizations {
   /// No description provided for @contact_subtitle.
   ///
   /// In pt, this message translates to:
-  /// **'Manda uma mensagem por aqui ou direto pelos canais abaixo. Respondo rápido durante a semana.'**
+  /// **'Aberto a oportunidades como desenvolvedor Flutter sênior — CLT, PJ ou contrato. Email e LinkedIn são os canais mais rápidos; respondo em até um dia útil.'**
   String get contact_subtitle;
 
   /// No description provided for @contact_ctaWhatsapp.
@@ -619,7 +691,7 @@ abstract class AppLocalizations {
   /// No description provided for @contact_ctaLinkedin.
   ///
   /// In pt, this message translates to:
-  /// **'LinkedIn'**
+  /// **'LinkedIn — histórico completo'**
   String get contact_ctaLinkedin;
 
   /// No description provided for @contact_ctaGithub.
@@ -661,7 +733,7 @@ abstract class AppLocalizations {
   /// No description provided for @contact_formSubmit.
   ///
   /// In pt, this message translates to:
-  /// **'Enviar pelo WhatsApp'**
+  /// **'Enviar por email'**
   String get contact_formSubmit;
 
   /// No description provided for @contact_formSubmitting.
@@ -670,22 +742,22 @@ abstract class AppLocalizations {
   /// **'Enviando...'**
   String get contact_formSubmitting;
 
-  /// No description provided for @contact_projectNewApp.
+  /// No description provided for @contact_projectPosition.
   ///
   /// In pt, this message translates to:
-  /// **'App novo (do zero ao MVP)'**
-  String get contact_projectNewApp;
+  /// **'Vaga (CLT/PJ)'**
+  String get contact_projectPosition;
 
-  /// No description provided for @contact_projectExisting.
+  /// No description provided for @contact_projectContract.
   ///
   /// In pt, this message translates to:
-  /// **'Evoluir um app existente'**
-  String get contact_projectExisting;
+  /// **'Projeto ou contrato'**
+  String get contact_projectContract;
 
   /// No description provided for @contact_projectConsulting.
   ///
   /// In pt, this message translates to:
-  /// **'Consultoria técnica / arquitetura'**
+  /// **'Consultoria pontual'**
   String get contact_projectConsulting;
 
   /// No description provided for @contact_projectOther.
@@ -763,7 +835,7 @@ abstract class AppLocalizations {
   /// No description provided for @engineering_githubButton.
   ///
   /// In pt, this message translates to:
-  /// **'Ver repositório no GitHub'**
+  /// **'Ver meu GitHub'**
   String get engineering_githubButton;
 
   /// No description provided for @showcase_eyebrow.
@@ -787,7 +859,7 @@ abstract class AppLocalizations {
   /// No description provided for @showcase_subtitle.
   ///
   /// In pt, this message translates to:
-  /// **'Mocks funcionais por nicho — delivery, agendamento, fitness, imobiliária e investimentos. Toque num card para abrir. Sem backend de verdade; demonstram o tipo de produto que consigo entregar.'**
+  /// **'Cinco marcas fictícias, cinco identidades visuais, mais de vinte telas navegáveis — e zero backend, por decisão. Tudo que se move aqui é front end Flutter: estado com Bloc e Custom Painters dedicados. Toque em um card para abrir.'**
   String get showcase_subtitle;
 
   /// No description provided for @showcase_financeLabel.
@@ -847,7 +919,7 @@ abstract class AppLocalizations {
   /// No description provided for @showcase_realestateDescription.
   ///
   /// In pt, this message translates to:
-  /// **'Listagem de imóveis com filtros por bairro, faixa de preço e número de quartos.'**
+  /// **'Solar — imobiliária com planta baixa gerada por dados, mapa de bairro e jornada da busca ao contato com o corretor.'**
   String get showcase_realestateDescription;
 
   /// No description provided for @pulso_eyebrowTodayWorkout.
@@ -1507,7 +1579,7 @@ abstract class AppLocalizations {
   /// No description provided for @stack_equatable_role.
   ///
   /// In pt, this message translates to:
-  /// **'Equality sem codegen pra value objects'**
+  /// **'Equality sem codegen para value objects'**
   String get stack_equatable_role;
 
   /// No description provided for @stack_platformChannels_role.
@@ -1519,7 +1591,7 @@ abstract class AppLocalizations {
   /// No description provided for @stack_flutterBloc_role.
   ///
   /// In pt, this message translates to:
-  /// **'Bloc + Cubit pros fluxos com eventos'**
+  /// **'Bloc + Cubit para fluxos com eventos'**
   String get stack_flutterBloc_role;
 
   /// No description provided for @stack_provider_role.
@@ -1549,7 +1621,7 @@ abstract class AppLocalizations {
   /// No description provided for @stack_blocTest_role.
   ///
   /// In pt, this message translates to:
-  /// **'Test harness pra blocs e cubits'**
+  /// **'Test harness para blocs e cubits'**
   String get stack_blocTest_role;
 
   /// No description provided for @stack_goRouter_role.
@@ -1693,7 +1765,7 @@ abstract class AppLocalizations {
   /// No description provided for @stack_mocktail_role.
   ///
   /// In pt, this message translates to:
-  /// **'Mocks sem codegen pra testes unitários'**
+  /// **'Mocks sem codegen para testes unitários'**
   String get stack_mocktail_role;
 
   /// No description provided for @stack_integrationTest_role.

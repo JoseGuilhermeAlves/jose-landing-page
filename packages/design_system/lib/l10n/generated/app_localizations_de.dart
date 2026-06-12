@@ -64,23 +64,27 @@ class AppLocalizationsDe extends AppLocalizations {
   String get common_semanticsLoadingSpinner => 'Inhalt wird geladen';
 
   @override
-  String get hero_eyebrow => 'Flutter Mobile-Entwickler';
+  String get hero_eyebrow => 'Mobile-Frontend · Flutter';
 
   @override
-  String get hero_headline1 => 'Mobile-Frontend mit Flutter.';
+  String get hero_headline1 => 'Sechs Jahre Flutter.';
 
   @override
-  String get hero_headline2 => 'Vom MVP zur Produktions-App.';
+  String get hero_headline2 => 'Fünf Retail-Apps in Produktion.';
 
   @override
   String get hero_bio =>
-      'Frontend mobiler Apps mit Flutter — Architektur pro Feature, State mit Bloc, flüssige UI auf realem Gerät. Sechs Jahre, in denen ich dasselbe Muster in unterschiedlichen Domänen liefere, stets in der Mobile-Schicht.';
+      'Ich habe das komplette Frontend von fünf B2B-Retail-Apps gebaut — vom Design bis zum Deployment — und arbeite heute an einem Finanzprodukt im großen Maßstab. Architektur pro Feature, State mit Bloc, flüssig auf realen Geräten.';
+
+  @override
+  String get hero_scopeLine =>
+      'Das Backend bleibt beim Team — ich liefere das gesamte Mobile-Frontend und integriere jede bestehende API.';
 
   @override
   String get hero_scrollHint => 'scrollen um fortzufahren';
 
   @override
-  String get hero_ctaWhatsapp => 'Über WhatsApp schreiben';
+  String get hero_ctaContact => 'Kontakt aufnehmen';
 
   @override
   String get hero_ctaProjects => 'Projekte ansehen';
@@ -92,16 +96,16 @@ class AppLocalizationsDe extends AppLocalizations {
   String get hero_trustYearsLabel => 'Jahre Flutter';
 
   @override
-  String get hero_trustDomainsValue => '5+';
+  String get hero_trustAppsValue => '5';
 
   @override
-  String get hero_trustDomainsLabel => 'Domänen bedient';
+  String get hero_trustAppsLabel => 'Retail-Apps in Produktion';
 
   @override
-  String get hero_trustPlatformsValue => 'Mobile · Web';
+  String get hero_trustCanvasValue => '0';
 
   @override
-  String get hero_trustPlatformsLabel => 'Zielplattformen';
+  String get hero_trustCanvasLabel => 'Animations-Assets — alles ist Canvas';
 
   @override
   String get hero_portraitSemantics => 'Foto von Jose Guilherme Alves';
@@ -110,10 +114,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get about_eyebrow => 'Über mich';
 
   @override
-  String get about_title => 'Wer Sie';
+  String get about_title => 'Wer';
 
   @override
-  String get about_titleAccent => 'betreut.';
+  String get about_titleAccent => 'liefert.';
 
   @override
   String get about_subtitle =>
@@ -136,11 +140,48 @@ class AppLocalizationsDe extends AppLocalizations {
       'Mobile-Frontend · Flutter Developer · Brasilien';
 
   @override
-  String get about_bioParagraph =>
-      'Ich baue das gesamte Frontend von Flutter-Apps — Architektur pro Feature, State mit Bloc, Performance auf realem Gerät und UX-Konsistenz. Sechs Jahre, in denen ich dieses Muster in unterschiedlichen Kontexten anwende: fünf davon mit der Verantwortung für das komplette Frontend von Apps für den Retail-Betrieb (Bestand, Distribution zwischen Filialen, Verkauf und interne Kommunikation, vom Design bis zum Deploy, in einem kleinen Team), danach Felderfassung offline-first mit Synchronisierung unter instabilem Netz, ein Bürgerdienst des öffentlichen Sektors mit sensiblem Datenfluss, interne Tools mit Gamification und heute ein Finanzprodukt im großen Maßstab im Monorepo mit eigenem Design System. Unterschiedliche Domänen, dasselbe Maß: robustes Mobile-Frontend, mit Flutter Web, wenn das Produkt es verlangte.';
+  String get about_bioLead =>
+      'Sechs Jahre mit demselben Maßstab — Mobile-Frontend in Flutter — angewandt in Kontexten, die sich nicht ähneln.';
 
   @override
-  String get delivery_entrega_eyebrow => 'LIEFERUNG';
+  String get about_factRetailTitle => 'B2B-Retail (5 Jahre)';
+
+  @override
+  String get about_factRetailBody =>
+      'Komplettes Frontend von fünf Operations-Apps: Bestand, Distribution zwischen Filialen, Verkauf und interne Kommunikation. Vom Design bis zum Deployment, im kleinen Team.';
+
+  @override
+  String get about_factFieldTitle => 'Feldarbeit offline-first';
+
+  @override
+  String get about_factFieldBody =>
+      'Datenerfassung mit Synchronisierung unter instabilem Netz.';
+
+  @override
+  String get about_factPublicTitle => 'Öffentlicher Sektor';
+
+  @override
+  String get about_factPublicBody => 'Bürgerdienst mit sensiblem Datenfluss.';
+
+  @override
+  String get about_factToolsTitle => 'Interne Tools';
+
+  @override
+  String get about_factToolsBody => 'Produktivität mit Gamification.';
+
+  @override
+  String get about_factFintechTitle => 'Fintech im großen Maßstab (aktuell)';
+
+  @override
+  String get about_factFintechBody =>
+      'Finanzprodukt im Monorepo mit eigenem Design System.';
+
+  @override
+  String get about_bioClose =>
+      'Unterschiedliche Domänen, dieselbe Lieferung: das gesamte Mobile-Frontend. Das Backend bleibt beim Team — ich binde es an.';
+
+  @override
+  String get delivery_entrega_eyebrow => 'UMSETZUNG';
 
   @override
   String get delivery_entrega_title => 'Klarer Scope,';
@@ -259,7 +300,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get services_consulting_description =>
-      'Architektur, Code Review und Stack-Definition — technische Unterstützung bevor das Feature zur Schuld wird.';
+      'Architektur, Code Review und Stack-Definition — technische Unterstützung, bevor aus dem Feature technische Schulden werden.';
 
   @override
   String get contact_eyebrow => 'Kontakt';
@@ -272,7 +313,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get contact_subtitle =>
-      'Senden Sie eine Nachricht hier oder direkt über die Kanäle unten. Ich antworte schnell unter der Woche.';
+      'Offen für Positionen als Senior-Flutter-Entwickler — Festanstellung oder Vertrag. E-Mail und LinkedIn sind die schnellsten Kanäle; ich antworte innerhalb eines Werktags.';
 
   @override
   String get contact_ctaWhatsapp => 'Direkt per WhatsApp';
@@ -281,7 +322,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get contact_ctaEmail => 'E-Mail';
 
   @override
-  String get contact_ctaLinkedin => 'LinkedIn';
+  String get contact_ctaLinkedin => 'LinkedIn — vollständiger Werdegang';
 
   @override
   String get contact_ctaGithub => 'GitHub';
@@ -302,19 +343,19 @@ class AppLocalizationsDe extends AppLocalizations {
   String get contact_formMessage => 'Nachricht';
 
   @override
-  String get contact_formSubmit => 'Über WhatsApp senden';
+  String get contact_formSubmit => 'Per E-Mail senden';
 
   @override
   String get contact_formSubmitting => 'Wird gesendet...';
 
   @override
-  String get contact_projectNewApp => 'Neue App (von Null zum MVP)';
+  String get contact_projectPosition => 'Stelle (Festanstellung)';
 
   @override
-  String get contact_projectExisting => 'Bestehende App weiterentwickeln';
+  String get contact_projectContract => 'Projekt oder Vertrag';
 
   @override
-  String get contact_projectConsulting => 'Technische Beratung / Architektur';
+  String get contact_projectConsulting => 'Punktuelle Beratung';
 
   @override
   String get contact_projectOther => 'Sonstiges';
@@ -354,7 +395,7 @@ class AppLocalizationsDe extends AppLocalizations {
       'Technologien, die ich in Produktion einsetze, und weitere, die ich aus der Nähe kenne. Tippen Sie auf eine Kachel für Details.';
 
   @override
-  String get engineering_githubButton => 'Repository auf GitHub ansehen';
+  String get engineering_githubButton => 'Mein GitHub ansehen';
 
   @override
   String get showcase_eyebrow => 'Showcase';
@@ -367,7 +408,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get showcase_subtitle =>
-      'Funktionale Mocks pro Nische — Lieferung, Terminplanung, Fitness, Immobilien und Investitionen. Tippen Sie auf eine Karte zum Öffnen. Kein echtes Backend; sie zeigen die Art von Produkt, die ich liefern kann.';
+      'Fünf fiktive Marken, fünf visuelle Identitäten, über zwanzig navigierbare Screens — und null Backend, bewusst. Alles, was sich hier bewegt, ist Flutter-Frontend: State mit Bloc und dedizierte Custom Painter. Tippen Sie auf eine Karte zum Öffnen.';
 
   @override
   String get showcase_financeLabel => 'Investitionen';
@@ -402,7 +443,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get showcase_realestateDescription =>
-      'Immobilienanzeigen mit Filtern nach Stadtteil, Preisbereich und Zimmeranzahl.';
+      'Solar — Immobilien mit datenbasiertem Grundriss, Stadtteilkarte und Journey von der Suche bis zum Kontakt.';
 
   @override
   String get pulso_eyebrowTodayWorkout => 'HEUTIGES TRAINING';

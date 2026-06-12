@@ -4,23 +4,26 @@ import 'package:feature_contact/src/presentation/widgets/contact_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-/// Secao "Contato" — bloc + form + CTAs alternativos
-/// (WhatsApp/email/LinkedIn/GitHub). Os callbacks de abertura sobem
-/// para o app shell, que decide como abrir cada Uri (url_launcher,
-/// `dart:html`, etc.).
+/// Secao "Contato" — bloc + form + CTAs diretos. Funil voltado a
+/// recrutador/tech lead: Email, LinkedIn e GitHub sao os canais
+/// primarios; WhatsApp fica como alternativo. Os callbacks de abertura
+/// sobem para o app shell, que decide como abrir cada Uri
+/// (url_launcher, `dart:html`, etc.).
 class ContactSection extends StatelessWidget {
   const ContactSection({
-    required this.whatsappNumber,
-    this.email,
+    required this.email,
+    this.whatsappNumber,
     this.linkedinUrl,
     this.githubUrl,
     this.onOpenUri,
     super.key,
   });
 
-  /// E.164 sem `+` (ex.: `5571999990000`).
-  final String whatsappNumber;
-  final String? email;
+  /// Email de destino — canal primario e destino do `mailto:` do form.
+  final String email;
+
+  /// E.164 sem `+` (ex.: `5571999990000`). Canal alternativo.
+  final String? whatsappNumber;
   final String? linkedinUrl;
   final String? githubUrl;
 
@@ -33,7 +36,7 @@ class ContactSection extends StatelessWidget {
     final isMobile = context.isMobile;
 
     final form = BlocProvider(
-      create: (_) => ContactBloc(whatsappNumber: whatsappNumber),
+      create: (_) => ContactBloc(email: email),
       child: ContactForm(onSubmissionSuccess: (uri) => onOpenUri?.call(uri)),
     );
 
@@ -89,8 +92,8 @@ class _AlternateCtas extends StatelessWidget {
     required this.onOpenUri,
   });
 
-  final String whatsappNumber;
-  final String? email;
+  final String? whatsappNumber;
+  final String email;
   final String? linkedinUrl;
   final String? githubUrl;
   final ValueChanged<Uri>? onOpenUri;
@@ -104,22 +107,16 @@ class _AlternateCtas extends StatelessWidget {
 
     final l10n = context.l10n;
 
+    // Ordem reflete o funil recrutador/tech lead: Email -> LinkedIn ->
+    // GitHub como primarios; WhatsApp por ultimo, como alternativo.
     final tiles = <Widget>[
       _CtaTile(
-        key: const Key('contact-cta-whatsapp'),
-        icon: Icons.chat_bubble_outline,
-        label: l10n.contact_ctaWhatsapp,
-        helper: '+$whatsappNumber',
-        onTap: () => _open(context, Uri.https('wa.me', '/$whatsappNumber')),
+        key: const Key('contact-cta-email'),
+        icon: Icons.mail_outline,
+        label: l10n.contact_ctaEmail,
+        helper: email,
+        onTap: () => _open(context, Uri(scheme: 'mailto', path: email)),
       ),
-      if (email != null)
-        _CtaTile(
-          key: const Key('contact-cta-email'),
-          icon: Icons.mail_outline,
-          label: l10n.contact_ctaEmail,
-          helper: email!,
-          onTap: () => _open(context, Uri(scheme: 'mailto', path: email)),
-        ),
       if (linkedinUrl != null)
         _CtaTile(
           key: const Key('contact-cta-linkedin'),
@@ -135,6 +132,14 @@ class _AlternateCtas extends StatelessWidget {
           label: l10n.contact_ctaGithub,
           helper: githubUrl!,
           onTap: () => _open(context, Uri.parse(githubUrl!)),
+        ),
+      if (whatsappNumber != null)
+        _CtaTile(
+          key: const Key('contact-cta-whatsapp'),
+          icon: Icons.chat_bubble_outline,
+          label: l10n.contact_ctaWhatsapp,
+          helper: '+$whatsappNumber',
+          onTap: () => _open(context, Uri.https('wa.me', '/$whatsappNumber')),
         ),
     ];
 
@@ -163,7 +168,7 @@ class _AlternateCtas extends StatelessWidget {
   }
 }
 
-class _CtaTile extends StatelessWidget {
+class _CtaTile extends StatefulWidget {
   const _CtaTile({
     required this.icon,
     required this.label,
@@ -178,48 +183,86 @@ class _CtaTile extends StatelessWidget {
   final VoidCallback onTap;
 
   @override
+  State<_CtaTile> createState() => _CtaTileState();
+}
+
+class _CtaTileState extends State<_CtaTile> {
+  bool _focused = false;
+
+  @override
   Widget build(BuildContext context) {
     final colors = context.colors;
     final textTheme = Theme.of(context).textTheme;
+    final icon = widget.icon;
+    final label = widget.label;
+    final helper = widget.helper;
+    final onTap = widget.onTap;
 
+    // FocusableActionDetector adiciona foco por Tab e ativacao por
+    // Enter/Espaco (ActivateIntent cobre os dois atalhos) — mesmo
+    // pattern do AppButton do design_system. Focus ring discreto via
+    // boxShadow spread no token primary, visivel so em navegacao por
+    // teclado (onShowFocusHighlight filtra foco por toque/clique).
     return Semantics(
       button: true,
       label: label,
       onTap: onTap,
-      child: MouseRegion(
-        cursor: SystemMouseCursors.click,
+      child: FocusableActionDetector(
+        mouseCursor: SystemMouseCursors.click,
+        onShowFocusHighlight: (v) => setState(() => _focused = v),
+        actions: {
+          ActivateIntent: CallbackAction<ActivateIntent>(
+            onInvoke: (_) {
+              onTap();
+              return null;
+            },
+          ),
+        },
         child: GestureDetector(
           onTap: onTap,
           behavior: HitTestBehavior.opaque,
           child: ConstrainedBox(
             constraints: const BoxConstraints(minHeight: 44),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
-              child: Row(
-                children: [
-                  Icon(icon, size: 18, color: colors.primary),
-                  const SizedBox(width: AppSpacing.sm),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          label,
-                          style: textTheme.labelLarge?.copyWith(
-                            color: colors.onSurface,
-                          ),
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(AppRadius.sm),
+                boxShadow: _focused
+                    ? [
+                        BoxShadow(
+                          color: colors.primary.withValues(alpha: 0.55),
+                          spreadRadius: 2,
                         ),
-                        Text(
-                          helper,
-                          style: textTheme.bodySmall?.copyWith(
-                            color: colors.onSurfaceMuted,
+                      ]
+                    : const <BoxShadow>[],
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
+                child: Row(
+                  children: [
+                    Icon(icon, size: 18, color: colors.primary),
+                    const SizedBox(width: AppSpacing.sm),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            label,
+                            style: textTheme.labelLarge?.copyWith(
+                              color: colors.onSurface,
+                            ),
                           ),
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ],
+                          Text(
+                            helper,
+                            style: textTheme.bodySmall?.copyWith(
+                              color: colors.onSurfaceMuted,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

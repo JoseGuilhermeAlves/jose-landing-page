@@ -236,11 +236,13 @@ class _BrokerRow extends StatelessWidget {
       ),
       child: Row(
         children: [
-          SolarBrokerAvatar(
+          ShowcaseMonogramAvatar(
             monogram: broker.monogram,
             size: 44,
             backgroundColor: colors.primary,
             foregroundColor: colors.onPrimary,
+            fontFamily: SolarBrand.displayFontFamily,
+            fontWeight: FontWeight.w600,
           ),
           const SizedBox(width: AppSpacing.md),
           Expanded(
@@ -301,10 +303,11 @@ class _SuccessState extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Center(
-            child: SolarConfirmationBadge(
+            child: ShowcaseConfirmationBadge(
               fillColor: colors.primary,
               checkColor: colors.onPrimary,
               ringColor: colors.primary,
+              size: 88,
             ),
           ),
           const SizedBox(height: AppSpacing.lg),

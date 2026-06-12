@@ -10,10 +10,10 @@ import 'package:feature_showcase/src/scheduling/presentation/vitral_brand.dart';
 import 'package:feature_showcase/src/scheduling/presentation/vitral_calendar_page.dart';
 import 'package:feature_showcase/src/scheduling/presentation/vitral_category_illustration.dart';
 import 'package:feature_showcase/src/scheduling/presentation/vitral_navigation.dart';
-import 'package:feature_showcase/src/scheduling/presentation/vitral_specialist_avatar.dart';
 import 'package:feature_showcase/src/scheduling/presentation/vitral_specialist_headshot.dart';
 import 'package:feature_showcase/src/shared/presentation/mock_body_constraint.dart';
 import 'package:feature_showcase/src/shared/presentation/mock_section_label.dart';
+import 'package:feature_showcase/src/shared/presentation/showcase_monogram_avatar.dart';
 import 'package:flutter/material.dart';
 
 part 'vitral_specialist_widgets.dart';

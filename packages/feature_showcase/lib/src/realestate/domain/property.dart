@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:feature_showcase/src/realestate/domain/property_feature.dart';
 import 'package:feature_showcase/src/realestate/domain/property_type.dart';
+import 'package:feature_showcase/src/shared/util/money_format.dart';
 import 'package:flutter/foundation.dart';
 
 /// Imovel listado na demo. Preco em centavos pra evitar imprecisao
@@ -88,27 +89,9 @@ class Property extends Equatable {
   /// ha fotos cadastradas.
   String? get coverPhoto => photoAssets.isEmpty ? null : photoAssets.first;
 
-  /// Preco formatado em BRL ("R\$ 1.250.000,00").
-  String get formattedPrice {
-    final reais = priceCents / 100;
-    final intPart = reais.truncate();
-    final centPart = ((reais - intPart) * 100).round().toString().padLeft(
-      2,
-      '0',
-    );
-    final intStr = _withThousands(intPart);
-    return 'R\$ $intStr,$centPart';
-  }
-
-  static String _withThousands(int value) {
-    final s = value.toString();
-    final buf = StringBuffer();
-    for (var i = 0; i < s.length; i++) {
-      if (i > 0 && (s.length - i) % 3 == 0) buf.write('.');
-      buf.write(s[i]);
-    }
-    return buf.toString();
-  }
+  /// Preco formatado em BRL ("R\$ 1.250.000,00") — delega pro
+  /// formatador compartilhado do showcase.
+  String get formattedPrice => formatBrl(priceCents.toDouble());
 
   @override
   List<Object?> get props => [

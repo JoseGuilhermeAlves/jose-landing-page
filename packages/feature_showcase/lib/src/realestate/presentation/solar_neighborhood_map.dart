@@ -118,6 +118,33 @@ class _SolarNeighborhoodMapPainter extends CustomPainter {
     ..color = pinColor
     ..style = PaintingStyle.fill;
 
+  // Halo pulsante — Paint reusado, so o alpha muda por frame.
+  late final Paint _pinHaloPaint = Paint()..style = PaintingStyle.fill;
+
+  late final Paint _pinDotPaint = Paint()..color = Colors.white;
+
+  // Aro fino branco em volta do pin.
+  late final Paint _pinRingPaint = Paint()
+    ..color = Colors.white.withValues(alpha: 0.8)
+    ..style = PaintingStyle.stroke
+    ..strokeWidth = 1.2;
+
+  late final Paint _compassBgPaint = Paint()
+    ..color = Colors.white.withValues(alpha: 0.85);
+
+  // "N" da bussola — texto estatico, layout feito uma vez.
+  late final TextPainter _compassTextPainter = TextPainter(
+    text: TextSpan(
+      text: 'N',
+      style: TextStyle(
+        color: pinColor,
+        fontSize: 11,
+        fontWeight: FontWeight.w800,
+      ),
+    ),
+    textDirection: TextDirection.ltr,
+  )..layout();
+
   /// Asfalto/fundo do mapa — cinza azulado frio derivado do
   /// `streetColor` (que e um tan da borda). Lerpamos rumo a um slate
   /// frio pra que o fundo NAO seja so um tan-sobre-tan: os
@@ -194,24 +221,15 @@ class _SolarNeighborhoodMapPainter extends CustomPainter {
       pinRow * cellH + cellH / 2,
     );
     final halo = 6 + 6 * controller.value;
+    _pinHaloPaint.color = pinColor.withValues(
+      alpha: 0.20 * (1 - controller.value),
+    );
     canvas
-      ..drawCircle(
-        pinCenter,
-        halo,
-        Paint()
-          ..color = pinColor.withValues(alpha: 0.20 * (1 - controller.value)),
-      )
+      ..drawCircle(pinCenter, halo, _pinHaloPaint)
       ..drawCircle(pinCenter, 6, _pinPaint)
-      ..drawCircle(pinCenter, 2.4, Paint()..color = Colors.white)
+      ..drawCircle(pinCenter, 2.4, _pinDotPaint)
       // Aro fino branco em volta pra destacar.
-      ..drawCircle(
-        pinCenter,
-        6,
-        Paint()
-          ..color = Colors.white.withValues(alpha: 0.8)
-          ..style = PaintingStyle.stroke
-          ..strokeWidth = 1.2,
-      );
+      ..drawCircle(pinCenter, 6, _pinRingPaint);
 
     // Risco "X" do norte no canto.
     _paintCompass(canvas, size);
@@ -219,25 +237,13 @@ class _SolarNeighborhoodMapPainter extends CustomPainter {
 
   void _paintCompass(Canvas canvas, Size size) {
     final origin = Offset(size.width - 22, 22);
-    canvas.drawCircle(
-      origin,
-      10,
-      Paint()..color = Colors.white.withValues(alpha: 0.85),
-    );
-    final tp = TextPainter(
-      text: TextSpan(
-        text: 'N',
-        style: TextStyle(
-          color: pinColor,
-          fontSize: 11,
-          fontWeight: FontWeight.w800,
-        ),
-      ),
-      textDirection: TextDirection.ltr,
-    )..layout();
-    tp.paint(
+    canvas.drawCircle(origin, 10, _compassBgPaint);
+    _compassTextPainter.paint(
       canvas,
-      Offset(origin.dx - tp.width / 2, origin.dy - tp.height / 2),
+      Offset(
+        origin.dx - _compassTextPainter.width / 2,
+        origin.dy - _compassTextPainter.height / 2,
+      ),
     );
   }
 

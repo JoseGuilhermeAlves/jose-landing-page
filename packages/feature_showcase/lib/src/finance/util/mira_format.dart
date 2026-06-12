@@ -3,6 +3,8 @@
 /// casas) — nao reaproveitam pra outros mocks.
 library;
 
+import 'package:feature_showcase/src/shared/util/money_format.dart';
+
 /// Formata centavos como "R$ 38,42" (numero puro com virgula decimal,
 /// sem separador de milhar — precos da B3 raramente passam de 999,99
 /// na unidade do papel, e moneyformat compartilhado usa ponto como
@@ -38,19 +40,9 @@ String formatMiraVolume(int volume) {
 
 /// Formata um BRL "grande" (totais de portfolio, market value) com
 /// separador de milhar tipo "R$ 12.345,67". Diferente de
-/// `formatMiraPrice`, agrupa em milhares.
-String formatMiraTotal(int priceCents) {
-  final reais = priceCents / 100;
-  final integer = reais.truncate();
-  final fraction = ((reais - integer) * 100).round().toString().padLeft(2, '0');
-  final str = integer.toString();
-  final buf = StringBuffer();
-  for (var i = 0; i < str.length; i++) {
-    if (i > 0 && (str.length - i) % 3 == 0) buf.write('.');
-    buf.write(str[i]);
-  }
-  return 'R\$ $buf,$fraction';
-}
+/// `formatMiraPrice`, agrupa em milhares — mesma semantica do
+/// `formatBrl` compartilhado, entao apenas delega.
+String formatMiraTotal(int priceCents) => formatBrl(priceCents.toDouble());
 
 /// Data abreviada "14/05" pros tooltips de candlestick e historico.
 String formatMiraShortDate(DateTime ts) {

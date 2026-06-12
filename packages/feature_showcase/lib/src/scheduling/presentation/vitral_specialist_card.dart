@@ -2,8 +2,8 @@ import 'package:design_system/design_system.dart';
 import 'package:feature_showcase/src/scheduling/domain/specialist.dart';
 import 'package:feature_showcase/src/scheduling/presentation/vitral_brand.dart';
 import 'package:feature_showcase/src/scheduling/presentation/vitral_navigation.dart';
-import 'package:feature_showcase/src/scheduling/presentation/vitral_specialist_avatar.dart';
 import 'package:feature_showcase/src/scheduling/presentation/vitral_specialist_page.dart';
+import 'package:feature_showcase/src/shared/presentation/showcase_monogram_avatar.dart';
 import 'package:flutter/material.dart';
 
 /// Card de profissional reutilizado pela home e (futuramente) pela
@@ -39,7 +39,7 @@ class VitralSpecialistCard extends StatelessWidget {
           ),
           child: Row(
             children: [
-              VitralSpecialistAvatar(
+              ShowcaseMonogramAvatar(
                 monogram: specialist.monogram,
                 size: 56,
                 backgroundColor: colors.primary,

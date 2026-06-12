@@ -312,7 +312,7 @@ class _PriceSlider extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
               child: Text(
-                isCapped ? 'sem teto' : 'ate ${_formatPrice(current)}',
+                isCapped ? 'sem teto' : 'ate ${formatBrlWhole(current)}',
                 key: const Key('solar-price-label'),
                 style: textTheme.labelMedium?.copyWith(
                   color: colors.onSurfaceMuted,
@@ -403,15 +403,4 @@ class _EmptyState extends StatelessWidget {
       ),
     );
   }
-}
-
-String _formatPrice(int cents) {
-  final reais = cents ~/ 100;
-  final buf = StringBuffer();
-  final s = reais.toString();
-  for (var i = 0; i < s.length; i++) {
-    if (i > 0 && (s.length - i) % 3 == 0) buf.write('.');
-    buf.write(s[i]);
-  }
-  return 'R\$ $buf';
 }

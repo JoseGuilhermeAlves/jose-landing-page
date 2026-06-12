@@ -30,13 +30,24 @@ void main() {
     blocTest<FitnessBloc, FitnessState>(
       'SessionStarted segunda vez e no-op',
       build: FitnessBloc.new,
-      seed: () {
-        final bloc = FitnessBloc()
-          ..add(SessionStarted(weekday: 1, now: fixedNow));
-        return bloc.state.copyWith(
-          activeSession: () => bloc.state.activeSession,
-        );
-      },
+      // Estado seed construido direto (sem bloc descartavel — add e
+      // assincrono e o state nao refletiria a sessao, alem de vazar o
+      // bloc sem close).
+      seed: () => FitnessState(
+        program: MesocycleCatalog.build(),
+        recoveryHistory: RecoveryCatalog.history(),
+        strainToday: RecoveryCatalog.strainToday(),
+        selectedProgramDay: 1,
+        recoveryHistoryOffset: 0,
+        activeSession: LoggedSession(
+          id: 'seed-session',
+          templateId: 'push-a',
+          startedAt: fixedNow,
+          programWeek: 1,
+          sets: const {},
+          peakStrain: 0,
+        ),
+      ),
       act: (bloc) {
         bloc
           ..add(SessionStarted(weekday: 1, now: fixedNow))
@@ -48,7 +59,9 @@ void main() {
           );
       },
       verify: (bloc) {
+        // Sessao seed segue intacta — os dois adds foram ignorados.
         expect(bloc.state.activeSession, isNotNull);
+        expect(bloc.state.activeSession!.id, 'seed-session');
       },
     );
 

@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 
 /// Corretor responsavel pelo imovel no mock Solar. Headshot real entra
 /// via [photoAsset]; quando ausente, o avatar cai no monograma desenhado
-/// (`SolarBrokerAvatar`). Telefone e e-mail sao mock reconheciveis como
+/// (`ShowcaseMonogramAvatar`). Telefone e e-mail sao mock reconheciveis como
 /// "decorativos".
 ///
 /// Campos `role`, `bio`, `yearsActive` e `photoAsset` sao aditivos com
@@ -47,7 +47,7 @@ class Broker extends Equatable {
   final int yearsActive;
 
   /// Caminho do headshot (relativo ao pacote `feature_showcase`). Null
-  /// cai no monograma desenhado via `SolarBrokerAvatar` no `ShowcasePhoto`.
+  /// cai no monograma desenhado via `ShowcaseMonogramAvatar` no `ShowcasePhoto`.
   final String? photoAsset;
 
   /// Iniciais para o monograma no avatar.

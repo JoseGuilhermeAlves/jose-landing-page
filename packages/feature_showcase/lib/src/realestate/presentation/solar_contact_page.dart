@@ -7,9 +7,9 @@ import 'package:feature_showcase/src/realestate/presentation/realestate_event.da
 import 'package:feature_showcase/src/realestate/presentation/realestate_state.dart';
 import 'package:feature_showcase/src/realestate/presentation/solar_app_bar.dart';
 import 'package:feature_showcase/src/realestate/presentation/solar_brand.dart';
-import 'package:feature_showcase/src/realestate/presentation/solar_broker_avatar.dart';
-import 'package:feature_showcase/src/realestate/presentation/solar_confirmation_badge.dart';
 import 'package:feature_showcase/src/shared/presentation/mock_body_constraint.dart';
+import 'package:feature_showcase/src/shared/presentation/showcase_confirmation_badge.dart';
+import 'package:feature_showcase/src/shared/presentation/showcase_monogram_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

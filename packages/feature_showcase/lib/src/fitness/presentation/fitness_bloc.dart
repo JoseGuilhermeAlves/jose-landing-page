@@ -209,11 +209,48 @@ class FitnessBloc extends Bloc<FitnessEvent, FitnessState> {
     emit(state.copyWith(recoveryHistoryOffset: event.offsetDays));
   }
 
+  /// Quantos refreshes ja rodaram — indexa a tabela de variacao
+  /// deterministica abaixo (sem Random, testavel).
+  int _refreshCount = 0;
+
+  // Deltas ciclicos aplicados ao snapshot de hoje em cada refresh.
+  // Somam zero por ciclo — leituras "novas do sensor" oscilam mas nao
+  // derivam pra fora das bandas.
+  static const List<double> _recoveryDeltas = [2, -3, 1, -1, 3, -2];
+  static const List<double> _hrvDeltas = [1.5, -2, 1, -0.5, 1.5, -1.5];
+  static const List<double> _rhrDeltas = [-1, 1, 0, 1, -1, 0];
+
   void _onRecoveryRefreshed(
     RecoveryRefreshed event,
     Emitter<FitnessState> emit,
   ) {
-    emit(state.copyWith(strainToday: state.strainToday.copyWith()));
+    final history = state.recoveryHistory;
+    if (history.isEmpty) return;
+
+    // Regenera o snapshot de hoje com variacao deterministica — como
+    // se o wearable tivesse sincronizado leituras novas. Dias passados
+    // sao imutaveis.
+    final k = _refreshCount % _recoveryDeltas.length;
+    _refreshCount++;
+    final today = history.last;
+    final refreshed = RecoverySnapshot(
+      date: today.date,
+      recoveryPercent: (today.recoveryPercent + _recoveryDeltas[k])
+          .clamp(0, 100)
+          .toDouble(),
+      hrvMs: (today.hrvMs + _hrvDeltas[k]).clamp(20, 120).toDouble(),
+      restingHeartRate: (today.restingHeartRate + _rhrDeltas[k])
+          .clamp(38, 90)
+          .toDouble(),
+      respiratoryRate: today.respiratoryRate,
+      sleep: today.sleep,
+      muscleRecovery: today.muscleRecovery,
+    );
+    emit(
+      state.copyWith(
+        recoveryHistory: [...history.sublist(0, history.length - 1), refreshed],
+      ),
+    );
   }
 
   void _onRestStarted(RestStarted event, Emitter<FitnessState> emit) {

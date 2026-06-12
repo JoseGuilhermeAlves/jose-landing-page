@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
-import 'package:feature_showcase/feature_showcase.dart' show LoggedSession, SetEntry;
+import 'package:feature_showcase/src/fitness/domain/logged_session.dart' show LoggedSession;
 import 'package:feature_showcase/src/fitness/domain/muscle_group.dart';
+import 'package:feature_showcase/src/fitness/domain/set_entry.dart' show SetEntry;
 import 'package:flutter/foundation.dart';
 
 /// Exercicio planejado dentro de um template de sessao. Imutavel —

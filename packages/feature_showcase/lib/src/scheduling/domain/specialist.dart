@@ -40,7 +40,7 @@ class Specialist extends Equatable {
 
   /// Caminho do asset de headshot (relativo ao pacote `feature_showcase`,
   /// ex.: `assets/scheduling/sofia_a.webp`). Null cai no
-  /// `VitralSpecialistAvatar` via `ShowcasePhoto` — entao o painter de
+  /// `ShowcaseMonogramAvatar` via `ShowcasePhoto` — entao o painter de
   /// monograma continua como rede de seguranca quando os `.webp` ainda
   /// nao existem. Aditivo: default null preserva compat com testes
   /// legados.

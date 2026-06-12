@@ -2,6 +2,7 @@ import 'dart:math' as math;
 import 'dart:ui' as ui;
 
 import 'package:design_system/design_system.dart';
+import 'package:feature_showcase/src/delivery/domain/delivery_status.dart';
 import 'package:flutter/material.dart';
 
 /// Mapa abstrato com rota animada — destaque tecnico do mock Aurora
@@ -27,16 +28,58 @@ import 'package:flutter/material.dart';
 /// 7. **Bussola** + escala no canto inferior direito — assinatura
 ///    cartografica.
 ///
+/// **Sincronizado com o estado real do pedido**: a posicao do courier
+/// na rota deriva de [status] + [etaMinutes] (nao de um loop de
+/// animacao) e a bolha mostra o ETA corrente do bloc. O controller
+/// segue ativo apenas pra animacao ambiente (pulso do halo + bob da
+/// bolha).
+///
 /// Performance: o painter recebe o `Listenable` direto via
 /// `super(repaint: ...)`, evitando o ciclo `build → layout` da arvore
 /// (ver CLAUDE.md). Paints, paths estaticos e a `_blockCells` lista
-/// sao cacheados como campos. `shouldRepaint` so dispara quando o
-/// progresso ou as cores mudam.
+/// sao cacheados como campos; a rota e o rio sao recalculados apenas
+/// quando o `size` muda. `shouldRepaint` so dispara quando estado ou
+/// cores mudam.
 class AuroraDeliveryMap extends StatefulWidget {
-  const AuroraDeliveryMap({required this.height, super.key});
+  const AuroraDeliveryMap({
+    required this.height,
+    required this.status,
+    required this.etaMinutes,
+    super.key,
+  });
 
   /// Altura do canvas; a largura sai do parent.
   final double height;
+
+  /// Status real do pedido — define em que trecho da rota o courier
+  /// aparece (preparo perto da banca, entregue no destino).
+  final DeliveryStatus status;
+
+  /// ETA corrente do pedido (minutos). Mostrado na bolha e usado pra
+  /// interpolar o avanco quando `outForDelivery`.
+  final int etaMinutes;
+
+  /// Progresso 0..1 ao longo da rota derivado do status do pedido.
+  /// `outForDelivery` interpola pelo ETA restante: quanto menor o ETA,
+  /// mais perto do destino o courier aparece.
+  static double routeProgressFor(DeliveryStatus status, int etaMinutes) {
+    switch (status) {
+      case DeliveryStatus.received:
+        return 0.06;
+      case DeliveryStatus.preparing:
+        return 0.15;
+      case DeliveryStatus.outForDelivery:
+        final t = (1 - etaMinutes / _etaReferenceMinutes).clamp(0.0, 1.0);
+        return 0.32 + 0.60 * t;
+      case DeliveryStatus.delivered:
+        return 1;
+      case DeliveryStatus.cancelled:
+        return 0;
+    }
+  }
+
+  /// ETA tipico de saida pra entrega — referencia da interpolacao.
+  static const double _etaReferenceMinutes = 18;
 
   @override
   State<AuroraDeliveryMap> createState() => _AuroraDeliveryMapState();
@@ -67,6 +110,12 @@ class _AuroraDeliveryMapState extends State<AuroraDeliveryMap>
           willChange: true,
           painter: _AuroraDeliveryMapPainter(
             controller: _controller,
+            status: widget.status,
+            etaMinutes: widget.etaMinutes,
+            routeProgress: AuroraDeliveryMap.routeProgressFor(
+              widget.status,
+              widget.etaMinutes,
+            ),
             base: colors.surface,
             block: colors.surfaceMuted,
             street: colors.border,
@@ -87,6 +136,9 @@ class _AuroraDeliveryMapState extends State<AuroraDeliveryMap>
 class _AuroraDeliveryMapPainter extends CustomPainter {
   _AuroraDeliveryMapPainter({
     required this.controller,
+    required this.status,
+    required this.etaMinutes,
+    required this.routeProgress,
     required this.base,
     required this.block,
     required this.street,
@@ -100,6 +152,12 @@ class _AuroraDeliveryMapPainter extends CustomPainter {
   }) : super(repaint: controller);
 
   final Animation<double> controller;
+  final DeliveryStatus status;
+  final int etaMinutes;
+
+  /// Progresso 0..1 derivado do estado do pedido (ver
+  /// [AuroraDeliveryMap.routeProgressFor]).
+  final double routeProgress;
   final Color base;
   final Color block;
   final Color street;
@@ -256,10 +314,25 @@ class _AuroraDeliveryMapPainter extends CustomPainter {
     ..style = PaintingStyle.stroke
     ..strokeWidth = 1.2;
 
+  /// Texto da bolha derivado do estado — ETA real do bloc enquanto o
+  /// pedido anda, "entregue" no estado final.
+  String get _etaLabel {
+    switch (status) {
+      case DeliveryStatus.delivered:
+        return 'entregue';
+      case DeliveryStatus.cancelled:
+        return '';
+      case DeliveryStatus.received:
+      case DeliveryStatus.preparing:
+      case DeliveryStatus.outForDelivery:
+        return etaMinutes > 0 ? '$etaMinutes min' : 'chegando';
+    }
+  }
+
   late final TextPainter _etaPainter = TextPainter(
     textDirection: TextDirection.ltr,
     text: TextSpan(
-      text: '12 min',
+      text: _etaLabel,
       style: TextStyle(
         color: route,
         fontSize: 11,
@@ -295,9 +368,61 @@ class _AuroraDeliveryMapPainter extends CustomPainter {
     ),
   )..layout();
 
+  // Geometria dependente do size — recalculada apenas quando o canvas
+  // muda de dimensao (cache por last-size; sem alocacao por frame).
+  Size _cachedSize = Size.zero;
+  late Path _routePath;
+  late ui.PathMetric _routeMetric;
+  late Path _riverPath;
+  late Offset _originPos;
+  late Offset _destPos;
+
+  void _ensureGeometry(Size size) {
+    if (size == _cachedSize) return;
+    _cachedSize = size;
+
+    _originPos = Offset(size.width * 0.16, size.height * 0.82);
+    _destPos = Offset(size.width * 0.84, size.height * 0.22);
+    final control1 = Offset(size.width * 0.30, size.height * 0.28);
+    final control2 = Offset(size.width * 0.72, size.height * 0.78);
+
+    _routePath = Path()
+      ..moveTo(_originPos.dx, _originPos.dy)
+      ..cubicTo(
+        control1.dx,
+        control1.dy,
+        control2.dx,
+        control2.dy,
+        _destPos.dx,
+        _destPos.dy,
+      );
+    _routeMetric = _routePath.computeMetrics().first;
+
+    _riverPath = Path()
+      ..moveTo(size.width * 0.66, -size.height * 0.05)
+      ..cubicTo(
+        size.width * 0.74,
+        size.height * 0.10,
+        size.width * 0.86,
+        size.height * 0.10,
+        size.width * 0.90,
+        size.height * 0.22,
+      )
+      ..cubicTo(
+        size.width * 0.94,
+        size.height * 0.32,
+        size.width * 1.02,
+        size.height * 0.34,
+        size.width * 1.05,
+        size.height * 0.40,
+      );
+  }
+
   @override
   void paint(Canvas canvas, Size size) {
     if (size.width <= 0 || size.height <= 0) return;
+
+    _ensureGeometry(size);
 
     canvas
       ..save()
@@ -308,33 +433,16 @@ class _AuroraDeliveryMapPainter extends CustomPainter {
 
     _paintStreets(canvas, size);
     _paintBlocks(canvas, size);
-    _paintRiver(canvas, size);
+    canvas.drawPath(_riverPath, _riverPaint);
 
     // Rota: Bezier curva da banca (canto inf-esq) ao cliente (canto
     // sup-dir). Usamos PathMetrics pra: (1) extrair o segmento
     // percorrido e o restante; (2) calcular posicao + angulo do
-    // courier no instante.
-    final originPos = Offset(size.width * 0.16, size.height * 0.82);
-    final destPos = Offset(size.width * 0.84, size.height * 0.22);
-    final control1 = Offset(size.width * 0.30, size.height * 0.28);
-    final control2 = Offset(size.width * 0.72, size.height * 0.78);
+    // courier. O progresso vem do estado real do pedido.
+    final metric = _routeMetric;
+    final traveledLength = metric.length * routeProgress;
 
-    final routePath = Path()
-      ..moveTo(originPos.dx, originPos.dy)
-      ..cubicTo(
-        control1.dx,
-        control1.dy,
-        control2.dx,
-        control2.dy,
-        destPos.dx,
-        destPos.dy,
-      );
-
-    final progress = controller.value;
-    final metric = routePath.computeMetrics().first;
-    final traveledLength = metric.length * progress;
-
-    canvas.drawPath(routePath, _routeHaloPaint);
+    canvas.drawPath(_routePath, _routeHaloPaint);
 
     if (traveledLength > 0) {
       canvas.drawPath(metric.extractPath(0, traveledLength), _routePaint);
@@ -348,9 +456,11 @@ class _AuroraDeliveryMapPainter extends CustomPainter {
       dashOff: 5,
     );
 
-    _paintOriginMarker(canvas, originPos);
-    _paintDestinationMarker(canvas, destPos);
-    _paintCourier(canvas, metric, progress);
+    _paintOriginMarker(canvas, _originPos);
+    _paintDestinationMarker(canvas, _destPos);
+    if (status != DeliveryStatus.cancelled) {
+      _paintCourier(canvas, metric, routeProgress);
+    }
 
     _paintCompass(canvas, size);
     _paintScaleBar(canvas, size);
@@ -433,33 +543,6 @@ class _AuroraDeliveryMapPainter extends CustomPainter {
       math.min(rect.width, rect.height) * 0.18,
       _treePaint,
     );
-  }
-
-  /// Rio cortando o canto superior direito — Bezier suave com a cor
-  /// info (azul-petroleo) em alpha baixo. Ancora a leitura como mapa
-  /// urbano (cidade tem rio). Entra pela borda superior e sai pela
-  /// borda direita (edge-to-edge), serpenteando — sem stub solto no
-  /// canto.
-  void _paintRiver(Canvas canvas, Size size) {
-    final path = Path()
-      ..moveTo(size.width * 0.66, -size.height * 0.05)
-      ..cubicTo(
-        size.width * 0.74,
-        size.height * 0.10,
-        size.width * 0.86,
-        size.height * 0.10,
-        size.width * 0.90,
-        size.height * 0.22,
-      )
-      ..cubicTo(
-        size.width * 0.94,
-        size.height * 0.32,
-        size.width * 1.02,
-        size.height * 0.34,
-        size.width * 1.05,
-        size.height * 0.40,
-      );
-    canvas.drawPath(path, _riverPaint);
   }
 
   /// Origem (banca) — quadrado arredondado ocre com cesta estilizada.
@@ -547,8 +630,9 @@ class _AuroraDeliveryMapPainter extends CustomPainter {
       ..drawRect(body, _whiteFill);
   }
 
-  /// Courier em transito — silhueta de scooter rotacionada por
-  /// `tangent.angle`, halo pulsante e bolha de ETA flutuando acima.
+  /// Courier — silhueta de scooter rotacionada por `tangent.angle` na
+  /// posicao derivada do estado do pedido, halo pulsante (animacao
+  /// ambiente via controller) e bolha de ETA flutuando acima.
   ///
   /// O scooter e desenhado em coordenadas locais (origem no centro,
   /// orientado ao longo do eixo +x). `canvas.translate(pos)` +
@@ -559,8 +643,8 @@ class _AuroraDeliveryMapPainter extends CustomPainter {
     final pos = tangent.position;
     final angle = tangent.angle; // radianos, eixo +x da curva
 
-    // Halo pulsante — independente da rotacao do veiculo.
-    final pulse = 0.5 + 0.5 * math.sin(progress * 2 * math.pi * 3);
+    // Halo pulsante — animacao ambiente, independente do estado.
+    final pulse = 0.5 + 0.5 * math.sin(controller.value * 2 * math.pi * 3);
     final haloRadius = 16 + pulse * 5;
 
     canvas
@@ -592,16 +676,21 @@ class _AuroraDeliveryMapPainter extends CustomPainter {
       ..restore();
 
     // Bolha de ETA: nao rotaciona, fica acima do courier.
-    _paintEtaBubble(canvas, pos);
+    if (_etaLabel.isNotEmpty) {
+      _paintEtaBubble(canvas, pos);
+    }
   }
 
-  /// Bolha branca arredondada com "12 min" — flutua 22px acima do
-  /// courier. Reforca leitura de mapa em tempo real.
+  /// Bolha branca arredondada com o ETA real do pedido — flutua acima
+  /// do courier com bob suave (controller). Reforca leitura de mapa em
+  /// tempo real sem inventar numero.
   void _paintEtaBubble(Canvas canvas, Offset courierPos) {
     final textSize = _etaPainter.size;
     final bubbleWidth = textSize.width + 16;
     final bubbleHeight = textSize.height + 8;
-    final bubbleCenter = Offset(courierPos.dx, courierPos.dy - 22);
+    // Bob vertical sutil de ±2px — animacao ambiente.
+    final bob = math.sin(controller.value * 2 * math.pi) * 2;
+    final bubbleCenter = Offset(courierPos.dx, courierPos.dy - 22 + bob);
     final bubbleRect = Rect.fromCenter(
       center: bubbleCenter,
       width: bubbleWidth,
@@ -725,7 +814,10 @@ class _AuroraDeliveryMapPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(_AuroraDeliveryMapPainter old) {
-    return old.base != base ||
+    return old.status != status ||
+        old.etaMinutes != etaMinutes ||
+        old.routeProgress != routeProgress ||
+        old.base != base ||
         old.block != block ||
         old.street != street ||
         old.route != route ||

@@ -98,6 +98,63 @@ class _TempoBarsPainter extends CustomPainter {
   static final Paint _activePaint = Paint()..color = const Color(0xFF00D982);
   static final Paint _cursorPaint = Paint()..color = const Color(0xFFF2F2F5);
 
+  // TextPainters cacheados — labels e segundos sao estaticos por
+  // instancia (tempo/labels novos criam painter novo); so o estado
+  // ativo troca a cor, entao mantemos as duas variantes prontas.
+  // Relayout acontece apenas quando o canvas muda de tamanho.
+  final List<TextPainter?> _idleLabels = [];
+  final List<TextPainter?> _activeLabels = [];
+  final List<TextPainter?> _secsLabels = [];
+  Size _textLayoutSize = Size.zero;
+
+  static TextPainter _labelPainter(String text, Color color, double maxWidth) {
+    return TextPainter(
+      text: TextSpan(
+        text: text,
+        style: TextStyle(
+          color: color,
+          fontSize: 9,
+          fontWeight: FontWeight.w700,
+          letterSpacing: 1.2,
+        ),
+      ),
+      textDirection: TextDirection.ltr,
+    )..layout(maxWidth: maxWidth);
+  }
+
+  void _rebuildTextPainters(List<double> widths) {
+    _idleLabels.clear();
+    _activeLabels.clear();
+    _secsLabels.clear();
+    for (var i = 0; i < tempo.length; i++) {
+      if (i >= labels.length) {
+        _idleLabels.add(null);
+        _activeLabels.add(null);
+        _secsLabels.add(null);
+        continue;
+      }
+      final text = labels[i].toUpperCase();
+      _idleLabels.add(_labelPainter(text, const Color(0xFF7E7E8A), widths[i]));
+      _activeLabels.add(
+        _labelPainter(text, const Color(0xFFF2F2F5), widths[i]),
+      );
+      _secsLabels.add(
+        TextPainter(
+          text: TextSpan(
+            text: tempo[i].toString(),
+            style: const TextStyle(
+              color: Color(0xFFF2F2F5),
+              fontSize: 13,
+              fontWeight: FontWeight.w600,
+              fontFamily: FitnessBrand.displayMonoFontFamily,
+            ),
+          ),
+          textDirection: TextDirection.ltr,
+        )..layout(),
+      );
+    }
+  }
+
   @override
   void paint(Canvas canvas, Size size) {
     const gap = 6.0;
@@ -110,6 +167,10 @@ class _TempoBarsPainter extends CustomPainter {
     var x = 0.0;
     final t = progress.value;
     final widths = tempo.map((v) => (v / total) * available).toList();
+    if (size != _textLayoutSize) {
+      _textLayoutSize = size;
+      _rebuildTextPainters(widths);
+    }
     var cumulative = 0.0;
 
     for (var i = 0; i < tempo.length; i++) {
@@ -144,40 +205,18 @@ class _TempoBarsPainter extends CustomPainter {
         canvas.drawCircle(Offset(cx, barY + barHeight / 2), 5, _cursorPaint);
       }
 
-      // Label inferior.
-      if (i < labels.length) {
-        final tp = TextPainter(
-          text: TextSpan(
-            text: labels[i].toUpperCase(),
-            style: TextStyle(
-              color: isActive
-                  ? const Color(0xFFF2F2F5)
-                  : const Color(0xFF7E7E8A),
-              fontSize: 9,
-              fontWeight: FontWeight.w700,
-              letterSpacing: 1.2,
-            ),
-          ),
-          textDirection: TextDirection.ltr,
-        )..layout(maxWidth: segWidth);
+      // Label inferior — variante ativa/idle pre-layoutada.
+      final tp = isActive ? _activeLabels[i] : _idleLabels[i];
+      if (tp != null) {
         tp.paint(
           canvas,
           Offset(x + (segWidth - tp.width) / 2, barY + barHeight + 6),
         );
+      }
 
-        // Segundos no topo.
-        final secs = TextPainter(
-          text: TextSpan(
-            text: tempo[i].toString(),
-            style: const TextStyle(
-              color: Color(0xFFF2F2F5),
-              fontSize: 13,
-              fontWeight: FontWeight.w600,
-              fontFamily: FitnessBrand.displayMonoFontFamily,
-            ),
-          ),
-          textDirection: TextDirection.ltr,
-        )..layout();
+      // Segundos no topo.
+      final secs = _secsLabels[i];
+      if (secs != null) {
         secs.paint(
           canvas,
           Offset(x + (segWidth - secs.width) / 2, barY - secs.height - 4),

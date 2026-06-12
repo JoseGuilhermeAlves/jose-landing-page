@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:feature_showcase/feature_showcase.dart' show LoggedSession;
 import 'package:feature_showcase/src/fitness/domain/logged_session.dart' show LoggedSession;
 
 /// Eventos do bloc Pulso na versao dark Whoop. Antigos (FitnessSet

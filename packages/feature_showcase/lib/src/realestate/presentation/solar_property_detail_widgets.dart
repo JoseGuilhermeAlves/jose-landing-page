@@ -538,11 +538,13 @@ class _BrokerCard extends StatelessWidget {
           ),
           child: Row(
             children: [
-              SolarBrokerAvatar(
+              ShowcaseMonogramAvatar(
                 monogram: broker.monogram,
                 size: 56,
                 backgroundColor: colors.primary,
                 foregroundColor: colors.onPrimary,
+                fontFamily: SolarBrand.displayFontFamily,
+                fontWeight: FontWeight.w600,
               ),
               const SizedBox(width: AppSpacing.md),
               Expanded(

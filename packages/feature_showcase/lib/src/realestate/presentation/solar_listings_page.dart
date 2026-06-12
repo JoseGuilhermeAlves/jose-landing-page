@@ -7,6 +7,7 @@ import 'package:feature_showcase/src/realestate/presentation/solar_brand.dart';
 import 'package:feature_showcase/src/realestate/presentation/solar_property_card.dart';
 import 'package:feature_showcase/src/realestate/presentation/solar_saved_action.dart';
 import 'package:feature_showcase/src/shared/presentation/mock_body_constraint.dart';
+import 'package:feature_showcase/src/shared/util/money_format.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

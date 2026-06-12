@@ -1,8 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:feature_showcase/feature_showcase.dart' show FitnessBrand;
 import 'package:feature_showcase/src/fitness/domain/muscle_recovery.dart';
 import 'package:feature_showcase/src/fitness/domain/sleep_window.dart';
-import 'package:feature_showcase/src/fitness/presentation/fitness_brand.dart' show FitnessBrand;
 import 'package:flutter/foundation.dart';
 
 /// Snapshot diario de recovery — agrega as biometricas que o mock
@@ -23,7 +21,8 @@ class RecoverySnapshot extends Equatable {
 
   final DateTime date;
 
-  /// 0..100 — banda colorida via [FitnessBrand.recoveryColor].
+  /// 0..100 — a presentation mapeia em banda colorida via
+  /// `FitnessBrand.recoveryColor` (domain nao conhece cor).
   final double recoveryPercent;
 
   /// HRV (Heart Rate Variability) RMSSD em ms.

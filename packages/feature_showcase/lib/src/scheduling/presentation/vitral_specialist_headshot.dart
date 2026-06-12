@@ -1,12 +1,12 @@
 import 'package:design_system/design_system.dart';
 import 'package:feature_showcase/src/scheduling/domain/specialist.dart';
-import 'package:feature_showcase/src/scheduling/presentation/vitral_specialist_avatar.dart';
+import 'package:feature_showcase/src/shared/presentation/showcase_monogram_avatar.dart';
 import 'package:feature_showcase/src/shared/presentation/showcase_photo.dart';
 import 'package:flutter/material.dart';
 
 /// Headshot do profissional Vitral. Usa `ShowcasePhoto` com a foto real
 /// (`specialist.photoAsset`) e cai automaticamente no
-/// `VitralSpecialistAvatar` (monograma desenhado em painter) enquanto o
+/// `ShowcaseMonogramAvatar` (monograma desenhado em painter) enquanto o
 /// `.webp` nao existe ou falha — o painter segue como rede de seguranca.
 ///
 /// Centraliza o wiring foto+fallback pra que home, lista de servicos e
@@ -32,7 +32,7 @@ class VitralSpecialistHeadshot extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = context.colors;
     final radius = borderRadius ?? BorderRadius.circular(AppRadius.md);
-    final fallback = VitralSpecialistAvatar(
+    final fallback = ShowcaseMonogramAvatar(
       monogram: specialist.monogram,
       size: size,
       backgroundColor: colors.primary,

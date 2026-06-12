@@ -48,10 +48,32 @@ class _MiraCandlestickChartState extends State<MiraCandlestickChart>
 
   int? _crosshairIndex;
 
+  /// Vira true na primeira interacao (toque, pan ou hover) — esconde o
+  /// hint de uso de forma permanente nesta sessao do widget.
+  bool _interacted = false;
+
   @override
   void dispose() {
     _reveal.dispose();
     super.dispose();
+  }
+
+  /// Atualiza crosshair via mesmo code path do pan/tap. setState so
+  /// dispara quando o indice efetivamente muda — isso atua como
+  /// throttle natural pro `onHover` do MouseRegion (que emite por
+  /// pixel no web; ver CLAUDE.md).
+  void _updateCrosshair(Offset local, Size canvasSize) {
+    final next = _indexFromLocal(local, canvasSize);
+    if (next == _crosshairIndex && _interacted) return;
+    setState(() {
+      _crosshairIndex = next;
+      _interacted = true;
+    });
+  }
+
+  void _clearCrosshair() {
+    if (_crosshairIndex == null) return;
+    setState(() => _crosshairIndex = null);
   }
 
   /// Converte coordenada local em indice de vela. Retorna null quando
@@ -76,42 +98,67 @@ class _MiraCandlestickChartState extends State<MiraCandlestickChart>
       width: double.infinity,
       child: LayoutBuilder(
         builder: (context, constraints) {
-          return GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onTapDown: (d) => setState(() {
-              _crosshairIndex = _indexFromLocal(
-                d.localPosition,
-                constraints.biggest,
-              );
-            }),
-            onPanStart: (d) => setState(() {
-              _crosshairIndex = _indexFromLocal(
-                d.localPosition,
-                constraints.biggest,
-              );
-            }),
-            onPanUpdate: (d) => setState(() {
-              _crosshairIndex = _indexFromLocal(
-                d.localPosition,
-                constraints.biggest,
-              );
-            }),
-            onPanCancel: () => setState(() => _crosshairIndex = null),
-            child: RepaintBoundary(
-              child: CustomPaint(
-                isComplex: true,
-                willChange: true,
-                painter: _MiraCandlestickPainter(
-                  candles: widget.candles,
-                  crosshairIndex: _crosshairIndex,
-                  reveal: _reveal,
-                  upColor: colors.success,
-                  downColor: colors.error,
-                  gridColor: colors.border,
-                  surfaceColor: colors.surface,
-                  textColor: colors.onSurface,
-                  mutedColor: colors.onSurfaceMuted,
-                ),
+          return MouseRegion(
+            // Hover desktop compartilha o code path do pan/tap; onExit
+            // limpa o crosshair pra nao deixar tooltip fantasma.
+            onHover: (e) => _updateCrosshair(
+              e.localPosition,
+              constraints.biggest,
+            ),
+            onExit: (_) => _clearCrosshair(),
+            child: GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTapDown: (d) =>
+                  _updateCrosshair(d.localPosition, constraints.biggest),
+              onPanStart: (d) =>
+                  _updateCrosshair(d.localPosition, constraints.biggest),
+              onPanUpdate: (d) =>
+                  _updateCrosshair(d.localPosition, constraints.biggest),
+              onPanCancel: _clearCrosshair,
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  RepaintBoundary(
+                    child: CustomPaint(
+                      isComplex: true,
+                      willChange: true,
+                      painter: _MiraCandlestickPainter(
+                        candles: widget.candles,
+                        crosshairIndex: _crosshairIndex,
+                        reveal: _reveal,
+                        upColor: colors.success,
+                        downColor: colors.error,
+                        gridColor: colors.border,
+                        surfaceColor: colors.surface,
+                        textColor: colors.onSurface,
+                        mutedColor: colors.onSurfaceMuted,
+                      ),
+                    ),
+                  ),
+                  // Hint discreto de interacao — some apos o primeiro
+                  // toque/hover e nunca volta.
+                  Positioned(
+                    left: _MiraCandlestickPainter.padLeft + 4,
+                    top: 2,
+                    child: IgnorePointer(
+                      child: AnimatedOpacity(
+                        opacity: _interacted ? 0 : 1,
+                        duration: const Duration(milliseconds: 300),
+                        child: Text(
+                          'passe o cursor ou toque no grafico',
+                          style: TextStyle(
+                            color: colors.onSurfaceMuted.withValues(
+                              alpha: 0.7,
+                            ),
+                            fontSize: 10,
+                            fontFamily: MiraBrand.monoFontFamily,
+                            letterSpacing: 0.3,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           );

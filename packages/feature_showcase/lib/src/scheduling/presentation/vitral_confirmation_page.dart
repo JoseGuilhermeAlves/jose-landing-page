@@ -6,8 +6,8 @@ import 'package:feature_showcase/src/scheduling/presentation/scheduling_bloc.dar
 import 'package:feature_showcase/src/scheduling/presentation/scheduling_event.dart';
 import 'package:feature_showcase/src/scheduling/presentation/vitral_app_bar.dart';
 import 'package:feature_showcase/src/scheduling/presentation/vitral_brand.dart';
-import 'package:feature_showcase/src/scheduling/presentation/vitral_confirmation_badge.dart';
 import 'package:feature_showcase/src/shared/presentation/mock_body_constraint.dart';
+import 'package:feature_showcase/src/shared/presentation/showcase_confirmation_badge.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -79,7 +79,7 @@ class VitralConfirmationPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Center(
-                  child: VitralConfirmationBadge(
+                  child: ShowcaseConfirmationBadge(
                     fillColor: colors.primary,
                     checkColor: colors.onPrimary,
                     ringColor: colors.primary,

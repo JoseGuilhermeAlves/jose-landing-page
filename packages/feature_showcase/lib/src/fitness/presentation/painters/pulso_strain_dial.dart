@@ -86,6 +86,50 @@ class _StrainDialPainter extends CustomPainter {
     ..strokeCap = StrokeCap.round
     ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 12);
 
+  // TextPainters cacheados — value/target/label sao imutaveis na
+  // instancia (mudancas criam painter novo via shouldRepaint), entao o
+  // layout roda uma unica vez por instancia, fora do hot loop.
+  late final TextPainter _bigPainter = TextPainter(
+    text: TextSpan(
+      text: value.toStringAsFixed(1),
+      style: TextStyle(
+        color: FitnessBrand.strainColor(value),
+        fontSize: 56,
+        fontWeight: FontWeight.w600,
+        letterSpacing: -1,
+        fontFamily: FitnessBrand.displayMonoFontFamily,
+        fontFeatures: FitnessBrand.numFeatures,
+      ),
+    ),
+    textDirection: TextDirection.ltr,
+  )..layout();
+
+  late final TextPainter _captionPainter = TextPainter(
+    text: TextSpan(
+      text: label.toUpperCase(),
+      style: const TextStyle(
+        color: Color(0xFF7E7E8A),
+        fontSize: 11,
+        fontWeight: FontWeight.w600,
+        letterSpacing: 1.6,
+      ),
+    ),
+    textDirection: TextDirection.ltr,
+  )..layout();
+
+  late final TextPainter _targetPainter = TextPainter(
+    text: TextSpan(
+      text: 'alvo  ${target.toStringAsFixed(1)}',
+      style: const TextStyle(
+        color: Color(0xFF7E7E8A),
+        fontSize: 11,
+        fontWeight: FontWeight.w500,
+        letterSpacing: 0.4,
+      ),
+    ),
+    textDirection: TextDirection.ltr,
+  )..layout();
+
   @override
   void paint(Canvas canvas, Size size) {
     final center = Offset(size.width / 2, size.height / 2);
@@ -152,52 +196,19 @@ class _StrainDialPainter extends CustomPainter {
   }
 
   void _drawCenterText(Canvas canvas, Size size, Offset center) {
-    final big = TextPainter(
-      text: TextSpan(
-        text: value.toStringAsFixed(1),
-        style: TextStyle(
-          color: FitnessBrand.strainColor(value),
-          fontSize: 56,
-          fontWeight: FontWeight.w600,
-          letterSpacing: -1,
-          fontFamily: FitnessBrand.displayMonoFontFamily,
-          fontFeatures: FitnessBrand.numFeatures,
-        ),
-      ),
-      textDirection: TextDirection.ltr,
-    )..layout();
+    final big = _bigPainter;
     big.paint(
       canvas,
       Offset(center.dx - big.width / 2, center.dy - big.height / 2 - 6),
     );
 
-    const captionStyle = TextStyle(
-      color: Color(0xFF7E7E8A),
-      fontSize: 11,
-      fontWeight: FontWeight.w600,
-      letterSpacing: 1.6,
-    );
-    final caption = TextPainter(
-      text: TextSpan(text: label.toUpperCase(), style: captionStyle),
-      textDirection: TextDirection.ltr,
-    )..layout();
+    final caption = _captionPainter;
     caption.paint(
       canvas,
       Offset(center.dx - caption.width / 2, center.dy + big.height / 2 - 8),
     );
 
-    final targetLabel = TextPainter(
-      text: TextSpan(
-        text: 'alvo  ${target.toStringAsFixed(1)}',
-        style: const TextStyle(
-          color: Color(0xFF7E7E8A),
-          fontSize: 11,
-          fontWeight: FontWeight.w500,
-          letterSpacing: 0.4,
-        ),
-      ),
-      textDirection: TextDirection.ltr,
-    )..layout();
+    final targetLabel = _targetPainter;
     targetLabel.paint(
       canvas,
       Offset(

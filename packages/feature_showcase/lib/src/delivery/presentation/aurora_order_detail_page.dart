@@ -72,6 +72,8 @@ class AuroraOrderDetailPage extends StatelessWidget {
                               mobile: 150,
                               desktop: 220,
                             ),
+                            status: order.status,
+                            etaMinutes: order.etaMinutes,
                           ),
                           Positioned(
                             left: AppSpacing.sm,

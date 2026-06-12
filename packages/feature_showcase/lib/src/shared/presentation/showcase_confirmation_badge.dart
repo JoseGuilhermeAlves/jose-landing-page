@@ -2,17 +2,17 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
-/// Badge animado da tela de contato Solar — circulo preenchido com
-/// check em duas linhas crescendo de 30% a 100% da animacao. Mesma
-/// estrutura do VitralConfirmationBadge: painter recebe controller
-/// direto via `super(repaint:)` pra pular build e layout no pipeline
-/// (ver CLAUDE.md).
-class SolarConfirmationBadge extends StatefulWidget {
-  const SolarConfirmationBadge({
+/// Badge animado de confirmacao compartilhado pelos mocks (Vitral,
+/// Solar) — circulo preenchido com check em duas linhas crescendo de
+/// 30% a 100% da animacao. Cada marca parametriza as cores via tema.
+/// Painter recebe controller direto via `super(repaint:)` pra pular
+/// build e layout no pipeline (ver CLAUDE.md).
+class ShowcaseConfirmationBadge extends StatefulWidget {
+  const ShowcaseConfirmationBadge({
     required this.fillColor,
     required this.checkColor,
     required this.ringColor,
-    this.size = 88,
+    this.size = 96,
     super.key,
   });
 
@@ -22,10 +22,11 @@ class SolarConfirmationBadge extends StatefulWidget {
   final double size;
 
   @override
-  State<SolarConfirmationBadge> createState() => _SolarConfirmationBadgeState();
+  State<ShowcaseConfirmationBadge> createState() =>
+      _ShowcaseConfirmationBadgeState();
 }
 
-class _SolarConfirmationBadgeState extends State<SolarConfirmationBadge>
+class _ShowcaseConfirmationBadgeState extends State<ShowcaseConfirmationBadge>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
 
@@ -51,7 +52,7 @@ class _SolarConfirmationBadgeState extends State<SolarConfirmationBadge>
         width: widget.size,
         height: widget.size,
         child: CustomPaint(
-          painter: _SolarConfirmationBadgePainter(
+          painter: _ShowcaseConfirmationBadgePainter(
             controller: _controller,
             fillColor: widget.fillColor,
             checkColor: widget.checkColor,
@@ -63,8 +64,8 @@ class _SolarConfirmationBadgeState extends State<SolarConfirmationBadge>
   }
 }
 
-class _SolarConfirmationBadgePainter extends CustomPainter {
-  _SolarConfirmationBadgePainter({
+class _ShowcaseConfirmationBadgePainter extends CustomPainter {
+  _ShowcaseConfirmationBadgePainter({
     required this.controller,
     required this.fillColor,
     required this.checkColor,
@@ -100,6 +101,7 @@ class _SolarConfirmationBadgePainter extends CustomPainter {
     final cy = size.height / 2;
     final radius = math.min(cx, cy) - 6;
 
+    // Pulse de escala 0 -> 1.08 -> 1.0.
     final scale = t < 0.6
         ? 1.08 * Curves.easeOutBack.transform(t / 0.6)
         : (1.08 - 0.08 * ((t - 0.6) / 0.4));
@@ -134,7 +136,7 @@ class _SolarConfirmationBadgePainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(_SolarConfirmationBadgePainter old) {
+  bool shouldRepaint(_ShowcaseConfirmationBadgePainter old) {
     return old.fillColor != fillColor ||
         old.checkColor != checkColor ||
         old.ringColor != ringColor;

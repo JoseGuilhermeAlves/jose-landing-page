@@ -373,11 +373,7 @@ class _ReviewsBlock extends StatelessWidget {
       children: [
         for (var i = 0; i < reviews.length; i++) ...[
           if (i > 0) const SizedBox(height: AppSpacing.sm),
-          _ReviewTile(
-            review: reviews[i],
-            colors: colors,
-            textTheme: textTheme,
-          ),
+          _ReviewTile(review: reviews[i], colors: colors, textTheme: textTheme),
         ],
       ],
     );
@@ -410,7 +406,7 @@ class _ReviewTile extends StatelessWidget {
         children: [
           Row(
             children: [
-              VitralSpecialistAvatar(
+              ShowcaseMonogramAvatar(
                 monogram: review.authorMonogram,
                 size: 36,
                 backgroundColor: colors.surfaceMuted,

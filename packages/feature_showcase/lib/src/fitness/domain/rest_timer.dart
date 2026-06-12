@@ -1,6 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:feature_showcase/feature_showcase.dart' show RestExtended;
-import 'package:feature_showcase/src/fitness/presentation/fitness_event.dart' show RestExtended;
 import 'package:flutter/foundation.dart';
 
 /// Estado do rest timer entre sets. Vive como sub-state do
@@ -12,8 +10,8 @@ class RestTimer extends Equatable {
   const RestTimer({required this.total, required this.remaining});
 
   /// Tempo total prescrito no inicio (segundos). Pode ser estendido
-  /// via [RestExtended] — total sobe junto pra manter ratio do
-  /// progresso coerente.
+  /// pelo evento `RestExtended` (presentation) — total sobe junto pra
+  /// manter ratio do progresso coerente.
   final int total;
 
   /// Segundos restantes. Quando bate 0, o bloc remove o `restTimer`

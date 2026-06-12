@@ -146,7 +146,11 @@ class _ActiveOrderCard extends StatelessWidget {
         child: Column(
           children: [
             // Mini-mapa em altura reduzida — destaca o tracking.
-            AuroraDeliveryMap(height: context.isMobile ? 104 : 140),
+            AuroraDeliveryMap(
+              height: context.isMobile ? 104 : 140,
+              status: order.status,
+              etaMinutes: order.etaMinutes,
+            ),
             Padding(
               padding: const EdgeInsets.all(AppSpacing.lg),
               child: Column(

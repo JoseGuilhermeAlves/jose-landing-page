@@ -9,7 +9,6 @@ export 'src/responsive/responsive_builder.dart';
 export 'src/spacing/app_spacing.dart';
 export 'l10n/generated/app_localizations.dart';
 export 'src/l10n/l10n_extension.dart';
-export 'src/strings/common_strings.dart';
 export 'src/theme/app_colors.dart';
 export 'src/theme/app_theme.dart';
 export 'src/tokens/app_curves.dart';

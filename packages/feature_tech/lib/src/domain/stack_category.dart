@@ -1,7 +1,7 @@
 import 'package:design_system/l10n/generated/app_localizations.dart';
 
 /// Agrupamento das libs do stack pra apresentacao. Cada categoria
-/// vira um cluster visual proprio na `TechSection`.
+/// vira um cluster visual proprio na secao Engineering do shell.
 enum StackCategory {
   framework,
   state,

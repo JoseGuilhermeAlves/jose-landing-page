@@ -91,15 +91,15 @@ abstract final class TechDescriptionsCatalog {
     ),
     'go_router': TechDescription(
       title: 'go_router',
-      tagline: 'Routing declarativo com deferred loading.',
+      tagline: 'Routing declarativo e enxuto.',
       role: 'Rotas',
       version: '^16.2.4',
       body:
-          'Routing declarativo com `/labs` e suas sub-rotas carregadas como '
-          'bundle separado on-demand via `deferred as labs`. A primeira pintura '
-          'da home não paga o custo dos sete playgrounds — o widget bundle so '
-          'materializa quando o usuário navega ate `/labs`. O `errorBuilder` '
-          'cobre 404 sem rota nominal extra.',
+          'Routing declarativo com configuracao centralizada num unico '
+          'arquivo. O router da landing e deliberadamente enxuto — rota raiz '
+          'e pagina 404 — porque toda a narrativa vive no scroll da home. '
+          'O `errorBuilder` cobre qualquer path desconhecido caindo na '
+          'NotFoundPage, sem rota nominal extra.',
       docsUrl: 'https://pub.dev/packages/go_router',
     ),
     'flutter_modular': TechDescription(
@@ -108,12 +108,12 @@ abstract final class TechDescriptionsCatalog {
       role: 'Rotas',
       version: '^6.0.0',
       body:
-          'Cada feature registra suas rotas e bindings num módulo isolado — o '
-          'shell compõe os módulos sem conhecer a implementação interna. '
-          'Injeção de dependência por escopo garante que repositórios e blocs '
-          'vivam apenas enquanto a feature está ativa, liberando recursos ao '
-          'sair. Combinado com lazy loading, módulos pesados só instanciam '
-          'quando o usuário navega até eles.',
+          'Framework que agrupa rotas e bindings de dependência em módulos '
+          'isolados por feature. Injeção de dependência por escopo garante '
+          'que repositórios e blocs vivam apenas enquanto o módulo está '
+          'ativo, liberando recursos ao sair. Alternativa ao par '
+          'go_router + get_it em projetos que preferem convenção única '
+          'para navegação e DI.',
       docsUrl: 'https://pub.dev/packages/flutter_modular',
     ),
     'CustomPainter': TechDescription(
@@ -142,7 +142,8 @@ abstract final class TechDescriptionsCatalog {
           'AnimationController com Tween chains para sequências explícitas, '
           'e Ticker direto em CustomPainter via super(repaint:) para loops '
           'de 60 Hz sem rebuild. Staggered animations, curves customizadas '
-          'e physics-based springs aplicados nos mocks e playgrounds.',
+          'e physics-based springs aplicados nos mocks do showcase e nas '
+          'cenas da própria landing.',
       docsUrl: 'https://docs.flutter.dev/ui/animations',
     ),
     'SQLite': TechDescription(
@@ -246,15 +247,15 @@ abstract final class TechDescriptionsCatalog {
     ),
     'very_good_analysis': TechDescription(
       title: 'very_good_analysis',
-      tagline: 'Lints estritos failFast no CI.',
+      tagline: 'Lints estritos em todo o workspace.',
       role: 'Qualidade',
       version: '^10.0.0',
       body:
-          'Conjunto estrito de lints rodando failFast no pipeline de '
-          'análise estática. Mantem o código limpo sem PR review repetitivo — '
-          'estilo, imutabilidade e ordering ja vem cobertos pela regra. O CI '
-          'quebra antes de qualquer review humano enxergar o diff, entao '
-          'inconsistência não chega até o reviewer.',
+          'Conjunto estrito de lints aplicado a todos os pacotes do '
+          'workspace via `melos run analyze` com failFast. Mantem o código '
+          'limpo sem PR review repetitivo — estilo, imutabilidade e ordering '
+          'ja vem cobertos pela regra, entao inconsistência é barrada antes '
+          'de qualquer review humano enxergar o diff.',
       docsUrl: 'https://pub.dev/packages/very_good_analysis',
     ),
     'bloc_test': TechDescription(
@@ -274,7 +275,7 @@ abstract final class TechDescriptionsCatalog {
       title: 'url_launcher',
       tagline: 'Deep links externos com fallback gracioso.',
       role: 'Tooling',
-      version: '^6.3.1',
+      version: '^6.3.0',
       body:
           'Deep links externos da landing: WhatsApp, mail, GitHub e LinkedIn. '
           'Cobre `https`, `mailto` e schemes customizados de apps moveis com '
@@ -324,15 +325,15 @@ abstract final class TechDescriptionsCatalog {
     ),
     'GitHub Actions': TechDescription(
       title: 'GitHub Actions',
-      tagline: 'Pipeline CI: analyze + test + build web.',
+      tagline: 'Automacao de CI/CD via workflows YAML.',
       role: 'Tooling',
       version: 'Workflow YAML',
       body:
-          'Pipeline CI: analyze + test + build web disparado em qualquer push, '
-          'orquestrado via Melos no workspace. O workflow roda em qualquer '
-          'branch, dando feedback antes do PR sair — quebra de analise ou '
-          'teste vira sinal vermelho imediato. Mantem a confianca no `main` '
-          'sem depender de disciplina manual.',
+          'Plataforma de CI/CD integrada ao GitHub — workflows YAML disparam '
+          'analyze, test e build a cada push ou pull request, com matrix de '
+          'plataformas e cache de dependencias. Quebra de analise ou teste '
+          'vira sinal vermelho antes de qualquer review humano, mantendo a '
+          'confianca no `main` sem depender de disciplina manual.',
       docsUrl: 'https://docs.github.com/actions',
     ),
     'flutter_test': TechDescription(

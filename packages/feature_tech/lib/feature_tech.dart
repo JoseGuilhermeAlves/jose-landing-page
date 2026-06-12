@@ -1,7 +1,7 @@
-/// Feature "Arquitetura & Stack" — secao da landing que apresenta as
-/// decisoes arquiteturais, o tech stack real (com versoes) e os Custom
-/// Painters destacados do projeto. Conteudo migrado de `/labs` (que
-/// permanece como vitrine interativa pura dos painters).
+/// Catalogos de arquitetura e stack — decisoes arquiteturais, tech stack
+/// real (com versoes) e Custom Painters destacados do projeto. O shell
+/// (`apps/landing`) consome esses dados na secao Engineering da home;
+/// a apresentacao vive la, nao aqui.
 library;
 
 export 'src/data/arch_decisions_catalog.dart';
@@ -11,4 +11,3 @@ export 'src/domain/arch_decision.dart';
 export 'src/domain/painter_highlight.dart';
 export 'src/domain/stack_category.dart';
 export 'src/domain/stack_item.dart';
-export 'src/presentation/tech_section.dart';

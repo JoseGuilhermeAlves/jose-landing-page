@@ -3,7 +3,7 @@
 Landing page institucional em **Flutter Web (PWA)** que serve como vitrine
 tecnica e comercial — duas leituras, uma URL. O cliente leigo entende em
 poucos segundos o que e oferecido e tem botao de WhatsApp a mao; o cliente
-tecnico rola ate a secao **Engenharia** e o **case study** e ve maturidade
+tecnico rola ate a secao **Engenharia** e ve maturidade
 arquitetural, custom painters a 60 fps e o monorepo organizado — tudo na
 propria home, sem rota separada.
 
@@ -27,9 +27,8 @@ propria home, sem rota separada.
   estao fora de escopo nesta versao.
 - Renderer web: build sempre com `--wasm` (skwasm + fallback CanvasKit).
 - **Rota unica `/`** (mais `/404` de fallback). Toda a experiencia vive
-  no scroll da home: Hero → Showcase → Sobre → Engenharia → Case study
-  → Contato. (As antigas rotas `/games` e `/labs` foram removidas; o
-  slot de fechamento virou um case study tecnico no proprio scroll.)
+  no scroll da home: Hero → Showcase → Sobre → Engenharia → Contato.
+  (As antigas rotas `/games` e `/labs` foram removidas.)
 - **Internacionalizacao:** 9 idiomas (pt como fonte; en, es, de, it, ja,
   zh, fr, ru), com seletor de locale e bandeiras desenhadas em
   `CustomPainter`.
@@ -102,7 +101,7 @@ jose-landing-page/
 │       │   ├── app.dart        # MaterialApp.router (dark-only)
 │       │   ├── router/         # GoRouter + paths (/ e /404)
 │       │   ├── features/       # composicao das features na home
-│       │   └── widgets/        # case study, engineering, nav, footer, dividers
+│       │   └── widgets/        # engineering, nav, footer, dividers
 │       ├── web/                # index.html com loading screen, manifest, robots, sitemap
 │       └── android/            # build Android
 └── packages/
@@ -119,8 +118,7 @@ jose-landing-page/
 ```
 
 > `feature_labs` permanece no workspace por ora, mas **nao** esta plugado
-> no router — a prova tecnica migrou pra secao Engenharia (`feature_tech`)
-> e pro case study na home.
+> no router — a prova tecnica migrou pra secao Engenharia na home.
 
 ## Showcase — 5 mocks navegaveis
 
@@ -201,7 +199,7 @@ Lighthouse Performance >= 80, Accessibility >= 90, PWA >= 90.
 | Bloc + Cubit (sem `freezed`/`get_it`)  | `flutter_bloc` direto, modelos com `Equatable`. Sem codegen e sem container DI por opcao explicita — revisitar quando crescer.  |
 | `core` como shell placeholder          | Os primitivos `Failure`/`Result`/`UseCase` foram removidos como codigo morto (zero features importavam). A casca mantem o topo da hierarquia. |
 | Custom Painter como coracao            | Performance critica: `Paint` cacheado em campo, `shouldRepaint` correto, `super(repaint:)` em loops, throttle de pointer no web.|
-| Prova tecnica na propria home          | Em vez de uma rota `/labs` separada, a secao Engenharia + o case study "Cosmos em Canvas" provam maturidade no fluxo principal. |
+| Prova tecnica na propria home          | Em vez de uma rota `/labs` separada, a secao Engenharia prova maturidade no fluxo principal.                                   |
 | Web build sempre `--wasm`              | skwasm + fallback CanvasKit. Loading screen em HTML/CSS puro escondendo a tela branca de 2-4s no primeiro acesso.               |
 
 Detalhe completo em [PROJECT.md](PROJECT.md). Estado real do repo
@@ -217,7 +215,7 @@ ao `AnimationController` pra pular build/layout a cada frame.
 | Painter                  | Papel na landing                                              |
 |--------------------------|--------------------------------------------------------------|
 | `ParticleFieldPainter`   | Campo de particulas no hero, reativo ao mouse                |
-| `CosmosPainter`          | Planetas, nebulosas, galaxias e pulsares — fundo + case study|
+| `CosmosPainter`          | Planetas, nebulosas, galaxias e pulsares — fundo da landing  |
 | `ConstellationPainter`   | Constelacoes nomeadas (Cruzeiro do Sul, Orion, Triangulo)    |
 | `AnimatedBorderPainter`  | Borda de cards revelada no hover (servicos, arch, bio)       |
 | `WaveDividerPainter`     | Separadores senoidais entre secoes                          |

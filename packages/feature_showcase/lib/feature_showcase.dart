@@ -80,7 +80,7 @@ export 'src/scheduling/presentation/scheduling_event.dart';
 export 'src/scheduling/presentation/scheduling_state.dart';
 export 'src/shared/data/showcase_catalog.dart';
 export 'src/shared/domain/showcase_template.dart';
-export 'src/shared/presentation/showcase_grid.dart';
+export 'src/shared/presentation/arcade_cabinet.dart';
 export 'src/shared/presentation/showcase_photo.dart';
 export 'src/shared/presentation/showcase_section.dart';
 export 'src/shared/util/money_format.dart';

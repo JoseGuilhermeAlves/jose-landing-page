@@ -12,121 +12,105 @@ void main() {
     home: Scaffold(body: SingleChildScrollView(child: child)),
   );
 
+  // O preview de cada gabinete ja renderiza o widget de demo do mock
+  // (home real). Ao abrir o demo fullscreen, passa a haver duas
+  // instancias do mesmo tipo — preview + modal.
+  Future<void> tapCabinetAndSettle(WidgetTester tester, String id) async {
+    final cabinet = find.byKey(Key('showcase-cabinet-$id'));
+    await tester.ensureVisible(cabinet);
+    await tester.pump(const Duration(milliseconds: 50));
+    await tester.tap(cabinet);
+    // pumpAndSettle nao serve: os mocks tem painters em loop infinito.
+    // Pumps fixos cobrem o push da MaterialPageRoute.
+    for (var i = 0; i < 12; i++) {
+      await tester.pump(const Duration(milliseconds: 50));
+    }
+  }
+
   group('ShowcaseSection', () {
-    testWidgets('renderiza um ShowcaseCard pra cada nicho do catalogo', (
+    testWidgets('renderiza um ArcadeCabinet pra cada nicho do catalogo', (
       tester,
     ) async {
       await tester.pumpWidget(wrap(const ShowcaseSection()));
       await tester.pump(const Duration(milliseconds: 16));
 
+      expect(find.byType(ArcadeCabinet), findsNWidgets(5));
+    });
+
+    testWidgets('preview renderiza a home real de cada mock', (tester) async {
+      await tester.pumpWidget(wrap(const ShowcaseSection()));
+      await tester.pump(const Duration(milliseconds: 16));
+
+      // Cada nicho tem o widget de demo renderizado na tela do gabinete.
+      expect(find.byType(DeliveryDemo), findsOneWidget);
+      expect(find.byType(SchedulingDemo), findsOneWidget);
+      expect(find.byType(FitnessDemo), findsOneWidget);
+      expect(find.byType(RealEstateDemo), findsOneWidget);
+      expect(find.byType(FinanceDemo), findsOneWidget);
+    });
+
+    testWidgets('tap no gabinete delivery abre o DeliveryDemo fullscreen', (
+      tester,
+    ) async {
+      await tester.pumpWidget(wrap(const ShowcaseSection()));
+      await tester.pump(const Duration(milliseconds: 16));
+
+      await tapCabinetAndSettle(tester, 'delivery');
+
+      // Preview (offstage apos abrir o modal) + modal fullscreen.
+      // skipOffstage:false conta os dois e prova que a rota foi empurrada.
+      expect(find.byType(DeliveryDemo, skipOffstage: false), findsNWidgets(2));
+    });
+
+    testWidgets('tap no gabinete scheduling abre o SchedulingDemo fullscreen', (
+      tester,
+    ) async {
+      await tester.pumpWidget(wrap(const ShowcaseSection()));
+      await tester.pump(const Duration(milliseconds: 16));
+
+      await tapCabinetAndSettle(tester, 'scheduling');
+
       expect(
-        find.byType(ShowcaseCard),
-        findsNWidgets(5),
+        find.byType(SchedulingDemo, skipOffstage: false),
+        findsNWidgets(2),
       );
     });
 
-    testWidgets('todos os templates do catalogo tem demo plugada', (
+    testWidgets('tap no gabinete fitness abre o FitnessDemo fullscreen', (
       tester,
     ) async {
       await tester.pumpWidget(wrap(const ShowcaseSection()));
       await tester.pump(const Duration(milliseconds: 16));
 
-      // Todos os nichos da vitrine ja estao com hasDemo=true; nao
-      // existe mais badge "em breve" na home.
-      expect(find.textContaining('em breve'), findsNothing);
+      await tapCabinetAndSettle(tester, 'fitness');
+
+      expect(find.byType(FitnessDemo, skipOffstage: false), findsNWidgets(2));
     });
 
-    testWidgets('tap no card de delivery abre o DeliveryDemo em modal', (
+    testWidgets(
+      'tap no gabinete imobiliaria abre o RealEstateDemo fullscreen',
+      (tester) async {
+        await tester.pumpWidget(wrap(const ShowcaseSection()));
+        await tester.pump(const Duration(milliseconds: 16));
+
+        await tapCabinetAndSettle(tester, 'realestate');
+
+        expect(
+          find.byType(RealEstateDemo, skipOffstage: false),
+          findsNWidgets(2),
+        );
+      },
+    );
+
+    testWidgets('tap no gabinete finance abre o FinanceDemo fullscreen', (
       tester,
     ) async {
       await tester.pumpWidget(wrap(const ShowcaseSection()));
       await tester.pump(const Duration(milliseconds: 16));
 
-      await tester.tap(find.byKey(const Key('showcase-card-delivery')));
-      // pumpAndSettle nao serve aqui porque o `AuroraHeroBackdrop` e o
-      // mapa do DeliveryDemo rodam em loop infinito. Pumpamos frames
-      // fixos pra a route de modal terminar de abrir.
-      for (var i = 0; i < 20; i++) {
-        await tester.pump(const Duration(milliseconds: 50));
-      }
+      await tapCabinetAndSettle(tester, 'finance');
 
-      expect(find.byType(DeliveryDemo), findsOneWidget);
-    });
-
-    testWidgets('tap no card de scheduling abre o SchedulingDemo em modal', (
-      tester,
-    ) async {
-      await tester.pumpWidget(wrap(const ShowcaseSection()));
-      await tester.pump(const Duration(milliseconds: 16));
-
-      // Scheduling fica em row 2 do grid no viewport de teste (800px),
-      // entao precisa rolar pra ficar dentro da hit area antes do tap.
-      final card = find.byKey(const Key('showcase-card-scheduling'));
-      await tester.ensureVisible(card);
-      await tester.pump(const Duration(milliseconds: 50));
-      await tester.tap(card);
-      // pumpAndSettle nao serve aqui porque o `VitralHeroBackdrop` e o
-      // relogio do SchedulingDemo rodam em loop infinito. Pumpamos
-      // frames fixos pra a route de modal terminar de abrir.
-      for (var i = 0; i < 20; i++) {
-        await tester.pump(const Duration(milliseconds: 50));
-      }
-
-      expect(find.byType(SchedulingDemo), findsOneWidget);
-    });
-
-    testWidgets('tap no card de fitness abre o FitnessDemo em modal', (
-      tester,
-    ) async {
-      await tester.pumpWidget(wrap(const ShowcaseSection()));
-      await tester.pump(const Duration(milliseconds: 16));
-
-      final card = find.byKey(const Key('showcase-card-fitness'));
-      await tester.ensureVisible(card);
-      await tester.pump(const Duration(milliseconds: 50));
-      await tester.tap(card);
-      // PulsoHomePage tem painters animando em loop infinito (athlete
-      // figure, activity rings); pumpAndSettle nao termina. Pumps
-      // explicitos cobrem o push da MaterialPageRoute + um frame extra
-      // pra o Theme/Bloc montarem.
-      await tester.pump(const Duration(milliseconds: 100));
-      await tester.pump(const Duration(milliseconds: 400));
-
-      expect(find.byType(FitnessDemo), findsOneWidget);
-    });
-
-    testWidgets('tap no card de imobiliaria abre o RealEstateDemo em modal', (
-      tester,
-    ) async {
-      await tester.pumpWidget(wrap(const ShowcaseSection()));
-      await tester.pump(const Duration(milliseconds: 16));
-
-      final card = find.byKey(const Key('showcase-card-realestate'));
-      await tester.ensureVisible(card);
-      await tester.pump(const Duration(milliseconds: 50));
-      await tester.tap(card);
-      // SolarHomePage tem SolarHeroBackdrop animando em loop;
-      // pumpAndSettle nao termina. Pumps explicitos cobrem o push.
-      await tester.pump(const Duration(milliseconds: 100));
-      await tester.pump(const Duration(milliseconds: 400));
-
-      expect(find.byType(RealEstateDemo), findsOneWidget);
-    });
-
-    testWidgets('tap no card de finance abre o FinanceDemo em modal', (
-      tester,
-    ) async {
-      await tester.pumpWidget(wrap(const ShowcaseSection()));
-      await tester.pump(const Duration(milliseconds: 16));
-
-      final card = find.byKey(const Key('showcase-card-finance'));
-      await tester.ensureVisible(card);
-      await tester.pump(const Duration(milliseconds: 50));
-      await tester.tap(card);
-      await tester.pump(const Duration(milliseconds: 100));
-      await tester.pump(const Duration(milliseconds: 400));
-
-      expect(find.byType(FinanceDemo), findsOneWidget);
+      expect(find.byType(FinanceDemo, skipOffstage: false), findsNWidgets(2));
     });
   });
 }

@@ -8,20 +8,22 @@ import 'package:landing/widgets/arcade/pixel_planet.dart';
 class HeroCosmos extends StatelessWidget {
   const HeroCosmos({super.key});
 
-  /// (x, y normalizados 0..1, diametro px, tipo, paleta, ringTilt?).
+  /// Disposicao CURADA (espelha o cosmos original: corpos ancorados nos
+  /// cantos, tamanhos variados, longe do texto/buraco-negro). x,y
+  /// normalizados 0..1, diametro px, tipo, paleta, seed, ringTilt?.
   static const List<_P> _planets = [
-    // Saturno rosa, canto superior-direito.
-    _P(0.9, 0.15, 150, PlanetKind.gasGiant, _saturn, 1, 0.34),
-    // Gigante gasoso laranja, superior-esquerda.
-    _P(0.12, 0.22, 116, PlanetKind.gasGiant, _orange, 2, null),
-    // Terran (continentes), meio-esquerda baixo.
-    _P(0.04, 0.66, 96, PlanetKind.terran, _terran, 3, null),
-    // Lua cinza com crateras, inferior-direita.
-    _P(0.93, 0.84, 80, PlanetKind.moon, _moon, 4, null),
-    // Lava rachada, inferior-centro.
-    _P(0.45, 0.92, 72, PlanetKind.lava, _lava, 5, null),
-    // Gelo, topo-centro-direita.
-    _P(0.66, 0.06, 64, PlanetKind.ice, _ice, 6, null),
+    // Saturno rosa GRANDE, canto superior-esquerdo (estrela do campo).
+    _P(0.15, 0.13, 156, PlanetKind.gasGiant, _saturn, 1, 0.32),
+    // Gigante gasoso laranja, superior-direito (acima do buraco negro).
+    _P(0.9, 0.18, 124, PlanetKind.gasGiant, _orange, 2, null),
+    // Terran (continentes), inferior-esquerdo.
+    _P(0.08, 0.83, 100, PlanetKind.terran, _terran, 3, null),
+    // Lava rachada, borda direita meio-baixo.
+    _P(0.95, 0.7, 84, PlanetKind.lava, _lava, 5, null),
+    // Lua cinza com crateras, inferior-centro.
+    _P(0.52, 0.92, 66, PlanetKind.moon, _moon, 4, null),
+    // Gelo pequeno, topo-centro (acento).
+    _P(0.62, 0.08, 54, PlanetKind.ice, _ice, 6, null),
   ];
 
   static const _saturn = [
@@ -89,6 +91,8 @@ class HeroCosmos extends StatelessWidget {
                         palette: p.palette,
                         seed: p.seed,
                         ringTilt: p.ring,
+                        // Glow halo deixa cada planeta chamativo no escuro.
+                        glow: true,
                       ),
                     ),
                   ),

@@ -132,37 +132,6 @@ class _AccretionPainter extends CustomPainter {
   /// Achatamento vertical do disco (tilt).
   static const double _tiltY = 0.34;
 
-  /// Direcao da luz pros mini-planetas (upper-left), normalizada.
-  static const _lx = -0.57;
-  static const _ly = -0.63;
-  static const _lz = 0.53;
-
-  /// Planetas em orbita: (raio rel ao R, tamanho rel, velocidade, fase,
-  /// paleta 5 cores shadow->light). Raios diferentes pra dar parallax.
-  static const List<_Orbit> _orbits = [
-    _Orbit(0.64, 0.062, 1, 0, [
-      Color(0xFF0A2E33),
-      Color(0xFF0E6B6B),
-      Color(0xFF12B5A6),
-      Color(0xFF49E0C0),
-      Color(0xFFB8FFF0),
-    ]),
-    _Orbit(0.80, 0.05, -0.7, 2.1, [
-      Color(0xFF3A0A2A),
-      Color(0xFF7A1452),
-      Color(0xFFC0307E),
-      Color(0xFFF26AAE),
-      Color(0xFFFFD0EA),
-    ]),
-    _Orbit(0.95, 0.075, 0.55, 4, [
-      Color(0xFF332300),
-      Color(0xFF6B4A00),
-      Color(0xFFB5860A),
-      Color(0xFFE0B33E),
-      Color(0xFFFFEDB8),
-    ]),
-  ];
-
   @override
   void paint(Canvas canvas, Size size) {
     final center = size.center(Offset.zero);
@@ -223,17 +192,6 @@ class _AccretionPainter extends CustomPainter {
       }
     }
 
-    // Planetas em orbita — desenhados na passada (frente/tras) que casa
-    // com a posicao vertical aparente de cada um.
-    for (final o in _orbits) {
-      final a = o.offset + phase * o.speed;
-      final sin = math.sin(a);
-      if ((sin > 0) != front) continue;
-      final cx = center.dx + math.cos(a) * (r * o.orbit);
-      final cy = center.dy + sin * (r * o.orbit) * _tiltY;
-      _paintMiniPlanet(canvas, Offset(cx, cy), r * o.size, o.palette);
-    }
-
     // Photon ring: aro fino brilhante no horizonte (passada da frente).
     if (front) {
       // Aro crisp (sem blur — formas pixel-perfect; bloom fica so no glow).
@@ -243,50 +201,6 @@ class _AccretionPainter extends CustomPainter {
         ..isAntiAlias = false
         ..color = Colors.white.withValues(alpha: 0.85);
       canvas.drawCircle(center, horizon * 1.02, ring);
-    }
-  }
-
-  /// Mini-planeta pixel: esfera em grid de blocos, sombreamento lambert
-  /// quantizado na paleta + outline. Mesma gramatica dos planetas da secao
-  /// Sobre, em escala menor.
-  void _paintMiniPlanet(
-    Canvas canvas,
-    Offset center,
-    double radius,
-    List<Color> palette,
-  ) {
-    final grid = ((radius * 2) / 4).round().clamp(7, 12);
-    final px = (radius * 2) / grid;
-    final origin = Offset(center.dx - radius, center.dy - radius);
-    final edgeBand = 1 - (2.4 / grid);
-
-    for (var gy = 0; gy < grid; gy++) {
-      for (var gx = 0; gx < grid; gx++) {
-        final u = ((gx + 0.5) / grid) * 2 - 1;
-        final v = ((gy + 0.5) / grid) * 2 - 1;
-        final d2 = u * u + v * v;
-        if (d2 > 1) continue;
-
-        Color color;
-        if (d2 > edgeBand) {
-          color = palette[0];
-        } else {
-          final nz = math.sqrt(1 - d2);
-          var b = (u * _lx + v * _ly + nz * _lz).clamp(0.0, 1.0);
-          b = b * b * (3 - 2 * b);
-          color = palette[(b * 4.999).floor().clamp(0, 4)];
-        }
-        _block.color = color;
-        canvas.drawRect(
-          Rect.fromLTWH(
-            origin.dx + gx * px,
-            origin.dy + gy * px,
-            px + 0.5,
-            px + 0.5,
-          ),
-          _block,
-        );
-      }
     }
   }
 
@@ -304,24 +218,4 @@ class _AccretionPainter extends CustomPainter {
   @override
   bool shouldRepaint(_AccretionPainter old) =>
       old.hot != hot || old.cool != cool || old.front != front;
-}
-
-/// Spec de um planeta em orbita ao redor do buraco negro.
-class _Orbit {
-  const _Orbit(this.orbit, this.size, this.speed, this.offset, this.palette);
-
-  /// Raio da orbita relativo ao raio total do widget.
-  final double orbit;
-
-  /// Tamanho do planeta relativo ao raio total.
-  final double size;
-
-  /// Velocidade angular (sinal = sentido).
-  final double speed;
-
-  /// Fase inicial (rad).
-  final double offset;
-
-  /// Paleta 5 cores [shadow..light].
-  final List<Color> palette;
 }

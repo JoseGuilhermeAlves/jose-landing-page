@@ -26,3 +26,8 @@ build/
 # OS
 .DS_Store
 Thumbs.db
+
+# Screenshots / scratch refs na raiz (debris de design, nunca versionar).
+# Assets reais do app vivem em apps/*/assets e packages/*/assets.
+/*.png
+/*.PNG

@@ -23,12 +23,11 @@ void main() {
   }
 
   group('AboutSection', () {
-    testWidgets('renderiza bio com nome, lead e linhas-fato', (tester) async {
+    testWidgets('renderiza bio em prosa: lead e linhas-fato', (tester) async {
       await tester.pumpWidget(wrap(const AboutSection()));
       await tester.pump(const Duration(milliseconds: 32));
 
-      expect(find.textContaining('José Guilherme'), findsWidgets);
-      expect(find.textContaining('Flutter Developer'), findsWidgets);
+      // Nome/titulo vivem no hero+nav (texto-primeiro aqui, sem bio-card).
       // Lead + linhas-fato escaneaveis + fecho de escopo.
       expect(find.textContaining('mesma régua'), findsOneWidget);
       expect(
@@ -63,9 +62,12 @@ void main() {
       await tester.pumpWidget(wrap(const AboutSection()));
       await tester.pump(const Duration(milliseconds: 32));
 
-      expect(find.text('ENTREGA'), findsOneWidget);
-      expect(find.text('CRAFT'), findsOneWidget);
-      expect(find.text('COLABORAÇÃO'), findsOneWidget);
+      // Eyebrows agora em fonte pixel (PixelText, nao Text).
+      Finder pixel(String t) =>
+          find.byWidgetPredicate((w) => w is PixelText && w.text == t);
+      expect(pixel('ENTREGA'), findsOneWidget);
+      expect(pixel('CRAFT'), findsOneWidget);
+      expect(pixel('COLABORAÇÃO'), findsOneWidget);
 
       await tester.pumpWidget(const SizedBox());
     });

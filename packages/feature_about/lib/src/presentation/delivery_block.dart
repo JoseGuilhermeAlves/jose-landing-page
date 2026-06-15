@@ -1,247 +1,140 @@
-import 'dart:math' as math;
-
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 
-/// Bloco "Como eu entrego" — 3 cards com narrativa expandida sobre o
-/// jeito de trabalhar. Substitui o manifesto curto em mono. Cada
-/// card tem painter abstrato no canto, headline em gradient brand
-/// e parágrafo. Visualmente apelativo + texto longo o suficiente pra
-/// dar substância sem virar página.
+/// Bloco "Como eu entrego" — 3 rows estilo changelog revestidas na
+/// identidade Arcade (herdado da estrutura texto-primeiro da designmd,
+/// superior aos cards genericos). Cada row: numero de "stage" em fonte
+/// pixel magenta, eyebrow pixel ciano, titulo legivel com acento magenta
+/// e paragrafo muted, separados por hairline neon. No mobile empilha.
+/// Sem card, sem glifo decorativo — texto-primeiro.
 class DeliveryBlock extends StatelessWidget {
   const DeliveryBlock({super.key});
 
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final cards = [
-      _DeliveryCard(
-        eyebrow: l10n.delivery_entrega_eyebrow,
-        title: l10n.delivery_entrega_title,
-        titleAccent: l10n.delivery_entrega_titleAccent,
-        body: l10n.delivery_entrega_body,
-        glyph: _DeliveryGlyph.checklist,
+    final rows = [
+      (
+        l10n.delivery_entrega_eyebrow,
+        l10n.delivery_entrega_title,
+        l10n.delivery_entrega_titleAccent,
+        l10n.delivery_entrega_body,
       ),
-      _DeliveryCard(
-        eyebrow: l10n.delivery_craft_eyebrow,
-        title: l10n.delivery_craft_title,
-        titleAccent: l10n.delivery_craft_titleAccent,
-        body: l10n.delivery_craft_body,
-        glyph: _DeliveryGlyph.layers,
+      (
+        l10n.delivery_craft_eyebrow,
+        l10n.delivery_craft_title,
+        l10n.delivery_craft_titleAccent,
+        l10n.delivery_craft_body,
       ),
-      _DeliveryCard(
-        eyebrow: l10n.delivery_collab_eyebrow,
-        title: l10n.delivery_collab_title,
-        titleAccent: l10n.delivery_collab_titleAccent,
-        body: l10n.delivery_collab_body,
-        glyph: _DeliveryGlyph.handshake,
+      (
+        l10n.delivery_collab_eyebrow,
+        l10n.delivery_collab_title,
+        l10n.delivery_collab_titleAccent,
+        l10n.delivery_collab_body,
       ),
     ];
-    final isMobile = context.isMobile;
-    if (isMobile) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          for (var i = 0; i < cards.length; i++) ...[
-            if (i > 0) const SizedBox(height: AppSpacing.md),
-            cards[i],
-          ],
-        ],
-      );
-    }
-    return IntrinsicHeight(
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          for (var i = 0; i < cards.length; i++) ...[
-            if (i > 0) const SizedBox(width: AppSpacing.md),
-            Expanded(child: cards[i]),
-          ],
-        ],
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        for (var i = 0; i < rows.length; i++)
+          _DeliveryRow(
+            stage: (i + 1).toString().padLeft(2, '0'),
+            eyebrow: rows[i].$1,
+            title: rows[i].$2,
+            titleAccent: rows[i].$3,
+            body: rows[i].$4,
+          ),
+      ],
     );
   }
 }
 
-enum _DeliveryGlyph { checklist, layers, handshake }
-
-class _DeliveryCard extends StatelessWidget {
-  const _DeliveryCard({
+class _DeliveryRow extends StatelessWidget {
+  const _DeliveryRow({
+    required this.stage,
     required this.eyebrow,
     required this.title,
     required this.titleAccent,
     required this.body,
-    required this.glyph,
   });
 
+  final String stage;
   final String eyebrow;
   final String title;
   final String titleAccent;
   final String body;
-  final _DeliveryGlyph glyph;
 
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
     final tt = Theme.of(context).textTheme;
-    return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [colors.surface, colors.primary.withValues(alpha: 0.05)],
+    final isMobile = context.isMobile;
+
+    // Coluna do titulo: numero de stage em pixel + eyebrow pixel ciano +
+    // titulo legivel com acento magenta.
+    final heading = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            PixelText(stage, color: colors.primary, pixelSize: 3),
+            const SizedBox(width: AppSpacing.sm),
+            PixelText(eyebrow, color: colors.accent, pixelSize: 2),
+          ],
         ),
-        borderRadius: BorderRadius.circular(AppRadius.lg),
-        border: Border.all(color: colors.border),
-      ),
-      padding: EdgeInsets.all(
-        context.responsive(mobile: AppSpacing.md, desktop: AppSpacing.lg),
-      ),
-      child: Stack(
-        children: [
-          Positioned(
-            top: -8,
-            right: -8,
-            child: IgnorePointer(
-              child: SizedBox(
-                width: 72,
-                height: 72,
-                child: CustomPaint(
-                  painter: _DeliveryGlyphPainter(
-                    glyph: glyph,
-                    color: colors.primary,
-                  ),
-                ),
-              ),
+        const SizedBox(height: AppSpacing.sm),
+        Text.rich(
+          TextSpan(
+            style: tt.titleMedium?.copyWith(
+              color: colors.onSurface,
+              height: 1.25,
+              fontWeight: FontWeight.w600,
             ),
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
-                eyebrow,
-                style: tt.labelSmall?.copyWith(
-                  color: colors.primary,
-                  fontWeight: FontWeight.w800,
-                  letterSpacing: 1.6,
-                ),
-              ),
-              const SizedBox(height: AppSpacing.sm),
-              RichText(
-                text: TextSpan(
-                  style: tt.headlineSmall?.copyWith(
-                    color: colors.onSurface,
-                    height: 1.2,
-                    letterSpacing: -0.4,
-                    fontWeight: FontWeight.w700,
-                  ),
-                  children: [
-                    TextSpan(text: '$title '),
-                    WidgetSpan(
-                      alignment: PlaceholderAlignment.baseline,
-                      baseline: TextBaseline.alphabetic,
-                      child: ShaderMask(
-                        shaderCallback: (rect) =>
-                            AppGradients.brand(colors).createShader(rect),
-                        blendMode: BlendMode.srcIn,
-                        child: Text(
-                          titleAccent,
-                          style: tt.headlineSmall?.copyWith(
-                            color: colors.onSurface,
-                            height: 1.2,
-                            letterSpacing: -0.4,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: AppSpacing.sm),
-              Text(
-                body,
-                style: context
-                    .responsive(mobile: tt.bodySmall, desktop: tt.bodyMedium)
-                    ?.copyWith(color: colors.onSurfaceMuted, height: 1.5),
+              TextSpan(text: '$title '),
+              TextSpan(
+                text: titleAccent,
+                style: TextStyle(color: colors.primary),
               ),
             ],
           ),
-        ],
+        ),
+      ],
+    );
+
+    final paragraph = Text(
+      body,
+      style: tt.bodyMedium?.copyWith(color: colors.onSurfaceMuted, height: 1.5),
+    );
+
+    // Changelog-row: padding vertical, hairline inferior neon, sem surface.
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg),
+      decoration: BoxDecoration(
+        border: Border(
+          bottom: BorderSide(color: colors.primary.withValues(alpha: 0.2)),
+        ),
       ),
+      child: isMobile
+          ? Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                heading,
+                const SizedBox(height: AppSpacing.sm),
+                paragraph,
+              ],
+            )
+          : Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(width: 260, child: heading),
+                const SizedBox(width: AppSpacing.xl),
+                Expanded(child: paragraph),
+              ],
+            ),
     );
   }
-}
-
-/// Glifo decorativo no canto do card — desenhado em Path em vez de
-/// asset/ícone pra manter peso visual coerente com o resto do painter
-/// vocabulary da landing.
-class _DeliveryGlyphPainter extends CustomPainter {
-  _DeliveryGlyphPainter({required this.glyph, required this.color});
-
-  final _DeliveryGlyph glyph;
-  final Color color;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..style = PaintingStyle.stroke
-      ..strokeCap = StrokeCap.round
-      ..strokeJoin = StrokeJoin.round
-      ..isAntiAlias = true
-      ..strokeWidth = 1.5
-      ..color = color.withValues(alpha: 0.35);
-    final w = size.width;
-    final h = size.height;
-    switch (glyph) {
-      case _DeliveryGlyph.checklist:
-        // Quadrado leve + 3 ticks empilhados.
-        final box = Rect.fromLTWH(w * 0.18, h * 0.18, w * 0.64, h * 0.64);
-        canvas.drawRRect(
-          RRect.fromRectAndRadius(box, const Radius.circular(6)),
-          paint,
-        );
-        for (var i = 0; i < 3; i++) {
-          final y = h * (0.32 + i * 0.18);
-          // Tick mark.
-          final start = Offset(w * 0.30, y);
-          final mid = Offset(w * 0.40, y + h * 0.04);
-          final end = Offset(w * 0.56, y - h * 0.05);
-          final tickPath = Path()
-            ..moveTo(start.dx, start.dy)
-            ..lineTo(mid.dx, mid.dy)
-            ..lineTo(end.dx, end.dy);
-          canvas.drawPath(tickPath, paint);
-        }
-      case _DeliveryGlyph.layers:
-        // Tres trapezoidos sobrepostos sugerindo arquitetura em
-        // camadas.
-        for (var i = 0; i < 3; i++) {
-          final yTop = h * (0.20 + i * 0.18);
-          final yBot = h * (0.30 + i * 0.18);
-          final inset = i * 8.0;
-          final path = Path()
-            ..moveTo(w * 0.20 + inset, yTop)
-            ..lineTo(w * 0.80 - inset, yTop)
-            ..lineTo(w * 0.72 - inset, yBot)
-            ..lineTo(w * 0.28 + inset, yBot)
-            ..close();
-          canvas.drawPath(path, paint);
-        }
-      case _DeliveryGlyph.handshake:
-        // Dois arcos entrelacados (anel infinito) sugerindo
-        // colaboracao mutua.
-        final r = math.min(w, h) * 0.28;
-        final c1 = Offset(w * 0.36, h * 0.5);
-        final c2 = Offset(w * 0.64, h * 0.5);
-        canvas
-          ..drawCircle(c1, r, paint)
-          ..drawCircle(c2, r, paint);
-    }
-  }
-
-  @override
-  bool shouldRepaint(covariant _DeliveryGlyphPainter old) =>
-      old.glyph != glyph || old.color != color;
 }

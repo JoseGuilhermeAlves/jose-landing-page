@@ -21,5 +21,3 @@ dev_dependencies:
     sdk: flutter
 
 flutter:
-  assets:
-    - assets/cosmos_3.png

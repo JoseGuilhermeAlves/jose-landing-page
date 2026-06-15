@@ -289,9 +289,9 @@ class _DomainPlanet extends StatelessWidget {
     return RepaintBoundary(
       child: AnimatedBuilder(
         animation: ambient,
-        // Sprite real do cosmos (replica exata); quando ativo/hover, ganha
-        // um halo neon pulsante atras — destaque sem deformar o pixel-art.
-        child: CelestialSprite(body: body),
+        // Planeta pixel desenhado em CustomPainter; quando ativo/hover,
+        // ganha um halo neon pulsante atras — destaque sem deformar.
+        child: CelestialPlanet(body: body),
         builder: (context, child) {
           if (!isActive) return child!;
           final pulse = 0.55 + 0.45 * math.sin(ambient.value * math.pi * 2);

@@ -18,7 +18,7 @@ class HeroCosmos extends StatefulWidget {
     _Body(0.05, 0.74, 124, CelestialBody.ice, 2.4),
     _Body(0.31, 0.9, 96, CelestialBody.earth, 3.1),
     _Body(0.95, 0.72, 120, CelestialBody.moon, 4.2),
-    _Body(0.64, 0.08, 84, CelestialBody.asteroids, 5),
+    _Body(0.64, 0.08, 84, CelestialBody.portal, 5),
     _Body(0.5, 0.96, 74, CelestialBody.sun, 5.7),
   ];
 
@@ -89,7 +89,7 @@ class _HeroCosmosState extends State<HeroCosmos>
       top: b.y * h - b.size / 2 + dy,
       width: b.size,
       height: b.size,
-      child: RepaintBoundary(child: CelestialSprite(body: b.body)),
+      child: CelestialPlanet(body: b.body, seed: b.phase.round() + 1),
     );
   }
 }

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:landing/config/app_config.dart';
 import 'package:landing/widgets/arcade/arcade_hero.dart';
+import 'package:landing/widgets/arcade/arcade_side_nav.dart';
 import 'package:landing/widgets/engineering_section.dart';
 import 'package:landing/widgets/home_bottom_nav.dart';
 import 'package:landing/widgets/home_footer.dart';
@@ -200,126 +201,147 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Colors.transparent,
       body: Stack(
         children: [
-          CustomScrollView(
-            controller: _scrollController,
-            slivers: [
-              SliverToBoxAdapter(
-                child: SectionVisibility(
-                  id: 'hero',
-                  child: SizedBox(
-                    height: heroHeight,
-                    child: ArcadeHero(
-                      // Funil recrutador: ambos os CTAs rolam dentro da
-                      // pagina — primario pro contato, secundario pro
-                      // showcase. WhatsApp/email moram na secao Contact.
-                      onContactPressed: () => _scrollToKey(_contactKey),
-                      onSeeProjectsPressed: () => _scrollToKey(_showcaseKey),
-                    ),
-                  ),
-                ),
-              ),
-              SliverToBoxAdapter(
-                child: KeyedSubtree(
-                  key: _showcaseKey,
-                  child: _SectionSlot(
-                    id: 'showcase',
-                    horizontalPadding: horizontalPadding,
-                    glowAlignment: Alignment.topLeft,
-                    child: const ShowcaseSection(),
-                  ),
-                ),
-              ),
-              const SliverToBoxAdapter(
-                child: SectionVisibility(
-                  id: 'divider-showcase-about',
-                  child: SectionWaveDivider(),
-                ),
-              ),
-              SliverToBoxAdapter(
-                child: KeyedSubtree(
-                  key: _aboutKey,
-                  child: _SectionSlot(
-                    id: 'about',
-                    horizontalPadding: horizontalPadding,
-                    glowAlignment: Alignment.centerRight,
-                    child: const AboutSection(),
-                  ),
-                ),
-              ),
-              const SliverToBoxAdapter(
-                child: SectionVisibility(
-                  id: 'divider-about-engineering',
-                  child: SectionWaveDivider(),
-                ),
-              ),
-              SliverToBoxAdapter(
-                child: KeyedSubtree(
-                  key: _engineeringKey,
-                  child: _SectionSlot(
-                    id: 'engineering',
-                    horizontalPadding: horizontalPadding,
-                    glowAlignment: Alignment.bottomRight,
-                    child: EngineeringSection(
-                      githubUrl: AppConfig.githubProfileUrl,
-                      onOpenGithub: (url) => _openExternalUri(Uri.parse(url)),
-                    ),
-                  ),
-                ),
-              ),
-              const SliverToBoxAdapter(
-                child: SectionVisibility(
-                  id: 'divider-engineering-contact',
-                  child: SectionWaveDivider(),
-                ),
-              ),
-              SliverToBoxAdapter(
-                child: KeyedSubtree(
-                  key: _contactKey,
-                  child: _SectionSlot(
-                    id: 'contact',
-                    horizontalPadding: horizontalPadding,
-                    glowAlignment: Alignment.centerLeft,
-                    child: ContactSection(
-                      whatsappNumber: AppConfig.whatsappNumber,
-                      email: AppConfig.email,
-                      linkedinUrl: AppConfig.linkedinUrl,
-                      githubUrl: AppConfig.githubProfileUrl,
-                      onOpenUri: _openExternalUri,
-                    ),
-                  ),
-                ),
-              ),
-              const SliverToBoxAdapter(
-                child: HomeFooter(
-                  startYear: 2026,
-                  name: 'Jose Guilherme Alves',
-                ),
-              ),
-              // Mobile: reserva espaco no fim pra o footer nao ficar atras
-              // da HomeBottomNav fixa.
-              if (isMobile)
+          // Desktop reserva a coluna esquerda pro menu lateral arcade.
+          Padding(
+            padding: EdgeInsets.only(left: isMobile ? 0 : kArcadeSideNavWidth),
+            child: CustomScrollView(
+              controller: _scrollController,
+              slivers: [
                 SliverToBoxAdapter(
-                  child: SizedBox(
-                    height:
-                        kHomeBottomNavHeight +
-                        MediaQuery.paddingOf(context).bottom,
+                  child: SectionVisibility(
+                    id: 'hero',
+                    child: SizedBox(
+                      height: heroHeight,
+                      child: ArcadeHero(
+                        // Funil recrutador: ambos os CTAs rolam dentro da
+                        // pagina — primario pro contato, secundario pro
+                        // showcase. WhatsApp/email moram na secao Contact.
+                        onContactPressed: () => _scrollToKey(_contactKey),
+                        onSeeProjectsPressed: () => _scrollToKey(_showcaseKey),
+                      ),
+                    ),
                   ),
                 ),
-            ],
-          ),
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            child: HomeNav(
-              anchors: anchors,
-              onLogoTap: _scrollToTop,
-              onCtaTap: () => _scrollToKey(_contactKey),
-              githubUrl: AppConfig.githubProfileUrl,
-              linkedinUrl: AppConfig.linkedinUrl,
-              onOpenSocial: (url) => _openExternalUri(Uri.parse(url)),
+                SliverToBoxAdapter(
+                  child: KeyedSubtree(
+                    key: _showcaseKey,
+                    child: _SectionSlot(
+                      id: 'showcase',
+                      horizontalPadding: horizontalPadding,
+                      glowAlignment: Alignment.topLeft,
+                      child: const ShowcaseSection(),
+                    ),
+                  ),
+                ),
+                const SliverToBoxAdapter(
+                  child: SectionVisibility(
+                    id: 'divider-showcase-about',
+                    child: SectionWaveDivider(),
+                  ),
+                ),
+                SliverToBoxAdapter(
+                  child: KeyedSubtree(
+                    key: _aboutKey,
+                    child: _SectionSlot(
+                      id: 'about',
+                      horizontalPadding: horizontalPadding,
+                      glowAlignment: Alignment.centerRight,
+                      child: const AboutSection(),
+                    ),
+                  ),
+                ),
+                const SliverToBoxAdapter(
+                  child: SectionVisibility(
+                    id: 'divider-about-engineering',
+                    child: SectionWaveDivider(),
+                  ),
+                ),
+                SliverToBoxAdapter(
+                  child: KeyedSubtree(
+                    key: _engineeringKey,
+                    child: _SectionSlot(
+                      id: 'engineering',
+                      horizontalPadding: horizontalPadding,
+                      glowAlignment: Alignment.bottomRight,
+                      child: EngineeringSection(
+                        githubUrl: AppConfig.githubProfileUrl,
+                        onOpenGithub: (url) => _openExternalUri(Uri.parse(url)),
+                      ),
+                    ),
+                  ),
+                ),
+                const SliverToBoxAdapter(
+                  child: SectionVisibility(
+                    id: 'divider-engineering-contact',
+                    child: SectionWaveDivider(),
+                  ),
+                ),
+                SliverToBoxAdapter(
+                  child: KeyedSubtree(
+                    key: _contactKey,
+                    child: _SectionSlot(
+                      id: 'contact',
+                      horizontalPadding: horizontalPadding,
+                      glowAlignment: Alignment.centerLeft,
+                      child: ContactSection(
+                        whatsappNumber: AppConfig.whatsappNumber,
+                        email: AppConfig.email,
+                        linkedinUrl: AppConfig.linkedinUrl,
+                        githubUrl: AppConfig.githubProfileUrl,
+                        onOpenUri: _openExternalUri,
+                      ),
+                    ),
+                  ),
+                ),
+                const SliverToBoxAdapter(
+                  child: HomeFooter(
+                    startYear: 2026,
+                    name: 'Jose Guilherme Alves',
+                  ),
+                ),
+                // Mobile: reserva espaco no fim pra o footer nao ficar atras
+                // da HomeBottomNav fixa.
+                if (isMobile)
+                  SliverToBoxAdapter(
+                    child: SizedBox(
+                      height:
+                          kHomeBottomNavHeight +
+                          MediaQuery.paddingOf(context).bottom,
+                    ),
+                  ),
+              ],
             ),
           ),
+          // Desktop: menu lateral arcade (stage select). Mobile mantem o
+          // top nav + bottom nav.
+          if (!isMobile)
+            Positioned(
+              top: 0,
+              left: 0,
+              bottom: 0,
+              child: ArcadeSideNav(
+                anchors: anchors,
+                activeIndex: _activeIndex,
+                onLogoTap: _scrollToTop,
+                githubUrl: AppConfig.githubProfileUrl,
+                linkedinUrl: AppConfig.linkedinUrl,
+                onOpenSocial: (url) => _openExternalUri(Uri.parse(url)),
+              ),
+            ),
+          if (isMobile)
+            Positioned(
+              top: 0,
+              left: 0,
+              right: 0,
+              child: HomeNav(
+                anchors: anchors,
+                onLogoTap: _scrollToTop,
+                onCtaTap: () => _scrollToKey(_contactKey),
+                githubUrl: AppConfig.githubProfileUrl,
+                linkedinUrl: AppConfig.linkedinUrl,
+                onOpenSocial: (url) => _openExternalUri(Uri.parse(url)),
+              ),
+            ),
           // Bottom nav so na visao mobile — substitui o menu hamburger.
           if (isMobile)
             Positioned(

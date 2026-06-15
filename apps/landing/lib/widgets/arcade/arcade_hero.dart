@@ -32,101 +32,112 @@ class ArcadeHero extends StatelessWidget {
       padding: EdgeInsets.symmetric(
         horizontal: context.responsive(mobile: AppSpacing.lg, desktop: 0),
       ),
-      child: Center(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 760),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Eyebrow: insira-moeda vibe, ciano.
-              Text(
-                context.l10n.hero_eyebrow.toUpperCase(),
-                style: textTheme.labelMedium?.copyWith(
-                  color: colors.accent,
-                  letterSpacing: 3,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-              const SizedBox(height: AppSpacing.lg),
-
-              // Nome em fonte pixel, duas linhas, glow magenta — o titulo.
-              Semantics(
-                header: true,
-                label: 'Jose Guilherme Alves',
-                child: PixelText(
-                  'JOSE\nGUILHERME ALVES',
-                  color: colors.primary,
-                  glowColor: colors.primary,
-                  glowBlur: 10,
-                  pixelSize: namePixel,
-                  lineSpacing: 3,
-                ),
-              ),
-              const SizedBox(height: AppSpacing.xl),
-
-              // Headline em fonte legivel (display) — pitch curto.
-              Text(
-                '${context.l10n.hero_headline1} '
-                '${context.l10n.hero_headline2}',
-                style:
-                    (isMobile
-                            ? textTheme.headlineSmall
-                            : textTheme.headlineMedium)
-                        ?.copyWith(
-                          color: colors.onSurface,
-                          height: 1.2,
-                          fontWeight: FontWeight.w600,
+      // Centra verticalmente quando cabe; rola se a viewport for curta
+      // (laptops baixos) em vez de estourar o RenderFlex.
+      child: LayoutBuilder(
+        builder: (context, constraints) => SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(minHeight: constraints.maxHeight),
+            child: IntrinsicHeight(
+              child: Center(
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 760),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Eyebrow: insira-moeda vibe, ciano.
+                      Text(
+                        context.l10n.hero_eyebrow.toUpperCase(),
+                        style: textTheme.labelMedium?.copyWith(
+                          color: colors.accent,
+                          letterSpacing: 3,
+                          fontWeight: FontWeight.w700,
                         ),
-              ),
-              const SizedBox(height: AppSpacing.md),
-              Text(
-                context.l10n.hero_scopeLine,
-                style: textTheme.bodyLarge?.copyWith(
-                  color: colors.onSurfaceMuted,
-                  height: 1.5,
+                      ),
+                      const SizedBox(height: AppSpacing.lg),
+
+                      // Nome em fonte pixel, duas linhas, glow magenta — o titulo.
+                      Semantics(
+                        header: true,
+                        label: 'Jose Guilherme Alves',
+                        child: PixelText(
+                          'JOSE\nGUILHERME ALVES',
+                          color: colors.primary,
+                          glowColor: colors.primary,
+                          glowBlur: 10,
+                          pixelSize: namePixel,
+                          lineSpacing: 3,
+                        ),
+                      ),
+                      const SizedBox(height: AppSpacing.xl),
+
+                      // Headline em fonte legivel (display) — pitch curto.
+                      Text(
+                        '${context.l10n.hero_headline1} '
+                        '${context.l10n.hero_headline2}',
+                        style:
+                            (isMobile
+                                    ? textTheme.headlineSmall
+                                    : textTheme.headlineMedium)
+                                ?.copyWith(
+                                  color: colors.onSurface,
+                                  height: 1.2,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                      ),
+                      const SizedBox(height: AppSpacing.md),
+                      Text(
+                        context.l10n.hero_scopeLine,
+                        style: textTheme.bodyLarge?.copyWith(
+                          color: colors.onSurfaceMuted,
+                          height: 1.5,
+                        ),
+                      ),
+                      const SizedBox(height: AppSpacing.xxl),
+
+                      // CTAs arcade.
+                      Wrap(
+                        spacing: AppSpacing.md,
+                        runSpacing: AppSpacing.md,
+                        children: [
+                          _ArcadeButton(
+                            label: context.l10n.hero_ctaContact,
+                            color: colors.primary,
+                            filled: true,
+                            onPressed: onContactPressed,
+                          ),
+                          _ArcadeButton(
+                            label: context.l10n.hero_ctaProjects,
+                            color: colors.accent,
+                            onPressed: onSeeProjectsPressed,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: AppSpacing.xxl),
+
+                      // Stats "high score" — anos + zero assets (tudo Canvas).
+                      Wrap(
+                        spacing: AppSpacing.huge,
+                        runSpacing: AppSpacing.lg,
+                        children: [
+                          _ArcadeStat(
+                            value: context.l10n.hero_trustYearsValue,
+                            label: context.l10n.hero_trustYearsLabel,
+                            color: colors.primary,
+                          ),
+                          _ArcadeStat(
+                            value: context.l10n.hero_trustCanvasValue,
+                            label: context.l10n.hero_trustCanvasLabel,
+                            color: colors.accent,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
-              const SizedBox(height: AppSpacing.xxl),
-
-              // CTAs arcade.
-              Wrap(
-                spacing: AppSpacing.md,
-                runSpacing: AppSpacing.md,
-                children: [
-                  _ArcadeButton(
-                    label: context.l10n.hero_ctaContact,
-                    color: colors.primary,
-                    filled: true,
-                    onPressed: onContactPressed,
-                  ),
-                  _ArcadeButton(
-                    label: context.l10n.hero_ctaProjects,
-                    color: colors.accent,
-                    onPressed: onSeeProjectsPressed,
-                  ),
-                ],
-              ),
-              const SizedBox(height: AppSpacing.xxl),
-
-              // Stats "high score" — anos + zero assets (tudo Canvas).
-              Wrap(
-                spacing: AppSpacing.huge,
-                runSpacing: AppSpacing.lg,
-                children: [
-                  _ArcadeStat(
-                    value: context.l10n.hero_trustYearsValue,
-                    label: context.l10n.hero_trustYearsLabel,
-                    color: colors.primary,
-                  ),
-                  _ArcadeStat(
-                    value: context.l10n.hero_trustCanvasValue,
-                    label: context.l10n.hero_trustCanvasLabel,
-                    color: colors.accent,
-                  ),
-                ],
-              ),
-            ],
+            ),
           ),
         ),
       ),

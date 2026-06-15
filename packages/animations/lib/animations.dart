@@ -6,8 +6,10 @@ library;
 
 export 'src/painters/animated_border_painter.dart';
 export 'src/painters/animated_timeline_painter.dart';
+export 'src/painters/arcade_backdrop_painter.dart';
 export 'src/painters/constellation_painter.dart';
 export 'src/painters/cosmos_painter.dart';
+export 'src/painters/crt_painter.dart';
 export 'src/painters/loading_spinner_painter.dart';
 export 'src/painters/morphing_shape_painter.dart';
 export 'src/painters/particle_field_painter.dart';

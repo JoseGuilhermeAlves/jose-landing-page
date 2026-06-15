@@ -46,12 +46,19 @@ class CelestialPainter extends CustomPainter {
 
   bool get _hasRing => body == CelestialBody.saturn;
 
+  /// Fracao do half-size ocupada pelo disco do corpo. Saturno deixa margem
+  /// pro anel; o sol deixa margem pra corona/raios; o resto quase preenche.
+  double get _discScale => switch (body) {
+    CelestialBody.saturn => 0.6,
+    CelestialBody.sun => 0.56,
+    _ => 0.92,
+  };
+
   @override
   void paint(Canvas canvas, Size size) {
     final shortest = math.min(size.width, size.height);
     final center = Offset(size.width / 2, size.height / 2);
-    // Corpos com anel deixam margem; os demais quase preenchem.
-    final radius = (shortest / 2) * (_hasRing ? 0.6 : 0.92);
+    final radius = (shortest / 2) * _discScale;
     final grid = (shortest / _targetPx).round().clamp(30, 96);
     final px = shortest / grid;
     final origin = Offset(center.dx - shortest / 2, center.dy - shortest / 2);
@@ -82,6 +89,11 @@ class CelestialPainter extends CustomPainter {
     // 1) Anel de tras (saturno) — metade superior, atras do corpo.
     if (_hasRing) {
       _paintRing(grid, drawCell, nx, ny, cfg.ringColor!, back: true);
+    }
+
+    // 1b) Corona/raios do sol — emanam de tras do disco pra fora.
+    if (body == CelestialBody.sun) {
+      _paintSunCorona(grid, drawCell, nx, ny, cfg.ramp);
     }
 
     // 2) Corpo.
@@ -163,17 +175,36 @@ class CelestialPainter extends CustomPainter {
     return land > 0.5 ? _band(cfg.land!, l) : _band(cfg.ramp, l);
   }
 
+  /// Portal = vortex neon: horizonte de eventos escuro no centro, disco em
+  /// espiral alternando magenta<->ciano (torcido pelo raio, quantizado em
+  /// degraus pixel), anel quente logo fora do nucleo e aro ciano crisp.
   Color _portalColor(_Cfg cfg, double u, double v, double d2) {
-    final ring = cfg.ringColor ?? cfg.ramp.last;
+    final cyan = cfg.ringColor!;
+    final magenta = cfg.ramp[3];
     final rr = math.sqrt(d2);
-    // Aro brilhante perto da borda.
-    if (rr > 0.82) return ring;
-    // Cruz de luz (barras finas horizontal/vertical).
-    if (u.abs() < 0.06 || v.abs() < 0.06) {
-      return Color.lerp(ring, Colors.white, 0.4)!;
+    final ang = math.atan2(v, u);
+
+    // Horizonte de eventos: nucleo quase preto clareando levemente pra fora.
+    if (rr < 0.30) {
+      return Color.lerp(cfg.ramp[0], cfg.ramp[1], rr / 0.30)!;
     }
-    // Interior escuro com leve gradiente.
-    return Color.lerp(cfg.ramp[0], cfg.ramp[1], (1 - rr) * 0.6)!;
+    // Aro externo neon crisp.
+    if (rr > 0.90) return Color.lerp(cyan, const Color(0xFFFFFFFF), 0.25)!;
+
+    // Espiral: faixas magenta<->ciano torcidas pelo raio, em degraus pixel.
+    final swirl = ang + rr * 7.0;
+    final band = (0.5 + 0.5 * math.sin(swirl * 3)).clamp(0.0, 1.0);
+    final q = (band * 3).round() / 3;
+    var c = Color.lerp(magenta, cyan, q)!;
+
+    // Anel quente logo fora do horizonte; profundidade nas bordas externas.
+    final lit = (1 - (rr - 0.30) / 0.60).clamp(0.0, 1.0);
+    if (rr < 0.42) {
+      c = Color.lerp(c, const Color(0xFFFFFFFF), 0.5 * lit)!;
+    } else {
+      c = Color.lerp(c, cfg.ramp[1], (1 - lit) * 0.35)!;
+    }
+    return c;
   }
 
   /// Crateras deterministicas: pit escuro + borda clara.
@@ -192,6 +223,52 @@ class CelestialPainter extends CustomPainter {
       }
     }
     return acc;
+  }
+
+  /// Corona do sol: glow radial + dois conjuntos de raios (8 longos + 8
+  /// curtos intercalados) em blocos pixel, decaindo com o raio e fadando
+  /// no espaco. Desenhada fora do disco (o nucleo emissivo cobre o miolo).
+  void _paintSunCorona(
+    int grid,
+    void Function(int, int, Color) drawCell,
+    double Function(int) nx,
+    double Function(int) ny,
+    List<Color> ramp,
+  ) {
+    for (var gy = 0; gy < grid; gy++) {
+      for (var gx = 0; gx < grid; gx++) {
+        final u = nx(gx);
+        final v = ny(gy);
+        final d2 = u * u + v * v;
+        // Dentro do nucleo o corpo desenha por cima — pula (com leve overlap).
+        if (d2 <= 0.86 * 0.86 || d2 > 3.0) continue;
+        final r = math.sqrt(d2);
+        final ang = math.atan2(v, u);
+
+        // Glow difuso colado ao disco.
+        final glow = ((1.25 - r) / 0.45).clamp(0.0, 1.0);
+        // 8 raios longos + 8 curtos defasados de pi/8.
+        final longRay = math.pow(math.max(0.0, math.cos(ang * 8)), 6)
+            .toDouble();
+        final shortRay =
+            math.pow(math.max(0.0, math.cos(ang * 8 + math.pi / 8)), 8)
+                .toDouble();
+        final longFall = ((1.55 - r) / 0.55).clamp(0.0, 1.0);
+        final shortFall = ((1.18 - r) / 0.32).clamp(0.0, 1.0);
+
+        final inten =
+            (glow * glow * 0.5 +
+                    longRay * longFall * 0.95 +
+                    shortRay * shortFall * 0.7)
+                .clamp(0.0, 1.0);
+        if (inten < 0.14) continue;
+
+        final color = _band(ramp, (inten * 0.7 + 0.3).clamp(0.0, 1.0));
+        // Alpha quantizado em degraus pra leitura pixel (sem rampa lisa).
+        final a = ((inten * 4).ceil() / 4).clamp(0.25, 1.0);
+        drawCell(gx, gy, color.withValues(alpha: a));
+      }
+    }
   }
 
   /// Anel eliptico (annulus) de saturno, metade [back] ou frente.
@@ -234,66 +311,70 @@ class CelestialPainter extends CustomPainter {
   _Cfg _configFor(CelestialBody b) {
     switch (b) {
       case CelestialBody.saturn:
+        // Gigante gasoso violeta neon + anel ciano (alto contraste synthwave).
         return const _Cfg(
           ramp: [
-            Color(0xFF2E1F2C),
-            Color(0xFF5A3A50),
-            Color(0xFF8E5C76),
-            Color(0xFFB98397),
-            Color(0xFFE4C0CE),
+            Color(0xFF2A0E3F),
+            Color(0xFF53219E),
+            Color(0xFF8A3FD6),
+            Color(0xFFB36CF0),
+            Color(0xFFE6C2FF),
           ],
-          outline: Color(0xFF1A0F18),
-          ringColor: Color(0xFF4CC6E6),
+          outline: Color(0xFF160726),
+          ringColor: Color(0xFF36E0FF),
         );
       case CelestialBody.ice:
+        // Mundo gelado em ciano eletrico vivido.
         return const _Cfg(
           ramp: [
-            Color(0xFF16344F),
-            Color(0xFF2E6188),
-            Color(0xFF5C9BC4),
-            Color(0xFF9FD2EC),
-            Color(0xFFE6F6FF),
+            Color(0xFF06283F),
+            Color(0xFF0A5A88),
+            Color(0xFF18A8C9),
+            Color(0xFF5FE0F0),
+            Color(0xFFD6FBFF),
           ],
-          outline: Color(0xFF0C2236),
+          outline: Color(0xFF041A2C),
         );
       case CelestialBody.lava:
+        // Crosta escura avermelhada + veias de lava em laranja/amarelo quente.
         return const _Cfg(
           ramp: [
-            Color(0xFF160A0C),
-            Color(0xFF301519),
-            Color(0xFF4E2522),
-            Color(0xFF6E3A33),
-            Color(0xFF8A4B3E),
+            Color(0xFF1A0606),
+            Color(0xFF3A1010),
+            Color(0xFF5E1C18),
+            Color(0xFF822A20),
+            Color(0xFFA83A28),
           ],
-          outline: Color(0xFF0C0506),
+          outline: Color(0xFF0C0303),
           vein: [
-            Color(0xFFB23A12),
-            Color(0xFFFF6A1E),
-            Color(0xFFFFA63E),
-            Color(0xFFFFE08A),
+            Color(0xFFC21A0A),
+            Color(0xFFFF4D1E),
+            Color(0xFFFF9A3E),
+            Color(0xFFFFE89A),
           ],
         );
       case CelestialBody.earth:
+        // Terra mantida (oceano/continente/nuvem) — so mais saturada/viva.
         return const _Cfg(
           ramp: [
-            Color(0xFF08213F),
-            Color(0xFF0E4070),
-            Color(0xFF1E6BA8),
-            Color(0xFF59A8D8),
-            Color(0xFFBFE6F5),
+            Color(0xFF03203F),
+            Color(0xFF0A4E8A),
+            Color(0xFF1E7AD0),
+            Color(0xFF4FB0F0),
+            Color(0xFFBFEAFF),
           ],
-          outline: Color(0xFF04132A),
+          outline: Color(0xFF021026),
           land: [
-            Color(0xFF14401F),
-            Color(0xFF1E6B34),
-            Color(0xFF359E4E),
-            Color(0xFF6FC472),
-            Color(0xFFCDEBB0),
+            Color(0xFF0A4A1F),
+            Color(0xFF128A34),
+            Color(0xFF1EC04E),
+            Color(0xFF5FE87E),
+            Color(0xFFCDFFB0),
           ],
           cloud: [
-            Color(0xFFB8CCD8),
-            Color(0xFFD6E6EE),
-            Color(0xFFF2FAFF),
+            Color(0xFFC2D6E2),
+            Color(0xFFE0EEF6),
+            Color(0xFFF6FCFF),
             Color(0xFFFFFFFF),
             Color(0xFFFFFFFF),
           ],
@@ -321,15 +402,17 @@ class CelestialPainter extends CustomPainter {
           outline: Color(0xFF18181F),
         );
       case CelestialBody.portal:
+        // Vortex: nucleo escuro (ramp[0/1]), magenta neon (ramp[3]) na
+        // espiral, ciano (ringColor) no aro. ramp[2/4] dao apoio de cor.
         return const _Cfg(
           ramp: [
-            Color(0xFF050310),
-            Color(0xFF1A0E3A),
-            Color(0xFF2E1A66),
-            Color(0xFF5A3AC0),
-            Color(0xFF9A7AFF),
+            Color(0xFF05010F),
+            Color(0xFF2A0A4A),
+            Color(0xFF7A1E9E),
+            Color(0xFFE83CC8),
+            Color(0xFFFF7AE6),
           ],
-          outline: Color(0xFF050310),
+          outline: Color(0xFF05010F),
           ringColor: Color(0xFF36E0FF),
         );
     }

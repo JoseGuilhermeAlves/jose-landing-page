@@ -1,6 +1,7 @@
-/// Secao Hero da landing — primeira coisa que o visitante ve. Carrega
-/// headline, subheadline, CTAs (WhatsApp + Ver projetos) e o
-/// `ParticleField` no fundo (PROJECT.md §4.1, §5.1).
+/// Secao Hero da landing — "title screen" do fliperama Arcade. Nome em fonte
+/// bitmap `PixelText` com glow neon, retrato no portal `BlackHolePortrait`,
+/// campo de corpos celestes `HeroCosmos` ao fundo e CTAs arcade que rolam
+/// dentro da pagina (funil interno). WhatsApp/email vivem na secao Contact.
 library;
 
-export 'src/presentation/hero_section.dart';
+export 'src/presentation/arcade_hero.dart';

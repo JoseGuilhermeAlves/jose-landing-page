@@ -1,11 +1,11 @@
 import 'package:design_system/design_system.dart';
 import 'package:feature_about/feature_about.dart';
 import 'package:feature_contact/feature_contact.dart';
+import 'package:feature_hero/feature_hero.dart';
 import 'package:feature_showcase/feature_showcase.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:landing/config/app_config.dart';
-import 'package:landing/widgets/arcade/arcade_hero.dart';
 import 'package:landing/widgets/arcade/arcade_side_nav.dart';
 import 'package:landing/widgets/engineering_section.dart';
 import 'package:landing/widgets/home_bottom_nav.dart';

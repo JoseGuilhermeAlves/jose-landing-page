@@ -1,13 +1,13 @@
 import 'package:design_system/design_system.dart';
 import 'package:feature_about/feature_about.dart';
 import 'package:feature_contact/feature_contact.dart';
+import 'package:feature_hero/feature_hero.dart';
 import 'package:feature_showcase/feature_showcase.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:landing/features/home_page.dart';
 import 'package:landing/presentation/locale_cubit.dart';
-import 'package:landing/widgets/arcade/arcade_hero.dart';
 import 'package:landing/widgets/engineering_section.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 

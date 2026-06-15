@@ -1,7 +1,7 @@
 import 'package:design_system/design_system.dart';
+import 'package:feature_hero/src/presentation/black_hole_portrait.dart';
+import 'package:feature_hero/src/presentation/hero_cosmos.dart';
 import 'package:flutter/material.dart';
-import 'package:landing/widgets/arcade/black_hole_portrait.dart';
-import 'package:landing/widgets/arcade/hero_cosmos.dart';
 
 /// Hero da landing Arcade — o "title screen" do fliperama. Nome em fonte
 /// bitmap [PixelText] com glow magenta sobre o backdrop CRT (grid Outrun

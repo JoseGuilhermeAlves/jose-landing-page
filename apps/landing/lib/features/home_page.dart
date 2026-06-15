@@ -1,11 +1,11 @@
 import 'package:design_system/design_system.dart';
 import 'package:feature_about/feature_about.dart';
 import 'package:feature_contact/feature_contact.dart';
-import 'package:feature_hero/feature_hero.dart';
 import 'package:feature_showcase/feature_showcase.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:landing/config/app_config.dart';
+import 'package:landing/widgets/arcade/arcade_hero.dart';
 import 'package:landing/widgets/engineering_section.dart';
 import 'package:landing/widgets/home_bottom_nav.dart';
 import 'package:landing/widgets/home_footer.dart';
@@ -84,12 +84,7 @@ class _HomePageState extends State<HomePage> {
     final last = _lastSpyOffset;
     if (last != null && (current - last).abs() < 24) return;
     _lastSpyOffset = current;
-    final keys = [
-      _showcaseKey,
-      _aboutKey,
-      _engineeringKey,
-      _contactKey,
-    ];
+    final keys = [_showcaseKey, _aboutKey, _engineeringKey, _contactKey];
     var active = -1;
     for (var i = 0; i < keys.length; i++) {
       final ctx = keys[i].currentContext;
@@ -213,11 +208,10 @@ class _HomePageState extends State<HomePage> {
                   id: 'hero',
                   child: SizedBox(
                     height: heroHeight,
-                    child: HeroSection(
+                    child: ArcadeHero(
                       // Funil recrutador: ambos os CTAs rolam dentro da
-                      // pagina — primario pro showcase, secundario pro
-                      // contato. WhatsApp continua disponivel apenas na
-                      // secao Contact.
+                      // pagina — primario pro contato, secundario pro
+                      // showcase. WhatsApp/email moram na secao Contact.
                       onContactPressed: () => _scrollToKey(_contactKey),
                       onSeeProjectsPressed: () => _scrollToKey(_showcaseKey),
                     ),
@@ -365,10 +359,7 @@ class _SectionSlot extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SectionVisibility(
-      id: id,
-      child: _buildSlot(context),
-    );
+    return SectionVisibility(id: id, child: _buildSlot(context));
   }
 
   Widget _buildSlot(BuildContext context) {

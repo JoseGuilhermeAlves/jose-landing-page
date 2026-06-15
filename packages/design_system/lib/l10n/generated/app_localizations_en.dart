@@ -70,7 +70,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get hero_headline1 => 'Six years of Flutter.';
 
   @override
-  String get hero_headline2 => 'Five retail apps in production.';
+  String get hero_headline2 => 'From MVP to app in production.';
 
   @override
   String get hero_bio =>

@@ -69,7 +69,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get hero_headline1 => 'Flutter歴6年。';
 
   @override
-  String get hero_headline2 => 'リテールアプリ5本が本番稼働中。';
+  String get hero_headline2 => 'MVPから本番アプリまで。';
 
   @override
   String get hero_bio =>

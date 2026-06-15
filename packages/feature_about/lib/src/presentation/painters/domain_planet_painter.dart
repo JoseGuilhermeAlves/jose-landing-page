@@ -1,5 +1,4 @@
 import 'dart:math' as math;
-import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 
@@ -9,7 +8,7 @@ enum DomainPlanetPattern { bands, speckled, hemispheres }
 
 /// Spec imutavel pra cada dominio: paleta 5 cores (shadow ->
 /// highlight), pattern, ring opcional. Cada dominio recebe uma
-/// especificacao unica no [DomainPlanetCatalog] em
+/// especificacao unica no DomainPlanetCatalog em
 /// `domain_constellation.dart`.
 @immutable
 class DomainPlanetSpec {
@@ -31,23 +30,33 @@ class DomainPlanetSpec {
   final int seed;
 }
 
-/// Planeta inline pra cada no da constelacao. Pintura leve em estilo
-/// CosmosPlanet (gradient radial pra esfera, surface pattern,
-/// rim/highlight), mas em painter dedicado pra evitar baixar o
-/// CosmosField inteiro pra renderizar 5 corpos pequenos. Quando
-/// [isActive] e true, ganha glow externo blur + escala maior.
+/// Planeta inline pra cada no da constelacao, em estetica 8/16-bit: o
+/// corpo e desenhado como um grid de "pixels" quadrados, com o
+/// sombreamento de esfera (normal · luz) quantizado nos 5 degraus da
+/// paleta — sem gradiente suave, sem antialias. Patterns (bands,
+/// speckled, hemispheres) e anel tambem viram blocos. Quando [isActive],
+/// ganha um glow CRT (blur) e o pulse modula a intensidade.
 class DomainPlanetPainter extends CustomPainter {
   DomainPlanetPainter({
     required this.spec,
     required this.isActive,
     required this.pulse,
-  });
+  }) : _cell = Paint()..isAntiAlias = false;
 
   final DomainPlanetSpec spec;
   final bool isActive;
 
   /// 0..1 pra modular pulse leve no glow quando ativo.
   final double pulse;
+
+  final Paint _cell;
+
+  /// Resolucao do grid de pixels do corpo (lado a lado). ~14 da leitura
+  /// 16-bit sem virar mosaico grosseiro.
+  static const int _grid = 14;
+
+  /// Direcao da luz (upper-left em direcao ao observador), normalizada.
+  static final _light = _norm3(-0.5, -0.55, 0.68);
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -56,191 +65,132 @@ class DomainPlanetPainter extends CustomPainter {
     final radius = (shortest / 2) * (1 - ringMargin);
     final center = Offset(size.width / 2, size.height / 2);
 
-    // 1. Glow externo quando ativo — disco difuso brand.
+    // Glow externo quando ativo — bloom CRT difuso.
     if (isActive) {
       final glow = Paint()
-        ..color = spec.palette[2].withValues(alpha: 0.32 * pulse)
-        ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 14);
-      canvas.drawCircle(center, radius + 10, glow);
+        ..color = spec.palette[3].withValues(alpha: 0.35 * pulse)
+        ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 12);
+      canvas.drawCircle(center, radius + 8, glow);
     }
 
-    // 2. Ring (atras do corpo) — duas elipses concentricas
-    // diferenciadas por tilt.
+    // Anel atras do corpo (blocos).
     if (spec.ring != null) {
       _paintRing(canvas, center, radius, spec.ring!);
     }
 
-    // 3. Atmosfera — anel difuso fino ao redor do corpo.
-    final atmosphere = Paint()
-      ..color = spec.palette[3].withValues(alpha: 0.20)
-      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 6);
-    canvas.drawCircle(center, radius + 3, atmosphere);
+    _paintPixelBody(canvas, center, radius);
+  }
 
-    // 4. Corpo: gradient radial top-left para baixo-direita
-    // (light source consistente com CosmosPainter).
-    final bodyRect = Rect.fromCircle(center: center, radius: radius);
-    final bodyPaint = Paint()
-      ..shader = RadialGradient(
-        center: const Alignment(-0.4, -0.4),
-        radius: 1.05,
-        colors: [
-          spec.palette[4],
-          spec.palette[3],
-          spec.palette[2],
-          spec.palette[1],
-          spec.palette[0],
-        ],
-        stops: const [0.0, 0.25, 0.55, 0.80, 1.0],
-      ).createShader(bodyRect);
-    canvas.drawCircle(center, radius, bodyPaint);
+  /// Corpo pixelado: varre um grid quadrado; cada celula cujo centro cai
+  /// dentro do disco vira um pixel colorido pelo degrau de iluminacao.
+  void _paintPixelBody(Canvas canvas, Offset center, double radius) {
+    final px = (radius * 2) / _grid;
+    final origin = Offset(center.dx - radius, center.dy - radius);
+    final rng = math.Random(spec.seed);
 
-    // 5. Surface pattern — bands / speckled / hemispheres.
-    canvas.save();
-    canvas.clipPath(Path()..addOval(bodyRect));
+    // Pre-sorteia quais celulas recebem "speckle" pra ser determinista.
+    final speckle = <int>{};
+    if (spec.pattern == DomainPlanetPattern.speckled) {
+      final count = (_grid * _grid * 0.12).round();
+      for (var i = 0; i < count; i++) {
+        speckle.add(rng.nextInt(_grid * _grid));
+      }
+    }
+
+    for (var gy = 0; gy < _grid; gy++) {
+      for (var gx = 0; gx < _grid; gx++) {
+        // Centro da celula em coords normalizadas -1..1.
+        final u = ((gx + 0.5) / _grid) * 2 - 1;
+        final v = ((gy + 0.5) / _grid) * 2 - 1;
+        final d2 = u * u + v * v;
+        if (d2 > 1) continue; // fora do disco — silhueta pixelada
+
+        // Normal da esfera no ponto + iluminacao lambert.
+        final nz = math.sqrt(1 - d2);
+        var bright = u * _light[0] + v * _light[1] + nz * _light[2];
+        bright = bright.clamp(0.0, 1.0);
+
+        // Quantiza em 5 degraus -> indice de paleta (0 shadow..4 light).
+        var idx = (bright * 4.999).floor().clamp(0, 4);
+
+        // Termina (borda) sempre puxa pro shadow pra dar volume.
+        if (d2 > 0.86) idx = (idx - 1).clamp(0, 4);
+
+        idx = _applyPattern(idx, gx, gy, u, v, speckle);
+
+        _cell.color = spec.palette[idx];
+        canvas.drawRect(
+          Rect.fromLTWH(
+            origin.dx + gx * px,
+            origin.dy + gy * px,
+            // +0.6 evita fios de fundo entre celulas por arredondamento.
+            px + 0.6,
+            px + 0.6,
+          ),
+          _cell,
+        );
+      }
+    }
+  }
+
+  int _applyPattern(
+    int idx,
+    int gx,
+    int gy,
+    double u,
+    double v,
+    Set<int> speckle,
+  ) {
     switch (spec.pattern) {
       case DomainPlanetPattern.bands:
-        _paintBands(canvas, center, radius);
+        // Faixas horizontais: linhas pares escurecem um degrau.
+        if (gy.isEven) return (idx - 1).clamp(0, 4);
+        return idx;
       case DomainPlanetPattern.speckled:
-        _paintSpeckled(canvas, center, radius);
+        if (speckle.contains(gy * _grid + gx)) {
+          return (idx + 1).clamp(0, 4);
+        }
+        return idx;
       case DomainPlanetPattern.hemispheres:
-        _paintHemispheres(canvas, center, radius);
-    }
-    canvas.restore();
-
-    // 6. Rim shadow — vinheta sutil no terminator pra dar volume.
-    final rimShadow = Paint()
-      ..shader = RadialGradient(
-        center: const Alignment(0.5, 0.5),
-        radius: 1.0,
-        colors: [Colors.transparent, spec.palette[0].withValues(alpha: 0.45)],
-        stops: const [0.78, 1.0],
-      ).createShader(bodyRect);
-    canvas.drawCircle(center, radius, rimShadow);
-
-    // 7. Highlight — bloom pequeno no quadrante upper-left.
-    final highlight = Paint()
-      ..color = spec.palette[4].withValues(alpha: 0.55)
-      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 3);
-    canvas.drawCircle(
-      Offset(center.dx - radius * 0.32, center.dy - radius * 0.32),
-      radius * 0.18,
-      highlight,
-    );
-  }
-
-  void _paintBands(Canvas canvas, Offset center, double radius) {
-    final paint = Paint()..style = PaintingStyle.fill;
-    const bandCount = 6;
-    for (var i = 0; i < bandCount; i++) {
-      final t = (i / bandCount) * 2 - 1; // -1..1
-      final y = center.dy + t * radius * 0.85;
-      final h = radius * 0.16;
-      final colorIdx = (i.isEven ? 1 : 2);
-      paint.color = spec.palette[colorIdx].withValues(alpha: 0.45);
-      final rect = Rect.fromLTWH(center.dx - radius, y - h / 2, radius * 2, h);
-      canvas.drawRect(rect, paint);
+        // Hemisferio inferior escurece; calota polar (topo) clareia.
+        if (v > 0.1) return (idx - 1).clamp(0, 4);
+        if (v < -0.55) return 4;
+        return idx;
     }
   }
 
-  void _paintSpeckled(Canvas canvas, Offset center, double radius) {
-    final rng = math.Random(spec.seed);
-    final paint = Paint()..style = PaintingStyle.fill;
-    final dotCount = (radius * 0.7).round().clamp(8, 22);
-    for (var i = 0; i < dotCount; i++) {
-      final r = math.sqrt(rng.nextDouble()) * radius * 0.85;
-      final theta = rng.nextDouble() * math.pi * 2;
-      final dot = Offset(
-        center.dx + r * math.cos(theta),
-        center.dy + r * math.sin(theta),
-      );
-      final dotRadius = (1 + rng.nextDouble() * 2.5);
-      final colorIdx = 1 + rng.nextInt(2);
-      paint.color = spec.palette[colorIdx].withValues(alpha: 0.55);
-      canvas.drawCircle(dot, dotRadius, paint);
-    }
-  }
-
-  void _paintHemispheres(Canvas canvas, Offset center, double radius) {
-    final paint = Paint()
-      ..color = spec.palette[0].withValues(alpha: 0.55)
-      ..style = PaintingStyle.fill;
-    final lowerRect = Rect.fromLTWH(
-      center.dx - radius,
-      center.dy + radius * 0.05,
-      radius * 2,
-      radius * 0.95,
-    );
-    canvas.drawRect(lowerRect, paint);
-    // Polar cap highlight no topo.
-    paint.color = spec.palette[4].withValues(alpha: 0.40);
-    canvas.drawArc(
-      Rect.fromCenter(
-        center: Offset(center.dx, center.dy - radius * 0.85),
-        width: radius * 1.4,
-        height: radius * 0.5,
-      ),
-      math.pi,
-      math.pi,
-      true,
-      paint,
-    );
-  }
-
+  /// Anel saturno-style pixelado: blocos quadrados distribuidos numa
+  /// elipse maior que o corpo. Tilt controla a altura da elipse.
   void _paintRing(
     Canvas canvas,
     Offset center,
     double bodyRadius,
-    double tiltY,
+    double tilt,
   ) {
-    // Anel saturno-style: oval mais largo que o corpo (~2.4x), altura
-    // proporcional ao tilt. Wings escapam pela esquerda/direita do
-    // corpo — onde o anel fica visivel. Pintamos um back-half atras
-    // (vai ficar escondido pelo body) + front-half desenhada DEPOIS
-    // do corpo (em _paintRingFront).
-    final ringWidth = bodyRadius * 2.4;
-    final ringHeight = math.max(bodyRadius * 0.45, bodyRadius * tiltY * 2.1);
-    final stroke = math.max(2.5, bodyRadius * 0.10);
+    final rx = bodyRadius * 1.6;
+    final ry = math.max(bodyRadius * 0.32, bodyRadius * tilt * 1.6);
+    final block = math.max(2.5, bodyRadius * 0.14);
+    const steps = 40;
 
-    // Cor solida bem visivel — gradient horizontal so com leve fade
-    // nas extremidades pras pontas nao ficarem chapadas.
-    final ringPaint = Paint()
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = stroke
-      ..isAntiAlias = true
-      ..shader = ui.Gradient.linear(
-        Offset(center.dx - ringWidth / 2, center.dy),
-        Offset(center.dx + ringWidth / 2, center.dy),
-        [
-          spec.palette[3].withValues(alpha: 0.30),
-          spec.palette[3].withValues(alpha: 0.90),
-          spec.palette[4].withValues(alpha: 0.95),
-          spec.palette[3].withValues(alpha: 0.90),
-          spec.palette[3].withValues(alpha: 0.30),
-        ],
-        [0.0, 0.18, 0.5, 0.82, 1.0],
+    for (var i = 0; i < steps; i++) {
+      final a = (i / steps) * math.pi * 2;
+      final x = center.dx + math.cos(a) * rx;
+      final y = center.dy + math.sin(a) * ry;
+      // Pontas (cos extremo) mais brilhantes; resto mid.
+      final bright = math.cos(a).abs() > 0.7;
+      _cell.color = (bright ? spec.palette[4] : spec.palette[3]).withValues(
+        alpha: 0.9,
       );
+      canvas.drawRect(
+        Rect.fromCenter(center: Offset(x, y), width: block, height: block),
+        _cell,
+      );
+    }
+  }
 
-    final ringRect = Rect.fromCenter(
-      center: center,
-      width: ringWidth,
-      height: ringHeight,
-    );
-
-    // Anel completo (back+front). Como nao da pra clipar so o atras
-    // sem state extra de profundidade, desenhamos o oval inteiro
-    // primeiro; o corpo depois cobre a metade superior interna,
-    // dando leitura "anel passa atras". A metade inferior interna
-    // continua visivel pra reforcar o efeito.
-    canvas.drawOval(ringRect, ringPaint);
-
-    // Aresta brilhante adicional na frente (arco inferior) — engrossa
-    // a parte do anel que passa "na frente" do planeta.
-    final frontArc = Paint()
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = stroke * 0.9
-      ..isAntiAlias = true
-      ..color = spec.palette[4].withValues(alpha: 0.85);
-    canvas.drawArc(ringRect, 0.10, math.pi - 0.20, false, frontArc);
+  static List<double> _norm3(double x, double y, double z) {
+    final m = math.sqrt(x * x + y * y + z * z);
+    return [x / m, y / m, z / m];
   }
 
   @override

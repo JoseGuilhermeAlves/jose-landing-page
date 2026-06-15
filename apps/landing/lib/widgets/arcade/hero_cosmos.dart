@@ -1,25 +1,22 @@
-import 'dart:math' as math;
-
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 
-/// Campo de corpos celestes do hero — sprites recortados do cosmos_3
-/// (replica exata da referencia) espalhados em disposicao curada pelos
-/// cantos/bordas (longe do texto e do buraco negro). Cada corpo flutua
-/// devagar (cosmos "passando"), com fase/velocidade proprias. Decorativo,
-/// IgnorePointer.
+/// Campo de corpos celestes do hero — planetas pixel (CustomPainter) que
+/// PASSAM devagar pela tela da direita pra esquerda, junto com o starfield
+/// do backdrop (parallax: alguns mais rapidos). Ficam nas faixas de topo e
+/// base pra nao atravessar o texto/portrait. Decorativo, IgnorePointer.
 class HeroCosmos extends StatefulWidget {
   const HeroCosmos({super.key});
 
-  /// x,y normalizados 0..1; diametro px; corpo; fase de drift.
+  /// x inicial 0..1; y 0..1 (faixas topo/base); diametro px; corpo;
+  /// passo de parallax (1 = lento, 2 = ~2x).
   static const List<_Body> _bodies = [
-    _Body(0.15, 0.16, 172, CelestialBody.saturn, 0),
-    _Body(0.88, 0.15, 124, CelestialBody.lava, 1.3),
-    _Body(0.05, 0.74, 124, CelestialBody.ice, 2.4),
-    _Body(0.31, 0.9, 96, CelestialBody.earth, 3.1),
-    _Body(0.95, 0.72, 120, CelestialBody.moon, 4.2),
-    _Body(0.64, 0.08, 84, CelestialBody.portal, 5),
-    _Body(0.5, 0.96, 74, CelestialBody.sun, 5.7),
+    _Body(0.10, 0.14, 150, CelestialBody.saturn, 1),
+    _Body(0.78, 0.10, 112, CelestialBody.lava, 1),
+    _Body(0.45, 0.18, 88, CelestialBody.ice, 2),
+    _Body(0.20, 0.86, 100, CelestialBody.earth, 1),
+    _Body(0.86, 0.90, 80, CelestialBody.moon, 2),
+    _Body(0.55, 0.82, 120, CelestialBody.sun, 1),
   ];
 
   @override
@@ -28,15 +25,16 @@ class HeroCosmos extends StatefulWidget {
 
 class _HeroCosmosState extends State<HeroCosmos>
     with SingleTickerProviderStateMixin {
-  late final AnimationController _drift;
+  late final AnimationController _scroll;
 
   @override
   void initState() {
     super.initState();
-    // Loop longo — drift lento, leitura de "passando".
-    _drift = AnimationController(
+    // 1 volta = travessia de um "passo" de parallax. Loop sem salto: x usa
+    // multiplos inteiros do span de wrap (ver _xFor).
+    _scroll = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 24),
+      duration: const Duration(seconds: 40),
     )..repeat();
   }
 
@@ -44,16 +42,27 @@ class _HeroCosmosState extends State<HeroCosmos>
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (MediaQuery.disableAnimationsOf(context)) {
-      _drift.stop();
-    } else if (!_drift.isAnimating) {
-      _drift.repeat();
+      _scroll.stop();
+    } else if (!_scroll.isAnimating) {
+      _scroll.repeat();
     }
   }
 
   @override
   void dispose() {
-    _drift.dispose();
+    _scroll.dispose();
     super.dispose();
+  }
+
+  /// Span de wrap em fracao de largura (entra/sai com folga).
+  static const double _span = 1.3;
+
+  /// x normalizado com wrap continuo (seamless: desloca multiplo inteiro
+  /// de [_span] por volta, entao value 0 e 1 coincidem).
+  double _xFor(_Body b) {
+    var x = (b.x - _scroll.value * _span * b.step) % _span;
+    if (x < 0) x += _span;
+    return x - 0.15; // folga a esquerda
   }
 
   @override
@@ -64,12 +73,18 @@ class _HeroCosmosState extends State<HeroCosmos>
           final w = c.maxWidth;
           final h = c.maxHeight;
           return AnimatedBuilder(
-            animation: _drift,
+            animation: _scroll,
             builder: (context, _) {
-              final t = _drift.value * 2 * math.pi;
               return Stack(
                 children: [
-                  for (final b in HeroCosmos._bodies) _positioned(b, w, h, t),
+                  for (final b in HeroCosmos._bodies)
+                    Positioned(
+                      left: _xFor(b) * w - b.size / 2,
+                      top: b.y * h - b.size / 2,
+                      width: b.size,
+                      height: b.size,
+                      child: CelestialPlanet(body: b.body, seed: b.seed),
+                    ),
                 ],
               );
             },
@@ -78,28 +93,17 @@ class _HeroCosmosState extends State<HeroCosmos>
       ),
     );
   }
-
-  Widget _positioned(_Body b, double w, double h, double t) {
-    // Drift suave: orbita minuscula (amplitude ~6% do corpo) em fase propria.
-    final amp = b.size * 0.06;
-    final dx = math.cos(t + b.phase) * amp;
-    final dy = math.sin(t * 0.8 + b.phase) * amp;
-    return Positioned(
-      left: b.x * w - b.size / 2 + dx,
-      top: b.y * h - b.size / 2 + dy,
-      width: b.size,
-      height: b.size,
-      child: CelestialPlanet(body: b.body, seed: b.phase.round() + 1),
-    );
-  }
 }
 
 class _Body {
-  const _Body(this.x, this.y, this.size, this.body, this.phase);
+  const _Body(this.x, this.y, this.size, this.body, this.step);
 
   final double x;
   final double y;
   final double size;
   final CelestialBody body;
-  final double phase;
+  final int step;
+
+  /// Seed estavel por posicao (varia o noise entre corpos do mesmo tipo).
+  int get seed => (x * 100).round() + (y * 13).round() + 1;
 }

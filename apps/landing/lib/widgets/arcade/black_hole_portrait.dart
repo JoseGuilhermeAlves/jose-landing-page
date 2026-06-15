@@ -2,13 +2,11 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
-/// Retrato do Jose num "portal" de buraco negro — centerpiece do hero.
-/// A foto fica LIMPA e em destaque no centro (recortada no rosto/ombros,
-/// sem pixelizacao agressiva — pixel-perfect e pra arte vetorial, nao pra
-/// headshot), emoldurada por um photon ring neon nitido. Em volta, um
-/// disco de acrecao de blocos quadrados vibrante (magenta quente ->
-/// ciano) gira numa elipse tiltada: metade de tras antes da foto, metade
-/// da frente depois (efeito de lente gravitacional).
+/// Retrato do Jose num portal neon — centerpiece do hero. A foto fica
+/// LIMPA e em destaque no centro; em volta (sempre FORA do circulo da
+/// foto, nunca cruzando o rosto) ha um anel de blocos pixel magenta->ciano
+/// com um arco brilhante girando devagar (leitura de "buraco negro" sem o
+/// disco tiltado que cortava a foto). Bloom CRT atras.
 class BlackHolePortrait extends StatefulWidget {
   const BlackHolePortrait({
     required this.diskHot,
@@ -17,12 +15,8 @@ class BlackHolePortrait extends StatefulWidget {
     super.key,
   });
 
-  /// Cor quente do disco (interno) — magenta neon.
   final Color diskHot;
-
-  /// Cor fria do disco (externo) — ciano neon.
   final Color diskCool;
-
   final double size;
 
   @override
@@ -38,7 +32,7 @@ class _BlackHolePortraitState extends State<BlackHolePortrait>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 16),
+      duration: const Duration(seconds: 10),
     )..repeat();
   }
 
@@ -60,36 +54,29 @@ class _BlackHolePortraitState extends State<BlackHolePortrait>
 
   @override
   Widget build(BuildContext context) {
-    // Foto ocupa ~52% do diametro — destaque real.
-    final horizon = widget.size * 0.52;
+    // Foto ocupa ~64% do diametro — destaque real, anel em volta.
+    final photo = widget.size * 0.64;
 
     return RepaintBoundary(
       child: SizedBox(
         width: widget.size,
         height: widget.size,
         child: CustomPaint(
-          painter: _AccretionPainter(
+          // Anel + arco + bloom desenhados ATRAS; ficam fora da foto.
+          painter: _PortalRingPainter(
             animation: _controller,
             hot: widget.diskHot,
             cool: widget.diskCool,
-            front: false,
-          ),
-          foregroundPainter: _AccretionPainter(
-            animation: _controller,
-            hot: widget.diskHot,
-            cool: widget.diskCool,
-            front: true,
           ),
           child: Center(
             child: SizedBox.square(
-              dimension: horizon,
+              dimension: photo,
               child: ClipOval(
                 child: ColoredBox(
                   color: const Color(0xFF080510),
-                  // Foto LIMPA, enquadrada no rosto/ombros. cacheWidth alto
-                  // mantem nitidez (sem o efeito "pixelizado horrivel").
+                  // scale 0.9 mostra rosto + ombros (nao so a cabeca).
                   child: Transform.scale(
-                    scale: 1.42,
+                    scale: 0.9,
                     alignment: Alignment.topCenter,
                     child: Image.asset(
                       'assets/images/foto_recortada.webp',
@@ -109,14 +96,13 @@ class _BlackHolePortraitState extends State<BlackHolePortrait>
   }
 }
 
-/// Metade (back/front) do disco de acrecao em blocos quadrados numa elipse
-/// achatada. Brilho = raio (quente dentro) + Doppler + swirl girando.
-class _AccretionPainter extends CustomPainter {
-  _AccretionPainter({
+/// Anel de blocos pixel ao redor da foto (annulus, sem tilt — nunca cruza
+/// o rosto) com um arco brilhante girando. Bloom difuso atras.
+class _PortalRingPainter extends CustomPainter {
+  _PortalRingPainter({
     required Animation<double> animation,
     required this.hot,
     required this.cool,
-    required this.front,
   }) : _animation = animation,
        _block = Paint()..isAntiAlias = false,
        super(repaint: animation);
@@ -125,107 +111,89 @@ class _AccretionPainter extends CustomPainter {
   final Color hot;
   final Color cool;
   final Paint _block;
-  final bool front;
-
-  static const double _tiltY = 0.30;
 
   @override
   void paint(Canvas canvas, Size size) {
     final center = size.center(Offset.zero);
-    final r = size.shortestSide / 2;
-    final horizon = r * 0.52;
+    final half = size.shortestSide / 2;
     final phase = _animation.value * 2 * math.pi;
-    final pb = (r * 0.05).clamp(3.0, 8.0);
 
-    // Bloom difuso atras de tudo (so na passada de tras) — vibrancia.
-    if (!front) {
-      canvas
-        ..drawCircle(
-          center,
-          r * 0.95,
-          Paint()
-            ..color = hot.withValues(alpha: 0.22)
-            ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 24),
-        )
-        ..drawCircle(
-          center,
-          r * 0.7,
-          Paint()
-            ..color = cool.withValues(alpha: 0.16)
-            ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 18),
-        );
-    }
+    // Raio normalizado da foto (0..1 de half). Anel vive logo fora dela.
+    const photoR = 0.64;
+    const ringIn = 0.66;
+    const ringOut = 0.97;
+    final pb = (half * 0.045).clamp(3.0, 9.0);
+    final grid = (size.shortestSide / pb).round();
 
-    final innerR = horizon * 1.06;
-    final outerR = r * 0.99;
-    for (var ringR = innerR; ringR <= outerR; ringR += pb) {
-      final steps = (ringR * 2 * math.pi / pb).round().clamp(24, 240);
-      for (var i = 0; i < steps; i++) {
-        final a = (i / steps) * 2 * math.pi;
-        final sin = math.sin(a);
-        if ((sin > 0) != front) continue;
+    // Bloom atras (camada de blur, nunca borra os blocos).
+    canvas
+      ..drawCircle(
+        center,
+        half * 0.9,
+        Paint()
+          ..color = hot.withValues(alpha: 0.20)
+          ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 26),
+      )
+      ..drawCircle(
+        center,
+        half * 0.7,
+        Paint()
+          ..color = cool.withValues(alpha: 0.16)
+          ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 18),
+      );
 
-        final x = center.dx + math.cos(a) * ringR;
-        final y = center.dy + sin * ringR * _tiltY;
+    // Annulus de blocos. Cor interpola magenta(perto)->ciano(fora); um arco
+    // girando acende uma faixa angular em branco-quente.
+    for (var gy = 0; gy < grid; gy++) {
+      for (var gx = 0; gx < grid; gx++) {
+        final u = ((gx + 0.5) / grid) * 2 - 1;
+        final v = ((gy + 0.5) / grid) * 2 - 1;
+        final rr = math.sqrt(u * u + v * v);
+        if (rr < ringIn || rr > ringOut) continue;
 
-        final radial = 1 - ((ringR - innerR) / (outerR - innerR)).clamp(0, 1);
-        final doppler = 0.5 + 0.5 * math.cos(a - 0.6);
-        final swirl = 0.5 + 0.5 * math.sin(a * 3 - phase);
-        final bright = (radial * 0.5 + doppler * 0.34 + swirl * 0.16).clamp(
-          0.0,
-          1.0,
-        );
-        // Faixas: corta blocos em swirl baixo longe do centro (gaps).
-        if (swirl < 0.22 && radial < 0.55) continue;
+        final t = ((rr - ringIn) / (ringOut - ringIn)).clamp(0.0, 1.0);
+        var color = Color.lerp(hot, cool, t)!;
 
-        _block.color = _shade(bright);
+        // Arco girando: realca uma janela angular.
+        final ang = math.atan2(v, u);
+        final d = _angDelta(ang, phase);
+        if (d < 0.5) {
+          color = Color.lerp(color, Colors.white, (0.5 - d) / 0.5 * 0.8)!;
+        }
+        // Quantiza alpha em 2 niveis pra leitura pixel.
+        _block.color = color.withValues(alpha: t < 0.5 ? 0.95 : 0.75);
         canvas.drawRect(
-          Rect.fromCenter(
-            center: Offset(x, y),
-            width: pb + 0.5,
-            height: pb + 0.5,
+          Rect.fromLTWH(
+            center.dx + u * half - pb / 2,
+            center.dy + v * half - pb / 2,
+            pb + 0.6,
+            pb + 0.6,
           ),
           _block,
         );
       }
     }
 
-    // Photon ring nitido em volta da foto (passada da frente): aro ciano +
-    // nucleo branco. Sem blur — forma crisp.
-    if (front) {
-      canvas
-        ..drawCircle(
-          center,
-          horizon * 1.05,
-          Paint()
-            ..style = PaintingStyle.stroke
-            ..strokeWidth = (pb * 0.9).clamp(3.0, 6.0)
-            ..isAntiAlias = false
-            ..color = cool,
-        )
-        ..drawCircle(
-          center,
-          horizon * 1.02,
-          Paint()
-            ..style = PaintingStyle.stroke
-            ..strokeWidth = (pb * 0.4).clamp(1.5, 3.0)
-            ..isAntiAlias = false
-            ..color = Colors.white,
-        );
-    }
+    // Aro fino crisp exatamente na borda da foto (moldura).
+    canvas.drawCircle(
+      center,
+      half * photoR + pb * 0.5,
+      Paint()
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = pb * 0.5
+        ..isAntiAlias = false
+        ..color = Colors.white.withValues(alpha: 0.85),
+    );
   }
 
-  /// Rampa quente->fria->branca quantizada em degraus, neon saturado.
-  Color _shade(double b) {
-    final q = (b * 6).floor() / 6;
-    if (q < 0.18) return cool.withValues(alpha: 0.6);
-    if (q < 0.4) return cool;
-    if (q < 0.6) return Color.lerp(cool, hot, 0.6)!;
-    if (q < 0.82) return hot;
-    return Color.lerp(hot, Colors.white, 0.55)!;
+  /// Distancia angular minima (0..pi) entre dois angulos.
+  double _angDelta(double a, double b) {
+    var d = (a - b).abs() % (2 * math.pi);
+    if (d > math.pi) d = 2 * math.pi - d;
+    return d;
   }
 
   @override
-  bool shouldRepaint(_AccretionPainter old) =>
-      old.hot != hot || old.cool != cool || old.front != front;
+  bool shouldRepaint(_PortalRingPainter old) =>
+      old.hot != hot || old.cool != cool;
 }

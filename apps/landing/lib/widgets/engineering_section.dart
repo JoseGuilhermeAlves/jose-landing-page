@@ -32,15 +32,43 @@ class EngineeringSection extends StatelessWidget {
             ),
           );
 
+    final colors = context.colors;
+    final tt = Theme.of(context).textTheme;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        SectionHeader(
-          eyebrow: context.l10n.engineering_eyebrow,
-          title: context.l10n.engineering_title,
-          titleAccent: context.l10n.engineering_titleAccent,
-          subtitle: context.l10n.engineering_subtitle,
+        PixelText(
+          context.l10n.engineering_eyebrow,
+          color: colors.accent,
+          pixelSize: 3,
+        ),
+        const SizedBox(height: AppSpacing.md),
+        Semantics(
+          header: true,
+          child: Text.rich(
+            TextSpan(
+              style: tt.headlineLarge?.copyWith(color: colors.onSurface),
+              children: [
+                TextSpan(text: '${context.l10n.engineering_title} '),
+                TextSpan(
+                  text: context.l10n.engineering_titleAccent,
+                  style: TextStyle(color: colors.primary),
+                ),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(height: AppSpacing.md),
+        ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 640),
+          child: Text(
+            context.l10n.engineering_subtitle,
+            style: tt.bodyLarge?.copyWith(
+              color: colors.onSurfaceMuted,
+              height: 1.55,
+            ),
+          ),
         ),
         SizedBox(
           height: context.responsive(

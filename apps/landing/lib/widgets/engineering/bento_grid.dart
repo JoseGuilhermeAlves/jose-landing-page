@@ -147,39 +147,36 @@ class _CategoryCardState extends State<_CategoryCard> {
     // Desktop: sempre expandido. Mobile: gated por _expanded.
     final showTiles = !isMobile || _expanded;
 
-    // Eyebrow: dot colorido + label uppercase. Em mobile ganha contagem
-    // + chevron rotativo e vira tappable.
-    Widget eyebrow = Row(
+    // Header arcade: quadradinho pixel + label da categoria em PixelText
+    // (cor da categoria) + contagem em mono. Mobile ganha chevron tappable.
+    Widget header = Row(
       children: [
-        Container(
-          width: 8,
-          height: 8,
-          decoration: BoxDecoration(
-            color: accent,
-            shape: BoxShape.circle,
-            boxShadow: [
-              BoxShadow(color: accent.withValues(alpha: 0.6), blurRadius: 8),
-            ],
+        // Bloco pixel (sem circulo) com a cor da categoria.
+        ColoredBox(color: accent, child: const SizedBox(width: 9, height: 9)),
+        const SizedBox(width: AppSpacing.sm),
+        Flexible(
+          child: FittedBox(
+            fit: BoxFit.scaleDown,
+            alignment: Alignment.centerLeft,
+            child: PixelText(
+              widget.category.label(context.l10n),
+              color: accent,
+              glowColor: accent,
+              pixelSize: 3,
+            ),
           ),
         ),
         const SizedBox(width: AppSpacing.sm),
         Text(
-          widget.category.label(context.l10n).toUpperCase(),
+          widget.items.length.toString().padLeft(2, '0'),
           style: textTheme.labelSmall?.copyWith(
-            color: accent,
-            letterSpacing: 1.2,
-            fontWeight: FontWeight.w600,
+            color: colors.onSurfaceMuted,
+            fontWeight: FontWeight.w700,
+            letterSpacing: 1,
+            fontFeatures: const [FontFeature.tabularFigures()],
           ),
         ),
         if (isMobile) ...[
-          const SizedBox(width: AppSpacing.sm),
-          Text(
-            '${widget.items.length}',
-            style: textTheme.labelSmall?.copyWith(
-              color: colors.onSurfaceMuted,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
           const Spacer(),
           AnimatedRotation(
             turns: _expanded ? 0.5 : 0,
@@ -196,7 +193,7 @@ class _CategoryCardState extends State<_CategoryCard> {
     );
 
     if (isMobile) {
-      eyebrow = Semantics(
+      header = Semantics(
         button: true,
         expanded: _expanded,
         label:
@@ -207,16 +204,20 @@ class _CategoryCardState extends State<_CategoryCard> {
         child: GestureDetector(
           behavior: HitTestBehavior.opaque,
           onTap: () => setState(() => _expanded = !_expanded),
-          child: eyebrow,
+          child: header,
         ),
       );
     }
 
+    // Painel arcade: cantos retos, borda neon da categoria + glow sutil,
+    // fundo escuro de "console".
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: colors.surface,
-        borderRadius: BorderRadius.circular(AppRadius.lg),
-        border: Border.all(color: colors.border),
+        color: colors.surfaceMuted,
+        border: Border.all(color: accent.withValues(alpha: 0.55), width: 2),
+        boxShadow: [
+          BoxShadow(color: accent.withValues(alpha: 0.12), blurRadius: 16),
+        ],
       ),
       child: Padding(
         padding: EdgeInsets.all(
@@ -230,7 +231,7 @@ class _CategoryCardState extends State<_CategoryCard> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              eyebrow,
+              header,
               if (showTiles) ...[
                 SizedBox(
                   height: context.responsive(
@@ -328,18 +329,17 @@ class _TechTileState extends State<_TechTile> {
     final textTheme = Theme.of(context).textTheme;
     final brand = TechBrandColors.primary(widget.techName);
 
+    // Chip arcade: cantos retos, borda neon brand. Hover acende (fill +
+    // glow) — leitura de "slot de skill" selecionavel.
     final shadows = _hovered
         ? [
             BoxShadow(
-              color: brand.withValues(alpha: 0.32),
-              blurRadius: 24,
-              spreadRadius: -4,
-              offset: const Offset(0, 6),
+              color: brand.withValues(alpha: 0.45),
+              blurRadius: 18,
+              spreadRadius: -2,
             ),
           ]
         : const <BoxShadow>[];
-
-    final borderColor = _hovered ? brand.withValues(alpha: 0.7) : colors.border;
 
     return Semantics(
       button: true,
@@ -353,26 +353,17 @@ class _TechTileState extends State<_TechTile> {
         child: GestureDetector(
           onTap: widget.onTap,
           child: AnimatedContainer(
-            // AnimatedContainer body abaixo — fechamento extra abaixo
-            // pra balancear o wrapper Semantics adicional.
             duration: AppDuration.fast,
             curve: Curves.easeOut,
             padding: EdgeInsets.all(
               context.responsive(mobile: AppSpacing.sm, desktop: AppSpacing.md),
             ),
             decoration: BoxDecoration(
-              // Gradient sutil com a cor brand — alpha baixo pra nao
-              // brigar com o surface dark do card.
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  brand.withValues(alpha: _hovered ? 0.16 : 0.08),
-                  brand.withValues(alpha: 0),
-                ],
+              color: brand.withValues(alpha: _hovered ? 0.18 : 0.05),
+              border: Border.all(
+                color: brand.withValues(alpha: _hovered ? 1 : 0.45),
+                width: 1.5,
               ),
-              borderRadius: BorderRadius.circular(AppRadius.md),
-              border: Border.all(color: borderColor),
               boxShadow: shadows,
             ),
             child: Column(
@@ -381,27 +372,19 @@ class _TechTileState extends State<_TechTile> {
               children: [
                 Row(
                   children: [
-                    Container(
-                      width: 10,
-                      height: 10,
-                      decoration: BoxDecoration(
-                        color: brand,
-                        shape: BoxShape.circle,
-                        boxShadow: [
-                          BoxShadow(
-                            color: brand.withValues(alpha: 0.6),
-                            blurRadius: 6,
-                          ),
-                        ],
-                      ),
+                    // Bloco pixel (quadrado) na cor brand.
+                    ColoredBox(
+                      color: brand,
+                      child: const SizedBox(width: 8, height: 8),
                     ),
                     const SizedBox(width: AppSpacing.sm),
                     Flexible(
                       child: Text(
-                        widget.techName,
-                        style: textTheme.titleSmall?.copyWith(
+                        widget.techName.toUpperCase(),
+                        style: textTheme.labelMedium?.copyWith(
                           color: colors.onSurface,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.w700,
+                          letterSpacing: 0.5,
                         ),
                         overflow: TextOverflow.ellipsis,
                       ),

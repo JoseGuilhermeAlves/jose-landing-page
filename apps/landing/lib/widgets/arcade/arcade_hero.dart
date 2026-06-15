@@ -1,5 +1,6 @@
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
+import 'package:landing/widgets/arcade/black_hole_portrait.dart';
 
 /// Hero da landing Arcade — o "title screen" do fliperama. Nome em fonte
 /// bitmap [PixelText] com glow magenta sobre o backdrop CRT (grid Outrun
@@ -41,98 +42,124 @@ class ArcadeHero extends StatelessWidget {
             child: IntrinsicHeight(
               child: Center(
                 child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 760),
-                  child: Column(
+                  constraints: const BoxConstraints(maxWidth: 1100),
+                  child: Flex(
+                    direction: isMobile ? Axis.vertical : Axis.horizontal,
                     mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Eyebrow: insira-moeda vibe, ciano.
-                      Text(
-                        context.l10n.hero_eyebrow.toUpperCase(),
-                        style: textTheme.labelMedium?.copyWith(
-                          color: colors.accent,
-                          letterSpacing: 3,
-                          fontWeight: FontWeight.w700,
+                      // Mobile: buraco negro acima do texto.
+                      if (isMobile) ...[
+                        BlackHolePortrait(
+                          diskHot: colors.primary,
+                          diskCool: colors.accent,
+                          size: 260,
                         ),
-                      ),
-                      const SizedBox(height: AppSpacing.lg),
+                        const SizedBox(height: AppSpacing.xxl),
+                      ],
+                      Flexible(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // Eyebrow: insira-moeda vibe, ciano.
+                            Text(
+                              context.l10n.hero_eyebrow.toUpperCase(),
+                              style: textTheme.labelMedium?.copyWith(
+                                color: colors.accent,
+                                letterSpacing: 3,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                            const SizedBox(height: AppSpacing.lg),
 
-                      // Nome em fonte pixel, duas linhas, glow magenta — o titulo.
-                      Semantics(
-                        header: true,
-                        label: 'Jose Guilherme Alves',
-                        child: PixelText(
-                          'JOSE\nGUILHERME ALVES',
-                          color: colors.primary,
-                          glowColor: colors.primary,
-                          glowBlur: 10,
-                          pixelSize: namePixel,
-                          lineSpacing: 3,
-                        ),
-                      ),
-                      const SizedBox(height: AppSpacing.xl),
+                            // Nome em fonte pixel, duas linhas, glow magenta — o titulo.
+                            Semantics(
+                              header: true,
+                              label: 'Jose Guilherme Alves',
+                              child: PixelText(
+                                'JOSE\nGUILHERME ALVES',
+                                color: colors.primary,
+                                glowColor: colors.primary,
+                                glowBlur: 10,
+                                pixelSize: namePixel,
+                                lineSpacing: 3,
+                              ),
+                            ),
+                            const SizedBox(height: AppSpacing.xl),
 
-                      // Headline em fonte legivel (display) — pitch curto.
-                      Text(
-                        '${context.l10n.hero_headline1} '
-                        '${context.l10n.hero_headline2}',
-                        style:
-                            (isMobile
-                                    ? textTheme.headlineSmall
-                                    : textTheme.headlineMedium)
-                                ?.copyWith(
-                                  color: colors.onSurface,
-                                  height: 1.2,
-                                  fontWeight: FontWeight.w600,
+                            // Headline em fonte legivel (display) — pitch curto.
+                            Text(
+                              '${context.l10n.hero_headline1} '
+                              '${context.l10n.hero_headline2}',
+                              style:
+                                  (isMobile
+                                          ? textTheme.headlineSmall
+                                          : textTheme.headlineMedium)
+                                      ?.copyWith(
+                                        color: colors.onSurface,
+                                        height: 1.2,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                            ),
+                            const SizedBox(height: AppSpacing.md),
+                            Text(
+                              context.l10n.hero_scopeLine,
+                              style: textTheme.bodyLarge?.copyWith(
+                                color: colors.onSurfaceMuted,
+                                height: 1.5,
+                              ),
+                            ),
+                            const SizedBox(height: AppSpacing.xxl),
+
+                            // CTAs arcade.
+                            Wrap(
+                              spacing: AppSpacing.md,
+                              runSpacing: AppSpacing.md,
+                              children: [
+                                _ArcadeButton(
+                                  label: context.l10n.hero_ctaContact,
+                                  color: colors.primary,
+                                  filled: true,
+                                  onPressed: onContactPressed,
                                 ),
-                      ),
-                      const SizedBox(height: AppSpacing.md),
-                      Text(
-                        context.l10n.hero_scopeLine,
-                        style: textTheme.bodyLarge?.copyWith(
-                          color: colors.onSurfaceMuted,
-                          height: 1.5,
+                                _ArcadeButton(
+                                  label: context.l10n.hero_ctaProjects,
+                                  color: colors.accent,
+                                  onPressed: onSeeProjectsPressed,
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: AppSpacing.xxl),
+
+                            // Stats "high score" — anos + zero assets (tudo Canvas).
+                            Wrap(
+                              spacing: AppSpacing.huge,
+                              runSpacing: AppSpacing.lg,
+                              children: [
+                                _ArcadeStat(
+                                  value: context.l10n.hero_trustYearsValue,
+                                  label: context.l10n.hero_trustYearsLabel,
+                                  color: colors.primary,
+                                ),
+                                _ArcadeStat(
+                                  value: context.l10n.hero_trustCanvasValue,
+                                  label: context.l10n.hero_trustCanvasLabel,
+                                  color: colors.accent,
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                       ),
-                      const SizedBox(height: AppSpacing.xxl),
-
-                      // CTAs arcade.
-                      Wrap(
-                        spacing: AppSpacing.md,
-                        runSpacing: AppSpacing.md,
-                        children: [
-                          _ArcadeButton(
-                            label: context.l10n.hero_ctaContact,
-                            color: colors.primary,
-                            filled: true,
-                            onPressed: onContactPressed,
-                          ),
-                          _ArcadeButton(
-                            label: context.l10n.hero_ctaProjects,
-                            color: colors.accent,
-                            onPressed: onSeeProjectsPressed,
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: AppSpacing.xxl),
-
-                      // Stats "high score" — anos + zero assets (tudo Canvas).
-                      Wrap(
-                        spacing: AppSpacing.huge,
-                        runSpacing: AppSpacing.lg,
-                        children: [
-                          _ArcadeStat(
-                            value: context.l10n.hero_trustYearsValue,
-                            label: context.l10n.hero_trustYearsLabel,
-                            color: colors.primary,
-                          ),
-                          _ArcadeStat(
-                            value: context.l10n.hero_trustCanvasValue,
-                            label: context.l10n.hero_trustCanvasLabel,
-                            color: colors.accent,
-                          ),
-                        ],
-                      ),
+                      // Desktop: buraco negro a direita do texto.
+                      if (!isMobile) ...[
+                        const SizedBox(width: AppSpacing.huge),
+                        BlackHolePortrait(
+                          diskHot: colors.primary,
+                          diskCool: colors.accent,
+                          size: 360,
+                        ),
+                      ],
                     ],
                   ),
                 ),

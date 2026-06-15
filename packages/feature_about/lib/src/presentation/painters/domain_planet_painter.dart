@@ -30,12 +30,13 @@ class DomainPlanetSpec {
   final int seed;
 }
 
-/// Planeta inline pra cada no da constelacao, em estetica 8/16-bit: o
-/// corpo e desenhado como um grid de "pixels" quadrados, com o
-/// sombreamento de esfera (normal · luz) quantizado nos 5 degraus da
-/// paleta — sem gradiente suave, sem antialias. Patterns (bands,
-/// speckled, hemispheres) e anel tambem viram blocos. Quando [isActive],
-/// ganha um glow CRT (blur) e o pulse modula a intensidade.
+/// Planeta inline pra cada no da constelacao, em estetica 8/16-bit. O
+/// corpo e desenhado como um grid de "pixels" quadrados (lado ~5px,
+/// constante independente do tamanho do no, pra leitura nitida). O
+/// sombreamento usa a normal da esfera contra a luz (lambert), quantizado
+/// em 5 degraus da paleta; a silhueta ganha um outline escuro de 1 pixel e
+/// um realce especular no ponto de luz. Sem antialias. Quando [isActive],
+/// um glow CRT (bloom blur, camada separada) pulsa atras.
 class DomainPlanetPainter extends CustomPainter {
   DomainPlanetPainter({
     required this.spec,
@@ -51,9 +52,8 @@ class DomainPlanetPainter extends CustomPainter {
 
   final Paint _cell;
 
-  /// Resolucao do grid de pixels do corpo (lado a lado). ~14 da leitura
-  /// 16-bit sem virar mosaico grosseiro.
-  static const int _grid = 14;
+  /// Lado-alvo do pixel em px logicos — define a resolucao do grid.
+  static const double _targetPx = 5;
 
   /// Direcao da luz (upper-left em direcao ao observador), normalizada.
   static final _light = _norm3(-0.5, -0.55, 0.68);
@@ -65,65 +65,72 @@ class DomainPlanetPainter extends CustomPainter {
     final radius = (shortest / 2) * (1 - ringMargin);
     final center = Offset(size.width / 2, size.height / 2);
 
-    // Glow externo quando ativo — bloom CRT difuso.
     if (isActive) {
       final glow = Paint()
-        ..color = spec.palette[3].withValues(alpha: 0.35 * pulse)
+        ..color = spec.palette[3].withValues(alpha: 0.4 * pulse)
         ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 12);
       canvas.drawCircle(center, radius + 8, glow);
     }
 
-    // Anel atras do corpo (blocos).
     if (spec.ring != null) {
       _paintRing(canvas, center, radius, spec.ring!);
     }
 
-    _paintPixelBody(canvas, center, radius);
+    // Grid adaptativo: pixel ~constante (~5px) seja o no grande ou pequeno.
+    final grid = ((radius * 2) / _targetPx).round().clamp(11, 20);
+    _paintPixelBody(canvas, center, radius, grid);
   }
 
-  /// Corpo pixelado: varre um grid quadrado; cada celula cujo centro cai
-  /// dentro do disco vira um pixel colorido pelo degrau de iluminacao.
-  void _paintPixelBody(Canvas canvas, Offset center, double radius) {
-    final px = (radius * 2) / _grid;
+  void _paintPixelBody(Canvas canvas, Offset center, double radius, int grid) {
+    final px = (radius * 2) / grid;
     final origin = Offset(center.dx - radius, center.dy - radius);
     final rng = math.Random(spec.seed);
 
-    // Pre-sorteia quais celulas recebem "speckle" pra ser determinista.
     final speckle = <int>{};
     if (spec.pattern == DomainPlanetPattern.speckled) {
-      final count = (_grid * _grid * 0.12).round();
+      final count = (grid * grid * 0.12).round();
       for (var i = 0; i < count; i++) {
-        speckle.add(rng.nextInt(_grid * _grid));
+        speckle.add(rng.nextInt(grid * grid));
       }
     }
 
-    for (var gy = 0; gy < _grid; gy++) {
-      for (var gx = 0; gx < _grid; gx++) {
-        // Centro da celula em coords normalizadas -1..1.
-        final u = ((gx + 0.5) / _grid) * 2 - 1;
-        final v = ((gy + 0.5) / _grid) * 2 - 1;
+    // Distancia normalizada acima da qual a celula e tratada como outline.
+    final edgeBand = 1 - (2.2 / grid);
+
+    for (var gy = 0; gy < grid; gy++) {
+      for (var gx = 0; gx < grid; gx++) {
+        final u = ((gx + 0.5) / grid) * 2 - 1;
+        final v = ((gy + 0.5) / grid) * 2 - 1;
         final d2 = u * u + v * v;
-        if (d2 > 1) continue; // fora do disco — silhueta pixelada
+        if (d2 > 1) continue; // silhueta pixelada
 
-        // Normal da esfera no ponto + iluminacao lambert.
-        final nz = math.sqrt(1 - d2);
-        var bright = u * _light[0] + v * _light[1] + nz * _light[2];
-        bright = bright.clamp(0.0, 1.0);
+        Color color;
+        if (d2 > edgeBand) {
+          // Outline: borda escura de 1 pixel pra recortar do fundo.
+          color = spec.palette[0];
+        } else {
+          final nz = math.sqrt(1 - d2);
+          var bright = u * _light[0] + v * _light[1] + nz * _light[2];
+          // Contraste: empurra meios-tons (gamma <1 clareia, mas usamos
+          // uma curva em S leve pra separar luz/sombra).
+          bright = bright.clamp(0.0, 1.0);
+          bright = bright * bright * (3 - 2 * bright); // smoothstep
 
-        // Quantiza em 5 degraus -> indice de paleta (0 shadow..4 light).
-        var idx = (bright * 4.999).floor().clamp(0, 4);
+          var idx = (bright * 4.999).floor().clamp(0, 4);
+          idx = _applyPattern(idx, gx, gy, v, speckle, grid);
+          color = spec.palette[idx];
 
-        // Termina (borda) sempre puxa pro shadow pra dar volume.
-        if (d2 > 0.86) idx = (idx - 1).clamp(0, 4);
+          // Especular: pixel mais alinhado a luz vira branco-quente.
+          if (bright > 0.93 && idx >= 3) {
+            color = Color.lerp(spec.palette[4], Colors.white, 0.7)!;
+          }
+        }
 
-        idx = _applyPattern(idx, gx, gy, u, v, speckle);
-
-        _cell.color = spec.palette[idx];
+        _cell.color = color;
         canvas.drawRect(
           Rect.fromLTWH(
             origin.dx + gx * px,
             origin.dy + gy * px,
-            // +0.6 evita fios de fundo entre celulas por arredondamento.
             px + 0.6,
             px + 0.6,
           ),
@@ -137,30 +144,27 @@ class DomainPlanetPainter extends CustomPainter {
     int idx,
     int gx,
     int gy,
-    double u,
     double v,
     Set<int> speckle,
+    int grid,
   ) {
     switch (spec.pattern) {
       case DomainPlanetPattern.bands:
-        // Faixas horizontais: linhas pares escurecem um degrau.
+        // Faixas horizontais a cada 2 linhas escurecem um degrau.
         if (gy.isEven) return (idx - 1).clamp(0, 4);
         return idx;
       case DomainPlanetPattern.speckled:
-        if (speckle.contains(gy * _grid + gx)) {
-          return (idx + 1).clamp(0, 4);
-        }
+        if (speckle.contains(gy * grid + gx)) return (idx + 1).clamp(0, 4);
         return idx;
       case DomainPlanetPattern.hemispheres:
-        // Hemisferio inferior escurece; calota polar (topo) clareia.
-        if (v > 0.1) return (idx - 1).clamp(0, 4);
-        if (v < -0.55) return 4;
+        if (v > 0.12) return (idx - 1).clamp(0, 4);
+        if (v < -0.55) return 4; // calota polar
         return idx;
     }
   }
 
-  /// Anel saturno-style pixelado: blocos quadrados distribuidos numa
-  /// elipse maior que o corpo. Tilt controla a altura da elipse.
+  /// Anel saturno-style pixelado: blocos quadrados numa elipse maior que o
+  /// corpo. Tilt controla a altura da elipse.
   void _paintRing(
     Canvas canvas,
     Offset center,
@@ -168,15 +172,14 @@ class DomainPlanetPainter extends CustomPainter {
     double tilt,
   ) {
     final rx = bodyRadius * 1.6;
-    final ry = math.max(bodyRadius * 0.32, bodyRadius * tilt * 1.6);
-    final block = math.max(2.5, bodyRadius * 0.14);
-    const steps = 40;
+    final ry = math.max(bodyRadius * 0.3, bodyRadius * tilt * 1.6);
+    final block = math.max(2.5, bodyRadius * 0.13);
+    const steps = 44;
 
     for (var i = 0; i < steps; i++) {
       final a = (i / steps) * math.pi * 2;
       final x = center.dx + math.cos(a) * rx;
       final y = center.dy + math.sin(a) * ry;
-      // Pontas (cos extremo) mais brilhantes; resto mid.
       final bright = math.cos(a).abs() > 0.7;
       _cell.color = (bright ? spec.palette[4] : spec.palette[3]).withValues(
         alpha: 0.9,

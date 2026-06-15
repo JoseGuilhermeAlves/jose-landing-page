@@ -108,14 +108,19 @@ class _ArcadeBackdropPainter extends CustomPainter {
     required this.starColor,
   }) : _animation = animation,
        _bgPaint = Paint()..color = background,
-       _starPaint = Paint()..color = starColor,
+       _starPaint = Paint()
+         ..color = starColor
+         ..isAntiAlias = false,
        _gridPaint = Paint()
          ..style = PaintingStyle.stroke
-         ..strokeWidth = 1.4,
+         ..strokeWidth = 1.4
+         ..isAntiAlias = false,
+       // "Glow" das linhas perto = traco crisp mais grosso e translucido
+       // por baixo (halo em bloco), nao blur gaussiano (pixel-perfect).
        _glowPaint = Paint()
          ..style = PaintingStyle.stroke
-         ..strokeWidth = 3
-         ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 4),
+         ..strokeWidth = 4
+         ..isAntiAlias = false,
        super(repaint: animation) {
     // Estrelas geradas uma vez com seed fixa — determinismo entre frames
     // e entre rebuilds, sem alocacao em paint().
@@ -177,7 +182,17 @@ class _ArcadeBackdropPainter extends CustomPainter {
       _starPaint.color = starColor.withValues(
         alpha: (0.25 + star.layer * 0.6) * twinkle,
       );
-      canvas.drawCircle(Offset(x * size.width, y), star.radius, _starPaint);
+      // Estrela = bloco quadrado alinhado a pixel inteiro (sem AA/circulo).
+      final s = (star.radius * 1.7).roundToDouble().clamp(1.0, 4.0);
+      canvas.drawRect(
+        Rect.fromLTWH(
+          (x * size.width).roundToDouble(),
+          y.roundToDouble(),
+          s,
+          s,
+        ),
+        _starPaint,
+      );
     }
   }
 

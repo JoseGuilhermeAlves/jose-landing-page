@@ -15,5 +15,6 @@ export 'src/painters/ripple_hover_painter.dart';
 export 'src/painters/wave_divider_painter.dart';
 export 'src/widgets/constellation_field.dart';
 export 'src/widgets/cosmos_field.dart';
+export 'src/widgets/cosmos_sprite.dart';
 export 'src/widgets/loading_spinner.dart';
 export 'src/widgets/particle_field.dart';

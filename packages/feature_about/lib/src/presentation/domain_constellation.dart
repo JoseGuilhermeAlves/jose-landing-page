@@ -4,7 +4,6 @@ import 'package:animations/animations.dart';
 import 'package:design_system/design_system.dart';
 import 'package:feature_about/src/domain/domain_highlight.dart';
 import 'package:feature_about/src/presentation/balloon_popup.dart';
-import 'package:feature_about/src/presentation/painters/domain_planet_painter.dart';
 import 'package:flutter/material.dart';
 
 /// Mapa de dominios em forma de **constelacao interativa**. Substitui
@@ -41,68 +40,15 @@ class DomainConstellation extends StatefulWidget {
     ('sanitation', 'fintech'),
   ];
 
-  /// Specs visuais por dominio: paleta de 5 cores + pattern + ring
-  /// opcional. Cada dominio recebe uma identidade cromatica
-  /// distinta, costurada com a paleta da landing.
-  static const Map<String, DomainPlanetSpec> _planetSpecs = {
-    'fintech': DomainPlanetSpec(
-      palette: [
-        Color(0xFF020B26),
-        Color(0xFF0A2B70),
-        Color(0xFF2D7FFF),
-        Color(0xFF7CB8FF),
-        Color(0xFFE0EEFF),
-      ],
-      pattern: DomainPlanetPattern.bands,
-      seed: 17,
-    ),
-    'public_services': DomainPlanetSpec(
-      palette: [
-        Color(0xFF1F1505),
-        Color(0xFF6A4A0A),
-        Color(0xFFE6C25A),
-        Color(0xFFFFE8A5),
-        Color(0xFFFFF7DC),
-      ],
-      pattern: DomainPlanetPattern.speckled,
-      seed: 31,
-    ),
-    'platform': DomainPlanetSpec(
-      palette: [
-        Color(0xFF120428),
-        Color(0xFF391066),
-        Color(0xFF9D3FFF),
-        Color(0xFFD58BFF),
-        Color(0xFFF0DCFF),
-      ],
-      pattern: DomainPlanetPattern.hemispheres,
-      ring: 0.30,
-      seed: 47,
-    ),
-    'sanitation': DomainPlanetSpec(
-      palette: [
-        Color(0xFF02100E),
-        Color(0xFF0A4A3D),
-        Color(0xFF1FE5B5),
-        Color(0xFFA5FFE5),
-        Color(0xFFE9FFF8),
-      ],
-      pattern: DomainPlanetPattern.bands,
-      ring: 0.22,
-      seed: 53,
-    ),
-    'retail': DomainPlanetSpec(
-      palette: [
-        Color(0xFF2A0610),
-        Color(0xFF7A1A30),
-        Color(0xFFFF4E78),
-        Color(0xFFFFA0B8),
-        Color(0xFFFFE0E8),
-      ],
-      pattern: DomainPlanetPattern.speckled,
-      ring: 0.28,
-      seed: 89,
-    ),
+  /// Corpo celeste (sprite do cosmos_3) por dominio — cada dominio ganha
+  /// um planeta distinto da arte de referencia. retail (end-to-end) recebe
+  /// o saturno, o corpo de maior destaque.
+  static const Map<String, CelestialBody> _planetBodies = {
+    'fintech': CelestialBody.earth,
+    'public_services': CelestialBody.ice,
+    'platform': CelestialBody.portal,
+    'sanitation': CelestialBody.lava,
+    'retail': CelestialBody.saturn,
   };
 
   @override
@@ -168,7 +114,7 @@ class _DomainConstellationState extends State<DomainConstellation>
             height: height,
             child: _Scene(
               domains: widget.domains,
-              specs: DomainConstellation._planetSpecs,
+              bodies: DomainConstellation._planetBodies,
               positions: DomainConstellation._positions,
               edges: DomainConstellation._edges,
               selectedId: _selectedId,
@@ -191,7 +137,7 @@ class _DomainConstellationState extends State<DomainConstellation>
 class _Scene extends StatelessWidget {
   const _Scene({
     required this.domains,
-    required this.specs,
+    required this.bodies,
     required this.positions,
     required this.edges,
     required this.selectedId,
@@ -203,7 +149,7 @@ class _Scene extends StatelessWidget {
   });
 
   final List<DomainHighlight> domains;
-  final Map<String, DomainPlanetSpec> specs;
+  final Map<String, CelestialBody> bodies;
   final Map<String, Offset> positions;
   final List<(String, String)> edges;
   final String? selectedId;
@@ -292,8 +238,8 @@ class _Scene extends StatelessWidget {
   Widget _buildPlanet(BuildContext context, DomainHighlight d, Size sceneSize) {
     final pos = positions[d.id] ?? const Offset(0.5, 0.5);
     final isActive = (hoverId ?? selectedId) == d.id;
-    final spec = specs[d.id];
-    if (spec == null) return const SizedBox.shrink();
+    final body = bodies[d.id];
+    if (body == null) return const SizedBox.shrink();
     // Web (desktop) aumenta os planetas consideravelmente — a cena e
     // ~16:9 e comportava planetas maiores; mobile mantem o tamanho pra
     // nao estourar o quadro mais alto.
@@ -316,7 +262,7 @@ class _Scene extends StatelessWidget {
           behavior: HitTestBehavior.opaque,
           onTap: () => onPick(d.id),
           child: _DomainPlanet(
-            spec: spec,
+            body: body,
             isActive: isActive,
             ambient: ambient,
           ),
@@ -328,28 +274,38 @@ class _Scene extends StatelessWidget {
 
 class _DomainPlanet extends StatelessWidget {
   const _DomainPlanet({
-    required this.spec,
+    required this.body,
     required this.isActive,
     required this.ambient,
   });
 
-  final DomainPlanetSpec spec;
+  final CelestialBody body;
   final bool isActive;
   final AnimationController ambient;
 
   @override
   Widget build(BuildContext context) {
+    final glow = context.colors.primary;
     return RepaintBoundary(
       child: AnimatedBuilder(
         animation: ambient,
-        builder: (_, _) {
-          final pulse = 0.8 + 0.2 * math.sin(ambient.value * math.pi * 2);
-          return CustomPaint(
-            painter: DomainPlanetPainter(
-              spec: spec,
-              isActive: isActive,
-              pulse: pulse,
+        // Sprite real do cosmos (replica exata); quando ativo/hover, ganha
+        // um halo neon pulsante atras — destaque sem deformar o pixel-art.
+        child: CelestialSprite(body: body),
+        builder: (context, child) {
+          if (!isActive) return child!;
+          final pulse = 0.55 + 0.45 * math.sin(ambient.value * math.pi * 2);
+          return DecoratedBox(
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: glow.withValues(alpha: 0.5 * pulse),
+                  blurRadius: 28,
+                  spreadRadius: 2,
+                ),
+              ],
             ),
+            child: child,
           );
         },
       ),

@@ -1,6 +1,7 @@
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:landing/widgets/arcade/black_hole_portrait.dart';
+import 'package:landing/widgets/arcade/hero_cosmos.dart';
 
 /// Hero da landing Arcade — o "title screen" do fliperama. Nome em fonte
 /// bitmap [PixelText] com glow magenta sobre o backdrop CRT (grid Outrun
@@ -29,6 +30,23 @@ class ArcadeHero extends StatelessWidget {
     // Tamanho do pixel do nome — o nome e o elemento-estrela do title screen.
     final namePixel = (isMobile ? 4 : 7).toDouble();
 
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        // Planetas espalhados atras de tudo (cosmos do hero).
+        const Positioned.fill(child: HeroCosmos()),
+        _heroContent(context, colors, textTheme, isMobile, namePixel),
+      ],
+    );
+  }
+
+  Widget _heroContent(
+    BuildContext context,
+    AppColorScheme colors,
+    TextTheme textTheme,
+    bool isMobile,
+    double namePixel,
+  ) {
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: context.responsive(mobile: AppSpacing.lg, desktop: 0),

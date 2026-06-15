@@ -42,43 +42,47 @@ class AppColorScheme {
   final Color error;
   final Color info;
 
-  // Valores alinhados a identidade Kraken (DESIGN.md §2) — dark base preservado.
-  /// Dark-first — paleta default da landing.
+  // Identidade "Arcade" — CRT neon fliperama 80s/16-bit. Quase-preto
+  // roxo de tubo CRT, neon magenta como acento primario, ciano como
+  // segundo acento e verde fosforo como status. Sem cinzas mortos:
+  // os mutes puxam lavanda pra ficar coerente com o glow neon.
+  /// Dark-first — paleta default da landing (CRT neon).
   static const AppColorScheme dark = AppColorScheme(
-    primary: Color(0xFF7132F5),
-    primaryHover: Color(0xFF855BFB),
-    onPrimary: Color(0xFFFFFFFF),
-    accent: Color(0xFF5741D8),
-    onAccent: Color(0xFFFFFFFF),
-    background: Color(0xFF0A0A0F),
-    surface: Color(0xFF14121C),
-    surfaceMuted: Color(0xFF1E1B2A),
-    border: Color(0xFF2A2638),
-    onSurface: Color(0xFFE8E6F0),
-    onSurfaceMuted: Color(0xFF9497A9),
-    success: Color(0xFF149E61),
-    warning: Color(0xFFFBBF24),
-    error: Color(0xFFF87171),
-    info: Color(0xFF60A5FA),
+    primary: Color(0xFFFF2E97),
+    primaryHover: Color(0xFFFF5CAD),
+    onPrimary: Color(0xFF0A0612),
+    accent: Color(0xFF00E5FF),
+    onAccent: Color(0xFF0A0612),
+    background: Color(0xFF0A0612),
+    surface: Color(0xFF150C26),
+    surfaceMuted: Color(0xFF0F0819),
+    border: Color(0xFF34215C),
+    onSurface: Color(0xFFF2E9FF),
+    onSurfaceMuted: Color(0xFF9A86C4),
+    success: Color(0xFF39FF14),
+    warning: Color(0xFFFFC400),
+    error: Color(0xFFFF3355),
+    info: Color(0xFF00E5FF),
   );
 
-  /// Modo claro — opcional, ativavel via toggle.
+  /// Modo claro — nao usado no Arcade (a landing e CRT dark-only). Mantido
+  /// pra nao quebrar o contrato de slots; espelha o dark com fundo claro.
   static const AppColorScheme light = AppColorScheme(
-    primary: Color(0xFF7132F5),
-    primaryHover: Color(0xFF5741D8),
+    primary: Color(0xFFD6177A),
+    primaryHover: Color(0xFFB30F63),
     onPrimary: Color(0xFFFFFFFF),
-    accent: Color(0xFF5741D8),
+    accent: Color(0xFF008CA8),
     onAccent: Color(0xFFFFFFFF),
-    background: Color(0xFFFFFFFF),
+    background: Color(0xFFF4EEFF),
     surface: Color(0xFFFFFFFF),
-    surfaceMuted: Color(0xFFF5F4F8),
-    border: Color(0xFFDEDEE5),
-    onSurface: Color(0xFF101114),
-    onSurfaceMuted: Color(0xFF9497A9),
-    success: Color(0xFF149E61),
-    warning: Color(0xFFD97706),
-    error: Color(0xFFDC2626),
-    info: Color(0xFF2563EB),
+    surfaceMuted: Color(0xFFEDE6FB),
+    border: Color(0xFFD9CCF2),
+    onSurface: Color(0xFF170A2E),
+    onSurfaceMuted: Color(0xFF6A5A8C),
+    success: Color(0xFF1A9E2E),
+    warning: Color(0xFFB37A00),
+    error: Color(0xFFD11F3F),
+    info: Color(0xFF008CA8),
   );
 }
 

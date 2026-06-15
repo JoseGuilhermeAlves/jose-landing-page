@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:landing/presentation/locale_cubit.dart';
 import 'package:landing/router/app_router.dart';
+import 'package:landing/widgets/arcade/arcade_shell.dart';
 
 class LandingApp extends StatefulWidget {
   const LandingApp({super.key});
@@ -28,6 +29,9 @@ class _LandingAppState extends State<LandingApp> {
             theme: AppTheme.dark(),
             darkTheme: AppTheme.dark(),
             themeMode: ThemeMode.dark,
+            // Envolve toda rota na moldura CRT (backdrop + scanlines + boot).
+            builder: (context, child) =>
+                ArcadeShell(child: child ?? const SizedBox.shrink()),
             locale: locale,
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             supportedLocales: AppLocalizations.supportedLocales,

@@ -160,7 +160,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.colors;
     final isMobile = context.isMobile;
     final viewportHeight = MediaQuery.sizeOf(context).height;
 
@@ -202,7 +201,8 @@ class _HomePageState extends State<HomePage> {
     ];
 
     return Scaffold(
-      backgroundColor: colors.background,
+      // Transparente pra revelar o ArcadeBackdrop global (starfield + grid).
+      backgroundColor: Colors.transparent,
       body: Stack(
         children: [
           CustomScrollView(

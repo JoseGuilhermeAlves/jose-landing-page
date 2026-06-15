@@ -136,13 +136,11 @@ class _BootSequenceState extends State<BootSequence>
                             final ready = _typing.isCompleted;
                             return Opacity(
                               opacity: ready ? _blink.value : 0,
-                              child: Text(
-                                '▸ PRESS START',
-                                style: textTheme.titleMedium?.copyWith(
-                                  color: colors.primary,
-                                  fontWeight: FontWeight.w700,
-                                  letterSpacing: 3,
-                                ),
+                              child: PixelText(
+                                '~ PRESS START',
+                                color: colors.primary,
+                                glowColor: colors.primary,
+                                pixelSize: 5,
                               ),
                             );
                           },

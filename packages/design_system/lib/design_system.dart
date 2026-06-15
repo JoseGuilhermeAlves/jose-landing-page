@@ -16,6 +16,8 @@ export 'src/tokens/app_duration.dart';
 export 'src/tokens/app_gradients.dart';
 export 'src/tokens/app_radius.dart';
 export 'src/typography/app_typography.dart';
+export 'src/typography/pixel_font.dart';
+export 'src/typography/pixel_text.dart';
 export 'src/widgets/app_button.dart';
 export 'src/widgets/flags/flag_icon.dart';
 export 'src/widgets/locale_switcher.dart';

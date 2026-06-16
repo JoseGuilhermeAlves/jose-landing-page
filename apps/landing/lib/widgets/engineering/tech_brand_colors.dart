@@ -78,6 +78,9 @@ abstract final class TechBrandColors {
       glow: Color(0xFF5B21B6),
     ),
 
+    // Observabilidade
+    'Datadog': _Brand(primary: Color(0xFF632CA6), glow: Color(0xFF3B1A6B)),
+
     // Qualidade
     'very_good_analysis': _Brand(
       primary: Color(0xFFFB923C),
@@ -130,6 +133,7 @@ abstract final class CategoryBrandColors {
     'graphics': Color(0xFFFF7043),
     'persistence': Color(0xFF44A8D8),
     'architecture': Color(0xFF7C3AED),
+    'observability': Color(0xFF632CA6),
     'quality': Color(0xFFFB923C),
     'web': Color(0xFFA78BFA),
     'tooling': Color(0xFFFACC15),

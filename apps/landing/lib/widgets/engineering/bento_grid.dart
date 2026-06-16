@@ -38,8 +38,9 @@ class TechBentoGrid extends StatelessWidget {
       _Slot(category: StackCategory.routing, span: 7),
     ],
     [
-      _Slot(category: StackCategory.web, span: 5),
-      _Slot(category: StackCategory.tooling, span: 7),
+      _Slot(category: StackCategory.web, span: 4),
+      _Slot(category: StackCategory.tooling, span: 4),
+      _Slot(category: StackCategory.observability, span: 4),
     ],
   ];
 

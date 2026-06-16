@@ -199,6 +199,13 @@ abstract final class StackCatalog {
     ),
 
     StackItem(
+      name: 'Datadog',
+      version: 'SaaS',
+      role: l10n.stack_datadog_role,
+      category: StackCategory.observability,
+    ),
+
+    StackItem(
       name: 'very_good_analysis',
       version: '6.0.0',
       role: l10n.stack_vga_role,

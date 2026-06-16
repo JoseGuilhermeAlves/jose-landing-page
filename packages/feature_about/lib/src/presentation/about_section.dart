@@ -1,15 +1,15 @@
 import 'package:design_system/design_system.dart';
 import 'package:feature_about/src/data/domains_catalog.dart';
+import 'package:feature_about/src/domain/domain_highlight.dart';
 import 'package:feature_about/src/presentation/delivery_block.dart';
-import 'package:feature_about/src/presentation/domain_constellation.dart';
 import 'package:flutter/material.dart';
 
 /// Secao "Sobre" (quem entrega) — prosa direta no canvas, texto-primeiro,
 /// sem cards genericos. Estrutura herdada da branch designmd (superior ao
 /// bio-card) revestida na identidade Arcade: eyebrow em fonte pixel ciano,
 /// titulo com acento magenta, bio em prosa + linhas-fato escaneaveis,
-/// hairlines neon entre blocos, grafo de dominios e o bloco "Como eu
-/// entrego" em rows estilo changelog.
+/// hairlines neon entre blocos, lista de dominios texto-primeiro e o
+/// bloco "Como eu entrego" em rows estilo changelog.
 ///
 /// **Sem timeline cronologica, sem nomear empresas/produtos** — detalhe
 /// nominal fica no LinkedIn.
@@ -78,28 +78,15 @@ class AboutSection extends StatelessWidget {
         SizedBox(height: blockGap),
         const _NeonHairline(),
         SizedBox(height: blockGap),
-        // Mapa de dominios (grafo) — cada dominio e uma criatura espacial
-        // clicavel; o detalhe vive no balao, nao em texto duplicado acima.
-        Wrap(
-          crossAxisAlignment: WrapCrossAlignment.center,
-          spacing: AppSpacing.sm,
-          runSpacing: AppSpacing.xs,
-          children: [
-            Text(
-              l10n.about_domainsMapLabel,
-              style: tt.headlineSmall?.copyWith(color: colors.onSurface),
-            ),
-            Text(
-              l10n.about_domainsHint,
-              style: tt.labelMedium?.copyWith(
-                color: colors.onSurfaceMuted,
-                letterSpacing: 0.4,
-              ),
-            ),
-          ],
+        // "Onde ja entreguei" — lista texto-primeiro dos dominios em rows
+        // estilo changelog, mesma gramatica do bloco "Como eu entrego" logo
+        // abaixo. Sem mapa interativo: leitura direta e escaneavel.
+        Text(
+          l10n.about_domainsMapLabel,
+          style: tt.headlineSmall?.copyWith(color: colors.onSurface),
         ),
         const SizedBox(height: AppSpacing.lg),
-        DomainConstellation(domains: DomainsCatalog.all(l10n)),
+        _DomainsList(domains: DomainsCatalog.all(l10n)),
         SizedBox(height: blockGap),
         const _NeonHairline(),
         SizedBox(height: blockGap),
@@ -110,6 +97,80 @@ class AboutSection extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.lg),
         const DeliveryBlock(),
+      ],
+    );
+  }
+}
+
+/// Lista texto-primeiro dos dominios em que o Jose ja atuou — rows
+/// estilo changelog, mesma gramatica do `DeliveryBlock`. Cada row tem
+/// um marcador-pixel ciano no topo, o rotulo em destaque e o blurb
+/// abaixo. Sem canvas, sem interacao: leitura direta e escaneavel.
+class _DomainsList extends StatelessWidget {
+  const _DomainsList({required this.domains});
+
+  final List<DomainHighlight> domains;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        for (var i = 0; i < domains.length; i++) ...[
+          if (i > 0) const SizedBox(height: AppSpacing.md),
+          _DomainRow(domain: domains[i]),
+        ],
+      ],
+    );
+  }
+}
+
+/// Row unica da lista de dominios: marcador-pixel + rotulo + blurb.
+class _DomainRow extends StatelessWidget {
+  const _DomainRow({required this.domain});
+
+  final DomainHighlight domain;
+
+  @override
+  Widget build(BuildContext context) {
+    final tt = Theme.of(context).textTheme;
+    final colors = context.colors;
+
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Marcador-pixel ciano alinhado ao topo do rotulo — estetica
+        // arcade, mesmo quadrado dos demais blocos.
+        Padding(
+          padding: const EdgeInsets.only(top: AppSpacing.xs),
+          child: ColoredBox(
+            color: colors.primary,
+            child: const SizedBox(width: 8, height: 8),
+          ),
+        ),
+        const SizedBox(width: AppSpacing.sm),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                domain.label,
+                style: tt.bodyLarge?.copyWith(
+                  color: colors.onSurface,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              const SizedBox(height: AppSpacing.xs),
+              Text(
+                domain.blurb,
+                style: tt.bodyMedium?.copyWith(
+                  color: colors.onSurfaceMuted,
+                  height: 1.5,
+                ),
+              ),
+            ],
+          ),
+        ),
       ],
     );
   }
@@ -128,4 +189,3 @@ class _NeonHairline extends StatelessWidget {
     );
   }
 }
-

@@ -48,6 +48,36 @@ void main() {
       );
     });
 
+    testWidgets('titulo nao estoura a largura num viewport mobile estreito', (
+      tester,
+    ) async {
+      // Regressao: "Vamos conversar?" em PixelText (largura intrinseca =
+      // chars x pixelSize) sangrava pra fora do painel no mobile ~360px.
+      // No mobile o titulo quebra em duas linhas e um FittedBox(scaleDown)
+      // garante que ate a linha mais longa caiba. Aqui medimos a largura
+      // pintada do titulo contra o viewport.
+      const narrow = Size(360, 1600);
+      await tester.pumpWidget(
+        wrap(const ContactSection(email: 'contato@example.com'), size: narrow),
+      );
+      await tester.pump(const Duration(milliseconds: 16));
+
+      // O titulo e o primeiro PixelText em fonte pixel da secao (o
+      // eyebrow "~ INSERT COIN" tambem e PixelText, mas o titulo carrega
+      // o glow magenta). Pegamos todos e garantimos que nenhum extrapola.
+      final pixelTexts = find.byType(PixelText);
+      expect(pixelTexts, findsWidgets);
+      for (final element in pixelTexts.evaluate()) {
+        final size = tester.getSize(find.byWidget(element.widget));
+        expect(
+          size.width,
+          lessThanOrEqualTo(narrow.width),
+          reason: 'PixelText "${(element.widget as PixelText).text}" '
+              'estoura o viewport de ${narrow.width}px',
+        );
+      }
+    });
+
     testWidgets('email link dispara mailto via onOpenUri', (tester) async {
       final opened = <Uri>[];
       await tester.pumpWidget(

@@ -118,18 +118,33 @@ class _ContactSectionState extends State<ContactSection>
                 ),
               ),
               const SizedBox(height: AppSpacing.lg),
-              // Titulo em fonte pixel com glow magenta.
+              // Titulo em fonte pixel com glow magenta. PixelText nao
+              // quebra sozinho (largura intrinseca = chars x pixelSize),
+              // entao no mobile separamos "VAMOS" / "CONVERSAR?" em duas
+              // linhas via `\n` pra caber em viewports estreitos; no desktop
+              // fica em linha unica. O FittedBox(scaleDown) e a rede de
+              // seguranca: se mesmo a linha mais longa estourar (~360px),
+              // o titulo encolhe em vez de sangrar pra fora do painel. O
+              // label do Semantics mantem o texto corrido (sem `\n`) pro
+              // leitor de tela.
               Semantics(
                 header: true,
                 label: '${l10n.contact_title} ${l10n.contact_titleAccent}',
-                child: PixelText(
-                  '${l10n.contact_title} ${l10n.contact_titleAccent}'
-                      .toUpperCase(),
-                  color: colors.primary,
-                  glowColor: colors.primary,
-                  glowBlur: 12,
-                  pixelSize: titlePixel,
-                  lineSpacing: 3,
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: Alignment.centerLeft,
+                  child: PixelText(
+                    context.isMobile
+                        ? '${l10n.contact_title}\n${l10n.contact_titleAccent}'
+                              .toUpperCase()
+                        : '${l10n.contact_title} ${l10n.contact_titleAccent}'
+                              .toUpperCase(),
+                    color: colors.primary,
+                    glowColor: colors.primary,
+                    glowBlur: 12,
+                    pixelSize: titlePixel,
+                    lineSpacing: 3,
+                  ),
                 ),
               ),
               const SizedBox(height: AppSpacing.lg),

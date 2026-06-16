@@ -229,6 +229,14 @@ ao `AnimationController` pra pular build/layout a cada frame.
 > `feature_showcase`, nao em `animations`. As mesmas regras de performance
 > valem.
 
+> **Reproducao 1:1 de sprite raster.** O boss Oni do hero (`OniBoss`) nao e
+> re-desenho vetorial: e o frame do GIF de referencia recortado/keyado
+> (`packages/animations/assets/images/oni_boss.png`), decodificado uma vez em
+> `ui.Image` e composto via `drawImageRect` + `FilterQuality.none` (nearest,
+> blocos crocantes, **1 draw call** em vez de ~130k `drawRect`). O porque dessa
+> escolha e os limites do Custom Painter nesse caso estao em
+> [`licoes-custom-painter-boss-1a1.md`](licoes-custom-painter-boss-1a1.md).
+
 ## Testes
 
 ```bash

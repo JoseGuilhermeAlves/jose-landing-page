@@ -18,12 +18,10 @@ class HeroCosmos extends StatefulWidget {
   /// passo de parallax (1 = lento, 2 = ~2x); cor do halo neon.
   static const List<_Body> _bodies = [
     _Body(0.11, 0.17, 140, CelestialBody.saturn, 1, Color(0xFFFF3CAC)),
-    _Body(0.83, 0.12, 172, CelestialBody.sun, 1, Color(0xFFFFB02E)),
     _Body(0.49, 0.085, 66, CelestialBody.ice, 2, Color(0xFF36E0FF)),
     _Body(0.38, 0.21, 72, CelestialBody.portal, 2, Color(0xFFE83CC8)),
     _Body(0.27, 0.40, 88, CelestialBody.earth, 1, Color(0xFF2FA8E0)),
     _Body(0.64, 0.33, 92, CelestialBody.lava, 1, Color(0xFFFF6A1E)),
-    _Body(0.92, 0.43, 104, CelestialBody.moon, 2, Color(0xFF9A86FF)),
   ];
 
   // ---- Camada FAR (gas difuso). Anchors em fracao; radii em px absolutos
@@ -147,6 +145,25 @@ class _HeroCosmosState extends State<HeroCosmos>
           final h = c.maxHeight;
           // Mobile encolhe os corpos difusos (radii sao px absolutos).
           final pixelSize = w < 600 ? 0.6 : 1.0;
+          // FINAL BOSS "Oni Mask": sprite pixel-art 1:1 (oni neon de corpo
+          // inteiro, fundo removido), reconstruido no Canvas pelo OniBoss.
+          // COMPACTO NO FIM DA PISTA: centrado no ponto de fuga do grid Outrun
+          // (x = w/2), figura INTEIRA acima do horizonte com a base apoiada na
+          // linha do horizonte (~0.62h) — nao transborda pra baixo da pista.
+          // Le como vulto distante que aguarda no fim da estrada. CORES VIVAS
+          // (sem Opacity) e desenhado POR CIMA do cosmos (estrelas/nebulosa/
+          // planetas = fundo distante atras dele).
+          const bossAspect = 1255 / 1560; // w/h do sprite recortado
+          final horizonY = h * 0.62;
+          var bossH = h * 0.55; // compacto: vulto no fim da pista
+          var bossW = bossH * bossAspect;
+          final maxBossW = w * 0.50;
+          if (bossW > maxBossW) {
+            bossW = maxBossW;
+            bossH = bossW / bossAspect;
+          }
+          final bossLeft = (w - bossW) / 2; // centrado no ponto de fuga
+          final bossTop = horizonY - bossH; // base na linha do horizonte
           return Stack(
             fit: StackFit.expand,
             children: [
@@ -201,15 +218,10 @@ class _HeroCosmosState extends State<HeroCosmos>
                                 child: SizedBox(
                                   width: b.size,
                                   height: b.size,
-                                  // Sol e lua sao Soul Eater; resto e pixel.
-                                  child: switch (b.body) {
-                                    CelestialBody.sun => const SoulEaterSun(),
-                                    CelestialBody.moon => const SoulEaterMoon(),
-                                    _ => CelestialPlanet(
-                                      body: b.body,
-                                      seed: b.seed,
-                                    ),
-                                  },
+                                  child: CelestialPlanet(
+                                    body: b.body,
+                                    seed: b.seed,
+                                  ),
                                 ),
                               ),
                             ],
@@ -218,6 +230,15 @@ class _HeroCosmosState extends State<HeroCosmos>
                     ],
                   );
                 },
+              ),
+              // BOSS compacto no fim da pista: centrado no ponto de fuga, base
+              // na linha do horizonte, cores vivas, por cima do ceu distante.
+              Positioned(
+                left: bossLeft,
+                top: bossTop,
+                width: bossW,
+                height: bossH,
+                child: const OniBoss(),
               ),
             ],
           );

@@ -11,6 +11,7 @@ enum StackCategory {
   persistence,
   codegen,
   architecture,
+  observability,
   quality,
   web,
   tooling;
@@ -24,6 +25,7 @@ enum StackCategory {
     StackCategory.persistence => l10n.stack_cat_persistence,
     StackCategory.codegen => l10n.stack_cat_codegen,
     StackCategory.architecture => l10n.stack_cat_architecture,
+    StackCategory.observability => l10n.stack_cat_observability,
     StackCategory.quality => l10n.stack_cat_quality,
     StackCategory.web => l10n.stack_cat_web,
     StackCategory.tooling => l10n.stack_cat_tooling,

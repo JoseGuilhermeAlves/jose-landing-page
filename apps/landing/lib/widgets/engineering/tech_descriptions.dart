@@ -245,6 +245,21 @@ abstract final class TechDescriptionsCatalog {
           'direta. Adicionar ou remover uma feature não quebra as demais. '
           'Hierarquia rígida: core → design_system → animations → feature_*.',
     ),
+    'Datadog': TechDescription(
+      title: 'Datadog',
+      tagline: 'APM, logs e RUM de apps em produção.',
+      role: 'Observabilidade',
+      version: 'SaaS',
+      body:
+          'Plataforma de observabilidade que correlaciona métricas, traces e '
+          'logs num único painel. O APM instrumenta o app e expõe latência, '
+          'throughput e erros por transação; o Real User Monitoring (RUM) '
+          'captura sessões reais — tempo de tela, crashes e jornada do '
+          'usuário no mobile. Dashboards e alertas fecham o ciclo: regressão '
+          'de performance ou pico de erro viram sinal antes de o usuário '
+          'reclamar.',
+      docsUrl: 'https://www.datadoghq.com/',
+    ),
     'very_good_analysis': TechDescription(
       title: 'very_good_analysis',
       tagline: 'Lints estritos em todo o workspace.',

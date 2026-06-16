@@ -149,7 +149,8 @@ class ArcadeHero extends StatelessWidget {
                             ),
                             const SizedBox(height: AppSpacing.xxl),
 
-                            // Stats "high score" — anos + zero assets (tudo Canvas).
+                            // Stats "high score" — anos de Flutter + telas demo
+                            // navegaveis no showcase (prova jogavel, verificavel).
                             Wrap(
                               spacing: AppSpacing.huge,
                               runSpacing: AppSpacing.lg,

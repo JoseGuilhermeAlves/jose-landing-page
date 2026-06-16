@@ -9,13 +9,15 @@ import 'package:landing/widgets/home_nav.dart';
 /// fique atras da barra.
 const double kHomeBottomNavHeight = 64;
 
-/// Barra de navegacao fixa no rodape — substitui o menu hamburger na
-/// visao mobile. Mesmo vidro translucido (BackdropFilter) da `HomeNav`
-/// do topo, com um item por ancora (icone + label) e destaque na secao
-/// ativa derivada do scroll (scroll-spy).
+/// Barra de navegacao fixa no rodape — o "stage select" da visao mobile,
+/// no mesmo vocabulario arcade do `ArcadeSideNav` do desktop: vidro
+/// translucido (BackdropFilter) com hairline neon no topo, um item por
+/// ancora com label em fonte pixel ([PixelText]) e indicador chunky neon
+/// (cantos retos + glow) que acende na secao ativa derivada do scroll
+/// (scroll-spy). Ativo em ciano, repouso em muted.
 ///
-/// So e montada em mobile (`context.isMobile`); tablet/desktop mantem a
-/// navegacao no topo.
+/// So e montada em mobile (`context.isMobile`); tablet/desktop usam o
+/// `ArcadeSideNav` lateral.
 class HomeBottomNav extends StatelessWidget {
   const HomeBottomNav({
     required this.anchors,
@@ -39,8 +41,9 @@ class HomeBottomNav extends StatelessWidget {
         child: DecoratedBox(
           decoration: BoxDecoration(
             color: colors.background.withValues(alpha: 0.82),
+            // Hairline neon no topo — mesma assinatura do menu lateral arcade.
             border: Border(
-              top: BorderSide(color: colors.border.withValues(alpha: 0.6)),
+              top: BorderSide(color: colors.primary.withValues(alpha: 0.35)),
             ),
           ),
           child: SafeArea(
@@ -75,8 +78,8 @@ class _BottomNavItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
-    final textTheme = Theme.of(context).textTheme;
-    final tint = active ? colors.primary : colors.onSurfaceMuted;
+    // Ativo em ciano neon; repouso em muted (vocabulario do ArcadeSideNav).
+    final tint = active ? colors.accent : colors.onSurfaceMuted;
 
     return Semantics(
       button: true,
@@ -88,27 +91,35 @@ class _BottomNavItem extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Indicador superior fino que acende na secao ativa.
+            // Indicador chunky neon (cantos retos + glow) que acende na ativa.
             AnimatedContainer(
               duration: AppDuration.fast,
-              height: 2,
-              width: active ? 20 : 0,
+              height: 3,
+              width: active ? 22 : 0,
               decoration: BoxDecoration(
-                color: colors.primary,
-                borderRadius: BorderRadius.circular(2),
+                color: colors.accent,
+                boxShadow: active
+                    ? [
+                        BoxShadow(
+                          color: colors.accent.withValues(alpha: 0.7),
+                          blurRadius: 8,
+                        ),
+                      ]
+                    : null,
               ),
             ),
-            const SizedBox(height: AppSpacing.xs),
-            Icon(anchor.icon ?? Icons.circle_outlined, size: 20, color: tint),
-            const SizedBox(height: 2),
-            Text(
-              anchor.label,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: textTheme.labelSmall?.copyWith(
-                color: tint,
-                fontWeight: active ? FontWeight.w700 : FontWeight.w500,
-                letterSpacing: 0.2,
+            const SizedBox(height: AppSpacing.sm),
+            // Label em fonte pixel — assinatura arcade. FittedBox encolhe
+            // labels longos (ex.: ENGENHARIA) pra caber na largura do item.
+            Flexible(
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: PixelText(
+                  anchor.label,
+                  color: tint,
+                  glowColor: active ? colors.accent : null,
+                  pixelSize: 2,
+                ),
               ),
             ),
           ],

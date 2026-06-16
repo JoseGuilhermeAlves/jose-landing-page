@@ -295,13 +295,13 @@ abstract class AppLocalizations {
   /// No description provided for @hero_trustCanvasValue.
   ///
   /// In pt, this message translates to:
-  /// **'0'**
+  /// **'20+'**
   String get hero_trustCanvasValue;
 
   /// No description provided for @hero_trustCanvasLabel.
   ///
   /// In pt, this message translates to:
-  /// **'assets de animação — tudo é Canvas'**
+  /// **'telas demo no showcase'**
   String get hero_trustCanvasLabel;
 
   /// No description provided for @hero_portraitSemantics.
@@ -337,14 +337,8 @@ abstract class AppLocalizations {
   /// No description provided for @about_domainsMapLabel.
   ///
   /// In pt, this message translates to:
-  /// **'Mapa de domínios'**
+  /// **'Onde já entreguei'**
   String get about_domainsMapLabel;
-
-  /// No description provided for @about_domainsHint.
-  ///
-  /// In pt, this message translates to:
-  /// **'· toque um planeta'**
-  String get about_domainsHint;
 
   /// No description provided for @about_deliveryTitle.
   ///
@@ -811,7 +805,7 @@ abstract class AppLocalizations {
   /// No description provided for @engineering_eyebrow.
   ///
   /// In pt, this message translates to:
-  /// **'Engenharia e serviços'**
+  /// **'Engenharia'**
   String get engineering_eyebrow;
 
   /// No description provided for @engineering_title.
@@ -1564,6 +1558,12 @@ abstract class AppLocalizations {
   /// **'Tooling'**
   String get stack_cat_tooling;
 
+  /// No description provided for @stack_cat_observability.
+  ///
+  /// In pt, this message translates to:
+  /// **'Observabilidade'**
+  String get stack_cat_observability;
+
   /// No description provided for @stack_flutter_role.
   ///
   /// In pt, this message translates to:
@@ -1809,6 +1809,12 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Automação de build, sign e deploy mobile'**
   String get stack_fastlane_role;
+
+  /// No description provided for @stack_datadog_role.
+  ///
+  /// In pt, this message translates to:
+  /// **'APM, logs e RUM de apps em produção'**
+  String get stack_datadog_role;
 
   /// No description provided for @locale_pt.
   ///

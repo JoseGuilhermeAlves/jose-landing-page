@@ -39,11 +39,17 @@ void main() {
       await tester.pumpWidget(const SizedBox());
     });
 
-    testWidgets('compoe DomainConstellation e DeliveryBlock', (tester) async {
+    testWidgets('lista dominios em texto + compoe DeliveryBlock', (
+      tester,
+    ) async {
       await tester.pumpWidget(wrap(const AboutSection()));
       await tester.pump(const Duration(milliseconds: 32));
 
-      expect(find.byType(DomainConstellation), findsOneWidget);
+      // Heading da lista de dominios (texto-primeiro, sem mapa interativo).
+      expect(find.text('Onde já entreguei'), findsOneWidget);
+      // Pelo menos um rotulo estavel do catalogo de dominios aparece como
+      // texto direto (nao mais escondido num balao de planeta).
+      expect(find.text('Varejo B2B'), findsOneWidget);
       expect(find.byType(DeliveryBlock), findsOneWidget);
 
       await tester.pumpWidget(const SizedBox());

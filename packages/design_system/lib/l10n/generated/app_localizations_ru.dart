@@ -102,10 +102,10 @@ class AppLocalizationsRu extends AppLocalizations {
   String get hero_trustAppsLabel => 'ритейл-приложений в продакшене';
 
   @override
-  String get hero_trustCanvasValue => '0';
+  String get hero_trustCanvasValue => '20+';
 
   @override
-  String get hero_trustCanvasLabel => 'ассетов анимации — всё на Canvas';
+  String get hero_trustCanvasLabel => 'демо-экраны в витрине';
 
   @override
   String get hero_portraitSemantics => 'Фото Жозе Гильерме Алвеса';
@@ -124,10 +124,7 @@ class AppLocalizationsRu extends AppLocalizations {
       'Мобильный фронтенд на Flutter уже 6 лет. Фокус на надёжных приложениях с чётким объёмом работ и согласованными ожиданиями с самого старта.';
 
   @override
-  String get about_domainsMapLabel => 'Карта доменов';
-
-  @override
-  String get about_domainsHint => '· коснитесь планеты';
+  String get about_domainsMapLabel => 'Где я работал';
 
   @override
   String get about_deliveryTitle => 'Как я работаю';
@@ -383,7 +380,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get footer_madeWith => 'Сделано на Flutter';
 
   @override
-  String get engineering_eyebrow => 'Инженерия и услуги';
+  String get engineering_eyebrow => 'Инженерия';
 
   @override
   String get engineering_title => 'Стек, на котором держится';
@@ -787,6 +784,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get stack_cat_tooling => 'Tooling';
 
   @override
+  String get stack_cat_observability => 'Наблюдаемость';
+
+  @override
   String get stack_flutter_role =>
       'Базовый фреймворк, Material 3 только тёмная тема';
 
@@ -926,6 +926,9 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get stack_fastlane_role =>
       'Автоматизация build, sign и deploy для мобильных';
+
+  @override
+  String get stack_datadog_role => 'APM, логи и RUM для продакшн-приложений';
 
   @override
   String get locale_pt => 'Português';

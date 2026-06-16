@@ -101,10 +101,10 @@ class AppLocalizationsJa extends AppLocalizations {
   String get hero_trustAppsLabel => '本のリテールアプリが本番稼働';
 
   @override
-  String get hero_trustCanvasValue => '0';
+  String get hero_trustCanvasValue => '20+';
 
   @override
-  String get hero_trustCanvasLabel => 'アニメーションアセット — すべてCanvas描画';
+  String get hero_trustCanvasLabel => 'ショーケースのデモ画面';
 
   @override
   String get hero_portraitSemantics => 'Jose Guilherme Alvesの写真';
@@ -123,10 +123,7 @@ class AppLocalizationsJa extends AppLocalizations {
       'Flutter モバイルフロントエンド6年。キックオフから明確なスコープと期待値の整合に焦点。';
 
   @override
-  String get about_domainsMapLabel => 'ドメインマップ';
-
-  @override
-  String get about_domainsHint => '· 惑星をタップ';
+  String get about_domainsMapLabel => 'これまでの実績領域';
 
   @override
   String get about_deliveryTitle => 'デリバリー方法';
@@ -378,7 +375,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get footer_madeWith => 'Flutterで構築';
 
   @override
-  String get engineering_eyebrow => 'エンジニアリングとサービス';
+  String get engineering_eyebrow => 'エンジニアリング';
 
   @override
   String get engineering_title => 'すべてのプロジェクト決定を';
@@ -769,6 +766,9 @@ class AppLocalizationsJa extends AppLocalizations {
   String get stack_cat_tooling => 'ツール';
 
   @override
+  String get stack_cat_observability => 'オブザーバビリティ';
+
+  @override
   String get stack_flutter_role => '基盤フレームワーク、Material 3 ダークオンリー';
 
   @override
@@ -891,6 +891,9 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get stack_fastlane_role => 'モバイルのbuild、署名、デプロイ自動化';
+
+  @override
+  String get stack_datadog_role => '本番アプリの APM・ログ・RUM';
 
   @override
   String get locale_pt => 'Português';

@@ -102,10 +102,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get hero_trustAppsLabel => 'app retail in produzione';
 
   @override
-  String get hero_trustCanvasValue => '0';
+  String get hero_trustCanvasValue => '20+';
 
   @override
-  String get hero_trustCanvasLabel => 'asset di animazione — tutto è Canvas';
+  String get hero_trustCanvasLabel => 'schermate demo nella vetrina';
 
   @override
   String get hero_portraitSemantics => 'Foto di Jose Guilherme Alves';
@@ -124,10 +124,7 @@ class AppLocalizationsIt extends AppLocalizations {
       'Front end mobile con Flutter da 6 anni. Focus sulla consegna di app robuste, con ambito chiaro e aspettative allineate dal kickoff.';
 
   @override
-  String get about_domainsMapLabel => 'Mappa dei domini';
-
-  @override
-  String get about_domainsHint => '· tocca un pianeta';
+  String get about_domainsMapLabel => 'Dove ho consegnato';
 
   @override
   String get about_deliveryTitle => 'Come consegno';
@@ -382,7 +379,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get footer_madeWith => 'Realizzato con Flutter';
 
   @override
-  String get engineering_eyebrow => 'Ingegneria e servizi';
+  String get engineering_eyebrow => 'Ingegneria';
 
   @override
   String get engineering_title => 'Lo stack dietro';
@@ -786,6 +783,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get stack_cat_tooling => 'Tooling';
 
   @override
+  String get stack_cat_observability => 'Osservabilità';
+
+  @override
   String get stack_flutter_role => 'Framework base, Material 3 dark-only';
 
   @override
@@ -923,6 +923,9 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get stack_fastlane_role =>
       'Automazione di build, firma e deploy mobile';
+
+  @override
+  String get stack_datadog_role => 'APM, log e RUM per app in produzione';
 
   @override
   String get locale_pt => 'Português';

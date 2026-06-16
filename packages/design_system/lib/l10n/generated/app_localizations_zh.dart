@@ -100,10 +100,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String get hero_trustAppsLabel => '款零售应用在生产环境';
 
   @override
-  String get hero_trustCanvasValue => '0';
+  String get hero_trustCanvasValue => '20+';
 
   @override
-  String get hero_trustCanvasLabel => '动画素材——一切皆由 Canvas 绘制';
+  String get hero_trustCanvasLabel => '展示中的演示屏幕';
 
   @override
   String get hero_portraitSemantics => 'Jose Guilherme Alves 照片';
@@ -121,10 +121,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get about_subtitle => 'Flutter 移动端前端开发6年。专注交付稳健应用，从启动就明确范围、对齐预期。';
 
   @override
-  String get about_domainsMapLabel => '领域地图';
-
-  @override
-  String get about_domainsHint => '· 点击星球';
+  String get about_domainsMapLabel => '我交付过的领域';
 
   @override
   String get about_deliveryTitle => '我的交付方式';
@@ -372,7 +369,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get footer_madeWith => '使用 Flutter 构建';
 
   @override
-  String get engineering_eyebrow => '工程与服务';
+  String get engineering_eyebrow => '工程';
 
   @override
   String get engineering_title => '支撑每个';
@@ -759,6 +756,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get stack_cat_tooling => '工具链';
 
   @override
+  String get stack_cat_observability => '可观测性';
+
+  @override
   String get stack_flutter_role => '基础框架，Material 3 纯暗色模式';
 
   @override
@@ -880,6 +880,9 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get stack_fastlane_role => '移动端构建、签名和部署自动化';
+
+  @override
+  String get stack_datadog_role => '生产应用的 APM、日志和 RUM';
 
   @override
   String get locale_pt => 'Português';

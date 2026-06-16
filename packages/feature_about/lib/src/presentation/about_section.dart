@@ -26,16 +26,6 @@ class AboutSection extends StatelessWidget {
       desktop: AppSpacing.xxl,
     );
 
-    // Linhas-fato da bio: dominio em peso forte + corpo curto, prosa
-    // escaneavel sem caixa.
-    final facts = <(String, String)>[
-      (l10n.about_factRetailTitle, l10n.about_factRetailBody),
-      (l10n.about_factFieldTitle, l10n.about_factFieldBody),
-      (l10n.about_factPublicTitle, l10n.about_factPublicBody),
-      (l10n.about_factToolsTitle, l10n.about_factToolsBody),
-      (l10n.about_factFintechTitle, l10n.about_factFintechBody),
-    ];
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -78,11 +68,6 @@ class AboutSection extends StatelessWidget {
           ),
         ),
         const SizedBox(height: AppSpacing.lg),
-        for (var i = 0; i < facts.length; i++) ...[
-          if (i > 0) const SizedBox(height: AppSpacing.sm),
-          _FactRow(title: facts[i].$1, body: facts[i].$2),
-        ],
-        const SizedBox(height: AppSpacing.lg),
         Text(
           l10n.about_bioClose,
           style: tt.bodyMedium?.copyWith(
@@ -93,8 +78,8 @@ class AboutSection extends StatelessWidget {
         SizedBox(height: blockGap),
         const _NeonHairline(),
         SizedBox(height: blockGap),
-        // Mapa de dominios (grafo). NB: os planetas ainda sao "smooth";
-        // reestilizar pra 8/16-bit e tarefa separada.
+        // Mapa de dominios (grafo) — cada dominio e uma criatura espacial
+        // clicavel; o detalhe vive no balao, nao em texto duplicado acima.
         Wrap(
           crossAxisAlignment: WrapCrossAlignment.center,
           spacing: AppSpacing.sm,
@@ -144,38 +129,3 @@ class _NeonHairline extends StatelessWidget {
   }
 }
 
-/// Linha-fato da bio: dominio em peso forte seguido do corpo curto na
-/// mesma linha (RichText) — cada fato escaneavel em uma leitura.
-class _FactRow extends StatelessWidget {
-  const _FactRow({required this.title, required this.body});
-
-  final String title;
-  final String body;
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = context.colors;
-    final tt = Theme.of(context).textTheme;
-    return Text.rich(
-      TextSpan(
-        children: [
-          TextSpan(
-            text: '$title — ',
-            style: tt.bodyMedium?.copyWith(
-              color: colors.onSurface,
-              fontWeight: FontWeight.w600,
-              height: 1.55,
-            ),
-          ),
-          TextSpan(
-            text: body,
-            style: tt.bodyMedium?.copyWith(
-              color: colors.onSurfaceMuted,
-              height: 1.55,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}

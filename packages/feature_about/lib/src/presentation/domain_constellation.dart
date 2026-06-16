@@ -40,15 +40,16 @@ class DomainConstellation extends StatefulWidget {
     ('sanitation', 'fintech'),
   ];
 
-  /// Corpo celeste (sprite do cosmos_3) por dominio — cada dominio ganha
-  /// um planeta distinto da arte de referencia. retail (end-to-end) recebe
-  /// o saturno, o corpo de maior destaque.
-  static const Map<String, CelestialBody> _planetBodies = {
-    'fintech': CelestialBody.earth,
-    'public_services': CelestialBody.ice,
-    'platform': CelestialBody.portal,
-    'sanitation': CelestialBody.lava,
-    'retail': CelestialBody.saturn,
+  /// Criatura espacial por dominio — cada dominio vira um bicho/objeto
+  /// distinto (alien, nave, beholder, meteoro, satelite) pra deixar o mapa
+  /// variado e divertido. retail (end-to-end) recebe o beholder, o corpo de
+  /// maior destaque.
+  static const Map<String, SpaceCreature> _creatures = {
+    'fintech': SpaceCreature.satellite,
+    'public_services': SpaceCreature.alien,
+    'platform': SpaceCreature.ufo,
+    'sanitation': SpaceCreature.meteor,
+    'retail': SpaceCreature.beholder,
   };
 
   @override
@@ -114,7 +115,7 @@ class _DomainConstellationState extends State<DomainConstellation>
             height: height,
             child: _Scene(
               domains: widget.domains,
-              bodies: DomainConstellation._planetBodies,
+              creatures: DomainConstellation._creatures,
               positions: DomainConstellation._positions,
               edges: DomainConstellation._edges,
               selectedId: _selectedId,
@@ -137,7 +138,7 @@ class _DomainConstellationState extends State<DomainConstellation>
 class _Scene extends StatelessWidget {
   const _Scene({
     required this.domains,
-    required this.bodies,
+    required this.creatures,
     required this.positions,
     required this.edges,
     required this.selectedId,
@@ -149,7 +150,7 @@ class _Scene extends StatelessWidget {
   });
 
   final List<DomainHighlight> domains;
-  final Map<String, CelestialBody> bodies;
+  final Map<String, SpaceCreature> creatures;
   final Map<String, Offset> positions;
   final List<(String, String)> edges;
   final String? selectedId;
@@ -238,8 +239,8 @@ class _Scene extends StatelessWidget {
   Widget _buildPlanet(BuildContext context, DomainHighlight d, Size sceneSize) {
     final pos = positions[d.id] ?? const Offset(0.5, 0.5);
     final isActive = (hoverId ?? selectedId) == d.id;
-    final body = bodies[d.id];
-    if (body == null) return const SizedBox.shrink();
+    final creature = creatures[d.id];
+    if (creature == null) return const SizedBox.shrink();
     // Web (desktop) aumenta os planetas consideravelmente — a cena e
     // ~16:9 e comportava planetas maiores; mobile mantem o tamanho pra
     // nao estourar o quadro mais alto.
@@ -262,7 +263,7 @@ class _Scene extends StatelessWidget {
           behavior: HitTestBehavior.opaque,
           onTap: () => onPick(d.id),
           child: _DomainPlanet(
-            body: body,
+            creature: creature,
             isActive: isActive,
             ambient: ambient,
           ),
@@ -274,12 +275,12 @@ class _Scene extends StatelessWidget {
 
 class _DomainPlanet extends StatelessWidget {
   const _DomainPlanet({
-    required this.body,
+    required this.creature,
     required this.isActive,
     required this.ambient,
   });
 
-  final CelestialBody body;
+  final SpaceCreature creature;
   final bool isActive;
   final AnimationController ambient;
 
@@ -289,9 +290,9 @@ class _DomainPlanet extends StatelessWidget {
     return RepaintBoundary(
       child: AnimatedBuilder(
         animation: ambient,
-        // Planeta pixel desenhado em CustomPainter; quando ativo/hover,
-        // ganha um halo neon pulsante atras — destaque sem deformar.
-        child: CelestialPlanet(body: body),
+        // Criatura desenhada em CustomPainter; quando ativo/hover, ganha um
+        // halo neon pulsante atras — destaque sem deformar.
+        child: SpaceCreatureView(creature: creature),
         builder: (context, child) {
           if (!isActive) return child!;
           final pulse = 0.55 + 0.45 * math.sin(ambient.value * math.pi * 2);

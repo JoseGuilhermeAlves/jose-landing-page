@@ -23,21 +23,14 @@ void main() {
   }
 
   group('AboutSection', () {
-    testWidgets('renderiza bio em prosa: lead e linhas-fato', (tester) async {
+    testWidgets('renderiza bio em prosa: lead e fecho', (tester) async {
       await tester.pumpWidget(wrap(const AboutSection()));
       await tester.pump(const Duration(milliseconds: 32));
 
       // Nome/titulo vivem no hero+nav (texto-primeiro aqui, sem bio-card).
-      // Lead + linhas-fato escaneaveis + fecho de escopo.
+      // Lead + fecho de escopo. As linhas-fato por dominio foram removidas
+      // (duplicavam o conteudo dos planetas do mapa).
       expect(find.textContaining('mesma régua'), findsOneWidget);
-      expect(
-        find.textContaining('Varejo B2B', findRichText: true),
-        findsWidgets,
-      );
-      expect(
-        find.textContaining('Fintech de larga escala', findRichText: true),
-        findsWidgets,
-      );
       expect(
         find.textContaining('Backend permanece com o time'),
         findsOneWidget,

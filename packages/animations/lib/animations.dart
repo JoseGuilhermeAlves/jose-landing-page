@@ -20,3 +20,6 @@ export 'src/widgets/celestial_planet.dart';
 export 'src/widgets/cosmos_field.dart';
 export 'src/widgets/loading_spinner.dart';
 export 'src/widgets/particle_field.dart';
+export 'src/widgets/soul_eater_moon.dart';
+export 'src/widgets/soul_eater_sun.dart';
+export 'src/widgets/space_creature.dart';

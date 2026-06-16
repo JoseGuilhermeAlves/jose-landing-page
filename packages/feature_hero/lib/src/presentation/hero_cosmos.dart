@@ -18,12 +18,12 @@ class HeroCosmos extends StatefulWidget {
   /// passo de parallax (1 = lento, 2 = ~2x); cor do halo neon.
   static const List<_Body> _bodies = [
     _Body(0.11, 0.17, 140, CelestialBody.saturn, 1, Color(0xFFFF3CAC)),
-    _Body(0.83, 0.13, 188, CelestialBody.sun, 1, Color(0xFFFFB02E)),
+    _Body(0.83, 0.12, 172, CelestialBody.sun, 1, Color(0xFFFFB02E)),
     _Body(0.49, 0.085, 66, CelestialBody.ice, 2, Color(0xFF36E0FF)),
     _Body(0.38, 0.21, 72, CelestialBody.portal, 2, Color(0xFFE83CC8)),
     _Body(0.27, 0.40, 88, CelestialBody.earth, 1, Color(0xFF2FA8E0)),
     _Body(0.64, 0.33, 92, CelestialBody.lava, 1, Color(0xFFFF6A1E)),
-    _Body(0.93, 0.44, 58, CelestialBody.moon, 2, Color(0xFF9A86FF)),
+    _Body(0.92, 0.43, 104, CelestialBody.moon, 2, Color(0xFF9A86FF)),
   ];
 
   // ---- Camada FAR (gas difuso). Anchors em fracao; radii em px absolutos
@@ -201,10 +201,15 @@ class _HeroCosmosState extends State<HeroCosmos>
                                 child: SizedBox(
                                   width: b.size,
                                   height: b.size,
-                                  child: CelestialPlanet(
-                                    body: b.body,
-                                    seed: b.seed,
-                                  ),
+                                  // Sol e lua sao Soul Eater; resto e pixel.
+                                  child: switch (b.body) {
+                                    CelestialBody.sun => const SoulEaterSun(),
+                                    CelestialBody.moon => const SoulEaterMoon(),
+                                    _ => CelestialPlanet(
+                                      body: b.body,
+                                      seed: b.seed,
+                                    ),
+                                  },
                                 ),
                               ),
                             ],

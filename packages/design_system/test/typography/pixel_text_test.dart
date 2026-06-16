@@ -24,6 +24,31 @@ void main() {
     test('minuscula mapeia pra maiuscula', () {
       expect(PixelFont.rowsFor('a'), PixelFont.rowsFor('A'));
     });
+
+    test('acentos e cedilha caem na letra-base (nao viram buraco)', () {
+      // Cobre o conjunto que aparece na copy pt-BR.
+      const pairs = {
+        'á': 'A', 'ã': 'A', 'â': 'A', 'à': 'A',
+        'é': 'E', 'ê': 'E',
+        'í': 'I',
+        'ó': 'O', 'ô': 'O', 'õ': 'O',
+        'ú': 'U', 'ü': 'U',
+        'ç': 'C', 'Ç': 'C',
+      };
+      pairs.forEach((accented, base) {
+        expect(
+          PixelFont.rowsFor(accented),
+          PixelFont.rowsFor(base),
+          reason: '"$accented" deveria render como "$base"',
+        );
+        // E nunca virar espaco (buraco no texto).
+        expect(
+          PixelFont.rowsFor(accented),
+          isNot(PixelFont.rowsFor(' ')),
+          reason: '"$accented" nao pode virar espaco',
+        );
+      });
+    });
   });
 
   group('PixelText', () {

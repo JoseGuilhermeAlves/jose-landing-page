@@ -70,7 +70,7 @@ class ArcadeHero extends StatelessWidget {
                         BlackHolePortrait(
                           diskHot: colors.primary,
                           diskCool: colors.accent,
-                          size: 260,
+                          size: 320,
                         ),
                         const SizedBox(height: AppSpacing.xxl),
                       ],
@@ -171,11 +171,11 @@ class ArcadeHero extends StatelessWidget {
                       ),
                       // Desktop: buraco negro a direita do texto.
                       if (!isMobile) ...[
-                        const SizedBox(width: AppSpacing.huge),
+                        const SizedBox(width: AppSpacing.xl),
                         BlackHolePortrait(
                           diskHot: colors.primary,
                           diskCool: colors.accent,
-                          size: 360,
+                          size: 460,
                         ),
                       ],
                     ],

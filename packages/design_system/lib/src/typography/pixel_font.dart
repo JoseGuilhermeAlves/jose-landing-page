@@ -5,7 +5,9 @@
 /// sem dependencia de arquivo .ttf.
 ///
 /// Cobre A-Z, 0-9 e pontuacao comum. Minusculas mapeiam pra maiusculas
-/// (estetica all-caps de fliperama). Char desconhecido vira espaco.
+/// (estetica all-caps de fliperama). Letras acentuadas e cedilha caem na
+/// letra-base (Ç->C, Ã->A, É->E...) — o 5x7 nao comporta diacritico, entao
+/// o texto fica legivel em vez de virar buraco. Char desconhecido vira espaco.
 abstract final class PixelFont {
   /// Largura da matriz de cada glifo, em pixels-fonte.
   static const int glyphWidth = 5;
@@ -14,11 +16,22 @@ abstract final class PixelFont {
   static const int glyphHeight = 7;
 
   /// Retorna as 7 linhas (5 bits cada) do glifo de [char], ou o glifo de
-  /// espaco se nao houver mapeamento.
+  /// espaco se nao houver mapeamento. Acentos/cedilha sao reduzidos a base.
   static List<int> rowsFor(String char) {
     final upper = char.toUpperCase();
-    return _glyphs[upper] ?? _glyphs[' ']!;
+    final base = _deaccent[upper] ?? upper;
+    return _glyphs[base] ?? _glyphs[' ']!;
   }
+
+  /// Acentuadas/cedilha -> letra-base ASCII (apos toUpperCase).
+  static const Map<String, String> _deaccent = {
+    'Á': 'A', 'À': 'A', 'Â': 'A', 'Ã': 'A', 'Ä': 'A',
+    'É': 'E', 'È': 'E', 'Ê': 'E', 'Ë': 'E',
+    'Í': 'I', 'Ì': 'I', 'Î': 'I', 'Ï': 'I',
+    'Ó': 'O', 'Ò': 'O', 'Ô': 'O', 'Õ': 'O', 'Ö': 'O',
+    'Ú': 'U', 'Ù': 'U', 'Û': 'U', 'Ü': 'U',
+    'Ç': 'C', 'Ñ': 'N',
+  };
 
   // Cada lista: 7 ints, top->bottom. Bit 4 (0x10) = coluna 0 (esquerda).
   static const Map<String, List<int>> _glyphs = {

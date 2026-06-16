@@ -193,14 +193,14 @@ class AppLocalizationsJa extends AppLocalizations {
   String get delivery_craft_eyebrow => 'クラフト';
 
   @override
-  String get delivery_craft_title => '実践的なアーキテクチャ';
+  String get delivery_craft_title => 'アーキテクチャと';
 
   @override
-  String get delivery_craft_titleAccent => 'とパフォーマンス。';
+  String get delivery_craft_titleAccent => '確かな実践。';
 
   @override
   String get delivery_craft_body =>
-      '機能ごとのClean Architecture、状態管理にBloc/Cubit、ベクターがアセットより軽い場合はCustomPainter。実機でフレーム時間を計測（エミュレータではなく）、ビルド時間をプロファイリング、リビルドを監査。プロダクションスタックは進化を支える——MVP後2ヶ月で止まることはない。';
+      '明確なアーキテクチャ判断：フィーチャー単位のClean ArchitectureとSOLIDが各クラスの境界を定義。一貫したコードパターン（Bloc/Cubit、リポジトリ、コンストラクタ注入）に加え、振る舞い駆動（BDD）と仕様駆動（SDD）の開発。各フィーチャーは契約とテストから始まり、場当たり的ではない。';
 
   @override
   String get delivery_collab_eyebrow => 'コラボレーション';

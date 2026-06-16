@@ -189,14 +189,14 @@ class AppLocalizationsZh extends AppLocalizations {
   String get delivery_craft_eyebrow => '技艺';
 
   @override
-  String get delivery_craft_title => '真实的架构';
+  String get delivery_craft_title => '架构与';
 
   @override
-  String get delivery_craft_titleAccent => '与性能。';
+  String get delivery_craft_titleAccent => '良好实践。';
 
   @override
   String get delivery_craft_body =>
-      '按功能的 Clean Architecture，Bloc/Cubit 管理状态，矢量比素材便宜时用 CustomPainter。在真机上测量帧时间（非模拟器），分析构建耗时，审查重建。生产级技术栈支撑演进——不会在MVP两个月后卡壳。';
+      '明确的架构决策：按功能划分的 Clean Architecture，以 SOLID 界定每个类的边界。一致的代码模式（Bloc/Cubit、仓储、构造函数注入），以及行为驱动（BDD）与规约驱动（SDD）的开发——每个功能从契约和测试开始，而非临时拼凑。';
 
   @override
   String get delivery_collab_eyebrow => '协作';

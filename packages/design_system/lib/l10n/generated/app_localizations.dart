@@ -475,13 +475,13 @@ abstract class AppLocalizations {
   /// No description provided for @delivery_craft_titleAccent.
   ///
   /// In pt, this message translates to:
-  /// **'performance reais.'**
+  /// **'boas práticas.'**
   String get delivery_craft_titleAccent;
 
   /// No description provided for @delivery_craft_body.
   ///
   /// In pt, this message translates to:
-  /// **'Clean Architecture por feature, Bloc/Cubit para estado, CustomPainter quando vetor é mais barato que asset. Mede tempo de frame em device real (não emulador), perfila build time, audita rebuilds. Stack de produção sustenta evolução — não emperra dois meses depois do MVP.'**
+  /// **'Decisões de arquitetura explícitas: Clean Architecture por feature e SOLID definindo os limites de cada classe. Patterns de código consistentes (Bloc/Cubit, repositório, injeção por construtor) e desenvolvimento orientado a comportamento (BDD) e a especificação (SDD) — cada feature nasce com contrato e teste, não com improviso.'**
   String get delivery_craft_body;
 
   /// No description provided for @delivery_collab_eyebrow.

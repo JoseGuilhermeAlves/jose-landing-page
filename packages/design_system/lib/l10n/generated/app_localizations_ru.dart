@@ -198,14 +198,14 @@ class AppLocalizationsRu extends AppLocalizations {
   String get delivery_craft_eyebrow => 'КРАФТ';
 
   @override
-  String get delivery_craft_title => 'Реальная архитектура и';
+  String get delivery_craft_title => 'Архитектура и';
 
   @override
-  String get delivery_craft_titleAccent => 'реальная производительность.';
+  String get delivery_craft_titleAccent => 'зрелые практики.';
 
   @override
   String get delivery_craft_body =>
-      'Clean Architecture по фичам, Bloc/Cubit для состояния, CustomPainter, когда вектор дешевле ассета. Замеряю время кадра на реальном устройстве (не эмуляторе), профилирую build time, аудирую ребилды. Продакшен-стек выдерживает развитие — не клинит через два месяца после MVP.';
+      'Осознанные архитектурные решения: Clean Architecture по фичам и SOLID, задающие границы каждого класса. Единообразные паттерны кода (Bloc/Cubit, репозиторий, внедрение через конструктор), а также разработка через поведение (BDD) и через спецификацию (SDD) — каждая фича начинается с контракта и тестов, а не с импровизации.';
 
   @override
   String get delivery_collab_eyebrow => 'СОТРУДНИЧЕСТВО';

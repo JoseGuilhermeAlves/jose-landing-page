@@ -197,14 +197,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get delivery_craft_eyebrow => 'CRAFT';
 
   @override
-  String get delivery_craft_title => 'Real architecture';
+  String get delivery_craft_title => 'Architecture and';
 
   @override
-  String get delivery_craft_titleAccent => 'and performance.';
+  String get delivery_craft_titleAccent => 'sound practices.';
 
   @override
   String get delivery_craft_body =>
-      'Clean Architecture per feature, Bloc/Cubit for state, CustomPainter when vectors are cheaper than assets. Measures frame time on real devices (not emulators), profiles build time, audits rebuilds. A production stack sustains evolution — it doesn\'t stall two months after the MVP.';
+      'Explicit architecture decisions: feature-first Clean Architecture and SOLID drawing each class\'s boundaries. Consistent code patterns (Bloc/Cubit, repository, constructor injection) plus behavior-driven (BDD) and spec-driven (SDD) development — every feature starts with a contract and tests, not improvisation.';
 
   @override
   String get delivery_collab_eyebrow => 'COLLABORATION';

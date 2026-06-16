@@ -31,6 +31,19 @@ class ShowcaseSection extends StatelessWidget {
     final l10n = context.l10n;
     final templates = ShowcaseCatalog.all(l10n);
 
+    // Gabinetes — construidos uma vez, consumidos pelo grid (desktop) ou
+    // pelo carrossel (mobile).
+    final cabinets = [
+      for (final t in templates)
+        ArcadeCabinet(
+          key: Key('showcase-cabinet-${t.id}'),
+          label: _brand[t.id] ?? t.label.toUpperCase(),
+          enabled: t.hasDemo,
+          preview: _previewFor(t.id),
+          onTap: () => _openDemo(context, t),
+        ),
+    ];
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -68,25 +81,19 @@ class ShowcaseSection extends StatelessWidget {
             desktop: AppSpacing.xxl,
           ),
         ),
-        // Galeria de gabinetes — Wrap responsivo (1 col mobile, varios no
-        // desktop). Cada gabinete tem largura fixa pra manter a proporcao.
-        Wrap(
-          spacing: AppSpacing.xl,
-          runSpacing: AppSpacing.xl,
-          children: [
-            for (final t in templates)
-              SizedBox(
-                width: context.responsive(mobile: 280, desktop: 300),
-                child: ArcadeCabinet(
-                  key: Key('showcase-cabinet-${t.id}'),
-                  label: _brand[t.id] ?? t.label.toUpperCase(),
-                  enabled: t.hasDemo,
-                  preview: _previewFor(t.id),
-                  onTap: () => _openDemo(context, t),
-                ),
-              ),
-          ],
-        ),
+        // Mobile: carrossel "stage select" (1 gabinete por vez) — evita a
+        // pilha vertical gigante. Desktop: Wrap com varios por linha.
+        if (context.isMobile)
+          _ShowcaseCarousel(cabinets: cabinets)
+        else
+          Wrap(
+            spacing: AppSpacing.xl,
+            runSpacing: AppSpacing.xl,
+            children: [
+              for (final cabinet in cabinets)
+                SizedBox(width: 300, child: cabinet),
+            ],
+          ),
       ],
     );
   }
@@ -119,5 +126,149 @@ class ShowcaseSection extends StatelessWidget {
       'finance' => const FinanceDemo(),
       _ => null,
     };
+  }
+}
+
+/// Carrossel "stage select" do mobile: um gabinete por vez (PageView com
+/// peek do vizinho), bolinhas de pagina e setas ‹ ›. Evita a pilha vertical
+/// gigante dos 5 gabinetes empilhados. Como e PageView.builder, so monta os
+/// previews proximos da pagina atual — mais leve que o Wrap (que monta os 5).
+class _ShowcaseCarousel extends StatefulWidget {
+  const _ShowcaseCarousel({required this.cabinets});
+
+  final List<Widget> cabinets;
+
+  @override
+  State<_ShowcaseCarousel> createState() => _ShowcaseCarouselState();
+}
+
+class _ShowcaseCarouselState extends State<_ShowcaseCarousel> {
+  static const double _viewportFraction = 0.86;
+
+  // Cromo fixo do gabinete (marquee + deck + paddings/espacos), fora a tela
+  // 3:4 que escala com a largura. Ver ArcadeCabinet.
+  static const double _cabinetChrome = 112;
+
+  late final PageController _controller = PageController(
+    viewportFraction: _viewportFraction,
+  );
+  int _page = 0;
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  void _goTo(int page) {
+    final target = page.clamp(0, widget.cabinets.length - 1);
+    _controller.animateToPage(
+      target,
+      duration: AppDuration.base,
+      curve: Curves.easeOutCubic,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        // Altura = cromo + tela (3:4) na largura da pagina (menos o gap).
+        final pageWidth = constraints.maxWidth * _viewportFraction;
+        final screenWidth = pageWidth - AppSpacing.sm * 2 - AppSpacing.md;
+        final cabinetHeight = _cabinetChrome + screenWidth * 4 / 3;
+
+        return Column(
+          children: [
+            SizedBox(
+              height: cabinetHeight,
+              child: PageView.builder(
+                controller: _controller,
+                itemCount: widget.cabinets.length,
+                onPageChanged: (i) => setState(() => _page = i),
+                itemBuilder: (context, i) => Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AppSpacing.sm,
+                  ),
+                  child: Align(
+                    alignment: Alignment.topCenter,
+                    child: widget.cabinets[i],
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: AppSpacing.lg),
+            // Setas + bolinhas de pagina.
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _Arrow(
+                  glyph: '<',
+                  enabled: _page > 0,
+                  onTap: () => _goTo(_page - 1),
+                ),
+                const SizedBox(width: AppSpacing.md),
+                for (var i = 0; i < widget.cabinets.length; i++)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 3),
+                    child: AnimatedContainer(
+                      duration: AppDuration.fast,
+                      width: i == _page ? 18 : 7,
+                      height: 7,
+                      decoration: BoxDecoration(
+                        color: i == _page
+                            ? colors.primary
+                            : colors.onSurfaceMuted.withValues(alpha: 0.4),
+                      ),
+                    ),
+                  ),
+                const SizedBox(width: AppSpacing.md),
+                _Arrow(
+                  glyph: '>',
+                  enabled: _page < widget.cabinets.length - 1,
+                  onTap: () => _goTo(_page + 1),
+                ),
+              ],
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
+
+/// Seta ‹ › em fonte pixel; apagada quando nao ha pra onde ir.
+class _Arrow extends StatelessWidget {
+  const _Arrow({
+    required this.glyph,
+    required this.enabled,
+    required this.onTap,
+  });
+
+  final String glyph;
+  final bool enabled;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+    return Semantics(
+      button: true,
+      enabled: enabled,
+      child: GestureDetector(
+        onTap: enabled ? onTap : null,
+        behavior: HitTestBehavior.opaque,
+        child: Padding(
+          padding: const EdgeInsets.all(AppSpacing.sm),
+          child: PixelText(
+            glyph,
+            color: enabled ? colors.accent : colors.onSurfaceMuted,
+            pixelSize: 4,
+          ),
+        ),
+      ),
+    );
   }
 }

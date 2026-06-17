@@ -28,9 +28,6 @@ class HeroCosmos extends StatefulWidget {
     _Body(0.64, 0.33, 92, CelestialBody.lava, 1, Color(0xFFFF6A1E)),
   ];
 
-  // ---- Camada FAR (gas difuso). Anchors em fracao; radii em px absolutos
-  // (escalados por pixelSize conforme breakpoint). Todos no ceu (y < 0.45).
-
   static const List<CosmosGalaxy> _galaxies = [
     CosmosGalaxy(
       canvasAnchor: Offset(0.17, 0.22),
@@ -44,8 +41,6 @@ class HeroCosmos extends StatefulWidget {
     ),
   ];
 
-  // Nebulosas: glow neon SUTIL sobre o preto (density baixa) — contexto de
-  // profundidade, nao lavar a cena de pastel.
   static const List<CosmosNebula> _nebulas = [
     CosmosNebula(
       canvasAnchor: Offset(0.30, 0.26),
@@ -104,9 +99,6 @@ class _HeroCosmosState extends State<HeroCosmos>
   @override
   void initState() {
     super.initState();
-    // 1 volta = travessia de um "passo" de parallax. Loop sem salto: x usa
-    // multiplos inteiros do span de wrap (ver _xFor). A galaxia/nebulosa/
-    // pulsar leem o mesmo tick via CosmosPainter(super: repaint).
     _scroll = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 40),
@@ -137,7 +129,7 @@ class _HeroCosmosState extends State<HeroCosmos>
   double _xFor(_Body b) {
     var x = (b.x - _scroll.value * _span * b.step) % _span;
     if (x < 0) x += _span;
-    return x - 0.15; // folga a esquerda
+    return x - 0.15;
   }
 
   @override
@@ -147,57 +139,26 @@ class _HeroCosmosState extends State<HeroCosmos>
         builder: (context, c) {
           final w = c.maxWidth;
           final h = c.maxHeight;
-          // Mobile encolhe os corpos difusos (radii sao px absolutos).
           final pixelSize = w < 600 ? 0.6 : 1.0;
-          // FINAL BOSS "Oni Mask": sprite pixel-art 1:1 (oni neon de corpo
-          // inteiro, fundo removido), reconstruido no Canvas pelo OniBoss.
-          // Agora um COLOSSO LA NO FUNDO: gigante, translucido e CENTRADO no
-          // ponto de fuga da pista. O grid Outrun do shell converge em
-          // (w/2, screenH * _horizonFraction); o boss sobe dali, com a cauda
-          // pousando exatamente onde a pista termina. Fica ATRAS de tudo
-          // (planetas + texto passam na frente) e com opacidade baixa pra nao
-          // roubar o foco da copy.
-          const bossAspect = 1255 / 1560; // w/h do sprite recortado
+          const bossAspect = 1255 / 1560;
           final isMobileViewport = w < 600;
-          // Escala pela VIEWPORT (nao pelo `h` do hero, que cresce no mobile com
-          // o conteudo empilhado): a origem do hero coincide com o topo da tela,
-          // entao y em espaco-hero == y em espaco-viewport no 1o fold.
           final screenH = MediaQuery.sizeOf(context).height;
-          // Colosso CENTRADO no ponto de fuga. Mesma escala vertical em web e
-          // mobile (a do mobile ficou perfeita): a cauda pousa perto do
-          // horizonte e o rosto fica no topo nos dois.
           var bossH = screenH * 0.68;
           var bossW = bossH * bossAspect;
-          // No mobile o cap pela largura corta de leve as laterais (mantem
-          // presenca); no desktop limita pra nao ocupar a tela toda.
           final maxBossW = w * (isMobileViewport ? 1.02 : 0.46);
           if (bossW > maxBossW) {
             bossW = maxBossW;
             bossH = bossW / bossAspect;
           }
-          // CENTRO do boss = PONTO DE FUGA da pista. O grid do shell e
-          // full-width (vive ATRAS do menu lateral), entao converge no centro da
-          // VIEWPORT — nao no centro da area de conteudo, que no desktop e
-          // empurrada pra direita pelo side nav. Converte o centro da viewport
-          // pra coords locais do HeroCosmos (no mobile, sem nav, vira w/2).
           final screenW = MediaQuery.sizeOf(context).width;
           final trackCenterX = w - screenW / 2;
           final bossLeft = trackCenterX - bossW / 2;
-          // Vertical: WEB ancora a CAUDA no horizonte (linha da pista, 0.62 da
-          // viewport) — o fim da pista encontra o boss. MOBILE mantem a ancora
-          // pelo rosto (composicao ja aprovada).
           final bossTop = isMobileViewport
               ? screenH * 0.12 - bossH * 0.16
               : screenH * 0.62 - bossH;
-          // Meio-termo: opacidade media + DESSATURADO. Presente como colosso,
-          // mas as cores neon mutadas nao roubam o destaque da copy.
-          const bossOpacity = 0.5;
-          const bossSaturation = 0.82;
           return Stack(
             fit: StackFit.expand,
             children: [
-              // FAR: galaxia + nebulosas + wisp + pulsar. O painter ouve o
-              // _scroll direto (repaint:), entao fica FORA do AnimatedBuilder.
               RepaintBoundary(
                 child: CustomPaint(
                   isComplex: true,
@@ -214,28 +175,19 @@ class _HeroCosmosState extends State<HeroCosmos>
                   size: Size.infinite,
                 ),
               ),
-              // BOSS: colosso gigante e translucido, CENTRADO no ponto de fuga
-              // (cauda na linha do horizonte), ATRAS dos planetas e do texto —
-              // os planetas passam na frente e reforcam profundidade.
               Positioned(
                 left: bossLeft,
                 top: bossTop,
                 width: bossW,
                 height: bossH,
-                child: const OniBoss(
-                  opacity: bossOpacity,
-                  saturation: bossSaturation,
-                ),
+                child: const OniBoss(),
               ),
-              // MID: planetas pixel passando (parallax) — NA FRENTE do boss.
               AnimatedBuilder(
                 animation: _scroll,
                 builder: (context, _) {
                   return Stack(
                     children: [
                       for (final b in HeroCosmos._bodies)
-                        // Caixa do halo (1.7x o corpo) — o planeta opaco cobre
-                        // o miolo do gradiente, sobra so o anel de bloom neon.
                         Positioned(
                           left: _xFor(b) * w - b.size * 0.85,
                           top: b.y * h - b.size * 0.85,

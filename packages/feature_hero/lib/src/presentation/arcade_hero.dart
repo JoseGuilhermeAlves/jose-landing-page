@@ -3,6 +3,18 @@ import 'package:feature_hero/src/presentation/black_hole_portrait.dart';
 import 'package:feature_hero/src/presentation/hero_cosmos.dart';
 import 'package:flutter/material.dart';
 
+/// Halo preto estilo box-shadow aplicado a TODO o texto do hero — varias
+/// sombras pretas empilhadas criam contraste forte contra o boss em cor
+/// cheia atras. Text usa esta lista em `shadows`; PixelText usa o
+/// equivalente via `glowColor: Colors.black` + `glowPasses`.
+const List<Shadow> _kHeroTextHalo = [
+  // Cor default de Shadow ja e preto (0xFF000000); so o blur varia.
+  Shadow(blurRadius: 4),
+  Shadow(blurRadius: 8),
+  Shadow(blurRadius: 8),
+  Shadow(blurRadius: 16),
+];
+
 /// Hero da landing Arcade — o "title screen" do fliperama. Nome em fonte
 /// bitmap [PixelText] com glow magenta sobre o backdrop CRT (grid Outrun
 /// + starfield, desenhado pelo shell). Headline e pitch em fonte legivel;
@@ -33,7 +45,6 @@ class ArcadeHero extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     final isMobile = context.isMobile;
 
-    // Tamanho do pixel do nome — o nome e o elemento-estrela do title screen.
     final namePixel = (isMobile ? 4 : 7).toDouble();
 
     return ConstrainedBox(
@@ -41,7 +52,6 @@ class ArcadeHero extends StatelessWidget {
       child: Stack(
         alignment: Alignment.center,
         children: [
-          // Planetas espalhados atras de tudo (cosmos do hero).
           const Positioned.fill(child: HeroCosmos()),
           _heroContent(context, colors, textTheme, isMobile, namePixel),
         ],
@@ -60,27 +70,17 @@ class ArcadeHero extends StatelessWidget {
       padding: EdgeInsets.symmetric(
         horizontal: context.responsive(mobile: AppSpacing.lg, desktop: 0),
       ),
-      // Sem scroll interno: o conteudo dimensiona o hero (altura intrinseca)
-      // e o Stack pai o centra verticalmente dentro do minHeight. Telas
-      // curtas crescem o hero e empurram a pagina (scroll unico do shell).
       child: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 1100),
           child: Flex(
             direction: isMobile ? Axis.vertical : Axis.horizontal,
-            // Vertical (mobile) precisa de min pra nao estourar com altura
-            // ilimitada; horizontal (desktop) preenche a largura cap 1100.
             mainAxisSize: isMobile ? MainAxisSize.min : MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.center,
-            // Mobile alinha tudo a ESQUERDA: a foto (menor) encosta na
-            // esquerda e libera a faixa direita pro boss dominar.
             crossAxisAlignment: isMobile
                 ? CrossAxisAlignment.start
                 : CrossAxisAlignment.center,
             children: [
-              // Mobile: buraco negro grande no CANTO SUPERIOR ESQUERDO, puxado
-              // pra cima/esquerda via translate (sangra em direcao ao canto sem
-              // empurrar o texto). Largura ~52% da viewport.
               if (isMobile) ...[
                 Transform.translate(
                   offset: const Offset(-32, -36),
@@ -103,33 +103,32 @@ class ArcadeHero extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Eyebrow: insira-moeda vibe, ciano.
                     Text(
                       context.l10n.hero_eyebrow.toUpperCase(),
                       style: textTheme.labelMedium?.copyWith(
                         color: colors.accent,
                         letterSpacing: 3,
                         fontWeight: FontWeight.w700,
+                        shadows: _kHeroTextHalo,
                       ),
                     ),
                     const SizedBox(height: AppSpacing.lg),
 
-                    // Nome em fonte pixel, duas linhas, glow magenta — o titulo.
                     Semantics(
                       header: true,
                       label: 'Jose Guilherme Alves',
                       child: PixelText(
                         'JOSE\nGUILHERME ALVES',
                         color: colors.primary,
-                        glowColor: colors.primary,
-                        glowBlur: 10,
+                        glowColor: Colors.black,
+                        glowBlur: 12,
+                        glowPasses: 6,
                         pixelSize: namePixel,
                         lineSpacing: 3,
                       ),
                     ),
                     const SizedBox(height: AppSpacing.xl),
 
-                    // Headline em fonte legivel (display) — pitch curto.
                     Text(
                       '${context.l10n.hero_headline1} '
                       '${context.l10n.hero_headline2}',
@@ -141,6 +140,7 @@ class ArcadeHero extends StatelessWidget {
                                 color: colors.onSurface,
                                 height: 1.2,
                                 fontWeight: FontWeight.w600,
+                                shadows: _kHeroTextHalo,
                               ),
                     ),
                     const SizedBox(height: AppSpacing.md),
@@ -149,11 +149,11 @@ class ArcadeHero extends StatelessWidget {
                       style: textTheme.bodyLarge?.copyWith(
                         color: colors.onSurfaceMuted,
                         height: 1.5,
+                        shadows: _kHeroTextHalo,
                       ),
                     ),
                     const SizedBox(height: AppSpacing.xxl),
 
-                    // CTAs arcade.
                     Wrap(
                       spacing: AppSpacing.md,
                       runSpacing: AppSpacing.md,
@@ -173,8 +173,6 @@ class ArcadeHero extends StatelessWidget {
                     ),
                     const SizedBox(height: AppSpacing.xxl),
 
-                    // Stats "high score" — anos de Flutter + telas demo
-                    // navegaveis no showcase (prova jogavel, verificavel).
                     Wrap(
                       spacing: AppSpacing.huge,
                       runSpacing: AppSpacing.lg,
@@ -194,7 +192,6 @@ class ArcadeHero extends StatelessWidget {
                   ],
                 ),
               ),
-              // Desktop: buraco negro a direita do texto.
               if (!isMobile) ...[
                 const SizedBox(width: AppSpacing.xl),
                 BlackHolePortrait(
@@ -236,7 +233,6 @@ class _ArcadeButtonState extends State<_ArcadeButton> {
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
-    // No hover, o botao "acende": preenche e ganha glow.
     final lit = _hovered || widget.filled;
     final bg = lit ? widget.color : Colors.transparent;
     final fg = lit ? colors.background : widget.color;
@@ -269,7 +265,14 @@ class _ArcadeButtonState extends State<_ArcadeButton> {
                     ]
                   : null,
             ),
-            child: PixelText(widget.label, color: fg, pixelSize: 3),
+            child: PixelText(
+              widget.label,
+              color: fg,
+              glowColor: Colors.black,
+              glowBlur: 5,
+              glowPasses: 4,
+              pixelSize: 3,
+            ),
           ),
         ),
       ),
@@ -298,7 +301,14 @@ class _ArcadeStat extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        PixelText(value, color: color, glowColor: color, pixelSize: 5),
+        PixelText(
+          value,
+          color: color,
+          glowColor: Colors.black,
+          glowBlur: 8,
+          glowPasses: 5,
+          pixelSize: 5,
+        ),
         const SizedBox(height: AppSpacing.sm),
         ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 180),
@@ -308,6 +318,7 @@ class _ArcadeStat extends StatelessWidget {
               color: colors.onSurfaceMuted,
               letterSpacing: 1.5,
               height: 1.4,
+              shadows: _kHeroTextHalo,
             ),
           ),
         ),

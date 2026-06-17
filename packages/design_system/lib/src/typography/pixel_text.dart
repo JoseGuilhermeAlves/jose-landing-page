@@ -20,6 +20,7 @@ class PixelText extends StatelessWidget {
     this.lineSpacing = 2,
     this.glowColor,
     this.glowBlur = 6,
+    this.glowPasses = 1,
     this.align = TextAlign.left,
     super.key,
   });
@@ -45,6 +46,11 @@ class PixelText extends StatelessWidget {
   /// Raio do blur do glow.
   final double glowBlur;
 
+  /// Quantas vezes o glow e desenhado, empilhado no mesmo lugar. >1
+  /// densifica o halo (estilo box-shadow do CSS), criando contraste forte
+  /// quando o texto fica sobre fundos claros/ruidosos. Default 1 = original.
+  final int glowPasses;
+
   /// Alinhamento horizontal entre linhas de larguras diferentes.
   final TextAlign align;
 
@@ -62,6 +68,7 @@ class PixelText extends StatelessWidget {
         letterSpacing: letterSpacing,
         glowColor: glowColor,
         glowBlur: glowBlur,
+        glowPasses: glowPasses,
         align: align,
       );
     }
@@ -92,6 +99,7 @@ class PixelText extends StatelessWidget {
         lineSpacing: lineSpacing,
         glowColor: glowColor,
         glowBlur: glowBlur,
+        glowPasses: glowPasses,
         align: align,
       ),
     );
@@ -109,6 +117,7 @@ class _FallbackText extends StatelessWidget {
     required this.letterSpacing,
     required this.glowColor,
     required this.glowBlur,
+    required this.glowPasses,
     required this.align,
   });
 
@@ -118,6 +127,7 @@ class _FallbackText extends StatelessWidget {
   final double letterSpacing;
   final Color? glowColor;
   final double glowBlur;
+  final int glowPasses;
   final TextAlign align;
 
   @override
@@ -133,7 +143,10 @@ class _FallbackText extends StatelessWidget {
         letterSpacing: letterSpacing * pixelSize,
         height: 1.1,
         shadows: glowColor != null
-            ? [Shadow(color: glowColor!, blurRadius: glowBlur)]
+            ? List<Shadow>.filled(
+                glowPasses,
+                Shadow(color: glowColor!, blurRadius: glowBlur),
+              )
             : null,
       ),
     );
@@ -149,6 +162,7 @@ class _PixelTextPainter extends CustomPainter {
     required this.lineSpacing,
     required this.glowColor,
     required this.glowBlur,
+    required this.glowPasses,
     required this.align,
   }) : _fill = Paint()..color = color {
     if (glowColor != null) {
@@ -165,6 +179,7 @@ class _PixelTextPainter extends CustomPainter {
   final double lineSpacing;
   final Color? glowColor;
   final double glowBlur;
+  final int glowPasses;
   final TextAlign align;
 
   final Paint _fill;
@@ -221,7 +236,11 @@ class _PixelTextPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final path = _path ??= _buildPath(size);
-    if (_glow != null) canvas.drawPath(path, _glow!);
+    if (_glow != null) {
+      for (var i = 0; i < glowPasses; i++) {
+        canvas.drawPath(path, _glow!);
+      }
+    }
     canvas.drawPath(path, _fill);
   }
 
@@ -234,5 +253,6 @@ class _PixelTextPainter extends CustomPainter {
       oldDelegate.lineSpacing != lineSpacing ||
       oldDelegate.glowColor != glowColor ||
       oldDelegate.glowBlur != glowBlur ||
+      oldDelegate.glowPasses != glowPasses ||
       oldDelegate.align != align;
 }

@@ -40,10 +40,8 @@ class AuroraItemDetailSheet extends StatefulWidget {
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(AppRadius.xl)),
       ),
-      builder: (_) => AuroraItemDetailSheet(
-        item: item,
-        initialQuantity: initialQuantity,
-      ),
+      builder: (_) =>
+          AuroraItemDetailSheet(item: item, initialQuantity: initialQuantity),
     );
   }
 
@@ -79,7 +77,6 @@ class _AuroraItemDetailSheetState extends State<AuroraItemDetailSheet> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Grip do sheet.
               Center(
                 child: Container(
                   width: 40,
@@ -173,7 +170,8 @@ class _AuroraItemDetailSheetState extends State<AuroraItemDetailSheet> {
                       width: double.infinity,
                       child: AppButton(
                         key: const Key('aurora-item-sheet-add'),
-                        label: 'Adicionar · '
+                        label:
+                            'Adicionar · '
                             '${formatBrl(item.priceCents * _quantity)}',
                         icon: Icons.add_shopping_cart_outlined,
                         size: AppButtonSize.large,
@@ -229,7 +227,9 @@ class _SheetStepper extends StatelessWidget {
                 onTap: onDecrement,
                 child: Icon(
                   Icons.remove_rounded,
-                  color: quantity > 1 ? colors.onSurface : colors.onSurfaceMuted,
+                  color: quantity > 1
+                      ? colors.onSurface
+                      : colors.onSurfaceMuted,
                   size: 20,
                 ),
               ),

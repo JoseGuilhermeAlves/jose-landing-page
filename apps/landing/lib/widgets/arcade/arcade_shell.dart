@@ -23,8 +23,6 @@ class ArcadeShell extends StatefulWidget {
 }
 
 class _ArcadeShellState extends State<ArcadeShell> {
-  // Estatico: o boot aparece uma vez por sessao, nao a cada navegacao
-  // (o builder do router recria o shell ao trocar de rota).
   static bool _bootSeen = false;
   late bool _booting = !_bootSeen;
 

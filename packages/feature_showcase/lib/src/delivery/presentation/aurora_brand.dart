@@ -81,7 +81,6 @@ abstract final class AuroraBrand {
       textTheme: baseText
           .apply(bodyColor: palette.onSurface, displayColor: palette.onSurface)
           .copyWith(
-            // Display em serif pra dar ar editorial; body fica sans.
             displayLarge: baseText.displayLarge?.copyWith(
               fontFamily: displayFontFamily,
               fontWeight: FontWeight.w600,

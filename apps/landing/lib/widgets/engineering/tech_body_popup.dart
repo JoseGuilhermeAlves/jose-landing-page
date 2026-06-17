@@ -1,9 +1,3 @@
-// Modal "cartucho" exibido quando o usuario clica num tile de tech do bento
-// grid de Engenharia. Recebe uma `TechDescription` ja resolvida do catalogo e
-// renderiza, no mesmo grammar arcade do grid (painel quadrado, borda neon na
-// cor brand da tech, PixelText, blocos pixel), titulo, tagline, stats e CTA
-// opcional pra docs.
-
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:landing/widgets/engineering/tech_brand_colors.dart';
@@ -30,7 +24,6 @@ Future<void> showTechBodyPopup(
         parent: animation,
         curve: Curves.easeOutCubic,
       );
-      // "Power-on" de fliperama: aparece de baixo com leve overshoot vertical.
       return FadeTransition(
         opacity: curved,
         child: ScaleTransition(
@@ -53,7 +46,6 @@ class _TechBodyPopup extends StatelessWidget {
     final colors = context.colors;
     final textTheme = Theme.of(context).textTheme;
     final docsUrl = description.docsUrl;
-    // Cor brand da tech — amarra o cartucho ao tile clicado.
     final accent = TechBrandColors.primary(description.title);
     final screenH = MediaQuery.sizeOf(context).height;
 
@@ -64,8 +56,6 @@ class _TechBodyPopup extends StatelessWidget {
           type: MaterialType.transparency,
           child: Container(
             margin: const EdgeInsets.all(AppSpacing.lg),
-            // Painel arcade: cantos RETOS, borda neon brand + glow, fundo de
-            // "console" escuro — mesmo grammar do card do bento.
             decoration: BoxDecoration(
               color: colors.surfaceMuted,
               border: Border.all(
@@ -89,8 +79,6 @@ class _TechBodyPopup extends StatelessWidget {
                 children: [
                   _Header(role: description.role, accent: accent),
                   const SizedBox(height: AppSpacing.lg),
-                  // Titulo = nome da tech em PixelText com glow brand. FittedBox
-                  // garante que nomes longos (very_good_analysis) caibam.
                   Semantics(
                     header: true,
                     label: description.title,
@@ -114,7 +102,6 @@ class _TechBodyPopup extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: AppSpacing.base),
-                  // "Stats" do cartucho — chips quadrados neon em mono.
                   Wrap(
                     spacing: AppSpacing.sm,
                     runSpacing: AppSpacing.sm,
@@ -172,7 +159,6 @@ class _Header extends StatelessWidget {
 
     return Row(
       children: [
-        // Bloco pixel (quadrado) na cor brand + glow — "insira moeda".
         Container(
           width: 11,
           height: 11,

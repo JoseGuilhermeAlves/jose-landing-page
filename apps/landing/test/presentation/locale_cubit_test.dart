@@ -27,12 +27,7 @@ void main() {
     });
 
     test('fallback e pt mesmo nao sendo o primeiro da lista gerada', () {
-      // A lista gerada comeca em 'de' — garante que o fallback nao
-      // herda supportedLocales.first.
-      expect(
-        LocaleCubit.resolveLocale(const Locale('xx')),
-        const Locale('pt'),
-      );
+      expect(LocaleCubit.resolveLocale(const Locale('xx')), const Locale('pt'));
     });
 
     test('resolveLocale casa cada um dos 9 idiomas suportados', () {
@@ -71,22 +66,25 @@ void main() {
         ..changeLocale(const Locale('ja'));
     });
 
-    test('locale repetido consecutivo nao re-emite (Cubit deduplica)', () async {
-      final cubit = LocaleCubit(systemLocale: const Locale('pt'));
-      addTearDown(cubit.close);
+    test(
+      'locale repetido consecutivo nao re-emite (Cubit deduplica)',
+      () async {
+        final cubit = LocaleCubit(systemLocale: const Locale('pt'));
+        addTearDown(cubit.close);
 
-      final emitted = <Locale>[];
-      final sub = cubit.stream.listen(emitted.add);
+        final emitted = <Locale>[];
+        final sub = cubit.stream.listen(emitted.add);
 
-      cubit
-        ..changeLocale(const Locale('en'))
-        ..changeLocale(const Locale('en')) // repetido — nao re-emite
-        ..changeLocale(const Locale('es'));
+        cubit
+          ..changeLocale(const Locale('en'))
+          ..changeLocale(const Locale('en'))
+          ..changeLocale(const Locale('es'));
 
-      await Future<void>.delayed(Duration.zero);
-      await sub.cancel();
+        await Future<void>.delayed(Duration.zero);
+        await sub.cancel();
 
-      expect(emitted, const [Locale('en'), Locale('es')]);
-    });
+        expect(emitted, const [Locale('en'), Locale('es')]);
+      },
+    );
   });
 }

@@ -150,7 +150,6 @@ class _StatsGrid extends StatelessWidget {
     final candles = MiraCandlesCatalog.forAsset(asset.id);
     if (candles.isEmpty) return const SizedBox.shrink();
 
-    // Min/max da serie inteira (60 dias).
     var minLow = candles.first.lowCents;
     var maxHigh = candles.first.highCents;
     var sumVolume = 0;

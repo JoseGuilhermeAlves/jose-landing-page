@@ -41,8 +41,6 @@ class _ArcadeBackdropState extends State<ArcadeBackdrop>
   @override
   void initState() {
     super.initState();
-    // Loop longo e continuo — a fase do grid e das estrelas deriva do
-    // valor 0..1 multiplicado por velocidades diferentes.
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 12),
@@ -52,7 +50,6 @@ class _ArcadeBackdropState extends State<ArcadeBackdrop>
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    // Acessibilidade: sem animacao o backdrop fica estatico.
     if (MediaQuery.disableAnimationsOf(context)) {
       _controller.stop();
     } else if (!_controller.isAnimating) {
@@ -68,8 +65,6 @@ class _ArcadeBackdropState extends State<ArcadeBackdrop>
 
   @override
   Widget build(BuildContext context) {
-    // Anima sozinho atras de uma arvore que rola — RepaintBoundary isola
-    // o repaint de 60 Hz do scroll.
     return RepaintBoundary(
       child: CustomPaint(
         isComplex: true,

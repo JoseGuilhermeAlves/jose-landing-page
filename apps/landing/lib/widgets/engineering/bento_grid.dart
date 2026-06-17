@@ -140,14 +140,10 @@ class _CategoryCardState extends State<_CategoryCard> {
     final textTheme = Theme.of(context).textTheme;
     final accent = _categoryColor();
     final isMobile = context.isMobile;
-    // Desktop: sempre expandido. Mobile: gated por _expanded.
     final showTiles = !isMobile || _expanded;
 
-    // Header arcade: quadradinho pixel + label da categoria em PixelText
-    // (cor da categoria) + contagem em mono. Mobile ganha chevron tappable.
     Widget header = Row(
       children: [
-        // Bloco pixel (sem circulo) com a cor da categoria.
         ColoredBox(color: accent, child: const SizedBox(width: 9, height: 9)),
         const SizedBox(width: AppSpacing.sm),
         Flexible(
@@ -205,8 +201,6 @@ class _CategoryCardState extends State<_CategoryCard> {
       );
     }
 
-    // Painel arcade: cantos retos, borda neon da categoria + glow sutil,
-    // fundo escuro de "console".
     return DecoratedBox(
       decoration: BoxDecoration(
         color: colors.surfaceMuted,
@@ -325,8 +319,6 @@ class _TechTileState extends State<_TechTile> {
     final textTheme = Theme.of(context).textTheme;
     final brand = TechBrandColors.primary(widget.techName);
 
-    // Chip arcade: cantos retos, borda neon brand. Hover acende (fill +
-    // glow) — leitura de "slot de skill" selecionavel.
     final shadows = _hovered
         ? [
             BoxShadow(
@@ -368,7 +360,6 @@ class _TechTileState extends State<_TechTile> {
               children: [
                 Row(
                   children: [
-                    // Bloco pixel (quadrado) na cor brand.
                     ColoredBox(
                       color: brand,
                       child: const SizedBox(width: 8, height: 8),

@@ -39,7 +39,6 @@ class _BrandTitle extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        // Mini glifo de marca — quadrado verde com inicial em serif.
         Container(
           width: 30,
           height: 30,

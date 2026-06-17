@@ -44,10 +44,10 @@ void main() {
       'tick rotaciona round-robin entre pedidos nao-finais',
       build: () => DeliveryBloc(initialOrders: orders),
       act: (bloc) => bloc
-        ..add(const DeliveryTickRequested()) // a -> preparing
-        ..add(const DeliveryTickRequested()) // b -> preparing
-        ..add(const DeliveryTickRequested()) // a -> outForDelivery
-        ..add(const DeliveryTickRequested()), // b -> outForDelivery
+        ..add(const DeliveryTickRequested())
+        ..add(const DeliveryTickRequested())
+        ..add(const DeliveryTickRequested())
+        ..add(const DeliveryTickRequested()),
       verify: (bloc) {
         expect(bloc.state.orders[0].status, DeliveryStatus.outForDelivery);
         expect(bloc.state.orders[1].status, DeliveryStatus.outForDelivery);
@@ -58,7 +58,6 @@ void main() {
       'depois de ticks suficientes, allDelivered=true',
       build: () => DeliveryBloc(initialOrders: orders),
       act: (bloc) {
-        // 3 status transicoes por pedido x 2 pedidos = 6 ticks
         for (var i = 0; i < 6; i++) {
           bloc.add(const DeliveryTickRequested());
         }
@@ -107,8 +106,8 @@ void main() {
       build: () => DeliveryBloc(initialOrders: orders),
       act: (bloc) => bloc.add(const DeliveryTickRequested()),
       verify: (bloc) {
-        expect(bloc.state.orders[0].etaMinutes, 19); // 20 - 1
-        expect(bloc.state.orders[1].etaMinutes, 29); // 30 - 1
+        expect(bloc.state.orders[0].etaMinutes, 19);
+        expect(bloc.state.orders[1].etaMinutes, 29);
       },
     );
 
@@ -160,7 +159,6 @@ void main() {
           expect(placed.status, DeliveryStatus.received);
           expect(placed.lineItems, hasLength(1));
           expect(placed.lineItems.first.quantity, 2);
-          // Default vem do AuroraCheckoutCatalog (primeiro endereco/pagto).
           expect(placed.addressLine, isNotEmpty);
           expect(placed.paymentLabel, isNotEmpty);
           expect(placed.notes, isEmpty);

@@ -21,9 +21,6 @@ void main() {
     );
   }
 
-  // ArcadeHero hospeda dois AnimationController em repeat (HeroCosmos e
-  // BlackHolePortrait) — pumpAndSettle trava. Usar pump(Duration) explicito
-  // e desmontar com SizedBox no fim pra dispor os controllers.
   group('ArcadeHero', () {
     testWidgets('compoe portrait e cosmos do hero', (tester) async {
       await tester.binding.setSurfaceSize(const Size(1600, 1000));

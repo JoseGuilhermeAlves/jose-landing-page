@@ -218,8 +218,6 @@ class _AssetSearchFieldState extends State<_AssetSearchField> {
   @override
   void didUpdateWidget(_AssetSearchField oldWidget) {
     super.didUpdateWidget(oldWidget);
-    // Sincroniza o controller quando o bloc muda o termo por fora (ex.:
-    // reset do demo) sem mover o cursor durante a digitacao normal.
     if (widget.query != _controller.text) {
       _controller.text = widget.query;
     }
@@ -669,10 +667,6 @@ class _SectorBadge extends StatelessWidget {
   }
 
   Color _toneForSector(Asset asset) {
-    // Hash simples do nome do setor pra um indice numa paleta curada de
-    // 4 swatches tiradas da marca (mint, azul-info, dourado, violeta
-    // suave) — sem candy colors off-brand, pra os badges lerem como
-    // sistema intencional num fintech de 3 cores e nao acidental.
     final palette = [
       const Color(0xFF22D17E),
       const Color(0xFF4FB8FF),

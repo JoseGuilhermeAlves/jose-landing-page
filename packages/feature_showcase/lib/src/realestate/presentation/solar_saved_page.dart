@@ -34,7 +34,6 @@ class SolarSavedPage extends StatelessWidget {
         child: SafeArea(
           top: false,
           child: BlocBuilder<RealEstateBloc, RealEstateState>(
-            // So reconstroi quando o set de favoritos muda.
             buildWhen: (a, b) => a.favoriteIds != b.favoriteIds,
             builder: (context, state) {
               final saved = <Property>[

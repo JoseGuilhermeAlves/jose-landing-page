@@ -100,9 +100,6 @@ class HomeNav extends StatelessWidget {
                       const Spacer(),
                     ] else
                       const Spacer(),
-                    // Links sociais antes do language switcher — funil
-                    // tech/recruiter. Mobile fica de fora: a largura e
-                    // curta e a secao de contato ja lista os perfis.
                     if (!isMobile) ...[
                       if (githubUrl != null)
                         _SocialIcon(
@@ -131,9 +128,6 @@ class HomeNav extends StatelessWidget {
                     ),
                     const SizedBox(width: AppSpacing.sm),
                     _Cta(onTap: onCtaTap),
-                    // Tablet (600-1180px) colapsa ancoras num menu overflow.
-                    // Mobile (<600px) NAO — usa a `HomeBottomNav` fixa no
-                    // rodape, entao o menu hamburger seria redundante.
                     if (isCompact && !isMobile && anchors.isNotEmpty) ...[
                       const SizedBox(width: AppSpacing.xs),
                       _AnchorsMenu(anchors: anchors),
@@ -157,8 +151,6 @@ class _Logo extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = context.colors;
 
-    // Wordmark em fonte pixel (mesma assinatura arcade do JGA no menu
-    // lateral): "ZEGUI" neutro + "DEV" em magenta neon com glow.
     return Tooltip(
       message: context.l10n.nav_backToTop,
       child: Semantics(
@@ -223,10 +215,6 @@ class _AnchorButtonState extends State<_AnchorButton> {
     final textTheme = Theme.of(context).textTheme;
     final highlighted = _hovering || _focused;
 
-    // FocusableActionDetector entrega foco por Tab + ativacao por
-    // Enter/Espaco (ActivateIntent ja vem mapeado pros dois) + hover —
-    // substitui o MouseRegion puro, que deixava a nav fora do alcance
-    // do teclado.
     return FocusableActionDetector(
       mouseCursor: SystemMouseCursors.click,
       onShowHoverHighlight: (v) => setState(() => _hovering = v),
@@ -253,7 +241,6 @@ class _AnchorButtonState extends State<_AnchorButton> {
                 ? colors.surface.withValues(alpha: 0.8)
                 : Colors.transparent,
             borderRadius: BorderRadius.circular(AppRadius.sm),
-            // Focus ring discreto — so aparece em navegacao por teclado.
             border: Border.all(
               color: _focused
                   ? colors.primary.withValues(alpha: 0.7)
@@ -338,8 +325,6 @@ class _Cta extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = context.colors;
 
-    // CTA em chrome arcade: retangulo chunky (cantos retos) com borda neon
-    // magenta, fill translucido, glow e label em fonte pixel.
     return Semantics(
       button: true,
       label: context.l10n.nav_ctaContact,

@@ -12,8 +12,6 @@ import 'package:landing/widgets/engineering_section.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
 void main() {
-  // Sem isso o VisibilityDetector (SectionVisibility da home) agenda um
-  // Timer de 500ms que fica pendente quando o teste descarta a arvore.
   setUpAll(() {
     VisibilityDetectorController.instance.updateInterval = Duration.zero;
   });
@@ -40,8 +38,6 @@ void main() {
       await tester.pumpWidget(wrap(const HomePage()));
       await tester.pump(const Duration(milliseconds: 16));
 
-      // ShowcaseSection esta no tree, mas pode estar fora da viewport
-      // inicial — `skipOffstage: false` percorre toda a lista.
       expect(find.byType(ShowcaseSection, skipOffstage: false), findsOneWidget);
 
       await tester.pumpWidget(const SizedBox());

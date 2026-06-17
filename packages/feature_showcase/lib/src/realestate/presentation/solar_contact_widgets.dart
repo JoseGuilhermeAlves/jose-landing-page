@@ -1,9 +1,5 @@
 part of 'solar_contact_page.dart';
 
-// =============================================================================
-// FORM
-// =============================================================================
-
 class _FormState extends StatelessWidget {
   const _FormState({
     required this.property,
@@ -272,10 +268,6 @@ class _BrokerRow extends StatelessWidget {
     );
   }
 }
-
-// =============================================================================
-// SUCCESS
-// =============================================================================
 
 class _SuccessState extends StatelessWidget {
   const _SuccessState({

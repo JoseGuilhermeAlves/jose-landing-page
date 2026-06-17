@@ -12,10 +12,6 @@ List<BoxShadow> _solarFocalShadow(AppColorScheme colors) => [
   ),
 ];
 
-// =============================================================================
-// GALERIA
-// =============================================================================
-
 class _Gallery extends StatelessWidget {
   const _Gallery({
     required this.property,
@@ -40,7 +36,6 @@ class _Gallery extends StatelessWidget {
         AspectRatio(
           aspectRatio: context.responsive(mobile: 1.95, desktop: 1.6),
           child: DecoratedBox(
-            // Sombra warm focal — a galeria e o ponto de entrada visual.
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(AppRadius.lg),
               boxShadow: _solarFocalShadow(colors),
@@ -49,8 +44,6 @@ class _Gallery extends StatelessWidget {
               borderRadius: BorderRadius.circular(AppRadius.lg),
               child: ColoredBox(
                 color: colors.surfaceMuted,
-                // Foto do angulo selecionado; cai na ilustracao da
-                // variant correspondente quando o .webp falta.
                 child: ShowcasePhoto(
                   key: ValueKey('solar-detail-photo-$galleryIndex'),
                   assetPath: property.photoAt(galleryIndex),
@@ -138,10 +131,6 @@ class _GalleryDot extends StatelessWidget {
   }
 }
 
-// =============================================================================
-// HEADER + STATS
-// =============================================================================
-
 class _Header extends StatelessWidget {
   const _Header({
     required this.property,
@@ -183,8 +172,6 @@ class _Header extends StatelessWidget {
           ),
         ),
         const SizedBox(height: AppSpacing.md),
-        // Bloco de preco como ponto focal — superficie levantada com a
-        // mesma sombra warm da galeria pra dar hierarquia de revista.
         Container(
           padding: const EdgeInsets.symmetric(
             horizontal: AppSpacing.base,
@@ -342,10 +329,6 @@ class _Description extends StatelessWidget {
   }
 }
 
-// =============================================================================
-// FEATURES
-// =============================================================================
-
 class _FeaturesGrid extends StatelessWidget {
   const _FeaturesGrid({
     required this.property,
@@ -395,10 +378,6 @@ class _FeaturesGrid extends StatelessWidget {
   }
 }
 
-// =============================================================================
-// PLANTA BAIXA
-// =============================================================================
-
 class _FloorPlanCard extends StatelessWidget {
   const _FloorPlanCard({required this.property, required this.colors});
 
@@ -427,10 +406,6 @@ class _FloorPlanCard extends StatelessWidget {
     );
   }
 }
-
-// =============================================================================
-// MAPA
-// =============================================================================
 
 class _MapCard extends StatelessWidget {
   const _MapCard({
@@ -501,10 +476,6 @@ class _MapCard extends StatelessWidget {
     );
   }
 }
-
-// =============================================================================
-// CORRETOR
-// =============================================================================
 
 class _BrokerCard extends StatelessWidget {
   const _BrokerCard({

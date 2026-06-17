@@ -23,19 +23,13 @@ class BootSequence extends StatefulWidget {
 
 class _BootSequenceState extends State<BootSequence>
     with TickerProviderStateMixin {
-  // Controla a digitacao das linhas (0..1 -> fracao de chars revelados).
   late final AnimationController _typing;
-  // Pisca do "PRESS START".
   late final AnimationController _blink;
-  // Fade-out na saida.
   late final AnimationController _exit;
 
   final _focusNode = FocusNode();
   bool _dismissing = false;
 
-  // Title-card de fliperama (attract screen), NAO um boot de sistema —
-  // nada de "BOOTING OS / LOADING ASSETS / WASM" pra nao dar impressao de
-  // que o site instala algo na maquina do visitante. So marca + convite.
   static const _lines = <String>[
     'ZEGUIDEV  ARCADE',
     'FLUTTER · 2026',
@@ -43,7 +37,6 @@ class _BootSequenceState extends State<BootSequence>
     'LOADING...',
   ];
 
-  // Beat curto entre o fim da digitacao e o auto-enter na home.
   static const _autoEnterDelay = Duration(milliseconds: 650);
   Timer? _autoTimer;
 
@@ -57,7 +50,6 @@ class _BootSequenceState extends State<BootSequence>
       vsync: this,
       duration: const Duration(milliseconds: 1400),
     )..forward();
-    // Ao terminar a digitacao, agenda o auto-enter (skipavel antes disso).
     _typing.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         _autoTimer = Timer(_autoEnterDelay, _dismiss);
@@ -71,7 +63,6 @@ class _BootSequenceState extends State<BootSequence>
       vsync: this,
       duration: const Duration(milliseconds: 420),
     );
-    // Foca pra capturar teclado no web/desktop.
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) _focusNode.requestFocus();
     });
@@ -109,7 +100,6 @@ class _BootSequenceState extends State<BootSequence>
           return KeyEventResult.handled;
         },
         child: Listener(
-          // Scroll dispensa (gesto natural de "quero ver o conteudo").
           onPointerSignal: (_) => _dismiss(),
           child: GestureDetector(
             behavior: HitTestBehavior.opaque,
@@ -125,7 +115,6 @@ class _BootSequenceState extends State<BootSequence>
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // Terminal de boot digitando.
                         AnimatedBuilder(
                           animation: _typing,
                           builder: (context, _) {
@@ -143,8 +132,6 @@ class _BootSequenceState extends State<BootSequence>
                           },
                         ),
                         const SizedBox(height: AppSpacing.lg),
-                        // Cursor de terminal piscando enquanto carrega — a home
-                        // entra sozinha logo apos a digitacao.
                         AnimatedBuilder(
                           animation: Listenable.merge([_typing, _blink]),
                           builder: (context, _) {

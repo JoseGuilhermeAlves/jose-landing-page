@@ -66,8 +66,9 @@ class _AuroraCheckoutPageState extends State<AuroraCheckoutPage> {
 
   double get _totalCents => _subtotalCents + widget.vendor.deliveryFeeCents;
 
-  String? get _note =>
-      _noteIndex == null ? null : AuroraCheckoutCatalog.noteSuggestions[_noteIndex!];
+  String? get _note => _noteIndex == null
+      ? null
+      : AuroraCheckoutCatalog.noteSuggestions[_noteIndex!];
 
   void _confirm() {
     final bloc = context.read<DeliveryBloc>();
@@ -81,8 +82,6 @@ class _AuroraCheckoutPageState extends State<AuroraCheckoutPage> {
         notes: _note ?? '',
       ),
     );
-    // Substitui o checkout pelo detalhe — voltar do detalhe cai direto na
-    // banca/home, sem passar de novo pela etapa de checkout.
     Navigator.of(context).pushReplacement(
       MaterialPageRoute<void>(
         builder: (_) => auroraWithDemoBloc(
@@ -164,8 +163,7 @@ class _AuroraCheckoutPageState extends State<AuroraCheckoutPage> {
                       textTheme: textTheme,
                     ),
                     const SizedBox(height: AppSpacing.sm),
-                    for (final pay
-                        in AuroraCheckoutCatalog.paymentMethods) ...[
+                    for (final pay in AuroraCheckoutCatalog.paymentMethods) ...[
                       _PaymentTile(
                         method: pay,
                         selected: pay.id == _payment.id,

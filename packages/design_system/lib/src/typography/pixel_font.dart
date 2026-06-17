@@ -46,15 +46,32 @@ abstract final class PixelFont {
 
   /// Acentuadas/cedilha -> letra-base ASCII (apos toUpperCase).
   static const Map<String, String> _deaccent = {
-    'Á': 'A', 'À': 'A', 'Â': 'A', 'Ã': 'A', 'Ä': 'A',
-    'É': 'E', 'È': 'E', 'Ê': 'E', 'Ë': 'E',
-    'Í': 'I', 'Ì': 'I', 'Î': 'I', 'Ï': 'I',
-    'Ó': 'O', 'Ò': 'O', 'Ô': 'O', 'Õ': 'O', 'Ö': 'O',
-    'Ú': 'U', 'Ù': 'U', 'Û': 'U', 'Ü': 'U',
-    'Ç': 'C', 'Ñ': 'N',
+    'Á': 'A',
+    'À': 'A',
+    'Â': 'A',
+    'Ã': 'A',
+    'Ä': 'A',
+    'É': 'E',
+    'È': 'E',
+    'Ê': 'E',
+    'Ë': 'E',
+    'Í': 'I',
+    'Ì': 'I',
+    'Î': 'I',
+    'Ï': 'I',
+    'Ó': 'O',
+    'Ò': 'O',
+    'Ô': 'O',
+    'Õ': 'O',
+    'Ö': 'O',
+    'Ú': 'U',
+    'Ù': 'U',
+    'Û': 'U',
+    'Ü': 'U',
+    'Ç': 'C',
+    'Ñ': 'N',
   };
 
-  // Cada lista: 7 ints, top->bottom. Bit 4 (0x10) = coluna 0 (esquerda).
   static const Map<String, List<int>> _glyphs = {
     ' ': [0, 0, 0, 0, 0, 0, 0],
     'A': [0x0E, 0x11, 0x11, 0x1F, 0x11, 0x11, 0x11],
@@ -116,9 +133,7 @@ abstract final class PixelFont {
     '"': [0x0A, 0x0A, 0x0A, 0, 0, 0, 0],
     '%': [0x19, 0x19, 0x02, 0x04, 0x08, 0x13, 0x13],
     '#': [0x0A, 0x1F, 0x0A, 0x0A, 0x0A, 0x1F, 0x0A],
-    // Triangulo cheio apontando pra direita — marcador "PRESS START".
     '~': [0, 0x08, 0x0C, 0x0E, 0x0C, 0x08, 0],
-    // Coracao 16-bit (vidas/health).
     '@': [0x0A, 0x1F, 0x1F, 0x1F, 0x0E, 0x04, 0],
   };
 }

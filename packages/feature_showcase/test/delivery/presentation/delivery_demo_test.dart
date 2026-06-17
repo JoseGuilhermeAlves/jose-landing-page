@@ -6,10 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  // O hero, o mini-mapa e o backdrop tem animacoes em loop infinito,
-  // entao todos os pumps deste arquivo usam Duration explicito —
-  // pumpAndSettle nunca terminaria.
-
   Widget wrap(Widget child) => MaterialApp(
     theme: AppTheme.dark(),
     localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -66,8 +62,6 @@ void main() {
           await tester.pump(const Duration(milliseconds: 50));
         }
 
-        // Header com label "Onde esta seu pedido" e timeline renderizada
-        // (todos os 4 status aparecem como titulos).
         expect(find.text('Onde está seu pedido'), findsOneWidget);
         expect(find.text(DeliveryStatus.received.label), findsOneWidget);
         expect(find.text(DeliveryStatus.delivered.label), findsOneWidget);
@@ -87,8 +81,6 @@ void main() {
         }
 
         expect(find.text('Pedidos anteriores'), findsOneWidget);
-        // O catalogo Aurora tem 2 pedidos delivered ja iniciados —
-        // verificamos por id concreto (mais robusto que predicate).
         expect(
           find.byKey(const Key('aurora-history-card-#A-1046')),
           findsOneWidget,
@@ -110,15 +102,11 @@ void main() {
       await tester.pumpWidget(wrap(DeliveryDemo(ticker: controller.stream)));
       await tester.pump(const Duration(milliseconds: 16));
 
-      // O primeiro pedido comeca em preparing. Tres ticks avancam ele
-      // pelos demais estados (round-robin entre 4 pedidos nao-finais).
       for (var i = 0; i < 16; i++) {
         controller.add(null);
         await tester.pump(const Duration(milliseconds: 16));
       }
 
-      // Apos varios ticks, ja deve existir pelo menos um pedido novo
-      // em delivered no historico (alem dos 2 iniciais).
       await tester.tap(find.byKey(const Key('aurora-history-icon')));
       for (var i = 0; i < 20; i++) {
         await tester.pump(const Duration(milliseconds: 50));
@@ -141,8 +129,6 @@ void main() {
           await tester.pump(const Duration(milliseconds: 50));
         }
 
-        // Vai direto pro detalhe da banca (secao "Produtos" + carrinho),
-        // nao pra lista de lojas filtrada (que teria os chips de filtro).
         expect(find.text('Produtos'), findsOneWidget);
         expect(find.byKey(const Key('aurora-filter-all')), findsNothing);
       },

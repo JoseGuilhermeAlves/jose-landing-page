@@ -81,7 +81,6 @@ class _ArcadeSideNavState extends State<ArcadeSideNav>
 
     return Container(
       width: kArcadeSideNavWidth,
-      // Hairline neon a direita separa o menu do conteudo.
       decoration: BoxDecoration(
         border: Border(
           right: BorderSide(color: colors.primary.withValues(alpha: 0.25)),
@@ -98,8 +97,6 @@ class _ArcadeSideNavState extends State<ArcadeSideNav>
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Wordmark ZeguiDev (mesma assinatura do nav mobile): "ZEGUI"
-              // neutro + "DEV" magenta neon. Tap volta ao topo.
               Semantics(
                 button: true,
                 label: 'ZeguiDev',
@@ -138,7 +135,6 @@ class _ArcadeSideNavState extends State<ArcadeSideNav>
               ),
               const SizedBox(height: AppSpacing.lg),
 
-              // Lista de stages.
               ValueListenableBuilder<int>(
                 valueListenable: widget.activeIndex,
                 builder: (context, active, _) {
@@ -162,8 +158,6 @@ class _ArcadeSideNavState extends State<ArcadeSideNav>
 
               const Spacer(),
 
-              // Seletor de idioma — no desktop mora aqui na coluna lateral
-              // (no mobile fica no top nav). Mesma pilula do HomeNav.
               BlocBuilder<LocaleCubit, Locale>(
                 builder: (context, locale) => LocaleSwitcher(
                   currentLocale: locale,
@@ -173,9 +167,6 @@ class _ArcadeSideNavState extends State<ArcadeSideNav>
               ),
               const SizedBox(height: AppSpacing.md),
 
-              // Sociais no rodape — nomes por extenso (GH/IN nao eram
-              // reconheciveis). Empilhados: "GitHub"/"LinkedIn" em pixel font
-              // nao cabem lado a lado na largura da coluna.
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -227,7 +218,6 @@ class _StageRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = context.colors;
     final lit = active || hovered;
-    // Ativo em ciano, hover em magenta, repouso em muted.
     final color = active
         ? colors.accent
         : (hovered ? colors.primary : colors.onSurfaceMuted);
@@ -242,7 +232,6 @@ class _StageRow extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
           child: Row(
             children: [
-              // Cursor ▸ piscante — so aparece quando lit.
               SizedBox(
                 width: 18,
                 child: lit
@@ -259,8 +248,6 @@ class _StageRow extends StatelessWidget {
                       )
                     : null,
               ),
-              // FittedBox encolhe labels longos (ex.: ENGENHARIA) pra
-              // caber na largura do menu sem estourar a Row.
               Flexible(
                 child: FittedBox(
                   fit: BoxFit.scaleDown,

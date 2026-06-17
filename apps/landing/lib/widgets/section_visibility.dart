@@ -21,11 +21,7 @@ import 'package:visibility_detector/visibility_detector.dart';
 /// do callback do detector e mantem testes de widget (que nunca disparam
 /// o callback agendado) com o comportamento atual.
 class SectionVisibility extends StatefulWidget {
-  const SectionVisibility({
-    required this.id,
-    required this.child,
-    super.key,
-  });
+  const SectionVisibility({required this.id, required this.child, super.key});
 
   /// Identificador estavel da secao — vira a `Key` do detector (o
   /// `VisibilityDetector` exige key unica pra rastrear o elemento).
@@ -42,8 +38,6 @@ class _SectionVisibilityState extends State<SectionVisibility> {
 
   void _onVisibilityChanged(VisibilityInfo info) {
     if (!mounted) return;
-    // Qualquer fracao > 0 conta como visivel — secoes altas entram no
-    // viewport aos poucos e ja devem animar no primeiro pixel.
     final visible = info.visibleFraction > 0;
     if (visible != _visible) setState(() => _visible = visible);
   }

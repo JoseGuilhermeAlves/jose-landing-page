@@ -46,9 +46,6 @@ class _HomePageState extends State<HomePage> {
   /// (nenhuma secao destacada ainda).
   final ValueNotifier<int> _activeIndex = ValueNotifier<int>(-1);
 
-  // Uma `GlobalKey` por secao navegavel — ancorada na arvore via
-  // `KeyedSubtree`. As 4 ancoras do `HomeNav` (showcase, sobre,
-  // engenharia, contato) usam estas pra calcular offset de scroll.
   final _showcaseKey = GlobalKey(debugLabel: 'home-anchor-showcase');
   final _engineeringKey = GlobalKey(debugLabel: 'home-anchor-engineering');
   final _aboutKey = GlobalKey(debugLabel: 'home-anchor-about');
@@ -141,8 +138,6 @@ class _HomePageState extends State<HomePage> {
     try {
       await launchUrl(uri, mode: LaunchMode.externalApplication);
     } on Object catch (error, stack) {
-      // Reporta no console em debug; em release o usuario apenas nao
-      // ve o app externo abrir — sem crash.
       FlutterError.reportError(
         FlutterErrorDetails(
           exception: error,
@@ -159,9 +154,6 @@ class _HomePageState extends State<HomePage> {
     final isMobile = context.isMobile;
     final viewportHeight = MediaQuery.sizeOf(context).height;
 
-    // Hero ocupa a viewport inteira (clamped) — sensacao "fold" classica
-    // de landing moderna. O proprio Hero tem fade-out gradient no rodape
-    // pra emendar com a primeira secao.
     final heroHeight = viewportHeight.clamp(640.0, 920.0);
 
     final horizontalPadding = context.responsive(
@@ -196,19 +188,12 @@ class _HomePageState extends State<HomePage> {
       ),
     ];
 
-    // A bottom nav mobile NAO repete "Contato" — o CTA do top nav ja leva
-    // ao contato (evita botao duplicado). Contato e o ultimo anchor, entao
-    // remover mantem os indices alinhados com o scroll-spy (0..2).
-    final bottomNavAnchors = anchors
-        .where((a) => a.id != 'contato')
-        .toList();
+    final bottomNavAnchors = anchors.where((a) => a.id != 'contato').toList();
 
     return Scaffold(
-      // Transparente pra revelar o ArcadeBackdrop global (starfield + grid).
       backgroundColor: Colors.transparent,
       body: Stack(
         children: [
-          // Desktop reserva a coluna esquerda pro menu lateral arcade.
           Padding(
             padding: EdgeInsets.only(left: isMobile ? 0 : kArcadeSideNavWidth),
             child: CustomScrollView(
@@ -217,15 +202,8 @@ class _HomePageState extends State<HomePage> {
                 SliverToBoxAdapter(
                   child: SectionVisibility(
                     id: 'hero',
-                    // Sem altura fixa nem scroll interno: o Hero tem altura
-                    // MINIMA de uma viewport e cresce com o conteudo (telas
-                    // estreitas), deixando o CustomScrollView ser o UNICO
-                    // scroll da pagina (nada de scroll aninhado no hero).
                     child: ArcadeHero(
                       minHeight: heroHeight,
-                      // Funil recrutador: ambos os CTAs rolam dentro da
-                      // pagina — primario pro contato, secundario pro
-                      // showcase. WhatsApp/email moram na secao Contact.
                       onContactPressed: () => _scrollToKey(_contactKey),
                       onSeeProjectsPressed: () => _scrollToKey(_showcaseKey),
                     ),
@@ -297,9 +275,6 @@ class _HomePageState extends State<HomePage> {
                         email: AppConfig.email,
                         linkedinUrl: AppConfig.linkedinUrl,
                         githubUrl: AppConfig.githubProfileUrl,
-                        // Absoluta a partir da origem do deploy — `launchUrl`
-                        // exige scheme, entao `Uri.base.resolve` transforma o
-                        // path relativo do PDF em https://.../cv/...pdf.
                         resumeUrl: Uri.base
                             .resolve(
                               AppConfig.resumeUrlFor(
@@ -318,8 +293,6 @@ class _HomePageState extends State<HomePage> {
                     name: 'Jose Guilherme Alves',
                   ),
                 ),
-                // Mobile: reserva espaco no fim pra o footer nao ficar atras
-                // da HomeBottomNav fixa.
                 if (isMobile)
                   SliverToBoxAdapter(
                     child: SizedBox(
@@ -331,8 +304,6 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
           ),
-          // Desktop: menu lateral arcade (stage select). Mobile mantem o
-          // top nav + bottom nav.
           if (!isMobile)
             Positioned(
               top: 0,
@@ -361,7 +332,6 @@ class _HomePageState extends State<HomePage> {
                 onOpenSocial: (url) => _openExternalUri(Uri.parse(url)),
               ),
             ),
-          // Bottom nav so na visao mobile — substitui o menu hamburger.
           if (isMobile)
             Positioned(
               left: 0,
@@ -413,10 +383,6 @@ class _SectionSlot extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.symmetric(
           horizontal: horizontalPadding,
-          // Desktop usa 64 (reduzido de 96) pra dar respiro entre secoes.
-          // Mobile aperta pra 24 — viewport curto nao pode gastar 128px
-          // (topo+base) de whitespace por secao, senao o scroll vira um
-          // tunel vazio entre blocos.
           vertical: context.responsive(
             mobile: AppSpacing.lg,
             desktop: AppSpacing.huge,

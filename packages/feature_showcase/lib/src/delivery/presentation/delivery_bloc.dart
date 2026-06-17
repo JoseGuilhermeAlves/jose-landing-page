@@ -37,9 +37,6 @@ class DeliveryBloc extends Bloc<DeliveryEvent, DeliveryState> {
   void _onTick(DeliveryTickRequested event, Emitter<DeliveryState> emit) {
     if (state.allDelivered) return;
 
-    // Decrementa ETA de todos os pedidos ainda em andamento — mesmo os
-    // que nao avancam de status nesta rodada. Da sensacao de relogio
-    // andando em todos os pedidos visiveis.
     final orders = [
       for (final o in state.orders)
         o.status.isFinal || o.etaMinutes <= 0
@@ -49,7 +46,6 @@ class DeliveryBloc extends Bloc<DeliveryEvent, DeliveryState> {
     final n = orders.length;
     if (n == 0) return;
 
-    // Procura o proximo pedido nao-final a partir do cursor (round-robin).
     var i = state.cursor;
     var attempts = 0;
     while (orders[i].status.isFinal && attempts < n) {
@@ -144,9 +140,6 @@ class DeliveryBloc extends Bloc<DeliveryEvent, DeliveryState> {
       (sum, li) => sum + li.subtotalCents,
     );
 
-    // Sem checkout: usa o endereco/pagamento default do catalogo pra o
-    // pedido nunca sair sem essas linhas. Com checkout: usa o que o
-    // cliente escolheu.
     final addressLine = event.addressLine.isNotEmpty
         ? event.addressLine
         : AuroraCheckoutCatalog.addresses.first.oneLine;

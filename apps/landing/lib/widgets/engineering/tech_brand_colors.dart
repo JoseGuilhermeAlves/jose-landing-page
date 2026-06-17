@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 /// dark sem virar neon.
 abstract final class TechBrandColors {
   static const Map<String, _Brand> _byName = {
-    // Framework
     'Flutter': _Brand(primary: Color(0xFF54C5F8), glow: Color(0xFF02569B)),
     'Dart': _Brand(primary: Color(0xFF00D4C0), glow: Color(0xFF0175C2)),
     'Platform Channels': _Brand(
@@ -15,7 +14,6 @@ abstract final class TechBrandColors {
       glow: Color(0xFF0277BD),
     ),
 
-    // Estado
     'flutter_bloc': _Brand(primary: Color(0xFFEA4C89), glow: Color(0xFFB91D5C)),
     'Provider': _Brand(primary: Color(0xFF02A6F2), glow: Color(0xFF0175A8)),
     'Riverpod': _Brand(primary: Color(0xFF0099FF), glow: Color(0xFF0553B1)),
@@ -23,25 +21,21 @@ abstract final class TechBrandColors {
     'MobX': _Brand(primary: Color(0xFFFF7043), glow: Color(0xFFD84315)),
     'bloc_test': _Brand(primary: Color(0xFFF472B6), glow: Color(0xFFBE185D)),
 
-    // Rotas
     'go_router': _Brand(primary: Color(0xFF60A5FA), glow: Color(0xFF1D4ED8)),
     'flutter_modular': _Brand(
       primary: Color(0xFF42A5F5),
       glow: Color(0xFF1565C0),
     ),
 
-    // Rede
     'Dio': _Brand(primary: Color(0xFF1DE9B6), glow: Color(0xFF00897B)),
     'http': _Brand(primary: Color(0xFF4DD0E1), glow: Color(0xFF00838F)),
 
-    // Graficos
     'CustomPainter': _Brand(
       primary: Color(0xFFFF7043),
       glow: Color(0xFFBF360C),
     ),
     'Animations': _Brand(primary: Color(0xFFFFB74D), glow: Color(0xFFE65100)),
 
-    // Persistencia
     'SQLite': _Brand(primary: Color(0xFF44A8D8), glow: Color(0xFF003B57)),
     'Hive': _Brand(primary: Color(0xFFFFCA28), glow: Color(0xFFF9A825)),
     'shared_preferences': _Brand(
@@ -50,14 +44,12 @@ abstract final class TechBrandColors {
     ),
     'Firebase': _Brand(primary: Color(0xFFFFA726), glow: Color(0xFFE65100)),
 
-    // Code Generation
     'freezed': _Brand(primary: Color(0xFF80DEEA), glow: Color(0xFF00695C)),
     'json_serializable': _Brand(
       primary: Color(0xFF4DB6AC),
       glow: Color(0xFF00695C),
     ),
 
-    // Arquitetura
     'Clean Architecture': _Brand(
       primary: Color(0xFF7C3AED),
       glow: Color(0xFF4C1D95),
@@ -77,10 +69,8 @@ abstract final class TechBrandColors {
       glow: Color(0xFF5B21B6),
     ),
 
-    // Observabilidade
     'Datadog': _Brand(primary: Color(0xFF632CA6), glow: Color(0xFF3B1A6B)),
 
-    // Qualidade
     'very_good_analysis': _Brand(
       primary: Color(0xFFFB923C),
       glow: Color(0xFFC2410C),
@@ -92,12 +82,10 @@ abstract final class TechBrandColors {
       glow: Color(0xFF2E7D32),
     ),
 
-    // Web
     'Skwasm': _Brand(primary: Color(0xFFA78BFA), glow: Color(0xFF6D28D9)),
     'PWA': _Brand(primary: Color(0xFF818CF8), glow: Color(0xFF4338CA)),
     'url_launcher': _Brand(primary: Color(0xFF38BDF8), glow: Color(0xFF0369A1)),
 
-    // Tooling
     'Melos': _Brand(primary: Color(0xFFFACC15), glow: Color(0xFFA16207)),
     'GitHub Actions': _Brand(
       primary: Color(0xFFE5E7EB),

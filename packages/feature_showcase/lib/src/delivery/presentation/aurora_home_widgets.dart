@@ -1,9 +1,5 @@
 part of 'aurora_home_page.dart';
 
-// =============================================================================
-// HERO
-// =============================================================================
-
 class _HeroCard extends StatelessWidget {
   const _HeroCard({required this.colors, required this.textTheme});
   final AppColorScheme colors;
@@ -108,10 +104,6 @@ class _HeroCard extends StatelessWidget {
   }
 }
 
-// =============================================================================
-// PEDIDO ATIVO
-// =============================================================================
-
 class _ActiveOrderCard extends StatelessWidget {
   const _ActiveOrderCard({
     required this.order,
@@ -145,7 +137,6 @@ class _ActiveOrderCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(AppRadius.xl),
         child: Column(
           children: [
-            // Mini-mapa em altura reduzida — destaca o tracking.
             AuroraDeliveryMap(
               height: context.isMobile ? 104 : 140,
               status: order.status,
@@ -285,10 +276,6 @@ class _NoActiveOrderCard extends StatelessWidget {
   }
 }
 
-// =============================================================================
-// CATEGORIAS
-// =============================================================================
-
 class _CategoriesStrip extends StatelessWidget {
   const _CategoriesStrip({required this.colors, required this.textTheme});
   final AppColorScheme colors;
@@ -386,10 +373,6 @@ class _CategoryChip extends StatelessWidget {
     );
   }
 }
-
-// =============================================================================
-// VENDORS
-// =============================================================================
 
 class _VendorsList extends StatelessWidget {
   const _VendorsList({required this.colors, required this.textTheme});
@@ -499,7 +482,11 @@ class AuroraVendorCard extends StatelessWidget {
                           ),
                         ),
                         const Spacer(),
-                        Icon(Icons.star_rounded, size: 14, color: colors.accent),
+                        Icon(
+                          Icons.star_rounded,
+                          size: 14,
+                          color: colors.accent,
+                        ),
                         const SizedBox(width: 2),
                         Text(
                           vendor.rating.toStringAsFixed(1),
@@ -559,13 +546,16 @@ class AuroraVendorBanner extends StatelessWidget {
               ),
             ),
           ),
-          // Scrim pra garantir contraste do texto sobre qualquer foto.
           const DecoratedBox(
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
-                colors: [Colors.transparent, Colors.transparent, Colors.black54],
+                colors: [
+                  Colors.transparent,
+                  Colors.transparent,
+                  Colors.black54,
+                ],
                 stops: [0, 0.45, 1],
               ),
             ),
@@ -612,10 +602,6 @@ class AuroraVendorBanner extends StatelessWidget {
     );
   }
 }
-
-// =============================================================================
-// SOBRE
-// =============================================================================
 
 class _AboutBlock extends StatelessWidget {
   const _AboutBlock({required this.colors, required this.textTheme});

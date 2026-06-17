@@ -20,7 +20,6 @@ abstract final class AppTypography {
   ];
 
   static const TextTheme textTheme = TextTheme(
-    // Hero / titulo de pagina
     displayLarge: TextStyle(
       fontFamily: _displayFamily,
       fontFamilyFallback: _displayFallback,
@@ -46,7 +45,6 @@ abstract final class AppTypography {
       letterSpacing: -0.4,
     ),
 
-    // Headlines de secao
     headlineLarge: TextStyle(
       fontFamily: _displayFamily,
       fontFamilyFallback: _displayFallback,
@@ -70,7 +68,6 @@ abstract final class AppTypography {
       height: 1.3,
     ),
 
-    // Titulos de cards / listas
     titleLarge: TextStyle(
       fontFamily: _uiFamily,
       fontFamilyFallback: _uiFallback,
@@ -93,7 +90,6 @@ abstract final class AppTypography {
       height: 1.4,
     ),
 
-    // Texto corrido
     bodyLarge: TextStyle(
       fontFamily: _uiFamily,
       fontFamilyFallback: _uiFallback,
@@ -116,7 +112,6 @@ abstract final class AppTypography {
       height: 1.5,
     ),
 
-    // Labels de botao, chip, badge
     labelLarge: TextStyle(
       fontFamily: _uiFamily,
       fontFamilyFallback: _uiFallback,

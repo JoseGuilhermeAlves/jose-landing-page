@@ -29,7 +29,6 @@ class _LandingAppState extends State<LandingApp> {
             theme: AppTheme.dark(),
             darkTheme: AppTheme.dark(),
             themeMode: ThemeMode.dark,
-            // Envolve toda rota na moldura CRT (backdrop + scanlines + boot).
             builder: (context, child) =>
                 ArcadeShell(child: child ?? const SizedBox.shrink()),
             locale: locale,

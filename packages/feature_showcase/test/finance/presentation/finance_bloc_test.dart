@@ -13,7 +13,6 @@ void main() {
       final bloc = build();
       expect(bloc.state.holdings, MiraPortfolioCatalog.initial);
       expect(bloc.state.trades.length, MiraTradesCatalog.initial.length);
-      // Watchlist default inclui holdings + extras.
       expect(bloc.state.favoriteIds, contains('PETR4'));
       expect(bloc.state.favoriteIds, contains('MGLU3'));
     });
@@ -96,7 +95,6 @@ void main() {
         final h = bloc.state.holdingOf('PETR4');
         expect(h, isNotNull);
         expect(h!.quantity, 200);
-        // (100*3000 + 100*4000) / 200 = 3500
         expect(h.avgPriceCents, 3500);
       },
     );

@@ -45,9 +45,6 @@ class _AppButtonState extends State<AppButton> {
     final colors = context.colors;
     final theme = Theme.of(context);
 
-    // Primary fica em gradiente brand (primary -> accent) com glow no
-    // hover. Secondary/ghost continuam em cor solida — primary e o
-    // unico que precisa "pular da pagina".
     final isPrimary = widget.variant == AppButtonVariant.primary;
     final usesGradient = isPrimary && !_disabled;
 
@@ -56,12 +53,7 @@ class _AppButtonState extends State<AppButton> {
       Color foreground,
       Color? border,
     ) = switch (widget.variant) {
-      AppButtonVariant.primary => (
-        // Cor de fundo so importa quando NAO usa gradient (disabled).
-        colors.surfaceMuted,
-        colors.onPrimary,
-        null,
-      ),
+      AppButtonVariant.primary => (colors.surfaceMuted, colors.onPrimary, null),
       AppButtonVariant.secondary => (
         _hovering && !_disabled ? colors.surfaceMuted : colors.surface,
         colors.onSurface,
@@ -85,9 +77,6 @@ class _AppButtonState extends State<AppButton> {
           ]
         : <BoxShadow>[];
 
-    // Focus ring discreto — glow no token primary, visivel apenas em
-    // navegacao por teclado (onShowFocusHighlight ja filtra foco por
-    // toque/clique).
     if (_focused && !_disabled) {
       shadows.add(
         BoxShadow(
@@ -139,9 +128,6 @@ class _AppButtonState extends State<AppButton> {
             ),
             const SizedBox(width: 8),
           ],
-          // Flexible permite o label encolher ou usar ellipsis quando o
-          // botao esta numa constraint apertada (ex.: CTA expandido em
-          // viewport mobile estreita) — sem isso a Row estoura.
           Flexible(
             child: Text(
               widget.label,
@@ -156,9 +142,6 @@ class _AppButtonState extends State<AppButton> {
       ),
     );
 
-    // FocusableActionDetector adiciona foco por Tab e ativacao por
-    // Enter/Espaco (ActivateIntent cobre os dois atalhos por padrao) —
-    // o GestureDetector sozinho deixava o botao inacessivel por teclado.
     return FocusableActionDetector(
       enabled: !_disabled,
       mouseCursor: _disabled

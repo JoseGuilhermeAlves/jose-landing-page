@@ -88,8 +88,6 @@ class FinanceBloc extends Bloc<FinanceEvent, FinanceState> {
           ),
         );
       } else {
-        // Custo medio ponderado: soma de cost basis dividida pela
-        // quantidade total.
         final totalQty = existing.quantity + event.quantity;
         final totalCost =
             existing.costBasisCents + event.quantity * event.priceCents;
@@ -104,8 +102,6 @@ class FinanceBloc extends Bloc<FinanceEvent, FinanceState> {
           );
       }
     } else {
-      // Venda — abate da quantidade. Avg price nao muda. Se zerar,
-      // remove o holding.
       if (existing == null) return;
       final remaining = existing.quantity - event.quantity;
       updatedHoldings.removeWhere((h) => h.assetId == event.assetId);

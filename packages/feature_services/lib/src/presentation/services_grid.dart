@@ -31,7 +31,6 @@ class ServicesGrid extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         const gap = AppSpacing.md;
-        // (columns - 1) gaps entre os cards na linha cheia.
         final totalGapWidth = gap * (columns - 1);
         final cardWidth = (constraints.maxWidth - totalGapWidth) / columns;
 

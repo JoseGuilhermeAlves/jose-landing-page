@@ -79,8 +79,6 @@ class SectionHeader extends StatelessWidget {
             constraints: BoxConstraints(maxWidth: subtitleMaxWidth),
             child: Text(
               subtitle!,
-              // Mobile cai pra bodyMedium (16) — bodyLarge (18) com wrap
-              // em 720px gera subtitles de 4+ linhas no estreito.
               style: context
                   .responsive(
                     mobile: textTheme.bodyMedium,

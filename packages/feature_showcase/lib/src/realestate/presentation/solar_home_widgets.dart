@@ -1,9 +1,5 @@
 part of 'solar_home_page.dart';
 
-// =============================================================================
-// HERO
-// =============================================================================
-
 class _HeroCard extends StatelessWidget {
   const _HeroCard({required this.colors, required this.textTheme});
 
@@ -111,20 +107,12 @@ class _HeroCard extends StatelessWidget {
   }
 }
 
-// =============================================================================
-// BAIRROS
-// =============================================================================
-
 class _NeighborhoodStrip extends StatelessWidget {
   const _NeighborhoodStrip();
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<RealEstateBloc, RealEstateState>(
-      // Deriva bairros do catalogo injetado no bloc — assim o demo
-      // respeita o override de `RealEstateDemo(properties:)` em
-      // testes / sandboxes, e fica consistente com os chips do
-      // filtro da listagem.
       buildWhen: (a, b) =>
           a.selectedNeighborhood != b.selectedNeighborhood ||
           a.allProperties != b.allProperties,
@@ -199,18 +187,12 @@ class _NeighborhoodChip extends StatelessWidget {
   }
 }
 
-// =============================================================================
-// EM DESTAQUE
-// =============================================================================
-
 class _FeaturedList extends StatelessWidget {
   const _FeaturedList();
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<RealEstateBloc, RealEstateState>(
-      // Featured saem do allProperties (catalogo via bloc) pra refletir
-      // qualquer override de propriedades passado ao demo.
       buildWhen: (a, b) => a.allProperties != b.allProperties,
       builder: (context, state) {
         final featured = state.allProperties.take(4).toList();
@@ -226,10 +208,6 @@ class _FeaturedList extends StatelessWidget {
     );
   }
 }
-
-// =============================================================================
-// SOBRE
-// =============================================================================
 
 class _AboutBlock extends StatelessWidget {
   const _AboutBlock({required this.colors, required this.textTheme});

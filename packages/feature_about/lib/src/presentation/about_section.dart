@@ -29,10 +29,8 @@ class AboutSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Eyebrow em fonte pixel ciano.
         PixelText(l10n.about_eyebrow, color: colors.accent, pixelSize: 3),
         const SizedBox(height: AppSpacing.md),
-        // Titulo legivel com acento magenta inline.
         Semantics(
           header: true,
           child: Text.rich(
@@ -49,8 +47,6 @@ class AboutSection extends StatelessWidget {
           ),
         ),
         const SizedBox(height: AppSpacing.lg),
-        // Bio em prosa: subtitle muted + lead em destaque + linhas-fato +
-        // fecho de escopo.
         Text(
           l10n.about_subtitle,
           style: tt.bodyLarge?.copyWith(
@@ -78,9 +74,6 @@ class AboutSection extends StatelessWidget {
         SizedBox(height: blockGap),
         const _NeonHairline(),
         SizedBox(height: blockGap),
-        // "Onde ja entreguei" — lista texto-primeiro dos dominios em rows
-        // estilo changelog, mesma gramatica do bloco "Como eu entrego" logo
-        // abaixo. Sem mapa interativo: leitura direta e escaneavel.
         Text(
           l10n.about_domainsMapLabel,
           style: tt.headlineSmall?.copyWith(color: colors.onSurface),
@@ -90,7 +83,6 @@ class AboutSection extends StatelessWidget {
         SizedBox(height: blockGap),
         const _NeonHairline(),
         SizedBox(height: blockGap),
-        // "Como eu entrego" — rows changelog arcade.
         Text(
           l10n.about_deliveryTitle,
           style: tt.headlineSmall?.copyWith(color: colors.onSurface),
@@ -139,8 +131,6 @@ class _DomainRow extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Marcador-pixel ciano alinhado ao topo do rotulo — estetica
-        // arcade, mesmo quadrado dos demais blocos.
         Padding(
           padding: const EdgeInsets.only(top: AppSpacing.xs),
           child: ColoredBox(

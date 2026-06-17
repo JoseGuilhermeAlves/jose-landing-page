@@ -61,11 +61,6 @@ class _MiraTickerTapeState extends State<MiraTickerTape>
     final colors = context.colors;
     const assets = MiraAssetsCatalog.all;
 
-    // Row construida UMA vez e passada como `child` do AnimatedBuilder
-    // — so o Transform.translate roda por frame; os ~24 chips nao
-    // rebuildam durante os 40s do loop. Duplicamos a lista pra criar
-    // loop seamless: quando o primeiro ciclo sai da tela, o segundo ja
-    // cobre o mesmo conteudo.
     final tape = Row(
       mainAxisSize: MainAxisSize.min,
       children: [

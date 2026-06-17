@@ -57,7 +57,6 @@ class RealEstateState extends Equatable {
       return false;
     }
     if (selectedBedrooms != null) {
-      // Bucket "4+" no filtro: bedrooms >= 4 quando filtro e 4.
       if (selectedBedrooms == 4) {
         if (p.bedrooms < 4) return false;
       } else if (p.bedrooms != selectedBedrooms) {

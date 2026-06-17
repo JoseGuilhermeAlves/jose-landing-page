@@ -42,10 +42,6 @@ class AppColorScheme {
   final Color error;
   final Color info;
 
-  // Identidade "Arcade" — CRT neon fliperama 80s/16-bit. Quase-preto
-  // roxo de tubo CRT, neon magenta como acento primario, ciano como
-  // segundo acento e verde fosforo como status. Sem cinzas mortos:
-  // os mutes puxam lavanda pra ficar coerente com o glow neon.
   /// Dark-first — paleta default da landing (CRT neon).
   static const AppColorScheme dark = AppColorScheme(
     primary: Color(0xFFFF2E97),
@@ -99,7 +95,6 @@ class AppColorsExtension extends ThemeExtension<AppColorsExtension> {
 
   @override
   AppColorsExtension lerp(ThemeExtension<AppColorsExtension>? other, double t) {
-    // Paleta nao interpola — toggling dark/light troca instantaneamente.
     if (other is! AppColorsExtension) return this;
     return t < 0.5 ? this : other;
   }

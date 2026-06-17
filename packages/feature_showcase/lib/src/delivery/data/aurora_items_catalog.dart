@@ -5,7 +5,6 @@ import 'package:feature_showcase/src/delivery/domain/market_item.dart';
 /// vinculado a uma banca (`vendorId`) e a uma categoria.
 abstract final class AuroraItemsCatalog {
   static const List<MarketItem> all = [
-    // Banca do Seu Mario — frutas e verduras
     MarketItem(
       id: 'i-banana',
       name: 'Banana prata',
@@ -86,7 +85,6 @@ abstract final class AuroraItemsCatalog {
       photoAsset: 'assets/delivery/cenoura.webp',
     ),
 
-    // Padaria do Centro
     MarketItem(
       id: 'i-pao-frances',
       name: 'Pao frances',
@@ -114,7 +112,6 @@ abstract final class AuroraItemsCatalog {
       photoAsset: 'assets/delivery/baguete.webp',
     ),
 
-    // Queijaria da Serra
     MarketItem(
       id: 'i-queijo-minas',
       name: 'Queijo minas frescal',
@@ -142,7 +139,6 @@ abstract final class AuroraItemsCatalog {
       photoAsset: 'assets/delivery/manteiga.webp',
     ),
 
-    // Emporio Aurora
     MarketItem(
       id: 'i-feijao',
       name: 'Feijao carioca',
@@ -170,7 +166,6 @@ abstract final class AuroraItemsCatalog {
       photoAsset: 'assets/delivery/azeite.webp',
     ),
 
-    // Feira Itinerante — caixote da semana
     MarketItem(
       id: 'i-caixote',
       name: 'Caixote da semana',
@@ -186,7 +181,6 @@ abstract final class AuroraItemsCatalog {
       photoAsset: 'assets/delivery/caixote.webp',
     ),
 
-    // Padoca do Bairro
     MarketItem(
       id: 'i-pao-doce',
       name: 'Pao doce',

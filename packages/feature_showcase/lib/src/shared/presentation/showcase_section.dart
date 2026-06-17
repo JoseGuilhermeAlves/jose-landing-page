@@ -27,8 +27,6 @@ class ShowcaseSection extends StatelessWidget {
     final l10n = context.l10n;
     final templates = ShowcaseCatalog.all(l10n);
 
-    // Gabinetes — construidos uma vez, consumidos pelo grid (desktop) ou
-    // pelo carrossel (mobile).
     final cabinets = [
       for (final t in templates)
         ArcadeCabinet(
@@ -77,8 +75,6 @@ class ShowcaseSection extends StatelessWidget {
             desktop: AppSpacing.xxl,
           ),
         ),
-        // Mobile: carrossel "stage select" (1 gabinete por vez) — evita a
-        // pilha vertical gigante. Desktop: Wrap com varios por linha.
         if (context.isMobile)
           _ShowcaseCarousel(cabinets: cabinets)
         else
@@ -139,8 +135,6 @@ class _ShowcaseCarousel extends StatefulWidget {
 class _ShowcaseCarouselState extends State<_ShowcaseCarousel> {
   static const double _viewportFraction = 0.86;
 
-  // Cromo fixo do gabinete (marquee + deck + paddings/espacos), fora a tela
-  // 3:4 que escala com a largura. Ver ArcadeCabinet.
   static const double _cabinetChrome = 112;
 
   late final PageController _controller = PageController(
@@ -169,7 +163,6 @@ class _ShowcaseCarouselState extends State<_ShowcaseCarousel> {
 
     return LayoutBuilder(
       builder: (context, constraints) {
-        // Altura = cromo + tela (3:4) na largura da pagina (menos o gap).
         final pageWidth = constraints.maxWidth * _viewportFraction;
         final screenWidth = pageWidth - AppSpacing.sm * 2 - AppSpacing.md;
         final cabinetHeight = _cabinetChrome + screenWidth * 4 / 3;
@@ -194,7 +187,6 @@ class _ShowcaseCarouselState extends State<_ShowcaseCarousel> {
               ),
             ),
             const SizedBox(height: AppSpacing.lg),
-            // Setas + bolinhas de pagina.
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

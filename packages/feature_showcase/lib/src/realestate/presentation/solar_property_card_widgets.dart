@@ -19,8 +19,6 @@ class _Illustration extends StatelessWidget {
             Positioned.fill(
               child: ColoredBox(
                 color: colors.surfaceMuted,
-                // Foto de capa quando ha asset; cai no painter da
-                // silhueta enquanto os .webp nao existem.
                 child: ShowcasePhoto(
                   assetPath: property.coverPhoto,
                   semanticLabel: property.headline.isEmpty

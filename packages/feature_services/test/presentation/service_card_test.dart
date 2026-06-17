@@ -73,19 +73,15 @@ void main() {
       addTearDown(gesture.removePointer);
 
       await gesture.moveTo(tester.getCenter(find.byType(ServiceCard)));
-      // dispatch do hover event (frame zero)
       await tester.pump();
-      // metade da animacao
       await tester.pump(const Duration(milliseconds: 150));
       final mid = currentBorder(tester).progress;
       expect(mid, greaterThan(0));
       expect(mid, lessThan(1));
 
-      // anima ate o fim
       await tester.pump(const Duration(milliseconds: 600));
       expect(currentBorder(tester).progress, closeTo(1, 0.01));
 
-      // sai e volta a recolher
       await gesture.moveTo(const Offset(-100, -100));
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 600));

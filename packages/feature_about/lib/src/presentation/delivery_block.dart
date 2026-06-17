@@ -70,8 +70,6 @@ class _DeliveryRow extends StatelessWidget {
     final tt = Theme.of(context).textTheme;
     final isMobile = context.isMobile;
 
-    // Coluna do titulo: numero de stage em pixel + eyebrow pixel ciano +
-    // titulo legivel com acento magenta.
     final heading = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
@@ -109,7 +107,6 @@ class _DeliveryRow extends StatelessWidget {
       style: tt.bodyMedium?.copyWith(color: colors.onSurfaceMuted, height: 1.5),
     );
 
-    // Changelog-row: padding vertical, hairline inferior neon, sem surface.
     return Container(
       padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg),
       decoration: BoxDecoration(

@@ -3,7 +3,6 @@ import 'package:feature_showcase/feature_showcase.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  // Catalogo enxuto pra exercitar todos os filtros sem ruido.
   const properties = [
     Property(
       id: 'a',
@@ -122,7 +121,6 @@ void main() {
         ..add(const RealEstateBedroomsSelected(4))
         ..add(const RealEstateMaxPriceChanged(150000000)),
       verify: (bloc) {
-        // Vila Nova + 4+ + ate 1.5M = so 'c' (110M, 4 quartos).
         expect(bloc.state.filtered.map((p) => p.id), ['c']);
         expect(bloc.state.hasActiveFilters, isTrue);
       },
@@ -150,7 +148,6 @@ void main() {
       build: makeBloc,
       act: (bloc) => bloc
         ..add(const RealEstateNeighborhoodSelected('Centro'))
-        // Centro so tem 1 e 3 quartos — 4+ filtra tudo.
         ..add(const RealEstateBedroomsSelected(4)),
       verify: (bloc) => expect(bloc.state.filtered, isEmpty),
     );
@@ -193,8 +190,6 @@ void main() {
       act: (bloc) => bloc
         ..add(const RealEstateContactSent('a'))
         ..add(const RealEstateContactSent('a')),
-      // O primeiro emit gera um state com o id; o segundo nao deve
-      // emitir nada novo (mesmo id ja presente).
       expect: () => [
         isA<RealEstateState>().having(
           (s) => s.sentContactIds,

@@ -1,7 +1,3 @@
-// Catalogo estatico de descricoes expandidas por tecnologia. As chaves casam
-// com `TechBody.techName` exposto em `cosmic_bodies.dart`; o consumidor e o
-// popup acionado quando o usuário clica num corpo celeste da cena cosmica.
-
 /// Conteudo expandido por tech, exibido no popup quando o usuário clica
 /// num corpo celeste da cena cosmic.
 class TechDescription {
@@ -578,7 +574,8 @@ abstract final class TechDescriptionsCatalog {
           'Permite acessar APIs de plataforma sem plugin publicado — '
           'sensores, biometria, armazenamento seguro, Bluetooth e '
           'qualquer SDK nativo que ainda não tenha wrapper Flutter.',
-      docsUrl: 'https://docs.flutter.dev/platform-integration/'
+      docsUrl:
+          'https://docs.flutter.dev/platform-integration/'
           'platform-channels',
     ),
   };

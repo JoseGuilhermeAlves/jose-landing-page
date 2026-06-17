@@ -89,7 +89,6 @@ class _ContactSectionState extends State<ContactSection>
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        // Painel "CONTINUE?" — escuro, borda neon magenta + glow.
         Container(
           padding: EdgeInsets.all(panelPadding),
           decoration: BoxDecoration(
@@ -105,7 +104,6 @@ class _ContactSectionState extends State<ContactSection>
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Eyebrow "INSERT COIN" piscante, ciano.
               FadeTransition(
                 opacity: _blink,
                 child: PixelText(
@@ -115,15 +113,6 @@ class _ContactSectionState extends State<ContactSection>
                 ),
               ),
               const SizedBox(height: AppSpacing.lg),
-              // Titulo em fonte pixel com glow magenta. PixelText nao
-              // quebra sozinho (largura intrinseca = chars x pixelSize),
-              // entao no mobile separamos "VAMOS" / "CONVERSAR?" em duas
-              // linhas via `\n` pra caber em viewports estreitos; no desktop
-              // fica em linha unica. O FittedBox(scaleDown) e a rede de
-              // seguranca: se mesmo a linha mais longa estourar (~360px),
-              // o titulo encolhe em vez de sangrar pra fora do painel. O
-              // label do Semantics mantem o texto corrido (sem `\n`) pro
-              // leitor de tela.
               Semantics(
                 header: true,
                 label: '${l10n.contact_title} ${l10n.contact_titleAccent}',
@@ -156,8 +145,6 @@ class _ContactSectionState extends State<ContactSection>
                 ),
               ),
               const SizedBox(height: AppSpacing.xl),
-              // Email gigante clicavel — funil mailto. Ciano com sublinhado;
-              // no hover/focus engrossa e sobe pro onSurface pleno.
               _FocusableLink(
                 key: const Key('contact-cta-email'),
                 semanticsLabel: l10n.contact_ctaEmail,

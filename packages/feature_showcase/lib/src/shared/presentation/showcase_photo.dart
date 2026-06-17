@@ -52,9 +52,6 @@ class ShowcasePhoto extends StatelessWidget {
       width: width,
       height: height,
       semanticLabel: semanticLabel,
-      // Decodifica no tamanho de layout pra nao segurar bitmap gigante em
-      // memoria (fotos web podem vir grandes). Fade-in suave quando o
-      // frame chega de forma assincrona.
       frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
         if (wasSynchronouslyLoaded) return child;
         return AnimatedOpacity(

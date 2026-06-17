@@ -33,10 +33,7 @@ void main() {
       );
       await tester.pump(const Duration(milliseconds: 16));
 
-      // Titulo da secao em fonte pixel (PixelText, nao Text — "conversar?"
-      // vira matriz de pixels).
       expect(find.byType(PixelText), findsWidgets);
-      // O proprio endereco e o CTA tipografico.
       final emailLink = find.byKey(const Key('contact-cta-email'));
       expect(emailLink, findsOneWidget);
       expect(
@@ -51,20 +48,12 @@ void main() {
     testWidgets('titulo nao estoura a largura num viewport mobile estreito', (
       tester,
     ) async {
-      // Regressao: "Vamos conversar?" em PixelText (largura intrinseca =
-      // chars x pixelSize) sangrava pra fora do painel no mobile ~360px.
-      // No mobile o titulo quebra em duas linhas e um FittedBox(scaleDown)
-      // garante que ate a linha mais longa caiba. Aqui medimos a largura
-      // pintada do titulo contra o viewport.
       const narrow = Size(360, 1600);
       await tester.pumpWidget(
         wrap(const ContactSection(email: 'contato@example.com'), size: narrow),
       );
       await tester.pump(const Duration(milliseconds: 16));
 
-      // O titulo e o primeiro PixelText em fonte pixel da secao (o
-      // eyebrow "~ INSERT COIN" tambem e PixelText, mas o titulo carrega
-      // o glow magenta). Pegamos todos e garantimos que nenhum extrapola.
       final pixelTexts = find.byType(PixelText);
       expect(pixelTexts, findsWidgets);
       for (final element in pixelTexts.evaluate()) {
@@ -72,7 +61,8 @@ void main() {
         expect(
           size.width,
           lessThanOrEqualTo(narrow.width),
-          reason: 'PixelText "${(element.widget as PixelText).text}" '
+          reason:
+              'PixelText "${(element.widget as PixelText).text}" '
               'estoura o viewport de ${narrow.width}px',
         );
       }
@@ -116,7 +106,6 @@ void main() {
       expect(find.byKey(const Key('contact-cta-linkedin')), findsOneWidget);
       expect(find.byKey(const Key('contact-cta-whatsapp')), findsOneWidget);
 
-      // Email primario fica acima da linha de links secundarios.
       final emailTop = tester
           .getTopLeft(find.byKey(const Key('contact-cta-email')))
           .dy;
@@ -125,10 +114,6 @@ void main() {
           .dy;
       expect(emailTop, lessThan(githubTop));
 
-      // Ordem de leitura GitHub · LinkedIn · WhatsApp — wrap-aware:
-      // dentro do painel coral (mais estreito) o Wrap pode quebrar pra
-      // outra linha, entao cada link seguinte fica a direita na mesma
-      // linha OU numa linha abaixo.
       Offset topLeftOf(String key) => tester.getTopLeft(find.byKey(Key(key)));
       bool follows(Offset a, Offset b) =>
           b.dy > a.dy || (b.dy == a.dy && b.dx > a.dx);
@@ -138,7 +123,6 @@ void main() {
       expect(follows(gh, li), isTrue);
       expect(follows(li, wa), isTrue);
 
-      // Tap em um secundario propaga a Uri correta.
       await tester.tap(find.byKey(const Key('contact-cta-github')));
       await tester.pump();
       expect(opened.single.toString(), 'https://github.com/jose');
@@ -198,10 +182,6 @@ void main() {
       );
       await tester.pump(const Duration(milliseconds: 16));
 
-      // Foca direto o FocusableActionDetector do link de email e ativa
-      // via Enter — cobre o caminho de teclado sem depender da ordem de
-      // tab da arvore inteira. Focus.of num descendant resolve o node
-      // interno do detector.
       final textContext = tester.element(
         find
             .descendant(
@@ -224,8 +204,6 @@ void main() {
     testWidgets('hover no email link sobe ink para onSurface pleno', (
       tester,
     ) async {
-      // FocusableActionDetector so mostra hover highlight em modo
-      // "traditional" — em teste o default e touch, entao forcamos.
       FocusManager.instance.highlightStrategy =
           FocusHighlightStrategy.alwaysTraditional;
       addTearDown(() {
@@ -250,8 +228,6 @@ void main() {
         return text.style!.color!;
       }
 
-      // Painel arcade: email em ciano (accent) que sobe pro onSurface
-      // pleno no hover.
       const colors = AppColorScheme.light;
       expect(colorOfEmailText(), colors.accent);
 
@@ -263,8 +239,6 @@ void main() {
       await gesture.moveTo(
         tester.getCenter(find.byKey(const Key('contact-cta-email'))),
       );
-      // Dois pumps: um registra o evento, o outro deixa o frame de
-      // highlight assentar (ver memoria testing_mouseregion_animations).
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 50));
 

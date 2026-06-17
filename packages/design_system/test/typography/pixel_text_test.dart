@@ -5,7 +5,6 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   group('PixelFont', () {
     test('todo glifo mapeado tem 7 linhas dentro de 5 bits', () {
-      // Varre o alfabeto + digitos + pontuacao comum.
       const sample =
           r'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 .,:;-_!?/\<>+=*()[]';
       for (final ch in sample.split('')) {
@@ -26,14 +25,21 @@ void main() {
     });
 
     test('acentos e cedilha caem na letra-base (nao viram buraco)', () {
-      // Cobre o conjunto que aparece na copy pt-BR.
       const pairs = {
-        'á': 'A', 'ã': 'A', 'â': 'A', 'à': 'A',
-        'é': 'E', 'ê': 'E',
+        'á': 'A',
+        'ã': 'A',
+        'â': 'A',
+        'à': 'A',
+        'é': 'E',
+        'ê': 'E',
         'í': 'I',
-        'ó': 'O', 'ô': 'O', 'õ': 'O',
-        'ú': 'U', 'ü': 'U',
-        'ç': 'C', 'Ç': 'C',
+        'ó': 'O',
+        'ô': 'O',
+        'õ': 'O',
+        'ú': 'U',
+        'ü': 'U',
+        'ç': 'C',
+        'Ç': 'C',
       };
       pairs.forEach((accented, base) {
         expect(
@@ -41,7 +47,6 @@ void main() {
           PixelFont.rowsFor(base),
           reason: '"$accented" deveria render como "$base"',
         );
-        // E nunca virar espaco (buraco no texto).
         expect(
           PixelFont.rowsFor(accented),
           isNot(PixelFont.rowsFor(' ')),
@@ -57,10 +62,9 @@ void main() {
     });
 
     test('canRenderAll: scripts fora do latino retornam false', () {
-      expect(PixelFont.canRenderAll('日本語'), isFalse); // japones
-      expect(PixelFont.canRenderAll('Привет'), isFalse); // cirilico
-      expect(PixelFont.canRenderAll('技术'), isFalse); // chines
-      // Misturado: um char nao-latino ja derruba tudo.
+      expect(PixelFont.canRenderAll('日本語'), isFalse);
+      expect(PixelFont.canRenderAll('Привет'), isFalse);
+      expect(PixelFont.canRenderAll('技术'), isFalse);
       expect(PixelFont.canRenderAll('STAGE 技'), isFalse);
     });
   });
@@ -98,7 +102,6 @@ void main() {
       );
 
       final size = tester.getSize(find.byType(PixelText));
-      // 2 linhas de 7 + 2 de lineSpacing = 16 dots * 3px = 48.
       expect(size.height, (PixelFont.glyphHeight * 2 + 2) * 3);
     });
 
@@ -116,10 +119,8 @@ void main() {
       );
 
       expect(tester.takeException(), isNull);
-      // Fallback: o texto aparece num Text de verdade, nao no painter bitmap.
       final text = tester.widget<Text>(find.byType(Text));
       expect(text.data, '日本語');
-      // Latino continua no caminho pixel (sem Text filho).
     });
 
     testWidgets('idioma latino NAO usa fallback (segue pixel/CustomPaint)', (

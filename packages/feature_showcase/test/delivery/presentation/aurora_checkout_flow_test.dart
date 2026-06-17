@@ -4,10 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  // O hero, o mini-mapa e o backdrop tem animacoes em loop infinito,
-  // entao todos os pumps usam Duration explicito — pumpAndSettle nunca
-  // terminaria.
-
   Widget wrap(Widget child) => MaterialApp(
     theme: AppTheme.dark(),
     localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -53,7 +49,6 @@ void main() {
         await tester.tap(product);
         await settle(tester);
 
-        // Sheet aberto: descricao longa e CTA de adicionar presentes.
         expect(find.byKey(const Key('aurora-item-sheet-add')), findsOneWidget);
         expect(find.text('Quantidade'), findsOneWidget);
       },
@@ -71,13 +66,11 @@ void main() {
       await tester.tap(product);
       await settle(tester);
 
-      // Sobe a quantidade pra 2 e adiciona.
       await tester.tap(find.byKey(const Key('aurora-item-sheet-increment')));
       await tester.pump(const Duration(milliseconds: 16));
       await tester.tap(find.byKey(const Key('aurora-item-sheet-add')));
       await settle(tester);
 
-      // De volta no detalhe da banca, a barra de carrinho aparece.
       expect(find.byKey(const Key('aurora-cart-bar')), findsOneWidget);
     });
   });
@@ -88,7 +81,6 @@ void main() {
     Future<void> reachCheckout(WidgetTester tester) async {
       await openVendorMario(tester);
 
-      // Adiciona pelo botao "+" do card (sem abrir o sheet).
       final addButtons = find.byKey(const Key('aurora-add-item'));
       await tester.ensureVisible(addButtons.first);
       await tester.pump(const Duration(milliseconds: 16));
@@ -114,10 +106,7 @@ void main() {
         find.byKey(const Key('aurora-checkout-payment-pay-pix')),
         findsOneWidget,
       );
-      expect(
-        find.byKey(const Key('aurora-checkout-confirm')),
-        findsOneWidget,
-      );
+      expect(find.byKey(const Key('aurora-checkout-confirm')), findsOneWidget);
     });
 
     testWidgets(
@@ -126,7 +115,6 @@ void main() {
         await useLargeSurface(tester);
         await reachCheckout(tester);
 
-        // Escolhe outro endereco + pagamento + observacao.
         await tester.tap(
           find.byKey(const Key('aurora-checkout-address-addr-mae')),
         );
@@ -141,7 +129,6 @@ void main() {
         await tester.tap(find.byKey(const Key('aurora-checkout-confirm')));
         await settle(tester);
 
-        // Caiu no detalhe do pedido (timeline com os status).
         expect(find.text(DeliveryStatus.received.label), findsOneWidget);
         expect(find.text(DeliveryStatus.delivered.label), findsOneWidget);
       },
@@ -154,10 +141,6 @@ void main() {
       await reachCheckout(tester);
       expect(find.text('Revisar pedido'), findsOneWidget);
 
-      // Back do AppBar volta pra banca (Produtos), nao avanca o pedido.
-      // Toca direto no BackButton inserido pela AppBar (pageBack do
-      // tester espera um back button materializado e e fragil com
-      // navigators aninhados — o tap explicito e mais robusto).
       await tester.tap(find.byType(BackButton));
       await settle(tester);
       expect(find.text('Produtos'), findsOneWidget);

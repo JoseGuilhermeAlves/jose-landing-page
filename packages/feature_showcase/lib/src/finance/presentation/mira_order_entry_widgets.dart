@@ -8,8 +8,6 @@ class _AssetSummary extends StatelessWidget {
     final colors = context.colors;
     final route = ModalRoute.of(context);
     if (route is! ModalRoute) return const SizedBox.shrink();
-    // Pega o asset id via Provider/state — caller monta com mira_navigation
-    // que ja injeta o bloc. Pegamos do state pra ler o preco corrente.
     return BlocBuilder<FinanceBloc, FinanceState>(
       builder: (context, state) {
         final orderPage = context
@@ -171,9 +169,6 @@ class _QuickPicks extends StatelessWidget {
           Expanded(
             child: Builder(
               builder: (context) {
-                // O pick que casa com a quantidade corrente fica ativo
-                // em mint/primary — sinaliza selecao em vez de ler como
-                // botao desabilitado cinza.
                 final isSelected = opt.$2 > 0 && opt.$2 == current;
                 return OutlinedButton(
                   onPressed: opt.$2 > 0 ? () => onPicked(opt.$2) : null,

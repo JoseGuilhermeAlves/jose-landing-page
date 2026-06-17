@@ -41,7 +41,6 @@ class HomeBottomNav extends StatelessWidget {
         child: DecoratedBox(
           decoration: BoxDecoration(
             color: colors.background.withValues(alpha: 0.82),
-            // Hairline neon no topo — mesma assinatura do menu lateral arcade.
             border: Border(
               top: BorderSide(color: colors.primary.withValues(alpha: 0.35)),
             ),
@@ -86,7 +85,6 @@ class _BottomNavItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = context.colors;
     final textTheme = Theme.of(context).textTheme;
-    // Ativo em ciano neon; repouso em muted (vocabulario do ArcadeSideNav).
     final tint = active ? colors.accent : colors.onSurfaceMuted;
 
     return Semantics(
@@ -100,8 +98,6 @@ class _BottomNavItem extends StatelessWidget {
         child: AnimatedContainer(
           duration: AppDuration.fast,
           curve: Curves.easeOut,
-          // Celula "acesa" na ativa: topo neon chunky + painel tint + glow,
-          // metafora de cartucho/stage selecionado no fliperama.
           decoration: BoxDecoration(
             color: active ? colors.accent.withValues(alpha: 0.08) : null,
             border: Border(
@@ -123,7 +119,6 @@ class _BottomNavItem extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Numero do stage em mono tabular (01, 02...).
               Text(
                 (index + 1).toString().padLeft(2, '0'),
                 style: textTheme.labelSmall?.copyWith(
@@ -137,8 +132,6 @@ class _BottomNavItem extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: AppSpacing.xs),
-              // Cursor ~ (so na ativa) + label em fonte pixel. FittedBox
-              // encolhe labels longos (ex.: ENGENHARIA) pra caber no item.
               Flexible(
                 child: FittedBox(
                   fit: BoxFit.scaleDown,

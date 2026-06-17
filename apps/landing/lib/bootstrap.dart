@@ -17,7 +17,6 @@ Future<void> bootstrap(Widget Function() builder) async {
 
       FlutterError.onError = (details) {
         FlutterError.presentError(details);
-        // TODO(jose): integrar com Sentry/Crashlytics em release.
       };
 
       PlatformDispatcher.instance.onError = (error, stack) {

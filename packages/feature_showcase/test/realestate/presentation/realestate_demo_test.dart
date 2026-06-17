@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  // Catalogo deterministico pros widget tests. Catalogo legado (sem
-  // headline/city/features) — testa que o demo aguenta o caso minimo.
   const sample = [
     Property(
       id: 'a',
@@ -44,7 +42,6 @@ void main() {
     home: child,
   );
 
-  // Helper — abre o demo na home e empurra a listagem pelo CTA do hero.
   Future<void> openListings(WidgetTester tester) async {
     await tester.pumpWidget(wrap(const RealEstateDemo(properties: sample)));
     await tester.pump(const Duration(milliseconds: 16));
@@ -61,7 +58,6 @@ void main() {
       await tester.pumpWidget(wrap(const RealEstateDemo(properties: sample)));
       await tester.pump(const Duration(milliseconds: 16));
 
-      // Tagline da marca aparece + chip de bairros + CTA visivel.
       expect(find.text('Sua nova casa cabe aqui.'), findsOneWidget);
       expect(find.byKey(const Key('solar-cta-listings')), findsOneWidget);
       expect(
@@ -83,8 +79,6 @@ void main() {
       await tester.tap(find.byKey(const Key('solar-home-neighborhood-Centro')));
       await tester.pumpAndSettle();
 
-      // Listagem aberta com filtro Centro aplicado — so as duas
-      // propriedades do bairro.
       expect(find.text('2 imoveis encontrados'), findsOneWidget);
     });
   });
@@ -97,7 +91,6 @@ void main() {
 
       await openListings(tester);
 
-      // Header de contagem.
       expect(find.text('3 imoveis encontrados'), findsOneWidget);
       expect(find.byKey(const Key('solar-property-card-a')), findsOneWidget);
       expect(find.byKey(const Key('solar-property-card-b')), findsOneWidget);
@@ -160,7 +153,6 @@ void main() {
 
       await openListings(tester);
 
-      // Centro tem 1 e 3 quartos no sample — pedir 4+ zera resultado.
       await tester.tap(find.byKey(const Key('solar-neighborhood-chip-Centro')));
       await tester.pump(const Duration(milliseconds: 16));
       await tester.tap(find.byKey(const Key('solar-bedroom-chip-4')));
@@ -179,23 +171,17 @@ void main() {
       tester.view.devicePixelRatio = 1;
       addTearDown(tester.view.resetPhysicalSize);
 
-      // Usa o catalogo canonico (com headline) — o sample minimo
-      // nao tem headline pra checar.
       await tester.pumpWidget(wrap(const RealEstateDemo()));
       await tester.pump(const Duration(milliseconds: 16));
       await tester.tap(find.byKey(const Key('solar-cta-listings')));
       await tester.pumpAndSettle();
 
-      // Tap no primeiro card do catalogo canonico (p-1001).
       await tester.tap(find.byKey(const Key('solar-property-card-p-1001')));
-      // SolarNeighborhoodMap na detalhe roda em loop infinito —
-      // pumpAndSettle nao termina. Pumps explicitos cobrem o push.
       await tester.pump(const Duration(milliseconds: 100));
       await tester.pump(const Duration(milliseconds: 400));
 
       expect(find.byKey(const Key('solar-detail-headline')), findsOneWidget);
       expect(find.byKey(const Key('solar-detail-price')), findsOneWidget);
-      // CTA pro corretor.
       expect(find.byKey(const Key('solar-detail-contact-cta')), findsOneWidget);
     });
   });
@@ -217,8 +203,6 @@ void main() {
       await tester.pump(const Duration(milliseconds: 100));
       await tester.pump(const Duration(milliseconds: 400));
 
-      // O card do corretor fica no fim da detalhe — garante visivel antes
-      // do tap (a detalhe roda painter em loop, sem pumpAndSettle).
       await tester.ensureVisible(find.byKey(const Key('solar-broker-card')));
       await tester.pump(const Duration(milliseconds: 100));
       await tester.tap(find.byKey(const Key('solar-broker-card')));
@@ -265,13 +249,8 @@ void main() {
       await tester.pump(const Duration(milliseconds: 100));
       await tester.pump(const Duration(milliseconds: 400));
 
-      // O card-a tambem existe na listagem por baixo da rota empilhada;
-      // afere o estado pela contagem, que so a SolarSavedPage renderiza.
       expect(find.byKey(const Key('solar-saved-title')), findsOneWidget);
-      expect(
-        find.text('1 imovel guardado pra ver depois.'),
-        findsOneWidget,
-      );
+      expect(find.text('1 imovel guardado pra ver depois.'), findsOneWidget);
     });
   });
 }

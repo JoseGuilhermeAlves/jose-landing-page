@@ -27,9 +27,6 @@ void main() {
       await tester.pumpWidget(wrap(const AboutSection()));
       await tester.pump(const Duration(milliseconds: 32));
 
-      // Nome/titulo vivem no hero+nav (texto-primeiro aqui, sem bio-card).
-      // Lead + fecho de escopo. As linhas-fato por dominio foram removidas
-      // (duplicavam o conteudo dos planetas do mapa).
       expect(find.textContaining('mesma régua'), findsOneWidget);
       expect(
         find.textContaining('Backend permanece com o time'),
@@ -45,10 +42,7 @@ void main() {
       await tester.pumpWidget(wrap(const AboutSection()));
       await tester.pump(const Duration(milliseconds: 32));
 
-      // Heading da lista de dominios (texto-primeiro, sem mapa interativo).
       expect(find.text('Onde já entreguei'), findsOneWidget);
-      // Pelo menos um rotulo estavel do catalogo de dominios aparece como
-      // texto direto (nao mais escondido num balao de planeta).
       expect(find.text('Varejo B2B'), findsOneWidget);
       expect(find.byType(DeliveryBlock), findsOneWidget);
 
@@ -61,7 +55,6 @@ void main() {
       await tester.pumpWidget(wrap(const AboutSection()));
       await tester.pump(const Duration(milliseconds: 32));
 
-      // Eyebrows agora em fonte pixel (PixelText, nao Text).
       Finder pixel(String t) =>
           find.byWidgetPredicate((w) => w is PixelText && w.text == t);
       expect(pixel('ENTREGA'), findsOneWidget);

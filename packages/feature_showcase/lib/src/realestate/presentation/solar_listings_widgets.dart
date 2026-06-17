@@ -56,7 +56,6 @@ class _Filters extends StatefulWidget {
 }
 
 class _FiltersState extends State<_Filters> {
-  // Mobile arranca colapsado pra nao engolir a tela antes dos resultados.
   bool _expanded = false;
 
   @override
@@ -64,7 +63,6 @@ class _FiltersState extends State<_Filters> {
     final colors = context.colors;
     final textTheme = Theme.of(context).textTheme;
     final isMobile = context.isMobile;
-    // Desktop sempre expandido; mobile respeita o toggle.
     final showBody = !isMobile || _expanded;
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
@@ -267,7 +265,6 @@ class _BedroomChips extends StatelessWidget {
 class _PriceSlider extends StatelessWidget {
   const _PriceSlider();
 
-  // Cobre 200k a 2.5M, granularidade de 50k.
   static const int minCents = 20000000;
   static const int maxCents = 250000000;
   static const int stepCents = 5000000;

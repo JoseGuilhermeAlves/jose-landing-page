@@ -2,11 +2,11 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
-/// Avatar de monograma compartilhado pelos mocks (Vitral, Solar) —
+/// Avatar de monograma compartilhavel pelos mocks (hoje Solar) —
 /// circulo colorido com iniciais desenhadas via `TextPainter`.
 /// Substitui foto real por composicao geometrica; cada marca ajusta
 /// tipografia via `fontFamily`/`fontWeight` (Solar usa serif w600 pra
-/// reforcar o ar de revista de arquitetura, Vitral usa sans w700).
+/// reforcar o ar de revista de arquitetura).
 ///
 /// Performance: paint e TextPainter cacheados no painter (texto e
 /// estatico por instancia) e `shouldRepaint` confronta campos reais.

@@ -50,6 +50,22 @@ class PixelText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Idiomas com script fora do alfabeto latino (japones, chines, russo...)
+    // nao tem glifo na fonte bitmap 5x7 — sairiam em branco. Nesses casos
+    // renderiza numa fonte real, estilizada pra preservar o ar arcade
+    // (all-caps, bold, glow). Latino/numeros/pontuacao seguem em pixel.
+    if (!PixelFont.canRenderAll(text)) {
+      return _FallbackText(
+        text: text,
+        color: color,
+        pixelSize: pixelSize,
+        letterSpacing: letterSpacing,
+        glowColor: glowColor,
+        glowBlur: glowBlur,
+        align: align,
+      );
+    }
+
     final lines = text.split('\n');
 
     // Largura de cada linha em pixels-fonte; a maior define a largura do box.
@@ -77,6 +93,48 @@ class PixelText extends StatelessWidget {
         glowColor: glowColor,
         glowBlur: glowBlur,
         align: align,
+      ),
+    );
+  }
+}
+
+/// Fallback de [PixelText] pra scripts sem glifo bitmap (CJK, cirilico...).
+/// Aproxima o display arcade com fonte real: all-caps, peso forte, glow via
+/// `shadows` e tamanho derivado do `pixelSize` (altura ~ glifo 5x7).
+class _FallbackText extends StatelessWidget {
+  const _FallbackText({
+    required this.text,
+    required this.color,
+    required this.pixelSize,
+    required this.letterSpacing,
+    required this.glowColor,
+    required this.glowBlur,
+    required this.align,
+  });
+
+  final String text;
+  final Color color;
+  final double pixelSize;
+  final double letterSpacing;
+  final Color? glowColor;
+  final double glowBlur;
+  final TextAlign align;
+
+  @override
+  Widget build(BuildContext context) {
+    final fontSize = pixelSize * PixelFont.glyphHeight;
+    return Text(
+      text.toUpperCase(),
+      textAlign: align,
+      style: TextStyle(
+        color: color,
+        fontSize: fontSize,
+        fontWeight: FontWeight.w700,
+        letterSpacing: letterSpacing * pixelSize,
+        height: 1.1,
+        shadows: glowColor != null
+            ? [Shadow(color: glowColor!, blurRadius: glowBlur)]
+            : null,
       ),
     );
   }

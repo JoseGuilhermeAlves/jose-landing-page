@@ -156,33 +156,34 @@ class _Logo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
-    final textTheme = Theme.of(context).textTheme;
 
-    // Wordmark "ZeguiDev" puro (sem icone). Sufixo "Dev" em gradient
-    // brand pra carregar a identidade visual sem mark separado.
-    final baseStyle = textTheme.titleSmall?.copyWith(
-      color: colors.onSurface,
-      fontWeight: FontWeight.w700,
-      letterSpacing: 0.3,
-    );
-
+    // Wordmark em fonte pixel (mesma assinatura arcade do JGA no menu
+    // lateral): "ZEGUI" neutro + "DEV" em magenta neon com glow.
     return Tooltip(
       message: context.l10n.nav_backToTop,
-      child: MouseRegion(
-        cursor: SystemMouseCursors.click,
-        child: GestureDetector(
-          key: const Key('home-nav-logo'),
-          onTap: onTap,
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text('Zegui', style: baseStyle),
-              GradientText(
-                text: 'Dev',
-                gradient: AppGradients.brand(colors),
-                style: baseStyle,
-              ),
-            ],
+      child: Semantics(
+        button: true,
+        label: 'ZeguiDev',
+        excludeSemantics: true,
+        child: MouseRegion(
+          cursor: SystemMouseCursors.click,
+          child: GestureDetector(
+            key: const Key('home-nav-logo'),
+            onTap: onTap,
+            behavior: HitTestBehavior.opaque,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                PixelText('ZEGUI', color: colors.onSurface, pixelSize: 3),
+                const SizedBox(width: 3),
+                PixelText(
+                  'DEV',
+                  color: colors.primary,
+                  glowColor: colors.primary,
+                  pixelSize: 3,
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -335,11 +336,47 @@ class _Cta extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppButton(
-      key: const Key('home-nav-cta'),
+    final colors = context.colors;
+
+    // CTA em chrome arcade: retangulo chunky (cantos retos) com borda neon
+    // magenta, fill translucido, glow e label em fonte pixel.
+    return Semantics(
+      button: true,
       label: context.l10n.nav_ctaContact,
-      onPressed: onTap,
-      icon: Icons.mail_outline,
+      excludeSemantics: true,
+      child: MouseRegion(
+        cursor: SystemMouseCursors.click,
+        child: GestureDetector(
+          key: const Key('home-nav-cta'),
+          onTap: onTap,
+          behavior: HitTestBehavior.opaque,
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              color: colors.primary.withValues(alpha: 0.16),
+              border: Border.all(color: colors.primary, width: 2),
+              boxShadow: [
+                BoxShadow(
+                  color: colors.primary.withValues(alpha: 0.45),
+                  blurRadius: 14,
+                  spreadRadius: -3,
+                ),
+              ],
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppSpacing.md,
+                vertical: AppSpacing.sm,
+              ),
+              child: PixelText(
+                context.l10n.nav_ctaContact,
+                color: colors.primary,
+                glowColor: colors.primary,
+                pixelSize: 3,
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

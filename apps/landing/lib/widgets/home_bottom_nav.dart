@@ -55,6 +55,7 @@ class HomeBottomNav extends StatelessWidget {
                   for (var i = 0; i < anchors.length; i++)
                     Expanded(
                       child: _BottomNavItem(
+                        index: i,
                         anchor: anchors[i],
                         active: i == activeIndex,
                       ),
@@ -70,14 +71,21 @@ class HomeBottomNav extends StatelessWidget {
 }
 
 class _BottomNavItem extends StatelessWidget {
-  const _BottomNavItem({required this.anchor, required this.active});
+  const _BottomNavItem({
+    required this.index,
+    required this.anchor,
+    required this.active,
+  });
 
+  /// Posicao da ancora — vira o numero do "stage" (01, 02...).
+  final int index;
   final HomeNavAnchor anchor;
   final bool active;
 
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
+    final textTheme = Theme.of(context).textTheme;
     // Ativo em ciano neon; repouso em muted (vocabulario do ArcadeSideNav).
     final tint = active ? colors.accent : colors.onSurfaceMuted;
 
@@ -85,44 +93,79 @@ class _BottomNavItem extends StatelessWidget {
       button: true,
       selected: active,
       label: anchor.label,
+      excludeSemantics: true,
       child: InkWell(
         key: Key('home-bottom-nav-${anchor.id}'),
         onTap: anchor.onTap,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // Indicador chunky neon (cantos retos + glow) que acende na ativa.
-            AnimatedContainer(
-              duration: AppDuration.fast,
-              height: 3,
-              width: active ? 22 : 0,
-              decoration: BoxDecoration(
-                color: colors.accent,
-                boxShadow: active
-                    ? [
-                        BoxShadow(
-                          color: colors.accent.withValues(alpha: 0.7),
-                          blurRadius: 8,
-                        ),
-                      ]
-                    : null,
+        child: AnimatedContainer(
+          duration: AppDuration.fast,
+          curve: Curves.easeOut,
+          // Celula "acesa" na ativa: topo neon chunky + painel tint + glow,
+          // metafora de cartucho/stage selecionado no fliperama.
+          decoration: BoxDecoration(
+            color: active ? colors.accent.withValues(alpha: 0.08) : null,
+            border: Border(
+              top: BorderSide(
+                color: active ? colors.accent : Colors.transparent,
+                width: 2,
               ),
             ),
-            const SizedBox(height: AppSpacing.sm),
-            // Label em fonte pixel — assinatura arcade. FittedBox encolhe
-            // labels longos (ex.: ENGENHARIA) pra caber na largura do item.
-            Flexible(
-              child: FittedBox(
-                fit: BoxFit.scaleDown,
-                child: PixelText(
-                  anchor.label,
-                  color: tint,
-                  glowColor: active ? colors.accent : null,
-                  pixelSize: 2,
+            boxShadow: active
+                ? [
+                    BoxShadow(
+                      color: colors.accent.withValues(alpha: 0.28),
+                      blurRadius: 14,
+                      spreadRadius: -5,
+                    ),
+                  ]
+                : null,
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // Numero do stage em mono tabular (01, 02...).
+              Text(
+                (index + 1).toString().padLeft(2, '0'),
+                style: textTheme.labelSmall?.copyWith(
+                  color: active
+                      ? colors.accent
+                      : colors.onSurfaceMuted.withValues(alpha: 0.7),
+                  fontWeight: FontWeight.w700,
+                  letterSpacing: 1,
+                  height: 1,
+                  fontFeatures: const [FontFeature.tabularFigures()],
                 ),
               ),
-            ),
-          ],
+              const SizedBox(height: AppSpacing.xs),
+              // Cursor ~ (so na ativa) + label em fonte pixel. FittedBox
+              // encolhe labels longos (ex.: ENGENHARIA) pra caber no item.
+              Flexible(
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (active) ...[
+                        PixelText(
+                          '~',
+                          color: colors.accent,
+                          glowColor: colors.accent,
+                          pixelSize: 2,
+                        ),
+                        const SizedBox(width: 3),
+                      ],
+                      PixelText(
+                        anchor.label,
+                        color: tint,
+                        glowColor: active ? colors.accent : null,
+                        pixelSize: 2,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

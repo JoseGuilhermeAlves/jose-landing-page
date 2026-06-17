@@ -11,18 +11,12 @@ void main() {
   });
 
   group('ShowcaseCatalog', () {
-    test('expoe os 5 nichos da vitrine', () {
+    test('expoe os 3 nichos da vitrine', () {
       final ids = ShowcaseCatalog.all(l10n).map((t) => t.id).toList();
-      expect(ids, hasLength(5));
+      expect(ids, hasLength(3));
       expect(
         ids,
-        containsAll([
-          'delivery',
-          'scheduling',
-          'fitness',
-          'realestate',
-          'finance',
-        ]),
+        containsAll(['delivery', 'realestate', 'finance']),
       );
     });
 

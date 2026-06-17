@@ -31,12 +31,6 @@ abstract final class DomainsCatalog {
       icon: Icons.engineering_outlined,
     ),
     DomainHighlight(
-      id: 'platform',
-      label: l10n.domain_platform_label,
-      blurb: l10n.domain_platform_blurb,
-      icon: Icons.hub_outlined,
-    ),
-    DomainHighlight(
       id: 'retail',
       label: l10n.domain_retail_label,
       blurb: l10n.domain_retail_blurb,

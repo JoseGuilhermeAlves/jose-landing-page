@@ -295,7 +295,7 @@ abstract class AppLocalizations {
   /// No description provided for @hero_trustCanvasValue.
   ///
   /// In pt, this message translates to:
-  /// **'20+'**
+  /// **'15+'**
   String get hero_trustCanvasValue;
 
   /// No description provided for @hero_trustCanvasLabel.
@@ -538,18 +538,6 @@ abstract class AppLocalizations {
   /// **'Coleta de dados em campo offline-first — Flutter Modular e Provider, sincronização confiável sob rede instável.'**
   String get domain_sanitation_blurb;
 
-  /// No description provided for @domain_platform_label.
-  ///
-  /// In pt, this message translates to:
-  /// **'Plataforma interna'**
-  String get domain_platform_label;
-
-  /// No description provided for @domain_platform_blurb.
-  ///
-  /// In pt, this message translates to:
-  /// **'Ferramentas internas em Flutter — camada de gamificação para engajamento de equipes.'**
-  String get domain_platform_blurb;
-
   /// No description provided for @domain_retail_label.
   ///
   /// In pt, this message translates to:
@@ -559,7 +547,7 @@ abstract class AppLocalizations {
   /// No description provided for @domain_retail_blurb.
   ///
   /// In pt, this message translates to:
-  /// **'Front end Flutter inteiro — do design ao deploy, em time pequeno, por cinco anos. Cinco apps de operação: estoque, distribuição entre unidades, vendas e comunicação interna.'**
+  /// **'Front end Flutter inteiro — do design ao deploy, por cinco anos. Cinco apps de operação: estoque, distribuição entre unidades, vendas e comunicação interna.'**
   String get domain_retail_blurb;
 
   /// No description provided for @services_eyebrow.
@@ -841,19 +829,19 @@ abstract class AppLocalizations {
   /// No description provided for @showcase_title.
   ///
   /// In pt, this message translates to:
-  /// **'Cinco nichos,'**
+  /// **'Três nichos,'**
   String get showcase_title;
 
   /// No description provided for @showcase_titleAccent.
   ///
   /// In pt, this message translates to:
-  /// **'cinco protótipos.'**
+  /// **'três protótipos.'**
   String get showcase_titleAccent;
 
   /// No description provided for @showcase_subtitle.
   ///
   /// In pt, this message translates to:
-  /// **'Cinco marcas fictícias, cinco identidades visuais, mais de vinte telas navegáveis — e zero backend, por decisão. Tudo que se move aqui é front end Flutter: estado com Bloc e Custom Painters dedicados. Toque em um card para abrir.'**
+  /// **'Três marcas fictícias, três identidades visuais, mais de quinze telas navegáveis — e zero backend, por decisão. Tudo que se move aqui é front end Flutter: estado com Bloc e Custom Painters dedicados. Toque em um card para abrir.'**
   String get showcase_subtitle;
 
   /// No description provided for @showcase_financeLabel.

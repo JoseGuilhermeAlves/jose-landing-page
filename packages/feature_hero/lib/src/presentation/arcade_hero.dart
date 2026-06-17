@@ -13,10 +13,16 @@ import 'package:flutter/material.dart';
 /// na secao Contact.
 class ArcadeHero extends StatelessWidget {
   const ArcadeHero({
+    required this.minHeight,
     this.onContactPressed,
     this.onSeeProjectsPressed,
     super.key,
   });
+
+  /// Altura MINIMA do hero (geralmente uma viewport). Cresce alem disso se o
+  /// conteudo nao couber (telas estreitas) — sem scroll interno, o scroll da
+  /// pagina (CustomScrollView do shell) absorve. Evita 2 scrolls aninhados.
+  final double minHeight;
 
   final VoidCallback? onContactPressed;
   final VoidCallback? onSeeProjectsPressed;
@@ -30,13 +36,16 @@ class ArcadeHero extends StatelessWidget {
     // Tamanho do pixel do nome — o nome e o elemento-estrela do title screen.
     final namePixel = (isMobile ? 4 : 7).toDouble();
 
-    return Stack(
-      fit: StackFit.expand,
-      children: [
-        // Planetas espalhados atras de tudo (cosmos do hero).
-        const Positioned.fill(child: HeroCosmos()),
-        _heroContent(context, colors, textTheme, isMobile, namePixel),
-      ],
+    return ConstrainedBox(
+      constraints: BoxConstraints(minHeight: minHeight),
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          // Planetas espalhados atras de tudo (cosmos do hero).
+          const Positioned.fill(child: HeroCosmos()),
+          _heroContent(context, colors, textTheme, isMobile, namePixel),
+        ],
+      ),
     );
   }
 
@@ -51,139 +60,140 @@ class ArcadeHero extends StatelessWidget {
       padding: EdgeInsets.symmetric(
         horizontal: context.responsive(mobile: AppSpacing.lg, desktop: 0),
       ),
-      // Centra verticalmente quando cabe; rola se a viewport for curta
-      // (laptops baixos) em vez de estourar o RenderFlex.
-      child: LayoutBuilder(
-        builder: (context, constraints) => SingleChildScrollView(
-          child: ConstrainedBox(
-            constraints: BoxConstraints(minHeight: constraints.maxHeight),
-            child: IntrinsicHeight(
-              child: Center(
-                child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 1100),
-                  child: Flex(
-                    direction: isMobile ? Axis.vertical : Axis.horizontal,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      // Mobile: buraco negro acima do texto.
-                      if (isMobile) ...[
-                        BlackHolePortrait(
-                          diskHot: colors.primary,
-                          diskCool: colors.accent,
-                          size: 320,
-                        ),
-                        const SizedBox(height: AppSpacing.xxl),
-                      ],
-                      Flexible(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            // Eyebrow: insira-moeda vibe, ciano.
-                            Text(
-                              context.l10n.hero_eyebrow.toUpperCase(),
-                              style: textTheme.labelMedium?.copyWith(
-                                color: colors.accent,
-                                letterSpacing: 3,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                            const SizedBox(height: AppSpacing.lg),
-
-                            // Nome em fonte pixel, duas linhas, glow magenta — o titulo.
-                            Semantics(
-                              header: true,
-                              label: 'Jose Guilherme Alves',
-                              child: PixelText(
-                                'JOSE\nGUILHERME ALVES',
-                                color: colors.primary,
-                                glowColor: colors.primary,
-                                glowBlur: 10,
-                                pixelSize: namePixel,
-                                lineSpacing: 3,
-                              ),
-                            ),
-                            const SizedBox(height: AppSpacing.xl),
-
-                            // Headline em fonte legivel (display) — pitch curto.
-                            Text(
-                              '${context.l10n.hero_headline1} '
-                              '${context.l10n.hero_headline2}',
-                              style:
-                                  (isMobile
-                                          ? textTheme.headlineSmall
-                                          : textTheme.headlineMedium)
-                                      ?.copyWith(
-                                        color: colors.onSurface,
-                                        height: 1.2,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                            ),
-                            const SizedBox(height: AppSpacing.md),
-                            Text(
-                              context.l10n.hero_scopeLine,
-                              style: textTheme.bodyLarge?.copyWith(
-                                color: colors.onSurfaceMuted,
-                                height: 1.5,
-                              ),
-                            ),
-                            const SizedBox(height: AppSpacing.xxl),
-
-                            // CTAs arcade.
-                            Wrap(
-                              spacing: AppSpacing.md,
-                              runSpacing: AppSpacing.md,
-                              children: [
-                                _ArcadeButton(
-                                  label: context.l10n.hero_ctaContact,
-                                  color: colors.primary,
-                                  filled: true,
-                                  onPressed: onContactPressed,
-                                ),
-                                _ArcadeButton(
-                                  label: context.l10n.hero_ctaProjects,
-                                  color: colors.accent,
-                                  onPressed: onSeeProjectsPressed,
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: AppSpacing.xxl),
-
-                            // Stats "high score" — anos de Flutter + telas demo
-                            // navegaveis no showcase (prova jogavel, verificavel).
-                            Wrap(
-                              spacing: AppSpacing.huge,
-                              runSpacing: AppSpacing.lg,
-                              children: [
-                                _ArcadeStat(
-                                  value: context.l10n.hero_trustYearsValue,
-                                  label: context.l10n.hero_trustYearsLabel,
-                                  color: colors.primary,
-                                ),
-                                _ArcadeStat(
-                                  value: context.l10n.hero_trustCanvasValue,
-                                  label: context.l10n.hero_trustCanvasLabel,
-                                  color: colors.accent,
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
+      // Sem scroll interno: o conteudo dimensiona o hero (altura intrinseca)
+      // e o Stack pai o centra verticalmente dentro do minHeight. Telas
+      // curtas crescem o hero e empurram a pagina (scroll unico do shell).
+      child: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 1100),
+          child: Flex(
+            direction: isMobile ? Axis.vertical : Axis.horizontal,
+            // Vertical (mobile) precisa de min pra nao estourar com altura
+            // ilimitada; horizontal (desktop) preenche a largura cap 1100.
+            mainAxisSize: isMobile ? MainAxisSize.min : MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            // Mobile alinha tudo a ESQUERDA: a foto (menor) encosta na
+            // esquerda e libera a faixa direita pro boss dominar.
+            crossAxisAlignment: isMobile
+                ? CrossAxisAlignment.start
+                : CrossAxisAlignment.center,
+            children: [
+              // Mobile: buraco negro acima do texto, menor e a esquerda pra
+              // nao cobrir o boss (que ocupa a faixa direita).
+              if (isMobile) ...[
+                BlackHolePortrait(
+                  diskHot: colors.primary,
+                  diskCool: colors.accent,
+                  size: 230,
+                ),
+                const SizedBox(height: AppSpacing.xl),
+              ],
+              Flexible(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Eyebrow: insira-moeda vibe, ciano.
+                    Text(
+                      context.l10n.hero_eyebrow.toUpperCase(),
+                      style: textTheme.labelMedium?.copyWith(
+                        color: colors.accent,
+                        letterSpacing: 3,
+                        fontWeight: FontWeight.w700,
                       ),
-                      // Desktop: buraco negro a direita do texto.
-                      if (!isMobile) ...[
-                        const SizedBox(width: AppSpacing.xl),
-                        BlackHolePortrait(
-                          diskHot: colors.primary,
-                          diskCool: colors.accent,
-                          size: 460,
+                    ),
+                    const SizedBox(height: AppSpacing.lg),
+
+                    // Nome em fonte pixel, duas linhas, glow magenta — o titulo.
+                    Semantics(
+                      header: true,
+                      label: 'Jose Guilherme Alves',
+                      child: PixelText(
+                        'JOSE\nGUILHERME ALVES',
+                        color: colors.primary,
+                        glowColor: colors.primary,
+                        glowBlur: 10,
+                        pixelSize: namePixel,
+                        lineSpacing: 3,
+                      ),
+                    ),
+                    const SizedBox(height: AppSpacing.xl),
+
+                    // Headline em fonte legivel (display) — pitch curto.
+                    Text(
+                      '${context.l10n.hero_headline1} '
+                      '${context.l10n.hero_headline2}',
+                      style:
+                          (isMobile
+                                  ? textTheme.headlineSmall
+                                  : textTheme.headlineMedium)
+                              ?.copyWith(
+                                color: colors.onSurface,
+                                height: 1.2,
+                                fontWeight: FontWeight.w600,
+                              ),
+                    ),
+                    const SizedBox(height: AppSpacing.md),
+                    Text(
+                      context.l10n.hero_scopeLine,
+                      style: textTheme.bodyLarge?.copyWith(
+                        color: colors.onSurfaceMuted,
+                        height: 1.5,
+                      ),
+                    ),
+                    const SizedBox(height: AppSpacing.xxl),
+
+                    // CTAs arcade.
+                    Wrap(
+                      spacing: AppSpacing.md,
+                      runSpacing: AppSpacing.md,
+                      children: [
+                        _ArcadeButton(
+                          label: context.l10n.hero_ctaContact,
+                          color: colors.primary,
+                          filled: true,
+                          onPressed: onContactPressed,
+                        ),
+                        _ArcadeButton(
+                          label: context.l10n.hero_ctaProjects,
+                          color: colors.accent,
+                          onPressed: onSeeProjectsPressed,
                         ),
                       ],
-                    ],
-                  ),
+                    ),
+                    const SizedBox(height: AppSpacing.xxl),
+
+                    // Stats "high score" — anos de Flutter + telas demo
+                    // navegaveis no showcase (prova jogavel, verificavel).
+                    Wrap(
+                      spacing: AppSpacing.huge,
+                      runSpacing: AppSpacing.lg,
+                      children: [
+                        _ArcadeStat(
+                          value: context.l10n.hero_trustYearsValue,
+                          label: context.l10n.hero_trustYearsLabel,
+                          color: colors.primary,
+                        ),
+                        _ArcadeStat(
+                          value: context.l10n.hero_trustCanvasValue,
+                          label: context.l10n.hero_trustCanvasLabel,
+                          color: colors.accent,
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
-            ),
+              // Desktop: buraco negro a direita do texto.
+              if (!isMobile) ...[
+                const SizedBox(width: AppSpacing.xl),
+                BlackHolePortrait(
+                  diskHot: colors.primary,
+                  diskCool: colors.accent,
+                  size: 460,
+                ),
+              ],
+            ],
           ),
         ),
       ),

@@ -51,10 +51,12 @@
   <link rel="canonical" href="https://example.invalid/">
 
   <!--
-    Loading screen em HTML/CSS puro. Aparece imediatamente (sem esperar
-    o WASM/CanvasKit baixar) e some quando o Flutter dispara
-    `appRunner.runApp()`. Sem isso, o usuário vê tela branca por 2-4s
-    no primeiro acesso.
+    Splash de carregamento em HTML/CSS puro (sem asset): wordmark ZeguiDev
+    sobre um piso Outrun em perspectiva + scanlines CRT, casando com a cena
+    arcade que vai aparecer. Pinta IMEDIATAMENTE (antes do engine --wasm /
+    CanvasKit baixar) e some no evento `flutter-first-frame`. Sem isso, o
+    usuário vê tela branca por 2-4s no primeiro acesso. Nada aqui é Flutter:
+    antes do primeiro frame só roda HTML/CSS/JS estático.
   -->
   <style>
     html, body {
@@ -74,8 +76,9 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 18px;
-      background: radial-gradient(circle at 50% 35%, #14141B 0%, #0A0A0F 60%);
+      gap: 16px;
+      overflow: hidden;
+      background: radial-gradient(circle at 50% 42%, #160A2A 0%, #0A0612 62%);
       z-index: 9999;
       transition: opacity 320ms ease-out;
     }
@@ -85,38 +88,121 @@
       pointer-events: none;
     }
 
-    #loading-spinner {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      border: 2.5px solid #1F1F2A;
-      border-top-color: #7C6BFF;
-      animation: spin 900ms cubic-bezier(0.6, 0.05, 0.4, 0.95) infinite;
+    /* Piso "Outrun": grade em perspectiva recuando pro horizonte, rolando
+       na direcao do observador. So CSS — nenhum asset. */
+    #loading-grid {
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      width: 220%;
+      height: 56%;
+      transform: translateX(-50%) perspective(340px) rotateX(68deg);
+      transform-origin: bottom center;
+      background-image:
+        linear-gradient(to right, rgba(255, 46, 151, 0.6) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(0, 229, 255, 0.6) 1px, transparent 1px);
+      background-size: 46px 46px;
+      opacity: 0.20;
+      animation: gridroll 1.6s linear infinite;
+      -webkit-mask-image: linear-gradient(to top, #000 0%, transparent 88%);
+      mask-image: linear-gradient(to top, #000 0%, transparent 88%);
+    }
+
+    @keyframes gridroll {
+      to { background-position-y: 46px; }
+    }
+
+    /* Scanlines CRT por cima de tudo (overlay sutil). */
+    #loading::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0) 0,
+        rgba(0, 0, 0, 0) 2px,
+        rgba(0, 0, 0, 0.16) 3px
+      );
+    }
+
+    /* Banda de varredura descendo lentamente. */
+    #loading::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 40%;
+      top: -40%;
+      pointer-events: none;
+      background: linear-gradient(
+        to bottom,
+        transparent,
+        rgba(124, 107, 255, 0.10),
+        transparent
+      );
+      animation: sweep 2.8s ease-in-out infinite;
+    }
+
+    @keyframes sweep {
+      0% { top: -40%; }
+      100% { top: 100%; }
+    }
+
+    #loading-content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+    }
+
+    #loading-wordmark {
+      font-size: 34px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      color: #F2E9FF;
+      text-shadow: 0 0 18px rgba(124, 107, 255, 0.35);
+    }
+
+    /* Sufixo "Dev" no gradiente da marca (magenta -> ciano). */
+    #loading-wordmark span {
+      background: linear-gradient(90deg, #FF2E97, #00E5FF);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
     }
 
     #loading-text {
-      font-size: 13px;
-      letter-spacing: 0.08em;
+      font-size: 12px;
+      letter-spacing: 0.32em;
       text-transform: uppercase;
-      color: #9A9AAB;
+      color: #9A86C4;
+      animation: blink 1.4s steps(1, end) infinite;
     }
 
-    @keyframes spin {
-      to { transform: rotate(360deg); }
+    @keyframes blink {
+      0%, 60% { opacity: 1; }
+      61%, 100% { opacity: 0.35; }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      #loading-spinner {
+      #loading-grid,
+      #loading::before,
+      #loading-text {
         animation: none;
-        border-top-color: #7C6BFF;
       }
     }
   </style>
 </head>
 <body>
-  <div id="loading" role="status" aria-live="polite" aria-label="Carregando aplicação">
-    <div id="loading-spinner"></div>
-    <div id="loading-text">Carregando</div>
+  <div id="loading" role="status" aria-live="polite" aria-label="Carregando ZeguiDev">
+    <div id="loading-grid" aria-hidden="true"></div>
+    <div id="loading-content">
+      <div id="loading-wordmark">Zegui<span>Dev</span></div>
+      <div id="loading-text">Carregando</div>
+    </div>
   </div>
 
   <script>

@@ -32,6 +32,4 @@ flutter:
   # ShowcasePhoto com fallback pro painter vetorial.
   assets:
     - assets/realestate/
-    - assets/scheduling/
-    - assets/fitness/
     - assets/delivery/

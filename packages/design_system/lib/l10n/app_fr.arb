@@ -32,7 +32,7 @@
   "hero_trustYearsLabel": "ans de Flutter",
   "hero_trustAppsValue": "5",
   "hero_trustAppsLabel": "apps retail en production",
-  "hero_trustCanvasValue": "20+",
+  "hero_trustCanvasValue": "15+",
   "hero_trustCanvasLabel": "écrans démo dans la vitrine",
   "hero_portraitSemantics": "Photo de Jose Guilherme Alves",
 
@@ -76,10 +76,8 @@
   "domain_publicServices_blurb": "Service public au citoyen — flux sensible de données avec Bloc, axé sur la fiabilité et la confidentialité.",
   "domain_sanitation_label": "Opération sur le terrain",
   "domain_sanitation_blurb": "Collecte de données sur le terrain offline-first — Flutter Modular et Provider, synchronisation fiable sous réseau instable.",
-  "domain_platform_label": "Plateforme interne",
-  "domain_platform_blurb": "Outils internes en Flutter — couche de gamification pour l'engagement des équipes.",
   "domain_retail_label": "Retail B2B",
-  "domain_retail_blurb": "Tout le front end Flutter — du design au déploiement, en petite équipe, pendant cinq ans. Cinq apps d'opération : stock, distribution entre unités, ventes et communication interne.",
+  "domain_retail_blurb": "Tout le front end Flutter — du design au déploiement, pendant cinq ans. Cinq apps d'opération : stock, distribution entre unités, ventes et communication interne.",
 
   "services_eyebrow": "Services",
   "services_title": "Front end mobile.",
@@ -132,9 +130,9 @@
 
 
   "showcase_eyebrow": "Showcase",
-  "showcase_title": "Cinq niches,",
-  "showcase_titleAccent": "cinq prototypes.",
-  "showcase_subtitle": "Cinq marques fictives, cinq identités visuelles, plus de vingt écrans navigables — et zéro backend, par choix. Tout ce qui bouge ici est du front end Flutter : état avec Bloc et Custom Painters dédiés. Touchez une carte pour ouvrir.",
+  "showcase_title": "Trois niches,",
+  "showcase_titleAccent": "trois prototypes.",
+  "showcase_subtitle": "Trois marques fictives, trois identités visuelles, plus de quinze écrans navigables — et zéro backend, par choix. Tout ce qui bouge ici est du front end Flutter : état avec Bloc et Custom Painters dédiés. Touchez une carte pour ouvrir.",
   "showcase_financeLabel": "Investissements",
   "showcase_financeDescription": "Mira — watchlist, candlestick interactif avec crosshair, envoi d'ordre et portfolio avec donut d'allocation.",
   "showcase_deliveryLabel": "Delivery",

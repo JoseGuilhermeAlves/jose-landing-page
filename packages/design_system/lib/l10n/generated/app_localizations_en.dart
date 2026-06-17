@@ -102,7 +102,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get hero_trustAppsLabel => 'retail apps in production';
 
   @override
-  String get hero_trustCanvasValue => '20+';
+  String get hero_trustCanvasValue => '15+';
 
   @override
   String get hero_trustCanvasLabel => 'demo screens in the showcase';
@@ -239,18 +239,11 @@ class AppLocalizationsEn extends AppLocalizations {
       'Offline-first field data collection — Flutter Modular and Provider, reliable syncing over an unstable network.';
 
   @override
-  String get domain_platform_label => 'Internal platform';
-
-  @override
-  String get domain_platform_blurb =>
-      'Internal tools in Flutter — gamification layer for team engagement.';
-
-  @override
   String get domain_retail_label => 'B2B Retail';
 
   @override
   String get domain_retail_blurb =>
-      'Entire Flutter front end — from design to deploy, in a small team, over five years. Five operations apps: inventory, distribution across units, sales and internal communication.';
+      'Entire Flutter front end — from design to deploy, over five years. Five operations apps: inventory, distribution across units, sales and internal communication.';
 
   @override
   String get services_eyebrow => 'Services';
@@ -399,14 +392,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get showcase_eyebrow => 'Showcase';
 
   @override
-  String get showcase_title => 'Five niches,';
+  String get showcase_title => 'Three niches,';
 
   @override
-  String get showcase_titleAccent => 'five prototypes.';
+  String get showcase_titleAccent => 'three prototypes.';
 
   @override
   String get showcase_subtitle =>
-      'Five fictional brands, five visual identities, over twenty navigable screens — and zero backend, by design. Everything that moves here is Flutter front end: Bloc state and dedicated Custom Painters. Tap a card to open.';
+      'Three fictional brands, three visual identities, over fifteen navigable screens — and zero backend, by design. Everything that moves here is Flutter front end: Bloc state and dedicated Custom Painters. Tap a card to open.';
 
   @override
   String get showcase_financeLabel => 'Investments';

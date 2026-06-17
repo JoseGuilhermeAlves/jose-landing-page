@@ -1,6 +1,8 @@
 import 'package:design_system/design_system.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:landing/presentation/locale_cubit.dart';
 import 'package:landing/widgets/home_nav.dart';
 
 /// Largura da coluna de navegacao lateral no desktop. O conteudo da home
@@ -147,18 +149,32 @@ class _ArcadeSideNavState extends State<ArcadeSideNav>
 
               const Spacer(),
 
-              // Sociais no rodape.
-              Row(
+              // Seletor de idioma — no desktop mora aqui na coluna lateral
+              // (no mobile fica no top nav). Mesma pilula do HomeNav.
+              BlocBuilder<LocaleCubit, Locale>(
+                builder: (context, locale) => LocaleSwitcher(
+                  currentLocale: locale,
+                  onLocaleChanged: (l) =>
+                      context.read<LocaleCubit>().changeLocale(l),
+                ),
+              ),
+              const SizedBox(height: AppSpacing.md),
+
+              // Sociais no rodape — nomes por extenso (GH/IN nao eram
+              // reconheciveis). Empilhados: "GitHub"/"LinkedIn" em pixel font
+              // nao cabem lado a lado na largura da coluna.
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   if (widget.githubUrl != null)
                     _SocialDot(
-                      label: 'GH',
+                      label: 'GitHub',
                       onTap: () => widget.onOpenSocial?.call(widget.githubUrl!),
                     ),
                   if (widget.linkedinUrl != null) ...[
-                    const SizedBox(width: AppSpacing.md),
+                    const SizedBox(height: AppSpacing.sm),
                     _SocialDot(
-                      label: 'IN',
+                      label: 'LinkedIn',
                       onTap: () =>
                           widget.onOpenSocial?.call(widget.linkedinUrl!),
                     ),

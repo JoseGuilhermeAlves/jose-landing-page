@@ -32,7 +32,7 @@
   "hero_trustYearsLabel": "anos de Flutter",
   "hero_trustAppsValue": "5",
   "hero_trustAppsLabel": "apps de varejo em produção",
-  "hero_trustCanvasValue": "20+",
+  "hero_trustCanvasValue": "15+",
   "hero_trustCanvasLabel": "telas demo no showcase",
   "hero_portraitSemantics": "Foto de Jose Guilherme Alves",
 
@@ -76,10 +76,8 @@
   "domain_publicServices_blurb": "Serviço público ao cidadão — fluxo sensível de dados com Bloc, foco em confiabilidade e privacidade.",
   "domain_sanitation_label": "Operação em campo",
   "domain_sanitation_blurb": "Coleta de dados em campo offline-first — Flutter Modular e Provider, sincronização confiável sob rede instável.",
-  "domain_platform_label": "Plataforma interna",
-  "domain_platform_blurb": "Ferramentas internas em Flutter — camada de gamificação para engajamento de equipes.",
   "domain_retail_label": "Varejo B2B",
-  "domain_retail_blurb": "Front end Flutter inteiro — do design ao deploy, em time pequeno, por cinco anos. Cinco apps de operação: estoque, distribuição entre unidades, vendas e comunicação interna.",
+  "domain_retail_blurb": "Front end Flutter inteiro — do design ao deploy, por cinco anos. Cinco apps de operação: estoque, distribuição entre unidades, vendas e comunicação interna.",
 
   "services_eyebrow": "Serviços",
   "services_title": "Front end mobile.",
@@ -132,9 +130,9 @@
 
 
   "showcase_eyebrow": "Showcase",
-  "showcase_title": "Cinco nichos,",
-  "showcase_titleAccent": "cinco protótipos.",
-  "showcase_subtitle": "Cinco marcas fictícias, cinco identidades visuais, mais de vinte telas navegáveis — e zero backend, por decisão. Tudo que se move aqui é front end Flutter: estado com Bloc e Custom Painters dedicados. Toque em um card para abrir.",
+  "showcase_title": "Três nichos,",
+  "showcase_titleAccent": "três protótipos.",
+  "showcase_subtitle": "Três marcas fictícias, três identidades visuais, mais de quinze telas navegáveis — e zero backend, por decisão. Tudo que se move aqui é front end Flutter: estado com Bloc e Custom Painters dedicados. Toque em um card para abrir.",
   "showcase_financeLabel": "Investimentos",
   "showcase_financeDescription": "Mira — watchlist, candlestick interativo com crosshair, envio de ordem e portfolio com donut de alocação.",
   "showcase_deliveryLabel": "Delivery",

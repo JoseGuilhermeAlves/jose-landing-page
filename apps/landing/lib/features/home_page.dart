@@ -196,6 +196,13 @@ class _HomePageState extends State<HomePage> {
       ),
     ];
 
+    // A bottom nav mobile NAO repete "Contato" — o CTA do top nav ja leva
+    // ao contato (evita botao duplicado). Contato e o ultimo anchor, entao
+    // remover mantem os indices alinhados com o scroll-spy (0..2).
+    final bottomNavAnchors = anchors
+        .where((a) => a.id != 'contato')
+        .toList();
+
     return Scaffold(
       // Transparente pra revelar o ArcadeBackdrop global (starfield + grid).
       backgroundColor: Colors.transparent,
@@ -210,15 +217,17 @@ class _HomePageState extends State<HomePage> {
                 SliverToBoxAdapter(
                   child: SectionVisibility(
                     id: 'hero',
-                    child: SizedBox(
-                      height: heroHeight,
-                      child: ArcadeHero(
-                        // Funil recrutador: ambos os CTAs rolam dentro da
-                        // pagina — primario pro contato, secundario pro
-                        // showcase. WhatsApp/email moram na secao Contact.
-                        onContactPressed: () => _scrollToKey(_contactKey),
-                        onSeeProjectsPressed: () => _scrollToKey(_showcaseKey),
-                      ),
+                    // Sem altura fixa nem scroll interno: o Hero tem altura
+                    // MINIMA de uma viewport e cresce com o conteudo (telas
+                    // estreitas), deixando o CustomScrollView ser o UNICO
+                    // scroll da pagina (nada de scroll aninhado no hero).
+                    child: ArcadeHero(
+                      minHeight: heroHeight,
+                      // Funil recrutador: ambos os CTAs rolam dentro da
+                      // pagina — primario pro contato, secundario pro
+                      // showcase. WhatsApp/email moram na secao Contact.
+                      onContactPressed: () => _scrollToKey(_contactKey),
+                      onSeeProjectsPressed: () => _scrollToKey(_showcaseKey),
                     ),
                   ),
                 ),
@@ -350,8 +359,10 @@ class _HomePageState extends State<HomePage> {
               bottom: 0,
               child: ValueListenableBuilder<int>(
                 valueListenable: _activeIndex,
-                builder: (_, active, _) =>
-                    HomeBottomNav(anchors: anchors, activeIndex: active),
+                builder: (_, active, _) => HomeBottomNav(
+                  anchors: bottomNavAnchors,
+                  activeIndex: active,
+                ),
               ),
             ),
         ],

@@ -32,7 +32,7 @@
   "hero_trustYearsLabel": "years of Flutter",
   "hero_trustAppsValue": "5",
   "hero_trustAppsLabel": "retail apps in production",
-  "hero_trustCanvasValue": "20+",
+  "hero_trustCanvasValue": "15+",
   "hero_trustCanvasLabel": "demo screens in the showcase",
   "hero_portraitSemantics": "Photo of Jose Guilherme Alves",
 
@@ -76,10 +76,8 @@
   "domain_publicServices_blurb": "Citizen-facing public service — sensitive data flow with Bloc, focused on reliability and privacy.",
   "domain_sanitation_label": "Field operations",
   "domain_sanitation_blurb": "Offline-first field data collection — Flutter Modular and Provider, reliable syncing over an unstable network.",
-  "domain_platform_label": "Internal platform",
-  "domain_platform_blurb": "Internal tools in Flutter — gamification layer for team engagement.",
   "domain_retail_label": "B2B Retail",
-  "domain_retail_blurb": "Entire Flutter front end — from design to deploy, in a small team, over five years. Five operations apps: inventory, distribution across units, sales and internal communication.",
+  "domain_retail_blurb": "Entire Flutter front end — from design to deploy, over five years. Five operations apps: inventory, distribution across units, sales and internal communication.",
 
   "services_eyebrow": "Services",
   "services_title": "Mobile front end.",
@@ -132,9 +130,9 @@
 
 
   "showcase_eyebrow": "Showcase",
-  "showcase_title": "Five niches,",
-  "showcase_titleAccent": "five prototypes.",
-  "showcase_subtitle": "Five fictional brands, five visual identities, over twenty navigable screens — and zero backend, by design. Everything that moves here is Flutter front end: Bloc state and dedicated Custom Painters. Tap a card to open.",
+  "showcase_title": "Three niches,",
+  "showcase_titleAccent": "three prototypes.",
+  "showcase_subtitle": "Three fictional brands, three visual identities, over fifteen navigable screens — and zero backend, by design. Everything that moves here is Flutter front end: Bloc state and dedicated Custom Painters. Tap a card to open.",
   "showcase_financeLabel": "Investments",
   "showcase_financeDescription": "Mira — watchlist, interactive candlestick with crosshair, order entry and portfolio with allocation donut.",
   "showcase_deliveryLabel": "Delivery",

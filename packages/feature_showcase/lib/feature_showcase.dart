@@ -1,9 +1,9 @@
 /// Feature "Showcase" — templates demonstraveis por nicho
-/// (PROJECT.md §4.3). Os 5 nichos sao sub-features (delivery,
-/// agendamento, fitness, imobiliaria, finance), cada um com seu
-/// proprio triangulo `data/domain/presentation` dentro de
-/// `lib/src/<mock>/`. O `shared/` carrega o indice cross-cutting
-/// (catalogo dos cards, grid, secao) e utilitarios comuns.
+/// (PROJECT.md §4.3). Os 3 nichos sao sub-features (delivery,
+/// imobiliaria, finance), cada um com seu proprio triangulo
+/// `data/domain/presentation` dentro de `lib/src/<mock>/`. O `shared/`
+/// carrega o indice cross-cutting (catalogo dos cards, grid, secao) e
+/// utilitarios comuns.
 library;
 
 export 'src/delivery/data/aurora_items_catalog.dart';
@@ -33,31 +33,6 @@ export 'src/finance/presentation/finance_bloc.dart';
 export 'src/finance/presentation/finance_demo.dart';
 export 'src/finance/presentation/finance_event.dart';
 export 'src/finance/presentation/finance_state.dart';
-export 'src/fitness/data/exercises_catalog.dart';
-export 'src/fitness/data/mesocycle_catalog.dart';
-export 'src/fitness/data/recovery_catalog.dart';
-export 'src/fitness/domain/logged_session.dart';
-export 'src/fitness/domain/muscle_group.dart';
-export 'src/fitness/domain/muscle_recovery.dart';
-export 'src/fitness/domain/program.dart';
-export 'src/fitness/domain/program_week.dart';
-export 'src/fitness/domain/recovery_snapshot.dart';
-export 'src/fitness/domain/rest_timer.dart';
-export 'src/fitness/domain/session_template.dart';
-export 'src/fitness/domain/set_entry.dart';
-export 'src/fitness/domain/sleep_window.dart';
-export 'src/fitness/domain/strain_score.dart';
-export 'src/fitness/presentation/fitness_bloc.dart';
-export 'src/fitness/presentation/fitness_brand.dart';
-export 'src/fitness/presentation/fitness_demo.dart';
-export 'src/fitness/presentation/fitness_event.dart';
-export 'src/fitness/presentation/fitness_state.dart';
-export 'src/fitness/presentation/painters/pulso_barbell_loader.dart';
-export 'src/fitness/presentation/painters/pulso_body_diagram.dart';
-export 'src/fitness/presentation/painters/pulso_periodization_timeline.dart';
-export 'src/fitness/presentation/painters/pulso_recovery_ring.dart';
-export 'src/fitness/presentation/painters/pulso_strain_dial.dart';
-export 'src/fitness/presentation/painters/pulso_tempo_bars.dart';
 export 'src/realestate/data/properties_catalog.dart';
 export 'src/realestate/data/solar_brokers_catalog.dart';
 export 'src/realestate/domain/broker.dart';
@@ -68,16 +43,6 @@ export 'src/realestate/presentation/realestate_bloc.dart';
 export 'src/realestate/presentation/realestate_demo.dart';
 export 'src/realestate/presentation/realestate_event.dart';
 export 'src/realestate/presentation/realestate_state.dart';
-export 'src/scheduling/data/vitral_services_catalog.dart';
-export 'src/scheduling/data/vitral_specialists_catalog.dart';
-export 'src/scheduling/domain/appointment.dart';
-export 'src/scheduling/domain/service.dart';
-export 'src/scheduling/domain/service_category.dart';
-export 'src/scheduling/domain/specialist.dart';
-export 'src/scheduling/presentation/scheduling_bloc.dart';
-export 'src/scheduling/presentation/scheduling_demo.dart';
-export 'src/scheduling/presentation/scheduling_event.dart';
-export 'src/scheduling/presentation/scheduling_state.dart';
 export 'src/shared/data/showcase_catalog.dart';
 export 'src/shared/domain/showcase_template.dart';
 export 'src/shared/presentation/arcade_cabinet.dart';

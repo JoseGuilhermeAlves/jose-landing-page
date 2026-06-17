@@ -1,10 +1,9 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
-/// Template demonstravel por nicho (PROJECT.md §4.3) — e-commerce,
-/// delivery, agendamento, fitness, imobiliaria. Cada um e um sub-flow
-/// dentro da feature; quando `hasDemo == false`, o card fica
-/// listado como "em breve".
+/// Template demonstravel por nicho (PROJECT.md §4.3) — delivery,
+/// imobiliaria, finance. Cada um e um sub-flow dentro da feature;
+/// quando `hasDemo == false`, o card fica listado como "em breve".
 @immutable
 class ShowcaseTemplate extends Equatable {
   const ShowcaseTemplate({

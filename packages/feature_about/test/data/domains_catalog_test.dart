@@ -11,8 +11,8 @@ void main() {
   });
 
   group('DomainsCatalog', () {
-    test('expoe pelo menos 5 dominios (cobrindo o range do Jose)', () {
-      expect(DomainsCatalog.all(l10n).length, greaterThanOrEqualTo(5));
+    test('expoe pelo menos 4 dominios (cobrindo o range do Jose)', () {
+      expect(DomainsCatalog.all(l10n).length, greaterThanOrEqualTo(4));
     });
 
     test('todos os dominios tem id, label e blurb nao-vazios', () {

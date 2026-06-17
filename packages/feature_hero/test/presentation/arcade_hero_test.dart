@@ -29,7 +29,7 @@ void main() {
       await tester.binding.setSurfaceSize(const Size(1600, 1000));
       addTearDown(() => tester.binding.setSurfaceSize(null));
 
-      await tester.pumpWidget(wrap(const ArcadeHero()));
+      await tester.pumpWidget(wrap(const ArcadeHero(minHeight: 640)));
       await tester.pump(const Duration(milliseconds: 16));
 
       expect(find.byType(BlackHolePortrait), findsOneWidget);
@@ -44,7 +44,9 @@ void main() {
       final handle = tester.ensureSemantics();
 
       var taps = 0;
-      await tester.pumpWidget(wrap(ArcadeHero(onContactPressed: () => taps++)));
+      await tester.pumpWidget(
+        wrap(ArcadeHero(minHeight: 640, onContactPressed: () => taps++)),
+      );
       await tester.pump(const Duration(milliseconds: 16));
 
       await tester.tap(find.bySemanticsLabel('Falar comigo'));
@@ -63,7 +65,7 @@ void main() {
 
       var taps = 0;
       await tester.pumpWidget(
-        wrap(ArcadeHero(onSeeProjectsPressed: () => taps++)),
+        wrap(ArcadeHero(minHeight: 640, onSeeProjectsPressed: () => taps++)),
       );
       await tester.pump(const Duration(milliseconds: 16));
 

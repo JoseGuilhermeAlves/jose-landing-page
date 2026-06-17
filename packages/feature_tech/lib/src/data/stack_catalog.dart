@@ -93,19 +93,6 @@ abstract final class StackCatalog {
     ),
 
     StackItem(
-      name: 'Dio',
-      version: '5.x',
-      role: l10n.stack_dio_role,
-      category: StackCategory.networking,
-    ),
-    StackItem(
-      name: 'http',
-      version: '1.x',
-      role: l10n.stack_http_role,
-      category: StackCategory.networking,
-    ),
-
-    StackItem(
       name: 'SQLite',
       version: 'sqflite',
       role: l10n.stack_sqlite_role,
@@ -128,19 +115,6 @@ abstract final class StackCatalog {
       version: 'FlutterFire',
       role: l10n.stack_firebase_role,
       category: StackCategory.persistence,
-    ),
-
-    StackItem(
-      name: 'freezed',
-      version: '2.x',
-      role: l10n.stack_freezed_role,
-      category: StackCategory.codegen,
-    ),
-    StackItem(
-      name: 'json_serializable',
-      version: '6.x',
-      role: l10n.stack_jsonSerializable_role,
-      category: StackCategory.codegen,
     ),
 
     StackItem(
@@ -228,25 +202,6 @@ abstract final class StackCatalog {
       version: 'SDK',
       role: l10n.stack_integrationTest_role,
       category: StackCategory.quality,
-    ),
-
-    StackItem(
-      name: 'Skwasm',
-      version: '--wasm',
-      role: l10n.stack_skwasm_role,
-      category: StackCategory.web,
-    ),
-    StackItem(
-      name: 'PWA',
-      version: 'manifest + sitemap',
-      role: l10n.stack_pwa_role,
-      category: StackCategory.web,
-    ),
-    StackItem(
-      name: 'url_launcher',
-      version: '6.3.0',
-      role: l10n.stack_urlLauncher_role,
-      category: StackCategory.web,
     ),
 
     StackItem(

@@ -8,6 +8,8 @@
 /// (estetica all-caps de fliperama). Letras acentuadas e cedilha caem na
 /// letra-base (Ç->C, Ã->A, É->E...) — o 5x7 nao comporta diacritico, entao
 /// o texto fica legivel em vez de virar buraco. Char desconhecido vira espaco.
+/// Scripts fora do latino (CJK, cirilico...) nao tem glifo: `PixelText` usa
+/// [canRenderAll] pra detectar e cair numa fonte real nesses idiomas.
 abstract final class PixelFont {
   /// Largura da matriz de cada glifo, em pixels-fonte.
   static const int glyphWidth = 5;
@@ -21,6 +23,25 @@ abstract final class PixelFont {
     final upper = char.toUpperCase();
     final base = _deaccent[upper] ?? upper;
     return _glyphs[base] ?? _glyphs[' ']!;
+  }
+
+  /// True se [char] tem glifo proprio na fonte (espaco/quebra contam, e
+  /// acentos caem na base latina). False pra scripts fora do alfabeto latino
+  /// (CJK, cirilico, arabe...), que a matriz 5x7 nao cobre.
+  static bool canRender(String char) {
+    if (char == ' ' || char == '\n' || char == '\t') return true;
+    final upper = char.toUpperCase();
+    final base = _deaccent[upper] ?? upper;
+    return _glyphs.containsKey(base);
+  }
+
+  /// True se TODOS os chars de [text] sao renderaveis pela fonte bitmap.
+  /// Quando false, o host deve cair numa fonte real (ver `PixelText`).
+  static bool canRenderAll(String text) {
+    for (final rune in text.runes) {
+      if (!canRender(String.fromCharCode(rune))) return false;
+    }
+    return true;
   }
 
   /// Acentuadas/cedilha -> letra-base ASCII (apos toUpperCase).

@@ -1,9 +1,7 @@
 import 'package:design_system/design_system.dart';
 import 'package:feature_showcase/src/delivery/presentation/delivery_demo.dart';
 import 'package:feature_showcase/src/finance/presentation/finance_demo.dart';
-import 'package:feature_showcase/src/fitness/presentation/fitness_demo.dart';
 import 'package:feature_showcase/src/realestate/presentation/realestate_demo.dart';
-import 'package:feature_showcase/src/scheduling/presentation/scheduling_demo.dart';
 import 'package:feature_showcase/src/shared/data/showcase_catalog.dart';
 import 'package:feature_showcase/src/shared/domain/showcase_template.dart';
 import 'package:feature_showcase/src/shared/presentation/arcade_cabinet.dart';
@@ -19,8 +17,6 @@ class ShowcaseSection extends StatelessWidget {
   static const _brand = {
     'delivery': 'AURORA',
     'finance': 'MIRA',
-    'fitness': 'PULSO',
-    'scheduling': 'VITRAL',
     'realestate': 'SOLAR',
   };
 
@@ -120,8 +116,6 @@ class ShowcaseSection extends StatelessWidget {
             ? null
             : Stream<void>.periodic(const Duration(seconds: 2)),
       ),
-      'scheduling' => SchedulingDemo(today: DateTime.now()),
-      'fitness' => FitnessDemo(today: DateTime.now().weekday),
       'realestate' => const RealEstateDemo(),
       'finance' => const FinanceDemo(),
       _ => null,

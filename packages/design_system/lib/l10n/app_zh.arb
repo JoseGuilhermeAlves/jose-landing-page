@@ -32,7 +32,7 @@
   "hero_trustYearsLabel": "年 Flutter 经验",
   "hero_trustAppsValue": "5",
   "hero_trustAppsLabel": "款零售应用在生产环境",
-  "hero_trustCanvasValue": "20+",
+  "hero_trustCanvasValue": "15+",
   "hero_trustCanvasLabel": "展示中的演示屏幕",
   "hero_portraitSemantics": "Jose Guilherme Alves 照片",
 
@@ -76,10 +76,8 @@
   "domain_publicServices_blurb": "面向公民的公共服务——用 Bloc 处理敏感数据流程，注重可靠性与隐私。",
   "domain_sanitation_label": "现场运营",
   "domain_sanitation_blurb": "offline-first 的现场数据采集——用 Flutter Modular 和 Provider，在不稳定网络下可靠同步。",
-  "domain_platform_label": "内部平台",
-  "domain_platform_blurb": "Flutter 内部工具——用游戏化层提升团队参与度。",
   "domain_retail_label": "B2B 零售",
-  "domain_retail_blurb": "完整的 Flutter 前端——从设计到部署，在小团队中，历时五年。五个运营应用：库存、门店间调拨、销售和内部沟通。",
+  "domain_retail_blurb": "完整的 Flutter 前端——从设计到部署，历时五年。五个运营应用：库存、门店间调拨、销售和内部沟通。",
 
   "services_eyebrow": "服务",
   "services_title": "移动端前端。",
@@ -132,9 +130,9 @@
 
 
   "showcase_eyebrow": "案例展示",
-  "showcase_title": "五个细分，",
-  "showcase_titleAccent": "五个原型。",
-  "showcase_subtitle": "五个虚构品牌、五套视觉识别、二十多个可导航页面——后端为零，刻意如此。这里一切会动的都是 Flutter 前端：Bloc 状态管理和专属 Custom Painter。点击卡片打开。",
+  "showcase_title": "三个细分，",
+  "showcase_titleAccent": "三个原型。",
+  "showcase_subtitle": "三个虚构品牌、三套视觉识别、十五个以上可导航页面——后端为零，刻意如此。这里一切会动的都是 Flutter 前端：Bloc 状态管理和专属 Custom Painter。点击卡片打开。",
   "showcase_financeLabel": "投资",
   "showcase_financeDescription": "Mira——自选股、带十字光标的交互式K线图、下单和配置饼图的投资组合。",
   "showcase_deliveryLabel": "配送",

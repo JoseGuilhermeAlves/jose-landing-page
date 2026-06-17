@@ -2,8 +2,8 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
-/// Badge animado de confirmacao compartilhado pelos mocks (Vitral,
-/// Solar) — circulo preenchido com check em duas linhas crescendo de
+/// Badge animado de confirmacao compartilhavel pelos mocks (hoje Solar)
+/// — circulo preenchido com check em duas linhas crescendo de
 /// 30% a 100% da animacao. Cada marca parametriza as cores via tema.
 /// Painter recebe controller direto via `super(repaint:)` pra pular
 /// build e layout no pipeline (ver CLAUDE.md).

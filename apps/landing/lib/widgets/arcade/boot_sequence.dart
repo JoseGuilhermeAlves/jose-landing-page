@@ -1,10 +1,11 @@
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 
-/// Abertura "boot de fliperama": linhas estilo BIOS aparecem digitando,
-/// depois "PRESS START" pisca. Skipavel — qualquer toque, scroll ou tecla
-/// dispara o fade-out e revela a home (metafora hibrida: personalidade na
-/// entrada sem travar a leitura).
+/// Abertura "title-card de fliperama": a marca aparece digitando como num
+/// attract screen, depois "PRESS START" pisca. Skipavel — qualquer toque,
+/// scroll ou tecla dispara o fade-out e revela a home (metafora hibrida:
+/// personalidade na entrada sem travar a leitura). Deliberadamente NAO usa
+/// linguagem de boot de sistema (OS/assets/WASM) pra nao soar como instalacao.
 ///
 /// O componente se auto-gerencia: chama [onStart] uma unica vez quando
 /// dispensado (por input ou pelo timeout de seguranca).
@@ -30,15 +31,14 @@ class _BootSequenceState extends State<BootSequence>
   final _focusNode = FocusNode();
   bool _dismissing = false;
 
-  // Linhas do boot — ingles tecnico de terminal (universal pra recrutador).
+  // Title-card de fliperama (attract screen), NAO um boot de sistema —
+  // nada de "BOOTING OS / LOADING ASSETS / WASM" pra nao dar impressao de
+  // que o site instala algo na maquina do visitante. So marca + convite.
   static const _lines = <String>[
-    'JGA-SYSTEM  v6.0',
-    'BOOTING ARCADE OS...',
-    'LOADING ASSETS............ OK',
-    'RENDERER: SKWASM/WASM..... OK',
-    'CUSTOM PAINTERS: ONLINE',
+    'ZEGUIDEV  ARCADE',
+    'FLUTTER · 2026',
     '',
-    'READY.',
+    'SELECT PLAYER 1',
   ];
 
   late final int _totalChars =

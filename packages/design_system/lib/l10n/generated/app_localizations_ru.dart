@@ -102,7 +102,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get hero_trustAppsLabel => 'ритейл-приложений в продакшене';
 
   @override
-  String get hero_trustCanvasValue => '20+';
+  String get hero_trustCanvasValue => '15+';
 
   @override
   String get hero_trustCanvasLabel => 'демо-экраны в витрине';
@@ -239,18 +239,11 @@ class AppLocalizationsRu extends AppLocalizations {
       'Сбор данных в полевых условиях offline-first — Flutter Modular и Provider, надёжная синхронизация при нестабильной сети.';
 
   @override
-  String get domain_platform_label => 'Внутренняя платформа';
-
-  @override
-  String get domain_platform_blurb =>
-      'Внутренние инструменты на Flutter — слой геймификации для вовлечения команд.';
-
-  @override
   String get domain_retail_label => 'Розница B2B';
 
   @override
   String get domain_retail_blurb =>
-      'Весь фронтенд Flutter — от дизайна до деплоя, в небольшой команде, пять лет. Пять приложений для операций: склад, распределение между точками, продажи и внутренние коммуникации.';
+      'Весь фронтенд Flutter — от дизайна до деплоя, пять лет. Пять приложений для операций: склад, распределение между точками, продажи и внутренние коммуникации.';
 
   @override
   String get services_eyebrow => 'Услуги';
@@ -399,14 +392,14 @@ class AppLocalizationsRu extends AppLocalizations {
   String get showcase_eyebrow => 'Showcase';
 
   @override
-  String get showcase_title => 'Пять ниш,';
+  String get showcase_title => 'Три ниши,';
 
   @override
-  String get showcase_titleAccent => 'пять прототипов.';
+  String get showcase_titleAccent => 'три прототипа.';
 
   @override
   String get showcase_subtitle =>
-      'Пять вымышленных брендов, пять визуальных идентичностей, больше двадцати экранов с навигацией — и ноль бэкенда, сознательно. Всё, что здесь движется, — фронтенд Flutter: состояние на Bloc и выделенные Custom Painter. Коснитесь карточки, чтобы открыть.';
+      'Три вымышленных бренда, три визуальные идентичности, больше пятнадцати экранов с навигацией — и ноль бэкенда, сознательно. Всё, что здесь движется, — фронтенд Flutter: состояние на Bloc и выделенные Custom Painter. Коснитесь карточки, чтобы открыть.';
 
   @override
   String get showcase_financeLabel => 'Инвестиции';

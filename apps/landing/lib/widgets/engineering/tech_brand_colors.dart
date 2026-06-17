@@ -128,14 +128,11 @@ abstract final class CategoryBrandColors {
     'framework': Color(0xFF54C5F8),
     'state': Color(0xFFEA4C89),
     'routing': Color(0xFF60A5FA),
-    'networking': Color(0xFF1DE9B6),
-    'codegen': Color(0xFF80DEEA),
     'graphics': Color(0xFFFF7043),
     'persistence': Color(0xFF44A8D8),
     'architecture': Color(0xFF7C3AED),
     'observability': Color(0xFF632CA6),
     'quality': Color(0xFFFB923C),
-    'web': Color(0xFFA78BFA),
     'tooling': Color(0xFFFACC15),
   };
 }

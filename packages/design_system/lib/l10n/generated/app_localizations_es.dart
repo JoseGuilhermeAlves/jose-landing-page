@@ -102,7 +102,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get hero_trustAppsLabel => 'apps de retail en producción';
 
   @override
-  String get hero_trustCanvasValue => '20+';
+  String get hero_trustCanvasValue => '15+';
 
   @override
   String get hero_trustCanvasLabel => 'pantallas demo en el showcase';
@@ -238,18 +238,11 @@ class AppLocalizationsEs extends AppLocalizations {
       'Recolección de datos en campo offline-first — Flutter Modular y Provider, sincronización fiable bajo red inestable.';
 
   @override
-  String get domain_platform_label => 'Plataforma interna';
-
-  @override
-  String get domain_platform_blurb =>
-      'Herramientas internas en Flutter — capa de gamificación para el engagement de equipos.';
-
-  @override
   String get domain_retail_label => 'Retail B2B';
 
   @override
   String get domain_retail_blurb =>
-      'Front end Flutter entero — del diseño al deploy, en equipo pequeño, durante cinco años. Cinco apps de operación: inventario, distribución entre unidades, ventas y comunicación interna.';
+      'Front end Flutter entero — del diseño al deploy, durante cinco años. Cinco apps de operación: inventario, distribución entre unidades, ventas y comunicación interna.';
 
   @override
   String get services_eyebrow => 'Servicios';
@@ -398,14 +391,14 @@ class AppLocalizationsEs extends AppLocalizations {
   String get showcase_eyebrow => 'Showcase';
 
   @override
-  String get showcase_title => 'Cinco nichos,';
+  String get showcase_title => 'Tres nichos,';
 
   @override
-  String get showcase_titleAccent => 'cinco prototipos.';
+  String get showcase_titleAccent => 'tres prototipos.';
 
   @override
   String get showcase_subtitle =>
-      'Cinco marcas ficticias, cinco identidades visuales, más de veinte pantallas navegables — y cero backend, por decisión. Todo lo que se mueve aquí es front end Flutter: estado con Bloc y Custom Painters dedicados. Toca un card para abrir.';
+      'Tres marcas ficticias, tres identidades visuales, más de quince pantallas navegables — y cero backend, por decisión. Todo lo que se mueve aquí es front end Flutter: estado con Bloc y Custom Painters dedicados. Toca un card para abrir.';
 
   @override
   String get showcase_financeLabel => 'Inversiones';

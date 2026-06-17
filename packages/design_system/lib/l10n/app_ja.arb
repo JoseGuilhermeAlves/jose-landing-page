@@ -32,7 +32,7 @@
   "hero_trustYearsLabel": "年のFlutter経験",
   "hero_trustAppsValue": "5",
   "hero_trustAppsLabel": "本のリテールアプリが本番稼働",
-  "hero_trustCanvasValue": "20+",
+  "hero_trustCanvasValue": "15+",
   "hero_trustCanvasLabel": "ショーケースのデモ画面",
   "hero_portraitSemantics": "Jose Guilherme Alvesの写真",
 
@@ -76,10 +76,8 @@
   "domain_publicServices_blurb": "市民向け公共サービス——Blocによる機微なデータフロー、信頼性とプライバシーを重視。",
   "domain_sanitation_label": "フィールドオペレーション",
   "domain_sanitation_blurb": "offline-firstの現場データ収集——Flutter ModularとProvider、不安定なネットワーク下でも確実に同期。",
-  "domain_platform_label": "社内プラットフォーム",
-  "domain_platform_blurb": "Flutterによる社内ツール——チームのエンゲージメント向上のためのgamificationレイヤー。",
   "domain_retail_label": "B2Bリテール",
-  "domain_retail_blurb": "Flutterフロントエンドを丸ごと——デザインからデプロイまで、少人数チームで5年間。オペレーションのアプリ5本：在庫、店舗間の配分、販売、社内コミュニケーション。",
+  "domain_retail_blurb": "Flutterフロントエンドを丸ごと——デザインからデプロイまで、5年間。オペレーションのアプリ5本：在庫、店舗間の配分、販売、社内コミュニケーション。",
 
   "services_eyebrow": "サービス",
   "services_title": "モバイルフロントエンド。",
@@ -132,9 +130,9 @@
 
 
   "showcase_eyebrow": "ショーケース",
-  "showcase_title": "5つのニッチ、",
-  "showcase_titleAccent": "5つのプロトタイプ。",
-  "showcase_subtitle": "架空ブランド5つ、ビジュアルアイデンティティ5種、20を超える画面——そしてバックエンドはあえてゼロ。ここで動くものはすべてFlutterのフロントエンド：Blocによる状態管理と専用のCustom Painter。カードをタップして開いてください。",
+  "showcase_title": "3つのニッチ、",
+  "showcase_titleAccent": "3つのプロトタイプ。",
+  "showcase_subtitle": "架空ブランド3つ、ビジュアルアイデンティティ3種、15を超える画面——そしてバックエンドはあえてゼロ。ここで動くものはすべてFlutterのフロントエンド：Blocによる状態管理と専用のCustom Painter。カードをタップして開いてください。",
   "showcase_financeLabel": "投資",
   "showcase_financeDescription": "Mira——ウォッチリスト、クロスヘア付きインタラクティブローソク足、注文入力、アロケーションドーナツ付きポートフォリオ。",
   "showcase_deliveryLabel": "デリバリー",

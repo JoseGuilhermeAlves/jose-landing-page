@@ -49,6 +49,20 @@ void main() {
         );
       });
     });
+
+    test('canRenderAll: latino/acento/numero/pontuacao sao renderaveis', () {
+      expect(PixelFont.canRenderAll('ENGENHARIA'), isTrue);
+      expect(PixelFont.canRenderAll('Olá, José! 2026'), isTrue);
+      expect(PixelFont.canRenderAll('GitHub / LinkedIn'), isTrue);
+    });
+
+    test('canRenderAll: scripts fora do latino retornam false', () {
+      expect(PixelFont.canRenderAll('日本語'), isFalse); // japones
+      expect(PixelFont.canRenderAll('Привет'), isFalse); // cirilico
+      expect(PixelFont.canRenderAll('技术'), isFalse); // chines
+      // Misturado: um char nao-latino ja derruba tudo.
+      expect(PixelFont.canRenderAll('STAGE 技'), isFalse);
+    });
   });
 
   group('PixelText', () {
@@ -86,6 +100,43 @@ void main() {
       final size = tester.getSize(find.byType(PixelText));
       // 2 linhas de 7 + 2 de lineSpacing = 16 dots * 3px = 48.
       expect(size.height, (PixelFont.glyphHeight * 2 + 2) * 3);
+    });
+
+    testWidgets('idioma nao-latino cai num Text real (nao some)', (
+      tester,
+    ) async {
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: Scaffold(
+            body: Center(
+              child: PixelText('日本語', color: Colors.pink, pixelSize: 5),
+            ),
+          ),
+        ),
+      );
+
+      expect(tester.takeException(), isNull);
+      // Fallback: o texto aparece num Text de verdade, nao no painter bitmap.
+      final text = tester.widget<Text>(find.byType(Text));
+      expect(text.data, '日本語');
+      // Latino continua no caminho pixel (sem Text filho).
+    });
+
+    testWidgets('idioma latino NAO usa fallback (segue pixel/CustomPaint)', (
+      tester,
+    ) async {
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: Scaffold(
+            body: Center(
+              child: PixelText('STAGE', color: Colors.pink, pixelSize: 5),
+            ),
+          ),
+        ),
+      );
+
+      expect(find.byType(Text), findsNothing);
+      expect(find.byType(CustomPaint), findsWidgets);
     });
   });
 }

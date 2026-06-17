@@ -102,7 +102,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get hero_trustAppsLabel => 'apps retail en production';
 
   @override
-  String get hero_trustCanvasValue => '20+';
+  String get hero_trustCanvasValue => '15+';
 
   @override
   String get hero_trustCanvasLabel => 'écrans démo dans la vitrine';
@@ -238,18 +238,11 @@ class AppLocalizationsFr extends AppLocalizations {
       'Collecte de données sur le terrain offline-first — Flutter Modular et Provider, synchronisation fiable sous réseau instable.';
 
   @override
-  String get domain_platform_label => 'Plateforme interne';
-
-  @override
-  String get domain_platform_blurb =>
-      'Outils internes en Flutter — couche de gamification pour l\'engagement des équipes.';
-
-  @override
   String get domain_retail_label => 'Retail B2B';
 
   @override
   String get domain_retail_blurb =>
-      'Tout le front end Flutter — du design au déploiement, en petite équipe, pendant cinq ans. Cinq apps d\'opération : stock, distribution entre unités, ventes et communication interne.';
+      'Tout le front end Flutter — du design au déploiement, pendant cinq ans. Cinq apps d\'opération : stock, distribution entre unités, ventes et communication interne.';
 
   @override
   String get services_eyebrow => 'Services';
@@ -398,14 +391,14 @@ class AppLocalizationsFr extends AppLocalizations {
   String get showcase_eyebrow => 'Showcase';
 
   @override
-  String get showcase_title => 'Cinq niches,';
+  String get showcase_title => 'Trois niches,';
 
   @override
-  String get showcase_titleAccent => 'cinq prototypes.';
+  String get showcase_titleAccent => 'trois prototypes.';
 
   @override
   String get showcase_subtitle =>
-      'Cinq marques fictives, cinq identités visuelles, plus de vingt écrans navigables — et zéro backend, par choix. Tout ce qui bouge ici est du front end Flutter : état avec Bloc et Custom Painters dédiés. Touchez une carte pour ouvrir.';
+      'Trois marques fictives, trois identités visuelles, plus de quinze écrans navigables — et zéro backend, par choix. Tout ce qui bouge ici est du front end Flutter : état avec Bloc et Custom Painters dédiés. Touchez une carte pour ouvrir.';
 
   @override
   String get showcase_financeLabel => 'Investissements';

@@ -34,7 +34,7 @@ void main() {
       await tester.pumpWidget(wrap(const ShowcaseSection()));
       await tester.pump(const Duration(milliseconds: 16));
 
-      expect(find.byType(ArcadeCabinet), findsNWidgets(5));
+      expect(find.byType(ArcadeCabinet), findsNWidgets(3));
     });
 
     testWidgets('preview renderiza a home real de cada mock', (tester) async {
@@ -43,8 +43,6 @@ void main() {
 
       // Cada nicho tem o widget de demo renderizado na tela do gabinete.
       expect(find.byType(DeliveryDemo), findsOneWidget);
-      expect(find.byType(SchedulingDemo), findsOneWidget);
-      expect(find.byType(FitnessDemo), findsOneWidget);
       expect(find.byType(RealEstateDemo), findsOneWidget);
       expect(find.byType(FinanceDemo), findsOneWidget);
     });
@@ -60,31 +58,6 @@ void main() {
       // Preview (offstage apos abrir o modal) + modal fullscreen.
       // skipOffstage:false conta os dois e prova que a rota foi empurrada.
       expect(find.byType(DeliveryDemo, skipOffstage: false), findsNWidgets(2));
-    });
-
-    testWidgets('tap no gabinete scheduling abre o SchedulingDemo fullscreen', (
-      tester,
-    ) async {
-      await tester.pumpWidget(wrap(const ShowcaseSection()));
-      await tester.pump(const Duration(milliseconds: 16));
-
-      await tapCabinetAndSettle(tester, 'scheduling');
-
-      expect(
-        find.byType(SchedulingDemo, skipOffstage: false),
-        findsNWidgets(2),
-      );
-    });
-
-    testWidgets('tap no gabinete fitness abre o FitnessDemo fullscreen', (
-      tester,
-    ) async {
-      await tester.pumpWidget(wrap(const ShowcaseSection()));
-      await tester.pump(const Duration(milliseconds: 16));
-
-      await tapCabinetAndSettle(tester, 'fitness');
-
-      expect(find.byType(FitnessDemo, skipOffstage: false), findsNWidgets(2));
     });
 
     testWidgets(

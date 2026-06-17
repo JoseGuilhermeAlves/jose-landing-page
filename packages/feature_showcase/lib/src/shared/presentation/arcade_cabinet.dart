@@ -19,7 +19,7 @@ class ArcadeCabinet extends StatefulWidget {
     super.key,
   });
 
-  /// Nome da marca/mock exibido no marquee (ex.: AURORA, PULSO).
+  /// Nome da marca/mock exibido no marquee (ex.: AURORA, SOLAR).
   final String label;
 
   /// Home real do mock — renderizada na tela do gabinete.

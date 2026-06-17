@@ -101,7 +101,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get hero_trustAppsLabel => '本のリテールアプリが本番稼働';
 
   @override
-  String get hero_trustCanvasValue => '20+';
+  String get hero_trustCanvasValue => '15+';
 
   @override
   String get hero_trustCanvasLabel => 'ショーケースのデモ画面';
@@ -234,18 +234,11 @@ class AppLocalizationsJa extends AppLocalizations {
       'offline-firstの現場データ収集——Flutter ModularとProvider、不安定なネットワーク下でも確実に同期。';
 
   @override
-  String get domain_platform_label => '社内プラットフォーム';
-
-  @override
-  String get domain_platform_blurb =>
-      'Flutterによる社内ツール——チームのエンゲージメント向上のためのgamificationレイヤー。';
-
-  @override
   String get domain_retail_label => 'B2Bリテール';
 
   @override
   String get domain_retail_blurb =>
-      'Flutterフロントエンドを丸ごと——デザインからデプロイまで、少人数チームで5年間。オペレーションのアプリ5本：在庫、店舗間の配分、販売、社内コミュニケーション。';
+      'Flutterフロントエンドを丸ごと——デザインからデプロイまで、5年間。オペレーションのアプリ5本：在庫、店舗間の配分、販売、社内コミュニケーション。';
 
   @override
   String get services_eyebrow => 'サービス';
@@ -393,14 +386,14 @@ class AppLocalizationsJa extends AppLocalizations {
   String get showcase_eyebrow => 'ショーケース';
 
   @override
-  String get showcase_title => '5つのニッチ、';
+  String get showcase_title => '3つのニッチ、';
 
   @override
-  String get showcase_titleAccent => '5つのプロトタイプ。';
+  String get showcase_titleAccent => '3つのプロトタイプ。';
 
   @override
   String get showcase_subtitle =>
-      '架空ブランド5つ、ビジュアルアイデンティティ5種、20を超える画面——そしてバックエンドはあえてゼロ。ここで動くものはすべてFlutterのフロントエンド：Blocによる状態管理と専用のCustom Painter。カードをタップして開いてください。';
+      '架空ブランド3つ、ビジュアルアイデンティティ3種、15を超える画面——そしてバックエンドはあえてゼロ。ここで動くものはすべてFlutterのフロントエンド：Blocによる状態管理と専用のCustom Painter。カードをタップして開いてください。';
 
   @override
   String get showcase_financeLabel => '投資';

@@ -100,7 +100,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get hero_trustAppsLabel => '款零售应用在生产环境';
 
   @override
-  String get hero_trustCanvasValue => '20+';
+  String get hero_trustCanvasValue => '15+';
 
   @override
   String get hero_trustCanvasLabel => '展示中的演示屏幕';
@@ -230,17 +230,11 @@ class AppLocalizationsZh extends AppLocalizations {
       'offline-first 的现场数据采集——用 Flutter Modular 和 Provider，在不稳定网络下可靠同步。';
 
   @override
-  String get domain_platform_label => '内部平台';
-
-  @override
-  String get domain_platform_blurb => 'Flutter 内部工具——用游戏化层提升团队参与度。';
-
-  @override
   String get domain_retail_label => 'B2B 零售';
 
   @override
   String get domain_retail_blurb =>
-      '完整的 Flutter 前端——从设计到部署，在小团队中，历时五年。五个运营应用：库存、门店间调拨、销售和内部沟通。';
+      '完整的 Flutter 前端——从设计到部署，历时五年。五个运营应用：库存、门店间调拨、销售和内部沟通。';
 
   @override
   String get services_eyebrow => '服务';
@@ -387,14 +381,14 @@ class AppLocalizationsZh extends AppLocalizations {
   String get showcase_eyebrow => '案例展示';
 
   @override
-  String get showcase_title => '五个细分，';
+  String get showcase_title => '三个细分，';
 
   @override
-  String get showcase_titleAccent => '五个原型。';
+  String get showcase_titleAccent => '三个原型。';
 
   @override
   String get showcase_subtitle =>
-      '五个虚构品牌、五套视觉识别、二十多个可导航页面——后端为零，刻意如此。这里一切会动的都是 Flutter 前端：Bloc 状态管理和专属 Custom Painter。点击卡片打开。';
+      '三个虚构品牌、三套视觉识别、十五个以上可导航页面——后端为零，刻意如此。这里一切会动的都是 Flutter 前端：Bloc 状态管理和专属 Custom Painter。点击卡片打开。';
 
   @override
   String get showcase_financeLabel => '投资';

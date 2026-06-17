@@ -46,23 +46,30 @@ abstract final class PaintersCatalog {
       location: 'feature_showcase / delivery',
     ),
     PainterHighlight(
-      name: 'VitralClockPainter',
-      role:
-          'Relogio analogico com ponteiro de segundos animado em loop '
-          'de 60s — trig pra ticks.',
-      location: 'feature_showcase / scheduling',
-    ),
-    PainterHighlight(
-      name: 'PulsoActivityRings',
-      role:
-          'Aneis estilo Apple Watch com progresso animado por treino e '
-          'cache de paths.',
-      location: 'feature_showcase / fitness',
-    ),
-    PainterHighlight(
       name: 'MiraCandlestickChart',
       role: 'Velas OHLC com crosshair interativo, tooltip e seed-determinismo.',
       location: 'feature_showcase / finance',
+    ),
+    PainterHighlight(
+      name: 'CosmosPainter',
+      role:
+          'Galaxia espiral + nebulosas + pulsar em milhares de pontos '
+          'batched via drawPoints; god-file dividido em extensions.',
+      location: 'packages/animations',
+    ),
+    PainterHighlight(
+      name: 'ArcadeBackdropPainter',
+      role:
+          'Starfield em parallax + grid Outrun em perspectiva; geometria '
+          'das estrelas cacheada, so a fase deriva do tempo.',
+      location: 'packages/animations',
+    ),
+    PainterHighlight(
+      name: 'SolarFloorPlan',
+      role:
+          'Planta baixa esquematica com comodos rotulados que variam por '
+          'tipo de imovel (casa/chacara/apartamento).',
+      location: 'feature_showcase / realestate',
     ),
   ];
 }

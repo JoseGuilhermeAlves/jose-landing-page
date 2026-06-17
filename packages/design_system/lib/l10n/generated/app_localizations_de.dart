@@ -102,7 +102,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get hero_trustAppsLabel => 'Retail-Apps in Produktion';
 
   @override
-  String get hero_trustCanvasValue => '20+';
+  String get hero_trustCanvasValue => '15+';
 
   @override
   String get hero_trustCanvasLabel => 'Demo-Screens im Showcase';
@@ -238,18 +238,11 @@ class AppLocalizationsDe extends AppLocalizations {
       'Datenerfassung im Feld offline-first — Flutter Modular und Provider, zuverlässige Synchronisierung unter instabilem Netz.';
 
   @override
-  String get domain_platform_label => 'Interne Plattform';
-
-  @override
-  String get domain_platform_blurb =>
-      'Interne Tools in Flutter — Gamification-Schicht zur Förderung des Team-Engagements.';
-
-  @override
   String get domain_retail_label => 'B2B-Retail';
 
   @override
   String get domain_retail_blurb =>
-      'Gesamtes Flutter-Frontend — vom Design bis zum Deploy, in einem kleinen Team, fünf Jahre lang. Fünf Apps für den Betrieb: Bestand, Distribution zwischen Filialen, Verkauf und interne Kommunikation.';
+      'Gesamtes Flutter-Frontend — vom Design bis zum Deploy, fünf Jahre lang. Fünf Apps für den Betrieb: Bestand, Distribution zwischen Filialen, Verkauf und interne Kommunikation.';
 
   @override
   String get services_eyebrow => 'Leistungen';
@@ -398,14 +391,14 @@ class AppLocalizationsDe extends AppLocalizations {
   String get showcase_eyebrow => 'Showcase';
 
   @override
-  String get showcase_title => 'Fünf Nischen,';
+  String get showcase_title => 'Drei Nischen,';
 
   @override
-  String get showcase_titleAccent => 'fünf Prototypen.';
+  String get showcase_titleAccent => 'drei Prototypen.';
 
   @override
   String get showcase_subtitle =>
-      'Fünf fiktive Marken, fünf visuelle Identitäten, über zwanzig navigierbare Screens — und null Backend, bewusst. Alles, was sich hier bewegt, ist Flutter-Frontend: State mit Bloc und dedizierte Custom Painter. Tippen Sie auf eine Karte zum Öffnen.';
+      'Drei fiktive Marken, drei visuelle Identitäten, über fünfzehn navigierbare Screens — und null Backend, bewusst. Alles, was sich hier bewegt, ist Flutter-Frontend: State mit Bloc und dedizierte Custom Painter. Tippen Sie auf eine Karte zum Öffnen.';
 
   @override
   String get showcase_financeLabel => 'Investitionen';

@@ -32,7 +32,7 @@
   "hero_trustYearsLabel": "лет с Flutter",
   "hero_trustAppsValue": "5",
   "hero_trustAppsLabel": "ритейл-приложений в продакшене",
-  "hero_trustCanvasValue": "20+",
+  "hero_trustCanvasValue": "15+",
   "hero_trustCanvasLabel": "демо-экраны в витрине",
   "hero_portraitSemantics": "Фото Жозе Гильерме Алвеса",
 
@@ -76,10 +76,8 @@
   "domain_publicServices_blurb": "Государственная услуга для граждан — чувствительный поток данных на Bloc, фокус на надёжности и приватности.",
   "domain_sanitation_label": "Полевые операции",
   "domain_sanitation_blurb": "Сбор данных в полевых условиях offline-first — Flutter Modular и Provider, надёжная синхронизация при нестабильной сети.",
-  "domain_platform_label": "Внутренняя платформа",
-  "domain_platform_blurb": "Внутренние инструменты на Flutter — слой геймификации для вовлечения команд.",
   "domain_retail_label": "Розница B2B",
-  "domain_retail_blurb": "Весь фронтенд Flutter — от дизайна до деплоя, в небольшой команде, пять лет. Пять приложений для операций: склад, распределение между точками, продажи и внутренние коммуникации.",
+  "domain_retail_blurb": "Весь фронтенд Flutter — от дизайна до деплоя, пять лет. Пять приложений для операций: склад, распределение между точками, продажи и внутренние коммуникации.",
 
   "services_eyebrow": "Услуги",
   "services_title": "Мобильный фронтенд.",
@@ -132,9 +130,9 @@
 
 
   "showcase_eyebrow": "Showcase",
-  "showcase_title": "Пять ниш,",
-  "showcase_titleAccent": "пять прототипов.",
-  "showcase_subtitle": "Пять вымышленных брендов, пять визуальных идентичностей, больше двадцати экранов с навигацией — и ноль бэкенда, сознательно. Всё, что здесь движется, — фронтенд Flutter: состояние на Bloc и выделенные Custom Painter. Коснитесь карточки, чтобы открыть.",
+  "showcase_title": "Три ниши,",
+  "showcase_titleAccent": "три прототипа.",
+  "showcase_subtitle": "Три вымышленных бренда, три визуальные идентичности, больше пятнадцати экранов с навигацией — и ноль бэкенда, сознательно. Всё, что здесь движется, — фронтенд Flutter: состояние на Bloc и выделенные Custom Painter. Коснитесь карточки, чтобы открыть.",
   "showcase_financeLabel": "Инвестиции",
   "showcase_financeDescription": "Mira — watchlist, интерактивный candlestick с crosshair, отправка ордера и портфель с donut-аллокацией.",
   "showcase_deliveryLabel": "Доставка",

@@ -21,20 +21,6 @@ abstract final class ShowcaseCatalog {
       hasDemo: true,
     ),
     ShowcaseTemplate(
-      id: 'scheduling',
-      label: l10n.showcase_schedulingLabel,
-      description: l10n.showcase_schedulingDescription,
-      icon: Icons.calendar_month_outlined,
-      hasDemo: true,
-    ),
-    ShowcaseTemplate(
-      id: 'fitness',
-      label: l10n.showcase_fitnessLabel,
-      description: l10n.showcase_fitnessDescription,
-      icon: Icons.monitor_heart_outlined,
-      hasDemo: true,
-    ),
-    ShowcaseTemplate(
       id: 'realestate',
       label: l10n.showcase_realestateLabel,
       description: l10n.showcase_realestateDescription,

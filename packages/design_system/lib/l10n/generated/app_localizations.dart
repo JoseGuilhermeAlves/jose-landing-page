@@ -247,7 +247,7 @@ abstract class AppLocalizations {
   /// No description provided for @hero_scopeLine.
   ///
   /// In pt, this message translates to:
-  /// **'Backend permanece com o time — eu entrego o front end mobile inteiro e integro com qualquer API existente.'**
+  /// **'Integro com APIs e ecossistemas existentes.'**
   String get hero_scopeLine;
 
   /// No description provided for @hero_scrollHint.
@@ -655,7 +655,7 @@ abstract class AppLocalizations {
   /// No description provided for @contact_subtitle.
   ///
   /// In pt, this message translates to:
-  /// **'Conversas sobre projetos, consultoria e parcerias em Flutter são bem-vindas. Email e LinkedIn são os canais mais rápidos; respondo em até um dia útil.'**
+  /// **'Conversas sobre projetos e parcerias em Flutter são bem-vindas. Email e LinkedIn são os canais mais rápidos; respondo em até um dia útil.'**
   String get contact_subtitle;
 
   /// No description provided for @contact_ctaWhatsapp.

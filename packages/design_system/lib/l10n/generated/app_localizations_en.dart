@@ -77,8 +77,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'I built the complete front end of five B2B retail-operations apps — design to deploy — and currently work on a large-scale financial product. Feature-based architecture, Bloc, smooth on real devices.';
 
   @override
-  String get hero_scopeLine =>
-      'Backend stays with the team — I deliver the entire mobile front end and integrate with any existing API.';
+  String get hero_scopeLine => 'I integrate with existing APIs and ecosystems.';
 
   @override
   String get hero_scrollHint => 'scroll to continue';
@@ -304,7 +303,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get contact_subtitle =>
-      'Conversations about projects, consulting and Flutter partnerships are welcome. Email and LinkedIn are the fastest channels; I reply within one business day.';
+      'Conversations about projects and Flutter partnerships are welcome. Email and LinkedIn are the fastest channels; I reply within one business day.';
 
   @override
   String get contact_ctaWhatsapp => 'Direct WhatsApp';

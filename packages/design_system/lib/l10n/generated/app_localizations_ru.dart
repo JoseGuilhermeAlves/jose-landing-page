@@ -78,7 +78,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get hero_scopeLine =>
-      'Бэкенд остаётся за командой — я выдаю весь мобильный фронтенд и интегрируюсь с любым существующим API.';
+      'Интегрируюсь с существующими API и экосистемами.';
 
   @override
   String get hero_scrollHint => 'листайте, чтобы продолжить';
@@ -304,7 +304,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get contact_subtitle =>
-      'Открыт к обсуждению проектов, консалтинга и партнёрств вокруг Flutter. Email и LinkedIn — самые быстрые каналы; отвечаю в течение одного рабочего дня.';
+      'Открыт к обсуждению проектов и партнёрств вокруг Flutter. Email и LinkedIn — самые быстрые каналы; отвечаю в течение одного рабочего дня.';
 
   @override
   String get contact_ctaWhatsapp => 'WhatsApp напрямую';

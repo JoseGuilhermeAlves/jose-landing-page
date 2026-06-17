@@ -76,8 +76,7 @@ class AppLocalizationsJa extends AppLocalizations {
       'B2Bリテール業務アプリ5本のフロントエンドを、デザインからデプロイまで丸ごと構築。現在は大規模金融プロダクトに携わっています。feature単位のアーキテクチャ、Blocによる状態管理、実機での滑らかな動作。';
 
   @override
-  String get hero_scopeLine =>
-      'バックエンドはチームに任せ、私はモバイルフロントエンド全体を提供し、既存のあらゆるAPIと統合します。';
+  String get hero_scopeLine => '既存のAPIやエコシステムと統合します。';
 
   @override
   String get hero_scrollHint => 'スクロールして続ける';
@@ -299,7 +298,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get contact_subtitle =>
-      'プロジェクト、コンサルティング、Flutterに関する協業のご相談を歓迎します。EmailとLinkedInが最速のチャネルです。1営業日以内に返信します。';
+      'プロジェクトやFlutterに関する協業のご相談を歓迎します。EmailとLinkedInが最速のチャネルです。1営業日以内に返信します。';
 
   @override
   String get contact_ctaWhatsapp => 'WhatsAppで直接';

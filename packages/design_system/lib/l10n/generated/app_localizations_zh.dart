@@ -76,7 +76,7 @@ class AppLocalizationsZh extends AppLocalizations {
       '我构建了五款 B2B 零售运营应用的完整前端——从设计到部署——目前在做一个大规模金融产品。按功能划分架构、Bloc 管理状态、真机上流畅运行。';
 
   @override
-  String get hero_scopeLine => '后端留给团队——我交付完整的移动端前端，并与任何现有 API 对接。';
+  String get hero_scopeLine => '与现有 API 和生态系统对接。';
 
   @override
   String get hero_scrollHint => '滚动以继续';
@@ -294,7 +294,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get contact_subtitle =>
-      '欢迎洽谈项目、咨询与 Flutter 合作。Email 和 LinkedIn 是最快的渠道；一个工作日内回复。';
+      '欢迎洽谈项目与 Flutter 合作。Email 和 LinkedIn 是最快的渠道；一个工作日内回复。';
 
   @override
   String get contact_ctaWhatsapp => 'WhatsApp 直联';

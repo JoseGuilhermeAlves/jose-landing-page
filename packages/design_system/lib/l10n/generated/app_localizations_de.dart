@@ -78,7 +78,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get hero_scopeLine =>
-      'Das Backend bleibt beim Team — ich liefere das gesamte Mobile-Frontend und integriere jede bestehende API.';
+      'Ich integriere mich mit bestehenden APIs und Ökosystemen.';
 
   @override
   String get hero_scrollHint => 'scrollen um fortzufahren';
@@ -303,7 +303,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get contact_subtitle =>
-      'Gespräche über Projekte, Beratung und Flutter-Kooperationen sind willkommen. E-Mail und LinkedIn sind die schnellsten Kanäle; ich antworte innerhalb eines Werktags.';
+      'Gespräche über Projekte und Flutter-Kooperationen sind willkommen. E-Mail und LinkedIn sind die schnellsten Kanäle; ich antworte innerhalb eines Werktags.';
 
   @override
   String get contact_ctaWhatsapp => 'Direkt per WhatsApp';

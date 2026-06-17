@@ -89,9 +89,9 @@ class ArcadeHero extends StatelessWidget {
                     child: BlackHolePortrait(
                       diskHot: colors.primary,
                       diskCool: colors.accent,
-                      size: (MediaQuery.sizeOf(context).width * 0.52).clamp(
-                        200.0,
-                        270.0,
+                      size: (MediaQuery.sizeOf(context).width * 0.86).clamp(
+                        300.0,
+                        440.0,
                       ),
                     ),
                   ),

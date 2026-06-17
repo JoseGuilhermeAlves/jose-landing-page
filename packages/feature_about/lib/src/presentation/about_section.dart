@@ -94,10 +94,10 @@ class AboutSection extends StatelessWidget {
   }
 }
 
-/// Lista texto-primeiro dos dominios em que o Jose ja atuou — rows
-/// estilo changelog, mesma gramatica do `DeliveryBlock`. Cada row tem
-/// um marcador-pixel ciano no topo, o rotulo em destaque e o blurb
-/// abaixo. Sem canvas, sem interacao: leitura direta e escaneavel.
+/// Lista texto-primeiro dos dominios em que o Jose ja atuou — **mesma
+/// gramatica visual do `DeliveryBlock`**: rows estilo changelog com numero
+/// de stage em pixel magenta, titulo legivel e blurb muted, em duas colunas
+/// no desktop e empilhado no mobile, separados por hairline neon.
 class _DomainsList extends StatelessWidget {
   const _DomainsList({required this.domains});
 
@@ -106,62 +106,79 @@ class _DomainsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        for (var i = 0; i < domains.length; i++) ...[
-          if (i > 0) const SizedBox(height: AppSpacing.md),
-          _DomainRow(domain: domains[i]),
-        ],
+        for (var i = 0; i < domains.length; i++)
+          _DomainRow(
+            stage: (i + 1).toString().padLeft(2, '0'),
+            domain: domains[i],
+          ),
       ],
     );
   }
 }
 
-/// Row unica da lista de dominios: marcador-pixel + rotulo + blurb.
+/// Row unica da lista de dominios — espelha `_DeliveryRow`: heading com
+/// stage em pixel + titulo, paragrafo na segunda coluna, hairline embaixo.
 class _DomainRow extends StatelessWidget {
-  const _DomainRow({required this.domain});
+  const _DomainRow({required this.stage, required this.domain});
 
+  final String stage;
   final DomainHighlight domain;
 
   @override
   Widget build(BuildContext context) {
     final tt = Theme.of(context).textTheme;
     final colors = context.colors;
+    final isMobile = context.isMobile;
 
-    return Row(
+    final heading = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
       children: [
-        Padding(
-          padding: const EdgeInsets.only(top: AppSpacing.xs),
-          child: ColoredBox(
-            color: colors.primary,
-            child: const SizedBox(width: 8, height: 8),
-          ),
-        ),
-        const SizedBox(width: AppSpacing.sm),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                domain.label,
-                style: tt.bodyLarge?.copyWith(
-                  color: colors.onSurface,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              const SizedBox(height: AppSpacing.xs),
-              Text(
-                domain.blurb,
-                style: tt.bodyMedium?.copyWith(
-                  color: colors.onSurfaceMuted,
-                  height: 1.5,
-                ),
-              ),
-            ],
+        PixelText(stage, color: colors.primary, pixelSize: 3),
+        const SizedBox(height: AppSpacing.sm),
+        Text(
+          domain.label,
+          style: tt.titleMedium?.copyWith(
+            color: colors.onSurface,
+            height: 1.25,
+            fontWeight: FontWeight.w600,
           ),
         ),
       ],
+    );
+
+    final paragraph = Text(
+      domain.blurb,
+      style: tt.bodyMedium?.copyWith(color: colors.onSurfaceMuted, height: 1.5),
+    );
+
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg),
+      decoration: BoxDecoration(
+        border: Border(
+          bottom: BorderSide(color: colors.primary.withValues(alpha: 0.2)),
+        ),
+      ),
+      child: isMobile
+          ? Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                heading,
+                const SizedBox(height: AppSpacing.sm),
+                paragraph,
+              ],
+            )
+          : Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(width: 260, child: heading),
+                const SizedBox(width: AppSpacing.xl),
+                Expanded(child: paragraph),
+              ],
+            ),
     );
   }
 }

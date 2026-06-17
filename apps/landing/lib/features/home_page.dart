@@ -5,7 +5,9 @@ import 'package:feature_hero/feature_hero.dart';
 import 'package:feature_showcase/feature_showcase.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:go_router/go_router.dart';
 import 'package:landing/config/app_config.dart';
+import 'package:landing/router/route_paths.dart';
 import 'package:landing/widgets/arcade/arcade_side_nav.dart';
 import 'package:landing/widgets/engineering_section.dart';
 import 'package:landing/widgets/home_bottom_nav.dart';
@@ -216,7 +218,9 @@ class _HomePageState extends State<HomePage> {
                       id: 'showcase',
                       horizontalPadding: horizontalPadding,
                       glowAlignment: Alignment.topLeft,
-                      child: const ShowcaseSection(),
+                      child: ShowcaseSection(
+                        onOpenDemo: (id) => context.push(RoutePaths.demoFor(id)),
+                      ),
                     ),
                   ),
                 ),

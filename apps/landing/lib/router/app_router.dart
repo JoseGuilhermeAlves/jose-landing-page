@@ -1,3 +1,5 @@
+import 'package:feature_showcase/feature_showcase.dart';
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:landing/features/home_page.dart';
 import 'package:landing/features/not_found_page.dart';
@@ -19,6 +21,21 @@ abstract final class AppRouter {
         GoRoute(
           path: RoutePaths.notFoundFallback,
           pageBuilder: (_, _) => const NoTransitionPage(child: NotFoundPage()),
+        ),
+        // Mock do showcase como rota: o open entra no historico do navegador,
+        // entao o botao voltar fecha o mock (volta pra home) em vez de sair do
+        // site. `fullscreenDialog` preserva a transicao slide-up + o X de
+        // fechar. As telas internas do mock seguem em Navigator.push imperativo
+        // (sobre esta pagina); um voltar fecha o mock inteiro de uma vez.
+        GoRoute(
+          path: RoutePaths.demo,
+          pageBuilder: (_, state) {
+            final demo = showcaseDemoById(state.pathParameters['id'] ?? '');
+            return MaterialPage<void>(
+              fullscreenDialog: true,
+              child: demo ?? const NotFoundPage(),
+            );
+          },
         ),
       ],
     );

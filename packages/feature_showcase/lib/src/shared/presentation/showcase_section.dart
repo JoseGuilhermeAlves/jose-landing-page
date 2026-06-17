@@ -11,7 +11,15 @@ import 'package:flutter/material.dart';
 /// Cada gabinete mostra a **home real** do mock na tela (escalada, nao
 /// interativa); tap "insere a ficha" e abre o demo completo fullscreen.
 class ShowcaseSection extends StatelessWidget {
-  const ShowcaseSection({super.key});
+  const ShowcaseSection({this.onOpenDemo, super.key});
+
+  /// Chamado com o id do template quando o usuario "insere a ficha". O
+  /// shell decide como navegar — uma rota go_router, pra que a abertura
+  /// do mock entre no historico do navegador (botao voltar fecha o mock
+  /// em vez de sair do site). Nulo = fallback pra `Navigator.push`
+  /// fullscreen, mantendo a secao utilizavel standalone (e nos testes,
+  /// sem router).
+  final ValueChanged<String>? onOpenDemo;
 
   /// Nome de marca exibido no marquee de cada gabinete.
   static const _brand = {
@@ -91,7 +99,13 @@ class ShowcaseSection extends StatelessWidget {
   }
 
   void _openDemo(BuildContext context, ShowcaseTemplate template) {
-    final demo = _demoFor(template.id, preview: false);
+    final open = onOpenDemo;
+    if (open != null) {
+      open(template.id);
+      return;
+    }
+    // Fallback sem router: push imperativo fullscreen (standalone/testes).
+    final demo = showcaseDemoById(template.id);
     if (demo == null) return;
     Navigator.of(context).push(
       MaterialPageRoute<void>(builder: (_) => demo, fullscreenDialog: true),
@@ -101,22 +115,25 @@ class ShowcaseSection extends StatelessWidget {
   /// Preview = home real do mock, sem interatividade. Delivery roda sem
   /// ticker (corredor estatico) pra nao gastar frame budget na miniatura.
   Widget _previewFor(String id) =>
-      _demoFor(id, preview: true) ?? const SizedBox.shrink();
+      _buildDemo(id, preview: true) ?? const SizedBox.shrink();
+}
 
-  /// Constroi o widget de demo por id. [preview] desliga o ticker do
-  /// delivery na miniatura; no fullscreen ele roda normalmente.
-  Widget? _demoFor(String id, {required bool preview}) {
-    return switch (id) {
-      'delivery' => DeliveryDemo(
-        ticker: preview
-            ? null
-            : Stream<void>.periodic(const Duration(seconds: 2)),
-      ),
-      'realestate' => const RealEstateDemo(),
-      'finance' => const FinanceDemo(),
-      _ => null,
-    };
-  }
+/// Constroi o demo completo (interativo) de um mock por id — pronto pra ser
+/// hospedado numa rota go_router (`/demo/:id`) ou num push fullscreen. Null =
+/// id desconhecido.
+Widget? showcaseDemoById(String id) => _buildDemo(id, preview: false);
+
+/// Constroi o widget de demo por id. [preview] desliga o ticker do delivery
+/// na miniatura; no fullscreen ele roda normalmente.
+Widget? _buildDemo(String id, {required bool preview}) {
+  return switch (id) {
+    'delivery' => DeliveryDemo(
+      ticker: preview ? null : Stream<void>.periodic(const Duration(seconds: 2)),
+    ),
+    'realestate' => const RealEstateDemo(),
+    'finance' => const FinanceDemo(),
+    _ => null,
+  };
 }
 
 /// Carrossel "stage select" do mobile: um gabinete por vez (PageView com

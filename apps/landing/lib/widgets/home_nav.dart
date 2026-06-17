@@ -93,13 +93,23 @@ class HomeNav extends StatelessWidget {
                 ),
                 child: Row(
                   children: [
-                    _Logo(onTap: onLogoTap),
-                    if (!isCompact) ...[
+                    if (isCompact)
+                      // Logo preenche o espaco livre (empurra o cluster da
+                      // direita) e encolhe via FittedBox em viewports muito
+                      // estreitos — evita overflow do Row no mobile.
+                      Expanded(
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          alignment: Alignment.centerLeft,
+                          child: _Logo(onTap: onLogoTap),
+                        ),
+                      )
+                    else ...[
+                      _Logo(onTap: onLogoTap),
                       const Spacer(),
                       _Anchors(anchors: anchors),
                       const Spacer(),
-                    ] else
-                      const Spacer(),
+                    ],
                     if (!isMobile) ...[
                       if (githubUrl != null)
                         _SocialIcon(

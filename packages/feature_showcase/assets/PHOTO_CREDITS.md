@@ -14,8 +14,6 @@ comercial sem atribuição obrigatória; a atribuição abaixo é cortesia.
 | Pasta | Conteúdo | Fonte |
 | --- | --- | --- |
 | `delivery/` | hortifruti, padaria, queijaria, empório (20 fotos) | Unsplash/Pexels |
-| `fitness/` | atleta em treino (1 foto) | Unsplash/Pexels |
 | `realestate/` | casas, chácaras, terrenos, headshots de corretores (33 fotos) | Unsplash/Pexels |
-| `scheduling/` | headshots de profissionais (6 fotos) | Unsplash/Pexels |
 
 Mira (finance) não usa fotos por decisão de design (PROJECT.md §4.3).

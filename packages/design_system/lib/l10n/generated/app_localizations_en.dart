@@ -304,7 +304,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get contact_subtitle =>
-      'Open to opportunities as a senior Flutter developer — full-time or contract. Email and LinkedIn are the fastest channels; I reply within one business day.';
+      'Conversations about projects, consulting and Flutter partnerships are welcome. Email and LinkedIn are the fastest channels; I reply within one business day.';
 
   @override
   String get contact_ctaWhatsapp => 'Direct WhatsApp';

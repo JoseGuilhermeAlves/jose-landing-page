@@ -299,7 +299,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get contact_subtitle =>
-      'シニアFlutterエンジニアとしての機会を探しています——正社員・業務委託いずれも可。EmailとLinkedInが最速のチャネルです。1営業日以内に返信します。';
+      'プロジェクト、コンサルティング、Flutterに関する協業のご相談を歓迎します。EmailとLinkedInが最速のチャネルです。1営業日以内に返信します。';
 
   @override
   String get contact_ctaWhatsapp => 'WhatsAppで直接';

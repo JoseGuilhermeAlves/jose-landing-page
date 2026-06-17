@@ -294,7 +294,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get contact_subtitle =>
-      '正在寻找高级 Flutter 开发者的机会——全职或合同均可。Email 和 LinkedIn 是最快的渠道；一个工作日内回复。';
+      '欢迎洽谈项目、咨询与 Flutter 合作。Email 和 LinkedIn 是最快的渠道；一个工作日内回复。';
 
   @override
   String get contact_ctaWhatsapp => 'WhatsApp 直联';

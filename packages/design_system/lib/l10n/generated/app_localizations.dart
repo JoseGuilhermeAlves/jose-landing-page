@@ -655,7 +655,7 @@ abstract class AppLocalizations {
   /// No description provided for @contact_subtitle.
   ///
   /// In pt, this message translates to:
-  /// **'Aberto a oportunidades como desenvolvedor Flutter sênior — CLT, PJ ou contrato. Email e LinkedIn são os canais mais rápidos; respondo em até um dia útil.'**
+  /// **'Conversas sobre projetos, consultoria e parcerias em Flutter são bem-vindas. Email e LinkedIn são os canais mais rápidos; respondo em até um dia útil.'**
   String get contact_subtitle;
 
   /// No description provided for @contact_ctaWhatsapp.

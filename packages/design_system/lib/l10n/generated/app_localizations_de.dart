@@ -303,7 +303,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get contact_subtitle =>
-      'Offen für Positionen als Senior-Flutter-Entwickler — Festanstellung oder Vertrag. E-Mail und LinkedIn sind die schnellsten Kanäle; ich antworte innerhalb eines Werktags.';
+      'Gespräche über Projekte, Beratung und Flutter-Kooperationen sind willkommen. E-Mail und LinkedIn sind die schnellsten Kanäle; ich antworte innerhalb eines Werktags.';
 
   @override
   String get contact_ctaWhatsapp => 'Direkt per WhatsApp';

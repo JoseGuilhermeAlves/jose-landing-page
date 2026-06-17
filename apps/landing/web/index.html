@@ -51,13 +51,13 @@
   <link rel="canonical" href="https://example.invalid/">
 
   <!--
-    Splash de carregamento em HTML/CSS puro (sem asset): terminal verde
-    "ZEGUIDEV ARCADE" (mesmas letras do BootSequence em Flutter) sobre um piso
-    Outrun em perspectiva + scanlines CRT — uma abertura continua. Pinta
-    IMEDIATAMENTE (antes do engine --wasm /
-    CanvasKit baixar) e some no evento `flutter-first-frame`. Sem isso, o
-    usuário vê tela branca por 2-4s no primeiro acesso. Nada aqui é Flutter:
-    antes do primeiro frame só roda HTML/CSS/JS estático.
+    Loading UNICO da landing, em HTML/CSS/JS puro (sem asset): terminal
+    verde "ZEGUIDEV ARCADE" digitado, sobre um piso Outrun em perspectiva
+    + scanlines CRT + barra de progresso neon indeterminada. Pinta
+    IMEDIATAMENTE (o fundo + grid antes do engine --wasm/CanvasKit baixar)
+    e some no evento `flutter-first-frame`. Sem isso, o usuário vê tela
+    branca por 2-4s no primeiro acesso. Nada aqui é Flutter — não existe
+    boot screen em Flutter (era um segundo loading idêntico, removido).
   -->
   <style>
     html, body {
@@ -190,28 +190,79 @@
       51%, 100% { opacity: 0; }
     }
 
+    /* Barra de progresso neon indeterminada — um bloco que varre o trilho
+       da esquerda pra direita enquanto o engine baixa. */
+    #loading-bar {
+      position: relative;
+      margin-top: 18px;
+      width: 100%;
+      height: 3px;
+      background: rgba(57, 255, 20, 0.12);
+      overflow: hidden;
+      border-radius: 2px;
+    }
+
+    #loading-bar > span {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 38%;
+      border-radius: 2px;
+      background: linear-gradient(90deg, transparent, #39FF14, transparent);
+      box-shadow: 0 0 12px rgba(57, 255, 20, 0.6);
+      animation: barsweep 1.25s ease-in-out infinite;
+    }
+
+    @keyframes barsweep {
+      0% { left: -40%; }
+      100% { left: 100%; }
+    }
+
     @media (prefers-reduced-motion: reduce) {
       #loading-grid,
       #loading::before,
-      #loading-caret {
+      #loading-caret,
+      #loading-bar > span {
         animation: none;
       }
     }
   </style>
 </head>
 <body>
-  <div id="loading" role="status" aria-live="polite" aria-label="Carregando ZeguiDev">
+  <div id="loading" role="status" aria-live="polite" aria-label="Carregando ZeguiDev Arcade">
     <div id="loading-grid" aria-hidden="true"></div>
     <div id="loading-content">
-      <pre id="loading-term">ZEGUIDEV  ARCADE
-FLUTTER · 2026
-
-LOADING...</pre>
+      <pre id="loading-term" aria-hidden="true"></pre>
       <div id="loading-caret" aria-hidden="true"></div>
+      <div id="loading-bar" aria-hidden="true"><span></span></div>
     </div>
   </div>
 
   <script>
+    (function () {
+      var term = document.getElementById('loading-term');
+      var caret = document.getElementById('loading-caret');
+      // Cabecalho digitado char a char (efeito terminal); a ultima linha
+      // "CARREGANDO" ganha reticencias animadas depois.
+      var header = 'ZEGUIDEV  ARCADE\nFLUTTER · 2026\n\n';
+      if (caret) caret.style.opacity = '0';
+      var i = 0;
+      var typer = setInterval(function () {
+        i++;
+        term.textContent = header.slice(0, i);
+        if (i >= header.length) {
+          clearInterval(typer);
+          if (caret) caret.style.opacity = '';
+          var n = 0;
+          setInterval(function () {
+            n = (n + 1) % 4;
+            term.textContent = header + 'CARREGANDO' + new Array(n + 1).join('.');
+          }, 350);
+        }
+      }, 45);
+    })();
+
     // Some assim que o Flutter sinalizar que o primeiro frame renderizou.
     // O hook `flutter-first-frame` e disparado pelo runtime.
     window.addEventListener('flutter-first-frame', function () {

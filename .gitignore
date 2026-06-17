@@ -31,3 +31,18 @@ Thumbs.db
 # Assets reais do app vivem em apps/*/assets e packages/*/assets.
 /*.png
 /*.PNG
+
+# Docs internos de planejamento/notas — NUNCA publicos (repo e open source).
+# Ficam no disco local, fora do versionamento. README.md e
+# PHOTO_CREDITS.md continuam versionados (publicos).
+/CLAUDE.md
+/PROJECT.md
+/DESIGN.md
+/COPY_REWRITE_PROPOSAL.md
+/Veredito-analise-fable-5.md
+/instrucoes-custom-painter.md
+/licoes-custom-painter-boss-1a1.md
+
+# Pasta de referencias de design (GIFs/PNGs de boss, fontes do CV, etc.) —
+# material de trabalho interno, fora do repo publico.
+/cosmic-boss-reference-theme/

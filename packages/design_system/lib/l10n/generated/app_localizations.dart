@@ -235,7 +235,7 @@ abstract class AppLocalizations {
   /// No description provided for @hero_headline2.
   ///
   /// In pt, this message translates to:
-  /// **'Do VMP ao app em produção.'**
+  /// **'Do MVP ao app em produção.'**
   String get hero_headline2;
 
   /// No description provided for @hero_bio.

@@ -11,9 +11,10 @@ import 'package:flutter/material.dart';
 ///
 /// Tudo vive na FAIXA DO CEU (acima do horizonte do grid Outrun em ~0.62) —
 /// nada cruza a pista. **Camadas (tras -> frente):** galaxia/nebulosa -> BOSS
-/// (vulto no canto superior direito) -> planetas. O boss fica ATRAS dos
-/// planetas de proposito: eles passam na frente e reforcam que ele e maior e
-/// mais ao fundo. Decorativo, `IgnorePointer`.
+/// (colosso gigante e translucido, CENTRADO no ponto de fuga da pista) ->
+/// planetas. O boss fica ATRAS dos planetas e do texto de proposito: eles
+/// passam na frente e reforcam que ele e maior e mais ao fundo. Decorativo,
+/// `IgnorePointer`.
 class HeroCosmos extends StatefulWidget {
   const HeroCosmos({super.key});
 
@@ -150,41 +151,48 @@ class _HeroCosmosState extends State<HeroCosmos>
           final pixelSize = w < 600 ? 0.6 : 1.0;
           // FINAL BOSS "Oni Mask": sprite pixel-art 1:1 (oni neon de corpo
           // inteiro, fundo removido), reconstruido no Canvas pelo OniBoss.
-          // VULTO NO CANTO SUPERIOR DIREITO, ATRAS dos planetas (desenhado
-          // ANTES deles no Stack): os planetas passam NA FRENTE, o que reforca
-          // que o boss e MAIOR e esta mais ao FUNDO. Escala contida pra nao
-          // virar bloco de informacao no meio da tela. Cores vivas (sem Opacity).
+          // Agora um COLOSSO LA NO FUNDO: gigante, translucido e CENTRADO no
+          // ponto de fuga da pista. O grid Outrun do shell converge em
+          // (w/2, screenH * _horizonFraction); o boss sobe dali, com a cauda
+          // pousando exatamente onde a pista termina. Fica ATRAS de tudo
+          // (planetas + texto passam na frente) e com opacidade baixa pra nao
+          // roubar o foco da copy.
           const bossAspect = 1255 / 1560; // w/h do sprite recortado
           final isMobileViewport = w < 600;
-          double bossW;
-          double bossH;
-          double bossLeft;
-          double bossTop;
-          if (isMobileViewport) {
-            // Mobile: o hero cresce em ALTURA (conteudo empilhado: foto +
-            // texto + CTAs), entao escalar por `h` deixava o boss gigante.
-            // Referencia (area pintada de vermelho): faixa vertical na DIREITA,
-            // do topo (~0.15h) ate ~0.78h. O sprite e quase quadrado (aspect
-            // 0.8), entao nao da pra ser estreito E alto ao mesmo tempo —
-            // prioriza presenca: largo, ancorado na direita, cabeca perto do
-            // topo da faixa.
-            bossW = w * 0.72;
+          // Escala pela VIEWPORT (nao pelo `h` do hero, que cresce no mobile com
+          // o conteudo empilhado): a origem do hero coincide com o topo da tela,
+          // entao y em espaco-hero == y em espaco-viewport no 1o fold.
+          final screenH = MediaQuery.sizeOf(context).height;
+          // Colosso CENTRADO no ponto de fuga. Mesma escala vertical em web e
+          // mobile (a do mobile ficou perfeita): a cauda pousa perto do
+          // horizonte e o rosto fica no topo nos dois.
+          var bossH = screenH * 0.68;
+          var bossW = bossH * bossAspect;
+          // No mobile o cap pela largura corta de leve as laterais (mantem
+          // presenca); no desktop limita pra nao ocupar a tela toda.
+          final maxBossW = w * (isMobileViewport ? 1.02 : 0.46);
+          if (bossW > maxBossW) {
+            bossW = maxBossW;
             bossH = bossW / bossAspect;
-            bossLeft = w - bossW; // encostado na borda direita
-            bossTop = h * 0.13; // cabeca no topo da faixa vermelha
-          } else {
-            // Desktop: o hero tem ~uma viewport de altura, entao escala por `h`.
-            bossH = h * 0.92; // grande no canto, ainda atras dos planetas
-            bossW = bossH * bossAspect;
-            final maxBossW = w * 0.58;
-            if (bossW > maxBossW) {
-              bossW = maxBossW;
-              bossH = bossW / bossAspect;
-            }
-            // Encostado no topo-direita (pequena folga das bordas).
-            bossLeft = w - bossW - w * 0.02;
-            bossTop = h * 0.02;
           }
+          // CENTRO do boss = PONTO DE FUGA da pista. O grid do shell e
+          // full-width (vive ATRAS do menu lateral), entao converge no centro da
+          // VIEWPORT — nao no centro da area de conteudo, que no desktop e
+          // empurrada pra direita pelo side nav. Converte o centro da viewport
+          // pra coords locais do HeroCosmos (no mobile, sem nav, vira w/2).
+          final screenW = MediaQuery.sizeOf(context).width;
+          final trackCenterX = w - screenW / 2;
+          final bossLeft = trackCenterX - bossW / 2;
+          // Vertical: WEB ancora a CAUDA no horizonte (linha da pista, 0.62 da
+          // viewport) — o fim da pista encontra o boss. MOBILE mantem a ancora
+          // pelo rosto (composicao ja aprovada).
+          final bossTop = isMobileViewport
+              ? screenH * 0.12 - bossH * 0.16
+              : screenH * 0.62 - bossH;
+          // Meio-termo: opacidade media + DESSATURADO. Presente como colosso,
+          // mas as cores neon mutadas nao roubam o destaque da copy.
+          const bossOpacity = 0.5;
+          const bossSaturation = 0.82;
           return Stack(
             fit: StackFit.expand,
             children: [
@@ -206,15 +214,18 @@ class _HeroCosmosState extends State<HeroCosmos>
                   size: Size.infinite,
                 ),
               ),
-              // BOSS: vulto no canto superior direito, ATRAS dos planetas
-              // (desenhado antes deles) — os planetas passam na frente e
-              // reforcam que o boss e maior e mais ao fundo.
+              // BOSS: colosso gigante e translucido, CENTRADO no ponto de fuga
+              // (cauda na linha do horizonte), ATRAS dos planetas e do texto —
+              // os planetas passam na frente e reforcam profundidade.
               Positioned(
                 left: bossLeft,
                 top: bossTop,
                 width: bossW,
                 height: bossH,
-                child: const OniBoss(),
+                child: const OniBoss(
+                  opacity: bossOpacity,
+                  saturation: bossSaturation,
+                ),
               ),
               // MID: planetas pixel passando (parallax) — NA FRENTE do boss.
               AnimatedBuilder(

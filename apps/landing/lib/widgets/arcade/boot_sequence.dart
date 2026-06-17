@@ -1,14 +1,16 @@
+import 'dart:async';
+
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 
 /// Abertura "title-card de fliperama": a marca aparece digitando como num
-/// attract screen, depois "PRESS START" pisca. Skipavel — qualquer toque,
-/// scroll ou tecla dispara o fade-out e revela a home (metafora hibrida:
-/// personalidade na entrada sem travar a leitura). Deliberadamente NAO usa
-/// linguagem de boot de sistema (OS/assets/WASM) pra nao soar como instalacao.
+/// attract screen (letras verdes de terminal), depois um cursor pisca e a home
+/// entra SOZINHA — sem PRESS START. Continua skipavel: qualquer toque, scroll
+/// ou tecla adianta o fade-out. Deliberadamente NAO usa linguagem de boot de
+/// sistema (OS/assets/WASM) pra nao soar como instalacao.
 ///
 /// O componente se auto-gerencia: chama [onStart] uma unica vez quando
-/// dispensado (por input ou pelo timeout de seguranca).
+/// dispensado (por input ou pelo auto-enter que dispara apos a digitacao).
 class BootSequence extends StatefulWidget {
   const BootSequence({required this.onStart, super.key});
 
@@ -38,8 +40,12 @@ class _BootSequenceState extends State<BootSequence>
     'ZEGUIDEV  ARCADE',
     'FLUTTER · 2026',
     '',
-    'SELECT PLAYER 1',
+    'LOADING...',
   ];
+
+  // Beat curto entre o fim da digitacao e o auto-enter na home.
+  static const _autoEnterDelay = Duration(milliseconds: 650);
+  Timer? _autoTimer;
 
   late final int _totalChars =
       _lines.fold(0, (sum, l) => sum + l.length) + _lines.length;
@@ -51,6 +57,12 @@ class _BootSequenceState extends State<BootSequence>
       vsync: this,
       duration: const Duration(milliseconds: 1400),
     )..forward();
+    // Ao terminar a digitacao, agenda o auto-enter (skipavel antes disso).
+    _typing.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        _autoTimer = Timer(_autoEnterDelay, _dismiss);
+      }
+    });
     _blink = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 700),
@@ -67,6 +79,7 @@ class _BootSequenceState extends State<BootSequence>
 
   @override
   void dispose() {
+    _autoTimer?.cancel();
     _typing.dispose();
     _blink.dispose();
     _exit.dispose();
@@ -77,6 +90,7 @@ class _BootSequenceState extends State<BootSequence>
   Future<void> _dismiss() async {
     if (_dismissing) return;
     _dismissing = true;
+    _autoTimer?.cancel();
     await _exit.forward();
     if (mounted) widget.onStart();
   }
@@ -128,26 +142,26 @@ class _BootSequenceState extends State<BootSequence>
                             );
                           },
                         ),
-                        const SizedBox(height: AppSpacing.xl),
-                        // PRESS START piscando (so depois do boot terminar).
+                        const SizedBox(height: AppSpacing.lg),
+                        // Cursor de terminal piscando enquanto carrega — a home
+                        // entra sozinha logo apos a digitacao.
                         AnimatedBuilder(
                           animation: Listenable.merge([_typing, _blink]),
                           builder: (context, _) {
                             final ready = _typing.isCompleted;
                             return Opacity(
                               opacity: ready ? _blink.value : 0,
-                              child: PixelText(
-                                '~ PRESS START',
-                                color: colors.primary,
-                                glowColor: colors.primary,
-                                pixelSize: 5,
+                              child: Container(
+                                width: 14,
+                                height: 22,
+                                color: colors.success,
                               ),
                             );
                           },
                         ),
-                        const SizedBox(height: AppSpacing.sm),
+                        const SizedBox(height: AppSpacing.lg),
                         Text(
-                          'toque, role ou pressione qualquer tecla',
+                          'toque para pular',
                           style: textTheme.labelSmall?.copyWith(
                             color: colors.onSurfaceMuted,
                             letterSpacing: 1,

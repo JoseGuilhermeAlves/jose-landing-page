@@ -19,7 +19,17 @@ import 'package:flutter/services.dart' show rootBundle;
 /// painter; o sprite em si fica intacto. `RepaintBoundary` isola, `shouldRepaint`
 /// real, shader do bloom cacheado por tamanho (zero alocacao no hot loop).
 class OniBoss extends StatefulWidget {
-  const OniBoss({super.key});
+  const OniBoss({this.opacity = 1, this.saturation = 1, super.key});
+
+  /// Opacidade do sprite (0..1). O boss vive LA NO FUNDO, gigante, alinhado ao
+  /// ponto de fuga da pista.
+  final double opacity;
+
+  /// Saturacao do sprite (0 = cinza, 1 = cores originais). O meio-termo
+  /// inteligente pra ele ser PRESENCA sem roubar o destaque: as cores neon
+  /// originais distraem; dessaturado vira um colosso fantasma que aguenta uma
+  /// opacidade mais alta (forma visivel) sem virar arco-iris no fundo.
+  final double saturation;
 
   @override
   State<OniBoss> createState() => _OniBossState();
@@ -77,17 +87,43 @@ class _OniBossState extends State<OniBoss> with SingleTickerProviderStateMixin {
         size: Size.infinite,
         isComplex: true,
         willChange: true,
-        painter: _OniBossPainter(image, _c),
+        painter: _OniBossPainter(image, _c, widget.opacity, widget.saturation),
       ),
     );
   }
 }
 
 class _OniBossPainter extends CustomPainter {
-  _OniBossPainter(this._image, this._anim) : super(repaint: _anim);
+  _OniBossPainter(this._image, this._anim, this._opacity, this._saturation)
+    : super(repaint: _anim) {
+    // Uma matriz de cor (5x4) faz DESSATURACAO + escala de ALPHA de uma vez —
+    // sem `Opacity`/saveLayer por frame, sem duas passadas. Linhas RGB usam a
+    // matriz de saturacao luminance-preserving; a linha alpha multiplica por
+    // _opacity.
+    if (_opacity < 1 || _saturation < 1) {
+      // Luminancia Rec.709.
+      const lr = 0.2126;
+      const lg = 0.7152;
+      const lb = 0.0722;
+      final s = _saturation;
+      final i = 1 - s; // peso da luminancia (invertido da saturacao)
+      _spritePaint.colorFilter = ColorFilter.matrix(<double>[
+        lr * i + s, lg * i, lb * i, 0, 0, //
+        lr * i, lg * i + s, lb * i, 0, 0, //
+        lr * i, lg * i, lb * i + s, 0, 0, //
+        0, 0, 0, _opacity, 0, //
+      ]);
+    }
+  }
 
   final ui.Image _image;
   final Animation<double> _anim;
+
+  /// Opacidade do sprite (0..1) — escala o bloom tambem.
+  final double _opacity;
+
+  /// Saturacao do sprite (0 = cinza, 1 = original).
+  final double _saturation;
 
   // Sprite: nearest-neighbor, sem anti-alias — preserva os blocos do pixel-art.
   final Paint _spritePaint = Paint()
@@ -121,8 +157,11 @@ class _OniBossPainter extends CustomPainter {
       ..translate(0, bob)
       ..drawImageRect(_image, _src, _dst, _spritePaint);
 
-    // 2) Bloom sutil sobre o rosto — da vida sem mexer nos pixels.
-    _glowPaint.color = Colors.white.withValues(alpha: 0.04 + 0.06 * pulse);
+    // 2) Bloom sutil sobre o rosto — da vida sem mexer nos pixels. Escala
+    // junto com a opacidade (boss faded nao deve brilhar mais que o sprite).
+    _glowPaint.color = Colors.white.withValues(
+      alpha: (0.04 + 0.06 * pulse) * _opacity,
+    );
     canvas
       ..drawCircle(_faceCenter, _glowRadius * (0.96 + 0.08 * pulse), _glowPaint)
       ..restore();
@@ -136,11 +175,12 @@ class _OniBossPainter extends CustomPainter {
     final ih = _image.height.toDouble();
     _src = Rect.fromLTWH(0, 0, iw, ih);
 
-    // Contain, colado no topo-direito (o boss espreita do canto da cena).
+    // Contain CENTRADO: o host (HeroCosmos) dimensiona a caixa no aspect do
+    // sprite e a ancora no ponto de fuga da pista, entao contain = preenche.
     final scale = math.min(size.width / iw, size.height / ih);
     final dw = iw * scale;
     final dh = ih * scale;
-    final dx = size.width - dw;
+    final dx = (size.width - dw) / 2;
     _dst = Rect.fromLTWH(dx, 0, dw, dh);
 
     // Mascara fica no alto do sprite de corpo inteiro (fx 0.50, fy 0.16).
@@ -158,5 +198,8 @@ class _OniBossPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(_OniBossPainter oldDelegate) =>
-      oldDelegate._image != _image || oldDelegate._anim != _anim;
+      oldDelegate._image != _image ||
+      oldDelegate._anim != _anim ||
+      oldDelegate._opacity != _opacity ||
+      oldDelegate._saturation != _saturation;
 }

@@ -11,7 +11,7 @@ const double kArcadeSideNavWidth = 232;
 
 /// Menu lateral "STAGE SELECT" — a navegacao da landing Arcade como um
 /// menu de fliperama. Coluna fixa a esquerda (desktop) com:
-/// logo JGA em pixel no topo, lista de "stages" (secoes) com cursor ▸
+/// wordmark ZeguiDev em pixel no topo, lista de "stages" (secoes) com cursor ▸
 /// piscante na ativa + glow neon, e sociais no rodape.
 ///
 /// O indicador de secao ativa vem do scroll-spy da home
@@ -98,19 +98,32 @@ class _ArcadeSideNavState extends State<ArcadeSideNav>
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Logo JGA em pixel — volta ao topo.
+              // Wordmark ZeguiDev (mesma assinatura do nav mobile): "ZEGUI"
+              // neutro + "DEV" magenta neon. Tap volta ao topo.
               Semantics(
                 button: true,
-                label: 'Jose Guilherme Alves',
+                label: 'ZeguiDev',
+                excludeSemantics: true,
                 child: MouseRegion(
                   cursor: SystemMouseCursors.click,
                   child: GestureDetector(
                     onTap: widget.onLogoTap,
-                    child: PixelText(
-                      'JGA',
-                      color: colors.primary,
-                      glowColor: colors.primary,
-                      pixelSize: 6,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        PixelText(
+                          'ZEGUI',
+                          color: colors.onSurface,
+                          pixelSize: 3,
+                        ),
+                        const SizedBox(width: 3),
+                        PixelText(
+                          'DEV',
+                          color: colors.primary,
+                          glowColor: colors.primary,
+                          pixelSize: 3,
+                        ),
+                      ],
                     ),
                   ),
                 ),

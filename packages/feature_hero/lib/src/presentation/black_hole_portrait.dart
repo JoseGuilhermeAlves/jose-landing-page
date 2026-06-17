@@ -1,4 +1,5 @@
 import 'dart:math' as math;
+import 'dart:ui' as ui;
 import 'dart:ui' show PointMode;
 
 import 'package:flutter/material.dart';
@@ -140,6 +141,22 @@ class _GargantuaPainter extends CustomPainter {
   final Paint _paint;
   final Paint _stroke;
 
+  // Shaders estaticos por tamanho — criados UMA vez por `half` e reusados todo
+  // frame. Criar gradiente/shader por frame e caro (recompila no skia/web).
+  double _shHalf = -1;
+  ui.Shader? _bloomShader;
+  ui.Shader? _bodyShader;
+  ui.Shader? _hotspotShader;
+  ui.Shader? _lensShader;
+
+  // Buckets (banda x nivel Doppler) reusados entre frames — `..clear()` em vez
+  // de realocar 18 listas por frame. So os Offsets sao recriados (a posicao das
+  // particulas muda a cada tick).
+  late final List<List<Offset>> _buckets = List.generate(
+    _bandColors.length * _dopLevels,
+    (_) => <Offset>[],
+  );
+
   /// Raio da foto (esfera/horizonte) como fracao do half-size.
   static const double photoR = 0.44;
   static const double _diskIn = 0.45;
@@ -199,8 +216,10 @@ class _GargantuaPainter extends CustomPainter {
   static List<_Dust> _buildParticles() {
     final rng = math.Random(20260616);
     final list = <_Dust>[];
-    // Base: todas as bandas, bias leve pra fora (asas mais densas).
-    for (var i = 0; i < 2400; i++) {
+    // Base: todas as bandas, bias leve pra fora (asas mais densas). Contagem
+    // enxuta — o corpo difuso (shader) preenche os vaos, entao menos particula
+    // nao rala a leitura mas corta CPU/GC (o loop roda 2x por frame: tras+frente).
+    for (var i = 0; i < 1400; i++) {
       final t = math.pow(rng.nextDouble(), 0.78).toDouble();
       final band = (t * _bandColors.length).floor().clamp(
         0,
@@ -208,13 +227,13 @@ class _GargantuaPainter extends CustomPainter {
       );
       list.add(_dust(rng, t, band));
     }
-    // EXTRA: muito mais poeira BRANCA (banda 0) e AMARELA (banda 1) no anel
-    // interno quente, sem tocar nas outras bandas.
+    // EXTRA: mais poeira BRANCA (banda 0) e AMARELA (banda 1) no anel interno
+    // quente, sem tocar nas outras bandas.
     const span = 1 / 6; // largura de uma banda em t (6 bandas)
-    for (var i = 0; i < 1300; i++) {
+    for (var i = 0; i < 750; i++) {
       list.add(_dust(rng, rng.nextDouble() * span, 0)); // branca
     }
-    for (var i = 0; i < 1000; i++) {
+    for (var i = 0; i < 550; i++) {
       list.add(_dust(rng, span + rng.nextDouble() * span, 1)); // amarela
     }
     return list;
@@ -225,6 +244,7 @@ class _GargantuaPainter extends CustomPainter {
     final center = size.center(Offset.zero);
     final half = size.shortestSide / 2;
     final phase = _anim.value * 2 * math.pi;
+    _ensureShaders(half, center);
 
     if (!front) {
       _bloom(canvas, center, half);
@@ -236,17 +256,58 @@ class _GargantuaPainter extends CustomPainter {
     }
   }
 
+  /// (Re)cria os shaders estaticos quando o tamanho muda. Tudo que NAO depende
+  /// do tempo (bloom, corpo difuso, hotspot na origem, arco lensado) vira shader
+  /// cacheado — fora do hot loop de 60 Hz.
+  void _ensureShaders(double half, Offset center) {
+    if (_shHalf == half) return;
+    _shHalf = half;
+    final rOut = _diskOut * half;
+
+    _bloomShader = RadialGradient(
+      colors: [
+        const Color(0xFFFF8A1E).withValues(alpha: 0.10),
+        const Color(0xFF9A36FF).withValues(alpha: 0.14),
+        const Color(0xFFFF2E86).withValues(alpha: 0.06),
+        Colors.transparent,
+      ],
+      stops: const [0.0, 0.45, 0.7, 1.0],
+    ).createShader(Rect.fromCircle(center: center, radius: half * 1.15));
+
+    const fIn = _diskIn / _diskOut;
+    _bodyShader = RadialGradient(
+      colors: [
+        _orange.withValues(alpha: 0),
+        _redOrange.withValues(alpha: 0.10),
+        _magenta.withValues(alpha: 0.06),
+        Colors.transparent,
+      ],
+      stops: const [fIn * 0.85, fIn + 0.04, 0.82, 1.0],
+    ).createShader(Rect.fromCircle(center: Offset.zero, radius: rOut));
+
+    _hotspotShader = RadialGradient(
+      colors: [_white.withValues(alpha: 0.4), _white.withValues(alpha: 0)],
+    ).createShader(Rect.fromCircle(center: Offset.zero, radius: rOut * 0.24));
+
+    const start = math.pi * 1.12;
+    const sweep = math.pi * 0.76;
+    _lensShader = SweepGradient(
+      startAngle: start,
+      endAngle: start + sweep,
+      colors: [
+        _orange.withValues(alpha: 0),
+        _gold.withValues(alpha: 0.9),
+        _white,
+        _gold.withValues(alpha: 0.9),
+        _orange.withValues(alpha: 0),
+      ],
+      stops: const [0.0, 0.3, 0.5, 0.7, 1.0],
+    ).createShader(Rect.fromCircle(center: Offset.zero, radius: photoR * half));
+  }
+
   void _bloom(Canvas canvas, Offset center, double half) {
     _paint
-      ..shader = RadialGradient(
-        colors: [
-          const Color(0xFFFF8A1E).withValues(alpha: 0.10),
-          const Color(0xFF9A36FF).withValues(alpha: 0.14),
-          const Color(0xFFFF2E86).withValues(alpha: 0.06),
-          Colors.transparent,
-        ],
-        stops: const [0.0, 0.45, 0.7, 1.0],
-      ).createShader(Rect.fromCircle(center: center, radius: half * 1.15))
+      ..shader = _bloomShader
       ..blendMode = BlendMode.srcOver;
     canvas.drawCircle(center, half * 1.15, _paint);
     _paint.shader = null;
@@ -277,18 +338,10 @@ class _GargantuaPainter extends CustomPainter {
     }
 
     // 1) Corpo difuso: brilho quente suave entre as particulas (tampa buracos
-    //    pretos sem virar disco chapado). Elipse achatada, aditivo.
-    final fIn = rIn / rOut;
+    //    pretos sem virar disco chapado). Elipse achatada, aditivo. Shader
+    //    cacheado por tamanho.
     _paint
-      ..shader = RadialGradient(
-        colors: [
-          _orange.withValues(alpha: 0),
-          _redOrange.withValues(alpha: 0.10),
-          _magenta.withValues(alpha: 0.06),
-          Colors.transparent,
-        ],
-        stops: [fIn * 0.85, fIn + 0.04, 0.82, 1.0],
-      ).createShader(Rect.fromCircle(center: Offset.zero, radius: rOut))
+      ..shader = _bodyShader
       ..blendMode = BlendMode.plus;
     canvas.drawOval(
       Rect.fromCenter(
@@ -306,10 +359,9 @@ class _GargantuaPainter extends CustomPainter {
     //    temperatura) e orbita (interno mais rapido). Brilho = Doppler (lado
     //    esquerdo que se aproxima mais intenso). Bucketizado por
     //    (banda x nivel Doppler) -> poucas chamadas drawPoints batched.
-    final buckets = List.generate(
-      _bandColors.length * _dopLevels,
-      (_) => <Offset>[],
-    );
+    for (final b in _buckets) {
+      b.clear();
+    }
     for (final p in _particles) {
       final radius = rIn + band * p.t + p.perp * band * 0.17;
       final th = p.ang + phase * p.speed * 1.35;
@@ -319,13 +371,13 @@ class _GargantuaPainter extends CustomPainter {
       final bright = (p.br * (0.22 + math.pow(c, 1.4).toDouble()))
           .clamp(0.0, 1.0);
       final dl = (bright * _dopLevels).floor().clamp(0, _dopLevels - 1);
-      buckets[p.band * _dopLevels + dl].add(
+      _buckets[p.band * _dopLevels + dl].add(
         Offset(ca * radius, sa * radius * _tiltY),
       );
     }
     for (var bi = 0; bi < _bandColors.length; bi++) {
       for (var dl = 0; dl < _dopLevels; dl++) {
-        final pts = buckets[bi * _dopLevels + dl];
+        final pts = _buckets[bi * _dopLevels + dl];
         if (pts.isEmpty) continue;
         final a = (_bandAlpha[bi] * (0.25 + 0.75 * (dl + 1) / _dopLevels))
             .clamp(0.0, 1.0);
@@ -338,15 +390,18 @@ class _GargantuaPainter extends CustomPainter {
       }
     }
 
-    // 3) Hotspot orbitando — sobre-densidade quente.
+    // 3) Hotspot orbitando — sobre-densidade quente. Shader cacheado na origem;
+    //    translada o canvas pro spot em vez de recriar o gradiente por frame.
     final rMid = (rIn + rOut) / 2;
     final spot = Offset(math.cos(phase) * rMid, math.sin(phase) * rMid * _tiltY);
     _paint
-      ..shader = RadialGradient(
-        colors: [_white.withValues(alpha: 0.4), _white.withValues(alpha: 0)],
-      ).createShader(Rect.fromCircle(center: spot, radius: rOut * 0.24))
+      ..shader = _hotspotShader
       ..blendMode = BlendMode.plus;
-    canvas.drawCircle(spot, rOut * 0.24, _paint);
+    canvas
+      ..save()
+      ..translate(spot.dx, spot.dy)
+      ..drawCircle(Offset.zero, rOut * 0.24, _paint)
+      ..restore();
 
     _paint
       ..shader = null
@@ -370,18 +425,7 @@ class _GargantuaPainter extends CustomPainter {
       ..rotate(_diskAngle);
 
     _stroke
-      ..shader = SweepGradient(
-        startAngle: start,
-        endAngle: start + sweep,
-        colors: [
-          _orange.withValues(alpha: 0),
-          _gold.withValues(alpha: 0.9),
-          _white,
-          _gold.withValues(alpha: 0.9),
-          _orange.withValues(alpha: 0),
-        ],
-        stops: const [0.0, 0.3, 0.5, 0.7, 1.0],
-      ).createShader(rect)
+      ..shader = _lensShader
       ..strokeWidth = half * 0.045
       ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 5)
       ..blendMode = BlendMode.plus;

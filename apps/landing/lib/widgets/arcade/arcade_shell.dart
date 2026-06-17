@@ -8,7 +8,8 @@ import 'package:landing/widgets/arcade/crt_overlay.dart';
 /// 1. [ArcadeBackdrop] — starfield + grid Outrun animado;
 /// 2. o conteudo da rota (paginas com Scaffold transparente);
 /// 3. [CrtOverlay] — scanlines, vinheta e flicker do tubo;
-/// 4. [BootSequence] — abertura "PRESS START", so na primeira carga.
+/// 4. [BootSequence] — abertura "terminal verde" que auto-entra, so na
+///    primeira carga.
 ///
 /// Montado no `builder` do MaterialApp.router, entao envolve todas as
 /// rotas com a mesma identidade CRT.

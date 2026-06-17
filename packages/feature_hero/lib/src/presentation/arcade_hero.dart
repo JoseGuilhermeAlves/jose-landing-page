@@ -78,15 +78,25 @@ class ArcadeHero extends StatelessWidget {
                 ? CrossAxisAlignment.start
                 : CrossAxisAlignment.center,
             children: [
-              // Mobile: buraco negro acima do texto, menor e a esquerda pra
-              // nao cobrir o boss (que ocupa a faixa direita).
+              // Mobile: buraco negro grande no CANTO SUPERIOR ESQUERDO, puxado
+              // pra cima/esquerda via translate (sangra em direcao ao canto sem
+              // empurrar o texto). Largura ~52% da viewport.
               if (isMobile) ...[
-                BlackHolePortrait(
-                  diskHot: colors.primary,
-                  diskCool: colors.accent,
-                  size: 230,
+                Transform.translate(
+                  offset: const Offset(-32, -36),
+                  child: Align(
+                    alignment: Alignment.topLeft,
+                    child: BlackHolePortrait(
+                      diskHot: colors.primary,
+                      diskCool: colors.accent,
+                      size: (MediaQuery.sizeOf(context).width * 0.52).clamp(
+                        200.0,
+                        270.0,
+                      ),
+                    ),
+                  ),
                 ),
-                const SizedBox(height: AppSpacing.xl),
+                const SizedBox(height: AppSpacing.md),
               ],
               Flexible(
                 child: Column(

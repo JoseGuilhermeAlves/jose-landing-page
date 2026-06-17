@@ -265,14 +265,7 @@ class _ArcadeButtonState extends State<_ArcadeButton> {
                     ]
                   : null,
             ),
-            child: PixelText(
-              widget.label,
-              color: fg,
-              glowColor: Colors.black,
-              glowBlur: 5,
-              glowPasses: 4,
-              pixelSize: 3,
-            ),
+            child: PixelText(widget.label, color: fg, pixelSize: 3),
           ),
         ),
       ),

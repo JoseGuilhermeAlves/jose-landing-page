@@ -682,71 +682,11 @@ abstract class AppLocalizations {
   /// **'GitHub'**
   String get contact_ctaGithub;
 
-  /// No description provided for @contact_orDirect.
+  /// No description provided for @contact_ctaResume.
   ///
   /// In pt, this message translates to:
-  /// **'Ou direto:'**
-  String get contact_orDirect;
-
-  /// No description provided for @contact_formName.
-  ///
-  /// In pt, this message translates to:
-  /// **'Nome'**
-  String get contact_formName;
-
-  /// No description provided for @contact_formEmail.
-  ///
-  /// In pt, this message translates to:
-  /// **'Email'**
-  String get contact_formEmail;
-
-  /// No description provided for @contact_formProjectType.
-  ///
-  /// In pt, this message translates to:
-  /// **'Tipo de projeto'**
-  String get contact_formProjectType;
-
-  /// No description provided for @contact_formMessage.
-  ///
-  /// In pt, this message translates to:
-  /// **'Mensagem'**
-  String get contact_formMessage;
-
-  /// No description provided for @contact_formSubmit.
-  ///
-  /// In pt, this message translates to:
-  /// **'Enviar por email'**
-  String get contact_formSubmit;
-
-  /// No description provided for @contact_formSubmitting.
-  ///
-  /// In pt, this message translates to:
-  /// **'Enviando...'**
-  String get contact_formSubmitting;
-
-  /// No description provided for @contact_projectPosition.
-  ///
-  /// In pt, this message translates to:
-  /// **'Vaga (CLT/PJ)'**
-  String get contact_projectPosition;
-
-  /// No description provided for @contact_projectContract.
-  ///
-  /// In pt, this message translates to:
-  /// **'Projeto ou contrato'**
-  String get contact_projectContract;
-
-  /// No description provided for @contact_projectConsulting.
-  ///
-  /// In pt, this message translates to:
-  /// **'Consultoria pontual'**
-  String get contact_projectConsulting;
-
-  /// No description provided for @contact_projectOther.
-  ///
-  /// In pt, this message translates to:
-  /// **'Outro'**
-  String get contact_projectOther;
+  /// **'Baixar currículo (PDF)'**
+  String get contact_ctaResume;
 
   /// No description provided for @nav_showcase.
   ///
@@ -1563,12 +1503,6 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'SDK, null safety e records'**
   String get stack_dart_role;
-
-  /// No description provided for @stack_equatable_role.
-  ///
-  /// In pt, this message translates to:
-  /// **'Equality sem codegen para value objects'**
-  String get stack_equatable_role;
 
   /// No description provided for @stack_platformChannels_role.
   ///

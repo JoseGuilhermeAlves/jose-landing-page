@@ -309,37 +309,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get contact_ctaGithub => 'GitHub';
 
   @override
-  String get contact_orDirect => '或直接：';
-
-  @override
-  String get contact_formName => '姓名';
-
-  @override
-  String get contact_formEmail => '邮箱';
-
-  @override
-  String get contact_formProjectType => '项目类型';
-
-  @override
-  String get contact_formMessage => '留言';
-
-  @override
-  String get contact_formSubmit => '通过电子邮件发送';
-
-  @override
-  String get contact_formSubmitting => '发送中...';
-
-  @override
-  String get contact_projectPosition => '职位（全职）';
-
-  @override
-  String get contact_projectContract => '项目或合同';
-
-  @override
-  String get contact_projectConsulting => '临时咨询';
-
-  @override
-  String get contact_projectOther => '其他';
+  String get contact_ctaResume => '下载简历 (PDF)';
 
   @override
   String get nav_showcase => '案例展示';
@@ -757,9 +727,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get stack_dart_role => 'SDK、空安全与 Records';
-
-  @override
-  String get stack_equatable_role => '无需代码生成的值对象相等性';
 
   @override
   String get stack_platformChannels_role => '原生桥接 Dart ↔ Kotlin/Swift';

@@ -319,37 +319,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get contact_ctaGithub => 'GitHub';
 
   @override
-  String get contact_orDirect => 'Или напрямую:';
-
-  @override
-  String get contact_formName => 'Имя';
-
-  @override
-  String get contact_formEmail => 'Email';
-
-  @override
-  String get contact_formProjectType => 'Тип проекта';
-
-  @override
-  String get contact_formMessage => 'Сообщение';
-
-  @override
-  String get contact_formSubmit => 'Отправить по email';
-
-  @override
-  String get contact_formSubmitting => 'Отправка...';
-
-  @override
-  String get contact_projectPosition => 'Вакансия (в штат)';
-
-  @override
-  String get contact_projectContract => 'Проект или контракт';
-
-  @override
-  String get contact_projectConsulting => 'Разовая консультация';
-
-  @override
-  String get contact_projectOther => 'Другое';
+  String get contact_ctaResume => 'Скачать резюме (PDF)';
 
   @override
   String get nav_showcase => 'Showcase';
@@ -785,9 +755,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get stack_dart_role => 'SDK, null safety и records';
-
-  @override
-  String get stack_equatable_role => 'Equality без codegen для value objects';
 
   @override
   String get stack_platformChannels_role => 'Нативный мост Dart ↔ Kotlin/Swift';

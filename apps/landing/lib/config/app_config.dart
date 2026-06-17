@@ -22,4 +22,16 @@ abstract final class AppConfig {
   /// pra um repositorio especifico.
   static const String githubProfileUrl =
       'https://github.com/JoseGuilhermeAlves';
+
+  /// Currículo em PDF — servido como asset estatico de
+  /// `apps/landing/web/cv/` (URL relativa, resolve contra a origem do
+  /// deploy). Ha versao PT e EN; o shell escolhe pelo idioma atual via
+  /// [resumeUrlFor].
+  static const String resumeUrlPt = 'cv/jose-guilherme-alves-pt.pdf';
+  static const String resumeUrlEn = 'cv/jose-guilherme-alves-en.pdf';
+
+  /// CV no idioma certo: PT para `pt`, EN para qualquer outro (os dois
+  /// unicos PDFs mantidos — ver decisao 2026-06-17).
+  static String resumeUrlFor(String languageCode) =>
+      languageCode == 'pt' ? resumeUrlPt : resumeUrlEn;
 }

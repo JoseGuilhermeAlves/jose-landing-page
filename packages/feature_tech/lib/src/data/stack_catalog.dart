@@ -17,12 +17,6 @@ abstract final class StackCatalog {
       category: StackCategory.framework,
     ),
     StackItem(
-      name: 'Equatable',
-      version: '2.0.7',
-      role: l10n.stack_equatable_role,
-      category: StackCategory.framework,
-    ),
-    StackItem(
       name: 'Platform Channels',
       version: 'Flutter API',
       role: l10n.stack_platformChannels_role,

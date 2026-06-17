@@ -155,24 +155,36 @@ void main() {
       expect(find.byKey(const Key('contact-cta-whatsapp')), findsNothing);
     });
 
-    testWidgets('form comeca colapsado e expande pelo toggle', (tester) async {
+    testWidgets('expoe link de download do curriculo quando resumeUrl', (
+      tester,
+    ) async {
+      final opened = <Uri>[];
+      await tester.pumpWidget(
+        wrap(
+          ContactSection(
+            email: 'contato@example.com',
+            resumeUrl: 'cv/jose-guilherme-alves-pt.pdf',
+            onOpenUri: opened.add,
+          ),
+        ),
+      );
+      await tester.pump(const Duration(milliseconds: 16));
+
+      final resume = find.byKey(const Key('contact-cta-resume'));
+      expect(resume, findsOneWidget);
+
+      await tester.tap(resume);
+      await tester.pump();
+      expect(opened.single.toString(), 'cv/jose-guilherme-alves-pt.pdf');
+    });
+
+    testWidgets('omite link de curriculo sem resumeUrl', (tester) async {
       await tester.pumpWidget(
         wrap(const ContactSection(email: 'contato@example.com')),
       );
       await tester.pump(const Duration(milliseconds: 16));
 
-      // Funil mailto primeiro — o form e caminho secundario.
-      expect(find.byType(ContactForm), findsNothing);
-
-      await tester.tap(find.byKey(const Key('contact-form-toggle')));
-      await tester.pump(const Duration(milliseconds: 200));
-
-      expect(find.byType(ContactForm), findsOneWidget);
-
-      // Colapsa de novo no segundo tap.
-      await tester.tap(find.byKey(const Key('contact-form-toggle')));
-      await tester.pump(const Duration(milliseconds: 200));
-      expect(find.byType(ContactForm), findsNothing);
+      expect(find.byKey(const Key('contact-cta-resume')), findsNothing);
     });
 
     testWidgets('email link aceita foco por teclado e ativa com Enter', (

@@ -10,7 +10,6 @@ abstract final class TechBrandColors {
     // Framework
     'Flutter': _Brand(primary: Color(0xFF54C5F8), glow: Color(0xFF02569B)),
     'Dart': _Brand(primary: Color(0xFF00D4C0), glow: Color(0xFF0175C2)),
-    'Equatable': _Brand(primary: Color(0xFF6DD5ED), glow: Color(0xFF2193B0)),
     'Platform Channels': _Brand(
       primary: Color(0xFF4FC3F7),
       glow: Color(0xFF0277BD),

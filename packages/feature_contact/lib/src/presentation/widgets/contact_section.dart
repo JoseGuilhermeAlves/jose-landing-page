@@ -1,29 +1,26 @@
 import 'package:design_system/design_system.dart';
-import 'package:feature_contact/src/presentation/bloc/contact_bloc.dart';
-import 'package:feature_contact/src/presentation/widgets/contact_form.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 /// Secao "Contato" — fechamento da landing como tela "CONTINUE?" de
 /// fliperama: um painel escuro com borda neon magenta + glow (sem cards
 /// genericos), titulo em fonte pixel, e o email como link tipografico
 /// grande que dispara o `mailto:` (funil primario). Links secundarios
-/// (GitHub · LinkedIn · WhatsApp) em linha; o [ContactForm] estruturado
-/// fica colapsado atras de um toggle — caminho secundario.
+/// (GitHub · LinkedIn · WhatsApp · currículo PDF) em linha.
 ///
 /// Mesma estrutura/acessibilidade da branch editorial, revestida na
-/// identidade Arcade. O `ContactBloc` segue dono do `mailto:` montado.
+/// identidade Arcade.
 class ContactSection extends StatefulWidget {
   const ContactSection({
     required this.email,
     this.whatsappNumber,
     this.linkedinUrl,
     this.githubUrl,
+    this.resumeUrl,
     this.onOpenUri,
     super.key,
   });
 
-  /// Email de destino — canal primario e destino do `mailto:` do form.
+  /// Email de destino — canal primario e destino do `mailto:`.
   final String email;
 
   /// E.164 sem `+` (ex.: `5571999990000`). Canal alternativo.
@@ -31,8 +28,12 @@ class ContactSection extends StatefulWidget {
   final String? linkedinUrl;
   final String? githubUrl;
 
-  /// Disparado pelos links e pelo form em sucesso. O shell sabe como
-  /// executar (url_launcher / window.open).
+  /// URL do currículo em PDF (resolvida pelo shell conforme o idioma
+  /// atual — PT ou EN). Abre num link secundario "Baixar currículo".
+  final String? resumeUrl;
+
+  /// Disparado pelos links. O shell sabe como executar
+  /// (url_launcher / window.open).
   final ValueChanged<Uri>? onOpenUri;
 
   @override
@@ -41,10 +42,6 @@ class ContactSection extends StatefulWidget {
 
 class _ContactSectionState extends State<ContactSection>
     with SingleTickerProviderStateMixin {
-  /// Form de mensagem estruturada comeca colapsado — o funil primario
-  /// e o link de email direto; o form e secundario.
-  bool _formExpanded = false;
-
   /// Pisca do eyebrow "INSERT COIN".
   late final AnimationController _blink;
 
@@ -201,54 +198,9 @@ class _ContactSectionState extends State<ContactSection>
                 githubUrl: widget.githubUrl,
                 linkedinUrl: widget.linkedinUrl,
                 whatsappNumber: widget.whatsappNumber,
+                resumeUrl: widget.resumeUrl,
                 onOpen: _open,
               ),
-            ],
-          ),
-        ),
-        // Form colapsado — caminho secundario, fora do painel.
-        const SizedBox(height: AppSpacing.xl),
-        BlocProvider(
-          create: (_) => ContactBloc(email: widget.email),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _FocusableLink(
-                key: const Key('contact-form-toggle'),
-                semanticsLabel: l10n.contact_formMessage,
-                onTap: () => setState(() => _formExpanded = !_formExpanded),
-                builder: ({required highlighted}) {
-                  final ink = highlighted
-                      ? colors.onSurface
-                      : colors.onSurfaceMuted;
-                  return ConstrainedBox(
-                    constraints: const BoxConstraints(minHeight: 32),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          l10n.contact_formMessage,
-                          style: textTheme.bodySmall?.copyWith(color: ink),
-                        ),
-                        const SizedBox(width: AppSpacing.xxs),
-                        AnimatedRotation(
-                          turns: _formExpanded ? 0.5 : 0,
-                          duration: const Duration(milliseconds: 160),
-                          child: Icon(Icons.expand_more, size: 16, color: ink),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
-              if (_formExpanded)
-                Padding(
-                  padding: const EdgeInsets.only(top: AppSpacing.lg),
-                  child: ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 560),
-                    child: ContactForm(onSubmissionSuccess: _open),
-                  ),
-                ),
             ],
           ),
         ),
@@ -264,12 +216,14 @@ class _SecondaryLinks extends StatelessWidget {
     required this.githubUrl,
     required this.linkedinUrl,
     required this.whatsappNumber,
+    required this.resumeUrl,
     required this.onOpen,
   });
 
   final String? githubUrl;
   final String? linkedinUrl;
   final String? whatsappNumber;
+  final String? resumeUrl;
   final ValueChanged<Uri> onOpen;
 
   @override
@@ -313,6 +267,12 @@ class _SecondaryLinks extends StatelessWidget {
           key: const Key('contact-cta-whatsapp'),
           label: l10n.contact_ctaWhatsapp,
           uri: Uri.https('wa.me', '/$whatsappNumber'),
+        ),
+      if (resumeUrl != null)
+        link(
+          key: const Key('contact-cta-resume'),
+          label: l10n.contact_ctaResume,
+          uri: Uri.parse(resumeUrl!),
         ),
     ];
     if (links.isEmpty) return const SizedBox.shrink();

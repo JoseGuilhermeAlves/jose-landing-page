@@ -297,6 +297,16 @@ class _HomePageState extends State<HomePage> {
                         email: AppConfig.email,
                         linkedinUrl: AppConfig.linkedinUrl,
                         githubUrl: AppConfig.githubProfileUrl,
+                        // Absoluta a partir da origem do deploy — `launchUrl`
+                        // exige scheme, entao `Uri.base.resolve` transforma o
+                        // path relativo do PDF em https://.../cv/...pdf.
+                        resumeUrl: Uri.base
+                            .resolve(
+                              AppConfig.resumeUrlFor(
+                                Localizations.localeOf(context).languageCode,
+                              ),
+                            )
+                            .toString(),
                         onOpenUri: _openExternalUri,
                       ),
                     ),

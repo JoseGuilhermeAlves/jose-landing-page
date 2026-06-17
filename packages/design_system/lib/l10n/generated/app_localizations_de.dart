@@ -318,37 +318,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get contact_ctaGithub => 'GitHub';
 
   @override
-  String get contact_orDirect => 'Oder direkt:';
-
-  @override
-  String get contact_formName => 'Name';
-
-  @override
-  String get contact_formEmail => 'E-Mail';
-
-  @override
-  String get contact_formProjectType => 'Projekttyp';
-
-  @override
-  String get contact_formMessage => 'Nachricht';
-
-  @override
-  String get contact_formSubmit => 'Per E-Mail senden';
-
-  @override
-  String get contact_formSubmitting => 'Wird gesendet...';
-
-  @override
-  String get contact_projectPosition => 'Stelle (Festanstellung)';
-
-  @override
-  String get contact_projectContract => 'Projekt oder Vertrag';
-
-  @override
-  String get contact_projectConsulting => 'Punktuelle Beratung';
-
-  @override
-  String get contact_projectOther => 'Sonstiges';
+  String get contact_ctaResume => 'Lebenslauf herunterladen (PDF)';
 
   @override
   String get nav_showcase => 'Showcase';
@@ -783,9 +753,6 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get stack_dart_role => 'SDK, Null Safety und Records';
-
-  @override
-  String get stack_equatable_role => 'Equality ohne Codegen für Value Objects';
 
   @override
   String get stack_platformChannels_role => 'Native Brücke Dart ↔ Kotlin/Swift';

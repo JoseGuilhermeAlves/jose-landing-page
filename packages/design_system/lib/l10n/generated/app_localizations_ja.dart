@@ -313,37 +313,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get contact_ctaGithub => 'GitHub';
 
   @override
-  String get contact_orDirect => 'または直接：';
-
-  @override
-  String get contact_formName => 'お名前';
-
-  @override
-  String get contact_formEmail => 'メール';
-
-  @override
-  String get contact_formProjectType => 'プロジェクトタイプ';
-
-  @override
-  String get contact_formMessage => 'メッセージ';
-
-  @override
-  String get contact_formSubmit => 'メールで送信';
-
-  @override
-  String get contact_formSubmitting => '送信中...';
-
-  @override
-  String get contact_projectPosition => '求人（正社員）';
-
-  @override
-  String get contact_projectContract => 'プロジェクト・業務委託';
-
-  @override
-  String get contact_projectConsulting => 'スポットコンサルティング';
-
-  @override
-  String get contact_projectOther => 'その他';
+  String get contact_ctaResume => '履歴書をダウンロード (PDF)';
 
   @override
   String get nav_showcase => 'ショーケース';
@@ -765,9 +735,6 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get stack_dart_role => 'SDK、null safety、records';
-
-  @override
-  String get stack_equatable_role => 'codegen不要のvalue object向けequality';
 
   @override
   String get stack_platformChannels_role => 'Dart ↔ Kotlin/Swiftネイティブブリッジ';

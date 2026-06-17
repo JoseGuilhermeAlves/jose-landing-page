@@ -1,5 +1,5 @@
 name: feature_contact
-description: Formulario de contato com Bloc, validacao e CTAs alternativos.
+description: Secao de contato — funil mailto, CTAs alternativos e download do curriculo.
 publish_to: none
 version: 0.0.1
 
@@ -9,21 +9,13 @@ environment:
 resolution: workspace
 
 dependencies:
-  animations:
-    path: ../animations
-  core:
-    path: ../core
   design_system:
     path: ../design_system
-  equatable: ^2.0.7
   flutter:
     sdk: flutter
-  flutter_bloc: ^9.1.1
 
 dev_dependencies:
-  bloc_test: ^10.0.0
   flutter_test:
     sdk: flutter
-  mocktail: ^1.0.4
 
 flutter:

@@ -58,8 +58,8 @@ abstract final class TechDescriptionsCatalog {
           'SDK 3.10+ com null safety, records e pattern matching habilitam '
           'modelagem expressiva sem boilerplate. Tipos solidos atravessam '
           'todas as camadas — entities, blocs, repositories — sem `dynamic` '
-          'no caminho critico. Equatable cobre value objects sem precisar de '
-          'codegen, mantendo o monorepo livre de `build_runner`.',
+          'no caminho critico, mantendo o monorepo livre de `build_runner` e '
+          'de etapas de codegen.',
       docsUrl: 'https://dart.dev',
     ),
     'Riverpod': TechDescription(
@@ -311,19 +311,6 @@ abstract final class TechDescriptionsCatalog {
           'Custom Painters em 60 Hz não engasgam mesmo com varias cenas '
           'ativas simultaneamente no scroll.',
       docsUrl: 'https://docs.flutter.dev/platform-integration/web/renderers',
-    ),
-    'Equatable': TechDescription(
-      title: 'Equatable',
-      tagline: 'Equality por valor sem codegen.',
-      role: 'Qualidade',
-      version: '^2.0.7',
-      body:
-          'Equality sem codegen. Value objects do dominio comparam por valor '
-          'sem `==` manual nem `freezed`/`build_runner` puxado pro monorepo. '
-          'Cada entity sobrescreve `props` declarando os campos relevantes e '
-          'pronto — `Equatable` cuida de `==` e `hashCode`. Mantem o ciclo de '
-          'build curto, sem etapa de geração de código.',
-      docsUrl: 'https://pub.dev/packages/equatable',
     ),
     'Fastlane': TechDescription(
       title: 'Fastlane',

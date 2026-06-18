@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <base href="/jose-landing-page/">
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0A0A0F">
+  <meta name="color-scheme" content="dark">
+
+  <!-- SEO -->
+  <title>José Guilherme Alves — Flutter Developer (mobile, web, PWA)</title>
+  <meta name="description" content="Desenvolvedor Flutter com 6 anos construindo apps mobile e web. Do MVP ao app em produção — Android, iOS, Web/PWA, integrações e consultoria técnica.">
+  <meta name="author" content="José Guilherme Alves">
+  <meta name="keywords" content="Flutter, Dart, desenvolvedor mobile, freelancer Flutter, app Android, PWA, Bloc, Clean Architecture, Brasil">
+  <meta name="robots" content="index,follow">
+
+  <!--
+    Open Graph. TODO ao publicar:
+    - trocar og:url e canonical pelo dominio final;
+    - trocar og:image / twitter:image por uma URL ABSOLUTA do hero
+      (ex.: https://dominio/og-card.png), 1200x630 idealmente;
+    - confirmar que o servidor serve o icone com `Cache-Control: public`.
+  -->
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:url" content="https://example.invalid/">
+  <meta property="og:title" content="José Guilherme Alves — Flutter Developer">
+  <meta property="og:description" content="Aplicativos Flutter de qualidade — do MVP ao app em produção. 6 anos.">
+  <meta property="og:image" content="icons/Icon-512.png">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="José Guilherme Alves — Flutter Developer">
+  <meta name="twitter:description" content="Aplicativos Flutter de qualidade — do MVP ao app em produção.">
+  <meta name="twitter:image" content="icons/Icon-512.png">
+
+  <!-- iOS / PWA -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="José G. Alves">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+  <!-- Icons / manifest -->
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="manifest" href="manifest.json">
+
+  <!-- Canonical: troque pelo dominio final ao publicar. -->
+  <link rel="canonical" href="https://example.invalid/">
+
+  <!--
+    Loading UNICO da landing, em HTML/CSS/JS puro (sem asset): terminal
+    verde "ZEGUIDEV ARCADE" digitado, sobre um piso Outrun em perspectiva
+    + scanlines CRT + barra de progresso neon indeterminada. Pinta
+    IMEDIATAMENTE (o fundo + grid antes do engine --wasm/CanvasKit baixar)
+    e some no evento `flutter-first-frame`. Sem isso, o usuário vê tela
+    branca por 2-4s no primeiro acesso. Nada aqui é Flutter — não existe
+    boot screen em Flutter (era um segundo loading idêntico, removido).
+  -->
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background-color: #0A0A0F;
+      color: #E8E8F0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      overscroll-behavior: none;
+    }
+
+    #loading {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      overflow: hidden;
+      background: radial-gradient(circle at 50% 42%, #160A2A 0%, #0A0612 62%);
+      z-index: 9999;
+      transition: opacity 320ms ease-out;
+    }
+
+    #loading.fade-out {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* Piso "Outrun": grade em perspectiva recuando pro horizonte, rolando
+       na direcao do observador. So CSS — nenhum asset. */
+    #loading-grid {
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      width: 220%;
+      height: 56%;
+      transform: translateX(-50%) perspective(340px) rotateX(68deg);
+      transform-origin: bottom center;
+      background-image:
+        linear-gradient(to right, rgba(255, 46, 151, 0.6) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(0, 229, 255, 0.6) 1px, transparent 1px);
+      background-size: 46px 46px;
+      opacity: 0.20;
+      animation: gridroll 1.6s linear infinite;
+      -webkit-mask-image: linear-gradient(to top, #000 0%, transparent 88%);
+      mask-image: linear-gradient(to top, #000 0%, transparent 88%);
+    }
+
+    @keyframes gridroll {
+      to { background-position-y: 46px; }
+    }
+
+    /* Scanlines CRT por cima de tudo (overlay sutil). */
+    #loading::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0) 0,
+        rgba(0, 0, 0, 0) 2px,
+        rgba(0, 0, 0, 0.16) 3px
+      );
+    }
+
+    /* Banda de varredura descendo lentamente. */
+    #loading::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 40%;
+      top: -40%;
+      pointer-events: none;
+      background: linear-gradient(
+        to bottom,
+        transparent,
+        rgba(124, 107, 255, 0.10),
+        transparent
+      );
+      animation: sweep 2.8s ease-in-out infinite;
+    }
+
+    @keyframes sweep {
+      0% { top: -40%; }
+      100% { top: 100%; }
+    }
+
+    #loading-content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 6px;
+      width: min(460px, 84vw);
+      padding: 0 24px;
+      box-sizing: border-box;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    }
+
+    /* Terminal verde digitado — casa com o BootSequence em Flutter que assume
+       logo apos o primeiro frame (continuidade visual da abertura). */
+    #loading-term {
+      margin: 0;
+      color: #39FF14;
+      font-size: 15px;
+      line-height: 1.7;
+      letter-spacing: 1.5px;
+      white-space: pre;
+      text-shadow: 0 0 10px rgba(57, 255, 20, 0.45);
+    }
+
+    /* Cursor de terminal piscando. */
+    #loading-caret {
+      width: 12px;
+      height: 20px;
+      margin-top: 10px;
+      background: #39FF14;
+      box-shadow: 0 0 10px rgba(57, 255, 20, 0.5);
+      animation: blink 1.1s steps(1, end) infinite;
+    }
+
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0; }
+    }
+
+    /* Barra de progresso neon indeterminada — um bloco que varre o trilho
+       da esquerda pra direita enquanto o engine baixa. */
+    #loading-bar {
+      position: relative;
+      margin-top: 18px;
+      width: 100%;
+      height: 3px;
+      background: rgba(57, 255, 20, 0.12);
+      overflow: hidden;
+      border-radius: 2px;
+    }
+
+    #loading-bar > span {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 38%;
+      border-radius: 2px;
+      background: linear-gradient(90deg, transparent, #39FF14, transparent);
+      box-shadow: 0 0 12px rgba(57, 255, 20, 0.6);
+      animation: barsweep 1.25s ease-in-out infinite;
+    }
+
+    @keyframes barsweep {
+      0% { left: -40%; }
+      100% { left: 100%; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #loading-grid,
+      #loading::before,
+      #loading-caret,
+      #loading-bar > span {
+        animation: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="loading" role="status" aria-live="polite" aria-label="Carregando ZeguiDev Arcade">
+    <div id="loading-grid" aria-hidden="true"></div>
+    <div id="loading-content">
+      <pre id="loading-term" aria-hidden="true"></pre>
+      <div id="loading-caret" aria-hidden="true"></div>
+      <div id="loading-bar" aria-hidden="true"><span></span></div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var term = document.getElementById('loading-term');
+      var caret = document.getElementById('loading-caret');
+      // Cabecalho digitado char a char (efeito terminal); a ultima linha
+      // "CARREGANDO" ganha reticencias animadas depois.
+      var header = 'ZEGUIDEV  ARCADE\nFLUTTER · 2026\n\n';
+      if (caret) caret.style.opacity = '0';
+      var i = 0;
+      var typer = setInterval(function () {
+        i++;
+        term.textContent = header.slice(0, i);
+        if (i >= header.length) {
+          clearInterval(typer);
+          if (caret) caret.style.opacity = '';
+          var n = 0;
+          setInterval(function () {
+            n = (n + 1) % 4;
+            term.textContent = header + 'CARREGANDO' + new Array(n + 1).join('.');
+          }, 350);
+        }
+      }, 45);
+    })();
+
+    // Some assim que o Flutter sinalizar que o primeiro frame renderizou.
+    // O hook `flutter-first-frame` e disparado pelo runtime.
+    window.addEventListener('flutter-first-frame', function () {
+      var el = document.getElementById('loading');
+      if (!el) return;
+      el.classList.add('fade-out');
+      setTimeout(function () { el.remove(); }, 360);
+    });
+  </script>
+
+  <script src="flutter_bootstrap.js" async></script>
+</body>
+</html>

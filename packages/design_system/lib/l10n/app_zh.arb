@@ -21,7 +21,7 @@
   "common_semanticsLoadingSpinner": "正在加载内容",
 
   "hero_eyebrow": "移动端前端 · Flutter",
-  "hero_headline1": "六年 Flutter。",
+  "hero_headline1": "Flutter 移动端前端。",
   "hero_headline2": "从 MVP 到上线的应用。",
   "hero_bio": "我构建了五款 B2B 零售运营应用的完整前端——从设计到部署——目前在做一个大规模金融产品。按功能划分架构、Bloc 管理状态、真机上流畅运行。",
   "hero_scopeLine": "与现有 API 和生态系统对接。",

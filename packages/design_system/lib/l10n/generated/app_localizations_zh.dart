@@ -66,7 +66,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get hero_eyebrow => '移动端前端 · Flutter';
 
   @override
-  String get hero_headline1 => '六年 Flutter。';
+  String get hero_headline1 => 'Flutter 移动端前端。';
 
   @override
   String get hero_headline2 => '从 MVP 到上线的应用。';

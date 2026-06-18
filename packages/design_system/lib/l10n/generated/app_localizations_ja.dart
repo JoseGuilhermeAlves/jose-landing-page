@@ -66,7 +66,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get hero_eyebrow => 'モバイルフロントエンド · Flutter';
 
   @override
-  String get hero_headline1 => 'Flutter歴6年。';
+  String get hero_headline1 => 'Flutter のモバイルフロントエンド。';
 
   @override
   String get hero_headline2 => 'MVPから本番アプリまで。';

@@ -25,12 +25,19 @@ class BlackHolePortrait extends StatefulWidget {
     required this.diskHot,
     required this.diskCool,
     required this.size,
+    this.diskScale = 1.0,
     super.key,
   });
 
   final Color diskHot;
   final Color diskCool;
   final double size;
+
+  /// Escala do disco de acrescimo (1 = cheio; <1 encolhe as ASAS pra um
+  /// footprint compacto, sem mexer no tamanho do rosto — a borda interna
+  /// fica ancorada na esfera). No mobile reduz o disco pra o retrato caber
+  /// no canto superior sem tampar a cara do boss.
+  final double diskScale;
 
   @override
   State<BlackHolePortrait> createState() => _BlackHolePortraitState();
@@ -76,10 +83,15 @@ class _BlackHolePortraitState extends State<BlackHolePortrait>
         width: widget.size,
         height: widget.size,
         child: CustomPaint(
-          painter: _GargantuaPainter(animation: _controller, front: false),
+          painter: _GargantuaPainter(
+            animation: _controller,
+            front: false,
+            diskScale: widget.diskScale,
+          ),
           foregroundPainter: _GargantuaPainter(
             animation: _controller,
             front: true,
+            diskScale: widget.diskScale,
           ),
           child: Center(
             child: SizedBox.square(
@@ -127,19 +139,31 @@ enum _DiskClip { all, front }
 
 /// Pinta uma das camadas do buraco negro (atras/frente da foto).
 class _GargantuaPainter extends CustomPainter {
-  _GargantuaPainter({required Animation<double> animation, required this.front})
-    : _anim = animation,
-      _paint = Paint()..isAntiAlias = true,
-      _stroke = (Paint()
-        ..style = PaintingStyle.stroke
-        ..isAntiAlias = true
-        ..strokeCap = StrokeCap.round),
-      super(repaint: animation);
+  _GargantuaPainter({
+    required Animation<double> animation,
+    required this.front,
+    required this.diskScale,
+  }) : _anim = animation,
+       _paint = Paint()..isAntiAlias = true,
+       _stroke = (Paint()
+         ..style = PaintingStyle.stroke
+         ..isAntiAlias = true
+         ..strokeCap = StrokeCap.round),
+       super(repaint: animation);
 
   final Animation<double> _anim;
   final bool front;
+
+  /// Escala das asas do disco (ver [BlackHolePortrait.diskScale]).
+  final double diskScale;
   final Paint _paint;
   final Paint _stroke;
+
+  /// Raio externo EFETIVO do disco apos [diskScale]: encolhe as asas
+  /// mantendo a borda interna ([_diskIn]) fixa, pra o disco nao invadir o
+  /// rosto. Bloom acompanha.
+  double get _effDiskOut => _diskIn + (_diskOut - _diskIn) * diskScale;
+  double get _bloomR => _effDiskOut * 1.2;
 
   // Shaders estaticos por tamanho — criados UMA vez por `half` e reusados todo
   // frame. Criar gradiente/shader por frame e caro (recompila no skia/web).
@@ -262,7 +286,7 @@ class _GargantuaPainter extends CustomPainter {
   void _ensureShaders(double half, Offset center) {
     if (_shHalf == half) return;
     _shHalf = half;
-    final rOut = _diskOut * half;
+    final rOut = _effDiskOut * half;
 
     _bloomShader = RadialGradient(
       colors: [
@@ -272,9 +296,9 @@ class _GargantuaPainter extends CustomPainter {
         Colors.transparent,
       ],
       stops: const [0.0, 0.45, 0.7, 1.0],
-    ).createShader(Rect.fromCircle(center: center, radius: half * 1.15));
+    ).createShader(Rect.fromCircle(center: center, radius: half * _bloomR));
 
-    const fIn = _diskIn / _diskOut;
+    final fIn = _diskIn / _effDiskOut;
     _bodyShader = RadialGradient(
       colors: [
         _orange.withValues(alpha: 0),
@@ -282,7 +306,7 @@ class _GargantuaPainter extends CustomPainter {
         _magenta.withValues(alpha: 0.06),
         Colors.transparent,
       ],
-      stops: const [fIn * 0.85, fIn + 0.04, 0.82, 1.0],
+      stops: [fIn * 0.85, fIn + 0.04, 0.82, 1.0],
     ).createShader(Rect.fromCircle(center: Offset.zero, radius: rOut));
 
     _hotspotShader = RadialGradient(
@@ -309,7 +333,7 @@ class _GargantuaPainter extends CustomPainter {
     _paint
       ..shader = _bloomShader
       ..blendMode = BlendMode.srcOver;
-    canvas.drawCircle(center, half * 1.15, _paint);
+    canvas.drawCircle(center, half * _bloomR, _paint);
     _paint.shader = null;
   }
 
@@ -320,7 +344,7 @@ class _GargantuaPainter extends CustomPainter {
     double phase, {
     required _DiskClip clip,
   }) {
-    final rOut = _diskOut * half;
+    final rOut = _effDiskOut * half;
     final rIn = _diskIn * half;
     final band = rOut - rIn;
 
@@ -455,5 +479,6 @@ class _GargantuaPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(_GargantuaPainter old) => old.front != front;
+  bool shouldRepaint(_GargantuaPainter old) =>
+      old.front != front || old.diskScale != diskScale;
 }

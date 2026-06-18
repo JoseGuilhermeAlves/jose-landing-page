@@ -67,7 +67,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get hero_eyebrow => 'Мобильный фронтенд · Flutter';
 
   @override
-  String get hero_headline1 => 'Шесть лет Flutter.';
+  String get hero_headline1 => 'Мобильный фронтенд на Flutter.';
 
   @override
   String get hero_headline2 => 'От MVP до приложения в продакшене.';

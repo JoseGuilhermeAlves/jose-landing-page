@@ -83,23 +83,27 @@ class _BlackHolePortraitState extends State<BlackHolePortrait>
         width: widget.size,
         height: widget.size,
         child: CustomPaint(
+          // On mobile we slightly reduce the diskScale so the accretion disk
+          // doesn't cover the portrait; the portrait itself is aligned to
+          // the top-left corner of the paint area (allowed to overflow).
           painter: _GargantuaPainter(
             animation: _controller,
             front: false,
-            diskScale: widget.diskScale,
-            // Mobile detection: follow project patterns (narrow width or
-            // small widget size). On mobile we render fewer bands.
-            isMobile: MediaQuery.of(context).size.shortestSide < 600 ||
-                widget.size < 360,
+            diskScale: (MediaQuery.of(context).size.shortestSide < 600 ||
+                    widget.size < 360)
+                ? (widget.diskScale * 0.7)
+                : widget.diskScale,
           ),
           foregroundPainter: _GargantuaPainter(
             animation: _controller,
             front: true,
-            diskScale: widget.diskScale,
-            isMobile: MediaQuery.of(context).size.shortestSide < 600 ||
-                widget.size < 360,
+            diskScale: (MediaQuery.of(context).size.shortestSide < 600 ||
+                    widget.size < 360)
+                ? (widget.diskScale * 0.7)
+                : widget.diskScale,
           ),
-          child: Center(
+          child: Align(
+            alignment: Alignment.topLeft,
             child: SizedBox.square(
               dimension: photo,
               child: ClipOval(
@@ -149,7 +153,6 @@ class _GargantuaPainter extends CustomPainter {
     required Animation<double> animation,
     required this.front,
     required this.diskScale,
-    required this.isMobile,
   }) : _anim = animation,
        _paint = Paint()..isAntiAlias = true,
        _stroke = (Paint()
@@ -165,7 +168,7 @@ class _GargantuaPainter extends CustomPainter {
   final double diskScale;
   final Paint _paint;
   final Paint _stroke;
-  final bool isMobile;
+  
 
   /// Raio externo EFETIVO do disco apos [diskScale]: encolhe as asas
   /// mantendo a borda interna ([_diskIn]) fixa, pra o disco nao invadir o
@@ -296,41 +299,25 @@ class _GargantuaPainter extends CustomPainter {
     _shHalf = half;
     final rOut = _effDiskOut * half;
 
-    // Bloom gradient: on mobile avoid the magenta/purple tint so the disk
-    // reads cleaner and doesn't occlude the portrait.
     _bloomShader = RadialGradient(
-      colors: isMobile
-          ? [
-              const Color(0xFFFF8A1E).withValues(alpha: 0.10),
-              _gold.withValues(alpha: 0.14),
-              Colors.transparent,
-            ]
-          : [
-              const Color(0xFFFF8A1E).withValues(alpha: 0.10),
-              const Color(0xFF9A36FF).withValues(alpha: 0.14),
-              const Color(0xFFFF2E86).withValues(alpha: 0.06),
-              Colors.transparent,
-            ],
-      stops: isMobile ? const [0.0, 0.55, 1.0] : const [0.0, 0.45, 0.7, 1.0],
+      colors: [
+        const Color(0xFFFF8A1E).withValues(alpha: 0.10),
+        const Color(0xFF9A36FF).withValues(alpha: 0.14),
+        const Color(0xFFFF2E86).withValues(alpha: 0.06),
+        Colors.transparent,
+      ],
+      stops: const [0.0, 0.45, 0.7, 1.0],
     ).createShader(Rect.fromCircle(center: center, radius: half * _bloomR));
 
     final fIn = _diskIn / _effDiskOut;
-    // Body shader: on mobile collapse the outer bands into a warm white->gold
-    // ramp to avoid purple/red outer rings that can overlap the portrait.
     _bodyShader = RadialGradient(
-      colors: isMobile
-          ? [
-              _white.withValues(alpha: 0),
-              _gold.withValues(alpha: 0.9),
-              Colors.transparent,
-            ]
-          : [
-              _orange.withValues(alpha: 0),
-              _redOrange.withValues(alpha: 0.10),
-              _magenta.withValues(alpha: 0.06),
-              Colors.transparent,
-            ],
-      stops: isMobile ? [fIn * 0.85, fIn + 0.06, 1.0] : [fIn * 0.85, fIn + 0.04, 0.82, 1.0],
+      colors: [
+        _orange.withValues(alpha: 0),
+        _redOrange.withValues(alpha: 0.10),
+        _magenta.withValues(alpha: 0.06),
+        Colors.transparent,
+      ],
+      stops: [fIn * 0.85, fIn + 0.04, 0.82, 1.0],
     ).createShader(Rect.fromCircle(center: Offset.zero, radius: rOut));
 
     _hotspotShader = RadialGradient(
@@ -423,41 +410,16 @@ class _GargantuaPainter extends CustomPainter {
         Offset(ca * radius, sa * radius * _tiltY),
       );
     }
-    // Effective band sets: on mobile collapse outer bands into a single
-    // warm band (white + gold). We remap the precomputed _buckets (which
-    // were generated for the full 6-band set) into a smaller set to avoid
-    // reallocating particles.
-    final effectiveBandColors = isMobile ? [_white, _gold] : _bandColors;
-    final effectiveBandAlpha = isMobile ? _bandAlpha.sublist(0, 2) : _bandAlpha;
-    final effectiveBandSize = isMobile ? _bandSize.sublist(0, 2) : _bandSize;
-
-    final effectivePts = List.generate(
-      effectiveBandColors.length * _dopLevels,
-      (_) => <Offset>[],
-    );
-
-    // Map original buckets into effective buckets. On mobile, original
-    // band 0 -> 0 (white), others -> 1 (gold).
-    for (var orig = 0; orig < _bandColors.length; orig++) {
-      final mapped = isMobile ? (orig == 0 ? 0 : 1) : orig;
+    for (var bi = 0; bi < _bandColors.length; bi++) {
       for (var dl = 0; dl < _dopLevels; dl++) {
-        final src = _buckets[orig * _dopLevels + dl];
-        if (src.isNotEmpty) {
-          effectivePts[mapped * _dopLevels + dl].addAll(src);
-        }
-      }
-    }
-
-    for (var bi = 0; bi < effectiveBandColors.length; bi++) {
-      for (var dl = 0; dl < _dopLevels; dl++) {
-        final pts = effectivePts[bi * _dopLevels + dl];
+        final pts = _buckets[bi * _dopLevels + dl];
         if (pts.isEmpty) continue;
-        final a = (effectiveBandAlpha[bi] * (0.25 + 0.75 * (dl + 1) / _dopLevels))
+        final a = (_bandAlpha[bi] * (0.25 + 0.75 * (dl + 1) / _dopLevels))
             .clamp(0.0, 1.0);
         _paint
-          ..color = effectiveBandColors[bi].withValues(alpha: a)
+          ..color = _bandColors[bi].withValues(alpha: a)
           ..strokeCap = StrokeCap.round
-          ..strokeWidth = half * effectiveBandSize[bi]
+          ..strokeWidth = half * _bandSize[bi]
           ..blendMode = BlendMode.plus;
         canvas.drawPoints(PointMode.points, pts, _paint);
       }
@@ -527,7 +489,7 @@ class _GargantuaPainter extends CustomPainter {
     canvas.drawCircle(center, r + half * 0.006, _stroke);
   }
 
-  @override
-  bool shouldRepaint(_GargantuaPainter old) =>
-      old.front != front || old.diskScale != diskScale || old.isMobile != isMobile;
+    @override
+    bool shouldRepaint(_GargantuaPainter old) =>
+      old.front != front || old.diskScale != diskScale;
 }

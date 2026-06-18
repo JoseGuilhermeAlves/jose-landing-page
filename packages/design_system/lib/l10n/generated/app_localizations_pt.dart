@@ -67,7 +67,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get hero_eyebrow => 'Front end mobile · Flutter';
 
   @override
-  String get hero_headline1 => 'Seis anos de Flutter.';
+  String get hero_headline1 => 'Front end mobile em Flutter.';
 
   @override
   String get hero_headline2 => 'Do MVP ao app em produção.';

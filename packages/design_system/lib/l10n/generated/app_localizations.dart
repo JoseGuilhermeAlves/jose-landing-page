@@ -229,7 +229,7 @@ abstract class AppLocalizations {
   /// No description provided for @hero_headline1.
   ///
   /// In pt, this message translates to:
-  /// **'Seis anos de Flutter.'**
+  /// **'Front end mobile em Flutter.'**
   String get hero_headline1;
 
   /// No description provided for @hero_headline2.

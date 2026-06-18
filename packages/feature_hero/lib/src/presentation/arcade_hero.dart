@@ -93,6 +93,9 @@ class ArcadeHero extends StatelessWidget {
                         300.0,
                         440.0,
                       ),
+                      // Disco compacto no mobile: rosto grande, asas curtas —
+                      // cabe no canto superior sem tampar a cara do boss.
+                      diskScale: 0.6,
                     ),
                   ),
                 ),

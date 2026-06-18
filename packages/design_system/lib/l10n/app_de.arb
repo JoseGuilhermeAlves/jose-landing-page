@@ -21,7 +21,7 @@
   "common_semanticsLoadingSpinner": "Inhalt wird geladen",
 
   "hero_eyebrow": "Mobile-Frontend · Flutter",
-  "hero_headline1": "Sechs Jahre Flutter.",
+  "hero_headline1": "Mobile-Frontend in Flutter.",
   "hero_headline2": "Vom MVP zur App in Produktion.",
   "hero_bio": "Ich habe das komplette Frontend von fünf B2B-Retail-Apps gebaut — vom Design bis zum Deployment — und arbeite heute an einem Finanzprodukt im großen Maßstab. Architektur pro Feature, State mit Bloc, flüssig auf realen Geräten.",
   "hero_scopeLine": "Ich integriere mich mit bestehenden APIs und Ökosystemen.",

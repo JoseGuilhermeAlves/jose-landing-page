@@ -82,55 +82,69 @@ class _BlackHolePortraitState extends State<BlackHolePortrait>
       child: SizedBox(
         width: widget.size,
         height: widget.size,
-        child: CustomPaint(
-          // On mobile we slightly reduce the diskScale so the accretion disk
-          // doesn't cover the portrait; the portrait itself is aligned to
-          // the top-left corner of the paint area (allowed to overflow).
-          painter: _GargantuaPainter(
-            animation: _controller,
-            front: false,
-            diskScale: (MediaQuery.of(context).size.shortestSide < 600 ||
-                    widget.size < 360)
-                ? (widget.diskScale * 0.7)
-                : widget.diskScale,
-          ),
-          foregroundPainter: _GargantuaPainter(
-            animation: _controller,
-            front: true,
-            diskScale: (MediaQuery.of(context).size.shortestSide < 600 ||
-                    widget.size < 360)
-                ? (widget.diskScale * 0.7)
-                : widget.diskScale,
-          ),
-          child: Align(
-            alignment: Alignment.topLeft,
-            child: SizedBox.square(
-              dimension: photo,
-              child: ClipOval(
-                child: ColoredBox(
-                  color: const Color(0xFF080510),
-                  // scale 0.85 mostra rosto + ombros (nao so a cabeca).
-                  child: Transform.scale(
-                    scale: 0.85,
-                    alignment: Alignment.topCenter,
-                    child: Image.asset(
-                      'assets/images/foto_recortada.webp',
-                      fit: BoxFit.cover,
-                      alignment: Alignment.topCenter,
-                      cacheWidth: 640,
-                      excludeFromSemantics: true,
-                      // Sem o asset (ex.: teste), cai num vazio escuro em vez
-                      // do placeholder vermelho de imagem quebrada.
-                      errorBuilder: (_, _, _) =>
-                          const ColoredBox(color: Color(0xFF080510)),
+        child: Builder(builder: (ctx) {
+          final mobile =
+              MediaQuery.of(ctx).size.shortestSide < 600 || widget.size < 360;
+          final appbarBottom = MediaQuery.of(ctx).padding.top + kToolbarHeight;
+          final half = widget.size / 2.0;
+          final portraitTopIfCentered = half - (photo / 2.0);
+          double topPad = 0.0;
+          if (mobile) {
+            topPad = appbarBottom - portraitTopIfCentered;
+            if (topPad < 0) topPad = 0.0;
+          }
+          // Translate the whole CustomPaint (paints + child) so that the
+          // disk center moves left and the portrait stays aligned with it.
+          // Desired: portrait left edge at x=0 -> translate center to photo/2.
+          final translateX = (photo / 2.0) - (widget.size / 2.0);
+          return Padding(
+            padding: EdgeInsets.only(top: topPad, left: 0),
+            child: Transform.translate(
+              offset: Offset(translateX, 0.0),
+              child: CustomPaint(
+                painter: _GargantuaPainter(
+                  animation: _controller,
+                  front: false,
+                  diskScale: mobile ? (widget.diskScale * 0.7) : widget.diskScale,
+                ),
+                foregroundPainter: _GargantuaPainter(
+                  animation: _controller,
+                  front: true,
+                  diskScale: mobile ? (widget.diskScale * 0.7) : widget.diskScale,
+                ),
+                child: Align(
+                  alignment: Alignment.center,
+                  child: SizedBox.square(
+                    dimension: photo,
+                    child: ClipOval(
+                      child: ColoredBox(
+                        color: const Color(0xFF080510),
+                        // scale 0.85 mostra rosto + ombros (nao so a cabeca).
+                        child: Transform.scale(
+                          scale: 0.85,
+                          alignment: Alignment.topCenter,
+                          child: Image.asset(
+                            'assets/images/foto_recortada.webp',
+                            fit: BoxFit.cover,
+                            alignment: Alignment.topCenter,
+                            cacheWidth: 640,
+                            excludeFromSemantics: true,
+                            // Sem o asset (ex.: teste), cai num vazio escuro em vez
+                            // do placeholder vermelho de imagem quebrada.
+                            errorBuilder: (_, _, _) =>
+                                const ColoredBox(color: Color(0xFF080510)),
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ),
               ),
             ),
-          ),
+          );
+        }),
         ),
-      ),
+      
     );
   }
 }

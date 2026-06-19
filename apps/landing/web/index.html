@@ -17,24 +17,22 @@
   <meta name="robots" content="index,follow">
 
   <!--
-    Open Graph. TODO ao publicar:
-    - trocar og:url e canonical pelo dominio final;
-    - trocar og:image / twitter:image por uma URL ABSOLUTA do hero
-      (ex.: https://dominio/og-card.png), 1200x630 idealmente;
-    - confirmar que o servidor serve o icone com `Cache-Control: public`.
+    Open Graph. og:image ainda e o icone quadrado (512). MELHORIA futura:
+    trocar por um card 1200x630 do hero (https://www.zeguidev.com.br/og-card.png)
+    e confirmar Cache-Control: public no servidor.
   -->
   <meta property="og:type" content="website">
   <meta property="og:locale" content="pt_BR">
-  <meta property="og:url" content="https://example.invalid/">
+  <meta property="og:url" content="https://www.zeguidev.com.br/">
   <meta property="og:title" content="José Guilherme Alves — Flutter Developer">
   <meta property="og:description" content="Aplicativos Flutter de qualidade — do MVP ao app em produção. 6 anos.">
-  <meta property="og:image" content="icons/Icon-512.png">
+  <meta property="og:image" content="https://www.zeguidev.com.br/icons/Icon-512.png">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="José Guilherme Alves — Flutter Developer">
   <meta name="twitter:description" content="Aplicativos Flutter de qualidade — do MVP ao app em produção.">
-  <meta name="twitter:image" content="icons/Icon-512.png">
+  <meta name="twitter:image" content="https://www.zeguidev.com.br/icons/Icon-512.png">
 
   <!-- iOS / PWA -->
   <meta name="mobile-web-app-capable" content="yes">
@@ -47,8 +45,8 @@
   <link rel="icon" type="image/png" href="favicon.png">
   <link rel="manifest" href="manifest.json">
 
-  <!-- Canonical: troque pelo dominio final ao publicar. -->
-  <link rel="canonical" href="https://example.invalid/">
+  <!-- Canonical: dominio final (www). Tem que casar com o CNAME. -->
+  <link rel="canonical" href="https://www.zeguidev.com.br/">
 
   <!--
     Loading UNICO da landing, em HTML/CSS/JS puro (sem asset): terminal

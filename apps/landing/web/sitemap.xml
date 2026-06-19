@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  TODO ao publicar: trocar todos os <loc> por URLs absolutas
-  (https://dominio/...). Crawlers aceitam relativas, mas o spec
-  oficial pede absolutas — Google trata como warning, nao erro.
--->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>/</loc>
+    <loc>https://www.zeguidev.com.br/</loc>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>

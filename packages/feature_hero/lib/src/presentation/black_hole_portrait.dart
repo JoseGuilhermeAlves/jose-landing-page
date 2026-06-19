@@ -119,21 +119,20 @@ class _BlackHolePortraitState extends State<BlackHolePortrait>
                     child: ClipOval(
                       child: ColoredBox(
                         color: const Color(0xFF080510),
-                        // scale 0.85 mostra rosto + ombros (nao so a cabeca).
-                        child: Transform.scale(
-                          scale: 0.85,
+                        // A foto PREENCHE o circulo ate a borda (BoxFit.cover
+                        // ancorado no topo mostra rosto + ombros). Sem encolher:
+                        // qualquer scale < 1 deixava margem escura entre a foto
+                        // e a borda do horizonte (parecia recorte/corte).
+                        child: Image.asset(
+                          'assets/images/foto_recortada.webp',
+                          fit: BoxFit.cover,
                           alignment: Alignment.topCenter,
-                          child: Image.asset(
-                            'assets/images/foto_recortada.webp',
-                            fit: BoxFit.cover,
-                            alignment: Alignment.topCenter,
-                            cacheWidth: 640,
-                            excludeFromSemantics: true,
-                            // Sem o asset (ex.: teste), cai num vazio escuro em vez
-                            // do placeholder vermelho de imagem quebrada.
-                            errorBuilder: (_, _, _) =>
-                                const ColoredBox(color: Color(0xFF080510)),
-                          ),
+                          cacheWidth: 640,
+                          excludeFromSemantics: true,
+                          // Sem o asset (ex.: teste), cai num vazio escuro em vez
+                          // do placeholder vermelho de imagem quebrada.
+                          errorBuilder: (_, _, _) =>
+                              const ColoredBox(color: Color(0xFF080510)),
                         ),
                       ),
                     ),

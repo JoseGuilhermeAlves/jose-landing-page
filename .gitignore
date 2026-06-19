@@ -8,6 +8,13 @@
 build/
 .metadata
 
+# Deploy artifacts — builds publicados na branch gh-pages, nunca no source.
+# (Codex commitava estes por engano; o deploy real vai pra gh-pages.)
+.deploy-temp/
+.deploy-temp2/
+.deploy-web/
+.gh-pages/
+
 # Workspace mode: only the root pubspec.lock is versioned
 **/pubspec.lock
 !/pubspec.lock

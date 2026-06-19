@@ -82,45 +82,68 @@ class _BlackHolePortraitState extends State<BlackHolePortrait>
       child: SizedBox(
         width: widget.size,
         height: widget.size,
-        child: CustomPaint(
-          painter: _GargantuaPainter(
-            animation: _controller,
-            front: false,
-            diskScale: widget.diskScale,
-          ),
-          foregroundPainter: _GargantuaPainter(
-            animation: _controller,
-            front: true,
-            diskScale: widget.diskScale,
-          ),
-          child: Center(
-            child: SizedBox.square(
-              dimension: photo,
-              child: ClipOval(
-                child: ColoredBox(
-                  color: const Color(0xFF080510),
-                  // scale 0.85 mostra rosto + ombros (nao so a cabeca).
-                  child: Transform.scale(
-                    scale: 0.85,
-                    alignment: Alignment.topCenter,
-                    child: Image.asset(
-                      'assets/images/foto_recortada.webp',
-                      fit: BoxFit.cover,
-                      alignment: Alignment.topCenter,
-                      cacheWidth: 640,
-                      excludeFromSemantics: true,
-                      // Sem o asset (ex.: teste), cai num vazio escuro em vez
-                      // do placeholder vermelho de imagem quebrada.
-                      errorBuilder: (_, _, _) =>
-                          const ColoredBox(color: Color(0xFF080510)),
+        child: Builder(builder: (ctx) {
+          final mobile =
+              MediaQuery.of(ctx).size.shortestSide < 600 || widget.size < 360;
+          final appbarBottom = MediaQuery.of(ctx).padding.top + kToolbarHeight;
+          final half = widget.size / 2.0;
+          final portraitTopIfCentered = half - (photo / 2.0);
+          double topPad = 0.0;
+          if (mobile) {
+            topPad = appbarBottom - portraitTopIfCentered;
+            if (topPad < 0) topPad = 0.0;
+          }
+          // Translate the whole CustomPaint (paints + child) so that the
+          // disk center moves left and the portrait stays aligned with it.
+          // Desired: portrait left edge at x=0 -> translate center to photo/2.
+          final translateX = (photo / 2.0) - (widget.size / 2.0);
+          return Padding(
+            padding: EdgeInsets.only(top: topPad, left: 0),
+            child: Transform.translate(
+              offset: Offset(translateX, 0.0),
+              child: CustomPaint(
+                painter: _GargantuaPainter(
+                  animation: _controller,
+                  front: false,
+                  diskScale: mobile ? (widget.diskScale * 0.7) : widget.diskScale,
+                ),
+                foregroundPainter: _GargantuaPainter(
+                  animation: _controller,
+                  front: true,
+                  diskScale: mobile ? (widget.diskScale * 0.7) : widget.diskScale,
+                ),
+                child: Align(
+                  alignment: Alignment.center,
+                  child: SizedBox.square(
+                    dimension: photo,
+                    child: ClipOval(
+                      child: ColoredBox(
+                        color: const Color(0xFF080510),
+                        // A foto PREENCHE o circulo ate a borda (BoxFit.cover
+                        // ancorado no topo mostra rosto + ombros). Sem encolher:
+                        // qualquer scale < 1 deixava margem escura entre a foto
+                        // e a borda do horizonte (parecia recorte/corte).
+                        child: Image.asset(
+                          'assets/images/foto_recortada.webp',
+                          fit: BoxFit.cover,
+                          alignment: Alignment.topCenter,
+                          cacheWidth: 640,
+                          excludeFromSemantics: true,
+                          // Sem o asset (ex.: teste), cai num vazio escuro em vez
+                          // do placeholder vermelho de imagem quebrada.
+                          errorBuilder: (_, _, _) =>
+                              const ColoredBox(color: Color(0xFF080510)),
+                        ),
+                      ),
                     ),
                   ),
                 ),
               ),
             ),
-          ),
+          );
+        }),
         ),
-      ),
+      
     );
   }
 }
@@ -158,6 +181,7 @@ class _GargantuaPainter extends CustomPainter {
   final double diskScale;
   final Paint _paint;
   final Paint _stroke;
+  
 
   /// Raio externo EFETIVO do disco apos [diskScale]: encolhe as asas
   /// mantendo a borda interna ([_diskIn]) fixa, pra o disco nao invadir o
@@ -478,7 +502,7 @@ class _GargantuaPainter extends CustomPainter {
     canvas.drawCircle(center, r + half * 0.006, _stroke);
   }
 
-  @override
-  bool shouldRepaint(_GargantuaPainter old) =>
+    @override
+    bool shouldRepaint(_GargantuaPainter old) =>
       old.front != front || old.diskScale != diskScale;
 }

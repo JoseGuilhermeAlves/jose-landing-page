@@ -1,12 +1,15 @@
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:landing/widgets/arcade/arcade_backdrop.dart';
+import 'package:landing/widgets/arcade/arcade_colossus.dart';
 import 'package:landing/widgets/arcade/crt_overlay.dart';
 
 /// Moldura global da landing Arcade. Empilha, de tras pra frente:
 /// 1. [ArcadeBackdrop] — starfield + grid Outrun animado;
-/// 2. o conteudo da rota (paginas com Scaffold transparente);
-/// 3. [CrtOverlay] — scanlines, vinheta e flicker do tubo.
+/// 2. [ArcadeColossus] — boss + portal no ponto de fuga da pista (fixo, atras
+///    do conteudo, identico em todas as secoes);
+/// 3. o conteudo da rota (paginas com Scaffold transparente);
+/// 4. [CrtOverlay] — scanlines, vinheta e flicker do tubo.
 ///
 /// Montado no `builder` do MaterialApp.router, entao envolve todas as
 /// rotas com a mesma identidade CRT. A abertura "terminal verde" e o
@@ -31,6 +34,7 @@ class ArcadeShell extends StatelessWidget {
             starColor: colors.onSurface,
           ),
         ),
+        const Positioned.fill(child: ArcadeColossus()),
         Positioned.fill(child: child),
         Positioned.fill(child: CrtOverlay(tint: colors.onSurface)),
       ],

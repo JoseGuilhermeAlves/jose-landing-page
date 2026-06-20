@@ -140,22 +140,11 @@ class _HeroCosmosState extends State<HeroCosmos>
           final w = c.maxWidth;
           final h = c.maxHeight;
           final pixelSize = w < 600 ? 0.6 : 1.0;
-          const bossAspect = 1255 / 1560;
           final isMobileViewport = w < 600;
-          final screenH = MediaQuery.sizeOf(context).height;
-          var bossH = screenH * 0.68;
-          var bossW = bossH * bossAspect;
-          final maxBossW = w * (isMobileViewport ? 1.02 : 0.46);
-          if (bossW > maxBossW) {
-            bossW = maxBossW;
-            bossH = bossW / bossAspect;
-          }
-          final screenW = MediaQuery.sizeOf(context).width;
-          final trackCenterX = w - screenW / 2;
-          final bossLeft = trackCenterX - bossW / 2;
-          final bossTop = isMobileViewport
-              ? screenH * 0.12 - bossH * 0.16
-              : screenH * 0.62 - bossH;
+          // Lua majenta gigante — centro ancorado no canto superior direito
+          // (w, 0), entao so o quadrante inferior-esquerdo aparece.
+          final moonD = isMobileViewport ? w * 1.15 : w * 0.6;
+
           return Stack(
             fit: StackFit.expand,
             children: [
@@ -175,12 +164,14 @@ class _HeroCosmosState extends State<HeroCosmos>
                   size: Size.infinite,
                 ),
               ),
+              // LUA MAJENTA — mesmo layer dos planetas; centro fora da tela no
+              // canto superior direito pra mostrar so 1/4 (inferior-esquerdo).
               Positioned(
-                left: bossLeft,
-                top: bossTop,
-                width: bossW,
-                height: bossH,
-                child: const OniBoss(),
+                left: w - moonD / 2,
+                top: -moonD / 2,
+                width: moonD,
+                height: moonD,
+                child: const GiantMoon(),
               ),
               AnimatedBuilder(
                 animation: _scroll,

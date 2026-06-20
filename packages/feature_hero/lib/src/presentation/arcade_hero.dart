@@ -54,6 +54,27 @@ class ArcadeHero extends StatelessWidget {
         children: [
           const Positioned.fill(child: HeroCosmos()),
           _heroContent(context, colors, textTheme, isMobile, namePixel),
+          // Web: portrait ancorado no canto superior ESQUERDO (espelha o
+          // tratamento mobile). Limite esquerdo = linha do nav lateral, que e
+          // a borda x=0 do hero (o scroll e padado por kArcadeSideNavWidth).
+          if (!isMobile)
+            Positioned(
+              top: -88,
+              left: AppSpacing.xl,
+              child: IgnorePointer(
+                child: BlackHolePortrait(
+                  diskHot: colors.primary,
+                  diskCool: colors.accent,
+                  size: (MediaQuery.sizeOf(context).width * 0.34).clamp(
+                    360.0,
+                    520.0,
+                  ),
+                  // Disco compacto (rosto grande, asas curtas) pra caber no
+                  // canto sem invadir o texto.
+                  diskScale: 0.6,
+                ),
+              ),
+            ),
         ],
       ),
     );
@@ -195,14 +216,6 @@ class ArcadeHero extends StatelessWidget {
                   ],
                 ),
               ),
-              if (!isMobile) ...[
-                const SizedBox(width: AppSpacing.xl),
-                BlackHolePortrait(
-                  diskHot: colors.primary,
-                  diskCool: colors.accent,
-                  size: 460,
-                ),
-              ],
             ],
           ),
         ),

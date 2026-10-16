@@ -50,7 +50,7 @@ abstract final class AppConfig {
   static const String pocoDemoAndroidUrl =
       '${pocoDemoBase}Poco-demo-android.apk';
 
-  /// Trailer do Poço em versao web (720p, ~11 MB) servido do proprio
+  /// Trailer do Poço em versao web (720p, ~14 MB) servido do proprio
   /// Pages a partir de `apps/landing/web/trailer/` — asset de Release
   /// vem como download, nao toca no navegador. O original 1080p fica na
   /// Release `poco-demo`.

@@ -880,4 +880,78 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get locale_ru => 'Русский';
+
+  @override
+  String get nav_game => 'ゲーム';
+
+  @override
+  String get game_eyebrow => '個人プロジェクト';
+
+  @override
+  String get game_title => 'Poço —';
+
+  @override
+  String get game_titleAccent => '開発中。';
+
+  @override
+  String get game_subtitle =>
+      'Godot 4 と C# で開発中のターン制ダンジョン・ローグライク。クラシックな JRPG バトルを 2D-HD スタイルで演出します。';
+
+  @override
+  String get game_body =>
+      '3人の英雄でパーティを組み、「井戸」へ降りていきます。ボスまで5フロア、プレイヤーを発見して追ってくるモンスター、そして永久死。毎回のランが異なるビルドになります。';
+
+  @override
+  String get game_factCombatTitle => 'ターン制バトル(ATB)';
+
+  @override
+  String get game_factCombatBody =>
+      '武器スキルは前に出て攻撃し、魔法はその場で詠唱します。属性マークが組み合わさりリアクションが発生します。';
+
+  @override
+  String get game_factBuildTitle => 'レベルごとにビルド';
+
+  @override
+  String get game_factBuildBody =>
+      'レベルアップごとに3つのスキルから1つを選択。同じスキルを再度選ぶとランクが上がり、ランク3で適切なパートナーと揃うとクライマックスへ進化します。';
+
+  @override
+  String get game_factStackTitle => 'エンジニアリング';
+
+  @override
+  String get game_factStackBody =>
+      'エンジンに依存しない C# ドメイン、435件のヘッドレステスト、バランス調整のためのフルラン・シミュレーション。';
+
+  @override
+  String get game_partnerTitle => '協力してくれるアーティストを募集中';
+
+  @override
+  String get game_partnerBody =>
+      'Poço は一人で開発しており、現在は AI 生成のアートを使用しています。これを人の手によるアートに置き換えることが目標です。共にゲームを作るピクセルアーティスト、アニメーター、作曲家を募集しています。';
+
+  @override
+  String get game_ctaPartner => '協力したい';
+
+  @override
+  String get game_partnerSubject => 'パートナーシップ — Poço';
+
+  @override
+  String get game_demoTitle => 'プレイアブルデモ';
+
+  @override
+  String get game_demoBody =>
+      'Windows と Android 向けの MVP テストビルド。キーボード、ゲームパッド、タッチ操作に対応しています。';
+
+  @override
+  String get game_ctaWindows => 'Windows .zip - 115 MB';
+
+  @override
+  String get game_ctaAndroid => 'Android .apk - 149 MB';
+
+  @override
+  String get game_demoNote =>
+      'Windows:.zip を展開して Poco.exe を実行してください。Android:.apk を開く前に提供元不明のアプリのインストールを許可してください。';
+
+  @override
+  String get game_gifAlt => 'Poço のゲームプレイ:魔法使いが敵の列にメテオを放つ';
 }

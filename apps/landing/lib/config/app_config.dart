@@ -34,4 +34,19 @@ abstract final class AppConfig {
   /// unicos PDFs mantidos — ver decisao 2026-06-17).
   static String resumeUrlFor(String languageCode) =>
       languageCode == 'pt' ? resumeUrlPt : resumeUrlEn;
+
+  /// Base dos downloads da demo do Poço. Os binarios passam do limite de
+  /// 100 MB por arquivo do GitHub Pages, entao moram numa GitHub Release
+  /// do repo publico da landing. Pra preview local, sobrescrever com
+  /// `--dart-define=POCO_DEMO_BASE=http://localhost:<porta>/`.
+  static const String pocoDemoBase = String.fromEnvironment(
+    'POCO_DEMO_BASE',
+    defaultValue:
+        'https://github.com/JoseGuilhermeAlves/jose-landing-page/releases/download/poco-demo/',
+  );
+
+  static const String pocoDemoWindowsUrl =
+      '${pocoDemoBase}Poco-demo-windows.zip';
+  static const String pocoDemoAndroidUrl =
+      '${pocoDemoBase}Poco-demo-android.apk';
 }

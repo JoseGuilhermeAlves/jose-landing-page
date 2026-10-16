@@ -916,4 +916,79 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get locale_ru => 'Русский';
+
+  @override
+  String get nav_game => 'Игра';
+
+  @override
+  String get game_eyebrow => 'Авторский проект';
+
+  @override
+  String get game_title => 'Poço —';
+
+  @override
+  String get game_titleAccent => 'в разработке.';
+
+  @override
+  String get game_subtitle =>
+      'Пошаговый данжен-рогалик на Godot 4 и C#. Классические JRPG-бои в стилистике 2D-HD.';
+
+  @override
+  String get game_body =>
+      'Соберите отряд из трёх героев и спуститесь в Колодец: пять этажей до босса, монстры, которые видят и преследуют вас, и необратимая смерть. Каждый забег — новый билд.';
+
+  @override
+  String get game_factCombatTitle => 'Пошаговый бой (ATB)';
+
+  @override
+  String get game_factCombatBody =>
+      'Оружейные умения выходят вперёд и наносят удар; заклинания читаются на месте. Стихийные метки объединяются в реакции.';
+
+  @override
+  String get game_factBuildTitle => 'Билд на каждом уровне';
+
+  @override
+  String get game_factBuildBody =>
+      'Каждое повышение уровня предлагает одно умение из трёх. Повторный выбор повышает его ранг; на ранге 3 с подходящим партнёром умение эволюционирует в кульминацию.';
+
+  @override
+  String get game_factStackTitle => 'Инженерия';
+
+  @override
+  String get game_factStackBody =>
+      'Независимый от движка C#-домен, 435 headless-тестов и симуляция полных забегов для баланса.';
+
+  @override
+  String get game_partnerTitle => 'Ищу художников для партнёрства';
+
+  @override
+  String get game_partnerBody =>
+      'Poço разрабатывает один человек, и сейчас в игре используется графика, созданная ИИ. Цель — заменить её работами людей: ищу пиксель-художников, аниматоров и музыкантов, готовых создавать игру в партнёрстве.';
+
+  @override
+  String get game_ctaPartner => 'Хочу участвовать';
+
+  @override
+  String get game_partnerSubject => 'Партнёрство — Poço';
+
+  @override
+  String get game_demoTitle => 'Играбельная демо-версия';
+
+  @override
+  String get game_demoBody =>
+      'Тестовая сборка MVP для Windows и Android. Поддерживаются клавиатура, геймпад и сенсорное управление.';
+
+  @override
+  String get game_ctaWindows => 'Windows .zip - 115 МБ';
+
+  @override
+  String get game_ctaAndroid => 'Android .apk - 149 МБ';
+
+  @override
+  String get game_demoNote =>
+      'Windows: распакуйте .zip и запустите Poco.exe. Android: перед открытием .apk разрешите установку приложений из неизвестных источников.';
+
+  @override
+  String get game_gifAlt =>
+      'Геймплей Poço: волшебница обрушивает Метеор на вражеский строй';
 }

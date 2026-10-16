@@ -10,6 +10,7 @@ import 'package:landing/config/app_config.dart';
 import 'package:landing/router/route_paths.dart';
 import 'package:landing/widgets/arcade/arcade_side_nav.dart';
 import 'package:landing/widgets/engineering_section.dart';
+import 'package:landing/widgets/game_section.dart';
 import 'package:landing/widgets/home_bottom_nav.dart';
 import 'package:landing/widgets/home_footer.dart';
 import 'package:landing/widgets/home_nav.dart';
@@ -50,6 +51,7 @@ class _HomePageState extends State<HomePage> {
 
   final _showcaseKey = GlobalKey(debugLabel: 'home-anchor-showcase');
   final _engineeringKey = GlobalKey(debugLabel: 'home-anchor-engineering');
+  final _gameKey = GlobalKey(debugLabel: 'home-anchor-game');
   final _aboutKey = GlobalKey(debugLabel: 'home-anchor-about');
   final _contactKey = GlobalKey(debugLabel: 'home-anchor-contact');
 
@@ -84,7 +86,13 @@ class _HomePageState extends State<HomePage> {
     final last = _lastSpyOffset;
     if (last != null && (current - last).abs() < 24) return;
     _lastSpyOffset = current;
-    final keys = [_showcaseKey, _aboutKey, _engineeringKey, _contactKey];
+    final keys = [
+      _showcaseKey,
+      _aboutKey,
+      _engineeringKey,
+      _gameKey,
+      _contactKey,
+    ];
     var active = -1;
     for (var i = 0; i < keys.length; i++) {
       final ctx = keys[i].currentContext;
@@ -183,6 +191,12 @@ class _HomePageState extends State<HomePage> {
         onTap: () => _scrollToKey(_engineeringKey),
       ),
       HomeNavAnchor(
+        id: 'jogo',
+        label: context.l10n.nav_game,
+        icon: Icons.sports_esports_rounded,
+        onTap: () => _scrollToKey(_gameKey),
+      ),
+      HomeNavAnchor(
         id: 'contato',
         label: context.l10n.nav_contact,
         icon: Icons.mail_outline_rounded,
@@ -263,7 +277,29 @@ class _HomePageState extends State<HomePage> {
                 ),
                 const SliverToBoxAdapter(
                   child: SectionVisibility(
-                    id: 'divider-engineering-contact',
+                    id: 'divider-engineering-game',
+                    child: SectionWaveDivider(),
+                  ),
+                ),
+                SliverToBoxAdapter(
+                  child: KeyedSubtree(
+                    key: _gameKey,
+                    child: _SectionSlot(
+                      id: 'game',
+                      horizontalPadding: horizontalPadding,
+                      glowAlignment: Alignment.topRight,
+                      child: GameSection(
+                        windowsDemoUrl: AppConfig.pocoDemoWindowsUrl,
+                        androidDemoUrl: AppConfig.pocoDemoAndroidUrl,
+                        email: AppConfig.email,
+                        onOpenUri: _openExternalUri,
+                      ),
+                    ),
+                  ),
+                ),
+                const SliverToBoxAdapter(
+                  child: SectionVisibility(
+                    id: 'divider-game-contact',
                     child: SectionWaveDivider(),
                   ),
                 ),

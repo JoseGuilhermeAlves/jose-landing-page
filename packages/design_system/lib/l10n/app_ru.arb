@@ -337,5 +337,8 @@
   "game_ctaWindows": "Windows .zip - 115 МБ",
   "game_ctaAndroid": "Android .apk - 149 МБ",
   "game_demoNote": "Windows: распакуйте .zip и запустите Poco.exe. Android: перед открытием .apk разрешите установку приложений из неизвестных источников.",
-  "game_gifAlt": "Геймплей Poço: волшебница обрушивает Метеор на вражеский строй"
+  "game_gifAlt": "Геймплей Poço: волшебница обрушивает Метеор на вражеский строй",
+  "game_trailerTitle": "Трейлер",
+  "game_trailerPlay": "Смотреть трейлер",
+  "game_trailerAlt": "Трейлер Poço"
 }

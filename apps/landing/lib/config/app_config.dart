@@ -49,4 +49,15 @@ abstract final class AppConfig {
       '${pocoDemoBase}Poco-demo-windows.zip';
   static const String pocoDemoAndroidUrl =
       '${pocoDemoBase}Poco-demo-android.apk';
+
+  /// Trailer do Poço em versao web (720p, ~11 MB) servido do proprio
+  /// Pages a partir de `apps/landing/web/trailer/` — asset de Release
+  /// vem como download, nao toca no navegador. O original 1080p fica na
+  /// Release `poco-demo`.
+  static const String pocoTrailerUrl = 'trailer/poco-trailer.mp4';
+
+  /// Poster do trailer — asset Flutter (o widget usa `Image.asset`; o
+  /// `<video>` aponta pro mesmo arquivo pela URL publicada do asset).
+  static const String pocoTrailerPosterAsset =
+      'assets/images/poco_trailer_poster.jpg';
 }

@@ -1,5 +1,7 @@
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
+import 'package:landing/widgets/trailer/trailer_video_view.dart'
+    if (dart.library.js_interop) 'package:landing/widgets/trailer/trailer_video_view_web.dart';
 
 /// Secao "Poço" — projeto autoral de jogo em desenvolvimento. Mesma
 /// gramatica da `AboutSection` (eyebrow pixel, titulo com acento magenta,
@@ -13,6 +15,8 @@ class GameSection extends StatelessWidget {
   const GameSection({
     required this.windowsDemoUrl,
     required this.androidDemoUrl,
+    required this.trailerUrl,
+    required this.trailerPosterAsset,
     required this.email,
     required this.onOpenUri,
     super.key,
@@ -20,6 +24,8 @@ class GameSection extends StatelessWidget {
 
   final String windowsDemoUrl;
   final String androidDemoUrl;
+  final String trailerUrl;
+  final String trailerPosterAsset;
   final String email;
   final ValueChanged<Uri> onOpenUri;
 
@@ -111,6 +117,16 @@ class GameSection extends StatelessWidget {
           stage: '03',
           title: l10n.game_factStackTitle,
           body: l10n.game_factStackBody,
+        ),
+        SizedBox(height: blockGap),
+        Text(
+          l10n.game_trailerTitle,
+          style: tt.headlineSmall?.copyWith(color: colors.onSurface),
+        ),
+        const SizedBox(height: AppSpacing.lg),
+        _TrailerPlayer(
+          videoUrl: trailerUrl,
+          posterAsset: trailerPosterAsset,
         ),
         SizedBox(height: blockGap),
         Text(
@@ -253,12 +269,84 @@ class _ArcadeButtonState extends State<_ArcadeButton> {
   }
 }
 
-/// GIF de gameplay em moldura neon de cantos retos (vocabulario arcade).
-/// `FilterQuality.none` preserva o pixel-art ao escalar.
+/// Trailer: poster com botao arcade de play; o `<video>` nativo so e
+/// montado no clique (autoplay com som, ja que veio de gesto do usuario).
+class _TrailerPlayer extends StatefulWidget {
+  const _TrailerPlayer({required this.videoUrl, required this.posterAsset});
+
+  final String videoUrl;
+  final String posterAsset;
+
+  @override
+  State<_TrailerPlayer> createState() => _TrailerPlayerState();
+}
+
+class _TrailerPlayerState extends State<_TrailerPlayer> {
+  bool _playing = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+    final l10n = context.l10n;
+    final video = Uri.base.resolve(widget.videoUrl).toString();
+    // Flutter web publica assets sob `assets/<caminho do asset>`.
+    final poster = Uri.base
+        .resolve('assets/${widget.posterAsset}')
+        .toString();
+
+    return _NeonFrame(
+      child: _playing
+          ? TrailerVideoView(src: video, poster: poster)
+          : Stack(
+              fit: StackFit.expand,
+              children: [
+                Image.asset(
+                  widget.posterAsset,
+                  fit: BoxFit.cover,
+                  semanticLabel: l10n.game_trailerAlt,
+                ),
+                ColoredBox(color: colors.background.withValues(alpha: 0.35)),
+                Center(
+                  child: _ArcadeButton(
+                    label: l10n.game_trailerPlay,
+                    color: colors.primary,
+                    filled: true,
+                    onPressed: () => setState(() => _playing = true),
+                  ),
+                ),
+              ],
+            ),
+    );
+  }
+}
+
+/// GIF de gameplay em moldura neon. `FilterQuality.none` preserva o
+/// pixel-art ao escalar.
 class _GameplayFrame extends StatelessWidget {
   const _GameplayFrame({required this.asset});
 
   final String asset;
+
+  @override
+  Widget build(BuildContext context) {
+    return _NeonFrame(
+      child: Image.asset(
+        asset,
+        fit: BoxFit.cover,
+        filterQuality: FilterQuality.none,
+        gaplessPlayback: true,
+        semanticLabel: context.l10n.game_gifAlt,
+      ),
+    );
+  }
+}
+
+/// Moldura 16:9 neon de cantos retos (vocabulario arcade) — compartilhada
+/// pelo GIF e pelo trailer.
+class _NeonFrame extends StatelessWidget {
+  const _NeonFrame({required this.child});
+
+  final Widget child;
 
   @override
   Widget build(BuildContext context) {
@@ -278,16 +366,7 @@ class _GameplayFrame extends StatelessWidget {
           ),
         ],
       ),
-      child: AspectRatio(
-        aspectRatio: 16 / 9,
-        child: Image.asset(
-          asset,
-          fit: BoxFit.cover,
-          filterQuality: FilterQuality.none,
-          gaplessPlayback: true,
-          semanticLabel: context.l10n.game_gifAlt,
-        ),
-      ),
+      child: AspectRatio(aspectRatio: 16 / 9, child: child),
     );
   }
 }

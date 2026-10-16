@@ -954,4 +954,13 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get game_gifAlt => 'Poço のゲームプレイ:魔法使いが敵の列にメテオを放つ';
+
+  @override
+  String get game_trailerTitle => 'トレーラー';
+
+  @override
+  String get game_trailerPlay => 'トレーラーを見る';
+
+  @override
+  String get game_trailerAlt => 'Poço のトレーラー';
 }

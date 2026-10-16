@@ -337,5 +337,8 @@
   "game_ctaWindows": "Windows .zip - 115 MB",
   "game_ctaAndroid": "Android .apk - 149 MB",
   "game_demoNote": "Windows: extrae el .zip y ejecuta Poco.exe. Android: permite instalar apps de origen desconocido antes de abrir el .apk.",
-  "game_gifAlt": "Gameplay de Poço: la maga lanza Meteoro sobre la línea enemiga"
+  "game_gifAlt": "Gameplay de Poço: la maga lanza Meteoro sobre la línea enemiga",
+  "game_trailerTitle": "Tráiler",
+  "game_trailerPlay": "Ver tráiler",
+  "game_trailerAlt": "Tráiler de Poço"
 }

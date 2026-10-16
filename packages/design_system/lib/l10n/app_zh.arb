@@ -337,5 +337,8 @@
   "game_ctaWindows": "Windows .zip - 115 MB",
   "game_ctaAndroid": "Android .apk - 149 MB",
   "game_demoNote": "Windows:解压 .zip 并运行 Poco.exe。Android:打开 .apk 前请允许安装未知来源的应用。",
-  "game_gifAlt": "Poço 实机画面:法师向敌方阵线施放陨石"
+  "game_gifAlt": "Poço 实机画面:法师向敌方阵线施放陨石",
+  "game_trailerTitle": "预告片",
+  "game_trailerPlay": "观看预告片",
+  "game_trailerAlt": "Poço 预告片"
 }

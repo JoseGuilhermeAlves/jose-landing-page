@@ -992,4 +992,13 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get game_gifAlt =>
       'Gameplay de Poço : la mage lance Météore sur la ligne ennemie';
+
+  @override
+  String get game_trailerTitle => 'Bande-annonce';
+
+  @override
+  String get game_trailerPlay => 'Voir la bande-annonce';
+
+  @override
+  String get game_trailerAlt => 'Bande-annonce de Poço';
 }

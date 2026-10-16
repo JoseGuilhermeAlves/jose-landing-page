@@ -337,5 +337,8 @@
   "game_ctaWindows": "Windows .zip - 115 Mo",
   "game_ctaAndroid": "Android .apk - 149 Mo",
   "game_demoNote": "Windows : extrayez le .zip et lancez Poco.exe. Android : autorisez l'installation d'applications de sources inconnues avant d'ouvrir le .apk.",
-  "game_gifAlt": "Gameplay de Poço : la mage lance Météore sur la ligne ennemie"
+  "game_gifAlt": "Gameplay de Poço : la mage lance Météore sur la ligne ennemie",
+  "game_trailerTitle": "Bande-annonce",
+  "game_trailerPlay": "Voir la bande-annonce",
+  "game_trailerAlt": "Bande-annonce de Poço"
 }

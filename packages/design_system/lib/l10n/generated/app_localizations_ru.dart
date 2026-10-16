@@ -991,4 +991,13 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get game_gifAlt =>
       'Геймплей Poço: волшебница обрушивает Метеор на вражеский строй';
+
+  @override
+  String get game_trailerTitle => 'Трейлер';
+
+  @override
+  String get game_trailerPlay => 'Смотреть трейлер';
+
+  @override
+  String get game_trailerAlt => 'Трейлер Poço';
 }

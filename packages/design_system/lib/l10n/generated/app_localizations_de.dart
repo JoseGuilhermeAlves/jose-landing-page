@@ -990,4 +990,13 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get game_gifAlt =>
       'Poço-Gameplay: die Magierin wirkt Meteor auf die gegnerische Reihe';
+
+  @override
+  String get game_trailerTitle => 'Trailer';
+
+  @override
+  String get game_trailerPlay => 'Trailer ansehen';
+
+  @override
+  String get game_trailerAlt => 'Poço-Trailer';
 }

@@ -337,5 +337,8 @@
   "game_ctaWindows": "Windows .zip - 115 MB",
   "game_ctaAndroid": "Android .apk - 149 MB",
   "game_demoNote": "Windows:.zip を展開して Poco.exe を実行してください。Android:.apk を開く前に提供元不明のアプリのインストールを許可してください。",
-  "game_gifAlt": "Poço のゲームプレイ:魔法使いが敵の列にメテオを放つ"
+  "game_gifAlt": "Poço のゲームプレイ:魔法使いが敵の列にメテオを放つ",
+  "game_trailerTitle": "トレーラー",
+  "game_trailerPlay": "トレーラーを見る",
+  "game_trailerAlt": "Poço のトレーラー"
 }

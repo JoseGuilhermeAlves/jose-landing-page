@@ -1923,6 +1923,24 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Gameplay do Poço: a maga conjura Meteoro sobre a linha inimiga'**
   String get game_gifAlt;
+
+  /// No description provided for @game_trailerTitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Trailer'**
+  String get game_trailerTitle;
+
+  /// No description provided for @game_trailerPlay.
+  ///
+  /// In pt, this message translates to:
+  /// **'Assistir trailer'**
+  String get game_trailerPlay;
+
+  /// No description provided for @game_trailerAlt.
+  ///
+  /// In pt, this message translates to:
+  /// **'Trailer do Poço'**
+  String get game_trailerAlt;
 }
 
 class _AppLocalizationsDelegate

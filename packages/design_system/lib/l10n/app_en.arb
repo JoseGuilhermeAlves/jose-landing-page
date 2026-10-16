@@ -337,5 +337,8 @@
   "game_ctaWindows": "Windows .zip - 115 MB",
   "game_ctaAndroid": "Android .apk - 149 MB",
   "game_demoNote": "Windows: extract the .zip and run Poco.exe. Android: allow installing apps from unknown sources before opening the .apk.",
-  "game_gifAlt": "Poço gameplay: the mage casts Meteor on the enemy line"
+  "game_gifAlt": "Poço gameplay: the mage casts Meteor on the enemy line",
+  "game_trailerTitle": "Trailer",
+  "game_trailerPlay": "Watch trailer",
+  "game_trailerAlt": "Poço trailer"
 }

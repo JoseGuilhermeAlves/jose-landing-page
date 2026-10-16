@@ -291,6 +291,8 @@ class _HomePageState extends State<HomePage> {
                       child: GameSection(
                         windowsDemoUrl: AppConfig.pocoDemoWindowsUrl,
                         androidDemoUrl: AppConfig.pocoDemoAndroidUrl,
+                        trailerUrl: AppConfig.pocoTrailerUrl,
+                        trailerPosterAsset: AppConfig.pocoTrailerPosterAsset,
                         email: AppConfig.email,
                         onOpenUri: _openExternalUri,
                       ),

@@ -990,4 +990,13 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get game_gifAlt =>
       'Gameplay de Poço: la maga lanza Meteoro sobre la línea enemiga';
+
+  @override
+  String get game_trailerTitle => 'Tráiler';
+
+  @override
+  String get game_trailerPlay => 'Ver tráiler';
+
+  @override
+  String get game_trailerAlt => 'Tráiler de Poço';
 }

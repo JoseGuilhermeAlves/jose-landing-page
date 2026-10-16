@@ -337,5 +337,8 @@
   "game_ctaWindows": "Windows .zip - 115 MB",
   "game_ctaAndroid": "Android .apk - 149 MB",
   "game_demoNote": "Windows: .zip entpacken und Poco.exe starten. Android: vor dem Öffnen der .apk die Installation aus unbekannten Quellen erlauben.",
-  "game_gifAlt": "Poço-Gameplay: die Magierin wirkt Meteor auf die gegnerische Reihe"
+  "game_gifAlt": "Poço-Gameplay: die Magierin wirkt Meteor auf die gegnerische Reihe",
+  "game_trailerTitle": "Trailer",
+  "game_trailerPlay": "Trailer ansehen",
+  "game_trailerAlt": "Poço-Trailer"
 }

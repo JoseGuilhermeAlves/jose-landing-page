@@ -942,4 +942,13 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get game_gifAlt => 'Poço 实机画面:法师向敌方阵线施放陨石';
+
+  @override
+  String get game_trailerTitle => '预告片';
+
+  @override
+  String get game_trailerPlay => '观看预告片';
+
+  @override
+  String get game_trailerAlt => 'Poço 预告片';
 }

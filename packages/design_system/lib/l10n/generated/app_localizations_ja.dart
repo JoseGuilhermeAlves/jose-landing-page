@@ -943,6 +943,11 @@ class AppLocalizationsJa extends AppLocalizations {
       'Windows と Android 向けの MVP テストビルド。キーボード、ゲームパッド、タッチ操作に対応しています。';
 
   @override
+  String game_demoUpdate(String version) {
+    return '$version の新要素:3 クラスから選ぶ仲間ドラフト、プレイアブルのドルイド(全 7 クラス)、FF6 風の後列、パーマデス(戦闘不能のヒーローはパーティーを離脱)。スキル進化と見えない壁の不具合を修正。';
+  }
+
+  @override
   String get game_ctaWindows => 'Windows .zip - 115 MB';
 
   @override

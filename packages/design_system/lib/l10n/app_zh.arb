@@ -334,6 +334,7 @@
   "game_partnerSubject": "合作 — Poço",
   "game_demoTitle": "可玩 Demo",
   "game_demoBody": "适用于 Windows 和 Android 的 MVP 测试版本。支持键盘、手柄和触屏。",
+  "game_demoUpdate": "{version} 新内容:三选一的招募选择、可玩德鲁伊(共 7 个职业)、FF6 风格后排,以及永久死亡——倒下的英雄会离开队伍。修复了技能进化与隐形墙问题。",
   "game_ctaWindows": "Windows .zip - 115 MB",
   "game_ctaAndroid": "Android .apk - 149 MB",
   "game_demoNote": "Windows:解压 .zip 并运行 Poco.exe。Android:打开 .apk 前请允许安装未知来源的应用。",

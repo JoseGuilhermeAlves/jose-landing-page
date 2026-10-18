@@ -931,6 +931,11 @@ class AppLocalizationsZh extends AppLocalizations {
   String get game_demoBody => '适用于 Windows 和 Android 的 MVP 测试版本。支持键盘、手柄和触屏。';
 
   @override
+  String game_demoUpdate(String version) {
+    return '$version 新内容:三选一的招募选择、可玩德鲁伊(共 7 个职业)、FF6 风格后排,以及永久死亡——倒下的英雄会离开队伍。修复了技能进化与隐形墙问题。';
+  }
+
+  @override
   String get game_ctaWindows => 'Windows .zip - 115 MB';
 
   @override

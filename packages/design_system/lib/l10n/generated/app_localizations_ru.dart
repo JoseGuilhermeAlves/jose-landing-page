@@ -979,6 +979,11 @@ class AppLocalizationsRu extends AppLocalizations {
       'Тестовая сборка MVP для Windows и Android. Поддерживаются клавиатура, геймпад и сенсорное управление.';
 
   @override
+  String game_demoUpdate(String version) {
+    return 'Новое в $version: драфт рекрутов из трёх классов, играбельный Друид (7 классов), задний ряд в стиле FF6 и перманентная смерть — павший герой покидает отряд. Исправлены эволюция навыков и невидимые стены.';
+  }
+
+  @override
   String get game_ctaWindows => 'Windows .zip - 115 МБ';
 
   @override

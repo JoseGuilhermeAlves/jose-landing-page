@@ -975,6 +975,11 @@ class AppLocalizationsIt extends AppLocalizations {
       'Build di test dell\'MVP per Windows e Android. Supporta tastiera, gamepad e touch.';
 
   @override
+  String game_demoUpdate(String version) {
+    return 'Novità della $version: draft di reclute tra tre classi, Druido giocabile (7 classi), fila posteriore in stile FF6 e morte permanente — l\'eroe KO lascia il gruppo. Corrette l\'evoluzione delle abilità e le pareti invisibili.';
+  }
+
+  @override
   String get game_ctaWindows => 'Windows .zip - 115 MB';
 
   @override

@@ -1900,6 +1900,12 @@ abstract class AppLocalizations {
   /// **'Build de testes do MVP para Windows e Android. Teclado, gamepad e toque são suportados.'**
   String get game_demoBody;
 
+  /// No description provided for @game_demoUpdate.
+  ///
+  /// In pt, this message translates to:
+  /// **'Novo na {version}: draft de recrutas entre três classes, Druida jogável (7 classes), fileira de trás estilo FF6 e permadeath — herói nocauteado sai da party. Evolução de skills e paredes invisíveis corrigidas.'**
+  String game_demoUpdate(String version);
+
   /// No description provided for @game_ctaWindows.
   ///
   /// In pt, this message translates to:

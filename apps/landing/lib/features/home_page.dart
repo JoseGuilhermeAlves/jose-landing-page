@@ -289,6 +289,7 @@ class _HomePageState extends State<HomePage> {
                       horizontalPadding: horizontalPadding,
                       glowAlignment: Alignment.topRight,
                       child: GameSection(
+                        demoVersion: AppConfig.pocoDemoVersion,
                         windowsDemoUrl: AppConfig.pocoDemoWindowsUrl,
                         androidDemoUrl: AppConfig.pocoDemoAndroidUrl,
                         trailerUrl: AppConfig.pocoTrailerUrl,

@@ -334,6 +334,7 @@
   "game_partnerSubject": "Partnerschaft — Poço",
   "game_demoTitle": "Spielbare Demo",
   "game_demoBody": "MVP-Testbuild für Windows und Android. Tastatur, Gamepad und Touch werden unterstützt.",
+  "game_demoUpdate": "Neu in {version}: Rekruten-Draft aus drei Klassen, spielbarer Druide (7 Klassen), hintere Reihe im FF6-Stil und permanenter Tod — ein besiegter Held verlässt die Gruppe. Fähigkeitsentwicklung und unsichtbare Wände behoben.",
   "game_ctaWindows": "Windows .zip - 115 MB",
   "game_ctaAndroid": "Android .apk - 149 MB",
   "game_demoNote": "Windows: .zip entpacken und Poco.exe starten. Android: vor dem Öffnen der .apk die Installation aus unbekannten Quellen erlauben.",

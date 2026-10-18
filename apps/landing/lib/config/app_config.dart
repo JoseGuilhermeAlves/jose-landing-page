@@ -45,6 +45,9 @@ abstract final class AppConfig {
         'https://github.com/JoseGuilhermeAlves/jose-landing-page/releases/download/poco-demo/',
   );
 
+  /// Versao do build publicado na release — trocar junto com o upload.
+  static const String pocoDemoVersion = 'v0.2.0';
+
   static const String pocoDemoWindowsUrl =
       '${pocoDemoBase}Poco-demo-windows.zip';
   static const String pocoDemoAndroidUrl =

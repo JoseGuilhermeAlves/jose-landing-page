@@ -334,6 +334,12 @@
   "game_partnerSubject": "Parceria — Poço",
   "game_demoTitle": "Demo jogável",
   "game_demoBody": "Build de testes do MVP para Windows e Android. Teclado, gamepad e toque são suportados.",
+  "game_demoUpdate": "Novo na {version}: draft de recrutas entre três classes, Druida jogável (7 classes), fileira de trás estilo FF6 e permadeath — herói nocauteado sai da party. Evolução de skills e paredes invisíveis corrigidas.",
+  "@game_demoUpdate": {
+    "placeholders": {
+      "version": {"type": "String"}
+    }
+  },
   "game_ctaWindows": "Windows .zip - 115 MB",
   "game_ctaAndroid": "Android .apk - 149 MB",
   "game_demoNote": "Windows: extraia o .zip e execute Poco.exe. Android: permita a instalação de apps de fontes desconhecidas antes de abrir o .apk.",

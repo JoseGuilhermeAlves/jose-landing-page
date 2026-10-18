@@ -334,6 +334,7 @@
   "game_partnerSubject": "パートナーシップ — Poço",
   "game_demoTitle": "プレイアブルデモ",
   "game_demoBody": "Windows と Android 向けの MVP テストビルド。キーボード、ゲームパッド、タッチ操作に対応しています。",
+  "game_demoUpdate": "{version} の新要素:3 クラスから選ぶ仲間ドラフト、プレイアブルのドルイド(全 7 クラス)、FF6 風の後列、パーマデス(戦闘不能のヒーローはパーティーを離脱)。スキル進化と見えない壁の不具合を修正。",
   "game_ctaWindows": "Windows .zip - 115 MB",
   "game_ctaAndroid": "Android .apk - 149 MB",
   "game_demoNote": "Windows:.zip を展開して Poco.exe を実行してください。Android:.apk を開く前に提供元不明のアプリのインストールを許可してください。",

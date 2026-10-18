@@ -13,6 +13,7 @@ import 'package:landing/widgets/trailer/trailer_video_view.dart'
 /// `HomePage` injeta as URLs via `AppConfig`.
 class GameSection extends StatelessWidget {
   const GameSection({
+    required this.demoVersion,
     required this.windowsDemoUrl,
     required this.androidDemoUrl,
     required this.trailerUrl,
@@ -22,6 +23,7 @@ class GameSection extends StatelessWidget {
     super.key,
   });
 
+  final String demoVersion;
   final String windowsDemoUrl;
   final String androidDemoUrl;
   final String trailerUrl;
@@ -167,6 +169,8 @@ class GameSection extends StatelessWidget {
             height: 1.55,
           ),
         ),
+        const SizedBox(height: AppSpacing.md),
+        _UpdateNote(text: l10n.game_demoUpdate(demoVersion)),
         const SizedBox(height: AppSpacing.lg),
         Wrap(
           spacing: AppSpacing.md,
@@ -367,6 +371,35 @@ class _NeonFrame extends StatelessWidget {
         ],
       ),
       child: AspectRatio(aspectRatio: 16 / 9, child: child),
+    );
+  }
+}
+
+/// Aviso da versao atual da demo — barra neon a esquerda, como um
+/// patch note de changelog.
+class _UpdateNote extends StatelessWidget {
+  const _UpdateNote({required this.text});
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    final tt = Theme.of(context).textTheme;
+    final colors = context.colors;
+
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.md,
+        vertical: AppSpacing.sm,
+      ),
+      decoration: BoxDecoration(
+        color: colors.accent.withValues(alpha: 0.08),
+        border: Border(left: BorderSide(color: colors.accent, width: 3)),
+      ),
+      child: Text(
+        text,
+        style: tt.bodyMedium?.copyWith(color: colors.onSurface, height: 1.55),
+      ),
     );
   }
 }

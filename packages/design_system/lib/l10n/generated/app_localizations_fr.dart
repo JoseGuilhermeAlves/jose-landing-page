@@ -981,7 +981,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Nouveautés de la $version : combat revu face à FF6, Octopath et Fear & Hunger. L\'intention ennemie s\'affiche avant le coup, Défendre divise les dégâts par deux, l\'étourdissement et les malus fonctionnent vraiment, et la Chimère combat en trois phases (charge annoncée, Muraille de Pierre à sceaux, renforts). Reliques en %, sanctuaire qui offre une compétence et bilan indiquant la cause de la mort.';
+    return 'Nouveautés de la $version : chaque combat devient une lecture. L\'intention ennemie s\'affiche avant le coup, Défendre divise les dégâts par deux, et l\'étourdissement comme les malus fonctionnent vraiment. La Chimère, boss final, combat en trois phases : charge annoncée, Muraille de Pierre qui ne cède qu\'à la Foudre et au Sacré, puis renforts. Reliques en %, sanctuaire qui enseigne une nouvelle compétence et bilan indiquant ce qui a tué chaque héros.';
   }
 
   @override

@@ -1903,7 +1903,7 @@ abstract class AppLocalizations {
   /// No description provided for @game_demoUpdate.
   ///
   /// In pt, this message translates to:
-  /// **'Novo na {version}: combate revisto contra FF6, Octopath e Fear & Hunger. A intenção do inimigo aparece antes do golpe, Defender corta o dano pela metade, atordoar e debuffs funcionam de verdade, e a Quimera luta em três fases (carga anunciada, Muralha de Pedra com selos, adds). Relíquias em %, santuário com skill nova e recap com a causa da morte.'**
+  /// **'Novo na {version}: cada luta virou uma leitura. A intenção do inimigo aparece antes do golpe, Defender corta o dano pela metade e atordoar e debuffs funcionam de verdade. A Quimera, chefe final, luta em três fases: carga anunciada, Muralha de Pedra que só cede a Trovão e Sagrado, e reforços no fim. Relíquias em %, santuário que ensina uma skill nova e recap que mostra o que matou cada herói.'**
   String game_demoUpdate(String version);
 
   /// No description provided for @game_ctaWindows.

@@ -979,7 +979,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Novedades en $version: combate revisado frente a FF6, Octopath y Fear & Hunger. La intención del enemigo se ve antes del golpe, Defender reduce el daño a la mitad, el aturdimiento y los debuffs funcionan de verdad, y la Quimera lucha en tres fases (carga anunciada, Muralla de Piedra con sellos, refuerzos). Reliquias en %, santuario que da una habilidad y resumen con la causa de la muerte.';
+    return 'Novedades en $version: cada combate se convierte en una lectura. La intención del enemigo se ve antes del golpe, Defender reduce el daño a la mitad y el aturdimiento y los debuffs funcionan de verdad. La Quimera, jefa final, lucha en tres fases: carga anunciada, una Muralla de Piedra que solo cede ante Trueno y Sagrado, y refuerzos al final. Reliquias en %, un santuario que enseña una habilidad nueva y un resumen que muestra qué mató a cada héroe.';
   }
 
   @override

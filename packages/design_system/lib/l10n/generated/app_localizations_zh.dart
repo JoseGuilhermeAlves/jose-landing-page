@@ -932,7 +932,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return '$version 新内容:参照 FF6、八方旅人与 Fear & Hunger 重做战斗。敌人意图在出手前显示,防御使伤害减半,眩晕与减益真正生效,奇美拉分三阶段作战(预告的蓄力、带封印的石墙、援军)。遗物改为百分比加成,祭坛可获得新技能,结算会显示死因。';
+    return '$version 新内容:每场战斗都变成了一次判断。敌人意图在出手前显示,防御使伤害减半,眩晕与减益真正生效。最终首领奇美拉分三阶段作战:预告的蓄力、只有雷与圣才能击破的石墙,以及最后的援军。遗物改为百分比加成,祭坛可习得新技能,结算会显示每位英雄的死因。';
   }
 
   @override

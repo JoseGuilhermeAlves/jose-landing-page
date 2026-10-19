@@ -979,7 +979,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Neu in $version: Kampf überarbeitet nach dem Vorbild von FF6, Octopath und Fear & Hunger. Gegnerabsichten erscheinen vor dem Schlag, Verteidigen halbiert den Schaden, Betäubung und Schwächungen wirken wirklich, und die Chimäre kämpft in drei Phasen (angekündigter Ansturm, versiegelte Steinmauer, Verstärkung). Relikte in Prozent, ein Schrein mit neuer Fähigkeit und eine Bilanz, die die Todesursache nennt.';
+    return 'Neu in $version: Jeder Kampf wird zum Lesen des Gegners. Gegnerabsichten erscheinen vor dem Schlag, Verteidigen halbiert den Schaden, Betäubung und Schwächungen wirken wirklich. Die Chimäre, der Endboss, kämpft in drei Phasen: angekündigter Ansturm, eine Steinmauer, die nur Donner und Heiligem weicht, und Verstärkung zum Schluss. Relikte in Prozent, ein Schrein, der eine neue Fähigkeit lehrt, und eine Bilanz, die zeigt, was jeden Helden getötet hat.';
   }
 
   @override

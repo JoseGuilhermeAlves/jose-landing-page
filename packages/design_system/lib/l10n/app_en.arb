@@ -334,7 +334,7 @@
   "game_partnerSubject": "Partnership — Poço",
   "game_demoTitle": "Playable demo",
   "game_demoBody": "MVP test build for Windows and Android. Keyboard, gamepad and touch are supported.",
-  "game_demoUpdate": "New in {version}: combat reworked against FF6, Octopath and Fear & Hunger. Enemy intents show before the blow, Defend halves damage, stun and debuffs truly work, and the Chimera fights in three phases (announced charge, a sealed Stone Wall, adds). Percentage relics, a skill-granting shrine and a recap that names what killed you.",
+  "game_demoUpdate": "New in {version}: every fight is now a read. Enemy intents show before the blow, Defend halves damage, and stun and debuffs truly work. The Chimera, the final boss, fights in three phases: an announced charge, a Stone Wall that only yields to Thunder and Holy, and reinforcements at the end. Percentage relics, a shrine that teaches a new skill, and a recap that shows what killed each hero.",
   "game_ctaWindows": "Windows .zip - 116 MB",
   "game_ctaAndroid": "Android .apk - 149 MB",
   "game_demoNote": "Windows: extract the .zip and run Poco.exe. Android: allow installing apps from unknown sources before opening the .apk.",

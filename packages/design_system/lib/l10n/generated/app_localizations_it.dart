@@ -976,7 +976,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Novità della $version: combattimento rivisto rispetto a FF6, Octopath e Fear & Hunger. L\'intenzione del nemico appare prima del colpo, Difendi dimezza i danni, stordimento e malus funzionano davvero e la Chimera combatte in tre fasi (carica annunciata, Muraglia di Pietra con sigilli, rinforzi). Reliquie in percentuale, santuario che dona un\'abilità e riepilogo con la causa della morte.';
+    return 'Novità della $version: ogni scontro diventa una lettura. L\'intenzione del nemico appare prima del colpo, Difendi dimezza i danni e stordimento e malus funzionano davvero. La Chimera, boss finale, combatte in tre fasi: carica annunciata, una Muraglia di Pietra che cede solo a Tuono e Sacro, e rinforzi alla fine. Reliquie in percentuale, un santuario che insegna una nuova abilità e un riepilogo che mostra cosa ha ucciso ogni eroe.';
   }
 
   @override

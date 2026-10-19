@@ -976,7 +976,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'New in $version: combat reworked against FF6, Octopath and Fear & Hunger. Enemy intents show before the blow, Defend halves damage, stun and debuffs truly work, and the Chimera fights in three phases (announced charge, a sealed Stone Wall, adds). Percentage relics, a skill-granting shrine and a recap that names what killed you.';
+    return 'New in $version: every fight is now a read. Enemy intents show before the blow, Defend halves damage, and stun and debuffs truly work. The Chimera, the final boss, fights in three phases: an announced charge, a Stone Wall that only yields to Thunder and Holy, and reinforcements at the end. Percentage relics, a shrine that teaches a new skill, and a recap that shows what killed each hero.';
   }
 
   @override

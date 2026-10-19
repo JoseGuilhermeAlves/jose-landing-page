@@ -979,11 +979,11 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Neu in $version: Rekruten-Draft aus drei Klassen, spielbarer Druide (7 Klassen), hintere Reihe im FF6-Stil und permanenter Tod — ein besiegter Held verlässt die Gruppe. Fähigkeitsentwicklung und unsichtbare Wände behoben.';
+    return 'Neu in $version: Beim Aufstieg schreibt die Unterklasse eine Fähigkeit um — Name, Wirkung und Optik (der Pyromant macht aus dem Feuerball den Glutball). Heilungen skalieren mit dem Wert des Heilers, Zauber-Passive erhöhen jetzt den Schaden, und die Eislanze wird auf den Gegner geschleudert.';
   }
 
   @override
-  String get game_ctaWindows => 'Windows .zip - 115 MB';
+  String get game_ctaWindows => 'Windows .zip - 116 MB';
 
   @override
   String get game_ctaAndroid => 'Android .apk - 149 MB';

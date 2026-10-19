@@ -1903,13 +1903,13 @@ abstract class AppLocalizations {
   /// No description provided for @game_demoUpdate.
   ///
   /// In pt, this message translates to:
-  /// **'Novo na {version}: draft de recrutas entre três classes, Druida jogável (7 classes), fileira de trás estilo FF6 e permadeath — herói nocauteado sai da party. Evolução de skills e paredes invisíveis corrigidas.'**
+  /// **'Novo na {version}: ao evoluir, a subclasse reescreve uma skill — nome, efeito e visual (Bola de Fogo vira Bola Ígnea no Piromante). Curas escalam com o atributo de quem cura, passivas de magia passaram a aumentar o dano e a Lança de Gelo agora é arremessada até o inimigo.'**
   String game_demoUpdate(String version);
 
   /// No description provided for @game_ctaWindows.
   ///
   /// In pt, this message translates to:
-  /// **'Windows .zip - 115 MB'**
+  /// **'Windows .zip - 116 MB'**
   String get game_ctaWindows;
 
   /// No description provided for @game_ctaAndroid.

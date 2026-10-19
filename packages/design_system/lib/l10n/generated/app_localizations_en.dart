@@ -976,11 +976,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'New in $version: recruit draft among three classes, playable Druid (7 classes), FF6-style back row and permadeath — a knocked-out hero leaves the party. Skill evolution and invisible walls fixed.';
+    return 'New in $version: evolving into a subclass rewrites a skill — name, effect and visuals (the Pyromancer turns Fireball into Igneous Ball). Heals scale with the healer\'s stats, spell passives now raise damage, and Ice Lance is thrown at the enemy.';
   }
 
   @override
-  String get game_ctaWindows => 'Windows .zip - 115 MB';
+  String get game_ctaWindows => 'Windows .zip - 116 MB';
 
   @override
   String get game_ctaAndroid => 'Android .apk - 149 MB';

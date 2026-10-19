@@ -980,11 +980,11 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Новое в $version: драфт рекрутов из трёх классов, играбельный Друид (7 классов), задний ряд в стиле FF6 и перманентная смерть — павший герой покидает отряд. Исправлены эволюция навыков и невидимые стены.';
+    return 'Новое в $version: при эволюции подкласс переписывает навык — название, эффект и визуал (у Пироманта Огненный шар становится Огненной сферой). Лечение растёт с характеристикой лекаря, магические пассивки теперь увеличивают урон, а Ледяное копьё летит во врага.';
   }
 
   @override
-  String get game_ctaWindows => 'Windows .zip - 115 МБ';
+  String get game_ctaWindows => 'Windows .zip - 116 МБ';
 
   @override
   String get game_ctaAndroid => 'Android .apk - 149 МБ';

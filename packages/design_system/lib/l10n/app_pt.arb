@@ -334,13 +334,13 @@
   "game_partnerSubject": "Parceria — Poço",
   "game_demoTitle": "Demo jogável",
   "game_demoBody": "Build de testes do MVP para Windows e Android. Teclado, gamepad e toque são suportados.",
-  "game_demoUpdate": "Novo na {version}: draft de recrutas entre três classes, Druida jogável (7 classes), fileira de trás estilo FF6 e permadeath — herói nocauteado sai da party. Evolução de skills e paredes invisíveis corrigidas.",
+  "game_demoUpdate": "Novo na {version}: ao evoluir, a subclasse reescreve uma skill — nome, efeito e visual (Bola de Fogo vira Bola Ígnea no Piromante). Curas escalam com o atributo de quem cura, passivas de magia passaram a aumentar o dano e a Lança de Gelo agora é arremessada até o inimigo.",
   "@game_demoUpdate": {
     "placeholders": {
       "version": {"type": "String"}
     }
   },
-  "game_ctaWindows": "Windows .zip - 115 MB",
+  "game_ctaWindows": "Windows .zip - 116 MB",
   "game_ctaAndroid": "Android .apk - 149 MB",
   "game_demoNote": "Windows: extraia o .zip e execute Poco.exe. Android: permita a instalação de apps de fontes desconhecidas antes de abrir o .apk.",
   "game_gifAlt": "Gameplay do Poço: a maga conjura Meteoro sobre a linha inimiga",

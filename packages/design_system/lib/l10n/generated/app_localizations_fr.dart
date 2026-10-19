@@ -981,11 +981,11 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Nouveautés de la $version : draft de recrues parmi trois classes, Druide jouable (7 classes), rang arrière façon FF6 et mort permanente — un héros K.O. quitte le groupe. Évolution des compétences et murs invisibles corrigés.';
+    return 'Nouveautés de la $version : en évoluant, la sous-classe réécrit une compétence — nom, effet et visuel (le Pyromancien change Boule de Feu en Boule Ignée). Les soins évoluent avec la caractéristique du soigneur, les passifs de magie augmentent enfin les dégâts et la Lance de Glace est lancée sur l\'ennemi.';
   }
 
   @override
-  String get game_ctaWindows => 'Windows .zip - 115 Mo';
+  String get game_ctaWindows => 'Windows .zip - 116 Mo';
 
   @override
   String get game_ctaAndroid => 'Android .apk - 149 Mo';

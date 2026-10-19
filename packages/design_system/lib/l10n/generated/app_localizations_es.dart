@@ -979,11 +979,11 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Novedades en $version: draft de reclutas entre tres clases, Druida jugable (7 clases), fila trasera al estilo FF6 y muerte permanente: el héroe noqueado deja el grupo. Corregidas la evolución de habilidades y las paredes invisibles.';
+    return 'Novedades en $version: al evolucionar, la subclase reescribe una habilidad — nombre, efecto y visual (el Piromante convierte Bola de Fuego en Bola Ígnea). Las curas escalan con el atributo de quien cura, las pasivas de magia ahora aumentan el daño y la Lanza de Hielo se lanza contra el enemigo.';
   }
 
   @override
-  String get game_ctaWindows => 'Windows .zip - 115 MB';
+  String get game_ctaWindows => 'Windows .zip - 116 MB';
 
   @override
   String get game_ctaAndroid => 'Android .apk - 149 MB';

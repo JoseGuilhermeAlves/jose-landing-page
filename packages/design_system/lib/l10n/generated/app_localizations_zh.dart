@@ -932,11 +932,11 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return '$version 新内容:三选一的招募选择、可玩德鲁伊(共 7 个职业)、FF6 风格后排,以及永久死亡——倒下的英雄会离开队伍。修复了技能进化与隐形墙问题。';
+    return '$version 新内容:进阶子职业后,会改写一个技能的名称、效果与特效(火法师的火球术变为烈焰球)。治疗量随施法者属性成长,法术被动终于能提升伤害,冰枪也改为投向敌人。';
   }
 
   @override
-  String get game_ctaWindows => 'Windows .zip - 115 MB';
+  String get game_ctaWindows => 'Windows .zip - 116 MB';
 
   @override
   String get game_ctaAndroid => 'Android .apk - 149 MB';

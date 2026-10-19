@@ -944,11 +944,11 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return '$version の新要素:3 クラスから選ぶ仲間ドラフト、プレイアブルのドルイド(全 7 クラス)、FF6 風の後列、パーマデス(戦闘不能のヒーローはパーティーを離脱)。スキル進化と見えない壁の不具合を修正。';
+    return '$version の新要素:サブクラスに進化すると、スキル 1 つの名前・効果・演出が書き換わります(パイロマンサーはファイアボールが「イグニアスボール」に)。回復は使い手の能力値に比例し、魔法系パッシブがダメージを正しく上げるようになり、アイスランスは敵へ投げつける演出になりました。';
   }
 
   @override
-  String get game_ctaWindows => 'Windows .zip - 115 MB';
+  String get game_ctaWindows => 'Windows .zip - 116 MB';
 
   @override
   String get game_ctaAndroid => 'Android .apk - 149 MB';

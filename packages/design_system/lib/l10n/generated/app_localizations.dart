@@ -1903,7 +1903,7 @@ abstract class AppLocalizations {
   /// No description provided for @game_demoUpdate.
   ///
   /// In pt, this message translates to:
-  /// **'Novo na {version}: cada luta virou uma leitura. A intenção do inimigo aparece antes do golpe, Defender corta o dano pela metade e atordoar e debuffs funcionam de verdade. A Quimera, chefe final, luta em três fases: carga anunciada, Muralha de Pedra que só cede a Trovão e Sagrado, e reforços no fim. Relíquias em %, santuário que ensina uma skill nova e recap que mostra o que matou cada herói.'**
+  /// **'Novo na {version}: inimigos e heróis se desintegram em pixels, fraquezas começam escondidas e são reveladas no golpe, e a barra de turno mostra a ordem real. Elites têm um líder Alpha que caça o herói mais ferido, e a Quimera volta a cobrar caro. Grupo de 4 com reserva, recrutas chegando prontos e eventos no mapa — apostas que você pode recusar.'**
   String game_demoUpdate(String version);
 
   /// No description provided for @game_ctaWindows.

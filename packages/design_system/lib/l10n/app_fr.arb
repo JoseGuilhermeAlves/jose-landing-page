@@ -334,7 +334,7 @@
   "game_partnerSubject": "Partenariat — Poço",
   "game_demoTitle": "Démo jouable",
   "game_demoBody": "Build de test du MVP pour Windows et Android. Clavier, manette et tactile sont pris en charge.",
-  "game_demoUpdate": "Nouveautés de la {version} : chaque combat devient une lecture. L'intention ennemie s'affiche avant le coup, Défendre divise les dégâts par deux, et l'étourdissement comme les malus fonctionnent vraiment. La Chimère, boss final, combat en trois phases : charge annoncée, Muraille de Pierre qui ne cède qu'à la Foudre et au Sacré, puis renforts. Reliques en %, sanctuaire qui enseigne une nouvelle compétence et bilan indiquant ce qui a tué chaque héros.",
+  "game_demoUpdate": "Nouveautés de la {version} : ennemis et héros se désintègrent en pixels, les faiblesses sont cachées et se révèlent au coup, et la barre de tours montre l'ordre réel. Les élites suivent un Alpha qui traque le héros le plus blessé, et la Chimère fait de nouveau payer cher. Groupe de 4 avec réserve, recrues prêtes dès leur arrivée et événements sur la carte — des paris que vous pouvez refuser.",
   "game_ctaWindows": "Windows .zip - 116 Mo",
   "game_ctaAndroid": "Android .apk - 149 Mo",
   "game_demoNote": "Windows : extrayez le .zip et lancez Poco.exe. Android : autorisez l'installation d'applications de sources inconnues avant d'ouvrir le .apk.",

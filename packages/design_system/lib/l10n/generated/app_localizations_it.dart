@@ -976,7 +976,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Novità della $version: ogni scontro diventa una lettura. L\'intenzione del nemico appare prima del colpo, Difendi dimezza i danni e stordimento e malus funzionano davvero. La Chimera, boss finale, combatte in tre fasi: carica annunciata, una Muraglia di Pietra che cede solo a Tuono e Sacro, e rinforzi alla fine. Reliquie in percentuale, un santuario che insegna una nuova abilità e un riepilogo che mostra cosa ha ucciso ogni eroe.';
+    return 'Novità della $version: nemici ed eroi si disintegrano in pixel, le debolezze partono nascoste e si rivelano al colpo, e la barra dei turni mostra l\'ordine reale. Le élite seguono un Alfa che caccia l\'eroe più ferito, e la Chimera torna a farti pagare caro. Gruppo di 4 con riserva, reclute che arrivano pronte ed eventi sulla mappa — scommesse che puoi rifiutare.';
   }
 
   @override

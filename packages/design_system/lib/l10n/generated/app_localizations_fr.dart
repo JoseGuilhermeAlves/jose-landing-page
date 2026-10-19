@@ -981,7 +981,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Nouveautés de la $version : chaque combat devient une lecture. L\'intention ennemie s\'affiche avant le coup, Défendre divise les dégâts par deux, et l\'étourdissement comme les malus fonctionnent vraiment. La Chimère, boss final, combat en trois phases : charge annoncée, Muraille de Pierre qui ne cède qu\'à la Foudre et au Sacré, puis renforts. Reliques en %, sanctuaire qui enseigne une nouvelle compétence et bilan indiquant ce qui a tué chaque héros.';
+    return 'Nouveautés de la $version : ennemis et héros se désintègrent en pixels, les faiblesses sont cachées et se révèlent au coup, et la barre de tours montre l\'ordre réel. Les élites suivent un Alpha qui traque le héros le plus blessé, et la Chimère fait de nouveau payer cher. Groupe de 4 avec réserve, recrues prêtes dès leur arrivée et événements sur la carte — des paris que vous pouvez refuser.';
   }
 
   @override

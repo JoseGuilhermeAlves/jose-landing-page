@@ -976,7 +976,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'New in $version: every fight is now a read. Enemy intents show before the blow, Defend halves damage, and stun and debuffs truly work. The Chimera, the final boss, fights in three phases: an announced charge, a Stone Wall that only yields to Thunder and Holy, and reinforcements at the end. Percentage relics, a shrine that teaches a new skill, and a recap that shows what killed each hero.';
+    return 'New in $version: enemies and heroes disintegrate into pixels, weaknesses start hidden and are revealed on hit, and the turn bar shows the real order. Elites follow an Alpha that hunts the most wounded hero, and the Chimera makes you pay again. A party of 4 with a reserve, recruits who join ready, and map events — gambles you can refuse.';
   }
 
   @override

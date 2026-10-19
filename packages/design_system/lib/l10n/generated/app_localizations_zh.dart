@@ -932,7 +932,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return '$version 新内容:每场战斗都变成了一次判断。敌人意图在出手前显示,防御使伤害减半,眩晕与减益真正生效。最终首领奇美拉分三阶段作战:预告的蓄力、只有雷与圣才能击破的石墙,以及最后的援军。遗物改为百分比加成,祭坛可习得新技能,结算会显示每位英雄的死因。';
+    return '$version 新内容:敌人与英雄会化作像素消散,弱点起初隐藏、命中后揭晓,行动条显示真实顺序。精英由一名专挑最虚弱英雄下手的头领率领,奇美拉再次成为难关。4 人队伍加替补、新队员加入即可作战,地图上还有可以拒绝的赌局事件。';
   }
 
   @override

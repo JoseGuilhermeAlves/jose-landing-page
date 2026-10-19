@@ -979,7 +979,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Novedades en $version: cada combate se convierte en una lectura. La intención del enemigo se ve antes del golpe, Defender reduce el daño a la mitad y el aturdimiento y los debuffs funcionan de verdad. La Quimera, jefa final, lucha en tres fases: carga anunciada, una Muralla de Piedra que solo cede ante Trueno y Sagrado, y refuerzos al final. Reliquias en %, un santuario que enseña una habilidad nueva y un resumen que muestra qué mató a cada héroe.';
+    return 'Novedades en $version: enemigos y héroes se desintegran en píxeles, las debilidades empiezan ocultas y se revelan al golpear, y la barra de turnos muestra el orden real. Los élites siguen a un Alfa que caza al héroe más herido, y la Quimera vuelve a cobrar caro. Grupo de 4 con reserva, reclutas que llegan listos y eventos en el mapa: apuestas que puedes rechazar.';
   }
 
   @override

@@ -976,7 +976,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Novo na $version: ao evoluir, a subclasse reescreve uma skill — nome, efeito e visual (Bola de Fogo vira Bola Ígnea no Piromante). Curas escalam com o atributo de quem cura, passivas de magia passaram a aumentar o dano e a Lança de Gelo agora é arremessada até o inimigo.';
+    return 'Novo na $version: combate revisto contra FF6, Octopath e Fear & Hunger. A intenção do inimigo aparece antes do golpe, Defender corta o dano pela metade, atordoar e debuffs funcionam de verdade, e a Quimera luta em três fases (carga anunciada, Muralha de Pedra com selos, adds). Relíquias em %, santuário com skill nova e recap com a causa da morte.';
   }
 
   @override

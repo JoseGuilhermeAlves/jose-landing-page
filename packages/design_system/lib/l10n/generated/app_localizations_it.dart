@@ -976,7 +976,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Novità della $version: evolvendo, la sottoclasse riscrive un\'abilità — nome, effetto e grafica (il Piromante trasforma Palla di Fuoco in Palla Ignea). Le cure scalano con la statistica di chi cura, i passivi magici ora aumentano il danno e la Lancia di Ghiaccio viene scagliata contro il nemico.';
+    return 'Novità della $version: combattimento rivisto rispetto a FF6, Octopath e Fear & Hunger. L\'intenzione del nemico appare prima del colpo, Difendi dimezza i danni, stordimento e malus funzionano davvero e la Chimera combatte in tre fasi (carica annunciata, Muraglia di Pietra con sigilli, rinforzi). Reliquie in percentuale, santuario che dona un\'abilità e riepilogo con la causa della morte.';
   }
 
   @override

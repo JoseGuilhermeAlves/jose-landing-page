@@ -976,7 +976,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'New in $version: evolving into a subclass rewrites a skill — name, effect and visuals (the Pyromancer turns Fireball into Igneous Ball). Heals scale with the healer\'s stats, spell passives now raise damage, and Ice Lance is thrown at the enemy.';
+    return 'New in $version: combat reworked against FF6, Octopath and Fear & Hunger. Enemy intents show before the blow, Defend halves damage, stun and debuffs truly work, and the Chimera fights in three phases (announced charge, a sealed Stone Wall, adds). Percentage relics, a skill-granting shrine and a recap that names what killed you.';
   }
 
   @override

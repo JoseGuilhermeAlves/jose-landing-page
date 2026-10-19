@@ -932,7 +932,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return '$version 新内容:进阶子职业后,会改写一个技能的名称、效果与特效(火法师的火球术变为烈焰球)。治疗量随施法者属性成长,法术被动终于能提升伤害,冰枪也改为投向敌人。';
+    return '$version 新内容:参照 FF6、八方旅人与 Fear & Hunger 重做战斗。敌人意图在出手前显示,防御使伤害减半,眩晕与减益真正生效,奇美拉分三阶段作战(预告的蓄力、带封印的石墙、援军)。遗物改为百分比加成,祭坛可获得新技能,结算会显示死因。';
   }
 
   @override

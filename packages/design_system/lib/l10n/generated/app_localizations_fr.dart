@@ -981,7 +981,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Nouveautés de la $version : en évoluant, la sous-classe réécrit une compétence — nom, effet et visuel (le Pyromancien change Boule de Feu en Boule Ignée). Les soins évoluent avec la caractéristique du soigneur, les passifs de magie augmentent enfin les dégâts et la Lance de Glace est lancée sur l\'ennemi.';
+    return 'Nouveautés de la $version : combat revu face à FF6, Octopath et Fear & Hunger. L\'intention ennemie s\'affiche avant le coup, Défendre divise les dégâts par deux, l\'étourdissement et les malus fonctionnent vraiment, et la Chimère combat en trois phases (charge annoncée, Muraille de Pierre à sceaux, renforts). Reliques en %, sanctuaire qui offre une compétence et bilan indiquant la cause de la mort.';
   }
 
   @override

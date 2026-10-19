@@ -979,7 +979,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Neu in $version: Beim Aufstieg schreibt die Unterklasse eine Fähigkeit um — Name, Wirkung und Optik (der Pyromant macht aus dem Feuerball den Glutball). Heilungen skalieren mit dem Wert des Heilers, Zauber-Passive erhöhen jetzt den Schaden, und die Eislanze wird auf den Gegner geschleudert.';
+    return 'Neu in $version: Kampf überarbeitet nach dem Vorbild von FF6, Octopath und Fear & Hunger. Gegnerabsichten erscheinen vor dem Schlag, Verteidigen halbiert den Schaden, Betäubung und Schwächungen wirken wirklich, und die Chimäre kämpft in drei Phasen (angekündigter Ansturm, versiegelte Steinmauer, Verstärkung). Relikte in Prozent, ein Schrein mit neuer Fähigkeit und eine Bilanz, die die Todesursache nennt.';
   }
 
   @override

@@ -334,7 +334,7 @@
   "game_partnerSubject": "パートナーシップ — Poço",
   "game_demoTitle": "プレイアブルデモ",
   "game_demoBody": "Windows と Android 向けの MVP テストビルド。キーボード、ゲームパッド、タッチ操作に対応しています。",
-  "game_demoUpdate": "{version} の新要素:サブクラスに進化すると、スキル 1 つの名前・効果・演出が書き換わります(パイロマンサーはファイアボールが「イグニアスボール」に)。回復は使い手の能力値に比例し、魔法系パッシブがダメージを正しく上げるようになり、アイスランスは敵へ投げつける演出になりました。",
+  "game_demoUpdate": "{version} の新要素:FF6・オクトパストラベラー・Fear & Hunger を参考に戦闘を刷新。敵の行動予告が攻撃前に表示され、防御でダメージ半減、スタンや弱体が正しく効くように。キマイラは 3 段階で戦います(予告されたチャージ、封印付きの石の城壁、増援)。レリックは % 補正に、祠ではスキルを獲得でき、リザルトに死因が表示されます。",
   "game_ctaWindows": "Windows .zip - 116 MB",
   "game_ctaAndroid": "Android .apk - 149 MB",
   "game_demoNote": "Windows:.zip を展開して Poco.exe を実行してください。Android:.apk を開く前に提供元不明のアプリのインストールを許可してください。",

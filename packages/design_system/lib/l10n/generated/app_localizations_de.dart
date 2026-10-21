@@ -979,14 +979,14 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Neu in $version: Gegner und Helden zerfallen in Pixel, Schwächen sind zunächst verborgen und zeigen sich beim Treffer, und die Zugleiste zeigt die echte Reihenfolge. Eliten folgen einem Alpha, der den am schwersten verletzten Helden jagt, und die Chimäre fordert wieder ihren Preis. Eine Gruppe aus 4 mit Reserve, Rekruten, die bereit ankommen, und Ereignisse auf der Karte — Wetten, die du ablehnen kannst.';
+    return 'Neu in $version: Pick ist auf jeder Ebene gefangen, und wie du ihn behandelst, entscheidet, wie alles endet. Jede Ebene hat ihr eigenes Gesicht und eigene Entscheidungsereignisse, Jäger zeigen, was sie sehen — erwisch sie von hinten oder gerate in einen Hinterhalt — und Relikte fordern jetzt einen Preis. Ein Kodex bewahrt jede Lüge, die Pick erzählt. Spielbar auf Englisch oder Portugiesisch, mit Touch-Menüs auf dem Handy.';
   }
 
   @override
-  String get game_ctaWindows => 'Windows .zip - 116 MB';
+  String get game_ctaWindows => 'Windows .zip - 115 MB';
 
   @override
-  String get game_ctaAndroid => 'Android .apk - 149 MB';
+  String get game_ctaAndroid => 'Android .apk - 151 MB';
 
   @override
   String get game_demoNote =>

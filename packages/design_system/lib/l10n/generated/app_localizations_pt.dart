@@ -976,14 +976,14 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Novo na $version: inimigos e heróis se desintegram em pixels, fraquezas começam escondidas e são reveladas no golpe, e a barra de turno mostra a ordem real. Elites têm um líder Alpha que caça o herói mais ferido, e a Quimera volta a cobrar caro. Grupo de 4 com reserva, recrutas chegando prontos e eventos no mapa — apostas que você pode recusar.';
+    return 'Novo na $version: o Pick está preso em todo andar, e o jeito que você trata ele decide como tudo termina. Cada andar tem cara e eventos de escolha próprios, os caçadores mostram o que enxergam — pegue-os pelas costas ou caia numa emboscada — e as relíquias agora cobram um preço. Um códice guarda cada mentira que o Pick conta. Jogue em português ou inglês, com menus por toque no celular.';
   }
 
   @override
-  String get game_ctaWindows => 'Windows .zip - 116 MB';
+  String get game_ctaWindows => 'Windows .zip - 115 MB';
 
   @override
-  String get game_ctaAndroid => 'Android .apk - 149 MB';
+  String get game_ctaAndroid => 'Android .apk - 151 MB';
 
   @override
   String get game_demoNote =>

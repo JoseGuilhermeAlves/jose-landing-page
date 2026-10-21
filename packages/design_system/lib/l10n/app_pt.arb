@@ -334,14 +334,14 @@
   "game_partnerSubject": "Parceria — Poço",
   "game_demoTitle": "Demo jogável",
   "game_demoBody": "Build de testes do MVP para Windows e Android. Teclado, gamepad e toque são suportados.",
-  "game_demoUpdate": "Novo na {version}: inimigos e heróis se desintegram em pixels, fraquezas começam escondidas e são reveladas no golpe, e a barra de turno mostra a ordem real. Elites têm um líder Alpha que caça o herói mais ferido, e a Quimera volta a cobrar caro. Grupo de 4 com reserva, recrutas chegando prontos e eventos no mapa — apostas que você pode recusar.",
+  "game_demoUpdate": "Novo na {version}: o Pick está preso em todo andar, e o jeito que você trata ele decide como tudo termina. Cada andar tem cara e eventos de escolha próprios, os caçadores mostram o que enxergam — pegue-os pelas costas ou caia numa emboscada — e as relíquias agora cobram um preço. Um códice guarda cada mentira que o Pick conta. Jogue em português ou inglês, com menus por toque no celular.",
   "@game_demoUpdate": {
     "placeholders": {
       "version": {"type": "String"}
     }
   },
-  "game_ctaWindows": "Windows .zip - 116 MB",
-  "game_ctaAndroid": "Android .apk - 149 MB",
+  "game_ctaWindows": "Windows .zip - 115 MB",
+  "game_ctaAndroid": "Android .apk - 151 MB",
   "game_demoNote": "Windows: extraia o .zip e execute Poco.exe. Android: permita a instalação de apps de fontes desconhecidas antes de abrir o .apk.",
   "game_gifAlt": "Gameplay do Poço: a maga conjura Meteoro sobre a linha inimiga",
   "game_trailerTitle": "Trailer",

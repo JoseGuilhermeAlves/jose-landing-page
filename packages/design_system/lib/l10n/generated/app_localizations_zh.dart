@@ -932,14 +932,14 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return '$version 新内容:敌人与英雄会化作像素消散,弱点起初隐藏、命中后揭晓,行动条显示真实顺序。精英由一名专挑最虚弱英雄下手的头领率领,奇美拉再次成为难关。4 人队伍加替补、新队员加入即可作战,地图上还有可以拒绝的赌局事件。';
+    return '$version 新内容:皮克被困在每一层,你如何对待他决定了一切的结局。每层都有独特的外观和抉择事件,猎手会在地面上显示视野 — 从背后偷袭先手,被背后追上则遭伏击 — 圣物现在都有代价。法典会记下皮克说过的每一个谎言。支持英语和葡萄牙语,手机上可用触控菜单。';
   }
 
   @override
-  String get game_ctaWindows => 'Windows .zip - 116 MB';
+  String get game_ctaWindows => 'Windows .zip - 115 MB';
 
   @override
-  String get game_ctaAndroid => 'Android .apk - 149 MB';
+  String get game_ctaAndroid => 'Android .apk - 151 MB';
 
   @override
   String get game_demoNote =>

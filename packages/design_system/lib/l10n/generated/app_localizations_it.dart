@@ -976,14 +976,14 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Novità della $version: nemici ed eroi si disintegrano in pixel, le debolezze partono nascoste e si rivelano al colpo, e la barra dei turni mostra l\'ordine reale. Le élite seguono un Alfa che caccia l\'eroe più ferito, e la Chimera torna a farti pagare caro. Gruppo di 4 con riserva, reclute che arrivano pronte ed eventi sulla mappa — scommesse che puoi rifiutare.';
+    return 'Novità della $version: Pick è prigioniero a ogni piano, e come lo tratti decide come finisce tutto. Ogni piano ha il suo aspetto e i suoi eventi a scelta, i cacciatori mostrano ciò che vedono — colpiscili alle spalle o finisci in un\'imboscata — e le reliquie ora hanno un prezzo. Un codice conserva ogni bugia che Pick racconta. Gioca in inglese o portoghese, con menu touch su mobile.';
   }
 
   @override
-  String get game_ctaWindows => 'Windows .zip - 116 MB';
+  String get game_ctaWindows => 'Windows .zip - 115 MB';
 
   @override
-  String get game_ctaAndroid => 'Android .apk - 149 MB';
+  String get game_ctaAndroid => 'Android .apk - 151 MB';
 
   @override
   String get game_demoNote =>

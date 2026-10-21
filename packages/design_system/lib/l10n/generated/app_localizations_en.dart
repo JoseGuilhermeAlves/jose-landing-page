@@ -976,14 +976,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'New in $version: enemies and heroes disintegrate into pixels, weaknesses start hidden and are revealed on hit, and the turn bar shows the real order. Elites follow an Alpha that hunts the most wounded hero, and the Chimera makes you pay again. A party of 4 with a reserve, recruits who join ready, and map events — gambles you can refuse.';
+    return 'New in $version: Pick is caught on every floor, and how you treat him decides how it all ends. Every floor has its own look and its own choice events, hunters show what they can see — strike them from behind or get ambushed — and relics now charge a price. A codex keeps every lie Pick tells. Play in English or Portuguese, with touch menus on mobile.';
   }
 
   @override
-  String get game_ctaWindows => 'Windows .zip - 116 MB';
+  String get game_ctaWindows => 'Windows .zip - 115 MB';
 
   @override
-  String get game_ctaAndroid => 'Android .apk - 149 MB';
+  String get game_ctaAndroid => 'Android .apk - 151 MB';
 
   @override
   String get game_demoNote =>

@@ -979,14 +979,14 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Novedades en $version: enemigos y héroes se desintegran en píxeles, las debilidades empiezan ocultas y se revelan al golpear, y la barra de turnos muestra el orden real. Los élites siguen a un Alfa que caza al héroe más herido, y la Quimera vuelve a cobrar caro. Grupo de 4 con reserva, reclutas que llegan listos y eventos en el mapa: apuestas que puedes rechazar.';
+    return 'Novedades en $version: Pick está atrapado en cada piso, y cómo lo tratas decide cómo termina todo. Cada piso tiene su propio aspecto y sus propios eventos de elección, los cazadores muestran lo que ven — atácalos por la espalda o cae en una emboscada — y las reliquias ahora cobran un precio. Un códice guarda cada mentira que cuenta Pick. Juega en inglés o portugués, con menús táctiles en el móvil.';
   }
 
   @override
-  String get game_ctaWindows => 'Windows .zip - 116 MB';
+  String get game_ctaWindows => 'Windows .zip - 115 MB';
 
   @override
-  String get game_ctaAndroid => 'Android .apk - 149 MB';
+  String get game_ctaAndroid => 'Android .apk - 151 MB';
 
   @override
   String get game_demoNote =>

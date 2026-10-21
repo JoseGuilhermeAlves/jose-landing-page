@@ -944,14 +944,14 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return '$version の新要素:敵も仲間もピクセルとなって崩れ去り、弱点は最初は隠され攻撃で判明、行動順バーは実際の順番を表示します。エリートは最も傷ついたヒーローを狙うアルファに率いられ、キマイラは再び手強い壁に。4 人パーティーと控え、すぐ戦える仲間の加入、そしてマップ上のイベント — 断ることもできる賭けです。';
+    return '$version の新要素:ピックはどの階層でも囚われており、彼をどう扱うかで結末が変わります。階層ごとに独自の景色と選択イベントがあり、追跡者は視界を床に映します — 背後を取れば先制、背後を取られれば奇襲。レリックには代償が伴うようになりました。ピックがつく嘘はすべてコーデックスに記録されます。英語とポルトガル語に対応し、スマホではタッチ操作のメニューが使えます。';
   }
 
   @override
-  String get game_ctaWindows => 'Windows .zip - 116 MB';
+  String get game_ctaWindows => 'Windows .zip - 115 MB';
 
   @override
-  String get game_ctaAndroid => 'Android .apk - 149 MB';
+  String get game_ctaAndroid => 'Android .apk - 151 MB';
 
   @override
   String get game_demoNote =>

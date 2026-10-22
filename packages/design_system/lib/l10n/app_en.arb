@@ -334,7 +334,7 @@
   "game_partnerSubject": "Partnership — Poço",
   "game_demoTitle": "Playable demo",
   "game_demoBody": "MVP test build for Windows and Android. Keyboard, gamepad and touch are supported.",
-  "game_demoUpdate": "New in {version}: Pick is caught on every floor, and how you treat him decides how it all ends. Every floor has its own look and its own choice events, hunters show what they can see — strike them from behind or get ambushed — and relics now charge a price. A codex keeps every lie Pick tells. Play in English or Portuguese, with touch menus on mobile.",
+  "game_demoUpdate": "New in {version}: every floor has its own monsters — rim rats, cistern drowned, village dead, the nest's brood — and whoever caught Pick now fights back. Wish-coins buy favours at the shrine and from a peddler of the deep. Three classes change weapons as they evolve, every skill has its own effect, and the dark outside the rooms is no longer empty.",
   "game_ctaWindows": "Windows .zip - 115 MB",
   "game_ctaAndroid": "Android .apk - 151 MB",
   "game_demoNote": "Windows: extract the .zip and run Poco.exe. Android: allow installing apps from unknown sources before opening the .apk.",

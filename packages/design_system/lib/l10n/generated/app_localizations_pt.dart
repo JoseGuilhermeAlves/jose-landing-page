@@ -976,7 +976,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Novo na $version: o Pick está preso em todo andar, e o jeito que você trata ele decide como tudo termina. Cada andar tem cara e eventos de escolha próprios, os caçadores mostram o que enxergam — pegue-os pelas costas ou caia numa emboscada — e as relíquias agora cobram um preço. Um códice guarda cada mentira que o Pick conta. Jogue em português ou inglês, com menus por toque no celular.';
+    return 'Novo na $version: cada andar tem seus próprios monstros — ratos da borda, afogados da cisterna, mortos da vila, a cria do ninho — e quem prendeu o Pick agora luta. Moedas de desejo compram favores no santuário e com um mascate das profundezas. Três classes trocam de arma ao evoluir, toda skill ganhou efeito próprio, e o escuro fora das salas não está mais vazio.';
   }
 
   @override

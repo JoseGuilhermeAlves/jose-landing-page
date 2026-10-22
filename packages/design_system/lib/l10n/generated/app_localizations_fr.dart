@@ -981,7 +981,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Nouveautés de la $version : Pick est captif à chaque étage, et la façon dont vous le traitez décide de la fin. Chaque étage a son propre visage et ses propres événements à choix, les chasseurs montrent ce qu\'ils voient — prenez-les à revers ou tombez dans une embuscade — et les reliques ont désormais un prix. Un codex garde chaque mensonge de Pick. Jouez en anglais ou en portugais, avec des menus tactiles sur mobile.';
+    return 'Nouveau dans la $version : chaque étage a ses propres monstres — rats de la margelle, noyés de la citerne, morts du village, couvée du nid — et celui qui a capturé Pick se bat désormais. Les pièces à vœux achètent des faveurs au sanctuaire et auprès d\'un colporteur des profondeurs. Trois classes changent d\'arme en évoluant, chaque compétence a son propre effet, et l\'obscurité hors des salles n\'est plus vide.';
   }
 
   @override

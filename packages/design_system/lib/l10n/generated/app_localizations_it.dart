@@ -976,7 +976,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Novità della $version: Pick è prigioniero a ogni piano, e come lo tratti decide come finisce tutto. Ogni piano ha il suo aspetto e i suoi eventi a scelta, i cacciatori mostrano ciò che vedono — colpiscili alle spalle o finisci in un\'imboscata — e le reliquie ora hanno un prezzo. Un codice conserva ogni bugia che Pick racconta. Gioca in inglese o portoghese, con menu touch su mobile.';
+    return 'Novità nella $version: ogni piano ha i suoi mostri — ratti del bordo, annegati della cisterna, morti del villaggio, la covata del nido — e chi ha catturato Pick ora combatte. Le monete dei desideri comprano favori al santuario e da un venditore ambulante degli abissi. Tre classi cambiano arma evolvendosi, ogni abilità ha il suo effetto e il buio fuori dalle stanze non è più vuoto.';
   }
 
   @override

@@ -979,7 +979,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Neu in $version: Pick ist auf jeder Ebene gefangen, und wie du ihn behandelst, entscheidet, wie alles endet. Jede Ebene hat ihr eigenes Gesicht und eigene Entscheidungsereignisse, Jäger zeigen, was sie sehen — erwisch sie von hinten oder gerate in einen Hinterhalt — und Relikte fordern jetzt einen Preis. Ein Kodex bewahrt jede Lüge, die Pick erzählt. Spielbar auf Englisch oder Portugiesisch, mit Touch-Menüs auf dem Handy.';
+    return 'Neu in $version: Jedes Stockwerk hat eigene Monster — Ratten am Brunnenrand, Ertrunkene der Zisterne, Tote des Dorfes, die Brut des Nests — und wer Pick gefangen hält, kämpft jetzt. Wunschmünzen kaufen Gefälligkeiten am Schrein und bei einem Hausierer der Tiefe. Drei Klassen wechseln beim Entwickeln die Waffe, jede Fähigkeit hat ihren eigenen Effekt, und die Dunkelheit außerhalb der Räume ist nicht mehr leer.';
   }
 
   @override

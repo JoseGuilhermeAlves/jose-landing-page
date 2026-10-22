@@ -976,7 +976,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'New in $version: Pick is caught on every floor, and how you treat him decides how it all ends. Every floor has its own look and its own choice events, hunters show what they can see — strike them from behind or get ambushed — and relics now charge a price. A codex keeps every lie Pick tells. Play in English or Portuguese, with touch menus on mobile.';
+    return 'New in $version: every floor has its own monsters — rim rats, cistern drowned, village dead, the nest\'s brood — and whoever caught Pick now fights back. Wish-coins buy favours at the shrine and from a peddler of the deep. Three classes change weapons as they evolve, every skill has its own effect, and the dark outside the rooms is no longer empty.';
   }
 
   @override

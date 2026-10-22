@@ -932,7 +932,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return '$version 新内容:皮克被困在每一层,你如何对待他决定了一切的结局。每层都有独特的外观和抉择事件,猎手会在地面上显示视野 — 从背后偷袭先手,被背后追上则遭伏击 — 圣物现在都有代价。法典会记下皮克说过的每一个谎言。支持英语和葡萄牙语,手机上可用触控菜单。';
+    return '$version 新内容：每层都有独有的怪物——井缘的老鼠、蓄水池的溺尸、村庄的亡者、巢穴的幼崽——抓住皮克的家伙现在会亲自出手。许愿币可在神龛和深渊行商处换取恩惠。三个职业进化时会更换武器，每个技能都有专属特效，房间外的黑暗也不再空无一物。';
   }
 
   @override

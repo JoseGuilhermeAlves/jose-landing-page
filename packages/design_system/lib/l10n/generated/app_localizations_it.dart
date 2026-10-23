@@ -976,7 +976,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Novità nella $version: ogni piano ha i suoi mostri — ratti del bordo, annegati della cisterna, morti del villaggio, la covata del nido — e chi ha catturato Pick ora combatte. Le monete dei desideri comprano favori al santuario e da un venditore ambulante degli abissi. Tre classi cambiano arma evolvendosi, ogni abilità ha il suo effetto e il buio fuori dalle stanze non è più vuoto.';
+    return 'Novità nella $version: ogni piano ha i suoi mostri — ratti del bordo, annegati della cisterna, morti del villaggio, la covata del nido — e chi ha catturato Pick ora combatte. Le monete dei desideri comprano favori al santuario e da un venditore ambulante degli abissi. Tre classi cambiano arma evolvendosi, ogni abilità ha il suo effetto e il buio fuori dalle stanze non è più vuoto. Quando evolve, l\'eroe ascende sulla scena. Le sottoclassi hanno un nuovo aspetto e il negromante può diventare Lich.';
   }
 
   @override

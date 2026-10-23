@@ -976,7 +976,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'New in $version: every floor has its own monsters — rim rats, cistern drowned, village dead, the nest\'s brood — and whoever caught Pick now fights back. Wish-coins buy favours at the shrine and from a peddler of the deep. Three classes change weapons as they evolve, every skill has its own effect, and the dark outside the rooms is no longer empty.';
+    return 'New in $version: every floor has its own monsters — rim rats, cistern drowned, village dead, the nest\'s brood — and whoever caught Pick now fights back. Wish-coins buy favours at the shrine and from a peddler of the deep. Three classes change weapons as they evolve, every skill has its own effect, and the dark outside the rooms is no longer empty. When a hero evolves, they ascend on screen. Subclasses got new looks, and the necromancer can become a Lich.';
   }
 
   @override

@@ -334,7 +334,7 @@
   "game_partnerSubject": "Collaborazione — Poço",
   "game_demoTitle": "Demo giocabile",
   "game_demoBody": "Build di test dell'MVP per Windows e Android. Supporta tastiera, gamepad e touch.",
-  "game_demoUpdate": "Novità nella {version}: ogni piano ha i suoi mostri — ratti del bordo, annegati della cisterna, morti del villaggio, la covata del nido — e chi ha catturato Pick ora combatte. Le monete dei desideri comprano favori al santuario e da un venditore ambulante degli abissi. Tre classi cambiano arma evolvendosi, ogni abilità ha il suo effetto e il buio fuori dalle stanze non è più vuoto.",
+  "game_demoUpdate": "Novità nella {version}: ogni piano ha i suoi mostri — ratti del bordo, annegati della cisterna, morti del villaggio, la covata del nido — e chi ha catturato Pick ora combatte. Le monete dei desideri comprano favori al santuario e da un venditore ambulante degli abissi. Tre classi cambiano arma evolvendosi, ogni abilità ha il suo effetto e il buio fuori dalle stanze non è più vuoto. Quando evolve, l'eroe ascende sulla scena. Le sottoclassi hanno un nuovo aspetto e il negromante può diventare Lich.",
   "game_ctaWindows": "Windows .zip - 115 MB",
   "game_ctaAndroid": "Android .apk - 151 MB",
   "game_demoNote": "Windows: estrai il .zip ed esegui Poco.exe. Android: consenti l'installazione da origini sconosciute prima di aprire il .apk.",

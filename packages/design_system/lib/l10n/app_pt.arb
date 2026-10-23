@@ -334,7 +334,7 @@
   "game_partnerSubject": "Parceria — Poço",
   "game_demoTitle": "Demo jogável",
   "game_demoBody": "Build de testes do MVP para Windows e Android. Teclado, gamepad e toque são suportados.",
-  "game_demoUpdate": "Novo na {version}: cada andar tem seus próprios monstros — ratos da borda, afogados da cisterna, mortos da vila, a cria do ninho — e quem prendeu o Pick agora luta. Moedas de desejo compram favores no santuário e com um mascate das profundezas. Três classes trocam de arma ao evoluir, toda skill ganhou efeito próprio, e o escuro fora das salas não está mais vazio.",
+  "game_demoUpdate": "Novo na {version}: cada andar tem seus próprios monstros — ratos da borda, afogados da cisterna, mortos da vila, a cria do ninho — e quem prendeu o Pick agora luta. Moedas de desejo compram favores no santuário e com um mascate das profundezas. Três classes trocam de arma ao evoluir, toda skill ganhou efeito próprio, e o escuro fora das salas não está mais vazio. Ao evoluir, o herói ascende em cena. As subclasses ganharam visual novo, e o necromante pode virar Lich.",
   "@game_demoUpdate": {
     "placeholders": {
       "version": {"type": "String"}

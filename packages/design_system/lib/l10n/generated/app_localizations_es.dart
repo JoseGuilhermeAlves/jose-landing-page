@@ -979,7 +979,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Novedades en $version: cada piso tiene sus propios monstruos — ratas del borde, ahogados de la cisterna, muertos de la aldea, la cría del nido — y quien atrapó a Pick ahora pelea. Las monedas de deseo compran favores en el santuario y a un buhonero de las profundidades. Tres clases cambian de arma al evolucionar, cada habilidad tiene su propio efecto y la oscuridad fuera de las salas ya no está vacía.';
+    return 'Novedades en $version: cada piso tiene sus propios monstruos — ratas del borde, ahogados de la cisterna, muertos de la aldea, la cría del nido — y quien atrapó a Pick ahora pelea. Las monedas de deseo compran favores en el santuario y a un buhonero de las profundidades. Tres clases cambian de arma al evolucionar, cada habilidad tiene su propio efecto y la oscuridad fuera de las salas ya no está vacía. Al evolucionar, el héroe asciende en escena. Las subclases tienen nuevo aspecto y el nigromante puede volverse Liche.';
   }
 
   @override

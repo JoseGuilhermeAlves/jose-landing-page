@@ -1903,7 +1903,7 @@ abstract class AppLocalizations {
   /// No description provided for @game_demoUpdate.
   ///
   /// In pt, this message translates to:
-  /// **'Novo na {version}: cada andar tem seus próprios monstros — ratos da borda, afogados da cisterna, mortos da vila, a cria do ninho — e quem prendeu o Pick agora luta. Moedas de desejo compram favores no santuário e com um mascate das profundezas. Três classes trocam de arma ao evoluir, toda skill ganhou efeito próprio, e o escuro fora das salas não está mais vazio.'**
+  /// **'Novo na {version}: cada andar tem seus próprios monstros — ratos da borda, afogados da cisterna, mortos da vila, a cria do ninho — e quem prendeu o Pick agora luta. Moedas de desejo compram favores no santuário e com um mascate das profundezas. Três classes trocam de arma ao evoluir, toda skill ganhou efeito próprio, e o escuro fora das salas não está mais vazio. Ao evoluir, o herói ascende em cena. As subclasses ganharam visual novo, e o necromante pode virar Lich.'**
   String game_demoUpdate(String version);
 
   /// No description provided for @game_ctaWindows.

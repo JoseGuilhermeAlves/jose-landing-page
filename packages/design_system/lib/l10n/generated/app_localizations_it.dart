@@ -976,7 +976,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Novità nella $version: ogni piano ha i suoi mostri — ratti del bordo, annegati della cisterna, morti del villaggio, la covata del nido — e chi ha catturato Pick ora combatte. Le monete dei desideri comprano favori al santuario e da un venditore ambulante degli abissi. Tre classi cambiano arma evolvendosi, ogni abilità ha il suo effetto e il buio fuori dalle stanze non è più vuoto. Quando evolve, l\'eroe ascende sulla scena. Le sottoclassi hanno un nuovo aspetto e il negromante può diventare Lich.';
+    return 'Novità nella $version: cinque fasi tra cui scegliere — dalla Tana degli Uomini-Ratto all\'Abisso —, ognuna una partita a sé, con bioma, suoni e creature propri. Oltre 60 mostri ridisegnati che camminano davvero sulla mappa e combattono con tattiche: caricano i colpi, proteggono gli alleati, chiamano rinforzi, esplodono morendo. Piani più grandi, gente lungo la strada, Pick prigioniero in ogni fase e nuovi effetti sonori.';
   }
 
   @override

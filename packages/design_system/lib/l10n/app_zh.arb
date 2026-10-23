@@ -334,7 +334,7 @@
   "game_partnerSubject": "合作 — Poço",
   "game_demoTitle": "可玩 Demo",
   "game_demoBody": "适用于 Windows 和 Android 的 MVP 测试版本。支持键盘、手柄和触屏。",
-  "game_demoUpdate": "{version} 新内容：每层都有独有的怪物——井缘的老鼠、蓄水池的溺尸、村庄的亡者、巢穴的幼崽——抓住皮克的家伙现在会亲自出手。许愿币可在神龛和深渊行商处换取恩惠。三个职业进化时会更换武器，每个技能都有专属特效，房间外的黑暗也不再空无一物。英雄进化时会在画面中升华。子职业换上了全新外观，死灵法师可以成为巫妖。",
+  "game_demoUpdate": "{version} 新内容:五个关卡任你选择——从鼠人巢穴到深渊——每一个都是独立的一局,拥有各自的生态、音效与生物。60 多种重新绘制的怪物会真正在地图上行走,并带着战术作战:蓄力重击、保护同伴、呼叫援军、死亡时爆炸。更大的楼层、旅途中的人们、每个关卡都被困的皮克,以及全新的音效。",
   "game_ctaWindows": "Windows .zip - 115 MB",
   "game_ctaAndroid": "Android .apk - 151 MB",
   "game_demoNote": "Windows:解压 .zip 并运行 Poco.exe。Android:打开 .apk 前请允许安装未知来源的应用。",

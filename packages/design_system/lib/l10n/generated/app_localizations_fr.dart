@@ -981,7 +981,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Nouveau dans la $version : chaque étage a ses propres monstres — rats de la margelle, noyés de la citerne, morts du village, couvée du nid — et celui qui a capturé Pick se bat désormais. Les pièces à vœux achètent des faveurs au sanctuaire et auprès d\'un colporteur des profondeurs. Trois classes changent d\'arme en évoluant, chaque compétence a son propre effet, et l\'obscurité hors des salles n\'est plus vide. En évoluant, le héros s\'élève à l\'écran. Les sous-classes ont un nouveau look, et le nécromancien peut devenir Liche.';
+    return 'Nouveau dans la $version : cinq phases au choix — du Terrier des Hommes-Rats à l\'Abîme —, chacune une partie à part, avec son biome, son ambiance et ses créatures. Plus de 60 monstres redessinés qui marchent vraiment sur la carte et combattent avec tactique : ils préparent leurs coups, protègent leurs alliés, appellent des renforts, explosent en mourant. Des étages plus grands, des rencontres en chemin, Pick prisonnier à chaque phase et de nouveaux effets sonores.';
   }
 
   @override

@@ -976,7 +976,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Novo na $version: cada andar tem seus próprios monstros — ratos da borda, afogados da cisterna, mortos da vila, a cria do ninho — e quem prendeu o Pick agora luta. Moedas de desejo compram favores no santuário e com um mascate das profundezas. Três classes trocam de arma ao evoluir, toda skill ganhou efeito próprio, e o escuro fora das salas não está mais vazio. Ao evoluir, o herói ascende em cena. As subclasses ganharam visual novo, e o necromante pode virar Lich.';
+    return 'Novo na $version: cinco fases para escolher — da Toca do Povo-Rato ao Abismo —, cada uma uma run própria, com bioma, som e criaturas. Mais de 60 monstros redesenhados que andam de verdade pelo mapa e lutam com táticas: preparam golpes, protegem aliados, chamam reforço, explodem ao morrer. Andares maiores, gente pelo caminho, o Pick preso em todas as fases e efeitos sonoros novos.';
   }
 
   @override

@@ -979,7 +979,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Novedades en $version: cada piso tiene sus propios monstruos — ratas del borde, ahogados de la cisterna, muertos de la aldea, la cría del nido — y quien atrapó a Pick ahora pelea. Las monedas de deseo compran favores en el santuario y a un buhonero de las profundidades. Tres clases cambian de arma al evolucionar, cada habilidad tiene su propio efecto y la oscuridad fuera de las salas ya no está vacía. Al evolucionar, el héroe asciende en escena. Las subclases tienen nuevo aspecto y el nigromante puede volverse Liche.';
+    return 'Novedades en $version: cinco fases para elegir — de la Madriguera de los Hombres-Rata al Abismo —, cada una una partida propia, con su bioma, sonido y criaturas. Más de 60 monstruos rediseñados que caminan de verdad por el mapa y luchan con tácticas: preparan golpes, protegen aliados, piden refuerzos, estallan al morir. Pisos más grandes, gente en el camino, Pick atrapado en cada fase y nuevos efectos de sonido.';
   }
 
   @override

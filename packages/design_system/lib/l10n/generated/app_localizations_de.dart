@@ -915,4 +915,93 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get locale_ru => 'Русский';
+
+  @override
+  String get nav_game => 'Spiel';
+
+  @override
+  String get game_eyebrow => 'Eigenes Projekt';
+
+  @override
+  String get game_title => 'Poço —';
+
+  @override
+  String get game_titleAccent => 'in Entwicklung.';
+
+  @override
+  String get game_subtitle =>
+      'Ein rundenbasiertes Dungeon-Roguelike, entwickelt mit Godot 4 und C#. Klassische JRPG-Kämpfe, inszeniert im 2D-HD-Stil.';
+
+  @override
+  String get game_body =>
+      'Stelle eine Gruppe aus drei Helden zusammen und steige in den Schacht hinab: fünf Ebenen bis zum Boss, Monster, die dich sehen und verfolgen, permanenter Tod. Jeder Durchlauf ergibt einen anderen Build.';
+
+  @override
+  String get game_factCombatTitle => 'Rundenbasierter Kampf (ATB)';
+
+  @override
+  String get game_factCombatBody =>
+      'Waffenfähigkeiten treten vor und schlagen zu; Zauber werden vor Ort gewirkt. Elementarmarken verbinden sich zu Reaktionen.';
+
+  @override
+  String get game_factBuildTitle => 'Ein Build mit jedem Level';
+
+  @override
+  String get game_factBuildBody =>
+      'Jeder Levelaufstieg bietet eine von drei Fähigkeiten. Wird eine Fähigkeit erneut gewählt, steigt ihr Rang; auf Rang 3 entwickelt sie sich mit dem passenden Partner zu einem Höhepunkt.';
+
+  @override
+  String get game_factStackTitle => 'Engineering';
+
+  @override
+  String get game_factStackBody =>
+      'Engine-unabhängige C#-Domäne, 435 Headless-Tests und Simulation kompletter Durchläufe für das Balancing.';
+
+  @override
+  String get game_partnerTitle => 'Künstler für eine Partnerschaft gesucht';
+
+  @override
+  String get game_partnerBody =>
+      'Poço wird von einer einzigen Person entwickelt und nutzt derzeit KI-generierte Grafik. Ziel ist, sie durch von Menschen geschaffene Kunst zu ersetzen: Gesucht sind Pixel-Artists, Animatoren und Musiker, die das Spiel als Partner mitgestalten möchten.';
+
+  @override
+  String get game_ctaPartner => 'Ich möchte mitwirken';
+
+  @override
+  String get game_partnerSubject => 'Partnerschaft — Poço';
+
+  @override
+  String get game_demoTitle => 'Spielbare Demo';
+
+  @override
+  String get game_demoBody =>
+      'MVP-Testbuild für Windows und Android. Tastatur, Gamepad und Touch werden unterstützt.';
+
+  @override
+  String game_demoUpdate(String version) {
+    return 'Neu in $version: fünf Phasen zur Wahl — vom Bau des Rattenvolks bis zum Abgrund —, jede ein eigener Lauf mit eigenem Biom, Klang und eigenen Kreaturen. Über 60 neu gezeichnete Monster, die wirklich über die Karte laufen und taktisch kämpfen: Sie holen zu Schlägen aus, schützen Verbündete, rufen Verstärkung und explodieren beim Tod. Größere Ebenen, Begegnungen unterwegs, Pick in jeder Phase gefangen und neue Soundeffekte.';
+  }
+
+  @override
+  String get game_ctaWindows => 'Windows .zip - 115 MB';
+
+  @override
+  String get game_ctaAndroid => 'Android .apk - 151 MB';
+
+  @override
+  String get game_demoNote =>
+      'Windows: .zip entpacken und Poco.exe starten. Android: vor dem Öffnen der .apk die Installation aus unbekannten Quellen erlauben.';
+
+  @override
+  String get game_gifAlt =>
+      'Poço-Gameplay: die Magierin wirkt Meteor auf die gegnerische Reihe';
+
+  @override
+  String get game_trailerTitle => 'Trailer';
+
+  @override
+  String get game_trailerPlay => 'Trailer ansehen';
+
+  @override
+  String get game_trailerAlt => 'Poço-Trailer';
 }

@@ -34,4 +34,33 @@ abstract final class AppConfig {
   /// unicos PDFs mantidos — ver decisao 2026-06-17).
   static String resumeUrlFor(String languageCode) =>
       languageCode == 'pt' ? resumeUrlPt : resumeUrlEn;
+
+  /// Base dos downloads da demo do Poço. Os binarios passam do limite de
+  /// 100 MB por arquivo do GitHub Pages, entao moram numa GitHub Release
+  /// do repo publico da landing. Pra preview local, sobrescrever com
+  /// `--dart-define=POCO_DEMO_BASE=http://localhost:<porta>/`.
+  static const String pocoDemoBase = String.fromEnvironment(
+    'POCO_DEMO_BASE',
+    defaultValue:
+        'https://github.com/JoseGuilhermeAlves/jose-landing-page/releases/download/poco-demo/',
+  );
+
+  /// Versao do build publicado na release — trocar junto com o upload.
+  static const String pocoDemoVersion = 'v0.9.0';
+
+  static const String pocoDemoWindowsUrl =
+      '${pocoDemoBase}Poco-demo-windows.zip';
+  static const String pocoDemoAndroidUrl =
+      '${pocoDemoBase}Poco-demo-android.apk';
+
+  /// Trailer do Poço em versao web (720p, ~14 MB) servido do proprio
+  /// Pages a partir de `apps/landing/web/trailer/` — asset de Release
+  /// vem como download, nao toca no navegador. O original 1080p fica na
+  /// Release `poco-demo`.
+  static const String pocoTrailerUrl = 'trailer/poco-trailer.mp4';
+
+  /// Poster do trailer — asset Flutter (o widget usa `Image.asset`; o
+  /// `<video>` aponta pro mesmo arquivo pela URL publicada do asset).
+  static const String pocoTrailerPosterAsset =
+      'assets/images/poco_trailer_poster.jpg';
 }

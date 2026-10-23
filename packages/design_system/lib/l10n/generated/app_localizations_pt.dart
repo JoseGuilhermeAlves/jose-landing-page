@@ -912,4 +912,93 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get locale_ru => 'Русский';
+
+  @override
+  String get nav_game => 'Jogo';
+
+  @override
+  String get game_eyebrow => 'Projeto autoral';
+
+  @override
+  String get game_title => 'Poço —';
+
+  @override
+  String get game_titleAccent => 'em desenvolvimento.';
+
+  @override
+  String get game_subtitle =>
+      'Roguelike de masmorra por turnos, feito em Godot 4 e C#. Combate JRPG clássico, encenado em estilo 2D-HD.';
+
+  @override
+  String get game_body =>
+      'Monte um grupo de três heróis e desça ao Poço: cinco andares até o chefe, monstros que enxergam e perseguem, morte permanente. Cada partida resulta em uma build diferente.';
+
+  @override
+  String get game_factCombatTitle => 'Combate por turnos (ATB)';
+
+  @override
+  String get game_factCombatBody =>
+      'Habilidades de arma avançam e golpeiam; magias são conjuradas no lugar. Marcas elementais se combinam em reações.';
+
+  @override
+  String get game_factBuildTitle => 'Build a cada nível';
+
+  @override
+  String get game_factBuildBody =>
+      'Cada level-up oferece uma habilidade entre três. Repetir uma habilidade aumenta o rank; no rank 3, com a parceira certa, ela evolui para um clímax.';
+
+  @override
+  String get game_factStackTitle => 'Engenharia';
+
+  @override
+  String get game_factStackBody =>
+      'Domínio em C# isolado da engine, 435 testes headless e simulação de partidas completas para balanceamento.';
+
+  @override
+  String get game_partnerTitle => 'Procuro artistas para parceria';
+
+  @override
+  String get game_partnerBody =>
+      'O Poço é desenvolvido por uma pessoa e hoje usa arte gerada por IA. O objetivo é substituí-la por arte feita por pessoas: busco pixel artists, animadores e músicos interessados em construir o jogo em parceria.';
+
+  @override
+  String get game_ctaPartner => 'Quero colaborar';
+
+  @override
+  String get game_partnerSubject => 'Parceria — Poço';
+
+  @override
+  String get game_demoTitle => 'Demo jogável';
+
+  @override
+  String get game_demoBody =>
+      'Build de testes do MVP para Windows e Android. Teclado, gamepad e toque são suportados.';
+
+  @override
+  String game_demoUpdate(String version) {
+    return 'Novo na $version: cinco fases para escolher — da Toca do Povo-Rato ao Abismo —, cada uma uma run própria, com bioma, som e criaturas. Mais de 60 monstros redesenhados que andam de verdade pelo mapa e lutam com táticas: preparam golpes, protegem aliados, chamam reforço, explodem ao morrer. Andares maiores, gente pelo caminho, o Pick preso em todas as fases e efeitos sonoros novos.';
+  }
+
+  @override
+  String get game_ctaWindows => 'Windows .zip - 115 MB';
+
+  @override
+  String get game_ctaAndroid => 'Android .apk - 151 MB';
+
+  @override
+  String get game_demoNote =>
+      'Windows: extraia o .zip e execute Poco.exe. Android: permita a instalação de apps de fontes desconhecidas antes de abrir o .apk.';
+
+  @override
+  String get game_gifAlt =>
+      'Gameplay do Poço: a maga conjura Meteoro sobre a linha inimiga';
+
+  @override
+  String get game_trailerTitle => 'Trailer';
+
+  @override
+  String get game_trailerPlay => 'Assistir trailer';
+
+  @override
+  String get game_trailerAlt => 'Trailer do Poço';
 }

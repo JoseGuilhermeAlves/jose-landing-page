@@ -915,4 +915,93 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get locale_ru => 'Русский';
+
+  @override
+  String get nav_game => 'Juego';
+
+  @override
+  String get game_eyebrow => 'Proyecto propio';
+
+  @override
+  String get game_title => 'Poço —';
+
+  @override
+  String get game_titleAccent => 'en desarrollo.';
+
+  @override
+  String get game_subtitle =>
+      'Roguelike de mazmorras por turnos, hecho en Godot 4 y C#. Combate JRPG clásico, escenificado en estilo 2D-HD.';
+
+  @override
+  String get game_body =>
+      'Forma un grupo de tres héroes y desciende al Pozo: cinco pisos hasta el jefe, monstruos que te ven y te persiguen, muerte permanente. Cada partida termina en una build distinta.';
+
+  @override
+  String get game_factCombatTitle => 'Combate por turnos (ATB)';
+
+  @override
+  String get game_factCombatBody =>
+      'Las habilidades de arma avanzan y golpean; los hechizos se lanzan en el sitio. Las marcas elementales se combinan en reacciones.';
+
+  @override
+  String get game_factBuildTitle => 'Una build en cada nivel';
+
+  @override
+  String get game_factBuildBody =>
+      'Cada subida de nivel ofrece una habilidad entre tres. Repetir una habilidad sube su rango; en rango 3, con la pareja correcta, evoluciona a un clímax.';
+
+  @override
+  String get game_factStackTitle => 'Ingeniería';
+
+  @override
+  String get game_factStackBody =>
+      'Dominio en C# independiente del motor, 435 pruebas headless y simulación de partidas completas para el balance.';
+
+  @override
+  String get game_partnerTitle => 'Busco artistas para colaborar';
+
+  @override
+  String get game_partnerBody =>
+      'Poço lo desarrolla una sola persona y hoy usa arte generado por IA. El objetivo es reemplazarlo por arte hecho por personas: busco pixel artists, animadores y músicos interesados en construir el juego en colaboración.';
+
+  @override
+  String get game_ctaPartner => 'Quiero colaborar';
+
+  @override
+  String get game_partnerSubject => 'Colaboración — Poço';
+
+  @override
+  String get game_demoTitle => 'Demo jugable';
+
+  @override
+  String get game_demoBody =>
+      'Build de pruebas del MVP para Windows y Android. Compatible con teclado, gamepad y pantalla táctil.';
+
+  @override
+  String game_demoUpdate(String version) {
+    return 'Novedades en $version: cinco fases para elegir — de la Madriguera de los Hombres-Rata al Abismo —, cada una una partida propia, con su bioma, sonido y criaturas. Más de 60 monstruos rediseñados que caminan de verdad por el mapa y luchan con tácticas: preparan golpes, protegen aliados, piden refuerzos, estallan al morir. Pisos más grandes, gente en el camino, Pick atrapado en cada fase y nuevos efectos de sonido.';
+  }
+
+  @override
+  String get game_ctaWindows => 'Windows .zip - 115 MB';
+
+  @override
+  String get game_ctaAndroid => 'Android .apk - 151 MB';
+
+  @override
+  String get game_demoNote =>
+      'Windows: extrae el .zip y ejecuta Poco.exe. Android: permite instalar apps de origen desconocido antes de abrir el .apk.';
+
+  @override
+  String get game_gifAlt =>
+      'Gameplay de Poço: la maga lanza Meteoro sobre la línea enemiga';
+
+  @override
+  String get game_trailerTitle => 'Tráiler';
+
+  @override
+  String get game_trailerPlay => 'Ver tráiler';
+
+  @override
+  String get game_trailerAlt => 'Tráiler de Poço';
 }

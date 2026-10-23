@@ -912,4 +912,93 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get locale_ru => 'Русский';
+
+  @override
+  String get nav_game => 'Game';
+
+  @override
+  String get game_eyebrow => 'Personal project';
+
+  @override
+  String get game_title => 'Poço —';
+
+  @override
+  String get game_titleAccent => 'in development.';
+
+  @override
+  String get game_subtitle =>
+      'A turn-based dungeon roguelike built in Godot 4 and C#. Classic JRPG combat, staged in a 2D-HD style.';
+
+  @override
+  String get game_body =>
+      'Assemble a party of three heroes and descend into the Pit: five floors to the boss, monsters that see and chase you, permanent death. Every run ends up as a different build.';
+
+  @override
+  String get game_factCombatTitle => 'Turn-based combat (ATB)';
+
+  @override
+  String get game_factCombatBody =>
+      'Weapon skills step in and strike; spells are cast in place. Elemental marks combine into reactions.';
+
+  @override
+  String get game_factBuildTitle => 'A build on every level';
+
+  @override
+  String get game_factBuildBody =>
+      'Each level-up offers one skill out of three. Picking a skill again ranks it up; at rank 3, with the right partner, it evolves into a climax.';
+
+  @override
+  String get game_factStackTitle => 'Engineering';
+
+  @override
+  String get game_factStackBody =>
+      'Engine-agnostic C# domain, 435 headless tests and full-run simulation for balancing.';
+
+  @override
+  String get game_partnerTitle => 'Looking for artist partners';
+
+  @override
+  String get game_partnerBody =>
+      'Poço is developed by one person and currently uses AI-generated art. The goal is to replace it with art made by people: I am looking for pixel artists, animators and musicians interested in building the game as partners.';
+
+  @override
+  String get game_ctaPartner => 'I want to collaborate';
+
+  @override
+  String get game_partnerSubject => 'Partnership — Poço';
+
+  @override
+  String get game_demoTitle => 'Playable demo';
+
+  @override
+  String get game_demoBody =>
+      'MVP test build for Windows and Android. Keyboard, gamepad and touch are supported.';
+
+  @override
+  String game_demoUpdate(String version) {
+    return 'New in $version: five stages to choose from — from the Ratfolk Warren to the Abyss — each its own run, with its own biome, sound and creatures. Over 60 redrawn monsters that truly walk the map and fight with tactics: winding up blows, shielding allies, calling for help, bursting on death. Bigger floors, people along the way, Pick caught on every stage, and new sound effects.';
+  }
+
+  @override
+  String get game_ctaWindows => 'Windows .zip - 115 MB';
+
+  @override
+  String get game_ctaAndroid => 'Android .apk - 151 MB';
+
+  @override
+  String get game_demoNote =>
+      'Windows: extract the .zip and run Poco.exe. Android: allow installing apps from unknown sources before opening the .apk.';
+
+  @override
+  String get game_gifAlt =>
+      'Poço gameplay: the mage casts Meteor on the enemy line';
+
+  @override
+  String get game_trailerTitle => 'Trailer';
+
+  @override
+  String get game_trailerPlay => 'Watch trailer';
+
+  @override
+  String get game_trailerAlt => 'Poço trailer';
 }

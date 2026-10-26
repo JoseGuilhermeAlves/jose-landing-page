@@ -979,7 +979,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Neu in $version: Jede Stufe ist jetzt ein echter Ort — Wände mit Tiefe, enge Gänge und eingerichtete Räume, vom Bau aus feuchtem Backstein über den Wald verdrehter Stämme, das gefrorene Grab und die glühende Schmiede bis zum Abgrund aus lebendem Fleisch. Der Kleriker und mehrere Aufstiege sehen neu aus, Kämpfe mit vier Helden sind sauber angeordnet, und das Spiel ist bunter: Schaden in der Farbe seines Elements, regenbogenfarbene kritische Treffer und Feinde, die in Münzen und Edelsteine zerplatzen.';
+    return 'Neu in $version: alle Helden und Aufstiege als eine Pixelfamilie neu gezeichnet — dieselbe Figur läuft über die Karte und kämpft, mit eigenem Angriff und Zauber, alle dem Feind zugewandt. Ein Hochelfen-Pyromant unter einem brennenden Hut. Jede Welt hat ihr eigenes Licht: kaltes Zwielicht und flackernde Glut, die fast erstarrt, wenn ein Jäger auftaucht. Treppen, Schreine, verfluchte Truhen und Lager für jede Stufe, und die verlorenen Seelen am Weg haben jetzt Gesichter.';
   }
 
   @override

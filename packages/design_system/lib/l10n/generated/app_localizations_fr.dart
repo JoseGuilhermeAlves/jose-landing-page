@@ -981,7 +981,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Nouveau dans la $version : chaque étape est désormais un vrai lieu — des murs avec de la profondeur, des couloirs étroits et des salles meublées, du terrier de brique humide à la forêt de troncs tordus, au tombeau gelé, à la forge ardente et à l\'abîme de chair vivante. Le clerc et plusieurs ascensions ont un nouveau look, les combats à quatre héros sont bien disposés, et le jeu a pris des couleurs : dégâts à la couleur de leur élément, critiques arc-en-ciel et ennemis qui éclatent en pièces et en gemmes.';
+    return 'Nouveau dans $version : tous les héros et ascensions redessinés en une seule famille de pixels — le même personnage arpente la carte et combat, avec sa propre attaque et son incantation, tous face à l\'ennemi. Un pyromancien haut-elfe sous un chapeau en flammes. Chaque monde a sa lumière : une pénombre froide et des braises qui vacillent, presque figées quand un chasseur apparaît. Escaliers, sanctuaires, coffres maudits et camps pensés pour chaque étape, et les âmes perdues du chemin ont désormais un visage.';
   }
 
   @override

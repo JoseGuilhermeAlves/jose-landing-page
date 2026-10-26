@@ -976,7 +976,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Novo na $version: cada fase virou um lugar de verdade — paredes com profundidade, corredores apertados e salas mobiliadas, da toca de tijolo úmido à floresta de troncos retorcidos, à tumba de gelo, à forja em brasa e ao abismo de carne viva. O clérigo e várias ascensões ganharam visual novo, a luta com quatro heróis ficou organizada, e o jogo ganhou cor: dano na cor do elemento, críticos em arco-íris e inimigos que explodem em moedas e gemas.';
+    return 'Novo na $version: todos os heróis e ascensões redesenhados numa só família de pixel — o mesmo personagem anda no mapa e luta, com ataque e conjuração próprios, todos encarando o inimigo. Um piromante alto-élfico de chapéu em chamas. Cada mundo ganhou luz própria: penumbra fria e brasas que tremulam, quase paradas quando um caçador aparece. Escadas, santuários, baús malditos e acampamentos feitos para cada fase, e as almas perdidas pelo caminho ganharam rosto.';
   }
 
   @override

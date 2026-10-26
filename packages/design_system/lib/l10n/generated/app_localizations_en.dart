@@ -976,7 +976,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'New in $version: every stage is a real place now — walls with depth, tight corridors and furnished rooms, from the damp-brick warren to the forest of twisted trunks, the frozen tomb, the ember forge and the abyss of living flesh. The cleric and several ascensions got new looks, four-hero battles are laid out cleanly, and the game got colour: damage in its element\'s colour, rainbow criticals and foes that burst into coins and gems.';
+    return 'New in $version: every hero and ascension redrawn as one pixel family — the same character walks the map and fights, with its own attack and spellcasting, all facing the foe. A high-elf pyromancer under a burning hat. Each world got its own light: a cold gloom and flickering embers that almost freeze when a hunter shows up. Stairs, shrines, cursed chests and camps made for every stage, and the lost souls along the way now have faces.';
   }
 
   @override

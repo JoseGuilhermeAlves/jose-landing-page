@@ -334,7 +334,7 @@
   "game_partnerSubject": "Partnership — Poço",
   "game_demoTitle": "Playable demo",
   "game_demoBody": "MVP test build for Windows and Android. Keyboard, gamepad and touch are supported.",
-  "game_demoUpdate": "New in {version}: every stage is a real place now — walls with depth, tight corridors and furnished rooms, from the damp-brick warren to the forest of twisted trunks, the frozen tomb, the ember forge and the abyss of living flesh. The cleric and several ascensions got new looks, four-hero battles are laid out cleanly, and the game got colour: damage in its element's colour, rainbow criticals and foes that burst into coins and gems.",
+  "game_demoUpdate": "New in {version}: every hero and ascension redrawn as one pixel family — the same character walks the map and fights, with its own attack and spellcasting, all facing the foe. A high-elf pyromancer under a burning hat. Each world got its own light: a cold gloom and flickering embers that almost freeze when a hunter shows up. Stairs, shrines, cursed chests and camps made for every stage, and the lost souls along the way now have faces.",
   "game_ctaWindows": "Windows .zip - 115 MB",
   "game_ctaAndroid": "Android .apk - 151 MB",
   "game_demoNote": "Windows: extract the .zip and run Poco.exe. Android: allow installing apps from unknown sources before opening the .apk.",

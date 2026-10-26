@@ -979,7 +979,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Neu in $version: fünf Phasen zur Wahl — vom Bau des Rattenvolks bis zum Abgrund —, jede ein eigener Lauf mit eigenem Biom, Klang und eigenen Kreaturen. Über 60 neu gezeichnete Monster, die wirklich über die Karte laufen und taktisch kämpfen: Sie holen zu Schlägen aus, schützen Verbündete, rufen Verstärkung und explodieren beim Tod. Größere Ebenen, Begegnungen unterwegs, Pick in jeder Phase gefangen und neue Soundeffekte.';
+    return 'Neu in $version: Jede Stufe ist jetzt ein echter Ort — Wände mit Tiefe, enge Gänge und eingerichtete Räume, vom Bau aus feuchtem Backstein über den Wald verdrehter Stämme, das gefrorene Grab und die glühende Schmiede bis zum Abgrund aus lebendem Fleisch. Der Kleriker und mehrere Aufstiege sehen neu aus, Kämpfe mit vier Helden sind sauber angeordnet, und das Spiel ist bunter: Schaden in der Farbe seines Elements, regenbogenfarbene kritische Treffer und Feinde, die in Münzen und Edelsteine zerplatzen.';
   }
 
   @override

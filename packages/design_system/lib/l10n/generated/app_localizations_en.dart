@@ -976,7 +976,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'New in $version: five stages to choose from — from the Ratfolk Warren to the Abyss — each its own run, with its own biome, sound and creatures. Over 60 redrawn monsters that truly walk the map and fight with tactics: winding up blows, shielding allies, calling for help, bursting on death. Bigger floors, people along the way, Pick caught on every stage, and new sound effects.';
+    return 'New in $version: every stage is a real place now — walls with depth, tight corridors and furnished rooms, from the damp-brick warren to the forest of twisted trunks, the frozen tomb, the ember forge and the abyss of living flesh. The cleric and several ascensions got new looks, four-hero battles are laid out cleanly, and the game got colour: damage in its element\'s colour, rainbow criticals and foes that burst into coins and gems.';
   }
 
   @override

@@ -976,7 +976,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Novo na $version: cinco fases para escolher — da Toca do Povo-Rato ao Abismo —, cada uma uma run própria, com bioma, som e criaturas. Mais de 60 monstros redesenhados que andam de verdade pelo mapa e lutam com táticas: preparam golpes, protegem aliados, chamam reforço, explodem ao morrer. Andares maiores, gente pelo caminho, o Pick preso em todas as fases e efeitos sonoros novos.';
+    return 'Novo na $version: cada fase virou um lugar de verdade — paredes com profundidade, corredores apertados e salas mobiliadas, da toca de tijolo úmido à floresta de troncos retorcidos, à tumba de gelo, à forja em brasa e ao abismo de carne viva. O clérigo e várias ascensões ganharam visual novo, a luta com quatro heróis ficou organizada, e o jogo ganhou cor: dano na cor do elemento, críticos em arco-íris e inimigos que explodem em moedas e gemas.';
   }
 
   @override

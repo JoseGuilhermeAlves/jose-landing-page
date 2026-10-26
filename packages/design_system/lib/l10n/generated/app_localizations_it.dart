@@ -976,7 +976,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Novità nella $version: cinque fasi tra cui scegliere — dalla Tana degli Uomini-Ratto all\'Abisso —, ognuna una partita a sé, con bioma, suoni e creature propri. Oltre 60 mostri ridisegnati che camminano davvero sulla mappa e combattono con tattiche: caricano i colpi, proteggono gli alleati, chiamano rinforzi, esplodono morendo. Piani più grandi, gente lungo la strada, Pick prigioniero in ogni fase e nuovi effetti sonori.';
+    return 'Novità nella $version: ogni fase ora è un luogo vero — muri con profondità, corridoi stretti e stanze arredate, dalla tana di mattoni umidi alla foresta di tronchi contorti, alla tomba ghiacciata, alla forgia ardente e all\'abisso di carne viva. Il chierico e diverse ascensioni hanno un nuovo aspetto, le battaglie a quattro eroi sono ordinate e il gioco ha preso colore: danni del colore del loro elemento, critici arcobaleno e nemici che esplodono in monete e gemme.';
   }
 
   @override

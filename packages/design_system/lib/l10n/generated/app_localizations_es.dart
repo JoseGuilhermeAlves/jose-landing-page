@@ -979,7 +979,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Novedades en $version: cinco fases para elegir — de la Madriguera de los Hombres-Rata al Abismo —, cada una una partida propia, con su bioma, sonido y criaturas. Más de 60 monstruos rediseñados que caminan de verdad por el mapa y luchan con tácticas: preparan golpes, protegen aliados, piden refuerzos, estallan al morir. Pisos más grandes, gente en el camino, Pick atrapado en cada fase y nuevos efectos de sonido.';
+    return 'Novedades en $version: cada fase es ahora un lugar de verdad — muros con profundidad, pasillos estrechos y salas amuebladas, desde la madriguera de ladrillo húmedo hasta el bosque de troncos retorcidos, la tumba helada, la forja en brasas y el abismo de carne viva. El clérigo y varias ascensiones tienen nuevo aspecto, las batallas con cuatro héroes están bien ordenadas y el juego ganó color: daño del color de su elemento, críticos arcoíris y enemigos que estallan en monedas y gemas.';
   }
 
   @override

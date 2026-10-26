@@ -981,7 +981,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Nouveau dans la $version : cinq phases au choix — du Terrier des Hommes-Rats à l\'Abîme —, chacune une partie à part, avec son biome, son ambiance et ses créatures. Plus de 60 monstres redessinés qui marchent vraiment sur la carte et combattent avec tactique : ils préparent leurs coups, protègent leurs alliés, appellent des renforts, explosent en mourant. Des étages plus grands, des rencontres en chemin, Pick prisonnier à chaque phase et de nouveaux effets sonores.';
+    return 'Nouveau dans la $version : chaque étape est désormais un vrai lieu — des murs avec de la profondeur, des couloirs étroits et des salles meublées, du terrier de brique humide à la forêt de troncs tordus, au tombeau gelé, à la forge ardente et à l\'abîme de chair vivante. Le clerc et plusieurs ascensions ont un nouveau look, les combats à quatre héros sont bien disposés, et le jeu a pris des couleurs : dégâts à la couleur de leur élément, critiques arc-en-ciel et ennemis qui éclatent en pièces et en gemmes.';
   }
 
   @override

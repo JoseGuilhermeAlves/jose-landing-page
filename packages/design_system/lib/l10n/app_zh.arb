@@ -334,7 +334,7 @@
   "game_partnerSubject": "合作 — Poço",
   "game_demoTitle": "可玩 Demo",
   "game_demoBody": "适用于 Windows 和 Android 的 MVP 测试版本。支持键盘、手柄和触屏。",
-  "game_demoUpdate": "{version} 新内容:五个关卡任你选择——从鼠人巢穴到深渊——每一个都是独立的一局,拥有各自的生态、音效与生物。60 多种重新绘制的怪物会真正在地图上行走,并带着战术作战:蓄力重击、保护同伴、呼叫援军、死亡时爆炸。更大的楼层、旅途中的人们、每个关卡都被困的皮克,以及全新的音效。",
+  "game_demoUpdate": "{version} 新内容：每个关卡都成了真正的地方——有纵深的墙壁、狭窄的走廊和摆满家具的房间，从潮湿砖砌的鼠窝到扭曲树干的森林、冰封墓穴、炽热熔炉，再到活肉构成的深渊。牧师和多个进阶职业换上新造型，四人战斗站位更加清晰，游戏也更多彩：伤害数字带元素颜色，暴击化作彩虹，敌人倒下时迸出金币和宝石。",
   "game_ctaWindows": "Windows .zip - 115 MB",
   "game_ctaAndroid": "Android .apk - 151 MB",
   "game_demoNote": "Windows:解压 .zip 并运行 Poco.exe。Android:打开 .apk 前请允许安装未知来源的应用。",

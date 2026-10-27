@@ -334,7 +334,7 @@
   "game_partnerSubject": "Partnership — Poço",
   "game_demoTitle": "Playable demo",
   "game_demoBody": "MVP test build for Windows and Android. Keyboard, gamepad and touch are supported.",
-  "game_demoUpdate": "New in {version}: the dark between rooms is now each world's own land, in layers — basalt crust breaking into lava, an ice shelf cracking into black water, canopy thinning into misted swamp, glowing flesh cliffs over a violet sea, ossuary fields crumbling into a bottomless pit. It lives, sparingly: a lava wyrm breaches, an eye tyrant drifts over the water, a river of rats pours through the bones. And walk into the wrong room and the camera leaves you: the world's people talking among themselves, until one of them notices the light.",
+  "game_demoUpdate": "New in {version}: every battle now happens in a real place. The world's own wall closes the horizon (bricks and rat banners, a tree line, icicled stone, forge stone, living flesh full of eyes) and its floor runs from that wall to your feet in perspective, so heroes and monsters stand on the ground, lit by guttering torches and lamps. Plus the layered worlds between the rooms, scenes on the map, and a redrawn Mage.",
   "game_ctaWindows": "Windows .zip - 115 MB",
   "game_ctaAndroid": "Android .apk - 151 MB",
   "game_demoNote": "Windows: extract the .zip and run Poco.exe. Android: allow installing apps from unknown sources before opening the .apk.",

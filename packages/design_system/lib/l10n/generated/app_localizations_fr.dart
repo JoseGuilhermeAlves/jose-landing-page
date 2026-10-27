@@ -981,7 +981,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Nouveau dans $version : l\'obscurité entre les salles est désormais la terre de chaque monde, en couches — croûte de basalte qui se brise en lave, banquise qui se fend sur une eau noire, canopée qui s\'ouvre sur un marais brumeux, falaises de chair vivante sur une mer violette, ossuaires qui s\'effondrent dans un puits sans fond. Et elle vit, avec retenue : une vouivre de lave surgit, un tyran oculaire flotte sur l\'eau, une rivière de rats coule entre les os. Et entrez dans la mauvaise salle : la caméra vous quitte, les habitants du monde parlent entre eux, jusqu\'à ce que l\'un d\'eux remarque la lumière.';
+    return 'Nouveau dans $version : chaque combat se déroule désormais dans un vrai lieu. Le mur du monde ferme l\'horizon (briques et bannières de rats, une lisière d\'arbres, pierre couverte de stalactites, pierre de forge, chair vivante pleine d\'yeux) et son sol court en perspective de ce mur jusqu\'à vos pieds : héros et monstres se tiennent sur le sol, éclairés par des torches et des lampes vacillantes. Plus les mondes en couches entre les salles, des scènes sur la carte et un Mage redessiné.';
   }
 
   @override

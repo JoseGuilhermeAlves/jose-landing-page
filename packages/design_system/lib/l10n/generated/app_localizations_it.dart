@@ -976,7 +976,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Novità in $version: il buio tra le stanze ora è la terra di ogni mondo, a strati — crosta di basalto che si spezza in lava, una banchisa che si crepa sull\'acqua nera, la volta della foresta che si apre su una palude di nebbia, scogliere di carne viva su un mare viola, ossari che franano in un pozzo senza fondo. E vive, con misura: un wyrm di lava emerge, un tiranno oculare fluttua sull\'acqua, un fiume di ratti scorre tra le ossa. Ed entra nella stanza sbagliata: la telecamera ti lascia, gli abitanti del mondo parlano tra loro, finché uno nota la luce.';
+    return 'Novità in $version: ogni battaglia ora si svolge in un luogo vero. Il muro del mondo chiude l\'orizzonte (mattoni e stendardi dei ratti, una linea di alberi, pietra con ghiaccioli, pietra di forgia, carne viva piena di occhi) e il suo pavimento corre in prospettiva da quel muro fino ai tuoi piedi: eroi e mostri poggiano sul terreno, illuminati da torce e lampade tremolanti. In più i mondi a strati tra le stanze, scene sulla mappa e un Mago ridisegnato.';
   }
 
   @override

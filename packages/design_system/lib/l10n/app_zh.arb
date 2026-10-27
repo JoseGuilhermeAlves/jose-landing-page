@@ -334,7 +334,7 @@
   "game_partnerSubject": "合作 — Poço",
   "game_demoTitle": "可玩 Demo",
   "game_demoBody": "适用于 Windows 和 Android 的 MVP 测试版本。支持键盘、手柄和触屏。",
-  "game_demoUpdate": "{version} 新内容：房间之间的黑暗，如今是每个世界自己的大地，层层叠叠 — 碎裂成熔岩的玄武岩地壳、裂入黑水的冰架、渐渐散开成雾沼的森林树冠、紫色海面上的活肉悬崖、崩落进无底深坑的骨原。它有节制地活着：熔岩巨蛇破面而出，眼魔之暴君漂过水面，一条鼠河在骨间流淌。走进错误的房间，镜头便离你而去：这个世界的居民彼此交谈，直到有人注意到光。",
+  "game_demoUpdate": "{version} 新内容：每场战斗现在都发生在真实的地方。世界自己的墙封住地平线（砖墙与鼠旗、林线、挂满冰锥的石壁、锻炉之石、布满眼睛的活肉），地面以透视从墙一直延伸到你脚下，英雄与怪物都踩在地上，被摇曳的火把与灯照亮。另有房间之间的分层世界、地图上的场景，以及重绘的法师。",
   "game_ctaWindows": "Windows .zip - 115 MB",
   "game_ctaAndroid": "Android .apk - 151 MB",
   "game_demoNote": "Windows:解压 .zip 并运行 Poco.exe。Android:打开 .apk 前请允许安装未知来源的应用。",

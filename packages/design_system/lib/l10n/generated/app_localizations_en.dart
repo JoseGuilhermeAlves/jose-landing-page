@@ -976,7 +976,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'New in $version: the dark between rooms is now each world\'s own land, in layers — basalt crust breaking into lava, an ice shelf cracking into black water, canopy thinning into misted swamp, glowing flesh cliffs over a violet sea, ossuary fields crumbling into a bottomless pit. It lives, sparingly: a lava wyrm breaches, an eye tyrant drifts over the water, a river of rats pours through the bones. And walk into the wrong room and the camera leaves you: the world\'s people talking among themselves, until one of them notices the light.';
+    return 'New in $version: every battle now happens in a real place. The world\'s own wall closes the horizon (bricks and rat banners, a tree line, icicled stone, forge stone, living flesh full of eyes) and its floor runs from that wall to your feet in perspective, so heroes and monsters stand on the ground, lit by guttering torches and lamps. Plus the layered worlds between the rooms, scenes on the map, and a redrawn Mage.';
   }
 
   @override

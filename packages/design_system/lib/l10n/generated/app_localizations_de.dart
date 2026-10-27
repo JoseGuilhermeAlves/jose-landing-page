@@ -979,7 +979,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Neu in $version: Das Dunkel zwischen den Räumen ist jetzt das Land jeder Welt, in Schichten — Basaltkruste, die in Lava zerbricht, ein Eisschelf, der in schwarzes Wasser reißt, Blätterdach, das sich zu nebligem Sumpf lichtet, Klippen aus lebendem Fleisch über einem violetten Meer, Beinhäuser, die in einen bodenlosen Schacht bröckeln. Und es lebt, sparsam: ein Lavawurm bricht hervor, ein Augentyrann treibt über das Wasser, ein Rattenstrom fließt durch die Knochen. Und betritt den falschen Raum, verlässt dich die Kamera: die Bewohner der Welt reden miteinander, bis einer das Licht bemerkt.';
+    return 'Neu in $version: Jeder Kampf findet jetzt an einem echten Ort statt. Die Wand der Welt schließt den Horizont (Ziegel und Rattenbanner, eine Baumreihe, Stein mit Eiszapfen, Schmiedestein, lebendes Fleisch voller Augen), und ihr Boden läuft perspektivisch von dieser Wand bis zu deinen Füßen – Helden und Monster stehen auf dem Boden, beleuchtet von flackernden Fackeln und Lampen. Dazu die geschichteten Welten zwischen den Räumen, Szenen auf der Karte und ein neu gezeichneter Magier.';
   }
 
   @override

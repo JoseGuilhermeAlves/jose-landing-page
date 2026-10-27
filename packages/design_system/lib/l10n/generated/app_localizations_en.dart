@@ -976,7 +976,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'New in $version: every world now fights on its own living stage, in chunky pixel art that changes as you go deeper — rats running along the sewer wall, a will-o\'-wisp in the black forest, soldiers frozen in the ice, a crucible pouring in the forge, eyes blinking in the walls of the abyss, with snow, embers and fireflies in the air. Two new heroes take the field: a polar werebear with a storm in his greataxe, and a dwarf artificer with flasks, cannons and a steel hound. The Pyromancer returns with blazing red hair and bright fire.';
+    return 'New in $version: the dark between rooms is now each world\'s own land, in layers — basalt crust breaking into lava, an ice shelf cracking into black water, canopy thinning into misted swamp, glowing flesh cliffs over a violet sea, ossuary fields crumbling into a bottomless pit. It lives, sparingly: a lava wyrm breaches, an eye tyrant drifts over the water, a river of rats pours through the bones. And walk into the wrong room and the camera leaves you: the world\'s people talking among themselves, until one of them notices the light.';
   }
 
   @override

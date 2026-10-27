@@ -976,7 +976,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Novità in $version: ogni mondo ora combatte sul proprio palcoscenico vivo, in pixel art grossa che cambia man mano che scendi — ratti che corrono lungo il muro della fogna, un fuoco fatuo nella foresta nera, soldati congelati nel ghiaccio, un crogiolo che versa metallo nella forgia, occhi che sbattono nelle pareti dell\'abisso, con neve, braci e lucciole nell\'aria. Due nuovi eroi scendono in campo: un uomo-orso polare con una tempesta nella sua ascia e un artefice nano con fiale, cannoni e un segugio d\'acciaio. Il Piromante torna con capelli rossi infuocati e un fuoco vivo.';
+    return 'Novità in $version: il buio tra le stanze ora è la terra di ogni mondo, a strati — crosta di basalto che si spezza in lava, una banchisa che si crepa sull\'acqua nera, la volta della foresta che si apre su una palude di nebbia, scogliere di carne viva su un mare viola, ossari che franano in un pozzo senza fondo. E vive, con misura: un wyrm di lava emerge, un tiranno oculare fluttua sull\'acqua, un fiume di ratti scorre tra le ossa. Ed entra nella stanza sbagliata: la telecamera ti lascia, gli abitanti del mondo parlano tra loro, finché uno nota la luce.';
   }
 
   @override

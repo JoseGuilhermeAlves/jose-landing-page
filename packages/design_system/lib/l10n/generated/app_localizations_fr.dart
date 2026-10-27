@@ -981,7 +981,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Nouveau dans $version : chaque monde se bat désormais sur sa propre scène vivante, en pixel art épais qui change à mesure que vous descendez — des rats qui courent le long du mur de l\'égout, un feu follet dans la forêt noire, des soldats pris dans la glace, un creuset qui se déverse dans la forge, des yeux qui clignent dans les parois de l\'abîme, avec neige, braises et lucioles dans l\'air. Deux nouveaux héros entrent en jeu : un ours-garou polaire avec une tempête dans sa hache et un artificier nain avec flacons, canons et un chien d\'acier. Le Pyromancien revient avec des cheveux rouges en flammes et un feu éclatant.';
+    return 'Nouveau dans $version : l\'obscurité entre les salles est désormais la terre de chaque monde, en couches — croûte de basalte qui se brise en lave, banquise qui se fend sur une eau noire, canopée qui s\'ouvre sur un marais brumeux, falaises de chair vivante sur une mer violette, ossuaires qui s\'effondrent dans un puits sans fond. Et elle vit, avec retenue : une vouivre de lave surgit, un tyran oculaire flotte sur l\'eau, une rivière de rats coule entre les os. Et entrez dans la mauvaise salle : la caméra vous quitte, les habitants du monde parlent entre eux, jusqu\'à ce que l\'un d\'eux remarque la lumière.';
   }
 
   @override

@@ -334,7 +334,7 @@
   "game_partnerSubject": "合作 — Poço",
   "game_demoTitle": "可玩 Demo",
   "game_demoBody": "适用于 Windows 和 Android 的 MVP 测试版本。支持键盘、手柄和触屏。",
-  "game_demoUpdate": "{version} 新内容：所有英雄与晋升以同一像素家族重绘 — 同一个角色既在地图上行走也在战斗中出手，各有攻击与施法动作，全都面向敌人。头戴燃烧尖帽的高等精灵炎术师。每个世界都有自己的光：冰冷的幽暗与摇曳的余烬，猎手出现时几乎静止。每个关卡专属的阶梯、祭坛、诅咒宝箱与营地，路上迷失的灵魂也有了面孔。",
+  "game_demoUpdate": "{version} 新内容：每个世界现在都在属于自己的「活的战斗舞台」上开战，粗颗粒像素画面随着深入而变化 — 沿着下水道墙壁奔跑的老鼠、黑森林里的鬼火、冻在冰中的士兵、锻炉里倾倒金属的坩埚、深渊墙壁上眨动的眼睛，空中飘着雪、火星与萤火虫。两位新英雄登场：斧中藏着风暴的北极熊人，以及带着药瓶、火炮和钢铁猎犬的矮人工匠。炎术师以燃烧的红发和鲜亮的火焰回归。",
   "game_ctaWindows": "Windows .zip - 115 MB",
   "game_ctaAndroid": "Android .apk - 151 MB",
   "game_demoNote": "Windows:解压 .zip 并运行 Poco.exe。Android:打开 .apk 前请允许安装未知来源的应用。",

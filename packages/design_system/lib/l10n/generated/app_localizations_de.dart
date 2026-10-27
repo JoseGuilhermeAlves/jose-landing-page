@@ -979,7 +979,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Neu in $version: alle Helden und Aufstiege als eine Pixelfamilie neu gezeichnet — dieselbe Figur läuft über die Karte und kämpft, mit eigenem Angriff und Zauber, alle dem Feind zugewandt. Ein Hochelfen-Pyromant unter einem brennenden Hut. Jede Welt hat ihr eigenes Licht: kaltes Zwielicht und flackernde Glut, die fast erstarrt, wenn ein Jäger auftaucht. Treppen, Schreine, verfluchte Truhen und Lager für jede Stufe, und die verlorenen Seelen am Weg haben jetzt Gesichter.';
+    return 'Neu in $version: Jede Welt kämpft jetzt auf ihrer eigenen lebendigen Bühne, in grober Pixelkunst, die sich ändert, je tiefer du kommst — Ratten rennen an der Kanalmauer entlang, ein Irrlicht im schwarzen Wald, Soldaten im Eis erstarrt, ein Tiegel gießt in der Schmiede, Augen blinzeln in den Wänden des Abgrunds, dazu Schnee, Glut und Glühwürmchen in der Luft. Zwei neue Helden ziehen ins Feld: ein Polar-Werbär mit einem Sturm in seiner Axt und ein Zwergen-Artifex mit Flaschen, Kanonen und einem Stahlhund. Der Pyromant kehrt mit flammend rotem Haar und hellem Feuer zurück.';
   }
 
   @override

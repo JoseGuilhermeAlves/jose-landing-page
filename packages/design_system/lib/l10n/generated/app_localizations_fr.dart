@@ -981,7 +981,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Nouveau dans $version : tous les héros et ascensions redessinés en une seule famille de pixels — le même personnage arpente la carte et combat, avec sa propre attaque et son incantation, tous face à l\'ennemi. Un pyromancien haut-elfe sous un chapeau en flammes. Chaque monde a sa lumière : une pénombre froide et des braises qui vacillent, presque figées quand un chasseur apparaît. Escaliers, sanctuaires, coffres maudits et camps pensés pour chaque étape, et les âmes perdues du chemin ont désormais un visage.';
+    return 'Nouveau dans $version : chaque monde se bat désormais sur sa propre scène vivante, en pixel art épais qui change à mesure que vous descendez — des rats qui courent le long du mur de l\'égout, un feu follet dans la forêt noire, des soldats pris dans la glace, un creuset qui se déverse dans la forge, des yeux qui clignent dans les parois de l\'abîme, avec neige, braises et lucioles dans l\'air. Deux nouveaux héros entrent en jeu : un ours-garou polaire avec une tempête dans sa hache et un artificier nain avec flacons, canons et un chien d\'acier. Le Pyromancien revient avec des cheveux rouges en flammes et un feu éclatant.';
   }
 
   @override

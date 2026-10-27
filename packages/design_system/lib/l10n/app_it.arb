@@ -334,7 +334,7 @@
   "game_partnerSubject": "Collaborazione — Poço",
   "game_demoTitle": "Demo giocabile",
   "game_demoBody": "Build di test dell'MVP per Windows e Android. Supporta tastiera, gamepad e touch.",
-  "game_demoUpdate": "Novità in {version}: tutti gli eroi e le ascensioni ridisegnati in un'unica famiglia di pixel — lo stesso personaggio esplora la mappa e combatte, con il proprio attacco e incantesimo, tutti rivolti al nemico. Un piromante alto elfo sotto un cappello in fiamme. Ogni mondo ha la sua luce: una penombra fredda e braci che tremolano, quasi immobili quando compare un cacciatore. Scale, santuari, forzieri maledetti e accampamenti fatti per ogni livello, e le anime perdute lungo il cammino ora hanno un volto.",
+  "game_demoUpdate": "Novità in {version}: ogni mondo ora combatte sul proprio palcoscenico vivo, in pixel art grossa che cambia man mano che scendi — ratti che corrono lungo il muro della fogna, un fuoco fatuo nella foresta nera, soldati congelati nel ghiaccio, un crogiolo che versa metallo nella forgia, occhi che sbattono nelle pareti dell'abisso, con neve, braci e lucciole nell'aria. Due nuovi eroi scendono in campo: un uomo-orso polare con una tempesta nella sua ascia e un artefice nano con fiale, cannoni e un segugio d'acciaio. Il Piromante torna con capelli rossi infuocati e un fuoco vivo.",
   "game_ctaWindows": "Windows .zip - 115 MB",
   "game_ctaAndroid": "Android .apk - 151 MB",
   "game_demoNote": "Windows: estrai il .zip ed esegui Poco.exe. Android: consenti l'installazione da origini sconosciute prima di aprire il .apk.",

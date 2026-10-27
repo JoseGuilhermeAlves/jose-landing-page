@@ -979,7 +979,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Novedades en $version: todos los héroes y ascensiones redibujados en una sola familia de píxel — el mismo personaje recorre el mapa y combate, con su propio ataque y conjuro, todos de cara al enemigo. Un piromante alto elfo bajo un sombrero en llamas. Cada mundo tiene su propia luz: penumbra fría y brasas que titilan y casi se detienen cuando aparece un cazador. Escaleras, santuarios, cofres malditos y campamentos hechos para cada fase, y las almas perdidas del camino ahora tienen rostro.';
+    return 'Novedades en $version: cada mundo lucha ahora en su propio escenario vivo, en pixel art grueso que cambia a medida que bajas — ratas corriendo por la pared de la cloaca, un fuego fatuo en el bosque negro, soldados congelados en el hielo, un crisol vertiendo metal en la forja, ojos que parpadean en las paredes del abismo, con nieve, brasas y luciérnagas en el aire. Dos héroes nuevos entran en combate: un hombre-oso polar con una tormenta en su hacha y un artífice enano con frascos, cañones y un sabueso de acero. El Piromante vuelve con el pelo rojo en llamas y un fuego vivo.';
   }
 
   @override

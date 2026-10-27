@@ -976,7 +976,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'New in $version: every hero and ascension redrawn as one pixel family — the same character walks the map and fights, with its own attack and spellcasting, all facing the foe. A high-elf pyromancer under a burning hat. Each world got its own light: a cold gloom and flickering embers that almost freeze when a hunter shows up. Stairs, shrines, cursed chests and camps made for every stage, and the lost souls along the way now have faces.';
+    return 'New in $version: every world now fights on its own living stage, in chunky pixel art that changes as you go deeper — rats running along the sewer wall, a will-o\'-wisp in the black forest, soldiers frozen in the ice, a crucible pouring in the forge, eyes blinking in the walls of the abyss, with snow, embers and fireflies in the air. Two new heroes take the field: a polar werebear with a storm in his greataxe, and a dwarf artificer with flasks, cannons and a steel hound. The Pyromancer returns with blazing red hair and bright fire.';
   }
 
   @override

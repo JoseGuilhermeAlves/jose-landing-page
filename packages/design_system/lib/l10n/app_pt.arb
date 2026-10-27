@@ -334,7 +334,7 @@
   "game_partnerSubject": "Parceria — Poço",
   "game_demoTitle": "Demo jogável",
   "game_demoBody": "Build de testes do MVP para Windows e Android. Teclado, gamepad e toque são suportados.",
-  "game_demoUpdate": "Novo na {version}: todos os heróis e ascensões redesenhados numa só família de pixel — o mesmo personagem anda no mapa e luta, com ataque e conjuração próprios, todos encarando o inimigo. Um piromante alto-élfico de chapéu em chamas. Cada mundo ganhou luz própria: penumbra fria e brasas que tremulam, quase paradas quando um caçador aparece. Escadas, santuários, baús malditos e acampamentos feitos para cada fase, e as almas perdidas pelo caminho ganharam rosto.",
+  "game_demoUpdate": "Novo na {version}: cada mundo agora luta no seu próprio palco vivo, em pixel art grossa que muda conforme você desce — ratos correndo pela parede do esgoto, um fogo-fátuo na floresta negra, soldados congelados no gelo, um caldeirão derramando metal na forja, olhos piscando nas paredes do abismo, com neve, brasas e vaga-lumes no ar. Dois heróis novos entram em campo: um homem-urso polar com uma tempestade no machado e um artífice anão com frascos, canhões e um cão de aço. O Piromante volta com cabelo vermelho em chamas e fogo vivo.",
   "@game_demoUpdate": {
     "placeholders": {
       "version": {"type": "String"}

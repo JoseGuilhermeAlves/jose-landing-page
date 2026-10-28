@@ -48411,7 +48411,7 @@ glV(){return"I want to collaborate"},
 gm9(){return"Partnership \u2014 Po\xe7o"},
 glZ(){return"Playable demo"},
 glX(){return"MVP test build for Windows and Android. Keyboard, gamepad and touch are supported."},
-m_(a){return"New in "+a+": the ratfolk lost their charm \u2014 red eyes, torn grimy ears, mangy tails. Monsters now appear exactly as drawn, with no coloured outline. Plus everything from 0.16: 25 missions, secrets for the codex, something left behind deep in every world, and heroes who remember how the Well dragged them down."},
+m_(a){return"New in "+a+": the ratfolk lost their charm, and their king is now the biggest, ugliest rat-man in the tunnels \u2014 red eyes, torn grimy ears, mangy tails. Monsters now appear exactly as drawn, with no coloured outline. Plus everything from 0.16: 25 missions, secrets for the codex, something left behind deep in every world, and heroes who remember how the Well dragged them down."},
 glW(){return"Windows .zip - 115 MB"},
 glU(){return"Android .apk - 151 MB"},
 glY(){return"Windows: extract the .zip and run Poco.exe. Android: allow installing apps from unknown sources before opening the .apk."},
@@ -49311,7 +49311,7 @@ glV(){return"Quero colaborar"},
 gm9(){return"Parceria \u2014 Po\xe7o"},
 glZ(){return"Demo jog\xe1vel"},
 glX(){return"Build de testes do MVP para Windows e Android. Teclado, gamepad e toque s\xe3o suportados."},
-m_(a){return"Novo na "+a+": o povo-rato perdeu a fofura \u2014 olhos vermelhos, orelhas rasgadas e encardidas, rabos sarnentos. Os monstros agora aparecem como foram desenhados, sem contorno colorido. E tudo da 0.16: 25 miss\xf5es, segredos para o c\xf3dice, algo deixado para tr\xe1s no fundo de cada mundo e her\xf3is que lembram como o Po\xe7o os arrastou."},
+m_(a){return"Novo na "+a+": o povo-rato perdeu a fofura, e o rei deles agora \xe9 o maior e mais feio homem-rato dos t\xfaneis \u2014 olhos vermelhos, orelhas rasgadas e encardidas, rabos sarnentos. Os monstros agora aparecem como foram desenhados, sem contorno colorido. E tudo da 0.16: 25 miss\xf5es, segredos para o c\xf3dice, algo deixado para tr\xe1s no fundo de cada mundo e her\xf3is que lembram como o Po\xe7o os arrastou."},
 glW(){return"Windows .zip - 115 MB"},
 glU(){return"Android .apk - 151 MB"},
 glY(){return"Windows: extraia o .zip e execute Poco.exe. Android: permita a instala\xe7\xe3o de apps de fontes desconhecidas antes de abrir o .apk."},
@@ -105212,7 +105212,7 @@ d=g?0:232
 c=n.gamY()
 s=A.Zc()
 r=t.p
-c=A.b([new A.e9(new A.lA("hero",new A.Nq(f,new A.aEC(n),new A.aED(n),m),m),m),new A.e9(new A.iJ(new A.q_(l,new A.XV(new A.aEE(a),m),e,B.cP,m),n.f),m),B.agc,new A.e9(new A.iJ(new A.q_("about",B.Ln,e,B.dz,m),n.x),m),B.ag7,new A.e9(new A.iJ(new A.q_("engineering",new A.Rp(k,new A.aEF(n),m),e,B.iC,m),n.r),m),B.agb,new A.e9(new A.iJ(new A.q_("game",new A.RL("v0.16.1","https://github.com/JoseGuilhermeAlves/jose-landing-page/releases/download/poco-demo/Poco-demo-windows.zip","https://github.com/JoseGuilhermeAlves/jose-landing-page/releases/download/poco-demo/Poco-demo-android.apk","trailer/poco-trailer.mp4","assets/images/poco_trailer_poster.jpg",j,c,m),e,B.Lu,m),n.w),m),B.agd,new A.e9(new A.iJ(new A.q_("contact",new A.Bi(j,"5514991163009",i,k,s.aj(a.aL(t.Gk).r.f.gdt()==="pt"?"cv/jose-guilherme-alves-pt.pdf":"cv/jose-guilherme-alves-en.pdf").k(0),c,m),e,B.bB,m),n.y),m),B.ag6],r)
+c=A.b([new A.e9(new A.lA("hero",new A.Nq(f,new A.aEC(n),new A.aED(n),m),m),m),new A.e9(new A.iJ(new A.q_(l,new A.XV(new A.aEE(a),m),e,B.cP,m),n.f),m),B.agc,new A.e9(new A.iJ(new A.q_("about",B.Ln,e,B.dz,m),n.x),m),B.ag7,new A.e9(new A.iJ(new A.q_("engineering",new A.Rp(k,new A.aEF(n),m),e,B.iC,m),n.r),m),B.agb,new A.e9(new A.iJ(new A.q_("game",new A.RL("v0.16.2","https://github.com/JoseGuilhermeAlves/jose-landing-page/releases/download/poco-demo/Poco-demo-windows.zip","https://github.com/JoseGuilhermeAlves/jose-landing-page/releases/download/poco-demo/Poco-demo-android.apk","trailer/poco-trailer.mp4","assets/images/poco_trailer_poster.jpg",j,c,m),e,B.Lu,m),n.w),m),B.agd,new A.e9(new A.iJ(new A.q_("contact",new A.Bi(j,"5514991163009",i,k,s.aj(a.aL(t.Gk).r.f.gdt()==="pt"?"cv/jose-guilherme-alves-pt.pdf":"cv/jose-guilherme-alves-en.pdf").k(0),c,m),e,B.bB,m),n.y),m),B.ag6],r)
 if(g)c.push(new A.e9(new A.ax(m,64+A.a3(a,B.cl,h).w.r.d,m,m),m))
 h=A.b([new A.aO(new A.a5(d,0,0,0),A.afx(n.d,c),m)],r)
 if(!g)h.push(A.fR(0,new A.Ay(p,n.e,n.gXf(),k,i,new A.aEG(n),m),m,m,0,m,0,m))

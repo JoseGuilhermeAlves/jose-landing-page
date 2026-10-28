@@ -979,7 +979,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Novedades en $version: música y efectos de sonido originales. La Madriguera tiene temas de dungeon synth distintos para exploración y combate, con transiciones suaves. Cada mundo tiene su propia música de exploración. Los jefes de la Madriguera ahora tienen un tema propio, más tenso.';
+    return 'Novedades en $version: las pistas de dungeon synth aprobadas ya suenan en todo el juego. Un tema para exploración y menús, otro para combates y uno más tenso para jefes, mientras preparamos temas propios para cada mundo. Los efectos y la música del tráiler también son originales.';
   }
 
   @override

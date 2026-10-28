@@ -932,7 +932,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return '$version 新内容：原创音乐与音效。鼠人巢穴现在有不同的探索和战斗地下城合成器主题曲，切换更加流畅。每个世界都有专属的探索音乐。 鼠人巢穴的首领现在有更紧张的专属主题曲。';
+    return '$version 新内容：已通过试听的地下城合成器音乐现已应用于整个游戏。探索和菜单、普通战斗及更紧张的首领战分别使用不同主题曲，同时继续准备每个世界的专属音乐。音效和预告片音乐也均为原创。';
   }
 
   @override

@@ -334,7 +334,7 @@
   "game_partnerSubject": "Collaborazione — Poço",
   "game_demoTitle": "Demo giocabile",
   "game_demoBody": "Build di test dell'MVP per Windows e Android. Supporta tastiera, gamepad e touch.",
-  "game_demoUpdate": "Novità in {version}: musica ed effetti sonori originali. La Tana ha temi dungeon synth distinti per esplorazione e battaglia, con transizioni fluide. Ogni mondo ha la propria musica di esplorazione. I boss della Tana ora hanno un tema dedicato, più teso.",
+  "game_demoUpdate": "Novità in {version}: le tracce dungeon synth approvate ora accompagnano tutto il gioco. Un tema per esplorazione e menu, uno per le battaglie e uno più teso per i boss, mentre prepariamo temi esclusivi per ogni mondo. Anche gli effetti e la musica del trailer sono originali.",
   "game_ctaWindows": "Windows .zip - 115 MB",
   "game_ctaAndroid": "Android .apk - 151 MB",
   "game_demoNote": "Windows: estrai il .zip ed esegui Poco.exe. Android: consenti l'installazione da origini sconosciute prima di aprire il .apk.",

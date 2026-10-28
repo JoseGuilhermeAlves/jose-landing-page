@@ -334,7 +334,7 @@
   "game_partnerSubject": "合作 — Poço",
   "game_demoTitle": "可玩 Demo",
   "game_demoBody": "适用于 Windows 和 Android 的 MVP 测试版本。支持键盘、手柄和触屏。",
-  "game_demoUpdate": "{version} 新内容：原创音乐与音效。鼠人巢穴现在有不同的探索和战斗地下城合成器主题曲，切换更加流畅。每个世界都有专属的探索音乐。 鼠人巢穴的首领现在有更紧张的专属主题曲。",
+  "game_demoUpdate": "{version} 新内容：已通过试听的地下城合成器音乐现已应用于整个游戏。探索和菜单、普通战斗及更紧张的首领战分别使用不同主题曲，同时继续准备每个世界的专属音乐。音效和预告片音乐也均为原创。",
   "game_ctaWindows": "Windows .zip - 115 MB",
   "game_ctaAndroid": "Android .apk - 151 MB",
   "game_demoNote": "Windows:解压 .zip 并运行 Poco.exe。Android:打开 .apk 前请允许安装未知来源的应用。",

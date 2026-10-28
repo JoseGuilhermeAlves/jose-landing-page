@@ -334,7 +334,7 @@
   "game_partnerSubject": "Partnership — Poço",
   "game_demoTitle": "Playable demo",
   "game_demoBody": "MVP test build for Windows and Android. Keyboard, gamepad and touch are supported.",
-  "game_demoUpdate": "New in {version}: original music and sound effects. The Warren now has separate dungeon synth themes for exploration and battle, with smooth transitions. Each world has its own exploration music. Warren bosses now have their own, more tense theme.",
+  "game_demoUpdate": "New in {version}: the approved dungeon synth tracks now play throughout the game. One theme for exploration and menus, another for battles, and a tenser one for bosses while we prepare unique themes for each world. Sound effects and the trailer score are original too.",
   "game_ctaWindows": "Windows .zip - 115 MB",
   "game_ctaAndroid": "Android .apk - 151 MB",
   "game_demoNote": "Windows: extract the .zip and run Poco.exe. Android: allow installing apps from unknown sources before opening the .apk.",

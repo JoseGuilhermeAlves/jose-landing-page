@@ -334,7 +334,7 @@
   "game_partnerSubject": "Colaboración — Poço",
   "game_demoTitle": "Demo jugable",
   "game_demoBody": "Build de pruebas del MVP para Windows y Android. Compatible con teclado, gamepad y pantalla táctil.",
-  "game_demoUpdate": "Novedades en {version}: música y efectos de sonido originales. La Madriguera tiene temas de dungeon synth distintos para exploración y combate, con transiciones suaves. Cada mundo tiene su propia música de exploración. Los jefes de la Madriguera ahora tienen un tema propio, más tenso.",
+  "game_demoUpdate": "Novedades en {version}: las pistas de dungeon synth aprobadas ya suenan en todo el juego. Un tema para exploración y menús, otro para combates y uno más tenso para jefes, mientras preparamos temas propios para cada mundo. Los efectos y la música del tráiler también son originales.",
   "game_ctaWindows": "Windows .zip - 115 MB",
   "game_ctaAndroid": "Android .apk - 151 MB",
   "game_demoNote": "Windows: extrae el .zip y ejecuta Poco.exe. Android: permite instalar apps de origen desconocido antes de abrir el .apk.",

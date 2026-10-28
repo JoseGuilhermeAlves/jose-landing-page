@@ -976,7 +976,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'New in $version: original music and sound effects. The Warren now has separate dungeon synth themes for exploration and battle, with smooth transitions. Each world has its own exploration music. Warren bosses now have their own, more tense theme.';
+    return 'New in $version: the approved dungeon synth tracks now play throughout the game. One theme for exploration and menus, another for battles, and a tenser one for bosses while we prepare unique themes for each world. Sound effects and the trailer score are original too.';
   }
 
   @override

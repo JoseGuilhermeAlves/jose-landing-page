@@ -923,19 +923,6 @@ class AppLocalizationsJa extends AppLocalizations {
       'エンジンに依存しない C# ドメイン、435件のヘッドレステスト、バランス調整のためのフルラン・シミュレーション。';
 
   @override
-  String get game_partnerTitle => '協力してくれるアーティストを募集中';
-
-  @override
-  String get game_partnerBody =>
-      'Poço は一人で開発しており、現在は AI 生成のアートを使用しています。これを人の手によるアートに置き換えることが目標です。共にゲームを作るピクセルアーティスト、アニメーター、作曲家を募集しています。';
-
-  @override
-  String get game_ctaPartner => '協力したい';
-
-  @override
-  String get game_partnerSubject => 'パートナーシップ — Poço';
-
-  @override
   String get game_demoTitle => 'プレイアブルデモ';
 
   @override
@@ -944,7 +931,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return '$version の新要素：承認済みのダンジョンシンセ曲をゲーム全体に適用しました。探索とメニュー、通常戦闘、より緊迫したボス戦にそれぞれ別の曲が流れます。各世界専用の曲も準備中です。効果音とトレーラーの音楽もオリジナルです。';
+    return '$version の新要素：各世界の探索、通常戦闘、ボス戦に専用のダンジョンシンセ曲を追加。メニューと導入にも専用曲が流れます。同じ場面に戻るたびに曲のバリエーションが切り替わります。';
   }
 
   @override

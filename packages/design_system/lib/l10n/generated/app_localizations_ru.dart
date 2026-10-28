@@ -959,19 +959,6 @@ class AppLocalizationsRu extends AppLocalizations {
       'Независимый от движка C#-домен, 435 headless-тестов и симуляция полных забегов для баланса.';
 
   @override
-  String get game_partnerTitle => 'Ищу художников для партнёрства';
-
-  @override
-  String get game_partnerBody =>
-      'Poço разрабатывает один человек, и сейчас в игре используется графика, созданная ИИ. Цель — заменить её работами людей: ищу пиксель-художников, аниматоров и музыкантов, готовых создавать игру в партнёрстве.';
-
-  @override
-  String get game_ctaPartner => 'Хочу участвовать';
-
-  @override
-  String get game_partnerSubject => 'Партнёрство — Poço';
-
-  @override
   String get game_demoTitle => 'Играбельная демо-версия';
 
   @override
@@ -980,7 +967,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Новое в $version: одобренные dungeon synth композиции теперь звучат во всей игре. Одна тема для исследования и меню, другая для боёв и более напряжённая для боссов, пока мы готовим отдельные темы для каждого мира. Звуковые эффекты и музыка трейлера тоже оригинальные.';
+    return 'Новое в $version: отдельные dungeon synth темы для исследования, боёв и боссов каждого мира, а также для меню и вступления. При возвращении к каждой ситуации варианты музыки чередуются.';
   }
 
   @override

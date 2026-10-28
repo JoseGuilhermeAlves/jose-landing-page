@@ -6,7 +6,7 @@ import 'package:landing/widgets/trailer/trailer_video_view.dart'
 /// Secao "Poço" — projeto autoral de jogo em desenvolvimento. Mesma
 /// gramatica da `AboutSection` (eyebrow pixel, titulo com acento magenta,
 /// prosa + rows estilo changelog), com o GIF de gameplay emoldurado em
-/// neon, o chamado pra artistas parceiros e os downloads da demo.
+/// neon e os downloads da demo.
 ///
 /// Os binarios (~115 MB e ~149 MB) passam do limite de 100 MB por arquivo
 /// do GitHub Pages, por isso sao servidos de uma GitHub Release — a
@@ -129,32 +129,6 @@ class GameSection extends StatelessWidget {
         _TrailerPlayer(
           videoUrl: trailerUrl,
           posterAsset: trailerPosterAsset,
-        ),
-        SizedBox(height: blockGap),
-        Text(
-          l10n.game_partnerTitle,
-          style: tt.headlineSmall?.copyWith(color: colors.onSurface),
-        ),
-        const SizedBox(height: AppSpacing.md),
-        Text(
-          l10n.game_partnerBody,
-          style: tt.bodyMedium?.copyWith(
-            color: colors.onSurfaceMuted,
-            height: 1.55,
-          ),
-        ),
-        const SizedBox(height: AppSpacing.lg),
-        _ArcadeButton(
-          label: l10n.game_ctaPartner,
-          color: colors.primary,
-          filled: true,
-          onPressed: () => onOpenUri(
-            Uri(
-              scheme: 'mailto',
-              path: email,
-              query: 'subject=${Uri.encodeComponent(l10n.game_partnerSubject)}',
-            ),
-          ),
         ),
         SizedBox(height: blockGap),
         Text(

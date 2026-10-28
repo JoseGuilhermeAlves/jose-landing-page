@@ -1,6 +1,5 @@
 {
   "@@locale": "zh",
-
   "common_cancel": "取消",
   "common_back": "返回",
   "common_close": "关闭",
@@ -19,7 +18,6 @@
   "common_search": "搜索",
   "common_semanticsClose": "关闭",
   "common_semanticsLoadingSpinner": "正在加载内容",
-
   "hero_eyebrow": "移动端前端 · Flutter",
   "hero_headline1": "Flutter 移动端前端。",
   "hero_headline2": "从 MVP 到上线的应用。",
@@ -35,7 +33,6 @@
   "hero_trustCanvasValue": "15+",
   "hero_trustCanvasLabel": "展示中的演示屏幕",
   "hero_portraitSemantics": "Jose Guilherme Alves 照片",
-
   "about_eyebrow": "关于我",
   "about_title": "谁来",
   "about_titleAccent": "交付。",
@@ -56,7 +53,6 @@
   "about_factFintechTitle": "大规模金融科技（现任）",
   "about_factFintechBody": "Monorepo 架构、自有设计系统的金融产品。",
   "about_bioClose": "领域各异，交付一致：完整的移动端前端。后端留给团队——我负责与之对接。",
-
   "delivery_entrega_eyebrow": "交付",
   "delivery_entrega_title": "明确范围，",
   "delivery_entrega_titleAccent": "对齐预期。",
@@ -69,7 +65,6 @@
   "delivery_collab_title": "产品团队成员",
   "delivery_collab_titleAccent": "或独揽 Flutter 全局。",
   "delivery_collab_body": "大团队中，我以功能范围或架构管理的角色参与移动端前端。小团队中（B2B零售，5年），我负责整个 Flutter 端——从设计到部署，集成现有 API 并在需要时协助定义新接口。我适应团队规模，而非相反。",
-
   "domain_fintech_label": "金融服务",
   "domain_fintech_blurb": "Flutter 前端的大规模金融产品——monorepo、自有 design system、按功能架构，在高吞吐下注重正确性与一致性。",
   "domain_publicServices_label": "公共服务",
@@ -78,7 +73,6 @@
   "domain_sanitation_blurb": "offline-first 的现场数据采集——用 Flutter Modular 和 Provider，在不稳定网络下可靠同步。",
   "domain_retail_label": "B2B 零售",
   "domain_retail_blurb": "完整的 Flutter 前端——从设计到部署，历时五年。五个运营应用：库存、门店间调拨、销售和内部沟通。",
-
   "services_eyebrow": "服务",
   "services_title": "移动端前端。",
   "services_titleAccent": "从需求到部署。",
@@ -93,7 +87,6 @@
   "services_maintenance_description": "已上线应用前端的重构、稳定化和新功能开发。",
   "services_consulting_title": "移动端咨询",
   "services_consulting_description": "架构、代码审查和技术栈选型——在功能变成技术债之前提供技术支持。",
-
   "contact_eyebrow": "联系",
   "contact_title": "来聊",
   "contact_titleAccent": "聊？",
@@ -103,7 +96,6 @@
   "contact_ctaLinkedin": "LinkedIn — 完整履历",
   "contact_ctaGithub": "GitHub",
   "contact_ctaResume": "下载简历 (PDF)",
-
   "nav_showcase": "案例展示",
   "nav_about": "关于",
   "nav_engineering": "工程",
@@ -111,14 +103,11 @@
   "nav_backToTop": "返回顶部",
   "nav_ctaContact": "联系",
   "footer_madeWith": "使用 Flutter 构建",
-
   "engineering_eyebrow": "工程",
   "engineering_title": "支撑每个",
   "engineering_titleAccent": "项目决策的技术栈。",
   "engineering_subtitle": "我在生产中使用的技术，以及其他我深入了解的技术。点击任意卡片了解更多。",
   "engineering_githubButton": "看我的 GitHub",
-
-
   "showcase_eyebrow": "案例展示",
   "showcase_title": "三个细分，",
   "showcase_titleAccent": "三个原型。",
@@ -133,7 +122,6 @@
   "showcase_fitnessDescription": "Pulso——恢复仪表盘、带 RPE 的逐组记录器和8周周期化。",
   "showcase_realestateLabel": "房产",
   "showcase_realestateDescription": "Solar——数据生成的户型图、社区地图，以及从搜索到联系经纪人的完整流程。",
-
   "pulso_eyebrowTodayWorkout": "今日训练",
   "pulso_eyebrowProgram": "计划",
   "pulso_eyebrowRecovery": "恢复",
@@ -192,14 +180,17 @@
   "pulso_sessionWeekSubtitle": "第 {week} 周 · {label}",
   "@pulso_sessionWeekSubtitle": {
     "placeholders": {
-      "week": {"type": "int"},
-      "label": {"type": "String"}
+      "week": {
+        "type": "int"
+      },
+      "label": {
+        "type": "String"
+      }
     }
   },
   "pulso_swapExerciseTitle": "更换动作",
   "pulso_swapExerciseSubtitle": "激活相同肌肉链的替代动作。",
   "pulso_swapExerciseEmpty": "该动作暂无编目替代方案。",
-
   "aurora_closeDemoTooltip": "关闭演示",
   "aurora_resetDemoTooltip": "重置演示",
   "aurora_historyTooltip": "订单历史",
@@ -214,24 +205,26 @@
   "aurora_storesTitleFiltered": "{category} 类别",
   "@aurora_storesTitleFiltered": {
     "placeholders": {
-      "category": {"type": "String"}
+      "category": {
+        "type": "String"
+      }
     }
   },
   "aurora_storesCountSingular": "1 个摊位",
   "aurora_storesCountPlural": "{count} 个摊位",
   "@aurora_storesCountPlural": {
     "placeholders": {
-      "count": {"type": "int"}
+      "count": {
+        "type": "int"
+      }
     }
   },
   "aurora_storesEmpty": "该分类暂无摊位。",
   "aurora_orderTimelineTitle": "您的订单在哪里",
   "aurora_orderItemsTitle": "商品",
-
   "vitral_closeDemoTooltip": "关闭演示",
   "vitral_categoriesTitle": "今天需要什么",
   "vitral_specialistsTitle": "谁在排班",
-
   "solar_closeDemoTooltip": "关闭演示",
   "solar_neighborhoodsEyebrow": "社区",
   "solar_neighborhoodsTitle": "您在哪里找",
@@ -240,7 +233,6 @@
   "solar_heroTag": "房产 · 圣保罗内陆",
   "solar_heroSubtitle": "内陆城市的住宅、庄园、地块和公寓——每个房源配有策展、户型图和本地经纪人。",
   "solar_heroCta": "查看房源",
-
   "mira_closeDemoTooltip": "关闭演示",
   "mira_portfolioTooltip": "我的组合",
   "mira_historyTooltip": "订单历史",
@@ -250,7 +242,6 @@
   "mira_otherAssetsTitle": "其他资产",
   "mira_marketStatusLabel": "B3 · 实时",
   "mira_totalAssetsLabel": "总资产",
-
   "stack_cat_framework": "框架",
   "stack_cat_state": "状态管理",
   "stack_cat_routing": "路由",
@@ -263,7 +254,6 @@
   "stack_cat_web": "Web / PWA",
   "stack_cat_tooling": "工具链",
   "stack_cat_observability": "可观测性",
-
   "stack_flutter_role": "基础框架，Material 3 纯暗色模式",
   "stack_dart_role": "SDK、空安全与 Records",
   "stack_platformChannels_role": "原生桥接 Dart ↔ Kotlin/Swift",
@@ -305,7 +295,6 @@
   "stack_githubActions_role": "分析、测试和 Web 构建流水线",
   "stack_fastlane_role": "移动端构建、签名和部署自动化",
   "stack_datadog_role": "生产应用的 APM、日志和 RUM",
-
   "locale_pt": "Português",
   "locale_en": "English",
   "locale_es": "Español",
@@ -315,7 +304,6 @@
   "locale_it": "Italiano",
   "locale_fr": "Français",
   "locale_ru": "Русский",
-
   "nav_game": "游戏",
   "game_eyebrow": "个人项目",
   "game_title": "Poço —",
@@ -328,13 +316,9 @@
   "game_factBuildBody": "每次升级从三个技能中选择一个。再次选择同一技能可提升等级;达到 3 级并搭配合适的伙伴技能后,将进化为终极技。",
   "game_factStackTitle": "工程",
   "game_factStackBody": "与引擎解耦的 C# 领域层、435 个无头测试,以及用于平衡的完整对局模拟。",
-  "game_partnerTitle": "寻找合作艺术家",
-  "game_partnerBody": "Poço 由一人开发,目前使用 AI 生成的美术素材。目标是以人工创作的美术替代:正在寻找愿意合作共建游戏的像素画师、动画师和音乐人。",
-  "game_ctaPartner": "我想合作",
-  "game_partnerSubject": "合作 — Poço",
   "game_demoTitle": "可玩 Demo",
   "game_demoBody": "适用于 Windows 和 Android 的 MVP 测试版本。支持键盘、手柄和触屏。",
-  "game_demoUpdate": "{version} 新内容：已通过试听的地下城合成器音乐现已应用于整个游戏。探索和菜单、普通战斗及更紧张的首领战分别使用不同主题曲，同时继续准备每个世界的专属音乐。音效和预告片音乐也均为原创。",
+  "game_demoUpdate": "{version} 新内容：每个世界的探索、普通战斗和首领战都有专属地下城合成器音乐，菜单和开场也有独立主题曲。再次进入相同场景时，音乐版本交替播放。",
   "game_ctaWindows": "Windows .zip - 115 MB",
   "game_ctaAndroid": "Android .apk - 151 MB",
   "game_demoNote": "Windows:解压 .zip 并运行 Poco.exe。Android:打开 .apk 前请允许安装未知来源的应用。",

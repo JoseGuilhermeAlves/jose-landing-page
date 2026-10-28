@@ -1864,30 +1864,6 @@ abstract class AppLocalizations {
   /// **'Domínio em C# isolado da engine, 435 testes headless e simulação de partidas completas para balanceamento.'**
   String get game_factStackBody;
 
-  /// No description provided for @game_partnerTitle.
-  ///
-  /// In pt, this message translates to:
-  /// **'Procuro artistas para parceria'**
-  String get game_partnerTitle;
-
-  /// No description provided for @game_partnerBody.
-  ///
-  /// In pt, this message translates to:
-  /// **'O Poço é desenvolvido por uma pessoa e hoje usa arte gerada por IA. O objetivo é substituí-la por arte feita por pessoas: busco pixel artists, animadores e músicos interessados em construir o jogo em parceria.'**
-  String get game_partnerBody;
-
-  /// No description provided for @game_ctaPartner.
-  ///
-  /// In pt, this message translates to:
-  /// **'Quero colaborar'**
-  String get game_ctaPartner;
-
-  /// No description provided for @game_partnerSubject.
-  ///
-  /// In pt, this message translates to:
-  /// **'Parceria — Poço'**
-  String get game_partnerSubject;
-
   /// No description provided for @game_demoTitle.
   ///
   /// In pt, this message translates to:
@@ -1903,7 +1879,7 @@ abstract class AppLocalizations {
   /// No description provided for @game_demoUpdate.
   ///
   /// In pt, this message translates to:
-  /// **'Novo na {version}: as trilhas de dungeon synth aprovadas agora tocam no jogo inteiro. Um tema para exploração e menu, outro para batalhas e um mais tenso para chefes, enquanto preparamos temas exclusivos para cada mundo. Efeitos sonoros e música do trailer também são originais.'**
+  /// **'Novo na {version}: trilhas dungeon synth próprias para exploração, batalhas e chefes de cada mundo, além de músicas exclusivas para o menu e a introdução. As variações aprovadas alternam ao retornar a cada contexto.'**
   String game_demoUpdate(String version);
 
   /// No description provided for @game_ctaWindows.

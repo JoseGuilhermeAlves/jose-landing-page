@@ -955,19 +955,6 @@ class AppLocalizationsIt extends AppLocalizations {
       'Dominio C# indipendente dal motore, 435 test headless e simulazione di partite complete per il bilanciamento.';
 
   @override
-  String get game_partnerTitle => 'Cerco artisti per una collaborazione';
-
-  @override
-  String get game_partnerBody =>
-      'Poço è sviluppato da una sola persona e oggi usa grafica generata dall\'IA. L\'obiettivo è sostituirla con arte creata da persone: cerco pixel artist, animatori e musicisti interessati a costruire il gioco in collaborazione.';
-
-  @override
-  String get game_ctaPartner => 'Voglio collaborare';
-
-  @override
-  String get game_partnerSubject => 'Collaborazione — Poço';
-
-  @override
   String get game_demoTitle => 'Demo giocabile';
 
   @override
@@ -976,7 +963,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Novità in $version: le tracce dungeon synth approvate ora accompagnano tutto il gioco. Un tema per esplorazione e menu, uno per le battaglie e uno più teso per i boss, mentre prepariamo temi esclusivi per ogni mondo. Anche gli effetti e la musica del trailer sono originali.';
+    return 'Novità in $version: temi dungeon synth dedicati a esplorazione, battaglie e boss di ogni mondo, oltre a musiche esclusive per menu e introduzione. Le varianti si alternano tornando a ciascun contesto.';
   }
 
   @override

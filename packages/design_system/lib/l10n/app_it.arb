@@ -1,6 +1,5 @@
 {
   "@@locale": "it",
-
   "common_cancel": "Annulla",
   "common_back": "Indietro",
   "common_close": "Chiudi",
@@ -19,7 +18,6 @@
   "common_search": "Cerca",
   "common_semanticsClose": "Chiudi",
   "common_semanticsLoadingSpinner": "Caricamento contenuto",
-
   "hero_eyebrow": "Front end mobile · Flutter",
   "hero_headline1": "Front end mobile in Flutter.",
   "hero_headline2": "Dall'MVP all'app in produzione.",
@@ -35,7 +33,6 @@
   "hero_trustCanvasValue": "15+",
   "hero_trustCanvasLabel": "schermate demo nella vetrina",
   "hero_portraitSemantics": "Foto di Jose Guilherme Alves",
-
   "about_eyebrow": "Chi sono",
   "about_title": "Chi",
   "about_titleAccent": "costruisce.",
@@ -56,7 +53,6 @@
   "about_factFintechTitle": "Fintech su larga scala (attuale)",
   "about_factFintechBody": "Prodotto finanziario in monorepo con design system proprio.",
   "about_bioClose": "Domini distinti, stessa consegna: il front end mobile intero. Il backend resta al team — io mi integro con esso.",
-
   "delivery_entrega_eyebrow": "REALIZZAZIONE",
   "delivery_entrega_title": "Ambito chiaro,",
   "delivery_entrega_titleAccent": "aspettative allineate.",
@@ -69,7 +65,6 @@
   "delivery_collab_title": "Nel team di prodotto",
   "delivery_collab_titleAccent": "o su tutto il Flutter.",
   "delivery_collab_body": "In team grandi entro come front end mobile con ambito feature o stewardship architetturale. In team piccoli (retail B2B, 5 anni) ho gestito tutto il Flutter — dal design al deploy, integrando API esistenti e contribuendo a definire nuovi contratti quando necessario. Mi adatto alla dimensione del team, non il contrario.",
-
   "domain_fintech_label": "Servizio finanziario",
   "domain_fintech_blurb": "Prodotto finanziario su larga scala nel front end Flutter — monorepo, design system proprio e architettura per feature, focus su correttezza e coerenza sotto alto volume.",
   "domain_publicServices_label": "Settore pubblico",
@@ -78,7 +73,6 @@
   "domain_sanitation_blurb": "Raccolta di dati sul campo offline-first — Flutter Modular e Provider, sincronizzazione affidabile su rete instabile.",
   "domain_retail_label": "Retail B2B",
   "domain_retail_blurb": "Intero front end Flutter — dal design al deploy, per cinque anni. Cinque app di operazioni: inventario, distribuzione tra unità, vendite e comunicazione interna.",
-
   "services_eyebrow": "Servizi",
   "services_title": "Front end mobile.",
   "services_titleAccent": "Dal brief al deploy.",
@@ -93,7 +87,6 @@
   "services_maintenance_description": "Refactoring, stabilizzazione e nuove feature nel front end di app già in produzione.",
   "services_consulting_title": "Consulenza mobile",
   "services_consulting_description": "Architettura, code review e definizione dello stack — supporto tecnico prima che la feature diventi debito.",
-
   "contact_eyebrow": "Contatto",
   "contact_title": "Parliamo",
   "contact_titleAccent": "?",
@@ -103,7 +96,6 @@
   "contact_ctaLinkedin": "LinkedIn — percorso completo",
   "contact_ctaGithub": "GitHub",
   "contact_ctaResume": "Scarica il curriculum (PDF)",
-
   "nav_showcase": "Showcase",
   "nav_about": "Chi sono",
   "nav_engineering": "Ingegneria",
@@ -111,14 +103,11 @@
   "nav_backToTop": "Torna in cima",
   "nav_ctaContact": "Contatto",
   "footer_madeWith": "Realizzato con Flutter",
-
   "engineering_eyebrow": "Ingegneria",
   "engineering_title": "Lo stack dietro",
   "engineering_titleAccent": "ogni decisione progettuale.",
   "engineering_subtitle": "Tecnologie che uso in produzione e altre che conosco da vicino. Tocca qualsiasi tile per saperne di più.",
   "engineering_githubButton": "Vedi il mio GitHub",
-
-
   "showcase_eyebrow": "Showcase",
   "showcase_title": "Tre nicchie,",
   "showcase_titleAccent": "tre prototipi.",
@@ -133,7 +122,6 @@
   "showcase_fitnessDescription": "Pulso — dashboard di recovery, logger set-per-set con RPE e periodizzazione di 8 settimane.",
   "showcase_realestateLabel": "Immobiliare",
   "showcase_realestateDescription": "Solar — immobiliare con planimetria generata dai dati, mappa di quartiere e percorso dalla ricerca al contatto.",
-
   "pulso_eyebrowTodayWorkout": "ALLENAMENTO DI OGGI",
   "pulso_eyebrowProgram": "PROGRAMMA",
   "pulso_eyebrowRecovery": "RECOVERY",
@@ -192,14 +180,17 @@
   "pulso_sessionWeekSubtitle": "Settimana {week} · {label}",
   "@pulso_sessionWeekSubtitle": {
     "placeholders": {
-      "week": {"type": "int"},
-      "label": {"type": "String"}
+      "week": {
+        "type": "int"
+      },
+      "label": {
+        "type": "String"
+      }
     }
   },
   "pulso_swapExerciseTitle": "Cambia esercizio",
   "pulso_swapExerciseSubtitle": "Alternative che attivano la stessa catena muscolare.",
   "pulso_swapExerciseEmpty": "Nessuna alternativa catalogata per questo esercizio.",
-
   "aurora_closeDemoTooltip": "Chiudi demo",
   "aurora_resetDemoTooltip": "Reimposta demo",
   "aurora_historyTooltip": "Storico ordini",
@@ -214,24 +205,26 @@
   "aurora_storesTitleFiltered": "In {category}",
   "@aurora_storesTitleFiltered": {
     "placeholders": {
-      "category": {"type": "String"}
+      "category": {
+        "type": "String"
+      }
     }
   },
   "aurora_storesCountSingular": "1 banco",
   "aurora_storesCountPlural": "{count} banchi",
   "@aurora_storesCountPlural": {
     "placeholders": {
-      "count": {"type": "int"}
+      "count": {
+        "type": "int"
+      }
     }
   },
   "aurora_storesEmpty": "Nessun banco in questa categoria per ora.",
   "aurora_orderTimelineTitle": "Dov'è il tuo ordine",
   "aurora_orderItemsTitle": "Articoli",
-
   "vitral_closeDemoTooltip": "Chiudi demo",
   "vitral_categoriesTitle": "Di cosa hai bisogno oggi",
   "vitral_specialistsTitle": "Chi è in agenda",
-
   "solar_closeDemoTooltip": "Chiudi demo",
   "solar_neighborhoodsEyebrow": "Quartieri",
   "solar_neighborhoodsTitle": "Dove cerchi",
@@ -240,7 +233,6 @@
   "solar_heroTag": "immobiliare · entroterra di são paulo",
   "solar_heroSubtitle": "Case, fattorie, terreni e appartamenti nelle città dell'entroterra — con curatela, planimetria e agente locale in ogni annuncio.",
   "solar_heroCta": "Vedi immobili",
-
   "mira_closeDemoTooltip": "Chiudi demo",
   "mira_portfolioTooltip": "Il mio portfolio",
   "mira_historyTooltip": "Storico ordini",
@@ -250,7 +242,6 @@
   "mira_otherAssetsTitle": "Altri asset",
   "mira_marketStatusLabel": "B3 · TEMPO REALE",
   "mira_totalAssetsLabel": "PATRIMONIO TOTALE",
-
   "stack_cat_framework": "Framework",
   "stack_cat_state": "Stato",
   "stack_cat_routing": "Routing",
@@ -263,7 +254,6 @@
   "stack_cat_web": "Web / PWA",
   "stack_cat_tooling": "Tooling",
   "stack_cat_observability": "Osservabilità",
-
   "stack_flutter_role": "Framework base, Material 3 dark-only",
   "stack_dart_role": "SDK, null safety e records",
   "stack_platformChannels_role": "Bridge nativo Dart ↔ Kotlin/Swift",
@@ -305,7 +295,6 @@
   "stack_githubActions_role": "Pipeline di analyze, test e build web",
   "stack_fastlane_role": "Automazione di build, firma e deploy mobile",
   "stack_datadog_role": "APM, log e RUM per app in produzione",
-
   "locale_pt": "Português",
   "locale_en": "English",
   "locale_es": "Español",
@@ -315,7 +304,6 @@
   "locale_it": "Italiano",
   "locale_fr": "Français",
   "locale_ru": "Русский",
-
   "nav_game": "Gioco",
   "game_eyebrow": "Progetto personale",
   "game_title": "Poço —",
@@ -328,13 +316,9 @@
   "game_factBuildBody": "Ogni salita di livello offre un'abilità su tre. Sceglierla di nuovo ne aumenta il grado; al grado 3, con il partner giusto, evolve in un climax.",
   "game_factStackTitle": "Ingegneria",
   "game_factStackBody": "Dominio C# indipendente dal motore, 435 test headless e simulazione di partite complete per il bilanciamento.",
-  "game_partnerTitle": "Cerco artisti per una collaborazione",
-  "game_partnerBody": "Poço è sviluppato da una sola persona e oggi usa grafica generata dall'IA. L'obiettivo è sostituirla con arte creata da persone: cerco pixel artist, animatori e musicisti interessati a costruire il gioco in collaborazione.",
-  "game_ctaPartner": "Voglio collaborare",
-  "game_partnerSubject": "Collaborazione — Poço",
   "game_demoTitle": "Demo giocabile",
   "game_demoBody": "Build di test dell'MVP per Windows e Android. Supporta tastiera, gamepad e touch.",
-  "game_demoUpdate": "Novità in {version}: le tracce dungeon synth approvate ora accompagnano tutto il gioco. Un tema per esplorazione e menu, uno per le battaglie e uno più teso per i boss, mentre prepariamo temi esclusivi per ogni mondo. Anche gli effetti e la musica del trailer sono originali.",
+  "game_demoUpdate": "Novità in {version}: temi dungeon synth dedicati a esplorazione, battaglie e boss di ogni mondo, oltre a musiche esclusive per menu e introduzione. Le varianti si alternano tornando a ciascun contesto.",
   "game_ctaWindows": "Windows .zip - 115 MB",
   "game_ctaAndroid": "Android .apk - 151 MB",
   "game_demoNote": "Windows: estrai il .zip ed esegui Poco.exe. Android: consenti l'installazione da origini sconosciute prima di aprire il .apk.",

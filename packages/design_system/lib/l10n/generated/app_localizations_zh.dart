@@ -912,19 +912,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get game_factStackBody => '与引擎解耦的 C# 领域层、435 个无头测试,以及用于平衡的完整对局模拟。';
 
   @override
-  String get game_partnerTitle => '寻找合作艺术家';
-
-  @override
-  String get game_partnerBody =>
-      'Poço 由一人开发,目前使用 AI 生成的美术素材。目标是以人工创作的美术替代:正在寻找愿意合作共建游戏的像素画师、动画师和音乐人。';
-
-  @override
-  String get game_ctaPartner => '我想合作';
-
-  @override
-  String get game_partnerSubject => '合作 — Poço';
-
-  @override
   String get game_demoTitle => '可玩 Demo';
 
   @override
@@ -932,7 +919,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return '$version 新内容：已通过试听的地下城合成器音乐现已应用于整个游戏。探索和菜单、普通战斗及更紧张的首领战分别使用不同主题曲，同时继续准备每个世界的专属音乐。音效和预告片音乐也均为原创。';
+    return '$version 新内容：每个世界的探索、普通战斗和首领战都有专属地下城合成器音乐，菜单和开场也有独立主题曲。再次进入相同场景时，音乐版本交替播放。';
   }
 
   @override

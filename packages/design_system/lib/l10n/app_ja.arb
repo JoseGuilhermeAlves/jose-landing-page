@@ -1,6 +1,5 @@
 {
   "@@locale": "ja",
-
   "common_cancel": "キャンセル",
   "common_back": "戻る",
   "common_close": "閉じる",
@@ -19,7 +18,6 @@
   "common_search": "検索",
   "common_semanticsClose": "閉じる",
   "common_semanticsLoadingSpinner": "コンテンツを読み込み中",
-
   "hero_eyebrow": "モバイルフロントエンド · Flutter",
   "hero_headline1": "Flutter のモバイルフロントエンド。",
   "hero_headline2": "MVPから本番アプリまで。",
@@ -35,7 +33,6 @@
   "hero_trustCanvasValue": "15+",
   "hero_trustCanvasLabel": "ショーケースのデモ画面",
   "hero_portraitSemantics": "Jose Guilherme Alvesの写真",
-
   "about_eyebrow": "About",
   "about_title": "誰が",
   "about_titleAccent": "つくるのか。",
@@ -56,7 +53,6 @@
   "about_factFintechTitle": "大規模フィンテック（現職）",
   "about_factFintechBody": "独自のデザインシステムを持つモノレポ構成の金融プロダクト。",
   "about_bioClose": "ドメインは違っても、提供するものは同じ——モバイルフロントエンド全体。バックエンドはチームに残り、私はそれと統合します。",
-
   "delivery_entrega_eyebrow": "成果",
   "delivery_entrega_title": "明確なスコープ、",
   "delivery_entrega_titleAccent": "整合された期待。",
@@ -69,7 +65,6 @@
   "delivery_collab_title": "プロダクトチームの一員",
   "delivery_collab_titleAccent": "またはFlutter全体を担当。",
   "delivery_collab_body": "大きなチームではフィーチャースコープまたはアーキテクチャスチュワードシップとしてモバイルフロントエンドに参加。小さなチーム（B2Bリテール、5年）ではFlutter全体を担当——デザインからデプロイまで、既存APIの統合と必要に応じた新しい契約の策定。チームサイズに合わせます。逆ではなく。",
-
   "domain_fintech_label": "金融サービス",
   "domain_fintech_blurb": "Flutterフロントエンドの大規模な金融プロダクト——monorepo、独自のdesign system、feature単位のアーキテクチャで、高負荷下での正確性と一貫性を重視。",
   "domain_publicServices_label": "公共サービス",
@@ -78,7 +73,6 @@
   "domain_sanitation_blurb": "offline-firstの現場データ収集——Flutter ModularとProvider、不安定なネットワーク下でも確実に同期。",
   "domain_retail_label": "B2Bリテール",
   "domain_retail_blurb": "Flutterフロントエンドを丸ごと——デザインからデプロイまで、5年間。オペレーションのアプリ5本：在庫、店舗間の配分、販売、社内コミュニケーション。",
-
   "services_eyebrow": "サービス",
   "services_title": "モバイルフロントエンド。",
   "services_titleAccent": "ブリーフからデプロイまで。",
@@ -93,7 +87,6 @@
   "services_maintenance_description": "本番稼働中のアプリフロントエンドのリファクタリング、安定化、新機能開発。",
   "services_consulting_title": "モバイルコンサルティング",
   "services_consulting_description": "アーキテクチャ、コードレビュー、技術スタック選定——フィーチャーが技術負債になる前の技術支援。",
-
   "contact_eyebrow": "お問い合わせ",
   "contact_title": "お話し",
   "contact_titleAccent": "しませんか？",
@@ -103,7 +96,6 @@
   "contact_ctaLinkedin": "LinkedIn — 詳細な経歴",
   "contact_ctaGithub": "GitHub",
   "contact_ctaResume": "履歴書をダウンロード (PDF)",
-
   "nav_showcase": "ショーケース",
   "nav_about": "About",
   "nav_engineering": "エンジニアリング",
@@ -111,14 +103,11 @@
   "nav_backToTop": "トップへ戻る",
   "nav_ctaContact": "お問い合わせ",
   "footer_madeWith": "Flutterで構築",
-
   "engineering_eyebrow": "エンジニアリング",
   "engineering_title": "すべてのプロジェクト決定を",
   "engineering_titleAccent": "支える技術スタック。",
   "engineering_subtitle": "本番で使用している技術と、近くで知る他の技術。タイルをタップして詳細を確認。",
   "engineering_githubButton": "私のGitHubを見る",
-
-
   "showcase_eyebrow": "ショーケース",
   "showcase_title": "3つのニッチ、",
   "showcase_titleAccent": "3つのプロトタイプ。",
@@ -133,7 +122,6 @@
   "showcase_fitnessDescription": "Pulso——リカバリーダッシュボード、RPE付きセットバイセットロガー、8週ピリオダイゼーション。",
   "showcase_realestateLabel": "不動産",
   "showcase_realestateDescription": "Solar——データから描画する間取り図、周辺マップ、検索から問い合わせまでの導線を備えた不動産。",
-
   "pulso_eyebrowTodayWorkout": "今日のトレーニング",
   "pulso_eyebrowProgram": "プログラム",
   "pulso_eyebrowRecovery": "リカバリー",
@@ -192,14 +180,17 @@
   "pulso_sessionWeekSubtitle": "第{week}週 · {label}",
   "@pulso_sessionWeekSubtitle": {
     "placeholders": {
-      "week": {"type": "int"},
-      "label": {"type": "String"}
+      "week": {
+        "type": "int"
+      },
+      "label": {
+        "type": "String"
+      }
     }
   },
   "pulso_swapExerciseTitle": "エクササイズ変更",
   "pulso_swapExerciseSubtitle": "同じ筋肉チェーンを活性化する代替エクササイズ。",
   "pulso_swapExerciseEmpty": "このエクササイズのカタログ代替はありません。",
-
   "aurora_closeDemoTooltip": "デモを閉じる",
   "aurora_resetDemoTooltip": "デモをリセット",
   "aurora_historyTooltip": "注文履歴",
@@ -214,24 +205,26 @@
   "aurora_storesTitleFiltered": "{category} カテゴリ",
   "@aurora_storesTitleFiltered": {
     "placeholders": {
-      "category": {"type": "String"}
+      "category": {
+        "type": "String"
+      }
     }
   },
   "aurora_storesCountSingular": "1 店舗",
   "aurora_storesCountPlural": "{count} 店舗",
   "@aurora_storesCountPlural": {
     "placeholders": {
-      "count": {"type": "int"}
+      "count": {
+        "type": "int"
+      }
     }
   },
   "aurora_storesEmpty": "このカテゴリにはまだ販売者がいません。",
   "aurora_orderTimelineTitle": "注文の状況",
   "aurora_orderItemsTitle": "商品",
-
   "vitral_closeDemoTooltip": "デモを閉じる",
   "vitral_categoriesTitle": "今日必要なもの",
   "vitral_specialistsTitle": "スケジュール上の担当",
-
   "solar_closeDemoTooltip": "デモを閉じる",
   "solar_neighborhoodsEyebrow": "地域",
   "solar_neighborhoodsTitle": "お探しのエリア",
@@ -240,7 +233,6 @@
   "solar_heroTag": "不動産 · サンパウロ郊外",
   "solar_heroSubtitle": "郊外都市の一戸建て、農園、土地、マンション——キュレーション、間取り図、現地の仲介業者付き。",
   "solar_heroCta": "物件を見る",
-
   "mira_closeDemoTooltip": "デモを閉じる",
   "mira_portfolioTooltip": "ポートフォリオ",
   "mira_historyTooltip": "注文履歴",
@@ -250,7 +242,6 @@
   "mira_otherAssetsTitle": "その他の資産",
   "mira_marketStatusLabel": "B3 · リアルタイム",
   "mira_totalAssetsLabel": "総資産",
-
   "stack_cat_framework": "フレームワーク",
   "stack_cat_state": "状態管理",
   "stack_cat_routing": "ルーティング",
@@ -263,7 +254,6 @@
   "stack_cat_web": "Web / PWA",
   "stack_cat_tooling": "ツール",
   "stack_cat_observability": "オブザーバビリティ",
-
   "stack_flutter_role": "基盤フレームワーク、Material 3 ダークオンリー",
   "stack_dart_role": "SDK、null safety、records",
   "stack_platformChannels_role": "Dart ↔ Kotlin/Swiftネイティブブリッジ",
@@ -305,7 +295,6 @@
   "stack_githubActions_role": "analyze、test、Web buildのパイプライン",
   "stack_fastlane_role": "モバイルのbuild、署名、デプロイ自動化",
   "stack_datadog_role": "本番アプリの APM・ログ・RUM",
-
   "locale_pt": "Português",
   "locale_en": "English",
   "locale_es": "Español",
@@ -315,7 +304,6 @@
   "locale_it": "Italiano",
   "locale_fr": "Français",
   "locale_ru": "Русский",
-
   "nav_game": "ゲーム",
   "game_eyebrow": "個人プロジェクト",
   "game_title": "Poço —",
@@ -328,13 +316,9 @@
   "game_factBuildBody": "レベルアップごとに3つのスキルから1つを選択。同じスキルを再度選ぶとランクが上がり、ランク3で適切なパートナーと揃うとクライマックスへ進化します。",
   "game_factStackTitle": "エンジニアリング",
   "game_factStackBody": "エンジンに依存しない C# ドメイン、435件のヘッドレステスト、バランス調整のためのフルラン・シミュレーション。",
-  "game_partnerTitle": "協力してくれるアーティストを募集中",
-  "game_partnerBody": "Poço は一人で開発しており、現在は AI 生成のアートを使用しています。これを人の手によるアートに置き換えることが目標です。共にゲームを作るピクセルアーティスト、アニメーター、作曲家を募集しています。",
-  "game_ctaPartner": "協力したい",
-  "game_partnerSubject": "パートナーシップ — Poço",
   "game_demoTitle": "プレイアブルデモ",
   "game_demoBody": "Windows と Android 向けの MVP テストビルド。キーボード、ゲームパッド、タッチ操作に対応しています。",
-  "game_demoUpdate": "{version} の新要素：承認済みのダンジョンシンセ曲をゲーム全体に適用しました。探索とメニュー、通常戦闘、より緊迫したボス戦にそれぞれ別の曲が流れます。各世界専用の曲も準備中です。効果音とトレーラーの音楽もオリジナルです。",
+  "game_demoUpdate": "{version} の新要素：各世界の探索、通常戦闘、ボス戦に専用のダンジョンシンセ曲を追加。メニューと導入にも専用曲が流れます。同じ場面に戻るたびに曲のバリエーションが切り替わります。",
   "game_ctaWindows": "Windows .zip - 115 MB",
   "game_ctaAndroid": "Android .apk - 151 MB",
   "game_demoNote": "Windows:.zip を展開して Poco.exe を実行してください。Android:.apk を開く前に提供元不明のアプリのインストールを許可してください。",

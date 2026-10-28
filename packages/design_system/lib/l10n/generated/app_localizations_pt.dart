@@ -976,7 +976,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Novo na $version: o povo-rato perdeu a fofura — olhos vermelhos, orelhas rasgadas e encardidas, rabos sarnentos. Os monstros agora aparecem como foram desenhados, sem contorno colorido. E tudo da 0.16: 25 missões, segredos para o códice, algo deixado para trás no fundo de cada mundo e heróis que lembram como o Poço os arrastou.';
+    return 'Novo na $version: o povo-rato perdeu a fofura, e o rei deles agora é o maior e mais feio homem-rato dos túneis — olhos vermelhos, orelhas rasgadas e encardidas, rabos sarnentos. Os monstros agora aparecem como foram desenhados, sem contorno colorido. E tudo da 0.16: 25 missões, segredos para o códice, algo deixado para trás no fundo de cada mundo e heróis que lembram como o Poço os arrastou.';
   }
 
   @override

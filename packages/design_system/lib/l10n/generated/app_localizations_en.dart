@@ -976,7 +976,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'New in $version: the ratfolk lost their charm — red eyes, torn grimy ears, mangy tails. Monsters now appear exactly as drawn, with no coloured outline. Plus everything from 0.16: 25 missions, secrets for the codex, something left behind deep in every world, and heroes who remember how the Well dragged them down.';
+    return 'New in $version: the ratfolk lost their charm, and their king is now the biggest, ugliest rat-man in the tunnels — red eyes, torn grimy ears, mangy tails. Monsters now appear exactly as drawn, with no coloured outline. Plus everything from 0.16: 25 missions, secrets for the codex, something left behind deep in every world, and heroes who remember how the Well dragged them down.';
   }
 
   @override

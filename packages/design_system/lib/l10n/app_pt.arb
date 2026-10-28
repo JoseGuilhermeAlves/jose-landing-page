@@ -334,7 +334,7 @@
   "game_partnerSubject": "Parceria — Poço",
   "game_demoTitle": "Demo jogável",
   "game_demoBody": "Build de testes do MVP para Windows e Android. Teclado, gamepad e toque são suportados.",
-  "game_demoUpdate": "Novo na {version}: trilha sonora e efeitos originais. A Toca do Povo-Rato ganhou temas de dungeon synth diferentes para exploração e batalha, com transições suaves. Cada mundo tem sua própria música de exploração.",
+  "game_demoUpdate": "Novo na {version}: trilha sonora e efeitos originais. A Toca do Povo-Rato ganhou temas de dungeon synth diferentes para exploração e batalha, com transições suaves. Cada mundo tem sua própria música de exploração. Os chefes da Toca agora têm um tema próprio, mais tenso.",
   "@game_demoUpdate": {
     "placeholders": {
       "version": {"type": "String"}

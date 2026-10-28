@@ -944,7 +944,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return '$version の新要素：オリジナルの音楽と効果音。ネズミ族の巣穴では、探索と戦闘に別々のダンジョンシンセ曲が流れ、滑らかに切り替わります。各世界に専用の探索曲を追加しました。';
+    return '$version の新要素：オリジナルの音楽と効果音。ネズミ族の巣穴では、探索と戦闘に別々のダンジョンシンセ曲が流れ、滑らかに切り替わります。各世界に専用の探索曲を追加しました。 巣穴のボスには、より緊迫した専用曲を追加しました。';
   }
 
   @override

@@ -979,7 +979,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Neu in $version: eigene Musik und Soundeffekte. Der Rattenbau hat unterschiedliche Dungeon-Synth-Themen für Erkundung und Kampf mit sanften Übergängen. Jede Welt hat ihre eigene Erkundungsmusik.';
+    return 'Neu in $version: eigene Musik und Soundeffekte. Der Rattenbau hat unterschiedliche Dungeon-Synth-Themen für Erkundung und Kampf mit sanften Übergängen. Jede Welt hat ihre eigene Erkundungsmusik. Die Bosse im Rattenbau haben jetzt ein eigenes, spannungsvolleres Thema.';
   }
 
   @override

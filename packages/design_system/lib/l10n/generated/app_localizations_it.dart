@@ -976,7 +976,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Novità in $version: musica ed effetti sonori originali. La Tana ha temi dungeon synth distinti per esplorazione e battaglia, con transizioni fluide. Ogni mondo ha la propria musica di esplorazione.';
+    return 'Novità in $version: musica ed effetti sonori originali. La Tana ha temi dungeon synth distinti per esplorazione e battaglia, con transizioni fluide. Ogni mondo ha la propria musica di esplorazione. I boss della Tana ora hanno un tema dedicato, più teso.';
   }
 
   @override

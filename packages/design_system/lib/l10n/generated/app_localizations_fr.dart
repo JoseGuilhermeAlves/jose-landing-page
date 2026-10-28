@@ -981,7 +981,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Nouveau dans $version : musique et effets sonores originaux. Le Terrier propose des thèmes dungeon synth distincts pour l’exploration et le combat, avec des transitions fluides. Chaque monde a sa propre musique d’exploration.';
+    return 'Nouveau dans $version : musique et effets sonores originaux. Le Terrier propose des thèmes dungeon synth distincts pour l’exploration et le combat, avec des transitions fluides. Chaque monde a sa propre musique d’exploration. Les boss du Terrier ont désormais un thème dédié, plus tendu.';
   }
 
   @override

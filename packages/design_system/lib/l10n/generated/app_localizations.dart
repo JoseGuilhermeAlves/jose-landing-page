@@ -1903,7 +1903,7 @@ abstract class AppLocalizations {
   /// No description provided for @game_demoUpdate.
   ///
   /// In pt, this message translates to:
-  /// **'Novo na {version}: trilha sonora e efeitos originais. A Toca do Povo-Rato ganhou temas de dungeon synth diferentes para exploração e batalha, com transições suaves. Cada mundo tem sua própria música de exploração.'**
+  /// **'Novo na {version}: trilha sonora e efeitos originais. A Toca do Povo-Rato ganhou temas de dungeon synth diferentes para exploração e batalha, com transições suaves. Cada mundo tem sua própria música de exploração. Os chefes da Toca agora têm um tema próprio, mais tenso.'**
   String game_demoUpdate(String version);
 
   /// No description provided for @game_ctaWindows.

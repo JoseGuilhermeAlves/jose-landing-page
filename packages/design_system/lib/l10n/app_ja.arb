@@ -334,7 +334,7 @@
   "game_partnerSubject": "パートナーシップ — Poço",
   "game_demoTitle": "プレイアブルデモ",
   "game_demoBody": "Windows と Android 向けの MVP テストビルド。キーボード、ゲームパッド、タッチ操作に対応しています。",
-  "game_demoUpdate": "{version} の新要素：オリジナルの音楽と効果音。ネズミ族の巣穴では、探索と戦闘に別々のダンジョンシンセ曲が流れ、滑らかに切り替わります。各世界に専用の探索曲を追加しました。",
+  "game_demoUpdate": "{version} の新要素：オリジナルの音楽と効果音。ネズミ族の巣穴では、探索と戦闘に別々のダンジョンシンセ曲が流れ、滑らかに切り替わります。各世界に専用の探索曲を追加しました。 巣穴のボスには、より緊迫した専用曲を追加しました。",
   "game_ctaWindows": "Windows .zip - 115 MB",
   "game_ctaAndroid": "Android .apk - 151 MB",
   "game_demoNote": "Windows:.zip を展開して Poco.exe を実行してください。Android:.apk を開く前に提供元不明のアプリのインストールを許可してください。",

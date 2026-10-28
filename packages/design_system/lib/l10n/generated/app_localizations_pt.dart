@@ -976,7 +976,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Novo na $version: trilha sonora e efeitos originais. A Toca do Povo-Rato ganhou temas de dungeon synth diferentes para exploração e batalha, com transições suaves. Cada mundo tem sua própria música de exploração.';
+    return 'Novo na $version: trilha sonora e efeitos originais. A Toca do Povo-Rato ganhou temas de dungeon synth diferentes para exploração e batalha, com transições suaves. Cada mundo tem sua própria música de exploração. Os chefes da Toca agora têm um tema próprio, mais tenso.';
   }
 
   @override

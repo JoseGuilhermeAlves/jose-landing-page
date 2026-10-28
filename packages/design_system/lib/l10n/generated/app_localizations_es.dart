@@ -979,7 +979,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Novedades en $version: cada batalla ocurre ahora en un lugar de verdad. La pared del propio mundo cierra el horizonte (ladrillos y estandartes de rata, una línea de árboles, piedra con carámbanos, piedra de forja, carne viva llena de ojos) y su suelo corre en perspectiva desde esa pared hasta tus pies, con héroes y monstruos pisando el suelo, iluminados por antorchas y lámparas que titilan. Además de los mundos en capas entre las salas, escenas en el mapa y un Mago redibujado.';
+    return 'Novedades en $version: 25 misiones, con pantalla propia, que desbloquean las evoluciones de cada clase, reliquias raras y secretos para el códice. Algo quedó atrás en lo profundo de cada mundo: búscalo. Tus héroes ahora recuerdan cómo el Pozo los arrastró, y los finales fueron reescritos.';
   }
 
   @override

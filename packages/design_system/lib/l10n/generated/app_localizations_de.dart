@@ -979,7 +979,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Neu in $version: Jeder Kampf findet jetzt an einem echten Ort statt. Die Wand der Welt schließt den Horizont (Ziegel und Rattenbanner, eine Baumreihe, Stein mit Eiszapfen, Schmiedestein, lebendes Fleisch voller Augen), und ihr Boden läuft perspektivisch von dieser Wand bis zu deinen Füßen – Helden und Monster stehen auf dem Boden, beleuchtet von flackernden Fackeln und Lampen. Dazu die geschichteten Welten zwischen den Räumen, Szenen auf der Karte und ein neu gezeichneter Magier.';
+    return 'Neu in $version: 25 Missionen auf einem eigenen Bildschirm, die die Entwicklungen jeder Klasse, seltene Relikte und Geheimnisse für den Kodex freischalten. Tief in jeder Welt wurde etwas zurückgelassen: Such danach. Deine Helden erinnern sich jetzt, wie der Brunnen sie hinabgezogen hat, und die Enden wurden neu geschrieben.';
   }
 
   @override

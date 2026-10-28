@@ -976,7 +976,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Novo na $version: toda batalha agora acontece num lugar de verdade. A parede do próprio mundo fecha o horizonte (tijolos e estandartes de rato, uma linha de árvores, pedra com sincelos, pedra de forja, carne viva cheia de olhos) e o chão corre dessa parede até os seus pés em perspectiva, com heróis e monstros pisando o chão, iluminados por tochas e lamparinas que tremulam. Além dos mundos em camadas entre as salas, cenas no mapa e um Mago redesenhado.';
+    return 'Novo na $version: 25 missões, com tela própria, que liberam as evoluções de cada classe, relíquias raras e segredos para o códice. Algo foi deixado para trás no fundo de cada mundo: procure. Seus heróis agora lembram como o Poço os arrastou, e os finais foram reescritos.';
   }
 
   @override

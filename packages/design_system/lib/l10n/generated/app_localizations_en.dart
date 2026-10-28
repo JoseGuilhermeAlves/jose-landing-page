@@ -976,7 +976,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'New in $version: every battle now happens in a real place. The world\'s own wall closes the horizon (bricks and rat banners, a tree line, icicled stone, forge stone, living flesh full of eyes) and its floor runs from that wall to your feet in perspective, so heroes and monsters stand on the ground, lit by guttering torches and lamps. Plus the layered worlds between the rooms, scenes on the map, and a redrawn Mage.';
+    return 'New in $version: 25 missions, on their own screen, that unlock each class\'s evolutions, rare relics and secrets for the codex. Something was left behind deep in every world: look for it. Your heroes now remember how the Well dragged them down, and the endings were rewritten.';
   }
 
   @override

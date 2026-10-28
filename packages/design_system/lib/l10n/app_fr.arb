@@ -334,7 +334,7 @@
   "game_partnerSubject": "Partenariat — Poço",
   "game_demoTitle": "Démo jouable",
   "game_demoBody": "Build de test du MVP pour Windows et Android. Clavier, manette et tactile sont pris en charge.",
-  "game_demoUpdate": "Nouveau dans {version} : chaque combat se déroule désormais dans un vrai lieu. Le mur du monde ferme l'horizon (briques et bannières de rats, une lisière d'arbres, pierre couverte de stalactites, pierre de forge, chair vivante pleine d'yeux) et son sol court en perspective de ce mur jusqu'à vos pieds : héros et monstres se tiennent sur le sol, éclairés par des torches et des lampes vacillantes. Plus les mondes en couches entre les salles, des scènes sur la carte et un Mage redessiné.",
+  "game_demoUpdate": "Nouveau dans {version} : 25 missions, sur leur propre écran, qui débloquent les évolutions de chaque classe, des reliques rares et des secrets pour le codex. Quelque chose a été laissé au fond de chaque monde : cherchez-le. Vos héros se souviennent désormais de la façon dont le Puits les a entraînés, et les fins ont été réécrites.",
   "game_ctaWindows": "Windows .zip - 115 Mo",
   "game_ctaAndroid": "Android .apk - 151 Mo",
   "game_demoNote": "Windows : extrayez le .zip et lancez Poco.exe. Android : autorisez l'installation d'applications de sources inconnues avant d'ouvrir le .apk.",

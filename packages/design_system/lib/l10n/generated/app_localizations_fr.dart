@@ -981,7 +981,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Nouveau dans $version : chaque combat se déroule désormais dans un vrai lieu. Le mur du monde ferme l\'horizon (briques et bannières de rats, une lisière d\'arbres, pierre couverte de stalactites, pierre de forge, chair vivante pleine d\'yeux) et son sol court en perspective de ce mur jusqu\'à vos pieds : héros et monstres se tiennent sur le sol, éclairés par des torches et des lampes vacillantes. Plus les mondes en couches entre les salles, des scènes sur la carte et un Mage redessiné.';
+    return 'Nouveau dans $version : 25 missions, sur leur propre écran, qui débloquent les évolutions de chaque classe, des reliques rares et des secrets pour le codex. Quelque chose a été laissé au fond de chaque monde : cherchez-le. Vos héros se souviennent désormais de la façon dont le Puits les a entraînés, et les fins ont été réécrites.';
   }
 
   @override

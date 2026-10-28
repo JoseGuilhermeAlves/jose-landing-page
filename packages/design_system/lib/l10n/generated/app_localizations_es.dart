@@ -979,7 +979,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Novedades en $version: los hombres rata perdieron su encanto: ojos rojos, orejas rasgadas y mugrientas, colas sarnosas. Los monstruos ahora se ven tal como fueron dibujados, sin contorno de color. Y todo lo de la 0.16: 25 misiones, secretos para el códice, algo que quedó atrás en lo profundo de cada mundo y héroes que recuerdan cómo el Pozo los arrastró.';
+    return 'Novedades en $version: música y efectos de sonido originales. La Madriguera tiene temas de dungeon synth distintos para exploración y combate, con transiciones suaves. Cada mundo tiene su propia música de exploración.';
   }
 
   @override

@@ -944,7 +944,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return '$version の新要素：ネズミ族から可愛げが消えました。赤い目、裂けて汚れた耳、疥癬の尾。モンスターは色付きの輪郭なしで、描かれたままの姿に。0.16 の内容もすべて：25のミッション、図鑑の秘密、各世界の奥に残された何か、そして井戸に引きずり込まれた日を思い出す英雄たち。';
+    return '$version の新要素：オリジナルの音楽と効果音。ネズミ族の巣穴では、探索と戦闘に別々のダンジョンシンセ曲が流れ、滑らかに切り替わります。各世界に専用の探索曲を追加しました。';
   }
 
   @override

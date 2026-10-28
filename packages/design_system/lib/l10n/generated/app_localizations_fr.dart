@@ -981,7 +981,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Nouveau dans $version : les hommes-rats ont perdu leur charme — yeux rouges, oreilles déchirées et crasseuses, queues galeuses. Les monstres apparaissent désormais tels qu\'ils sont dessinés, sans contour coloré. Et tout ce qu\'apportait la 0.16 : 25 missions, des secrets pour le codex, quelque chose laissé au fond de chaque monde et des héros qui se souviennent comment le Puits les a entraînés.';
+    return 'Nouveau dans $version : musique et effets sonores originaux. Le Terrier propose des thèmes dungeon synth distincts pour l’exploration et le combat, avec des transitions fluides. Chaque monde a sa propre musique d’exploration.';
   }
 
   @override

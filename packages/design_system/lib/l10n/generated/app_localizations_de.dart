@@ -979,7 +979,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Neu in $version: Das Rattenvolk hat seinen Charme verloren – rote Augen, zerrissene, verdreckte Ohren, räudige Schwänze. Monster erscheinen jetzt genau so, wie sie gezeichnet sind, ohne farbigen Umriss. Dazu alles aus 0.16: 25 Missionen, Geheimnisse für den Kodex, etwas, das tief in jeder Welt zurückgelassen wurde, und Helden, die sich erinnern, wie der Brunnen sie hinabzog.';
+    return 'Neu in $version: eigene Musik und Soundeffekte. Der Rattenbau hat unterschiedliche Dungeon-Synth-Themen für Erkundung und Kampf mit sanften Übergängen. Jede Welt hat ihre eigene Erkundungsmusik.';
   }
 
   @override

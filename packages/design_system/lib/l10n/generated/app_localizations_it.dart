@@ -976,7 +976,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Novità in $version: gli uomini-ratto hanno perso il loro fascino — occhi rossi, orecchie strappate e sudice, code rognose. I mostri ora appaiono esattamente come sono disegnati, senza contorno colorato. E tutto della 0.16: 25 missioni, segreti per il codice, qualcosa lasciato nel profondo di ogni mondo ed eroi che ricordano come il Pozzo li ha trascinati giù.';
+    return 'Novità in $version: musica ed effetti sonori originali. La Tana ha temi dungeon synth distinti per esplorazione e battaglia, con transizioni fluide. Ogni mondo ha la propria musica di esplorazione.';
   }
 
   @override

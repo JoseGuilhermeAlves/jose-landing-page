@@ -932,7 +932,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return '$version 新内容：鼠人不再可爱——红色的眼睛、撕裂肮脏的耳朵、癞皮的尾巴。怪物现在完全按原画呈现，不再有彩色描边。另含 0.16 的全部内容：25 个任务、图鉴中的秘密、每个世界深处留下的某样东西，以及记得自己如何被井拖下去的英雄们。';
+    return '$version 新内容：原创音乐与音效。鼠人巢穴现在有不同的探索和战斗地下城合成器主题曲，切换更加流畅。每个世界都有专属的探索音乐。';
   }
 
   @override

@@ -334,7 +334,7 @@
   "game_partnerSubject": "Collaborazione — Poço",
   "game_demoTitle": "Demo giocabile",
   "game_demoBody": "Build di test dell'MVP per Windows e Android. Supporta tastiera, gamepad e touch.",
-  "game_demoUpdate": "Novità in {version}: gli uomini-ratto hanno perso il loro fascino — occhi rossi, orecchie strappate e sudice, code rognose. I mostri ora appaiono esattamente come sono disegnati, senza contorno colorato. E tutto della 0.16: 25 missioni, segreti per il codice, qualcosa lasciato nel profondo di ogni mondo ed eroi che ricordano come il Pozzo li ha trascinati giù.",
+  "game_demoUpdate": "Novità in {version}: musica ed effetti sonori originali. La Tana ha temi dungeon synth distinti per esplorazione e battaglia, con transizioni fluide. Ogni mondo ha la propria musica di esplorazione.",
   "game_ctaWindows": "Windows .zip - 115 MB",
   "game_ctaAndroid": "Android .apk - 151 MB",
   "game_demoNote": "Windows: estrai il .zip ed esegui Poco.exe. Android: consenti l'installazione da origini sconosciute prima di aprire il .apk.",

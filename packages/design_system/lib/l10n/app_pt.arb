@@ -334,7 +334,7 @@
   "game_partnerSubject": "Parceria — Poço",
   "game_demoTitle": "Demo jogável",
   "game_demoBody": "Build de testes do MVP para Windows e Android. Teclado, gamepad e toque são suportados.",
-  "game_demoUpdate": "Novo na {version}: o povo-rato perdeu a fofura, e o rei deles agora é o maior e mais feio homem-rato dos túneis — olhos vermelhos, orelhas rasgadas e encardidas, rabos sarnentos. Os monstros agora aparecem como foram desenhados, sem contorno colorido. E tudo da 0.16: 25 missões, segredos para o códice, algo deixado para trás no fundo de cada mundo e heróis que lembram como o Poço os arrastou.",
+  "game_demoUpdate": "Novo na {version}: trilha sonora e efeitos originais. A Toca do Povo-Rato ganhou temas de dungeon synth diferentes para exploração e batalha, com transições suaves. Cada mundo tem sua própria música de exploração.",
   "@game_demoUpdate": {
     "placeholders": {
       "version": {"type": "String"}

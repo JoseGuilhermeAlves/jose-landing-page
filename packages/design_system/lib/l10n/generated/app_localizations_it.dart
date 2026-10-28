@@ -976,7 +976,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Novità in $version: 25 missioni, con una schermata propria, che sbloccano le evoluzioni di ogni classe, reliquie rare e segreti per il codice. Qualcosa è stato lasciato indietro nel profondo di ogni mondo: cercalo. I tuoi eroi ora ricordano come il Pozzo li ha trascinati giù, e i finali sono stati riscritti.';
+    return 'Novità in $version: gli uomini-ratto hanno perso il loro fascino — occhi rossi, orecchie strappate e sudice, code rognose. I mostri ora appaiono esattamente come sono disegnati, senza contorno colorato. E tutto della 0.16: 25 missioni, segreti per il codice, qualcosa lasciato nel profondo di ogni mondo ed eroi che ricordano come il Pozzo li ha trascinati giù.';
   }
 
   @override

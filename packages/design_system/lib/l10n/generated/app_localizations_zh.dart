@@ -932,7 +932,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return '$version 新内容：25 个任务，拥有专属界面，可解锁每个职业的进化、稀有遗物和图鉴中的秘密。每个世界的深处都留下了某样东西：去找找看。英雄们现在会回忆起井是如何把他们拖下去的，结局也已重写。';
+    return '$version 新内容：鼠人不再可爱——红色的眼睛、撕裂肮脏的耳朵、癞皮的尾巴。怪物现在完全按原画呈现，不再有彩色描边。另含 0.16 的全部内容：25 个任务、图鉴中的秘密、每个世界深处留下的某样东西，以及记得自己如何被井拖下去的英雄们。';
   }
 
   @override

@@ -981,7 +981,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Nouveau dans $version : 25 missions, sur leur propre écran, qui débloquent les évolutions de chaque classe, des reliques rares et des secrets pour le codex. Quelque chose a été laissé au fond de chaque monde : cherchez-le. Vos héros se souviennent désormais de la façon dont le Puits les a entraînés, et les fins ont été réécrites.';
+    return 'Nouveau dans $version : les hommes-rats ont perdu leur charme — yeux rouges, oreilles déchirées et crasseuses, queues galeuses. Les monstres apparaissent désormais tels qu\'ils sont dessinés, sans contour coloré. Et tout ce qu\'apportait la 0.16 : 25 missions, des secrets pour le codex, quelque chose laissé au fond de chaque monde et des héros qui se souviennent comment le Puits les a entraînés.';
   }
 
   @override

@@ -979,7 +979,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Novedades en $version: 25 misiones, con pantalla propia, que desbloquean las evoluciones de cada clase, reliquias raras y secretos para el códice. Algo quedó atrás en lo profundo de cada mundo: búscalo. Tus héroes ahora recuerdan cómo el Pozo los arrastró, y los finales fueron reescritos.';
+    return 'Novedades en $version: los hombres rata perdieron su encanto: ojos rojos, orejas rasgadas y mugrientas, colas sarnosas. Los monstruos ahora se ven tal como fueron dibujados, sin contorno de color. Y todo lo de la 0.16: 25 misiones, secretos para el códice, algo que quedó atrás en lo profundo de cada mundo y héroes que recuerdan cómo el Pozo los arrastró.';
   }
 
   @override

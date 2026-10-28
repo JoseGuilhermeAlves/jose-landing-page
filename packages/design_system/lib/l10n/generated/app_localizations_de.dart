@@ -979,7 +979,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Neu in $version: 25 Missionen auf einem eigenen Bildschirm, die die Entwicklungen jeder Klasse, seltene Relikte und Geheimnisse für den Kodex freischalten. Tief in jeder Welt wurde etwas zurückgelassen: Such danach. Deine Helden erinnern sich jetzt, wie der Brunnen sie hinabgezogen hat, und die Enden wurden neu geschrieben.';
+    return 'Neu in $version: Das Rattenvolk hat seinen Charme verloren – rote Augen, zerrissene, verdreckte Ohren, räudige Schwänze. Monster erscheinen jetzt genau so, wie sie gezeichnet sind, ohne farbigen Umriss. Dazu alles aus 0.16: 25 Missionen, Geheimnisse für den Kodex, etwas, das tief in jeder Welt zurückgelassen wurde, und Helden, die sich erinnern, wie der Brunnen sie hinabzog.';
   }
 
   @override

@@ -1,6 +1,5 @@
 {
   "@@locale": "ru",
-
   "common_cancel": "Отмена",
   "common_back": "Назад",
   "common_close": "Закрыть",
@@ -19,7 +18,6 @@
   "common_search": "Поиск",
   "common_semanticsClose": "Закрыть",
   "common_semanticsLoadingSpinner": "Загрузка содержимого",
-
   "hero_eyebrow": "Мобильный фронтенд · Flutter",
   "hero_headline1": "Мобильный фронтенд на Flutter.",
   "hero_headline2": "От MVP до приложения в продакшене.",
@@ -35,7 +33,6 @@
   "hero_trustCanvasValue": "15+",
   "hero_trustCanvasLabel": "демо-экраны в витрине",
   "hero_portraitSemantics": "Фото Жозе Гильерме Алвеса",
-
   "about_eyebrow": "Обо мне",
   "about_title": "Кто",
   "about_titleAccent": "строит.",
@@ -56,7 +53,6 @@
   "about_factFintechTitle": "Крупномасштабный финтех (сейчас)",
   "about_factFintechBody": "Финансовый продукт в монорепозитории с собственной дизайн-системой.",
   "about_bioClose": "Разные домены, одна и та же поставка: весь мобильный фронтенд. Бэкенд остаётся за командой — я с ним интегрируюсь.",
-
   "delivery_entrega_eyebrow": "РЕЗУЛЬТАТ",
   "delivery_entrega_title": "Чёткий объём,",
   "delivery_entrega_titleAccent": "согласованные ожидания.",
@@ -69,7 +65,6 @@
   "delivery_collab_title": "В продуктовой команде",
   "delivery_collab_titleAccent": "или весь Flutter целиком.",
   "delivery_collab_body": "В большой команде вхожу как мобильный фронтендер с объёмом фичи или архитектурным стюардшипом. В небольшой команде (розница B2B, 5 лет) вёл весь Flutter целиком — от дизайна до деплоя, интегрируя уже существующие API и помогая формировать новые контракты, когда путь был именно таким. Подстраиваюсь под размер команды, а не наоборот.",
-
   "domain_fintech_label": "Финансовый сервис",
   "domain_fintech_blurb": "Крупный финансовый продукт на фронтенде Flutter — монорепозиторий, собственный design system и архитектура по фичам, фокус на корректности и единообразии под высокой нагрузкой.",
   "domain_publicServices_label": "Государственный сектор",
@@ -78,7 +73,6 @@
   "domain_sanitation_blurb": "Сбор данных в полевых условиях offline-first — Flutter Modular и Provider, надёжная синхронизация при нестабильной сети.",
   "domain_retail_label": "Розница B2B",
   "domain_retail_blurb": "Весь фронтенд Flutter — от дизайна до деплоя, пять лет. Пять приложений для операций: склад, распределение между точками, продажи и внутренние коммуникации.",
-
   "services_eyebrow": "Услуги",
   "services_title": "Мобильный фронтенд.",
   "services_titleAccent": "От брифа до деплоя.",
@@ -93,7 +87,6 @@
   "services_maintenance_description": "Рефакторинг, стабилизация и новые фичи во фронтенде приложений, уже работающих в продакшене.",
   "services_consulting_title": "Мобильный консалтинг",
   "services_consulting_description": "Архитектура, code review и выбор стека — техническая поддержка до того, как фича превратится в долг.",
-
   "contact_eyebrow": "Контакты",
   "contact_title": "Давайте",
   "contact_titleAccent": "поговорим?",
@@ -103,7 +96,6 @@
   "contact_ctaLinkedin": "LinkedIn — полный послужной список",
   "contact_ctaGithub": "GitHub",
   "contact_ctaResume": "Скачать резюме (PDF)",
-
   "nav_showcase": "Showcase",
   "nav_about": "Обо мне",
   "nav_engineering": "Инженерия",
@@ -111,14 +103,11 @@
   "nav_backToTop": "Наверх",
   "nav_ctaContact": "Контакты",
   "footer_madeWith": "Сделано на Flutter",
-
   "engineering_eyebrow": "Инженерия",
   "engineering_title": "Стек, на котором держится",
   "engineering_titleAccent": "каждое решение проекта.",
   "engineering_subtitle": "Технологии, которые я использую в продакшене, и другие, которые знаю вблизи. Коснитесь любого тайла, чтобы узнать больше.",
   "engineering_githubButton": "Смотреть мой GitHub",
-
-
   "showcase_eyebrow": "Showcase",
   "showcase_title": "Три ниши,",
   "showcase_titleAccent": "три прототипа.",
@@ -133,7 +122,6 @@
   "showcase_fitnessDescription": "Pulso — recovery-дашборд, логгер подход за подходом с RPE и периодизация на 8 недель.",
   "showcase_realestateLabel": "Недвижимость",
   "showcase_realestateDescription": "Solar — недвижимость с планом, построенным по данным, картой района и путём от поиска до контакта.",
-
   "pulso_eyebrowTodayWorkout": "ТРЕНИРОВКА НА СЕГОДНЯ",
   "pulso_eyebrowProgram": "ПРОГРАММА",
   "pulso_eyebrowRecovery": "RECOVERY",
@@ -192,14 +180,17 @@
   "pulso_sessionWeekSubtitle": "Неделя {week} · {label}",
   "@pulso_sessionWeekSubtitle": {
     "placeholders": {
-      "week": {"type": "int"},
-      "label": {"type": "String"}
+      "week": {
+        "type": "int"
+      },
+      "label": {
+        "type": "String"
+      }
     }
   },
   "pulso_swapExerciseTitle": "Заменить упражнение",
   "pulso_swapExerciseSubtitle": "Альтернативы, активирующие ту же мышечную цепь.",
   "pulso_swapExerciseEmpty": "Для этого упражнения нет каталогизированных альтернатив.",
-
   "aurora_closeDemoTooltip": "Закрыть демо",
   "aurora_resetDemoTooltip": "Перезапустить демо",
   "aurora_historyTooltip": "История заказов",
@@ -214,24 +205,26 @@
   "aurora_storesTitleFiltered": "В категории {category}",
   "@aurora_storesTitleFiltered": {
     "placeholders": {
-      "category": {"type": "String"}
+      "category": {
+        "type": "String"
+      }
     }
   },
   "aurora_storesCountSingular": "1 лавка",
   "aurora_storesCountPlural": "{count} лавок",
   "@aurora_storesCountPlural": {
     "placeholders": {
-      "count": {"type": "int"}
+      "count": {
+        "type": "int"
+      }
     }
   },
   "aurora_storesEmpty": "В этой категории пока нет лавок.",
   "aurora_orderTimelineTitle": "Где ваш заказ",
   "aurora_orderItemsTitle": "Позиции",
-
   "vitral_closeDemoTooltip": "Закрыть демо",
   "vitral_categoriesTitle": "Что вам нужно сегодня",
   "vitral_specialistsTitle": "Кто в расписании",
-
   "solar_closeDemoTooltip": "Закрыть демо",
   "solar_neighborhoodsEyebrow": "Районы",
   "solar_neighborhoodsTitle": "Где вы ищете",
@@ -240,7 +233,6 @@
   "solar_heroTag": "недвижимость · внутренние районы сан-паулу",
   "solar_heroSubtitle": "Дома, усадьбы, участки и квартиры в городах глубинки — с кураторской подборкой, планировкой и местным риелтором в каждом объявлении.",
   "solar_heroCta": "Смотреть объекты",
-
   "mira_closeDemoTooltip": "Закрыть демо",
   "mira_portfolioTooltip": "Мой портфель",
   "mira_historyTooltip": "История ордеров",
@@ -250,7 +242,6 @@
   "mira_otherAssetsTitle": "Другие активы",
   "mira_marketStatusLabel": "B3 · РЕАЛЬНОЕ ВРЕМЯ",
   "mira_totalAssetsLabel": "ОБЩИЙ КАПИТАЛ",
-
   "stack_cat_framework": "Фреймворк",
   "stack_cat_state": "Состояние",
   "stack_cat_routing": "Маршруты",
@@ -263,7 +254,6 @@
   "stack_cat_web": "Web / PWA",
   "stack_cat_tooling": "Tooling",
   "stack_cat_observability": "Наблюдаемость",
-
   "stack_flutter_role": "Базовый фреймворк, Material 3 только тёмная тема",
   "stack_dart_role": "SDK, null safety и records",
   "stack_platformChannels_role": "Нативный мост Dart ↔ Kotlin/Swift",
@@ -305,7 +295,6 @@
   "stack_githubActions_role": "Пайплайны analyze, test и build web",
   "stack_fastlane_role": "Автоматизация build, sign и deploy для мобильных",
   "stack_datadog_role": "APM, логи и RUM для продакшн-приложений",
-
   "locale_pt": "Português",
   "locale_en": "English",
   "locale_es": "Español",
@@ -314,5 +303,27 @@
   "locale_ja": "日本語",
   "locale_it": "Italiano",
   "locale_fr": "Français",
-  "locale_ru": "Русский"
+  "locale_ru": "Русский",
+  "nav_game": "Игра",
+  "game_eyebrow": "Авторский проект",
+  "game_title": "Poço —",
+  "game_titleAccent": "в разработке.",
+  "game_subtitle": "Пошаговый данжен-рогалик на Godot 4 и C#. Классические JRPG-бои в стилистике 2D-HD.",
+  "game_body": "Соберите отряд из трёх героев и спуститесь в Колодец: пять этажей до босса, монстры, которые видят и преследуют вас, и необратимая смерть. Каждый забег — новый билд.",
+  "game_factCombatTitle": "Пошаговый бой (ATB)",
+  "game_factCombatBody": "Оружейные умения выходят вперёд и наносят удар; заклинания читаются на месте. Стихийные метки объединяются в реакции.",
+  "game_factBuildTitle": "Билд на каждом уровне",
+  "game_factBuildBody": "Каждое повышение уровня предлагает одно умение из трёх. Повторный выбор повышает его ранг; на ранге 3 с подходящим партнёром умение эволюционирует в кульминацию.",
+  "game_factStackTitle": "Инженерия",
+  "game_factStackBody": "Независимый от движка C#-домен, 435 headless-тестов и симуляция полных забегов для баланса.",
+  "game_demoTitle": "Играбельная демо-версия",
+  "game_demoBody": "Тестовая сборка MVP для Windows и Android. Поддерживаются клавиатура, геймпад и сенсорное управление.",
+  "game_demoUpdate": "Новое в {version}: эффекты навыков, ударов, смерти, победы, эволюции и интерфейса. Награды звучат как самоцветы. Включены все dungeon synth темы миров, меню и вступления.",
+  "game_ctaWindows": "Windows .zip - 115 МБ",
+  "game_ctaAndroid": "Android .apk - 151 МБ",
+  "game_demoNote": "Windows: распакуйте .zip и запустите Poco.exe. Android: перед открытием .apk разрешите установку приложений из неизвестных источников.",
+  "game_gifAlt": "Геймплей Poço: волшебница обрушивает Метеор на вражеский строй",
+  "game_trailerTitle": "Трейлер",
+  "game_trailerPlay": "Смотреть трейлер",
+  "game_trailerAlt": "Трейлер Poço"
 }

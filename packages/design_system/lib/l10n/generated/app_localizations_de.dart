@@ -915,4 +915,80 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get locale_ru => 'Русский';
+
+  @override
+  String get nav_game => 'Spiel';
+
+  @override
+  String get game_eyebrow => 'Eigenes Projekt';
+
+  @override
+  String get game_title => 'Poço —';
+
+  @override
+  String get game_titleAccent => 'in Entwicklung.';
+
+  @override
+  String get game_subtitle =>
+      'Ein rundenbasiertes Dungeon-Roguelike, entwickelt mit Godot 4 und C#. Klassische JRPG-Kämpfe, inszeniert im 2D-HD-Stil.';
+
+  @override
+  String get game_body =>
+      'Stelle eine Gruppe aus drei Helden zusammen und steige in den Schacht hinab: fünf Ebenen bis zum Boss, Monster, die dich sehen und verfolgen, permanenter Tod. Jeder Durchlauf ergibt einen anderen Build.';
+
+  @override
+  String get game_factCombatTitle => 'Rundenbasierter Kampf (ATB)';
+
+  @override
+  String get game_factCombatBody =>
+      'Waffenfähigkeiten treten vor und schlagen zu; Zauber werden vor Ort gewirkt. Elementarmarken verbinden sich zu Reaktionen.';
+
+  @override
+  String get game_factBuildTitle => 'Ein Build mit jedem Level';
+
+  @override
+  String get game_factBuildBody =>
+      'Jeder Levelaufstieg bietet eine von drei Fähigkeiten. Wird eine Fähigkeit erneut gewählt, steigt ihr Rang; auf Rang 3 entwickelt sie sich mit dem passenden Partner zu einem Höhepunkt.';
+
+  @override
+  String get game_factStackTitle => 'Engineering';
+
+  @override
+  String get game_factStackBody =>
+      'Engine-unabhängige C#-Domäne, 435 Headless-Tests und Simulation kompletter Durchläufe für das Balancing.';
+
+  @override
+  String get game_demoTitle => 'Spielbare Demo';
+
+  @override
+  String get game_demoBody =>
+      'MVP-Testbuild für Windows und Android. Tastatur, Gamepad und Touch werden unterstützt.';
+
+  @override
+  String game_demoUpdate(String version) {
+    return 'Neu in $version: neue Effekte für Fähigkeiten, Treffer, Tod, Sieg, Entwicklung und Menüs. Belohnungen klingen wie Edelsteine. Alle Dungeon-Synth-Themen für Welten, Menü und Einleitung bleiben enthalten.';
+  }
+
+  @override
+  String get game_ctaWindows => 'Windows .zip - 115 MB';
+
+  @override
+  String get game_ctaAndroid => 'Android .apk - 151 MB';
+
+  @override
+  String get game_demoNote =>
+      'Windows: .zip entpacken und Poco.exe starten. Android: vor dem Öffnen der .apk die Installation aus unbekannten Quellen erlauben.';
+
+  @override
+  String get game_gifAlt =>
+      'Poço-Gameplay: die Magierin wirkt Meteor auf die gegnerische Reihe';
+
+  @override
+  String get game_trailerTitle => 'Trailer';
+
+  @override
+  String get game_trailerPlay => 'Trailer ansehen';
+
+  @override
+  String get game_trailerAlt => 'Poço-Trailer';
 }

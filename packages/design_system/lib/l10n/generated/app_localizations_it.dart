@@ -912,4 +912,80 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get locale_ru => 'Русский';
+
+  @override
+  String get nav_game => 'Gioco';
+
+  @override
+  String get game_eyebrow => 'Progetto personale';
+
+  @override
+  String get game_title => 'Poço —';
+
+  @override
+  String get game_titleAccent => 'in sviluppo.';
+
+  @override
+  String get game_subtitle =>
+      'Un roguelike dungeon a turni, sviluppato con Godot 4 e C#. Combattimento JRPG classico, messo in scena in stile 2D-HD.';
+
+  @override
+  String get game_body =>
+      'Componi un gruppo di tre eroi e scendi nel Pozzo: cinque piani fino al boss, mostri che ti vedono e ti inseguono, morte permanente. Ogni partita porta a una build diversa.';
+
+  @override
+  String get game_factCombatTitle => 'Combattimento a turni (ATB)';
+
+  @override
+  String get game_factCombatBody =>
+      'Le abilità con arma avanzano e colpiscono; gli incantesimi si lanciano sul posto. I marchi elementali si combinano in reazioni.';
+
+  @override
+  String get game_factBuildTitle => 'Una build a ogni livello';
+
+  @override
+  String get game_factBuildBody =>
+      'Ogni salita di livello offre un\'abilità su tre. Sceglierla di nuovo ne aumenta il grado; al grado 3, con il partner giusto, evolve in un climax.';
+
+  @override
+  String get game_factStackTitle => 'Ingegneria';
+
+  @override
+  String get game_factStackBody =>
+      'Dominio C# indipendente dal motore, 435 test headless e simulazione di partite complete per il bilanciamento.';
+
+  @override
+  String get game_demoTitle => 'Demo giocabile';
+
+  @override
+  String get game_demoBody =>
+      'Build di test dell\'MVP per Windows e Android. Supporta tastiera, gamepad e touch.';
+
+  @override
+  String game_demoUpdate(String version) {
+    return 'Novità in $version: nuovi effetti per abilità, colpi, morti, vittoria, evoluzione e interfaccia. Le ricompense hanno il suono di gemme. Incluse tutte le tracce dungeon synth per mondi, menu e introduzione.';
+  }
+
+  @override
+  String get game_ctaWindows => 'Windows .zip - 115 MB';
+
+  @override
+  String get game_ctaAndroid => 'Android .apk - 151 MB';
+
+  @override
+  String get game_demoNote =>
+      'Windows: estrai il .zip ed esegui Poco.exe. Android: consenti l\'installazione da origini sconosciute prima di aprire il .apk.';
+
+  @override
+  String get game_gifAlt =>
+      'Gameplay di Poço: la maga lancia Meteora sulla linea nemica';
+
+  @override
+  String get game_trailerTitle => 'Trailer';
+
+  @override
+  String get game_trailerPlay => 'Guarda il trailer';
+
+  @override
+  String get game_trailerAlt => 'Trailer di Poço';
 }

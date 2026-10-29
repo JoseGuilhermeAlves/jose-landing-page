@@ -1791,6 +1791,138 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Русский'**
   String get locale_ru;
+
+  /// No description provided for @nav_game.
+  ///
+  /// In pt, this message translates to:
+  /// **'Jogo'**
+  String get nav_game;
+
+  /// No description provided for @game_eyebrow.
+  ///
+  /// In pt, this message translates to:
+  /// **'Projeto autoral'**
+  String get game_eyebrow;
+
+  /// No description provided for @game_title.
+  ///
+  /// In pt, this message translates to:
+  /// **'Poço —'**
+  String get game_title;
+
+  /// No description provided for @game_titleAccent.
+  ///
+  /// In pt, this message translates to:
+  /// **'em desenvolvimento.'**
+  String get game_titleAccent;
+
+  /// No description provided for @game_subtitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Roguelike de masmorra por turnos, feito em Godot 4 e C#. Combate JRPG clássico, encenado em estilo 2D-HD.'**
+  String get game_subtitle;
+
+  /// No description provided for @game_body.
+  ///
+  /// In pt, this message translates to:
+  /// **'Monte um grupo de três heróis e desça ao Poço: cinco andares até o chefe, monstros que enxergam e perseguem, morte permanente. Cada partida resulta em uma build diferente.'**
+  String get game_body;
+
+  /// No description provided for @game_factCombatTitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Combate por turnos (ATB)'**
+  String get game_factCombatTitle;
+
+  /// No description provided for @game_factCombatBody.
+  ///
+  /// In pt, this message translates to:
+  /// **'Habilidades de arma avançam e golpeiam; magias são conjuradas no lugar. Marcas elementais se combinam em reações.'**
+  String get game_factCombatBody;
+
+  /// No description provided for @game_factBuildTitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Build a cada nível'**
+  String get game_factBuildTitle;
+
+  /// No description provided for @game_factBuildBody.
+  ///
+  /// In pt, this message translates to:
+  /// **'Cada level-up oferece uma habilidade entre três. Repetir uma habilidade aumenta o rank; no rank 3, com a parceira certa, ela evolui para um clímax.'**
+  String get game_factBuildBody;
+
+  /// No description provided for @game_factStackTitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Engenharia'**
+  String get game_factStackTitle;
+
+  /// No description provided for @game_factStackBody.
+  ///
+  /// In pt, this message translates to:
+  /// **'Domínio em C# isolado da engine, 435 testes headless e simulação de partidas completas para balanceamento.'**
+  String get game_factStackBody;
+
+  /// No description provided for @game_demoTitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Demo jogável'**
+  String get game_demoTitle;
+
+  /// No description provided for @game_demoBody.
+  ///
+  /// In pt, this message translates to:
+  /// **'Build de testes do MVP para Windows e Android. Teclado, gamepad e toque são suportados.'**
+  String get game_demoBody;
+
+  /// No description provided for @game_demoUpdate.
+  ///
+  /// In pt, this message translates to:
+  /// **'Novo na {version}: novos efeitos para skills, golpes, mortes, vitória, evolução e interface. Recompensas têm som de gemas. Todas as trilhas dungeon synth por mundo, menu e introdução continuam incluídas.'**
+  String game_demoUpdate(String version);
+
+  /// No description provided for @game_ctaWindows.
+  ///
+  /// In pt, this message translates to:
+  /// **'Windows .zip - 115 MB'**
+  String get game_ctaWindows;
+
+  /// No description provided for @game_ctaAndroid.
+  ///
+  /// In pt, this message translates to:
+  /// **'Android .apk - 151 MB'**
+  String get game_ctaAndroid;
+
+  /// No description provided for @game_demoNote.
+  ///
+  /// In pt, this message translates to:
+  /// **'Windows: extraia o .zip e execute Poco.exe. Android: permita a instalação de apps de fontes desconhecidas antes de abrir o .apk.'**
+  String get game_demoNote;
+
+  /// No description provided for @game_gifAlt.
+  ///
+  /// In pt, this message translates to:
+  /// **'Gameplay do Poço: a maga conjura Meteoro sobre a linha inimiga'**
+  String get game_gifAlt;
+
+  /// No description provided for @game_trailerTitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Trailer'**
+  String get game_trailerTitle;
+
+  /// No description provided for @game_trailerPlay.
+  ///
+  /// In pt, this message translates to:
+  /// **'Assistir trailer'**
+  String get game_trailerPlay;
+
+  /// No description provided for @game_trailerAlt.
+  ///
+  /// In pt, this message translates to:
+  /// **'Trailer do Poço'**
+  String get game_trailerAlt;
 }
 
 class _AppLocalizationsDelegate

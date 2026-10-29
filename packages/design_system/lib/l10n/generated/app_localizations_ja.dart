@@ -880,4 +880,79 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get locale_ru => 'Русский';
+
+  @override
+  String get nav_game => 'ゲーム';
+
+  @override
+  String get game_eyebrow => '個人プロジェクト';
+
+  @override
+  String get game_title => 'Poço —';
+
+  @override
+  String get game_titleAccent => '開発中。';
+
+  @override
+  String get game_subtitle =>
+      'Godot 4 と C# で開発中のターン制ダンジョン・ローグライク。クラシックな JRPG バトルを 2D-HD スタイルで演出します。';
+
+  @override
+  String get game_body =>
+      '3人の英雄でパーティを組み、「井戸」へ降りていきます。ボスまで5フロア、プレイヤーを発見して追ってくるモンスター、そして永久死。毎回のランが異なるビルドになります。';
+
+  @override
+  String get game_factCombatTitle => 'ターン制バトル(ATB)';
+
+  @override
+  String get game_factCombatBody =>
+      '武器スキルは前に出て攻撃し、魔法はその場で詠唱します。属性マークが組み合わさりリアクションが発生します。';
+
+  @override
+  String get game_factBuildTitle => 'レベルごとにビルド';
+
+  @override
+  String get game_factBuildBody =>
+      'レベルアップごとに3つのスキルから1つを選択。同じスキルを再度選ぶとランクが上がり、ランク3で適切なパートナーと揃うとクライマックスへ進化します。';
+
+  @override
+  String get game_factStackTitle => 'エンジニアリング';
+
+  @override
+  String get game_factStackBody =>
+      'エンジンに依存しない C# ドメイン、435件のヘッドレステスト、バランス調整のためのフルラン・シミュレーション。';
+
+  @override
+  String get game_demoTitle => 'プレイアブルデモ';
+
+  @override
+  String get game_demoBody =>
+      'Windows と Android 向けの MVP テストビルド。キーボード、ゲームパッド、タッチ操作に対応しています。';
+
+  @override
+  String game_demoUpdate(String version) {
+    return '$version の新要素：スキル、攻撃、死亡、勝利、進化、UIの効果音を刷新。報酬には宝石の音が鳴ります。各世界、メニュー、導入のダンジョンシンセ曲もすべて収録。';
+  }
+
+  @override
+  String get game_ctaWindows => 'Windows .zip - 115 MB';
+
+  @override
+  String get game_ctaAndroid => 'Android .apk - 151 MB';
+
+  @override
+  String get game_demoNote =>
+      'Windows:.zip を展開して Poco.exe を実行してください。Android:.apk を開く前に提供元不明のアプリのインストールを許可してください。';
+
+  @override
+  String get game_gifAlt => 'Poço のゲームプレイ:魔法使いが敵の列にメテオを放つ';
+
+  @override
+  String get game_trailerTitle => 'トレーラー';
+
+  @override
+  String get game_trailerPlay => 'トレーラーを見る';
+
+  @override
+  String get game_trailerAlt => 'Poço のトレーラー';
 }

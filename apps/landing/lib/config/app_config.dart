@@ -57,7 +57,7 @@ abstract final class AppConfig {
   /// Pages a partir de `apps/landing/web/trailer/` — asset de Release
   /// vem como download, nao toca no navegador. O original 1080p fica na
   /// Release `poco-demo`.
-  static const String pocoTrailerUrl = 'trailer/poco-trailer.mp4';
+  static const String pocoTrailerUrl = 'trailer/poco-trailer.mp4?v=0.18.0';
 
   /// Poster do trailer — asset Flutter (o widget usa `Image.asset`; o
   /// `<video>` aponta pro mesmo arquivo pela URL publicada do asset).

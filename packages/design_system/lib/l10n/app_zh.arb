@@ -318,7 +318,7 @@
   "game_factStackBody": "与引擎解耦的 C# 领域层、435 个无头测试,以及用于平衡的完整对局模拟。",
   "game_demoTitle": "可玩 Demo",
   "game_demoBody": "适用于 Windows 和 Android 的 MVP 测试版本。支持键盘、手柄和触屏。",
-  "game_demoUpdate": "{version} 新内容：每个世界的探索、普通战斗和首领战都有专属地下城合成器音乐，菜单和开场也有独立主题曲。再次进入相同场景时，音乐版本交替播放。",
+  "game_demoUpdate": "{version} 新内容：技能、命中、死亡、胜利、进化和界面采用新音效。奖励使用宝石声。各世界、菜单和开场的地下城合成器音乐均已收录。",
   "game_ctaWindows": "Windows .zip - 115 MB",
   "game_ctaAndroid": "Android .apk - 151 MB",
   "game_demoNote": "Windows:解压 .zip 并运行 Poco.exe。Android:打开 .apk 前请允许安装未知来源的应用。",

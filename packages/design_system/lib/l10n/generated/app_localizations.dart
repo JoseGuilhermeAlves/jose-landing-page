@@ -1879,7 +1879,7 @@ abstract class AppLocalizations {
   /// No description provided for @game_demoUpdate.
   ///
   /// In pt, this message translates to:
-  /// **'Novo na {version}: trilhas dungeon synth próprias para exploração, batalhas e chefes de cada mundo, além de músicas exclusivas para o menu e a introdução. As variações aprovadas alternam ao retornar a cada contexto.'**
+  /// **'Novo na {version}: novos efeitos para skills, golpes, mortes, vitória, evolução e interface. Recompensas têm som de gemas. Todas as trilhas dungeon synth por mundo, menu e introdução continuam incluídas.'**
   String game_demoUpdate(String version);
 
   /// No description provided for @game_ctaWindows.

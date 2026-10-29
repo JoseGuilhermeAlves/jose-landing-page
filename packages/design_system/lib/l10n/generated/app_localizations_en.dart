@@ -963,7 +963,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'New in $version: dedicated dungeon synth tracks for exploration, battles and bosses in every world, plus exclusive menu and introduction music. Approved variations alternate when returning to each context.';
+    return 'New in $version: new effects for skills, hits, deaths, victory, evolution and UI. Rewards sound like gems. Includes all dungeon synth tracks for every world, menu and introduction.';
   }
 
   @override

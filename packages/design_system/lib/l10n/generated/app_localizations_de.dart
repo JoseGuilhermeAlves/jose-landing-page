@@ -966,7 +966,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Neu in $version: eigene Dungeon-Synth-Musik für Erkundung, Kämpfe und Bosse jeder Welt sowie für Menü und Einleitung. Die Varianten wechseln bei der Rückkehr zum jeweiligen Kontext.';
+    return 'Neu in $version: neue Effekte für Fähigkeiten, Treffer, Tod, Sieg, Entwicklung und Menüs. Belohnungen klingen wie Edelsteine. Alle Dungeon-Synth-Themen für Welten, Menü und Einleitung bleiben enthalten.';
   }
 
   @override

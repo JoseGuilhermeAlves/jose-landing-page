@@ -966,7 +966,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Nuevo en $version: temas dungeon synth propios para exploración, combates y jefes de cada mundo, además de música exclusiva para el menú y la introducción. Las variaciones alternan al volver a cada contexto.';
+    return 'Nuevo en $version: efectos para habilidades, golpes, muertes, victoria, evolución e interfaz. Las recompensas suenan como gemas. Incluye todas las pistas dungeon synth de cada mundo, menú e introducción.';
   }
 
   @override

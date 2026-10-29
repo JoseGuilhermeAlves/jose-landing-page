@@ -919,7 +919,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return '$version 新内容：每个世界的探索、普通战斗和首领战都有专属地下城合成器音乐，菜单和开场也有独立主题曲。再次进入相同场景时，音乐版本交替播放。';
+    return '$version 新内容：技能、命中、死亡、胜利、进化和界面采用新音效。奖励使用宝石声。各世界、菜单和开场的地下城合成器音乐均已收录。';
   }
 
   @override

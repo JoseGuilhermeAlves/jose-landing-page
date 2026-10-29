@@ -318,7 +318,7 @@
   "game_factStackBody": "Dominio C# indipendente dal motore, 435 test headless e simulazione di partite complete per il bilanciamento.",
   "game_demoTitle": "Demo giocabile",
   "game_demoBody": "Build di test dell'MVP per Windows e Android. Supporta tastiera, gamepad e touch.",
-  "game_demoUpdate": "Novità in {version}: temi dungeon synth dedicati a esplorazione, battaglie e boss di ogni mondo, oltre a musiche esclusive per menu e introduzione. Le varianti si alternano tornando a ciascun contesto.",
+  "game_demoUpdate": "Novità in {version}: nuovi effetti per abilità, colpi, morti, vittoria, evoluzione e interfaccia. Le ricompense hanno il suono di gemme. Incluse tutte le tracce dungeon synth per mondi, menu e introduzione.",
   "game_ctaWindows": "Windows .zip - 115 MB",
   "game_ctaAndroid": "Android .apk - 151 MB",
   "game_demoNote": "Windows: estrai il .zip ed esegui Poco.exe. Android: consenti l'installazione da origini sconosciute prima di aprire il .apk.",

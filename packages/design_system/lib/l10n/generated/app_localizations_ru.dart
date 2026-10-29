@@ -967,7 +967,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Новое в $version: отдельные dungeon synth темы для исследования, боёв и боссов каждого мира, а также для меню и вступления. При возвращении к каждой ситуации варианты музыки чередуются.';
+    return 'Новое в $version: эффекты навыков, ударов, смерти, победы, эволюции и интерфейса. Награды звучат как самоцветы. Включены все dungeon synth темы миров, меню и вступления.';
   }
 
   @override

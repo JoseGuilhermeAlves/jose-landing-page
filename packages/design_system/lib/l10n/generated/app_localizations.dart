@@ -1879,25 +1879,25 @@ abstract class AppLocalizations {
   /// No description provided for @game_demoUpdate.
   ///
   /// In pt, this message translates to:
-  /// **'Novo na {version}: novos efeitos para skills, golpes, mortes, vitória, evolução e interface. Recompensas têm som de gemas. Todas as trilhas dungeon synth por mundo, menu e introdução continuam incluídas.'**
+  /// **'Novo na {version}: instalador Windows com a identidade do Poço e efeitos de combate mais nítidos, curtos e marcantes. Todas as trilhas dungeon synth continuam incluídas.'**
   String game_demoUpdate(String version);
 
   /// No description provided for @game_ctaWindows.
   ///
   /// In pt, this message translates to:
-  /// **'Windows .zip - 115 MB'**
+  /// **'Windows .exe - 176 MB'**
   String get game_ctaWindows;
 
   /// No description provided for @game_ctaAndroid.
   ///
   /// In pt, this message translates to:
-  /// **'Android .apk - 151 MB'**
+  /// **'Android .apk - 221 MB'**
   String get game_ctaAndroid;
 
   /// No description provided for @game_demoNote.
   ///
   /// In pt, this message translates to:
-  /// **'Windows: extraia o .zip e execute Poco.exe. Android: permita a instalação de apps de fontes desconhecidas antes de abrir o .apk.'**
+  /// **'Windows: abra o instalador .exe, escolha a pasta e siga as etapas. Android: instale o .apk.'**
   String get game_demoNote;
 
   /// No description provided for @game_gifAlt.

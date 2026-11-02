@@ -966,18 +966,18 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Nuevo en $version: efectos para habilidades, golpes, muertes, victoria, evolución e interfaz. Las recompensas suenan como gemas. Incluye todas las pistas dungeon synth de cada mundo, menú e introducción.';
+    return 'Nuevo en $version: instalador de Windows con la identidad de Poço y sonidos de combate más claros, breves y contundentes. Incluye todas las pistas dungeon synth.';
   }
 
   @override
-  String get game_ctaWindows => 'Windows .zip - 115 MB';
+  String get game_ctaWindows => 'Windows .exe - 176 MB';
 
   @override
-  String get game_ctaAndroid => 'Android .apk - 151 MB';
+  String get game_ctaAndroid => 'Android .apk - 221 MB';
 
   @override
   String get game_demoNote =>
-      'Windows: extrae el .zip y ejecuta Poco.exe. Android: permite instalar apps de origen desconocido antes de abrir el .apk.';
+      'Windows: abre el instalador .exe, elige una carpeta y sigue los pasos. Android: instala el .apk.';
 
   @override
   String get game_gifAlt =>

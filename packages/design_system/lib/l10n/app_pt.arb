@@ -318,7 +318,7 @@
   "game_factStackBody": "Domínio em C# isolado da engine, 435 testes headless e simulação de partidas completas para balanceamento.",
   "game_demoTitle": "Demo jogável",
   "game_demoBody": "Build de testes do MVP para Windows e Android. Teclado, gamepad e toque são suportados.",
-  "game_demoUpdate": "Novo na {version}: novos efeitos para skills, golpes, mortes, vitória, evolução e interface. Recompensas têm som de gemas. Todas as trilhas dungeon synth por mundo, menu e introdução continuam incluídas.",
+  "game_demoUpdate": "Novo na {version}: instalador Windows com a identidade do Poço e efeitos de combate mais nítidos, curtos e marcantes. Todas as trilhas dungeon synth continuam incluídas.",
   "@game_demoUpdate": {
     "placeholders": {
       "version": {
@@ -326,9 +326,9 @@
       }
     }
   },
-  "game_ctaWindows": "Windows .zip - 115 MB",
-  "game_ctaAndroid": "Android .apk - 151 MB",
-  "game_demoNote": "Windows: extraia o .zip e execute Poco.exe. Android: permita a instalação de apps de fontes desconhecidas antes de abrir o .apk.",
+  "game_ctaWindows": "Windows .exe - 176 MB",
+  "game_ctaAndroid": "Android .apk - 221 MB",
+  "game_demoNote": "Windows: abra o instalador .exe, escolha a pasta e siga as etapas. Android: instale o .apk.",
   "game_gifAlt": "Gameplay do Poço: a maga conjura Meteoro sobre a linha inimiga",
   "game_trailerTitle": "Trailer",
   "game_trailerPlay": "Assistir trailer",

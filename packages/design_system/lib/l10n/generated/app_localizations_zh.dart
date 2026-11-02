@@ -919,18 +919,18 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return '$version 新内容：技能、命中、死亡、胜利、进化和界面采用新音效。奖励使用宝石声。各世界、菜单和开场的地下城合成器音乐均已收录。';
+    return '$version 新内容：Poço 主题 Windows 安装程序，以及更清晰、短促、有力的战斗音效。所有地牢合成器乐曲均已包含。';
   }
 
   @override
-  String get game_ctaWindows => 'Windows .zip - 115 MB';
+  String get game_ctaWindows => 'Windows .exe - 176 MB';
 
   @override
-  String get game_ctaAndroid => 'Android .apk - 151 MB';
+  String get game_ctaAndroid => 'Android .apk - 221 MB';
 
   @override
   String get game_demoNote =>
-      'Windows:解压 .zip 并运行 Poco.exe。Android:打开 .apk 前请允许安装未知来源的应用。';
+      'Windows：打开 .exe 安装程序，选择文件夹并按步骤操作。Android：安装 .apk。';
 
   @override
   String get game_gifAlt => 'Poço 实机画面:法师向敌方阵线施放陨石';

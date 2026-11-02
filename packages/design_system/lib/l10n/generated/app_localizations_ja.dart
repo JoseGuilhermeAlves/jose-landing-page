@@ -931,18 +931,18 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return '$version の新要素：スキル、攻撃、死亡、勝利、進化、UIの効果音を刷新。報酬には宝石の音が鳴ります。各世界、メニュー、導入のダンジョンシンセ曲もすべて収録。';
+    return '$version の新機能：Poço デザインの Windows インストーラーと、より鮮明で短く爽快な戦闘音。ダンジョンシンセの全楽曲も収録しています。';
   }
 
   @override
-  String get game_ctaWindows => 'Windows .zip - 115 MB';
+  String get game_ctaWindows => 'Windows .exe - 176 MB';
 
   @override
-  String get game_ctaAndroid => 'Android .apk - 151 MB';
+  String get game_ctaAndroid => 'Android .apk - 221 MB';
 
   @override
   String get game_demoNote =>
-      'Windows:.zip を展開して Poco.exe を実行してください。Android:.apk を開く前に提供元不明のアプリのインストールを許可してください。';
+      'Windows：.exe インストーラーを開き、フォルダーを選んで手順に従ってください。Android：.apk をインストールしてください。';
 
   @override
   String get game_gifAlt => 'Poço のゲームプレイ:魔法使いが敵の列にメテオを放つ';

@@ -972,10 +972,10 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get game_ctaWindows => 'Windows .exe - 176 Mo';
+  String get game_ctaWindows => 'Windows .exe - 170 Mo';
 
   @override
-  String get game_ctaAndroid => 'Android .apk - 221 Mo';
+  String get game_ctaAndroid => 'Android .apk - 215 Mo';
 
   @override
   String get game_demoNote =>

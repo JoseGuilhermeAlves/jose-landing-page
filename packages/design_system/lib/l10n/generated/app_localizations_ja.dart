@@ -935,10 +935,10 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get game_ctaWindows => 'Windows .exe - 176 MB';
+  String get game_ctaWindows => 'Windows .exe - 170 MB';
 
   @override
-  String get game_ctaAndroid => 'Android .apk - 221 MB';
+  String get game_ctaAndroid => 'Android .apk - 215 MB';
 
   @override
   String get game_demoNote =>

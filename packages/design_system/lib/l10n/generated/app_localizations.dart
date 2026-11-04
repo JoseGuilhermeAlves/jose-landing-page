@@ -1885,13 +1885,13 @@ abstract class AppLocalizations {
   /// No description provided for @game_ctaWindows.
   ///
   /// In pt, this message translates to:
-  /// **'Windows .exe - 170 MB'**
+  /// **'Windows .exe - 169 MB'**
   String get game_ctaWindows;
 
   /// No description provided for @game_ctaAndroid.
   ///
   /// In pt, this message translates to:
-  /// **'Android .apk - 215 MB'**
+  /// **'Android .apk - 214 MB'**
   String get game_ctaAndroid;
 
   /// No description provided for @game_demoNote.

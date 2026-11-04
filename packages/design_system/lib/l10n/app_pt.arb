@@ -326,8 +326,8 @@
       }
     }
   },
-  "game_ctaWindows": "Windows .exe - 170 MB",
-  "game_ctaAndroid": "Android .apk - 215 MB",
+  "game_ctaWindows": "Windows .exe - 169 MB",
+  "game_ctaAndroid": "Android .apk - 214 MB",
   "game_demoNote": "Windows: abra o instalador .exe, escolha a pasta e siga as etapas. Android: instale o .apk.",
   "game_gifAlt": "Gameplay do Poço: a maga conjura Meteoro sobre a linha inimiga",
   "game_trailerTitle": "Trailer",

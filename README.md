@@ -17,8 +17,8 @@ própria home, sem rota separada.
 
 ## Demo
 
-🔗 **<https://joseguilhermealves.github.io/jose-landing-page/>** — servido
-via GitHub Pages a partir da branch `gh-pages`.
+🔗 **<https://www.zeguidev.com.br/>** — domínio customizado servido pelo
+GitHub Pages a partir da branch `gh-pages`.
 
 ## Sobre
 
@@ -168,13 +168,14 @@ flutter gen-l10n
 
 ```bash
 cd apps/landing
-flutter build web --wasm --release --base-href "/jose-landing-page/"
+fvm flutter build web --wasm --release --base-href "/"
 # build/web/ contém o bundle pronto pra deploy.
 ```
 
-O `--base-href` é necessário porque o GitHub Pages serve o site em um
-subpath (`/jose-landing-page/`). O conteúdo de `build/web/` é publicado na
-branch `gh-pages` (com um `.nojekyll` na raiz). Build **sempre** com
+O domínio customizado `www.zeguidev.com.br` serve o site na raiz, então o
+`--base-href` deve ser `/` — usar o subpath do repositório causa 404 no
+manifest e nos assets. O conteúdo de `build/web/` é publicado na branch
+`gh-pages` (com um `.nojekyll` na raiz). Build **sempre** com
 `--wasm`: gera skwasm + fallback CanvasKit automático. Como o GitHub Pages
 não envia os headers COOP/COEP que o skwasm exige, o runtime cai no
 CanvasKit — esperado e transparente. Uma loading screen em HTML/CSS puro

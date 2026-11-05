@@ -971,10 +971,10 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String get game_ctaWindows => 'Windows .exe - 169 МБ';
+  String get game_ctaWindows => 'Windows .exe - 187 МБ';
 
   @override
-  String get game_ctaAndroid => 'Android .apk - 214 МБ';
+  String get game_ctaAndroid => 'Android .apk - 234 МБ';
 
   @override
   String get game_demoNote =>

@@ -46,7 +46,7 @@ abstract final class AppConfig {
   );
 
   /// Versao do build publicado na release — trocar junto com o upload.
-  static const String pocoDemoVersion = 'v0.23.0';
+  static const String pocoDemoVersion = 'v0.24.0';
 
   static const String pocoDemoWindowsUrl =
       '${pocoDemoBase}Poco-setup-windows.exe';

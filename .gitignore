@@ -1,3 +1,12 @@
+# Secrets — nunca versionar (defensivo; repo e codigo aberto)
+.env
+.env.*
+*.pem
+*.key
+key.properties
+google-services.json
+GoogleService-Info.plist
+
 # Dart / Flutter
 .dart_tool/
 .flutter-plugins
@@ -10,9 +19,13 @@ build/
 
 # Deploy artifacts — builds publicados na branch gh-pages, nunca no source.
 # (Codex commitava estes por engano; o deploy real vai pra gh-pages.)
-.deploy-temp/
-.deploy-temp2/
+.deploy-temp*/
 .deploy-web/
+
+# CV source local + script/doc de deploy — nao versionar
+cv_src/
+DEPLOY.md
+deploy.ps1
 .gh-pages/
 
 # Workspace mode: only the root pubspec.lock is versioned

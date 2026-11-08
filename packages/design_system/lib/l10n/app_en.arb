@@ -318,7 +318,7 @@
   "game_factStackBody": "Engine-agnostic C# domain, 435 headless tests and full-run simulation for balancing.",
   "game_demoTitle": "Playable demo",
   "game_demoBody": "MVP test build for Windows and Android. Keyboard, gamepad and touch are supported.",
-  "game_demoUpdate": "In {version}: removed the animated doors scattered across the overworld and fixed the intro showing a black screen or visual glitches.",
+  "game_demoUpdate": "In {version}: restored the full localized subtitles in the cinematic intro while keeping the playback fix.",
   "game_ctaWindows": "Windows .exe - 187 MB",
   "game_ctaAndroid": "Android .apk - 234 MB",
   "game_demoNote": "Windows: open the .exe installer, choose a folder and follow the steps. Android: install the .apk.",

@@ -318,7 +318,7 @@
   "game_factStackBody": "Dominio C# indipendente dal motore, 435 test headless e simulazione di partite complete per il bilanciamento.",
   "game_demoTitle": "Demo giocabile",
   "game_demoBody": "Build di test dell'MVP per Windows e Android. Supporta tastiera, gamepad e touch.",
-  "game_demoUpdate": "Novità della {version}: installer Windows in stile Poço e suoni di combattimento più nitidi, brevi e incisivi. Tutti i brani dungeon synth sono inclusi.",
+  "game_demoUpdate": "In {version}: ripristinati e sincronizzati tutti i sottotitoli dell'introduzione cinematografica, mantenendo la correzione della riproduzione.",
   "game_ctaWindows": "Windows .exe - 187 MB",
   "game_ctaAndroid": "Android .apk - 234 MB",
   "game_demoNote": "Windows: apri il programma di installazione .exe, scegli una cartella e segui i passaggi. Android: installa il file .apk.",

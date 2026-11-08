@@ -318,7 +318,7 @@
   "game_factStackBody": "Dominio en C# independiente del motor, 435 pruebas headless y simulación de partidas completas para el balance.",
   "game_demoTitle": "Demo jugable",
   "game_demoBody": "Build de pruebas del MVP para Windows y Android. Compatible con teclado, gamepad y pantalla táctil.",
-  "game_demoUpdate": "Nuevo en {version}: instalador de Windows con la identidad de Poço y sonidos de combate más claros, breves y contundentes. Incluye todas las pistas dungeon synth.",
+  "game_demoUpdate": "En {version}: se restauraron y sincronizaron todos los subtítulos de la introducción cinematográfica, manteniendo la corrección de reproducción.",
   "game_ctaWindows": "Windows .exe - 187 MB",
   "game_ctaAndroid": "Android .apk - 234 MB",
   "game_demoNote": "Windows: abre el instalador .exe, elige una carpeta y sigue los pasos. Android: instala el .apk.",

@@ -963,7 +963,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Novità della $version: installer Windows in stile Poço e suoni di combattimento più nitidi, brevi e incisivi. Tutti i brani dungeon synth sono inclusi.';
+    return 'In $version: ripristinati e sincronizzati tutti i sottotitoli dell\'introduzione cinematografica, mantenendo la correzione della riproduzione.';
   }
 
   @override

@@ -931,7 +931,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return '$version の新機能：Poço デザインの Windows インストーラーと、より鮮明で短く爽快な戦闘音。ダンジョンシンセの全楽曲も収録しています。';
+    return '$version：オープニング映像の字幕を完全に復元して同期し、再生の修正も維持しました。';
   }
 
   @override

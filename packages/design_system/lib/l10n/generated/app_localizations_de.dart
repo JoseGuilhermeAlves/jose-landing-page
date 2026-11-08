@@ -966,7 +966,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Neu in $version: ein Windows-Installer im Poço-Design und klarere, kürzere, kraftvollere Kampfgeräusche. Alle Dungeon-Synth-Titel bleiben enthalten.';
+    return 'In $version: vollständige Untertitel im filmischen Intro wiederhergestellt und synchronisiert; die Wiedergabekorrektur bleibt erhalten.';
   }
 
   @override

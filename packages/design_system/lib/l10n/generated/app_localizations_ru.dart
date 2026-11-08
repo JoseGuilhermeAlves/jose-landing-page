@@ -967,7 +967,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Новое в $version: установщик Windows в стиле Poço и более чёткие, короткие и выразительные звуки боя. Все композиции dungeon synth включены.';
+    return 'В $version восстановлены и синхронизированы все субтитры кинематографического вступления; исправление воспроизведения сохранено.';
   }
 
   @override

@@ -966,7 +966,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Nuevo en $version: instalador de Windows con la identidad de Poço y sonidos de combate más claros, breves y contundentes. Incluye todas las pistas dungeon synth.';
+    return 'En $version: se restauraron y sincronizaron todos los subtítulos de la introducción cinematográfica, manteniendo la corrección de reproducción.';
   }
 
   @override

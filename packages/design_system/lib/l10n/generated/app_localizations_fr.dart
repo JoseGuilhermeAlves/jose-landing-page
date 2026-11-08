@@ -968,7 +968,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Nouveau dans $version : un installateur Windows aux couleurs de Poço et des sons de combat plus nets, brefs et percutants. Toutes les pistes dungeon synth sont incluses.';
+    return 'Dans $version : sous-titres complets rétablis et synchronisés dans l’introduction cinématique, avec la correction de lecture conservée.';
   }
 
   @override

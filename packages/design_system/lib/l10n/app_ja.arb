@@ -318,7 +318,7 @@
   "game_factStackBody": "エンジンに依存しない C# ドメイン、435件のヘッドレステスト、バランス調整のためのフルラン・シミュレーション。",
   "game_demoTitle": "プレイアブルデモ",
   "game_demoBody": "Windows と Android 向けの MVP テストビルド。キーボード、ゲームパッド、タッチ操作に対応しています。",
-  "game_demoUpdate": "{version} の新機能：Poço デザインの Windows インストーラーと、より鮮明で短く爽快な戦闘音。ダンジョンシンセの全楽曲も収録しています。",
+  "game_demoUpdate": "{version}：オープニング映像の字幕を完全に復元して同期し、再生の修正も維持しました。",
   "game_ctaWindows": "Windows .exe - 187 MB",
   "game_ctaAndroid": "Android .apk - 234 MB",
   "game_demoNote": "Windows：.exe インストーラーを開き、フォルダーを選んで手順に従ってください。Android：.apk をインストールしてください。",

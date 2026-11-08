@@ -919,7 +919,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return '$version 新内容：Poço 主题 Windows 安装程序，以及更清晰、短促、有力的战斗音效。所有地牢合成器乐曲均已包含。';
+    return '$version：恢复并同步了开场动画的完整字幕，同时保留了播放修复。';
   }
 
   @override

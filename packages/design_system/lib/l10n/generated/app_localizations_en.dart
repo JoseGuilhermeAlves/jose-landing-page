@@ -963,7 +963,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'In $version: removed the animated doors scattered across the overworld and fixed the intro showing a black screen or visual glitches.';
+    return 'In $version: restored the full localized subtitles in the cinematic intro while keeping the playback fix.';
   }
 
   @override

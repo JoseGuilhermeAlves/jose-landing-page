@@ -318,7 +318,7 @@
   "game_factStackBody": "Engine-unabhängige C#-Domäne, 435 Headless-Tests und Simulation kompletter Durchläufe für das Balancing.",
   "game_demoTitle": "Spielbare Demo",
   "game_demoBody": "MVP-Testbuild für Windows und Android. Tastatur, Gamepad und Touch werden unterstützt.",
-  "game_demoUpdate": "Neu in {version}: ein Windows-Installer im Poço-Design und klarere, kürzere, kraftvollere Kampfgeräusche. Alle Dungeon-Synth-Titel bleiben enthalten.",
+  "game_demoUpdate": "In {version}: vollständige Untertitel im filmischen Intro wiederhergestellt und synchronisiert; die Wiedergabekorrektur bleibt erhalten.",
   "game_ctaWindows": "Windows .exe - 187 MB",
   "game_ctaAndroid": "Android .apk - 234 MB",
   "game_demoNote": "Windows: Den .exe-Installer öffnen, einen Ordner wählen und den Schritten folgen. Android: Die .apk installieren.",

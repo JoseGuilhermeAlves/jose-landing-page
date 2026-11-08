@@ -1879,7 +1879,7 @@ abstract class AppLocalizations {
   /// No description provided for @game_demoUpdate.
   ///
   /// In pt, this message translates to:
-  /// **'Nesta {version}: removidas as portas animadas espalhadas pelo mapa e corrigida a intro, que podia ficar preta ou apresentar falhas de imagem.'**
+  /// **'Nesta {version}: legendas completas restauradas e sincronizadas na intro cinematográfica, mantendo a correção da reprodução.'**
   String game_demoUpdate(String version);
 
   /// No description provided for @game_ctaWindows.

@@ -963,7 +963,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Nesta $version: removidas as portas animadas espalhadas pelo mapa e corrigida a intro, que podia ficar preta ou apresentar falhas de imagem.';
+    return 'Nesta $version: legendas completas restauradas e sincronizadas na intro cinematográfica, mantendo a correção da reprodução.';
   }
 
   @override

@@ -963,7 +963,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Novo na $version: instalador Windows com a identidade do Poço e efeitos de combate mais nítidos, curtos e marcantes. Todas as trilhas dungeon synth continuam incluídas.';
+    return 'Nesta $version: removidas as portas animadas espalhadas pelo mapa e corrigida a intro, que podia ficar preta ou apresentar falhas de imagem.';
   }
 
   @override

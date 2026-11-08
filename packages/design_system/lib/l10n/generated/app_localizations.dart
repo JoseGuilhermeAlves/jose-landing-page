@@ -1879,7 +1879,7 @@ abstract class AppLocalizations {
   /// No description provided for @game_demoUpdate.
   ///
   /// In pt, this message translates to:
-  /// **'Novo na {version}: instalador Windows com a identidade do Poço e efeitos de combate mais nítidos, curtos e marcantes. Todas as trilhas dungeon synth continuam incluídas.'**
+  /// **'Nesta {version}: removidas as portas animadas espalhadas pelo mapa e corrigida a intro, que podia ficar preta ou apresentar falhas de imagem.'**
   String game_demoUpdate(String version);
 
   /// No description provided for @game_ctaWindows.

@@ -963,7 +963,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'New in $version: a branded Windows installer and sharper, shorter, punchier combat sounds. All dungeon synth tracks remain included.';
+    return 'In $version: removed the animated doors scattered across the overworld and fixed the intro showing a black screen or visual glitches.';
   }
 
   @override

@@ -318,7 +318,7 @@
   "game_factStackBody": "Domínio em C# isolado da engine, 435 testes headless e simulação de partidas completas para balanceamento.",
   "game_demoTitle": "Demo jogável",
   "game_demoBody": "Build de testes do MVP para Windows e Android. Teclado, gamepad e toque são suportados.",
-  "game_demoUpdate": "Novo na {version}: instalador Windows com a identidade do Poço e efeitos de combate mais nítidos, curtos e marcantes. Todas as trilhas dungeon synth continuam incluídas.",
+  "game_demoUpdate": "Nesta {version}: removidas as portas animadas espalhadas pelo mapa e corrigida a intro, que podia ficar preta ou apresentar falhas de imagem.",
   "@game_demoUpdate": {
     "placeholders": {
       "version": {

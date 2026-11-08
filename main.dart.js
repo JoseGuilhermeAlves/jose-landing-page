@@ -48399,7 +48399,7 @@ gm5(){return"Engineering"},
 gm4(){return"Engine-agnostic C# domain, 435 headless tests and full-run simulation for balancing."},
 glY(){return"Playable demo"},
 glW(){return"MVP test build for Windows and Android. Keyboard, gamepad and touch are supported."},
-lZ(a){return"New in "+a+": a branded Windows installer and sharper, shorter, punchier combat sounds. All dungeon synth tracks remain included."},
+lZ(a){return"In "+a+": removed the animated doors scattered across the overworld and fixed the intro showing a black screen or visual glitches."},
 glV(){return"Windows .exe - 187 MB"},
 glU(){return"Android .apk - 234 MB"},
 glX(){return"Windows: open the .exe installer, choose a folder and follow the steps. Android: install the .apk."},
@@ -49279,7 +49279,7 @@ gm5(){return"Engenharia"},
 gm4(){return"Dom\xednio em C# isolado da engine, 435 testes headless e simula\xe7\xe3o de partidas completas para balanceamento."},
 glY(){return"Demo jog\xe1vel"},
 glW(){return"Build de testes do MVP para Windows e Android. Teclado, gamepad e toque s\xe3o suportados."},
-lZ(a){return"Novo na "+a+": instalador Windows com a identidade do Po\xe7o e efeitos de combate mais n\xedtidos, curtos e marcantes. Todas as trilhas dungeon synth continuam inclu\xeddas."},
+lZ(a){return"Nesta "+a+": removidas as portas animadas espalhadas pelo mapa e corrigida a intro, que podia ficar preta ou apresentar falhas de imagem."},
 glV(){return"Windows .exe - 187 MB"},
 glU(){return"Android .apk - 234 MB"},
 glX(){return"Windows: abra o instalador .exe, escolha a pasta e siga as etapas. Android: instale o .apk."},
@@ -105172,7 +105172,7 @@ e=h?0:232
 d=n.gamU()
 s=A.Zc()
 r=t.p
-d=A.b([new A.e9(new A.lA("hero",new A.Nq(g,new A.aEB(n),new A.aEC(n),m),m),m),new A.e9(new A.iJ(new A.pZ(l,new A.XV(new A.aED(a),m),f,B.cP,m),n.f),m),B.agc,new A.e9(new A.iJ(new A.pZ("about",B.Ln,f,B.dz,m),n.x),m),B.ag7,new A.e9(new A.iJ(new A.pZ("engineering",new A.Rp(k,new A.aEE(n),m),f,B.iC,m),n.r),m),B.agb,new A.e9(new A.iJ(new A.pZ("game",new A.RL("v0.25.0","https://github.com/JoseGuilhermeAlves/jose-landing-page/releases/download/poco-demo/Poco-setup-windows.exe","https://github.com/JoseGuilhermeAlves/jose-landing-page/releases/download/poco-demo/Poco-demo-android.apk","trailer/poco-trailer.mp4?v=0.23.0","assets/images/poco_trailer_poster.jpg",d,m),f,B.Lu,m),n.w),m),B.agd,new A.e9(new A.iJ(new A.pZ("contact",new A.Bh("contato.joseguilhermealves@gmail.com","5514991163009",j,k,s.aj(a.aL(t.Gk).r.f.gdt()==="pt"?"cv/jose-guilherme-alves-pt.pdf":"cv/jose-guilherme-alves-en.pdf").k(0),d,m),f,B.bB,m),n.y),m),B.ag6],r)
+d=A.b([new A.e9(new A.lA("hero",new A.Nq(g,new A.aEB(n),new A.aEC(n),m),m),m),new A.e9(new A.iJ(new A.pZ(l,new A.XV(new A.aED(a),m),f,B.cP,m),n.f),m),B.agc,new A.e9(new A.iJ(new A.pZ("about",B.Ln,f,B.dz,m),n.x),m),B.ag7,new A.e9(new A.iJ(new A.pZ("engineering",new A.Rp(k,new A.aEE(n),m),f,B.iC,m),n.r),m),B.agb,new A.e9(new A.iJ(new A.pZ("game",new A.RL("v0.25.1","https://github.com/JoseGuilhermeAlves/jose-landing-page/releases/download/poco-demo/Poco-setup-windows.exe","https://github.com/JoseGuilhermeAlves/jose-landing-page/releases/download/poco-demo/Poco-demo-android.apk","trailer/poco-trailer.mp4?v=0.23.0","assets/images/poco_trailer_poster.jpg",d,m),f,B.Lu,m),n.w),m),B.agd,new A.e9(new A.iJ(new A.pZ("contact",new A.Bh("contato.joseguilhermealves@gmail.com","5514991163009",j,k,s.aj(a.aL(t.Gk).r.f.gdt()==="pt"?"cv/jose-guilherme-alves-pt.pdf":"cv/jose-guilherme-alves-en.pdf").k(0),d,m),f,B.bB,m),n.y),m),B.ag6],r)
 if(h)d.push(new A.e9(new A.ay(m,64+A.a3(a,B.cl,i).w.r.d,m,m),m))
 i=A.b([new A.aO(new A.a5(e,0,0,0),A.afx(n.d,d),m)],r)
 if(!h)i.push(A.fR(0,new A.Ax(p,n.e,n.gXb(),k,j,new A.aEF(n),m),m,m,0,m,0,m))

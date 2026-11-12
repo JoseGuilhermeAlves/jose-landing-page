@@ -174,7 +174,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get about_bioClose =>
-      'Distinct domains, same delivery: the entire mobile front end. Backend stays with the team — I integrate with it.';
+      'Different domains, same delivery: the entire mobile front end — and, when the project calls for it, hands-on work on back ends, BFFs and web front ends.';
 
   @override
   String get delivery_entrega_eyebrow => 'DELIVERY';
@@ -206,15 +206,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get delivery_collab_eyebrow => 'COLLABORATION';
 
   @override
-  String get delivery_collab_title => 'On a product team';
+  String get delivery_collab_title => 'Mobile at the core,';
 
   @override
   String get delivery_collab_titleAccent =>
-      'or owning the entire Flutter side.';
+      'full stack when delivery calls for it.';
 
   @override
   String get delivery_collab_body =>
-      'On large teams I join as mobile front end with feature scope or architectural stewardship. On small teams (B2B retail, 5 years) I owned the entire Flutter side — from design to deploy, integrating existing APIs and helping shape new contracts when needed. I adapt to the team size, not the other way around.';
+      'My specialty is mobile front end in Flutter, but on every team I\'ve worked with I also contributed across the rest of the stack: back ends, BFFs and web front ends, closing deliveries end to end. On large teams I own feature scope or architecture; on small teams (B2B retail, 5 years) I led the whole app, from design to deploy.';
 
   @override
   String get domain_fintech_label => 'Financial service';

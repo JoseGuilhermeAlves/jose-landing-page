@@ -1,4 +1,4 @@
-import 'package:design_system/design_system.dart';
+﻿import 'package:design_system/design_system.dart';
 import 'package:feature_about/feature_about.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -29,7 +29,7 @@ void main() {
 
       expect(find.textContaining('mesma régua'), findsOneWidget);
       expect(
-        find.textContaining('Backend permanece com o time'),
+        find.textContaining('colaboração direta em back-ends'),
         findsOneWidget,
       );
 

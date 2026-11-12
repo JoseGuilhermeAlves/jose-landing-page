@@ -170,7 +170,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get about_bioClose =>
-      'ドメインは違っても、提供するものは同じ——モバイルフロントエンド全体。バックエンドはチームに残り、私はそれと統合します。';
+      '領域は違っても、届けるものは同じ:モバイルのフロントエンド全体。必要に応じてバックエンド、BFF、Web フロントエンドにも直接関わります。';
 
   @override
   String get delivery_entrega_eyebrow => '成果';
@@ -202,14 +202,14 @@ class AppLocalizationsJa extends AppLocalizations {
   String get delivery_collab_eyebrow => 'コラボレーション';
 
   @override
-  String get delivery_collab_title => 'プロダクトチームの一員';
+  String get delivery_collab_title => 'モバイルを軸に、';
 
   @override
-  String get delivery_collab_titleAccent => 'またはFlutter全体を担当。';
+  String get delivery_collab_titleAccent => '必要ならフルスタックで。';
 
   @override
   String get delivery_collab_body =>
-      '大きなチームではフィーチャースコープまたはアーキテクチャスチュワードシップとしてモバイルフロントエンドに参加。小さなチーム（B2Bリテール、5年）ではFlutter全体を担当——デザインからデプロイまで、既存APIの統合と必要に応じた新しい契約の策定。チームサイズに合わせます。逆ではなく。';
+      '専門は Flutter によるモバイルのフロントエンドですが、これまでのどのチームでもスタックの他の部分にも関わってきました。バックエンド、BFF、Web フロントエンドに貢献し、エンドツーエンドで納品を完結させます。大規模チームでは機能単位やアーキテクチャを担当し、小規模チーム(B2B小売、5年)ではデザインからデプロイまでアプリ全体を主導しました。';
 
   @override
   String get domain_fintech_label => '金融サービス';

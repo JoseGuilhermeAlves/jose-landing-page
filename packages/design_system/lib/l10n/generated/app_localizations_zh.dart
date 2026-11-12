@@ -167,7 +167,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get about_factFintechBody => 'Monorepo 架构、自有设计系统的金融产品。';
 
   @override
-  String get about_bioClose => '领域各异，交付一致：完整的移动端前端。后端留给团队——我负责与之对接。';
+  String get about_bioClose => '领域不同,交付一致:完整的移动前端;项目需要时,也直接参与后端、BFF 与 Web 前端。';
 
   @override
   String get delivery_entrega_eyebrow => '交付';
@@ -199,14 +199,14 @@ class AppLocalizationsZh extends AppLocalizations {
   String get delivery_collab_eyebrow => '协作';
 
   @override
-  String get delivery_collab_title => '产品团队成员';
+  String get delivery_collab_title => '以移动端为核心,';
 
   @override
-  String get delivery_collab_titleAccent => '或独揽 Flutter 全局。';
+  String get delivery_collab_titleAccent => '需要时全栈交付。';
 
   @override
   String get delivery_collab_body =>
-      '大团队中，我以功能范围或架构管理的角色参与移动端前端。小团队中（B2B零售，5年），我负责整个 Flutter 端——从设计到部署，集成现有 API 并在需要时协助定义新接口。我适应团队规模，而非相反。';
+      '我的专长是 Flutter 移动前端,但在待过的每个团队里,我也参与了技术栈的其他部分:后端、BFF 和 Web 前端,把交付做到端到端。在大团队中负责功能或架构;在小团队(B2B 零售,5 年)中主导整个应用,从设计到部署。';
 
   @override
   String get domain_fintech_label => '金融服务';

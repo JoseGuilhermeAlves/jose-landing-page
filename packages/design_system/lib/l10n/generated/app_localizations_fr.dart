@@ -175,7 +175,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get about_bioClose =>
-      'Des domaines distincts, une même livraison : le front end mobile entier. Le backend reste à l\'équipe — je m\'y intègre.';
+      'Domaines différents, même livraison : tout le front end mobile — et, quand le projet l\'exige, une contribution directe aux back ends, BFF et front ends web.';
 
   @override
   String get delivery_entrega_eyebrow => 'RÉALISATION';
@@ -207,14 +207,15 @@ class AppLocalizationsFr extends AppLocalizations {
   String get delivery_collab_eyebrow => 'COLLABORATION';
 
   @override
-  String get delivery_collab_title => 'Dans l\'équipe produit';
+  String get delivery_collab_title => 'Le mobile au centre,';
 
   @override
-  String get delivery_collab_titleAccent => 'ou sur tout le Flutter.';
+  String get delivery_collab_titleAccent =>
+      'full stack quand la livraison l\'exige.';
 
   @override
   String get delivery_collab_body =>
-      'Dans une grande équipe, j\'interviens comme front end mobile avec un périmètre de feature ou un stewardship architectural. Dans une petite équipe (retail B2B, 5 ans), je me suis occupé de tout le Flutter — du design au déploiement, en intégrant des APIs déjà existantes et en aidant à façonner de nouveaux contrats quand c\'était la voie. Je m\'adapte à la taille de l\'équipe, pas l\'inverse.';
+      'Ma spécialité est le front end mobile en Flutter, mais dans toutes les équipes où je suis passé j\'ai aussi contribué au reste de la stack : back ends, BFF et front ends web, pour livrer de bout en bout. En grande équipe, je prends le périmètre d\'une feature ou l\'architecture ; en petite équipe (retail B2B, 5 ans), j\'ai mené l\'app entière, du design au déploiement.';
 
   @override
   String get domain_fintech_label => 'Service financier';

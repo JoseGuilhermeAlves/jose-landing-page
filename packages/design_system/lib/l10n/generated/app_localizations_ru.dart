@@ -176,7 +176,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get about_bioClose =>
-      'Разные домены, одна и та же поставка: весь мобильный фронтенд. Бэкенд остаётся за командой — я с ним интегрируюсь.';
+      'Разные отрасли, один результат: весь мобильный фронтенд, а при необходимости — прямая работа над бэкендами, BFF и веб-фронтендом.';
 
   @override
   String get delivery_entrega_eyebrow => 'РЕЗУЛЬТАТ';
@@ -208,14 +208,15 @@ class AppLocalizationsRu extends AppLocalizations {
   String get delivery_collab_eyebrow => 'СОТРУДНИЧЕСТВО';
 
   @override
-  String get delivery_collab_title => 'В продуктовой команде';
+  String get delivery_collab_title => 'Мобильная разработка в центре,';
 
   @override
-  String get delivery_collab_titleAccent => 'или весь Flutter целиком.';
+  String get delivery_collab_titleAccent =>
+      'фулстек, когда этого требует задача.';
 
   @override
   String get delivery_collab_body =>
-      'В большой команде вхожу как мобильный фронтендер с объёмом фичи или архитектурным стюардшипом. В небольшой команде (розница B2B, 5 лет) вёл весь Flutter целиком — от дизайна до деплоя, интегрируя уже существующие API и помогая формировать новые контракты, когда путь был именно таким. Подстраиваюсь под размер команды, а не наоборот.';
+      'Моя специализация — мобильный фронтенд на Flutter, но в каждой команде я работал и с остальной частью стека: бэкендами, BFF и веб-фронтендом, доводя задачи до конца. В больших командах беру фичи или архитектуру; в маленьких (B2B-ритейл, 5 лет) вёл приложение целиком — от дизайна до деплоя.';
 
   @override
   String get domain_fintech_label => 'Финансовый сервис';

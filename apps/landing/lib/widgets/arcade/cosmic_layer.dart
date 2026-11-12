@@ -1,4 +1,5 @@
 import 'dart:math' as math;
+import 'dart:ui' as ui;
 
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
@@ -23,22 +24,26 @@ class _CosmicLayerState extends State<CosmicLayer>
     with SingleTickerProviderStateMixin {
   late final AnimationController _t = AnimationController(
     vsync: this,
-    duration: const Duration(seconds: 60),
+    duration: const Duration(seconds: 110),
   );
 
-  /// Planetas que ATRAVESSAM o ceu da direita pra esquerda (como no hero
-  /// antigo): x inicial 0..1, y 0..1 da viewport, diametro em px, corpo,
-  /// passo de parallax (1 = lento, 2 = ~2x) e cor do halo.
+  /// Corpos que ATRAVESSAM o ceu da direita pra esquerda. Profundidade
+  /// (`depth` 0 = longe .. 1 = perto) decide tudo: tamanho, opacidade,
+  /// desfoque, intensidade do halo e velocidade (parallax: `step` 2 = perto,
+  /// 1 = longe). Correm em faixas no alto e embaixo da viewport; o [_span]
+  /// largo faz cada um passar boa parte do ciclo fora da tela — 2 ou 3
+  /// visiveis por vez, nunca um enxame.
   static const _bodies = <_Body>[
-    _Body(0.11, 0.17, 140, CelestialBody.saturn, 1, Color(0xFFFF3CAC)),
-    _Body(0.49, 0.085, 66, CelestialBody.ice, 2, Color(0xFF36E0FF)),
-    _Body(0.38, 0.62, 72, CelestialBody.portal, 2, Color(0xFFE83CC8)),
-    _Body(0.27, 0.40, 88, CelestialBody.earth, 1, Color(0xFF2FA8E0)),
-    _Body(0.74, 0.80, 92, CelestialBody.lava, 1, Color(0xFFFF6A1E)),
+    _Body(0.15, 0.13, 128, CelestialBody.saturn, 2, 0.9, Color(0xFFFF3CAC)),
+    _Body(0.70, 0.29, 44, CelestialBody.earth, 1, 0.2, Color(0xFF2FA8E0)),
+    _Body(1.25, 0.86, 62, CelestialBody.ice, 1, 0.45, Color(0xFF36E0FF)),
+    _Body(1.10, 0.76, 96, CelestialBody.lava, 2, 0.8, Color(0xFFFF6A1E)),
+    _Body(0.42, 0.06, 34, CelestialBody.portal, 1, 0.25, Color(0xFFE83CC8)),
   ];
 
-  /// Span de wrap em fracao de largura (entra/sai com folga).
-  static const double _span = 1.3;
+  /// Span de wrap em fracao de largura: 2.0 = cada corpo fica ~metade do
+  /// ciclo fora da tela.
+  static const double _span = 2;
 
   static const _nebulas = [
     CosmosNebula(
@@ -92,37 +97,48 @@ class _CosmicLayerState extends State<CosmicLayer>
     required double scale,
   }) {
     final d = b.size * scale;
-    final box = d * 1.7;
-    // Leve flutuar vertical alem da travessia.
-    final bob = math.sin(_t.value * 2 * math.pi * 3 + b.x * 9) * 6 * scale;
+    final box = d * 1.8;
+    // Flutuar vertical sutil, proporcional a proximidade.
+    final bob =
+        math.sin(_t.value * 2 * math.pi * 4 + b.x * 9) * 5 * b.depth * scale;
+    Widget body = SizedBox.square(
+      dimension: d,
+      child: CelestialPlanet(body: b.body, seed: b.seed),
+    );
+    // Perspectiva atmosferica: longe = levemente desfocado.
+    if (b.depth < 0.5) {
+      final sigma = (0.5 - b.depth) * 3;
+      body = ImageFiltered(
+        imageFilter: ui.ImageFilter.blur(sigmaX: sigma, sigmaY: sigma),
+        child: body,
+      );
+    }
     return Positioned(
       left: _xFor(b) * w - box / 2,
       top: b.y * h - box / 2 + bob,
       width: box,
       height: box,
-      child: RepaintBoundary(
-        child: Stack(
-          fit: StackFit.expand,
-          children: [
-            DecoratedBox(
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                gradient: RadialGradient(
-                  colors: [
-                    b.glow.withValues(alpha: 0.45),
-                    b.glow.withValues(alpha: 0),
-                  ],
-                  stops: const [0.34, 1],
+      child: Opacity(
+        opacity: 0.3 + 0.55 * b.depth,
+        child: RepaintBoundary(
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              DecoratedBox(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  gradient: RadialGradient(
+                    colors: [
+                      b.glow.withValues(alpha: 0.12 + 0.3 * b.depth),
+                      b.glow.withValues(alpha: 0),
+                    ],
+                    stops: const [0.3, 1],
+                  ),
                 ),
               ),
-            ),
-            Center(
-              child: SizedBox.square(
-                dimension: d,
-                child: CelestialPlanet(body: b.body, seed: b.seed),
-              ),
-            ),
-          ],
+              Center(child: body),
+            ],
+          ),
         ),
       ),
     );
@@ -152,7 +168,7 @@ class _CosmicLayerState extends State<CosmicLayer>
           final w = c.maxWidth;
           final h = c.maxHeight;
           final mobile = w < 600;
-          final scale = mobile ? 0.6 : 1.0;
+          final scale = mobile ? 0.55 : 1.0;
 
           return Stack(
             fit: StackFit.expand,
@@ -192,13 +208,24 @@ class _CosmicLayerState extends State<CosmicLayer>
 }
 
 class _Body {
-  const _Body(this.x, this.y, this.size, this.body, this.step, this.glow);
+  const _Body(
+    this.x,
+    this.y,
+    this.size,
+    this.body,
+    this.step,
+    this.depth,
+    this.glow,
+  );
 
   final double x;
   final double y;
   final double size;
   final CelestialBody body;
   final int step;
+
+  /// 0 = longe (pequeno, apagado, desfocado) .. 1 = perto.
+  final double depth;
 
   /// Cor do halo neon (bloom) atras do corpo.
   final Color glow;

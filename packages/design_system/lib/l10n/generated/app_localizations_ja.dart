@@ -920,7 +920,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get game_factStackBody =>
-      'エンジンに依存しない C# ドメイン、435件のヘッドレステスト、バランス調整のためのフルラン・シミュレーション。';
+      'エンジンに依存しない C# ドメイン、650+件のヘッドレステスト、バランス調整のためのフルラン・シミュレーション。';
 
   @override
   String get game_demoTitle => 'プレイアブルデモ';
@@ -931,7 +931,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return '$version：5つの世界の物語を書き直し、すべてのサブクラスに固有の発動条件を追加し、3種のクリーチャーが受けた攻撃の種類に反応するようになり、コデックスの図鑑に実際に戦うクリーチャーが載るようになりました。';
+    return '$version：敵の技を中断すると、その敵は次のターンまで「隙あり」状態になり、続く攻撃から25%多くダメージを受けるようになりました。';
   }
 
   @override
@@ -955,4 +955,223 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get game_trailerAlt => 'Poço のトレーラー';
+
+  @override
+  String get showcase_openDemo => 'デモを開く';
+
+  @override
+  String get game_ctaExplore => 'ゲームを見る';
+
+  @override
+  String get game_ctaDownload => 'デモをダウンロード';
+
+  @override
+  String game_metaLine(String version) {
+    return 'デモ $version · Windows · Android';
+  }
+
+  @override
+  String get poco_back => 'zeguidev に戻る';
+
+  @override
+  String get poco_status => '開発中 · プレイアブルデモ';
+
+  @override
+  String get poco_ctaDownload => 'ダウンロード';
+
+  @override
+  String get poco_ctaTrailer => 'トレーラーを見る';
+
+  @override
+  String get poco_featuresEyebrow => '特徴';
+
+  @override
+  String get poco_featuresTitle => '井戸の底で待つもの';
+
+  @override
+  String get poco_f1Title => 'パーティを編成';
+
+  @override
+  String get poco_f1Body =>
+      '9人の英雄から3人を選択。2〜4階ではリクルートで新しいクラスが加わり、最大4人で戦う。倒れた英雄は戻らない。';
+
+  @override
+  String get poco_f2Title => 'ターン制バトル(ATB)';
+
+  @override
+  String get poco_f2Body =>
+      '武器スキルは踏み込んで斬り、魔法はその場で詠唱。属性マークは組み合わさって粉砕・融解・過負荷などの反応を起こす。';
+
+  @override
+  String get poco_f3Title => 'ランごとに違うビルド';
+
+  @override
+  String get poco_f3Body =>
+      'レベルアップごとに3つから1つのスキルを選択。同じスキルを選ぶとランクが上がり、ランク3で相方が揃うとクライマックス技に進化する。';
+
+  @override
+  String get poco_f4Title => 'あなたを狩るダンジョン';
+
+  @override
+  String get poco_f4Body =>
+      '見下ろし型の探索。モンスターはあなたを視認して追跡し、一定距離を離れるまで諦めない。触れたらバトル開始。';
+
+  @override
+  String get poco_f5Title => '5つの世界、4つのエンディング';
+
+  @override
+  String get poco_f5Body =>
+      '各世界ボスまで5階層、25のミッションと4つのエンディング。世界ごとに戦闘ステージ、クリーチャー、空気感が異なる。';
+
+  @override
+  String get poco_f6Title => 'オリジナルサウンドトラック';
+
+  @override
+  String get poco_f6Body =>
+      '世界ごとに作曲したダンジョンシンセ(探索・戦闘・ボス)とアーケード風効果音。すべてプロジェクト内で合成。';
+
+  @override
+  String get poco_heroesEyebrow => 'パーティ選択';
+
+  @override
+  String get poco_heroesTitle => '9人の英雄。連れて行けるのは3人。';
+
+  @override
+  String get poco_heroesBody =>
+      '各クラスは固有のスキルツリーを持ち、レベル8で2つのサブクラスから1つを選ぶ。エリートはビルドと噛み合うレリックを落とす。';
+
+  @override
+  String get poco_classWarrior => '戦士';
+
+  @override
+  String get poco_classMage => '魔法使い';
+
+  @override
+  String get poco_classRogue => '盗賊';
+
+  @override
+  String get poco_classCleric => '僧侶';
+
+  @override
+  String get poco_classBloodKnight => 'ブラッドナイト';
+
+  @override
+  String get poco_classNecromancer => 'ネクロマンサー';
+
+  @override
+  String get poco_classDruid => 'ドルイド';
+
+  @override
+  String get poco_classStormHerald => 'ストームヘラルド';
+
+  @override
+  String get poco_classArtificer => 'アーティフィサー';
+
+  @override
+  String get poco_galleryEyebrow => 'ギャラリー';
+
+  @override
+  String get poco_galleryTitle => 'デモのスクリーンショット';
+
+  @override
+  String get poco_shotTitle => 'タイトル画面';
+
+  @override
+  String get poco_shotParty => 'パーティ選択:最初の3人';
+
+  @override
+  String get poco_shotDungeon => '井戸:モンスターが視認して追跡';
+
+  @override
+  String get poco_shotLevelUp => 'レベルアップ:3つから1つ';
+
+  @override
+  String get poco_shotMeteor => 'メテオ:炎のクライマックス';
+
+  @override
+  String get poco_shotBlizzard => 'ブリザード';
+
+  @override
+  String get poco_shotStorm => 'テンペスト:雷のクライマックス';
+
+  @override
+  String get poco_shotBoss => '5階のボス';
+
+  @override
+  String get poco_controlsEyebrow => '操作';
+
+  @override
+  String get poco_controlsTitle => 'キーボード、ゲームパッド、タッチ';
+
+  @override
+  String get poco_ctrlAction => 'アクション';
+
+  @override
+  String get poco_ctrlKeyboard => 'キーボード';
+
+  @override
+  String get poco_ctrlGamepad => 'ゲームパッド';
+
+  @override
+  String get poco_ctrlTouch => 'タッチ(Android)';
+
+  @override
+  String get poco_ctrlMove => '移動 / 選択';
+
+  @override
+  String get poco_ctrlConfirm => '決定';
+
+  @override
+  String get poco_ctrlBack => '戻る';
+
+  @override
+  String get poco_ctrlDash => 'ダッシュ';
+
+  @override
+  String get poco_ctrlParty => 'パーティ画面';
+
+  @override
+  String get poco_ctrlReroll => 'リロール / 除外';
+
+  @override
+  String get poco_infoEyebrow => 'ゲーム情報';
+
+  @override
+  String get poco_infoStatus => 'ステータス';
+
+  @override
+  String get poco_infoStatusValue => '開発中';
+
+  @override
+  String get poco_infoPlatforms => 'プラットフォーム';
+
+  @override
+  String get poco_infoEngine => '使用技術';
+
+  @override
+  String get poco_infoGenre => 'ジャンル';
+
+  @override
+  String get poco_infoGenreValue => 'ローグライク、ターン制RPG';
+
+  @override
+  String get poco_infoVersion => 'デモバージョン';
+
+  @override
+  String get poco_infoTests => 'テスト';
+
+  @override
+  String get poco_infoTestsValue => '650件以上のヘッドレステスト(xUnit)';
+
+  @override
+  String get poco_downloadEyebrow => 'ダウンロード';
+
+  @override
+  String get poco_downloadTitle => 'デモをプレイ';
+
+  @override
+  String get poco_feedback => 'バグ報告やご意見はこちらへ';
+
+  @override
+  String get poco_madeBy => 'José Guilherme Alves による個人プロジェクト。';
 }

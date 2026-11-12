@@ -952,7 +952,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get game_factStackBody =>
-      'Domínio em C# isolado da engine, 435 testes headless e simulação de partidas completas para balanceamento.';
+      'Domínio em C# isolado da engine, 650+ testes headless e simulação de partidas completas para balanceamento.';
 
   @override
   String get game_demoTitle => 'Demo jogável';
@@ -963,7 +963,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Nesta $version: a história dos cinco mundos foi reescrita, cada subclasse ganhou um gatilho próprio, três criaturas reagem ao tipo de golpe que levam e o bestiário do códice agora mostra as criaturas que você enfrenta.';
+    return 'Nesta $version: interromper a técnica de um inimigo agora o deixa Exposto até o próximo turno dele, levando 25% a mais de dano dos golpes seguintes.';
   }
 
   @override
@@ -988,4 +988,224 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get game_trailerAlt => 'Trailer do Poço';
+
+  @override
+  String get showcase_openDemo => 'Abrir demo';
+
+  @override
+  String get game_ctaExplore => 'Conhecer o jogo';
+
+  @override
+  String get game_ctaDownload => 'Baixar demo';
+
+  @override
+  String game_metaLine(String version) {
+    return 'Demo $version · Windows · Android';
+  }
+
+  @override
+  String get poco_back => 'Voltar para zeguidev';
+
+  @override
+  String get poco_status => 'Em desenvolvimento · demo jogável';
+
+  @override
+  String get poco_ctaDownload => 'Baixar demo';
+
+  @override
+  String get poco_ctaTrailer => 'Ver trailer';
+
+  @override
+  String get poco_featuresEyebrow => 'Destaques';
+
+  @override
+  String get poco_featuresTitle => 'O que espera por você no Poço';
+
+  @override
+  String get poco_f1Title => 'Monte o grupo';
+
+  @override
+  String get poco_f1Body =>
+      'Escolha 3 de 9 heróis. Nos andares 2 a 4, um recrutamento oferece uma classe nova — até quatro lutam. Herói caído está morto.';
+
+  @override
+  String get poco_f2Title => 'Combate por turnos (ATB)';
+
+  @override
+  String get poco_f2Body =>
+      'Habilidades de arma avançam e golpeiam; magias são conjuradas no lugar. Marcas elementais se combinam em reações: estilhaçar, derreter, sobrecarga.';
+
+  @override
+  String get poco_f3Title => 'Uma build por partida';
+
+  @override
+  String get poco_f3Body =>
+      'Cada level-up oferece uma habilidade entre três. Repetir uma habilidade aumenta o rank; no rank 3, com a parceira certa, ela evolui para um clímax.';
+
+  @override
+  String get poco_f4Title => 'Uma masmorra que caça você';
+
+  @override
+  String get poco_f4Body =>
+      'Exploração em visão de cima: os monstros enxergam, perseguem e só desistem depois de certa distância. Encostou, é batalha.';
+
+  @override
+  String get poco_f5Title => 'Cinco mundos, quatro finais';
+
+  @override
+  String get poco_f5Body =>
+      'Cinco andares por mundo até o chefe, 25 missões e quatro finais. Cada mundo tem palco de batalha, criaturas e atmosfera próprios.';
+
+  @override
+  String get poco_f6Title => 'Trilha original';
+
+  @override
+  String get poco_f6Body =>
+      'Dungeon synth composto para cada mundo — exploração, batalha, chefe — e efeitos sonoros arcade, tudo sintetizado dentro do projeto.';
+
+  @override
+  String get poco_heroesEyebrow => 'Seleção de grupo';
+
+  @override
+  String get poco_heroesTitle => 'Nove heróis. Leve três.';
+
+  @override
+  String get poco_heroesBody =>
+      'Cada classe tem árvore de habilidades própria e, no nível 8, escolhe entre duas subclasses. Elites deixam relíquias que combinam com a build.';
+
+  @override
+  String get poco_classWarrior => 'Guerreiro';
+
+  @override
+  String get poco_classMage => 'Maga';
+
+  @override
+  String get poco_classRogue => 'Ladino';
+
+  @override
+  String get poco_classCleric => 'Clérigo';
+
+  @override
+  String get poco_classBloodKnight => 'Cavaleiro de Sangue';
+
+  @override
+  String get poco_classNecromancer => 'Necromante';
+
+  @override
+  String get poco_classDruid => 'Druida';
+
+  @override
+  String get poco_classStormHerald => 'Arauto da Tempestade';
+
+  @override
+  String get poco_classArtificer => 'Artífice';
+
+  @override
+  String get poco_galleryEyebrow => 'Galeria';
+
+  @override
+  String get poco_galleryTitle => 'Capturas da demo';
+
+  @override
+  String get poco_shotTitle => 'Tela de título';
+
+  @override
+  String get poco_shotParty => 'Seleção de grupo: três heróis para começar';
+
+  @override
+  String get poco_shotDungeon => 'O Poço: os monstros enxergam e perseguem';
+
+  @override
+  String get poco_shotLevelUp => 'Level-up: uma habilidade entre três';
+
+  @override
+  String get poco_shotMeteor => 'Meteoro: o clímax de fogo';
+
+  @override
+  String get poco_shotBlizzard => 'Nevasca';
+
+  @override
+  String get poco_shotStorm => 'Tempestade: o clímax elétrico';
+
+  @override
+  String get poco_shotBoss => 'O chefe do andar 5';
+
+  @override
+  String get poco_controlsEyebrow => 'Controles';
+
+  @override
+  String get poco_controlsTitle => 'Teclado, gamepad ou toque';
+
+  @override
+  String get poco_ctrlAction => 'Ação';
+
+  @override
+  String get poco_ctrlKeyboard => 'Teclado';
+
+  @override
+  String get poco_ctrlGamepad => 'Gamepad';
+
+  @override
+  String get poco_ctrlTouch => 'Toque (Android)';
+
+  @override
+  String get poco_ctrlMove => 'Mover / navegar';
+
+  @override
+  String get poco_ctrlConfirm => 'Confirmar';
+
+  @override
+  String get poco_ctrlBack => 'Voltar';
+
+  @override
+  String get poco_ctrlDash => 'Correr';
+
+  @override
+  String get poco_ctrlParty => 'Tela do grupo';
+
+  @override
+  String get poco_ctrlReroll => 'Rerrolar / banir oferta';
+
+  @override
+  String get poco_infoEyebrow => 'Ficha técnica';
+
+  @override
+  String get poco_infoStatus => 'Status';
+
+  @override
+  String get poco_infoStatusValue => 'Em desenvolvimento';
+
+  @override
+  String get poco_infoPlatforms => 'Plataformas';
+
+  @override
+  String get poco_infoEngine => 'Feito com';
+
+  @override
+  String get poco_infoGenre => 'Gênero';
+
+  @override
+  String get poco_infoGenreValue => 'Roguelike, RPG por turnos';
+
+  @override
+  String get poco_infoVersion => 'Versão da demo';
+
+  @override
+  String get poco_infoTests => 'Testes';
+
+  @override
+  String get poco_infoTestsValue => '650+ testes headless (xUnit)';
+
+  @override
+  String get poco_downloadEyebrow => 'Download';
+
+  @override
+  String get poco_downloadTitle => 'Jogue a demo';
+
+  @override
+  String get poco_feedback =>
+      'Encontrou um bug ou tem uma sugestão? Escreva para';
+
+  @override
+  String get poco_madeBy => 'Projeto autoral de José Guilherme Alves.';
 }

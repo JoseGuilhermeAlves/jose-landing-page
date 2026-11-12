@@ -1861,7 +1861,7 @@ abstract class AppLocalizations {
   /// No description provided for @game_factStackBody.
   ///
   /// In pt, this message translates to:
-  /// **'Domínio em C# isolado da engine, 435 testes headless e simulação de partidas completas para balanceamento.'**
+  /// **'Domínio em C# isolado da engine, 650+ testes headless e simulação de partidas completas para balanceamento.'**
   String get game_factStackBody;
 
   /// No description provided for @game_demoTitle.
@@ -1879,7 +1879,7 @@ abstract class AppLocalizations {
   /// No description provided for @game_demoUpdate.
   ///
   /// In pt, this message translates to:
-  /// **'Nesta {version}: a história dos cinco mundos foi reescrita, cada subclasse ganhou um gatilho próprio, três criaturas reagem ao tipo de golpe que levam e o bestiário do códice agora mostra as criaturas que você enfrenta.'**
+  /// **'Nesta {version}: interromper a técnica de um inimigo agora o deixa Exposto até o próximo turno dele, levando 25% a mais de dano dos golpes seguintes.'**
   String game_demoUpdate(String version);
 
   /// No description provided for @game_ctaWindows.
@@ -1923,6 +1923,426 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Trailer do Poço'**
   String get game_trailerAlt;
+
+  /// No description provided for @showcase_openDemo.
+  ///
+  /// In pt, this message translates to:
+  /// **'Abrir demo'**
+  String get showcase_openDemo;
+
+  /// No description provided for @game_ctaExplore.
+  ///
+  /// In pt, this message translates to:
+  /// **'Conhecer o jogo'**
+  String get game_ctaExplore;
+
+  /// No description provided for @game_ctaDownload.
+  ///
+  /// In pt, this message translates to:
+  /// **'Baixar demo'**
+  String get game_ctaDownload;
+
+  /// No description provided for @game_metaLine.
+  ///
+  /// In pt, this message translates to:
+  /// **'Demo {version} · Windows · Android'**
+  String game_metaLine(String version);
+
+  /// No description provided for @poco_back.
+  ///
+  /// In pt, this message translates to:
+  /// **'Voltar para zeguidev'**
+  String get poco_back;
+
+  /// No description provided for @poco_status.
+  ///
+  /// In pt, this message translates to:
+  /// **'Em desenvolvimento · demo jogável'**
+  String get poco_status;
+
+  /// No description provided for @poco_ctaDownload.
+  ///
+  /// In pt, this message translates to:
+  /// **'Baixar demo'**
+  String get poco_ctaDownload;
+
+  /// No description provided for @poco_ctaTrailer.
+  ///
+  /// In pt, this message translates to:
+  /// **'Ver trailer'**
+  String get poco_ctaTrailer;
+
+  /// No description provided for @poco_featuresEyebrow.
+  ///
+  /// In pt, this message translates to:
+  /// **'Destaques'**
+  String get poco_featuresEyebrow;
+
+  /// No description provided for @poco_featuresTitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'O que espera por você no Poço'**
+  String get poco_featuresTitle;
+
+  /// No description provided for @poco_f1Title.
+  ///
+  /// In pt, this message translates to:
+  /// **'Monte o grupo'**
+  String get poco_f1Title;
+
+  /// No description provided for @poco_f1Body.
+  ///
+  /// In pt, this message translates to:
+  /// **'Escolha 3 de 9 heróis. Nos andares 2 a 4, um recrutamento oferece uma classe nova — até quatro lutam. Herói caído está morto.'**
+  String get poco_f1Body;
+
+  /// No description provided for @poco_f2Title.
+  ///
+  /// In pt, this message translates to:
+  /// **'Combate por turnos (ATB)'**
+  String get poco_f2Title;
+
+  /// No description provided for @poco_f2Body.
+  ///
+  /// In pt, this message translates to:
+  /// **'Habilidades de arma avançam e golpeiam; magias são conjuradas no lugar. Marcas elementais se combinam em reações: estilhaçar, derreter, sobrecarga.'**
+  String get poco_f2Body;
+
+  /// No description provided for @poco_f3Title.
+  ///
+  /// In pt, this message translates to:
+  /// **'Uma build por partida'**
+  String get poco_f3Title;
+
+  /// No description provided for @poco_f3Body.
+  ///
+  /// In pt, this message translates to:
+  /// **'Cada level-up oferece uma habilidade entre três. Repetir uma habilidade aumenta o rank; no rank 3, com a parceira certa, ela evolui para um clímax.'**
+  String get poco_f3Body;
+
+  /// No description provided for @poco_f4Title.
+  ///
+  /// In pt, this message translates to:
+  /// **'Uma masmorra que caça você'**
+  String get poco_f4Title;
+
+  /// No description provided for @poco_f4Body.
+  ///
+  /// In pt, this message translates to:
+  /// **'Exploração em visão de cima: os monstros enxergam, perseguem e só desistem depois de certa distância. Encostou, é batalha.'**
+  String get poco_f4Body;
+
+  /// No description provided for @poco_f5Title.
+  ///
+  /// In pt, this message translates to:
+  /// **'Cinco mundos, quatro finais'**
+  String get poco_f5Title;
+
+  /// No description provided for @poco_f5Body.
+  ///
+  /// In pt, this message translates to:
+  /// **'Cinco andares por mundo até o chefe, 25 missões e quatro finais. Cada mundo tem palco de batalha, criaturas e atmosfera próprios.'**
+  String get poco_f5Body;
+
+  /// No description provided for @poco_f6Title.
+  ///
+  /// In pt, this message translates to:
+  /// **'Trilha original'**
+  String get poco_f6Title;
+
+  /// No description provided for @poco_f6Body.
+  ///
+  /// In pt, this message translates to:
+  /// **'Dungeon synth composto para cada mundo — exploração, batalha, chefe — e efeitos sonoros arcade, tudo sintetizado dentro do projeto.'**
+  String get poco_f6Body;
+
+  /// No description provided for @poco_heroesEyebrow.
+  ///
+  /// In pt, this message translates to:
+  /// **'Seleção de grupo'**
+  String get poco_heroesEyebrow;
+
+  /// No description provided for @poco_heroesTitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Nove heróis. Leve três.'**
+  String get poco_heroesTitle;
+
+  /// No description provided for @poco_heroesBody.
+  ///
+  /// In pt, this message translates to:
+  /// **'Cada classe tem árvore de habilidades própria e, no nível 8, escolhe entre duas subclasses. Elites deixam relíquias que combinam com a build.'**
+  String get poco_heroesBody;
+
+  /// No description provided for @poco_classWarrior.
+  ///
+  /// In pt, this message translates to:
+  /// **'Guerreiro'**
+  String get poco_classWarrior;
+
+  /// No description provided for @poco_classMage.
+  ///
+  /// In pt, this message translates to:
+  /// **'Maga'**
+  String get poco_classMage;
+
+  /// No description provided for @poco_classRogue.
+  ///
+  /// In pt, this message translates to:
+  /// **'Ladino'**
+  String get poco_classRogue;
+
+  /// No description provided for @poco_classCleric.
+  ///
+  /// In pt, this message translates to:
+  /// **'Clérigo'**
+  String get poco_classCleric;
+
+  /// No description provided for @poco_classBloodKnight.
+  ///
+  /// In pt, this message translates to:
+  /// **'Cavaleiro de Sangue'**
+  String get poco_classBloodKnight;
+
+  /// No description provided for @poco_classNecromancer.
+  ///
+  /// In pt, this message translates to:
+  /// **'Necromante'**
+  String get poco_classNecromancer;
+
+  /// No description provided for @poco_classDruid.
+  ///
+  /// In pt, this message translates to:
+  /// **'Druida'**
+  String get poco_classDruid;
+
+  /// No description provided for @poco_classStormHerald.
+  ///
+  /// In pt, this message translates to:
+  /// **'Arauto da Tempestade'**
+  String get poco_classStormHerald;
+
+  /// No description provided for @poco_classArtificer.
+  ///
+  /// In pt, this message translates to:
+  /// **'Artífice'**
+  String get poco_classArtificer;
+
+  /// No description provided for @poco_galleryEyebrow.
+  ///
+  /// In pt, this message translates to:
+  /// **'Galeria'**
+  String get poco_galleryEyebrow;
+
+  /// No description provided for @poco_galleryTitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Capturas da demo'**
+  String get poco_galleryTitle;
+
+  /// No description provided for @poco_shotTitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Tela de título'**
+  String get poco_shotTitle;
+
+  /// No description provided for @poco_shotParty.
+  ///
+  /// In pt, this message translates to:
+  /// **'Seleção de grupo: três heróis para começar'**
+  String get poco_shotParty;
+
+  /// No description provided for @poco_shotDungeon.
+  ///
+  /// In pt, this message translates to:
+  /// **'O Poço: os monstros enxergam e perseguem'**
+  String get poco_shotDungeon;
+
+  /// No description provided for @poco_shotLevelUp.
+  ///
+  /// In pt, this message translates to:
+  /// **'Level-up: uma habilidade entre três'**
+  String get poco_shotLevelUp;
+
+  /// No description provided for @poco_shotMeteor.
+  ///
+  /// In pt, this message translates to:
+  /// **'Meteoro: o clímax de fogo'**
+  String get poco_shotMeteor;
+
+  /// No description provided for @poco_shotBlizzard.
+  ///
+  /// In pt, this message translates to:
+  /// **'Nevasca'**
+  String get poco_shotBlizzard;
+
+  /// No description provided for @poco_shotStorm.
+  ///
+  /// In pt, this message translates to:
+  /// **'Tempestade: o clímax elétrico'**
+  String get poco_shotStorm;
+
+  /// No description provided for @poco_shotBoss.
+  ///
+  /// In pt, this message translates to:
+  /// **'O chefe do andar 5'**
+  String get poco_shotBoss;
+
+  /// No description provided for @poco_controlsEyebrow.
+  ///
+  /// In pt, this message translates to:
+  /// **'Controles'**
+  String get poco_controlsEyebrow;
+
+  /// No description provided for @poco_controlsTitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Teclado, gamepad ou toque'**
+  String get poco_controlsTitle;
+
+  /// No description provided for @poco_ctrlAction.
+  ///
+  /// In pt, this message translates to:
+  /// **'Ação'**
+  String get poco_ctrlAction;
+
+  /// No description provided for @poco_ctrlKeyboard.
+  ///
+  /// In pt, this message translates to:
+  /// **'Teclado'**
+  String get poco_ctrlKeyboard;
+
+  /// No description provided for @poco_ctrlGamepad.
+  ///
+  /// In pt, this message translates to:
+  /// **'Gamepad'**
+  String get poco_ctrlGamepad;
+
+  /// No description provided for @poco_ctrlTouch.
+  ///
+  /// In pt, this message translates to:
+  /// **'Toque (Android)'**
+  String get poco_ctrlTouch;
+
+  /// No description provided for @poco_ctrlMove.
+  ///
+  /// In pt, this message translates to:
+  /// **'Mover / navegar'**
+  String get poco_ctrlMove;
+
+  /// No description provided for @poco_ctrlConfirm.
+  ///
+  /// In pt, this message translates to:
+  /// **'Confirmar'**
+  String get poco_ctrlConfirm;
+
+  /// No description provided for @poco_ctrlBack.
+  ///
+  /// In pt, this message translates to:
+  /// **'Voltar'**
+  String get poco_ctrlBack;
+
+  /// No description provided for @poco_ctrlDash.
+  ///
+  /// In pt, this message translates to:
+  /// **'Correr'**
+  String get poco_ctrlDash;
+
+  /// No description provided for @poco_ctrlParty.
+  ///
+  /// In pt, this message translates to:
+  /// **'Tela do grupo'**
+  String get poco_ctrlParty;
+
+  /// No description provided for @poco_ctrlReroll.
+  ///
+  /// In pt, this message translates to:
+  /// **'Rerrolar / banir oferta'**
+  String get poco_ctrlReroll;
+
+  /// No description provided for @poco_infoEyebrow.
+  ///
+  /// In pt, this message translates to:
+  /// **'Ficha técnica'**
+  String get poco_infoEyebrow;
+
+  /// No description provided for @poco_infoStatus.
+  ///
+  /// In pt, this message translates to:
+  /// **'Status'**
+  String get poco_infoStatus;
+
+  /// No description provided for @poco_infoStatusValue.
+  ///
+  /// In pt, this message translates to:
+  /// **'Em desenvolvimento'**
+  String get poco_infoStatusValue;
+
+  /// No description provided for @poco_infoPlatforms.
+  ///
+  /// In pt, this message translates to:
+  /// **'Plataformas'**
+  String get poco_infoPlatforms;
+
+  /// No description provided for @poco_infoEngine.
+  ///
+  /// In pt, this message translates to:
+  /// **'Feito com'**
+  String get poco_infoEngine;
+
+  /// No description provided for @poco_infoGenre.
+  ///
+  /// In pt, this message translates to:
+  /// **'Gênero'**
+  String get poco_infoGenre;
+
+  /// No description provided for @poco_infoGenreValue.
+  ///
+  /// In pt, this message translates to:
+  /// **'Roguelike, RPG por turnos'**
+  String get poco_infoGenreValue;
+
+  /// No description provided for @poco_infoVersion.
+  ///
+  /// In pt, this message translates to:
+  /// **'Versão da demo'**
+  String get poco_infoVersion;
+
+  /// No description provided for @poco_infoTests.
+  ///
+  /// In pt, this message translates to:
+  /// **'Testes'**
+  String get poco_infoTests;
+
+  /// No description provided for @poco_infoTestsValue.
+  ///
+  /// In pt, this message translates to:
+  /// **'650+ testes headless (xUnit)'**
+  String get poco_infoTestsValue;
+
+  /// No description provided for @poco_downloadEyebrow.
+  ///
+  /// In pt, this message translates to:
+  /// **'Download'**
+  String get poco_downloadEyebrow;
+
+  /// No description provided for @poco_downloadTitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Jogue a demo'**
+  String get poco_downloadTitle;
+
+  /// No description provided for @poco_feedback.
+  ///
+  /// In pt, this message translates to:
+  /// **'Encontrou um bug ou tem uma sugestão? Escreva para'**
+  String get poco_feedback;
+
+  /// No description provided for @poco_madeBy.
+  ///
+  /// In pt, this message translates to:
+  /// **'Projeto autoral de José Guilherme Alves.'**
+  String get poco_madeBy;
 }
 
 class _AppLocalizationsDelegate

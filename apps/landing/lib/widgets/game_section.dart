@@ -22,8 +22,8 @@ class GameSection extends StatelessWidget {
   final VoidCallback onExplore;
   final VoidCallback onDownload;
 
-  /// Captura atual do jogo (v0.27.0) — o GIF antigo estava desatualizado.
-  static const String _gifAsset = 'assets/images/poco/battle-strike.jpg';
+  /// GIF de gameplay (Meteoro da maga) — a vitrine animada do jogo na home.
+  static const String _gifAsset = 'assets/images/poco_meteor.gif';
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +46,9 @@ class GameSection extends StatelessWidget {
                 Image.asset(
                   _gifAsset,
                   fit: BoxFit.cover,
-                  semanticLabel: l10n.poco_shotBattleStrike,
+                  filterQuality: FilterQuality.none,
+                  gaplessPlayback: true,
+                  semanticLabel: l10n.game_gifAlt,
                 ),
                 Positioned(
                   left: AppSpacing.md,

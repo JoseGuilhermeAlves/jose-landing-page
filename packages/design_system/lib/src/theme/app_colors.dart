@@ -54,7 +54,7 @@ class AppColorScheme {
     surfaceMuted: Color(0xFF0F0819),
     border: Color(0xFF34215C),
     onSurface: Color(0xFFF2E9FF),
-    onSurfaceMuted: Color(0xFF9A86C4),
+    onSurfaceMuted: Color(0xFFB2A3D4),
     success: Color(0xFF39FF14),
     warning: Color(0xFFFFC400),
     error: Color(0xFFFF3355),

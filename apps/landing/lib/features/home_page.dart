@@ -14,14 +14,14 @@ import 'package:landing/widgets/game_section.dart';
 import 'package:landing/widgets/home_bottom_nav.dart';
 import 'package:landing/widgets/home_footer.dart';
 import 'package:landing/widgets/home_nav.dart';
+import 'package:landing/widgets/open_external.dart';
 import 'package:landing/widgets/section_visibility.dart';
-import 'package:landing/widgets/section_wave_divider.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 /// Home da landing — composta pelas feature_* na ordem do scroll.
-/// Plugadas: Hero (§12.6) + Showcase (§12.10) + About (§12.8) +
-/// Engineering (services + tech merged) + Contact (§12.9), separadas
-/// por `SectionWaveDivider` e envoltas em `GlowBackdrop` alternados.
+/// Ordem: Hero -> Showcase (01) -> Sobre (02) -> Engenharia (03) ->
+/// Poço (04, teaser da rota `/poco`) -> Contato (05). Redesign 2026-11:
+/// sem divisorias em onda nem glows por secao — o ritmo vem do espaco em
+/// branco e do cabecalho padrao `NeonSectionHeading`.
 /// Cada secao vai dentro de um `SectionVisibility` que pausa os
 /// tickers quando ela sai do viewport (e quando o sistema pede
 /// animacoes reduzidas).
@@ -140,24 +140,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  /// Abre a [uri] no app externo apropriado (browser, mail client,
-  /// WhatsApp). No web, [LaunchMode.externalApplication] equivale a
-  /// `window.open(_blank)`. Engole falhas silenciosamente — falhar
-  /// um CTA nao deve quebrar o resto da sessao.
-  Future<void> _openExternalUri(Uri uri) async {
-    try {
-      await launchUrl(uri, mode: LaunchMode.externalApplication);
-    } on Object catch (error, stack) {
-      FlutterError.reportError(
-        FlutterErrorDetails(
-          exception: error,
-          stack: stack,
-          library: 'apps/landing',
-          context: ErrorDescription('opening external uri $uri'),
-        ),
-      );
-    }
-  }
+  Future<void> _openExternalUri(Uri uri) => openExternalUri(uri);
 
   @override
   Widget build(BuildContext context) {
@@ -231,17 +214,11 @@ class _HomePageState extends State<HomePage> {
                     child: _SectionSlot(
                       id: 'showcase',
                       horizontalPadding: horizontalPadding,
-                      glowAlignment: Alignment.topLeft,
                       child: ShowcaseSection(
-                        onOpenDemo: (id) => context.push(RoutePaths.demoFor(id)),
+                        onOpenDemo: (id) =>
+                            context.push(RoutePaths.demoFor(id)),
                       ),
                     ),
-                  ),
-                ),
-                const SliverToBoxAdapter(
-                  child: SectionVisibility(
-                    id: 'divider-showcase-about',
-                    child: SectionWaveDivider(),
                   ),
                 ),
                 SliverToBoxAdapter(
@@ -250,15 +227,8 @@ class _HomePageState extends State<HomePage> {
                     child: _SectionSlot(
                       id: 'about',
                       horizontalPadding: horizontalPadding,
-                      glowAlignment: Alignment.centerRight,
                       child: const AboutSection(),
                     ),
-                  ),
-                ),
-                const SliverToBoxAdapter(
-                  child: SectionVisibility(
-                    id: 'divider-about-engineering',
-                    child: SectionWaveDivider(),
                   ),
                 ),
                 SliverToBoxAdapter(
@@ -267,18 +237,11 @@ class _HomePageState extends State<HomePage> {
                     child: _SectionSlot(
                       id: 'engineering',
                       horizontalPadding: horizontalPadding,
-                      glowAlignment: Alignment.bottomRight,
                       child: EngineeringSection(
                         githubUrl: AppConfig.githubProfileUrl,
                         onOpenGithub: (url) => _openExternalUri(Uri.parse(url)),
                       ),
                     ),
-                  ),
-                ),
-                const SliverToBoxAdapter(
-                  child: SectionVisibility(
-                    id: 'divider-engineering-game',
-                    child: SectionWaveDivider(),
                   ),
                 ),
                 SliverToBoxAdapter(
@@ -287,23 +250,13 @@ class _HomePageState extends State<HomePage> {
                     child: _SectionSlot(
                       id: 'game',
                       horizontalPadding: horizontalPadding,
-                      glowAlignment: Alignment.topRight,
                       child: GameSection(
                         demoVersion: AppConfig.pocoDemoVersion,
-                        windowsDemoUrl: AppConfig.pocoDemoWindowsUrl,
-                        androidDemoUrl: AppConfig.pocoDemoAndroidUrl,
-                        trailerUrl: AppConfig.pocoTrailerUrl,
-                        trailerPosterAsset: AppConfig.pocoTrailerPosterAsset,
-                        email: AppConfig.email,
-                        onOpenUri: _openExternalUri,
+                        onExplore: () => context.push(RoutePaths.poco),
+                        onDownload: () =>
+                            context.push('${RoutePaths.poco}?s=download'),
                       ),
                     ),
-                  ),
-                ),
-                const SliverToBoxAdapter(
-                  child: SectionVisibility(
-                    id: 'divider-game-contact',
-                    child: SectionWaveDivider(),
                   ),
                 ),
                 SliverToBoxAdapter(
@@ -312,7 +265,6 @@ class _HomePageState extends State<HomePage> {
                     child: _SectionSlot(
                       id: 'contact',
                       horizontalPadding: horizontalPadding,
-                      glowAlignment: Alignment.centerLeft,
                       child: ContactSection(
                         whatsappNumber: AppConfig.whatsappNumber,
                         email: AppConfig.email,
@@ -403,7 +355,6 @@ class _SectionSlot extends StatelessWidget {
     required this.id,
     required this.child,
     required this.horizontalPadding,
-    required this.glowAlignment,
   });
 
   /// Identificador estavel da secao — repassado ao `SectionVisibility`.
@@ -411,7 +362,6 @@ class _SectionSlot extends StatelessWidget {
 
   final Widget child;
   final double horizontalPadding;
-  final Alignment glowAlignment;
 
   @override
   Widget build(BuildContext context) {
@@ -419,25 +369,17 @@ class _SectionSlot extends StatelessWidget {
   }
 
   Widget _buildSlot(BuildContext context) {
-    return GlowBackdrop(
-      alignment: glowAlignment,
-      intensity: 0.08,
-      radius: 0.45,
-      child: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: horizontalPadding,
-          vertical: context.responsive(
-            mobile: AppSpacing.lg,
-            desktop: AppSpacing.huge,
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: horizontalPadding,
+        vertical: context.responsive<double>(mobile: 56, desktop: 112),
+      ),
+      child: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(
+            maxWidth: HomePage._maxContentWidth,
           ),
-        ),
-        child: Center(
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(
-              maxWidth: HomePage._maxContentWidth,
-            ),
-            child: child,
-          ),
+          child: child,
         ),
       ),
     );

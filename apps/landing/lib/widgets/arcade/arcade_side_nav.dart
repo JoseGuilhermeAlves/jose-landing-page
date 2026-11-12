@@ -9,9 +9,9 @@ import 'package:landing/widgets/home_nav.dart';
 /// reserva esse espaco a esquerda.
 const double kArcadeSideNavWidth = 232;
 
-/// Menu lateral "STAGE SELECT" — a navegacao da landing Arcade como um
+/// Menu lateral "STAGE SELECT" â€” a navegacao da landing Arcade como um
 /// menu de fliperama. Coluna fixa a esquerda (desktop) com:
-/// wordmark ZeguiDev em pixel no topo, lista de "stages" (secoes) com cursor ▸
+/// wordmark ZeguiDev em pixel no topo, lista de "stages" (secoes) com cursor â–¸
 /// piscante na ativa + glow neon, e sociais no rodape.
 ///
 /// O indicador de secao ativa vem do scroll-spy da home
@@ -27,7 +27,7 @@ class ArcadeSideNav extends StatefulWidget {
     super.key,
   });
 
-  /// Mesmas ancoras do scroll-spy — ordem define a numeracao dos stages.
+  /// Mesmas ancoras do scroll-spy â€” ordem define a numeracao dos stages.
   final List<HomeNavAnchor> anchors;
 
   /// Indice da secao ativa (-1 = topo/hero). Alimentado pelo scroll-spy.
@@ -42,49 +42,16 @@ class ArcadeSideNav extends StatefulWidget {
   State<ArcadeSideNav> createState() => _ArcadeSideNavState();
 }
 
-class _ArcadeSideNavState extends State<ArcadeSideNav>
-    with SingleTickerProviderStateMixin {
-  late final AnimationController _blink;
+class _ArcadeSideNavState extends State<ArcadeSideNav> {
   int _hovered = -1;
-
-  @override
-  void initState() {
-    super.initState();
-    _blink = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 600),
-    )..repeat(reverse: true);
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (MediaQuery.disableAnimationsOf(context)) {
-      _blink
-        ..stop()
-        ..value = 1;
-    } else if (!_blink.isAnimating) {
-      _blink.repeat(reverse: true);
-    }
-  }
-
-  @override
-  void dispose() {
-    _blink.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
-    final textTheme = Theme.of(context).textTheme;
-
     return Container(
       width: kArcadeSideNavWidth,
       decoration: BoxDecoration(
-        border: Border(
-          right: BorderSide(color: colors.primary.withValues(alpha: 0.25)),
-        ),
+        border: Border(right: BorderSide(color: colors.border)),
       ),
       child: SafeArea(
         child: Padding(
@@ -126,14 +93,7 @@ class _ArcadeSideNavState extends State<ArcadeSideNav>
                 ),
               ),
               const SizedBox(height: AppSpacing.xl),
-              Text(
-                'STAGE SELECT',
-                style: textTheme.labelSmall?.copyWith(
-                  color: colors.onSurfaceMuted,
-                  letterSpacing: 2,
-                ),
-              ),
-              const SizedBox(height: AppSpacing.lg),
+              const SizedBox(height: AppSpacing.md),
 
               ValueListenableBuilder<int>(
                 valueListenable: widget.activeIndex,
@@ -147,7 +107,6 @@ class _ArcadeSideNavState extends State<ArcadeSideNav>
                           anchor: widget.anchors[i],
                           active: i == active,
                           hovered: i == _hovered,
-                          blink: _blink,
                           onEnter: () => setState(() => _hovered = i),
                           onExit: () => setState(() => _hovered = -1),
                         ),
@@ -193,7 +152,7 @@ class _ArcadeSideNavState extends State<ArcadeSideNav>
   }
 }
 
-/// Uma linha de "stage" no menu: numero + label, com cursor ▸ piscante e
+/// Uma linha de "stage" no menu: numero + label, com cursor â–¸ piscante e
 /// glow neon quando ativa ou em hover.
 class _StageRow extends StatelessWidget {
   const _StageRow({
@@ -201,7 +160,6 @@ class _StageRow extends StatelessWidget {
     required this.anchor,
     required this.active,
     required this.hovered,
-    required this.blink,
     required this.onEnter,
     required this.onExit,
   });
@@ -210,57 +168,70 @@ class _StageRow extends StatelessWidget {
   final HomeNavAnchor anchor;
   final bool active;
   final bool hovered;
-  final Animation<double> blink;
   final VoidCallback onEnter;
   final VoidCallback onExit;
 
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
-    final lit = active || hovered;
+    final tt = Theme.of(context).textTheme;
     final color = active
-        ? colors.accent
-        : (hovered ? colors.primary : colors.onSurfaceMuted);
+        ? colors.onSurface
+        : (hovered ? colors.onSurface : colors.onSurfaceMuted);
 
-    return MouseRegion(
-      cursor: SystemMouseCursors.click,
-      onEnter: (_) => onEnter(),
-      onExit: (_) => onExit(),
-      child: GestureDetector(
-        onTap: anchor.onTap,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
-          child: Row(
-            children: [
-              SizedBox(
-                width: 18,
-                child: lit
-                    ? FadeTransition(
-                        opacity: active
-                            ? blink
-                            : const AlwaysStoppedAnimation<double>(1),
-                        child: PixelText(
-                          '~',
-                          color: color,
-                          glowColor: color,
-                          pixelSize: 3,
-                        ),
-                      )
-                    : null,
-              ),
-              Flexible(
-                child: FittedBox(
-                  fit: BoxFit.scaleDown,
-                  alignment: Alignment.centerLeft,
-                  child: PixelText(
-                    anchor.label,
-                    color: color,
-                    glowColor: lit ? color : null,
-                    pixelSize: 3,
-                  ),
+    return Semantics(
+      button: true,
+      selected: active,
+      label: anchor.label,
+      excludeSemantics: true,
+      child: MouseRegion(
+        cursor: SystemMouseCursors.click,
+        onEnter: (_) => onEnter(),
+        onExit: (_) => onExit(),
+        child: GestureDetector(
+          onTap: anchor.onTap,
+          behavior: HitTestBehavior.opaque,
+          child: AnimatedContainer(
+            duration: AppDuration.fast,
+            padding: const EdgeInsets.symmetric(
+              vertical: AppSpacing.sm + 2,
+              horizontal: AppSpacing.md,
+            ),
+            decoration: BoxDecoration(
+              color: active
+                  ? colors.primary.withValues(alpha: 0.08)
+                  : Colors.transparent,
+              border: Border(
+                left: BorderSide(
+                  color: active ? colors.primary : Colors.transparent,
+                  width: 2,
                 ),
               ),
-            ],
+            ),
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 26,
+                  child: PixelText(
+                    (index + 1).toString().padLeft(2, '0'),
+                    color: active
+                        ? colors.primary
+                        : colors.onSurfaceMuted.withValues(alpha: 0.55),
+                    pixelSize: 1.5,
+                  ),
+                ),
+                Flexible(
+                  child: Text(
+                    anchor.label,
+                    overflow: TextOverflow.ellipsis,
+                    style: tt.titleSmall?.copyWith(
+                      color: color,
+                      fontWeight: active ? FontWeight.w600 : FontWeight.w500,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -268,7 +239,6 @@ class _StageRow extends StatelessWidget {
   }
 }
 
-/// Botao social compacto em pixel ("GH"/"IN") com borda neon.
 class _SocialDot extends StatefulWidget {
   const _SocialDot({required this.label, required this.onTap});
 
@@ -296,12 +266,18 @@ class _SocialDotState extends State<_SocialDot> {
         onExit: (_) => setState(() => _hovered = false),
         child: GestureDetector(
           onTap: widget.onTap,
-          child: Container(
-            padding: const EdgeInsets.all(AppSpacing.sm),
-            decoration: BoxDecoration(
-              border: Border.all(color: color.withValues(alpha: 0.5)),
-            ),
-            child: PixelText(widget.label, color: color, pixelSize: 3),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                widget.label,
+                style: Theme.of(
+                  context,
+                ).textTheme.labelLarge?.copyWith(color: color),
+              ),
+              const SizedBox(width: AppSpacing.xs),
+              Icon(Icons.north_east_rounded, size: 14, color: color),
+            ],
           ),
         ),
       ),

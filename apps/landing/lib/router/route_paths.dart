@@ -5,6 +5,9 @@ abstract final class RoutePaths {
 
   static const String notFoundFallback = '/404';
 
+  /// Landing gamificada do Poço. `?s=download` abre direto no download.
+  static const String poco = '/poco';
+
   /// Demo de um mock do showcase (`/demo/delivery`, `/demo/finance`,
   /// `/demo/realestate`). Como e uma rota go_router, a abertura entra no
   /// historico do navegador — o botao voltar fecha o mock em vez de sair.

@@ -26,4 +26,6 @@ export 'src/widgets/brand_mark.dart';
 export 'src/widgets/eyebrow_badge.dart';
 export 'src/widgets/glow_backdrop.dart';
 export 'src/widgets/gradient_text.dart';
+export 'src/widgets/neon_button.dart';
+export 'src/widgets/neon_section_heading.dart';
 export 'src/widgets/section_header.dart';

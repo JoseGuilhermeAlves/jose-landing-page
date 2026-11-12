@@ -1,28 +1,16 @@
 import 'package:design_system/design_system.dart';
 import 'package:feature_hero/src/presentation/black_hole_portrait.dart';
-import 'package:feature_hero/src/presentation/hero_cosmos.dart';
+import 'package:feature_hero/src/presentation/horizon_floor.dart';
 import 'package:flutter/material.dart';
 
-/// Halo preto estilo box-shadow aplicado a TODO o texto do hero — varias
-/// sombras pretas empilhadas criam contraste forte contra o boss em cor
-/// cheia atras. Text usa esta lista em `shadows`; PixelText usa o
-/// equivalente via `glowColor: Colors.black` + `glowPasses`.
-const List<Shadow> _kHeroTextHalo = [
-  // Cor default de Shadow ja e preto (0xFF000000); so o blur varia.
-  Shadow(blurRadius: 4),
-  Shadow(blurRadius: 8),
-  Shadow(blurRadius: 8),
-  Shadow(blurRadius: 16),
-];
-
-/// Hero da landing Arcade — o "title screen" do fliperama. Nome em fonte
-/// bitmap [PixelText] com glow magenta sobre o backdrop CRT (grid Outrun
-/// + starfield, desenhado pelo shell). Headline e pitch em fonte legivel;
-/// dois botoes arcade chunky e um par de stats estilo "high score".
+/// Hero da landing — "title screen" enxuto. Duas colunas no desktop:
+/// texto a esquerda (eyebrow, nome em fonte pixel, headline, escopo, CTAs,
+/// dois numeros) e o retrato no buraco negro neon a direita. O chao Outrun
+/// fica confinado ao rodape do hero ([HorizonFloor]).
 ///
-/// Sem contagem de apps — o que importa e o que sei fazer, nao quantos.
-/// Os CTAs rolam dentro da pagina (funil interno); WhatsApp/email moram
-/// na secao Contact.
+/// Redesign 2026-11: sairam os planetas, galaxia e nebulosas (`HeroCosmos`)
+/// e o halo preto do texto — com o fundo calmo, o texto le sozinho. A fonte
+/// pixel ficou so no nome (assinatura); o resto e sans.
 class ArcadeHero extends StatelessWidget {
   const ArcadeHero({
     required this.minHeight,
@@ -31,9 +19,8 @@ class ArcadeHero extends StatelessWidget {
     super.key,
   });
 
-  /// Altura MINIMA do hero (geralmente uma viewport). Cresce alem disso se o
-  /// conteudo nao couber (telas estreitas) — sem scroll interno, o scroll da
-  /// pagina (CustomScrollView do shell) absorve. Evita 2 scrolls aninhados.
+  /// Altura MINIMA do hero (geralmente uma viewport). Cresce se o conteudo
+  /// nao couber — sem scroll interno.
   final double minHeight;
 
   final VoidCallback? onContactPressed;
@@ -42,296 +29,235 @@ class ArcadeHero extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
-    final textTheme = Theme.of(context).textTheme;
     final isMobile = context.isMobile;
+    final width = MediaQuery.sizeOf(context).width;
 
-    final namePixel = (isMobile ? 4 : 7).toDouble();
+    final portrait = BlackHolePortrait(
+      diskHot: colors.primary,
+      diskCool: colors.accent,
+      size: isMobile
+          ? (width * 0.72).clamp(240.0, 340.0)
+          : (width * 0.36).clamp(380.0, 560.0),
+      diskScale: 0.75,
+    );
+
+    final copy = _HeroCopy(
+      onContactPressed: onContactPressed,
+      onSeeProjectsPressed: onSeeProjectsPressed,
+    );
 
     return ConstrainedBox(
       constraints: BoxConstraints(minHeight: minHeight),
       child: Stack(
-        alignment: Alignment.center,
         children: [
-          const Positioned.fill(child: HeroCosmos()),
-          _heroContent(context, colors, textTheme, isMobile, namePixel),
-          // Web: portrait ancorado no canto superior ESQUERDO (espelha o
-          // tratamento mobile). Limite esquerdo = linha do nav lateral, que e
-          // a borda x=0 do hero (o scroll e padado por kArcadeSideNavWidth).
-          if (!isMobile)
-            Positioned(
-              top: -88,
-              left: AppSpacing.xl,
-              child: IgnorePointer(
-                child: BlackHolePortrait(
-                  diskHot: colors.primary,
-                  diskCool: colors.accent,
-                  size: (MediaQuery.sizeOf(context).width * 0.34).clamp(
-                    360.0,
-                    520.0,
-                  ),
-                  // Disco compacto (rosto grande, asas curtas) pra caber no
-                  // canto sem invadir o texto.
-                  diskScale: 0.6,
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 0,
+            height: isMobile ? 120 : 180,
+            child: HorizonFloor(near: colors.primary, far: colors.accent),
+          ),
+          ConstrainedBox(
+            constraints: BoxConstraints(minHeight: minHeight),
+            child: Padding(
+              padding: EdgeInsets.fromLTRB(
+                context.responsive(
+                  mobile: AppSpacing.lg,
+                  desktop: AppSpacing.huge,
+                ),
+                context.responsive(mobile: 96, desktop: AppSpacing.huge),
+                context.responsive(
+                  mobile: AppSpacing.lg,
+                  desktop: AppSpacing.huge,
+                ),
+                isMobile ? 140 : 200,
+              ),
+              child: Center(
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 1180),
+                  child: isMobile
+                      ? Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Center(child: IgnorePointer(child: portrait)),
+                            const SizedBox(height: AppSpacing.lg),
+                            copy,
+                          ],
+                        )
+                      : Row(
+                          children: [
+                            Expanded(flex: 6, child: copy),
+                            const SizedBox(width: AppSpacing.xl),
+                            Expanded(
+                              flex: 5,
+                              child: Center(
+                                child: IgnorePointer(child: portrait),
+                              ),
+                            ),
+                          ],
+                        ),
                 ),
               ),
             ),
+          ),
         ],
       ),
     );
   }
-
-  Widget _heroContent(
-    BuildContext context,
-    AppColorScheme colors,
-    TextTheme textTheme,
-    bool isMobile,
-    double namePixel,
-  ) {
-    return Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: context.responsive(mobile: AppSpacing.lg, desktop: 0),
-      ),
-      child: Center(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 1100),
-          child: Flex(
-            direction: isMobile ? Axis.vertical : Axis.horizontal,
-            mainAxisSize: isMobile ? MainAxisSize.min : MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: isMobile
-                ? CrossAxisAlignment.start
-                : CrossAxisAlignment.center,
-            children: [
-              if (isMobile) ...[
-                Transform.translate(
-                  offset: const Offset(-32, -36),
-                  child: Align(
-                    alignment: Alignment.topLeft,
-                    child: BlackHolePortrait(
-                      diskHot: colors.primary,
-                      diskCool: colors.accent,
-                      size: (MediaQuery.sizeOf(context).width * 0.86).clamp(
-                        300.0,
-                        440.0,
-                      ),
-                      // Disco compacto no mobile: rosto grande, asas curtas —
-                      // cabe no canto superior sem tampar a cara do boss.
-                      diskScale: 0.6,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.md),
-              ],
-              Flexible(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      context.l10n.hero_eyebrow.toUpperCase(),
-                      style: textTheme.labelMedium?.copyWith(
-                        color: colors.accent,
-                        letterSpacing: 3,
-                        fontWeight: FontWeight.w700,
-                        shadows: _kHeroTextHalo,
-                      ),
-                    ),
-                    const SizedBox(height: AppSpacing.lg),
-
-                    Semantics(
-                      header: true,
-                      label: 'Jose Guilherme Alves',
-                      child: PixelText(
-                        'JOSE\nGUILHERME ALVES',
-                        color: colors.primary,
-                        glowColor: Colors.black,
-                        glowBlur: 12,
-                        glowPasses: 6,
-                        pixelSize: namePixel,
-                        lineSpacing: 3,
-                      ),
-                    ),
-                    const SizedBox(height: AppSpacing.xl),
-
-                    Text(
-                      '${context.l10n.hero_headline1} '
-                      '${context.l10n.hero_headline2}',
-                      style:
-                          (isMobile
-                                  ? textTheme.headlineSmall
-                                  : textTheme.headlineMedium)
-                              ?.copyWith(
-                                color: colors.onSurface,
-                                height: 1.2,
-                                fontWeight: FontWeight.w600,
-                                shadows: _kHeroTextHalo,
-                              ),
-                    ),
-                    const SizedBox(height: AppSpacing.md),
-                    Text(
-                      context.l10n.hero_scopeLine,
-                      style: textTheme.bodyLarge?.copyWith(
-                        color: colors.onSurfaceMuted,
-                        height: 1.5,
-                        shadows: _kHeroTextHalo,
-                      ),
-                    ),
-                    const SizedBox(height: AppSpacing.xxl),
-
-                    Wrap(
-                      spacing: AppSpacing.md,
-                      runSpacing: AppSpacing.md,
-                      children: [
-                        _ArcadeButton(
-                          label: context.l10n.hero_ctaContact,
-                          color: colors.primary,
-                          filled: true,
-                          onPressed: onContactPressed,
-                        ),
-                        _ArcadeButton(
-                          label: context.l10n.hero_ctaProjects,
-                          color: colors.accent,
-                          onPressed: onSeeProjectsPressed,
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: AppSpacing.xxl),
-
-                    Wrap(
-                      spacing: AppSpacing.huge,
-                      runSpacing: AppSpacing.lg,
-                      children: [
-                        _ArcadeStat(
-                          value: context.l10n.hero_trustYearsValue,
-                          label: context.l10n.hero_trustYearsLabel,
-                          color: colors.primary,
-                        ),
-                        _ArcadeStat(
-                          value: context.l10n.hero_trustCanvasValue,
-                          label: context.l10n.hero_trustCanvasLabel,
-                          color: colors.accent,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
 }
 
-/// Botao retangular estilo fliperama: cantos retos, borda neon de 2px,
-/// preenchido (CTA primario) ou contornado. Hover acende o glow e inverte.
-class _ArcadeButton extends StatefulWidget {
-  const _ArcadeButton({
-    required this.label,
-    required this.color,
-    this.filled = false,
-    this.onPressed,
-  });
+class _HeroCopy extends StatelessWidget {
+  const _HeroCopy({this.onContactPressed, this.onSeeProjectsPressed});
 
-  final String label;
-  final Color color;
-  final bool filled;
-  final VoidCallback? onPressed;
-
-  @override
-  State<_ArcadeButton> createState() => _ArcadeButtonState();
-}
-
-class _ArcadeButtonState extends State<_ArcadeButton> {
-  bool _hovered = false;
+  final VoidCallback? onContactPressed;
+  final VoidCallback? onSeeProjectsPressed;
 
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
-    final lit = _hovered || widget.filled;
-    final bg = lit ? widget.color : Colors.transparent;
-    final fg = lit ? colors.background : widget.color;
-
-    return Semantics(
-      button: true,
-      label: widget.label,
-      child: MouseRegion(
-        cursor: SystemMouseCursors.click,
-        onEnter: (_) => setState(() => _hovered = true),
-        onExit: (_) => setState(() => _hovered = false),
-        child: GestureDetector(
-          onTap: widget.onPressed,
-          child: AnimatedContainer(
-            duration: AppDuration.fast,
-            curve: Curves.easeOut,
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.xl,
-              vertical: AppSpacing.md,
-            ),
-            decoration: BoxDecoration(
-              color: bg,
-              border: Border.all(color: widget.color, width: 2),
-              boxShadow: _hovered
-                  ? [
-                      BoxShadow(
-                        color: widget.color.withValues(alpha: 0.6),
-                        blurRadius: 16,
-                      ),
-                    ]
-                  : null,
-            ),
-            child: PixelText(widget.label, color: fg, pixelSize: 3),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-/// Stat estilo "high score": numero grande em pixel + label miudo.
-class _ArcadeStat extends StatelessWidget {
-  const _ArcadeStat({
-    required this.value,
-    required this.label,
-    required this.color,
-  });
-
-  final String value;
-  final String label;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = context.colors;
-    final textTheme = Theme.of(context).textTheme;
+    final tt = Theme.of(context).textTheme;
+    final l10n = context.l10n;
+    final isMobile = context.isMobile;
 
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        PixelText(
-          value,
-          color: color,
-          glowColor: Colors.black,
-          glowBlur: 8,
-          glowPasses: 5,
-          pixelSize: 5,
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(width: 8, height: 8, color: colors.accent),
+            const SizedBox(width: AppSpacing.sm),
+            Flexible(
+              child: Text(
+                l10n.hero_eyebrow.toUpperCase(),
+                style: tt.labelMedium?.copyWith(
+                  color: colors.accent,
+                  letterSpacing: 2.4,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ),
+          ],
         ),
-        const SizedBox(height: AppSpacing.sm),
-        ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 180),
-          child: Text(
-            label.toUpperCase(),
-            style: textTheme.labelSmall?.copyWith(
-              color: colors.onSurfaceMuted,
-              letterSpacing: 1.5,
-              height: 1.4,
-              shadows: _kHeroTextHalo,
+        const SizedBox(height: AppSpacing.lg),
+        Semantics(
+          header: true,
+          label: 'Jose Guilherme Alves',
+          child: ExcludeSemantics(
+            child: PixelText(
+              'JOSE\nGUILHERME ALVES',
+              color: colors.primary,
+              glowColor: colors.primary,
+              glowBlur: 14,
+              pixelSize: isMobile ? 3 : 6,
+              lineSpacing: 3,
             ),
           ),
         ),
+        const SizedBox(height: AppSpacing.xl),
+        Text(
+          '${l10n.hero_headline1} ${l10n.hero_headline2}',
+          style: (isMobile ? tt.headlineSmall : tt.headlineMedium)?.copyWith(
+            color: colors.onSurface,
+            height: 1.3,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        const SizedBox(height: AppSpacing.sm),
+        Text(
+          l10n.hero_scopeLine,
+          style: tt.bodyLarge?.copyWith(
+            color: colors.onSurfaceMuted,
+            height: 1.55,
+          ),
+        ),
+        const SizedBox(height: AppSpacing.xl),
+        Wrap(
+          spacing: AppSpacing.md,
+          runSpacing: AppSpacing.md,
+          children: [
+            NeonButton(
+              label: l10n.hero_ctaContact,
+              filled: true,
+              onPressed: onContactPressed,
+            ),
+            NeonButton(
+              label: l10n.hero_ctaProjects,
+              color: colors.accent,
+              icon: Icons.arrow_downward_rounded,
+              onPressed: onSeeProjectsPressed,
+            ),
+          ],
+        ),
+        const SizedBox(height: AppSpacing.xl),
+        Wrap(
+          spacing: AppSpacing.xl,
+          runSpacing: AppSpacing.md,
+          children: [
+            _Stat(
+              value: l10n.hero_trustYearsValue,
+              label: l10n.hero_trustYearsLabel,
+            ),
+            _Stat(
+              value: l10n.hero_trustCanvasValue,
+              label: l10n.hero_trustCanvasLabel,
+            ),
+          ],
+        ),
       ],
+    );
+  }
+}
+
+/// Numero + rotulo, separados por um filete vertical a esquerda.
+class _Stat extends StatelessWidget {
+  const _Stat({required this.value, required this.label});
+
+  final String value;
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+    final tt = Theme.of(context).textTheme;
+
+    return Container(
+      padding: const EdgeInsets.only(left: AppSpacing.md),
+      decoration: BoxDecoration(
+        border: Border(
+          left: BorderSide(
+            color: colors.primary.withValues(alpha: 0.6),
+            width: 2,
+          ),
+        ),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            value,
+            style: tt.headlineMedium?.copyWith(
+              color: colors.onSurface,
+              fontWeight: FontWeight.w700,
+              height: 1.1,
+            ),
+          ),
+          const SizedBox(height: AppSpacing.xs),
+          ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 170),
+            child: Text(
+              label,
+              style: tt.bodySmall?.copyWith(
+                color: colors.onSurfaceMuted,
+                height: 1.4,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

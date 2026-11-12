@@ -1,4 +1,4 @@
-import 'dart:ui';
+﻿import 'dart:ui';
 
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
@@ -9,10 +9,10 @@ import 'package:landing/widgets/home_nav.dart';
 /// fique atras da barra.
 const double kHomeBottomNavHeight = 64;
 
-/// Barra de navegacao fixa no rodape — o "stage select" da visao mobile,
+/// Barra de navegacao fixa no rodape â€” o "stage select" da visao mobile,
 /// no mesmo vocabulario arcade do `ArcadeSideNav` do desktop: vidro
 /// translucido (BackdropFilter) com hairline neon no topo, um item por
-/// ancora com label em fonte pixel ([PixelText]) e indicador chunky neon
+/// ancora com label em sans legivel e indicador chunky neon
 /// (cantos retos + glow) que acende na secao ativa derivada do scroll
 /// (scroll-spy). Ativo em ciano, repouso em muted.
 ///
@@ -76,7 +76,7 @@ class _BottomNavItem extends StatelessWidget {
     required this.active,
   });
 
-  /// Posicao da ancora — vira o numero do "stage" (01, 02...).
+  /// Posicao da ancora â€” vira o numero do "stage" (01, 02...).
   final int index;
   final HomeNavAnchor anchor;
   final bool active;
@@ -138,20 +138,15 @@ class _BottomNavItem extends StatelessWidget {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      if (active) ...[
-                        PixelText(
-                          '~',
-                          color: colors.accent,
-                          glowColor: colors.accent,
-                          pixelSize: 2,
-                        ),
-                        const SizedBox(width: 3),
-                      ],
-                      PixelText(
+                      Text(
                         anchor.label,
-                        color: tint,
-                        glowColor: active ? colors.accent : null,
-                        pixelSize: 2,
+                        style: Theme.of(context).textTheme.labelMedium
+                            ?.copyWith(
+                              color: tint,
+                              fontWeight: active
+                                  ? FontWeight.w700
+                                  : FontWeight.w500,
+                            ),
                       ),
                     ],
                   ),

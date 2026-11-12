@@ -1,7 +1,6 @@
 import 'package:design_system/design_system.dart';
 import 'package:feature_hero/feature_hero.dart';
 import 'package:feature_hero/src/presentation/black_hole_portrait.dart';
-import 'package:feature_hero/src/presentation/hero_cosmos.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -22,7 +21,7 @@ void main() {
   }
 
   group('ArcadeHero', () {
-    testWidgets('compoe portrait e cosmos do hero', (tester) async {
+    testWidgets('compoe portrait e chao do hero', (tester) async {
       await tester.binding.setSurfaceSize(const Size(1600, 1000));
       addTearDown(() => tester.binding.setSurfaceSize(null));
 
@@ -30,7 +29,7 @@ void main() {
       await tester.pump(const Duration(milliseconds: 16));
 
       expect(find.byType(BlackHolePortrait), findsOneWidget);
-      expect(find.byType(HeroCosmos), findsOneWidget);
+      expect(find.byType(HorizonFloor), findsOneWidget);
 
       await tester.pumpWidget(const SizedBox());
     });

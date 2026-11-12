@@ -28,10 +28,15 @@ class ShowcaseSection extends StatelessWidget {
     'realestate': 'SOLAR',
   };
 
+  /// Cor do friso neon de cada gabinete — puxada da identidade do mock.
+  static const _neon = {
+    'finance': Color(0xFF2BF5C4),
+    'delivery': Color(0xFFFF2E97),
+    'realestate': Color(0xFFFFB547),
+  };
+
   @override
   Widget build(BuildContext context) {
-    final colors = context.colors;
-    final tt = Theme.of(context).textTheme;
     final l10n = context.l10n;
     final templates = ShowcaseCatalog.all(l10n);
 
@@ -40,6 +45,10 @@ class ShowcaseSection extends StatelessWidget {
         ArcadeCabinet(
           key: Key('showcase-cabinet-${t.id}'),
           label: _brand[t.id] ?? t.label.toUpperCase(),
+          niche: t.label,
+          description: t.description,
+          actionLabel: l10n.showcase_openDemo,
+          neon: _neon[t.id],
           enabled: t.hasDemo,
           preview: _previewFor(t.id),
           onTap: () => _openDemo(context, t),
@@ -49,33 +58,12 @@ class ShowcaseSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        PixelText(l10n.showcase_eyebrow, color: colors.accent, pixelSize: 3),
-        const SizedBox(height: AppSpacing.md),
-        Semantics(
-          header: true,
-          child: Text.rich(
-            TextSpan(
-              style: tt.headlineLarge?.copyWith(color: colors.onSurface),
-              children: [
-                TextSpan(text: '${l10n.showcase_title} '),
-                TextSpan(
-                  text: l10n.showcase_titleAccent,
-                  style: TextStyle(color: colors.primary),
-                ),
-              ],
-            ),
-          ),
-        ),
-        const SizedBox(height: AppSpacing.md),
-        ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 640),
-          child: Text(
-            l10n.showcase_subtitle,
-            style: tt.bodyLarge?.copyWith(
-              color: colors.onSurfaceMuted,
-              height: 1.55,
-            ),
-          ),
+        NeonSectionHeading(
+          index: '01',
+          eyebrow: l10n.showcase_eyebrow,
+          title: l10n.showcase_title,
+          titleAccent: l10n.showcase_titleAccent,
+          subtitle: l10n.showcase_subtitle,
         ),
         SizedBox(
           height: context.responsive(
@@ -86,12 +74,21 @@ class ShowcaseSection extends StatelessWidget {
         if (context.isMobile)
           _ShowcaseCarousel(cabinets: cabinets)
         else
-          Wrap(
-            spacing: AppSpacing.xl,
-            runSpacing: AppSpacing.xl,
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              for (final cabinet in cabinets)
-                SizedBox(width: 300, child: cabinet),
+              for (var i = 0; i < cabinets.length; i++) ...[
+                if (i > 0) const SizedBox(width: AppSpacing.xl),
+                Expanded(
+                  child: Align(
+                    alignment: Alignment.topCenter,
+                    child: ConstrainedBox(
+                      constraints: const BoxConstraints(maxWidth: 300),
+                      child: cabinets[i],
+                    ),
+                  ),
+                ),
+              ],
             ],
           ),
       ],
@@ -128,7 +125,9 @@ Widget? showcaseDemoById(String id) => _buildDemo(id, preview: false);
 Widget? _buildDemo(String id, {required bool preview}) {
   return switch (id) {
     'delivery' => DeliveryDemo(
-      ticker: preview ? null : Stream<void>.periodic(const Duration(seconds: 2)),
+      ticker: preview
+          ? null
+          : Stream<void>.periodic(const Duration(seconds: 2)),
     ),
     'realestate' => const RealEstateDemo(),
     'finance' => const FinanceDemo(),
@@ -152,7 +151,9 @@ class _ShowcaseCarousel extends StatefulWidget {
 class _ShowcaseCarouselState extends State<_ShowcaseCarousel> {
   static const double _viewportFraction = 0.86;
 
-  static const double _cabinetChrome = 112;
+  /// Altura fixa do gabinete fora da tela (marquee + deck + porta) mais a
+  /// legenda abaixo dele.
+  static const double _cabinetChrome = 162 + 170;
 
   late final PageController _controller = PageController(
     viewportFraction: _viewportFraction,
@@ -181,7 +182,7 @@ class _ShowcaseCarouselState extends State<_ShowcaseCarousel> {
     return LayoutBuilder(
       builder: (context, constraints) {
         final pageWidth = constraints.maxWidth * _viewportFraction;
-        final screenWidth = pageWidth - AppSpacing.sm * 2 - AppSpacing.md;
+        final screenWidth = pageWidth - AppSpacing.sm * 2 - 48;
         final cabinetHeight = _cabinetChrome + screenWidth * 4 / 3;
 
         return Column(

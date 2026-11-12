@@ -84,6 +84,7 @@ class TechBentoGrid extends StatelessWidget {
                   Expanded(
                     flex: _desktopRows[rowIndex][i].span,
                     child: _CategoryCard(
+                      span: _desktopRows[rowIndex][i].span,
                       category: _desktopRows[rowIndex][i].category,
                       items:
                           byCategory[_desktopRows[rowIndex][i].category] ??
@@ -117,7 +118,11 @@ class _CategoryCard extends StatefulWidget {
     required this.category,
     required this.items,
     required this.onTechTap,
+    this.span = 12,
   });
+
+  /// Largura relativa do card no grid desktop (de 12).
+  final int span;
 
   final StackCategory category;
   final List<StackItem> items;
@@ -150,11 +155,13 @@ class _CategoryCardState extends State<_CategoryCard> {
           child: FittedBox(
             fit: BoxFit.scaleDown,
             alignment: Alignment.centerLeft,
-            child: PixelText(
-              widget.category.label(context.l10n),
-              color: accent,
-              glowColor: accent,
-              pixelSize: 3,
+            child: Text(
+              widget.category.label(context.l10n).toUpperCase(),
+              style: textTheme.labelLarge?.copyWith(
+                color: colors.onSurface,
+                fontWeight: FontWeight.w700,
+                letterSpacing: 1.6,
+              ),
             ),
           ),
         ),
@@ -203,11 +210,13 @@ class _CategoryCardState extends State<_CategoryCard> {
 
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: colors.surfaceMuted,
-        border: Border.all(color: accent.withValues(alpha: 0.55), width: 2),
-        boxShadow: [
-          BoxShadow(color: accent.withValues(alpha: 0.12), blurRadius: 16),
-        ],
+        color: colors.surface.withValues(alpha: 0.55),
+        border: Border(
+          top: BorderSide(color: accent.withValues(alpha: 0.8), width: 2),
+          left: BorderSide(color: colors.border),
+          right: BorderSide(color: colors.border),
+          bottom: BorderSide(color: colors.border),
+        ),
       ),
       child: Padding(
         padding: EdgeInsets.all(
@@ -229,7 +238,11 @@ class _CategoryCardState extends State<_CategoryCard> {
                     desktop: AppSpacing.md,
                   ),
                 ),
-                _TileGrid(items: widget.items, onTechTap: widget.onTechTap),
+                _TileGrid(
+                  items: widget.items,
+                  onTechTap: widget.onTechTap,
+                  maxCols: widget.span >= 7 ? 3 : 2,
+                ),
               ],
             ],
           ),
@@ -243,17 +256,26 @@ class _CategoryCardState extends State<_CategoryCard> {
 /// em rows de Expanded — sem LayoutBuilder (incompativel com
 /// IntrinsicHeight). Coluna count derivado do total de items.
 class _TileGrid extends StatelessWidget {
-  const _TileGrid({required this.items, required this.onTechTap});
+  const _TileGrid({
+    required this.items,
+    required this.onTechTap,
+    required this.maxCols,
+  });
 
   final List<StackItem> items;
+
+  /// Colunas maximas no desktop (derivado do span do card).
+  final int maxCols;
   final void Function(String techName) onTechTap;
 
   @override
   Widget build(BuildContext context) {
-    final cols = context.responsive(
-      mobile: items.length.clamp(1, 2),
-      desktop: items.length.clamp(1, 3),
-    );
+    // Colunas pelo tamanho do card (span do slot) — evita nome e papel
+    // truncados em cards estreitos. Sem LayoutBuilder: o card vive dentro de
+    // IntrinsicHeight, que nao suporta layout dependente de constraints.
+    final cols = context.isMobile
+        ? 2.clamp(1, items.length)
+        : maxCols.clamp(1, items.length);
 
     final rows = <Widget>[];
     for (var i = 0; i < items.length; i += cols) {
@@ -347,11 +369,10 @@ class _TechTileState extends State<_TechTile> {
               context.responsive(mobile: AppSpacing.sm, desktop: AppSpacing.md),
             ),
             decoration: BoxDecoration(
-              color: brand.withValues(alpha: _hovered ? 0.18 : 0.05),
-              border: Border.all(
-                color: brand.withValues(alpha: _hovered ? 1 : 0.45),
-                width: 1.5,
-              ),
+              color: _hovered
+                  ? brand.withValues(alpha: 0.12)
+                  : colors.background.withValues(alpha: 0.5),
+              border: Border.all(color: _hovered ? brand : colors.border),
               boxShadow: shadows,
             ),
             child: Column(
@@ -367,11 +388,10 @@ class _TechTileState extends State<_TechTile> {
                     const SizedBox(width: AppSpacing.sm),
                     Flexible(
                       child: Text(
-                        widget.techName.toUpperCase(),
-                        style: textTheme.labelMedium?.copyWith(
+                        widget.techName,
+                        style: textTheme.labelLarge?.copyWith(
                           color: colors.onSurface,
                           fontWeight: FontWeight.w700,
-                          letterSpacing: 0.5,
                         ),
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -385,7 +405,7 @@ class _TechTileState extends State<_TechTile> {
                     color: colors.onSurfaceMuted,
                     height: 1.4,
                   ),
-                  maxLines: context.responsive(mobile: 1, desktop: 2),
+                  maxLines: 3,
                   overflow: TextOverflow.ellipsis,
                 ),
               ],

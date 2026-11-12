@@ -362,11 +362,13 @@ class _Cta extends StatelessWidget {
                 horizontal: AppSpacing.md,
                 vertical: AppSpacing.sm,
               ),
-              child: PixelText(
-                context.l10n.nav_ctaContact,
-                color: colors.primary,
-                glowColor: colors.primary,
-                pixelSize: 3,
+              child: Text(
+                context.l10n.nav_ctaContact.toUpperCase(),
+                style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                  color: colors.primary,
+                  fontWeight: FontWeight.w700,
+                  letterSpacing: 1.4,
+                ),
               ),
             ),
           ),

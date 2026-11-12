@@ -29,30 +29,12 @@ class AboutSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        PixelText(l10n.about_eyebrow, color: colors.accent, pixelSize: 3),
-        const SizedBox(height: AppSpacing.md),
-        Semantics(
-          header: true,
-          child: Text.rich(
-            TextSpan(
-              style: tt.headlineLarge?.copyWith(color: colors.onSurface),
-              children: [
-                TextSpan(text: '${l10n.about_title} '),
-                TextSpan(
-                  text: l10n.about_titleAccent,
-                  style: TextStyle(color: colors.primary),
-                ),
-              ],
-            ),
-          ),
-        ),
-        const SizedBox(height: AppSpacing.lg),
-        Text(
-          l10n.about_subtitle,
-          style: tt.bodyLarge?.copyWith(
-            color: colors.onSurfaceMuted,
-            height: 1.55,
-          ),
+        NeonSectionHeading(
+          index: '02',
+          eyebrow: l10n.about_eyebrow,
+          title: l10n.about_title,
+          titleAccent: l10n.about_titleAccent,
+          subtitle: l10n.about_subtitle,
         ),
         const SizedBox(height: AppSpacing.lg),
         Text(
@@ -136,7 +118,7 @@ class _DomainRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        PixelText(stage, color: colors.primary, pixelSize: 3),
+        PixelText(stage, color: colors.primary, pixelSize: 2),
         const SizedBox(height: AppSpacing.sm),
         Text(
           domain.label,

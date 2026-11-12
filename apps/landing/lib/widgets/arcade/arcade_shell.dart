@@ -1,20 +1,15 @@
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
-import 'package:landing/widgets/arcade/arcade_backdrop.dart';
-import 'package:landing/widgets/arcade/arcade_colossus.dart';
-import 'package:landing/widgets/arcade/crt_overlay.dart';
+import 'package:landing/widgets/arcade/calm_backdrop.dart';
 
-/// Moldura global da landing Arcade. Empilha, de tras pra frente:
-/// 1. [ArcadeBackdrop] — starfield + grid Outrun animado;
-/// 2. [ArcadeColossus] — boss + portal no ponto de fuga da pista (fixo, atras
-///    do conteudo, identico em todas as secoes);
-/// 3. o conteudo da rota (paginas com Scaffold transparente);
-/// 4. [CrtOverlay] — scanlines, vinheta e flicker do tubo.
+/// Moldura global da landing. Empilha, de tras pra frente:
+/// 1. [CalmBackdrop] — fundo solido, luzes neon difusas e estrelas estaticas;
+/// 2. o conteudo da rota (paginas com Scaffold transparente).
 ///
-/// Montado no `builder` do MaterialApp.router, entao envolve todas as
-/// rotas com a mesma identidade CRT. A abertura "terminal verde" e o
-/// loading unico em HTML/CSS no `web/index.html` (some no primeiro frame);
-/// nao ha boot screen em Flutter — evita o loading duplicado.
+/// Redesign 2026-11: o grid Outrun animado, o boss/portal (arquivados em
+/// `archive/final_boss/`) e o overlay CRT sairam do fundo global — competiam
+/// com o texto. O grid virou o chao do hero; o CRT ficou so na pagina
+/// gamificada do Poço, onde a estetica de fliperama e o proprio assunto.
 class ArcadeShell extends StatelessWidget {
   const ArcadeShell({required this.child, super.key});
 
@@ -27,16 +22,14 @@ class ArcadeShell extends StatelessWidget {
     return Stack(
       children: [
         Positioned.fill(
-          child: ArcadeBackdrop(
+          child: CalmBackdrop(
             background: colors.background,
-            gridNear: colors.primary,
-            gridFar: colors.accent,
+            glowA: colors.primary,
+            glowB: colors.accent,
             starColor: colors.onSurface,
           ),
         ),
-        const Positioned.fill(child: ArcadeColossus()),
         Positioned.fill(child: child),
-        Positioned.fill(child: CrtOverlay(tint: colors.onSurface)),
       ],
     );
   }

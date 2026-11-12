@@ -1,9 +1,8 @@
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 
-/// Secao "Contato" — fechamento da landing como tela "CONTINUE?" de
-/// fliperama: um painel escuro com borda neon magenta + glow (sem cards
-/// genericos), titulo em fonte pixel, e o email como link tipografico
+/// Secao "Contato" — fechamento da landing: painel escuro com borda neon
+/// discreta, cabecalho padrao das secoes, e o email como link tipografico
 /// grande que dispara o `mailto:` (funil primario). Links secundarios
 /// (GitHub · LinkedIn · WhatsApp · currículo PDF) em linha.
 ///
@@ -40,38 +39,7 @@ class ContactSection extends StatefulWidget {
   State<ContactSection> createState() => _ContactSectionState();
 }
 
-class _ContactSectionState extends State<ContactSection>
-    with SingleTickerProviderStateMixin {
-  /// Pisca do eyebrow "INSERT COIN".
-  late final AnimationController _blink;
-
-  @override
-  void initState() {
-    super.initState();
-    _blink = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 650),
-    )..repeat(reverse: true);
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (MediaQuery.disableAnimationsOf(context)) {
-      _blink
-        ..stop()
-        ..value = 1;
-    } else if (!_blink.isAnimating) {
-      _blink.repeat(reverse: true);
-    }
-  }
-
-  @override
-  void dispose() {
-    _blink.dispose();
-    super.dispose();
-  }
-
+class _ContactSectionState extends State<ContactSection> {
   void _open(Uri uri) => widget.onOpenUri?.call(uri);
 
   @override
@@ -84,7 +52,6 @@ class _ContactSectionState extends State<ContactSection>
       mobile: AppSpacing.xl,
       desktop: 56,
     );
-    final titlePixel = context.responsive<double>(mobile: 5, desktop: 8);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -93,56 +60,26 @@ class _ContactSectionState extends State<ContactSection>
           padding: EdgeInsets.all(panelPadding),
           decoration: BoxDecoration(
             color: colors.surfaceMuted,
-            border: Border.all(color: colors.primary, width: 2),
+            border: Border.all(
+              color: colors.primary.withValues(alpha: 0.45),
+              width: 1.5,
+            ),
             boxShadow: [
               BoxShadow(
-                color: colors.primary.withValues(alpha: 0.35),
-                blurRadius: 28,
+                color: colors.primary.withValues(alpha: 0.12),
+                blurRadius: 40,
               ),
             ],
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              FadeTransition(
-                opacity: _blink,
-                child: PixelText(
-                  '~ INSERT COIN',
-                  color: colors.accent,
-                  pixelSize: 3,
-                ),
-              ),
-              const SizedBox(height: AppSpacing.lg),
-              Semantics(
-                header: true,
-                label: '${l10n.contact_title} ${l10n.contact_titleAccent}',
-                child: FittedBox(
-                  fit: BoxFit.scaleDown,
-                  alignment: Alignment.centerLeft,
-                  child: PixelText(
-                    context.isMobile
-                        ? '${l10n.contact_title}\n${l10n.contact_titleAccent}'
-                              .toUpperCase()
-                        : '${l10n.contact_title} ${l10n.contact_titleAccent}'
-                              .toUpperCase(),
-                    color: colors.primary,
-                    glowColor: colors.primary,
-                    glowBlur: 12,
-                    pixelSize: titlePixel,
-                    lineSpacing: 3,
-                  ),
-                ),
-              ),
-              const SizedBox(height: AppSpacing.lg),
-              ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 640),
-                child: Text(
-                  l10n.contact_subtitle,
-                  style: textTheme.bodyLarge?.copyWith(
-                    color: colors.onSurfaceMuted,
-                    height: 1.55,
-                  ),
-                ),
+              NeonSectionHeading(
+                index: '05',
+                eyebrow: l10n.nav_contact,
+                title: l10n.contact_title,
+                titleAccent: l10n.contact_titleAccent,
+                subtitle: l10n.contact_subtitle,
               ),
               const SizedBox(height: AppSpacing.xl),
               _FocusableLink(

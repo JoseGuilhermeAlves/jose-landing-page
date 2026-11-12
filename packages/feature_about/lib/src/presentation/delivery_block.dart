@@ -77,7 +77,7 @@ class _DeliveryRow extends StatelessWidget {
         Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            PixelText(stage, color: colors.primary, pixelSize: 3),
+            PixelText(stage, color: colors.primary, pixelSize: 2),
             const SizedBox(width: AppSpacing.sm),
             PixelText(eyebrow, color: colors.accent, pixelSize: 2),
           ],

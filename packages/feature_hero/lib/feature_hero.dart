@@ -1,7 +1,7 @@
-/// Secao Hero da landing — "title screen" do fliperama Arcade. Nome em fonte
-/// bitmap `PixelText` com glow neon, retrato no portal `BlackHolePortrait`,
-/// campo de corpos celestes `HeroCosmos` ao fundo e CTAs arcade que rolam
-/// dentro da pagina (funil interno). WhatsApp/email vivem na secao Contact.
+/// Secao Hero da landing — "title screen" enxuto. Nome em fonte bitmap
+/// `PixelText`, retrato no portal `BlackHolePortrait`, chao Outrun
+/// `HorizonFloor` no rodape e CTAs neon que rolam dentro da pagina.
 library;
 
 export 'src/presentation/arcade_hero.dart';
+export 'src/presentation/horizon_floor.dart';

@@ -1062,7 +1062,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get poco_classDruid => 'ドルイド';
 
   @override
-  String get poco_classStormHerald => 'ストームヘラルド';
+  String get poco_classStormHerald => 'ストームバーバリアン';
 
   @override
   String get poco_classArtificer => 'アーティフィサー';
@@ -1074,28 +1074,13 @@ class AppLocalizationsJa extends AppLocalizations {
   String get poco_galleryTitle => 'デモのスクリーンショット';
 
   @override
-  String get poco_shotTitle => 'タイトル画面';
-
-  @override
   String get poco_shotParty => 'パーティ選択:最初の3人';
 
   @override
-  String get poco_shotDungeon => '井戸:モンスターが視認して追跡';
+  String get poco_shotDungeon => '探索:黒い森を進む一行。モンスターは視認して追跡する';
 
   @override
-  String get poco_shotLevelUp => 'レベルアップ:3つから1つ';
-
-  @override
-  String get poco_shotMeteor => 'メテオ:炎のクライマックス';
-
-  @override
-  String get poco_shotBlizzard => 'ブリザード';
-
-  @override
-  String get poco_shotStorm => 'テンペスト:雷のクライマックス';
-
-  @override
-  String get poco_shotBoss => '5階のボス';
+  String get poco_shotLevelUp => 'レベルアップ:3つから1つ、進化先も表示';
 
   @override
   String get poco_controlsEyebrow => '操作';
@@ -1174,4 +1159,22 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get poco_madeBy => 'José Guilherme Alves による個人プロジェクト。';
+
+  @override
+  String get poco_subtitle => 'ピックの願い';
+
+  @override
+  String get poco_shotBattleCommand => '戦闘:盗賊のターン、上部に行動順キュー';
+
+  @override
+  String get poco_shotBattleStrike => '黒い森で戦士の重撃';
+
+  @override
+  String get about_statSectorsLabel => '対応した業界';
+
+  @override
+  String get about_statAppsLabel => 'B2B小売の業務アプリ(エンドツーエンド)';
+
+  @override
+  String get about_scopeEndToEnd => 'フロントエンド全体';
 }

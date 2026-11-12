@@ -155,13 +155,11 @@ class _CategoryCardState extends State<_CategoryCard> {
           child: FittedBox(
             fit: BoxFit.scaleDown,
             alignment: Alignment.centerLeft,
-            child: Text(
-              widget.category.label(context.l10n).toUpperCase(),
-              style: textTheme.labelLarge?.copyWith(
-                color: colors.onSurface,
-                fontWeight: FontWeight.w700,
-                letterSpacing: 1.6,
-              ),
+            child: PixelText(
+              widget.category.label(context.l10n),
+              color: accent,
+              glowColor: accent,
+              pixelSize: 3,
             ),
           ),
         ),
@@ -210,13 +208,11 @@ class _CategoryCardState extends State<_CategoryCard> {
 
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: colors.surface.withValues(alpha: 0.55),
-        border: Border(
-          top: BorderSide(color: accent.withValues(alpha: 0.8), width: 2),
-          left: BorderSide(color: colors.border),
-          right: BorderSide(color: colors.border),
-          bottom: BorderSide(color: colors.border),
-        ),
+        color: colors.surfaceMuted,
+        border: Border.all(color: accent.withValues(alpha: 0.55), width: 2),
+        boxShadow: [
+          BoxShadow(color: accent.withValues(alpha: 0.12), blurRadius: 16),
+        ],
       ),
       child: Padding(
         padding: EdgeInsets.all(
@@ -270,12 +266,11 @@ class _TileGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Colunas pelo tamanho do card (span do slot) — evita nome e papel
-    // truncados em cards estreitos. Sem LayoutBuilder: o card vive dentro de
-    // IntrinsicHeight, que nao suporta layout dependente de constraints.
+    // Colunas pelo span do card: cards estreitos (span < 7) ficam com 2
+    // colunas pra nome e papel nao truncarem.
     final cols = context.isMobile
-        ? 2.clamp(1, items.length)
-        : maxCols.clamp(1, items.length);
+        ? items.length.clamp(1, 2)
+        : items.length.clamp(1, maxCols);
 
     final rows = <Widget>[];
     for (var i = 0; i < items.length; i += cols) {
@@ -369,10 +364,11 @@ class _TechTileState extends State<_TechTile> {
               context.responsive(mobile: AppSpacing.sm, desktop: AppSpacing.md),
             ),
             decoration: BoxDecoration(
-              color: _hovered
-                  ? brand.withValues(alpha: 0.12)
-                  : colors.background.withValues(alpha: 0.5),
-              border: Border.all(color: _hovered ? brand : colors.border),
+              color: brand.withValues(alpha: _hovered ? 0.18 : 0.05),
+              border: Border.all(
+                color: brand.withValues(alpha: _hovered ? 1 : 0.45),
+                width: 1.5,
+              ),
               boxShadow: shadows,
             ),
             child: Column(
@@ -387,13 +383,21 @@ class _TechTileState extends State<_TechTile> {
                     ),
                     const SizedBox(width: AppSpacing.sm),
                     Flexible(
-                      child: Text(
-                        widget.techName,
-                        style: textTheme.labelLarge?.copyWith(
-                          color: colors.onSurface,
-                          fontWeight: FontWeight.w700,
+                      // Linha unica com escala reduzida: nomes longos
+                      // (shared_preferences, integration_test) nao quebram
+                      // no meio da palavra nem viram reticencias.
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          widget.techName.toUpperCase(),
+                          maxLines: 1,
+                          style: textTheme.labelMedium?.copyWith(
+                            color: colors.onSurface,
+                            fontWeight: FontWeight.w700,
+                            letterSpacing: 0.5,
+                          ),
                         ),
-                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
                   ],

@@ -2083,7 +2083,7 @@ abstract class AppLocalizations {
   /// No description provided for @poco_classMage.
   ///
   /// In pt, this message translates to:
-  /// **'Maga'**
+  /// **'Mago'**
   String get poco_classMage;
 
   /// No description provided for @poco_classRogue.
@@ -2119,7 +2119,7 @@ abstract class AppLocalizations {
   /// No description provided for @poco_classStormHerald.
   ///
   /// In pt, this message translates to:
-  /// **'Arauto da Tempestade'**
+  /// **'Bárbaro Tempestade'**
   String get poco_classStormHerald;
 
   /// No description provided for @poco_classArtificer.
@@ -2140,12 +2140,6 @@ abstract class AppLocalizations {
   /// **'Capturas da demo'**
   String get poco_galleryTitle;
 
-  /// No description provided for @poco_shotTitle.
-  ///
-  /// In pt, this message translates to:
-  /// **'Tela de título'**
-  String get poco_shotTitle;
-
   /// No description provided for @poco_shotParty.
   ///
   /// In pt, this message translates to:
@@ -2155,38 +2149,14 @@ abstract class AppLocalizations {
   /// No description provided for @poco_shotDungeon.
   ///
   /// In pt, this message translates to:
-  /// **'O Poço: os monstros enxergam e perseguem'**
+  /// **'Exploração: o grupo atravessa a Floresta Negra; os monstros enxergam e perseguem'**
   String get poco_shotDungeon;
 
   /// No description provided for @poco_shotLevelUp.
   ///
   /// In pt, this message translates to:
-  /// **'Level-up: uma habilidade entre três'**
+  /// **'Level-up: uma habilidade entre três, com a evolução indicada'**
   String get poco_shotLevelUp;
-
-  /// No description provided for @poco_shotMeteor.
-  ///
-  /// In pt, this message translates to:
-  /// **'Meteoro: o clímax de fogo'**
-  String get poco_shotMeteor;
-
-  /// No description provided for @poco_shotBlizzard.
-  ///
-  /// In pt, this message translates to:
-  /// **'Nevasca'**
-  String get poco_shotBlizzard;
-
-  /// No description provided for @poco_shotStorm.
-  ///
-  /// In pt, this message translates to:
-  /// **'Tempestade: o clímax elétrico'**
-  String get poco_shotStorm;
-
-  /// No description provided for @poco_shotBoss.
-  ///
-  /// In pt, this message translates to:
-  /// **'O chefe do andar 5'**
-  String get poco_shotBoss;
 
   /// No description provided for @poco_controlsEyebrow.
   ///
@@ -2343,6 +2313,42 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Projeto autoral de José Guilherme Alves.'**
   String get poco_madeBy;
+
+  /// No description provided for @poco_subtitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'O desejo de Pick'**
+  String get poco_subtitle;
+
+  /// No description provided for @poco_shotBattleCommand.
+  ///
+  /// In pt, this message translates to:
+  /// **'Combate: o turno do Ladino, com a fila de iniciativa no topo'**
+  String get poco_shotBattleCommand;
+
+  /// No description provided for @poco_shotBattleStrike.
+  ///
+  /// In pt, this message translates to:
+  /// **'Golpe Pesado do Guerreiro na Floresta Negra'**
+  String get poco_shotBattleStrike;
+
+  /// No description provided for @about_statSectorsLabel.
+  ///
+  /// In pt, this message translates to:
+  /// **'setores atendidos'**
+  String get about_statSectorsLabel;
+
+  /// No description provided for @about_statAppsLabel.
+  ///
+  /// In pt, this message translates to:
+  /// **'apps de operação no varejo B2B, de ponta a ponta'**
+  String get about_statAppsLabel;
+
+  /// No description provided for @about_scopeEndToEnd.
+  ///
+  /// In pt, this message translates to:
+  /// **'Front end inteiro'**
+  String get about_scopeEndToEnd;
 }
 
 class _AppLocalizationsDelegate

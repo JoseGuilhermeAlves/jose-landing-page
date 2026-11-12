@@ -1095,7 +1095,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get poco_classDruid => 'Druid';
 
   @override
-  String get poco_classStormHerald => 'Storm Herald';
+  String get poco_classStormHerald => 'Storm Barbarian';
 
   @override
   String get poco_classArtificer => 'Artificer';
@@ -1107,28 +1107,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get poco_galleryTitle => 'Screenshots from the demo';
 
   @override
-  String get poco_shotTitle => 'Title screen';
-
-  @override
   String get poco_shotParty => 'Party select: three heroes to start';
 
   @override
-  String get poco_shotDungeon => 'The Pit: monsters see you and chase';
+  String get poco_shotDungeon =>
+      'Exploration: the party crosses the Black Forest; monsters see you and chase';
 
   @override
-  String get poco_shotLevelUp => 'Level-up: one skill out of three';
-
-  @override
-  String get poco_shotMeteor => 'Meteor: the fire climax';
-
-  @override
-  String get poco_shotBlizzard => 'Blizzard';
-
-  @override
-  String get poco_shotStorm => 'Storm: the lightning climax';
-
-  @override
-  String get poco_shotBoss => 'The floor 5 boss';
+  String get poco_shotLevelUp =>
+      'Level-up: one skill out of three, with the evolution path shown';
 
   @override
   String get poco_controlsEyebrow => 'Controls';
@@ -1207,4 +1194,24 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get poco_madeBy => 'A personal project by José Guilherme Alves.';
+
+  @override
+  String get poco_subtitle => 'Pick\'s Wish';
+
+  @override
+  String get poco_shotBattleCommand =>
+      'Combat: the Rogue\'s turn, with the initiative queue on top';
+
+  @override
+  String get poco_shotBattleStrike =>
+      'The Warrior\'s Heavy Blow in the Black Forest';
+
+  @override
+  String get about_statSectorsLabel => 'sectors served';
+
+  @override
+  String get about_statAppsLabel => 'B2B retail operations apps, end to end';
+
+  @override
+  String get about_scopeEndToEnd => 'Full front end';
 }

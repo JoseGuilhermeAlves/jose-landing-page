@@ -55,8 +55,7 @@ void main() {
       await tester.pumpWidget(wrap(const AboutSection()));
       await tester.pump(const Duration(milliseconds: 32));
 
-      Finder pixel(String t) =>
-          find.byWidgetPredicate((w) => w is PixelText && w.text == t);
+      Finder pixel(String t) => find.text(t);
       expect(pixel('ENTREGA'), findsOneWidget);
       expect(pixel('CRAFT'), findsOneWidget);
       expect(pixel('COLABORAÇÃO'), findsOneWidget);

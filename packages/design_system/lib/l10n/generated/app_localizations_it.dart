@@ -1077,7 +1077,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get poco_classWarrior => 'Guerriero';
 
   @override
-  String get poco_classMage => 'Maga';
+  String get poco_classMage => 'Mago';
 
   @override
   String get poco_classRogue => 'Ladro';
@@ -1095,7 +1095,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get poco_classDruid => 'Druido';
 
   @override
-  String get poco_classStormHerald => 'Araldo della Tempesta';
+  String get poco_classStormHerald => 'Barbaro della Tempesta';
 
   @override
   String get poco_classArtificer => 'Artefice';
@@ -1107,28 +1107,15 @@ class AppLocalizationsIt extends AppLocalizations {
   String get poco_galleryTitle => 'Screenshot della demo';
 
   @override
-  String get poco_shotTitle => 'Schermata del titolo';
-
-  @override
   String get poco_shotParty => 'Scelta del gruppo: tre eroi per iniziare';
 
   @override
-  String get poco_shotDungeon => 'Il Pozzo: i mostri vedono e inseguono';
+  String get poco_shotDungeon =>
+      'Esplorazione: il gruppo attraversa la Foresta Nera; i mostri vedono e inseguono';
 
   @override
-  String get poco_shotLevelUp => 'Level-up: un\'abilità su tre';
-
-  @override
-  String get poco_shotMeteor => 'Meteora: il climax di fuoco';
-
-  @override
-  String get poco_shotBlizzard => 'Bufera';
-
-  @override
-  String get poco_shotStorm => 'Tempesta: il climax elettrico';
-
-  @override
-  String get poco_shotBoss => 'Il boss del piano 5';
+  String get poco_shotLevelUp =>
+      'Level-up: un\'abilità su tre, con l\'evoluzione indicata';
 
   @override
   String get poco_controlsEyebrow => 'Comandi';
@@ -1208,4 +1195,24 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get poco_madeBy => 'Un progetto personale di José Guilherme Alves.';
+
+  @override
+  String get poco_subtitle => 'Il desiderio di Pick';
+
+  @override
+  String get poco_shotBattleCommand =>
+      'Combattimento: il turno del Ladro, con la coda d\'iniziativa in alto';
+
+  @override
+  String get poco_shotBattleStrike =>
+      'Colpo Pesante del Guerriero nella Foresta Nera';
+
+  @override
+  String get about_statSectorsLabel => 'settori serviti';
+
+  @override
+  String get about_statAppsLabel => 'app operative nel retail B2B, end to end';
+
+  @override
+  String get about_scopeEndToEnd => 'Front end completo';
 }

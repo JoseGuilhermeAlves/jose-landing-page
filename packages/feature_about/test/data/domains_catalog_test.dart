@@ -31,9 +31,9 @@ void main() {
 
     test('inclui o dominio "retail" como o unico end-to-end '
         '— alinhado com o que Jose construiu sozinho', () {
-      final endToEnd = DomainsCatalog.all(l10n)
-          .where((d) => d.scope == DomainScope.endToEnd)
-          .toList();
+      final endToEnd = DomainsCatalog.all(
+        l10n,
+      ).where((d) => d.scope == DomainScope.endToEnd).toList();
       expect(endToEnd, hasLength(1));
       expect(endToEnd.first.id, 'retail');
     });

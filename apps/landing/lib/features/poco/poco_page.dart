@@ -270,7 +270,8 @@ class PocoTopBar extends StatelessWidget {
 }
 
 /// "Title screen" do jogo: arte de titulo do Poço escurecida ao fundo, logo
-/// em pixel neon, subtitulo, PRESS START piscando, CTAs e chao Outrun.
+/// em pixel neon, subtitulo oficial ("O desejo de Pick"), CTAs e chao
+/// Outrun.
 class PocoTitleScreen extends StatelessWidget {
   const PocoTitleScreen({
     required this.version,
@@ -312,9 +313,9 @@ class PocoTitleScreen extends StatelessWidget {
               child: ImageFiltered(
                 imageFilter: ui.ImageFilter.blur(sigmaX: 10, sigmaY: 10),
                 child: Image.asset(
-                  'assets/images/poco/title.jpg',
+                  'assets/images/poco/title-art.jpg',
                   fit: BoxFit.cover,
-                  alignment: const Alignment(0, -0.4),
+                  alignment: const Alignment(0, -0.3),
                   excludeFromSemantics: true,
                 ),
               ),
@@ -361,11 +362,15 @@ class PocoTitleScreen extends StatelessWidget {
                   const SizedBox(height: AppSpacing.xl),
                   PocoLogo(pixelSize: isMobile ? 11 : 20),
                   const SizedBox(height: AppSpacing.md),
-                  PixelText(
-                    'INTO THE WELL',
-                    color: colors.onSurface,
-                    pixelSize: isMobile ? 2 : 3,
-                    letterSpacing: 3,
+                  Text(
+                    l10n.poco_subtitle.toUpperCase(),
+                    textAlign: TextAlign.center,
+                    style: (isMobile ? tt.titleSmall : tt.titleMedium)
+                        ?.copyWith(
+                          color: colors.onSurface,
+                          letterSpacing: isMobile ? 4 : 7,
+                          fontWeight: FontWeight.w500,
+                        ),
                   ),
                   const SizedBox(height: AppSpacing.xl),
                   ConstrainedBox(
@@ -382,12 +387,6 @@ class PocoTitleScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: AppSpacing.xl),
-                  BlinkingPixelText(
-                    'PRESS START',
-                    color: colors.accent,
-                    pixelSize: isMobile ? 2 : 3,
-                  ),
-                  const SizedBox(height: AppSpacing.lg),
                   Wrap(
                     alignment: WrapAlignment.center,
                     spacing: AppSpacing.md,

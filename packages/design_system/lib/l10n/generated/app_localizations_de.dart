@@ -1080,7 +1080,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get poco_classWarrior => 'Krieger';
 
   @override
-  String get poco_classMage => 'Magierin';
+  String get poco_classMage => 'Magier';
 
   @override
   String get poco_classRogue => 'Schurke';
@@ -1098,7 +1098,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get poco_classDruid => 'Druide';
 
   @override
-  String get poco_classStormHerald => 'Sturmherold';
+  String get poco_classStormHerald => 'Sturmbarbar';
 
   @override
   String get poco_classArtificer => 'Artifex';
@@ -1110,28 +1110,15 @@ class AppLocalizationsDe extends AppLocalizations {
   String get poco_galleryTitle => 'Screenshots aus der Demo';
 
   @override
-  String get poco_shotTitle => 'Titelbildschirm';
-
-  @override
   String get poco_shotParty => 'Gruppenwahl: drei Helden zum Start';
 
   @override
-  String get poco_shotDungeon => 'Der Brunnen: Monster sehen und verfolgen';
+  String get poco_shotDungeon =>
+      'Erkundung: die Gruppe durchquert den Schwarzen Wald; Monster sehen und verfolgen';
 
   @override
-  String get poco_shotLevelUp => 'Stufenaufstieg: eine von drei Fertigkeiten';
-
-  @override
-  String get poco_shotMeteor => 'Meteor: der Feuer-Höhepunkt';
-
-  @override
-  String get poco_shotBlizzard => 'Schneesturm';
-
-  @override
-  String get poco_shotStorm => 'Gewitter: der Blitz-Höhepunkt';
-
-  @override
-  String get poco_shotBoss => 'Der Boss von Ebene 5';
+  String get poco_shotLevelUp =>
+      'Stufenaufstieg: eine von drei Fertigkeiten, mit angezeigter Entwicklung';
 
   @override
   String get poco_controlsEyebrow => 'Steuerung';
@@ -1210,4 +1197,24 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get poco_madeBy => 'Ein eigenes Projekt von José Guilherme Alves.';
+
+  @override
+  String get poco_subtitle => 'Picks Wunsch';
+
+  @override
+  String get poco_shotBattleCommand =>
+      'Kampf: der Zug des Schurken, oben die Initiativeleiste';
+
+  @override
+  String get poco_shotBattleStrike =>
+      'Schwerer Schlag des Kriegers im Schwarzen Wald';
+
+  @override
+  String get about_statSectorsLabel => 'betreute Branchen';
+
+  @override
+  String get about_statAppsLabel => 'Betriebs-Apps im B2B-Handel, End-to-End';
+
+  @override
+  String get about_scopeEndToEnd => 'Komplettes Front end';
 }

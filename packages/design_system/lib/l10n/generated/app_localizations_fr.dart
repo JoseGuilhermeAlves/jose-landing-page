@@ -1100,7 +1100,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get poco_classDruid => 'Druide';
 
   @override
-  String get poco_classStormHerald => 'Héraut de l\'orage';
+  String get poco_classStormHerald => 'Barbare de l\'orage';
 
   @override
   String get poco_classArtificer => 'Artificier';
@@ -1112,30 +1112,15 @@ class AppLocalizationsFr extends AppLocalizations {
   String get poco_galleryTitle => 'Captures de la démo';
 
   @override
-  String get poco_shotTitle => 'Écran titre';
-
-  @override
   String get poco_shotParty => 'Choix du groupe : trois héros pour commencer';
 
   @override
   String get poco_shotDungeon =>
-      'Le Puits : les monstres voient et poursuivent';
+      'Exploration : le groupe traverse la Forêt Noire ; les monstres voient et poursuivent';
 
   @override
   String get poco_shotLevelUp =>
-      'Montée de niveau : une compétence parmi trois';
-
-  @override
-  String get poco_shotMeteor => 'Météore : l\'apogée du feu';
-
-  @override
-  String get poco_shotBlizzard => 'Blizzard';
-
-  @override
-  String get poco_shotStorm => 'Tempête : l\'apogée de la foudre';
-
-  @override
-  String get poco_shotBoss => 'Le boss de l\'étage 5';
+      'Montée de niveau : une compétence parmi trois, évolution indiquée';
 
   @override
   String get poco_controlsEyebrow => 'Commandes';
@@ -1214,4 +1199,25 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get poco_madeBy => 'Un projet personnel de José Guilherme Alves.';
+
+  @override
+  String get poco_subtitle => 'Le vœu de Pick';
+
+  @override
+  String get poco_shotBattleCommand =>
+      'Combat : le tour du Voleur, file d\'initiative en haut';
+
+  @override
+  String get poco_shotBattleStrike =>
+      'Coup Lourd du Guerrier dans la Forêt Noire';
+
+  @override
+  String get about_statSectorsLabel => 'secteurs servis';
+
+  @override
+  String get about_statAppsLabel =>
+      'apps d\'exploitation en retail B2B, de bout en bout';
+
+  @override
+  String get about_scopeEndToEnd => 'Front end complet';
 }

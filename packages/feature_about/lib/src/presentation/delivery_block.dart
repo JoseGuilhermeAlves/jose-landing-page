@@ -1,137 +1,153 @@
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 
-/// Bloco "Como eu entrego" — 3 rows estilo changelog revestidas na
-/// identidade Arcade (herdado da estrutura texto-primeiro da designmd,
-/// superior aos cards genericos). Cada row: numero de "stage" em fonte
-/// pixel magenta, eyebrow pixel ciano, titulo legivel com acento magenta
-/// e paragrafo muted, separados por hairline neon. No mobile empilha.
-/// Sem card, sem glifo decorativo — texto-primeiro.
+/// "Como eu entrego" — tres principios lado a lado (empilhados no mobile).
+/// Cada coluna: filete superior neon, rotulo curto em caixa alta, titulo com
+/// acento magenta e texto de apoio. Sem numeracao: sao principios, nao
+/// etapas.
 class DeliveryBlock extends StatelessWidget {
   const DeliveryBlock({super.key});
 
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final rows = [
+    final colors = context.colors;
+    final items = [
       (
+        Icons.track_changes_rounded,
         l10n.delivery_entrega_eyebrow,
         l10n.delivery_entrega_title,
         l10n.delivery_entrega_titleAccent,
         l10n.delivery_entrega_body,
+        colors.primary,
       ),
       (
+        Icons.architecture_rounded,
         l10n.delivery_craft_eyebrow,
         l10n.delivery_craft_title,
         l10n.delivery_craft_titleAccent,
         l10n.delivery_craft_body,
+        colors.accent,
       ),
       (
+        Icons.diversity_3_rounded,
         l10n.delivery_collab_eyebrow,
         l10n.delivery_collab_title,
         l10n.delivery_collab_titleAccent,
         l10n.delivery_collab_body,
+        colors.primary,
       ),
     ];
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        for (var i = 0; i < rows.length; i++)
-          _DeliveryRow(
-            stage: (i + 1).toString().padLeft(2, '0'),
-            eyebrow: rows[i].$1,
-            title: rows[i].$2,
-            titleAccent: rows[i].$3,
-            body: rows[i].$4,
-          ),
-      ],
+
+    final cards = [
+      for (final it in items)
+        _Principle(
+          icon: it.$1,
+          eyebrow: it.$2,
+          title: it.$3,
+          titleAccent: it.$4,
+          body: it.$5,
+          tint: it.$6,
+        ),
+    ];
+
+    if (context.isMobile) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          for (var i = 0; i < cards.length; i++) ...[
+            if (i > 0) const SizedBox(height: AppSpacing.xl),
+            cards[i],
+          ],
+        ],
+      );
+    }
+    return IntrinsicHeight(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          for (var i = 0; i < cards.length; i++) ...[
+            if (i > 0) const SizedBox(width: AppSpacing.xl),
+            Expanded(child: cards[i]),
+          ],
+        ],
+      ),
     );
   }
 }
 
-class _DeliveryRow extends StatelessWidget {
-  const _DeliveryRow({
-    required this.stage,
+class _Principle extends StatelessWidget {
+  const _Principle({
+    required this.icon,
     required this.eyebrow,
     required this.title,
     required this.titleAccent,
     required this.body,
+    required this.tint,
   });
 
-  final String stage;
+  final IconData icon;
   final String eyebrow;
   final String title;
   final String titleAccent;
   final String body;
+  final Color tint;
 
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
     final tt = Theme.of(context).textTheme;
-    final isMobile = context.isMobile;
 
-    final heading = Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            PixelText(stage, color: colors.primary, pixelSize: 2),
-            const SizedBox(width: AppSpacing.sm),
-            PixelText(eyebrow, color: colors.accent, pixelSize: 2),
-          ],
-        ),
-        const SizedBox(height: AppSpacing.sm),
-        Text.rich(
-          TextSpan(
-            style: tt.titleMedium?.copyWith(
-              color: colors.onSurface,
-              height: 1.25,
-              fontWeight: FontWeight.w600,
-            ),
+    return Container(
+      padding: const EdgeInsets.only(top: AppSpacing.lg),
+      decoration: BoxDecoration(
+        border: Border(top: BorderSide(color: tint, width: 2)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
             children: [
-              TextSpan(text: '$title '),
-              TextSpan(
-                text: titleAccent,
-                style: TextStyle(color: colors.primary),
+              Icon(icon, size: 18, color: tint),
+              const SizedBox(width: AppSpacing.sm),
+              Text(
+                eyebrow,
+                style: tt.labelSmall?.copyWith(
+                  color: tint,
+                  fontWeight: FontWeight.w700,
+                  letterSpacing: 2,
+                ),
               ),
             ],
           ),
-        ),
-      ],
-    );
-
-    final paragraph = Text(
-      body,
-      style: tt.bodyMedium?.copyWith(color: colors.onSurfaceMuted, height: 1.5),
-    );
-
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg),
-      decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(color: colors.primary.withValues(alpha: 0.2)),
-        ),
-      ),
-      child: isMobile
-          ? Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
+          const SizedBox(height: AppSpacing.md),
+          Text.rich(
+            TextSpan(
+              style: tt.titleLarge?.copyWith(
+                color: colors.onSurface,
+                fontWeight: FontWeight.w700,
+                height: 1.3,
+              ),
               children: [
-                heading,
-                const SizedBox(height: AppSpacing.sm),
-                paragraph,
-              ],
-            )
-          : Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(width: 260, child: heading),
-                const SizedBox(width: AppSpacing.xl),
-                Expanded(child: paragraph),
+                TextSpan(text: '$title '),
+                TextSpan(
+                  text: titleAccent,
+                  style: TextStyle(color: colors.primary),
+                ),
               ],
             ),
+          ),
+          const SizedBox(height: AppSpacing.md),
+          Text(
+            body,
+            style: tt.bodyMedium?.copyWith(
+              color: colors.onSurfaceMuted,
+              height: 1.6,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

@@ -1099,7 +1099,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get poco_classDruid => 'Друид';
 
   @override
-  String get poco_classStormHerald => 'Вестник бури';
+  String get poco_classStormHerald => 'Варвар бури';
 
   @override
   String get poco_classArtificer => 'Изобретатель';
@@ -1111,28 +1111,15 @@ class AppLocalizationsRu extends AppLocalizations {
   String get poco_galleryTitle => 'Скриншоты демо';
 
   @override
-  String get poco_shotTitle => 'Титульный экран';
-
-  @override
   String get poco_shotParty => 'Выбор отряда: три героя на старте';
 
   @override
-  String get poco_shotDungeon => 'Колодец: монстры видят и преследуют';
+  String get poco_shotDungeon =>
+      'Исследование: отряд идёт через Чёрный лес; монстры видят и преследуют';
 
   @override
-  String get poco_shotLevelUp => 'Новый уровень: один навык из трёх';
-
-  @override
-  String get poco_shotMeteor => 'Метеор: огненная кульминация';
-
-  @override
-  String get poco_shotBlizzard => 'Буран';
-
-  @override
-  String get poco_shotStorm => 'Буря: электрическая кульминация';
-
-  @override
-  String get poco_shotBoss => 'Босс 5-го этажа';
+  String get poco_shotLevelUp =>
+      'Новый уровень: один навык из трёх, с указанием эволюции';
 
   @override
   String get poco_controlsEyebrow => 'Управление';
@@ -1211,4 +1198,24 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get poco_madeBy => 'Авторский проект Жозе Гильерме Алвеса.';
+
+  @override
+  String get poco_subtitle => 'Желание Пика';
+
+  @override
+  String get poco_shotBattleCommand =>
+      'Бой: ход Плута, сверху очередь инициативы';
+
+  @override
+  String get poco_shotBattleStrike => 'Тяжёлый удар Воина в Чёрном лесу';
+
+  @override
+  String get about_statSectorsLabel => 'отраслей';
+
+  @override
+  String get about_statAppsLabel =>
+      'операционных приложений для B2B-ритейла, целиком';
+
+  @override
+  String get about_scopeEndToEnd => 'Весь фронтенд';
 }

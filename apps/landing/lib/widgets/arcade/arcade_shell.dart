@@ -1,10 +1,12 @@
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:landing/widgets/arcade/calm_backdrop.dart';
+import 'package:landing/widgets/arcade/cosmic_layer.dart';
 
 /// Moldura global da landing. Empilha, de tras pra frente:
 /// 1. [CalmBackdrop] — fundo solido, luzes neon difusas e estrelas estaticas;
-/// 2. o conteudo da rota (paginas com Scaffold transparente).
+/// 2. [CosmicLayer] — nebulosas, galaxia distante e planetas nas bordas;
+/// 3. o conteudo da rota (paginas com Scaffold transparente).
 ///
 /// Redesign 2026-11: o grid Outrun animado, o boss/portal (arquivados em
 /// `archive/final_boss/`) e o overlay CRT sairam do fundo global — competiam
@@ -29,6 +31,7 @@ class ArcadeShell extends StatelessWidget {
             starColor: colors.onSurface,
           ),
         ),
+        const Positioned.fill(child: CosmicLayer()),
         Positioned.fill(child: child),
       ],
     );

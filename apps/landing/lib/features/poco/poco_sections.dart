@@ -292,14 +292,12 @@ class PocoGallerySection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
+    // Capturas do build atual (v0.27.0), feitas rodando o jogo.
+    final featured = ('battle-strike', l10n.poco_shotBattleStrike);
     final shots = [
-      ('title', l10n.poco_shotTitle),
-      ('dungeon-map', l10n.poco_shotDungeon),
-      ('level-up-draft', l10n.poco_shotLevelUp),
-      ('battle-meteor', l10n.poco_shotMeteor),
-      ('battle-blizzard', l10n.poco_shotBlizzard),
-      ('battle-storm', l10n.poco_shotStorm),
-      ('boss', l10n.poco_shotBoss),
+      ('explore', l10n.poco_shotDungeon),
+      ('level-up', l10n.poco_shotLevelUp),
+      ('battle-command', l10n.poco_shotBattleCommand),
     ];
 
     return Column(
@@ -311,16 +309,16 @@ class PocoGallerySection extends StatelessWidget {
           title: l10n.poco_galleryTitle,
         ),
         const SizedBox(height: AppSpacing.xl),
-        // Primeira captura (combate) em destaque, demais em grade.
+        // Combate em destaque, demais em grade.
         _Shot(
-          asset: 'assets/images/poco/${shots[3].$1}.jpg',
-          caption: shots[3].$2,
+          asset: 'assets/images/poco/${featured.$1}.jpg',
+          caption: featured.$2,
         ),
         const SizedBox(height: AppSpacing.lg),
         _ResponsiveGrid(
-          minTileWidth: 260,
+          minTileWidth: 300,
           children: [
-            for (final s in [...shots.take(3), ...shots.skip(4)])
+            for (final s in shots)
               _Shot(asset: 'assets/images/poco/${s.$1}.jpg', caption: s.$2),
           ],
         ),
@@ -816,7 +814,7 @@ class PocoFooter extends StatelessWidget {
       ),
       child: Column(
         children: [
-          BlinkingPixelText('THANKS FOR PLAYING', color: colors.primary),
+          PixelText('THANKS FOR PLAYING', color: colors.primary),
           const SizedBox(height: AppSpacing.lg),
           Wrap(
             alignment: WrapAlignment.center,

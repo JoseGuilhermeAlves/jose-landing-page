@@ -1077,7 +1077,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get poco_classWarrior => 'Guerreiro';
 
   @override
-  String get poco_classMage => 'Maga';
+  String get poco_classMage => 'Mago';
 
   @override
   String get poco_classRogue => 'Ladino';
@@ -1095,7 +1095,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get poco_classDruid => 'Druida';
 
   @override
-  String get poco_classStormHerald => 'Arauto da Tempestade';
+  String get poco_classStormHerald => 'Bárbaro Tempestade';
 
   @override
   String get poco_classArtificer => 'Artífice';
@@ -1107,28 +1107,15 @@ class AppLocalizationsPt extends AppLocalizations {
   String get poco_galleryTitle => 'Capturas da demo';
 
   @override
-  String get poco_shotTitle => 'Tela de título';
-
-  @override
   String get poco_shotParty => 'Seleção de grupo: três heróis para começar';
 
   @override
-  String get poco_shotDungeon => 'O Poço: os monstros enxergam e perseguem';
+  String get poco_shotDungeon =>
+      'Exploração: o grupo atravessa a Floresta Negra; os monstros enxergam e perseguem';
 
   @override
-  String get poco_shotLevelUp => 'Level-up: uma habilidade entre três';
-
-  @override
-  String get poco_shotMeteor => 'Meteoro: o clímax de fogo';
-
-  @override
-  String get poco_shotBlizzard => 'Nevasca';
-
-  @override
-  String get poco_shotStorm => 'Tempestade: o clímax elétrico';
-
-  @override
-  String get poco_shotBoss => 'O chefe do andar 5';
+  String get poco_shotLevelUp =>
+      'Level-up: uma habilidade entre três, com a evolução indicada';
 
   @override
   String get poco_controlsEyebrow => 'Controles';
@@ -1208,4 +1195,25 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get poco_madeBy => 'Projeto autoral de José Guilherme Alves.';
+
+  @override
+  String get poco_subtitle => 'O desejo de Pick';
+
+  @override
+  String get poco_shotBattleCommand =>
+      'Combate: o turno do Ladino, com a fila de iniciativa no topo';
+
+  @override
+  String get poco_shotBattleStrike =>
+      'Golpe Pesado do Guerreiro na Floresta Negra';
+
+  @override
+  String get about_statSectorsLabel => 'setores atendidos';
+
+  @override
+  String get about_statAppsLabel =>
+      'apps de operação no varejo B2B, de ponta a ponta';
+
+  @override
+  String get about_scopeEndToEnd => 'Front end inteiro';
 }

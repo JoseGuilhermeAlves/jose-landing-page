@@ -1044,7 +1044,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get poco_classDruid => '德鲁伊';
 
   @override
-  String get poco_classStormHerald => '风暴使者';
+  String get poco_classStormHerald => '风暴野蛮人';
 
   @override
   String get poco_classArtificer => '工匠';
@@ -1056,28 +1056,13 @@ class AppLocalizationsZh extends AppLocalizations {
   String get poco_galleryTitle => '试玩版截图';
 
   @override
-  String get poco_shotTitle => '标题画面';
-
-  @override
   String get poco_shotParty => '队伍选择:三名起始英雄';
 
   @override
-  String get poco_shotDungeon => '井底:怪物会发现并追击';
+  String get poco_shotDungeon => '探索:队伍穿越黑森林,怪物会发现并追击';
 
   @override
-  String get poco_shotLevelUp => '升级:三选一技能';
-
-  @override
-  String get poco_shotMeteor => '陨石:火焰终极技';
-
-  @override
-  String get poco_shotBlizzard => '暴风雪';
-
-  @override
-  String get poco_shotStorm => '风暴:雷电终极技';
-
-  @override
-  String get poco_shotBoss => '第 5 层首领';
+  String get poco_shotLevelUp => '升级:三选一技能,并显示进化路线';
 
   @override
   String get poco_controlsEyebrow => '操作';
@@ -1156,4 +1141,22 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get poco_madeBy => 'José Guilherme Alves 的个人项目。';
+
+  @override
+  String get poco_subtitle => '皮克的愿望';
+
+  @override
+  String get poco_shotBattleCommand => '战斗:盗贼的回合,顶部为行动顺序';
+
+  @override
+  String get poco_shotBattleStrike => '战士在黑森林施展重击';
+
+  @override
+  String get about_statSectorsLabel => '服务过的行业';
+
+  @override
+  String get about_statAppsLabel => 'B2B 零售运营应用,端到端';
+
+  @override
+  String get about_scopeEndToEnd => '完整前端';
 }

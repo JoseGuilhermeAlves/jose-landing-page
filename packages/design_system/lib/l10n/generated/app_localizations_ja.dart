@@ -945,10 +945,13 @@ class AppLocalizationsJa extends AppLocalizations {
       'Windows：.exe インストーラーを開き、フォルダーを選んで手順に従ってください。Android：.apk をインストールしてください。';
 
   @override
-  String get game_gifAlt => 'Poço のゲームプレイ:魔法使いが敵の列にメテオを放つ';
+  String get game_gifAlt => 'Poço のゲームプレイ:パイロマンサーが火山の悪魔に残り火の雨を降らせる';
 
   @override
   String get game_trailerTitle => 'トレーラー';
+
+  @override
+  String get poco_gameplayTrailerTitle => 'ゲームプレイトレーラー';
 
   @override
   String get game_trailerPlay => 'トレーラーを見る';
@@ -1077,7 +1080,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get poco_shotParty => 'パーティ選択:最初の3人';
 
   @override
-  String get poco_shotDungeon => '探索:黒い森を進む一行。モンスターは視認して追跡する';
+  String get poco_shotDungeon => '探索:一行は深淵を下っていく。モンスターは視認して追跡する';
 
   @override
   String get poco_shotLevelUp => 'レベルアップ:3つから1つ、進化先も表示';
@@ -1164,10 +1167,10 @@ class AppLocalizationsJa extends AppLocalizations {
   String get poco_subtitle => 'ピックの願い';
 
   @override
-  String get poco_shotBattleCommand => '戦闘:盗賊のターン、上部に行動順キュー';
+  String get poco_shotBattleCommand => '深淵での戦闘:戦士のターン、上部に行動順キュー';
 
   @override
-  String get poco_shotBattleStrike => '黒い森で戦士の重撃';
+  String get poco_shotBattleStrike => '深淵でパイロマンサーの灼熱球が炸裂:弱点に109ダメージ';
 
   @override
   String get about_statSectorsLabel => '対応した業界';

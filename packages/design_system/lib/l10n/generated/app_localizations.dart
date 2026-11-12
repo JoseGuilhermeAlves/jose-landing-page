@@ -1903,7 +1903,7 @@ abstract class AppLocalizations {
   /// No description provided for @game_gifAlt.
   ///
   /// In pt, this message translates to:
-  /// **'Gameplay do Poço: a maga conjura Meteoro sobre a linha inimiga'**
+  /// **'Gameplay do Poço: o Piromante faz chover brasas sobre um demônio do vulcão'**
   String get game_gifAlt;
 
   /// No description provided for @game_trailerTitle.
@@ -1911,6 +1911,12 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Trailer'**
   String get game_trailerTitle;
+
+  /// No description provided for @poco_gameplayTrailerTitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Trailer de gameplay'**
+  String get poco_gameplayTrailerTitle;
 
   /// No description provided for @game_trailerPlay.
   ///
@@ -2149,7 +2155,7 @@ abstract class AppLocalizations {
   /// No description provided for @poco_shotDungeon.
   ///
   /// In pt, this message translates to:
-  /// **'Exploração: o grupo atravessa a Floresta Negra; os monstros enxergam e perseguem'**
+  /// **'Exploração: o grupo desce pelo Abismo; os monstros enxergam e perseguem'**
   String get poco_shotDungeon;
 
   /// No description provided for @poco_shotLevelUp.
@@ -2323,13 +2329,13 @@ abstract class AppLocalizations {
   /// No description provided for @poco_shotBattleCommand.
   ///
   /// In pt, this message translates to:
-  /// **'Combate: o turno do Ladino, com a fila de iniciativa no topo'**
+  /// **'Combate no Abismo: o turno do Guerreiro, com a fila de iniciativa no topo'**
   String get poco_shotBattleCommand;
 
   /// No description provided for @poco_shotBattleStrike.
   ///
   /// In pt, this message translates to:
-  /// **'Golpe Pesado do Guerreiro na Floresta Negra'**
+  /// **'Bola Ígnea do Piromante explode no Abismo: 109 de dano na fraqueza'**
   String get poco_shotBattleStrike;
 
   /// No description provided for @about_statSectorsLabel.

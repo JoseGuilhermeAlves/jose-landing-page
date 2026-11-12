@@ -978,10 +978,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get game_gifAlt =>
-      'Poço gameplay: the mage casts Meteor on the enemy line';
+      'Poço gameplay: the Pyromancer rains embers down on a volcano demon';
 
   @override
   String get game_trailerTitle => 'Trailer';
+
+  @override
+  String get poco_gameplayTrailerTitle => 'Gameplay trailer';
 
   @override
   String get game_trailerPlay => 'Watch trailer';
@@ -1111,7 +1114,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get poco_shotDungeon =>
-      'Exploration: the party crosses the Black Forest; monsters see you and chase';
+      'Exploration: the party descends through the Abyss; monsters see you and chase';
 
   @override
   String get poco_shotLevelUp =>
@@ -1200,11 +1203,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get poco_shotBattleCommand =>
-      'Combat: the Rogue\'s turn, with the initiative queue on top';
+      'Combat in the Abyss: the Warrior\'s turn, with the initiative queue on top';
 
   @override
   String get poco_shotBattleStrike =>
-      'The Warrior\'s Heavy Blow in the Black Forest';
+      'The Pyromancer\'s Blazing Orb bursts in the Abyss: 109 damage on a weakness';
 
   @override
   String get about_statSectorsLabel => 'sectors served';

@@ -982,10 +982,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get game_gifAlt =>
-      'Gameplay de Poço: la maga lanza Meteoro sobre la línea enemiga';
+      'Gameplay de Poço: el Piromante hace llover brasas sobre un demonio del volcán';
 
   @override
   String get game_trailerTitle => 'Tráiler';
+
+  @override
+  String get poco_gameplayTrailerTitle => 'Tráiler de gameplay';
 
   @override
   String get game_trailerPlay => 'Ver tráiler';
@@ -1115,7 +1118,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get poco_shotDungeon =>
-      'Exploración: el grupo cruza el Bosque Negro; los monstruos ven y persiguen';
+      'Exploración: el grupo desciende por el Abismo; los monstruos ven y persiguen';
 
   @override
   String get poco_shotLevelUp =>
@@ -1205,11 +1208,11 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get poco_shotBattleCommand =>
-      'Combate: el turno del Pícaro, con la cola de iniciativa arriba';
+      'Combate en el Abismo: el turno del Guerrero, con la cola de iniciativa arriba';
 
   @override
   String get poco_shotBattleStrike =>
-      'Golpe Pesado del Guerrero en el Bosque Negro';
+      'La Bola Ígnea del Piromante estalla en el Abismo: 109 de daño en la debilidad';
 
   @override
   String get about_statSectorsLabel => 'sectores atendidos';

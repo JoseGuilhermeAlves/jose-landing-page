@@ -120,6 +120,9 @@ class _PocoPageState extends State<PocoPage> {
                   const PocoTrailerSection(
                     trailerUrl: AppConfig.pocoTrailerUrl,
                     posterAsset: AppConfig.pocoTrailerPosterAsset,
+                    gameplayTrailerUrl: AppConfig.pocoGameplayTrailerUrl,
+                    gameplayPosterAsset:
+                        AppConfig.pocoGameplayTrailerPosterAsset,
                   ),
                 ),
               ),

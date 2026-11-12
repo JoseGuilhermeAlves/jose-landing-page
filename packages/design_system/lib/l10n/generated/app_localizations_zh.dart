@@ -933,10 +933,13 @@ class AppLocalizationsZh extends AppLocalizations {
       'Windows：打开 .exe 安装程序，选择文件夹并按步骤操作。Android：安装 .apk。';
 
   @override
-  String get game_gifAlt => 'Poço 实机画面:法师向敌方阵线施放陨石';
+  String get game_gifAlt => 'Poço 实机画面:炎术师向火山恶魔降下余烬之雨';
 
   @override
   String get game_trailerTitle => '预告片';
+
+  @override
+  String get poco_gameplayTrailerTitle => '实机预告片';
 
   @override
   String get game_trailerPlay => '观看预告片';
@@ -1059,7 +1062,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get poco_shotParty => '队伍选择:三名起始英雄';
 
   @override
-  String get poco_shotDungeon => '探索:队伍穿越黑森林,怪物会发现并追击';
+  String get poco_shotDungeon => '探索:队伍深入深渊,怪物会发现并追击';
 
   @override
   String get poco_shotLevelUp => '升级:三选一技能,并显示进化路线';
@@ -1146,10 +1149,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String get poco_subtitle => '皮克的愿望';
 
   @override
-  String get poco_shotBattleCommand => '战斗:盗贼的回合,顶部为行动顺序';
+  String get poco_shotBattleCommand => '深渊中的战斗:战士的回合,顶部为行动顺序';
 
   @override
-  String get poco_shotBattleStrike => '战士在黑森林施展重击';
+  String get poco_shotBattleStrike => '炎术师的炽焰球在深渊中爆裂:命中弱点造成109点伤害';
 
   @override
   String get about_statSectorsLabel => '服务过的行业';

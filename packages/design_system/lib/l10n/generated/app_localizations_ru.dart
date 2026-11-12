@@ -983,10 +983,13 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get game_gifAlt =>
-      'Геймплей Poço: волшебница обрушивает Метеор на вражеский строй';
+      'Геймплей Poço: Пиромант обрушивает дождь углей на вулканического демона';
 
   @override
   String get game_trailerTitle => 'Трейлер';
+
+  @override
+  String get poco_gameplayTrailerTitle => 'Геймплейный трейлер';
 
   @override
   String get game_trailerPlay => 'Смотреть трейлер';
@@ -1116,7 +1119,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get poco_shotDungeon =>
-      'Исследование: отряд идёт через Чёрный лес; монстры видят и преследуют';
+      'Исследование: отряд спускается в Бездну; монстры видят и преследуют';
 
   @override
   String get poco_shotLevelUp =>
@@ -1205,10 +1208,11 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get poco_shotBattleCommand =>
-      'Бой: ход Плута, сверху очередь инициативы';
+      'Бой в Бездне: ход Воина, сверху очередь инициативы';
 
   @override
-  String get poco_shotBattleStrike => 'Тяжёлый удар Воина в Чёрном лесу';
+  String get poco_shotBattleStrike =>
+      'Пылающая сфера Пироманта взрывается в Бездне: 109 урона по слабости';
 
   @override
   String get about_statSectorsLabel => 'отраслей';

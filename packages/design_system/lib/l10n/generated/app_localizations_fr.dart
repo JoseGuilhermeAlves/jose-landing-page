@@ -984,10 +984,13 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get game_gifAlt =>
-      'Gameplay de Poço : la mage lance Météore sur la ligne ennemie';
+      'Gameplay de Poço : le Pyromancien fait pleuvoir des braises sur un démon du volcan';
 
   @override
   String get game_trailerTitle => 'Bande-annonce';
+
+  @override
+  String get poco_gameplayTrailerTitle => 'Bande-annonce de gameplay';
 
   @override
   String get game_trailerPlay => 'Voir la bande-annonce';
@@ -1117,7 +1120,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get poco_shotDungeon =>
-      'Exploration : le groupe traverse la Forêt Noire ; les monstres voient et poursuivent';
+      'Exploration : le groupe descend dans l\'Abîme ; les monstres voient et poursuivent';
 
   @override
   String get poco_shotLevelUp =>
@@ -1206,11 +1209,11 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get poco_shotBattleCommand =>
-      'Combat : le tour du Voleur, file d\'initiative en haut';
+      'Combat dans l\'Abîme : le tour du Guerrier, file d\'initiative en haut';
 
   @override
   String get poco_shotBattleStrike =>
-      'Coup Lourd du Guerrier dans la Forêt Noire';
+      'L\'Orbe Ardent du Pyromancien explose dans l\'Abîme : 109 dégâts sur une faiblesse';
 
   @override
   String get about_statSectorsLabel => 'secteurs servis';

@@ -982,10 +982,13 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get game_gifAlt =>
-      'Poço-Gameplay: die Magierin wirkt Meteor auf die gegnerische Reihe';
+      'Poço-Gameplay: der Pyromant lässt Glut auf einen Vulkandämon regnen';
 
   @override
   String get game_trailerTitle => 'Trailer';
+
+  @override
+  String get poco_gameplayTrailerTitle => 'Gameplay-Trailer';
 
   @override
   String get game_trailerPlay => 'Trailer ansehen';
@@ -1115,7 +1118,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get poco_shotDungeon =>
-      'Erkundung: die Gruppe durchquert den Schwarzen Wald; Monster sehen und verfolgen';
+      'Erkundung: die Gruppe steigt in den Abgrund hinab; Monster sehen und verfolgen';
 
   @override
   String get poco_shotLevelUp =>
@@ -1204,11 +1207,11 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get poco_shotBattleCommand =>
-      'Kampf: der Zug des Schurken, oben die Initiativeleiste';
+      'Kampf im Abgrund: der Zug des Kriegers, oben die Initiativeleiste';
 
   @override
   String get poco_shotBattleStrike =>
-      'Schwerer Schlag des Kriegers im Schwarzen Wald';
+      'Die Glutkugel des Pyromanten explodiert im Abgrund: 109 Schaden auf eine Schwäche';
 
   @override
   String get about_statSectorsLabel => 'betreute Branchen';

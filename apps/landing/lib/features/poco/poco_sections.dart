@@ -9,11 +9,17 @@ class PocoTrailerSection extends StatelessWidget {
   const PocoTrailerSection({
     required this.trailerUrl,
     required this.posterAsset,
+    this.gameplayTrailerUrl,
+    this.gameplayPosterAsset,
     super.key,
   });
 
   final String trailerUrl;
   final String posterAsset;
+
+  /// Trailer de gameplay (combate, mundos, classes), abaixo do cinematico.
+  final String? gameplayTrailerUrl;
+  final String? gameplayPosterAsset;
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +35,19 @@ class PocoTrailerSection extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.xl),
         PocoTrailerPlayer(videoUrl: trailerUrl, posterAsset: posterAsset),
+        if (gameplayTrailerUrl != null && gameplayPosterAsset != null) ...[
+          const SizedBox(height: AppSpacing.xxl),
+          PixelText(
+            l10n.poco_gameplayTrailerTitle.toUpperCase(),
+            color: context.colors.primary,
+            pixelSize: 2,
+          ),
+          const SizedBox(height: AppSpacing.lg),
+          PocoTrailerPlayer(
+            videoUrl: gameplayTrailerUrl!,
+            posterAsset: gameplayPosterAsset!,
+          ),
+        ],
       ],
     );
   }
@@ -148,8 +167,40 @@ class _FeatureTileState extends State<_FeatureTile> {
 }
 
 /// "Party select": nove slots de classe, como a tela de selecao do jogo.
-class PocoHeroesSection extends StatelessWidget {
+class PocoHeroesSection extends StatefulWidget {
   const PocoHeroesSection({super.key});
+
+  /// Captura da tela de selecao com cada heroi em foco, na ordem dos slots.
+  static const shotIds = [
+    'warrior',
+    'mage',
+    'rogue',
+    'cleric',
+    'bloodknight',
+    'necromancer',
+    'druid',
+    'stormherald',
+    'artificer',
+  ];
+
+  @override
+  State<PocoHeroesSection> createState() => _PocoHeroesSectionState();
+}
+
+class _PocoHeroesSectionState extends State<PocoHeroesSection> {
+  int _selected = 0;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Pre-carrega as nove capturas: trocar de heroi nao pisca.
+    for (final id in PocoHeroesSection.shotIds) {
+      precacheImage(AssetImage(_shotAsset(id)), context);
+    }
+  }
+
+  static String _shotAsset(String id) =>
+      'assets/images/poco/party-select-$id.jpg';
 
   @override
   Widget build(BuildContext context) {
@@ -178,12 +229,21 @@ class PocoHeroesSection extends StatelessWidget {
       spacing: AppSpacing.sm,
       children: [
         for (var i = 0; i < classes.length; i++)
-          _ClassSlot(slot: i + 1, name: classes[i]),
+          _ClassSlot(
+            slot: i + 1,
+            name: classes[i],
+            selected: i == _selected,
+            onTap: () => setState(() => _selected = i),
+          ),
       ],
     );
-    final shot = _Shot(
-      asset: 'assets/images/poco/party-select.jpg',
-      caption: l10n.poco_shotParty,
+    final shot = AnimatedSwitcher(
+      duration: AppDuration.fast,
+      child: _Shot(
+        key: ValueKey(_selected),
+        asset: _shotAsset(PocoHeroesSection.shotIds[_selected]),
+        caption: '${classes[_selected]} — ${l10n.poco_shotParty}',
+      ),
     );
 
     if (isMobile) {
@@ -217,10 +277,17 @@ class PocoHeroesSection extends StatelessWidget {
 }
 
 class _ClassSlot extends StatefulWidget {
-  const _ClassSlot({required this.slot, required this.name});
+  const _ClassSlot({
+    required this.slot,
+    required this.name,
+    required this.selected,
+    required this.onTap,
+  });
 
   final int slot;
   final String name;
+  final bool selected;
+  final VoidCallback onTap;
 
   @override
   State<_ClassSlot> createState() => _ClassSlotState();
@@ -233,52 +300,63 @@ class _ClassSlotState extends State<_ClassSlot> {
   Widget build(BuildContext context) {
     final colors = context.colors;
     final tt = Theme.of(context).textTheme;
-    final lit = _hovered;
+    final lit = _hovered || widget.selected;
 
-    return MouseRegion(
-      onEnter: (_) => setState(() => _hovered = true),
-      onExit: (_) => setState(() => _hovered = false),
-      child: AnimatedContainer(
-        duration: AppDuration.fast,
-        height: 76,
-        padding: const EdgeInsets.all(AppSpacing.sm),
-        decoration: BoxDecoration(
-          color: lit
-              ? colors.primary.withValues(alpha: 0.14)
-              : colors.surface.withValues(alpha: 0.7),
-          border: Border.all(
-            color: lit ? colors.primary : colors.border,
-            width: lit ? 1.5 : 1,
-          ),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                PixelText(
-                  'P${widget.slot}',
-                  color: lit
-                      ? colors.primary
-                      : colors.onSurfaceMuted.withValues(alpha: 0.6),
-                  pixelSize: 1.5,
-                ),
-                const Spacer(),
-                if (lit) PixelText('>', color: colors.primary, pixelSize: 2),
-              ],
-            ),
-            const Spacer(),
-            Text(
-              widget.name,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: tt.labelLarge?.copyWith(
-                color: colors.onSurface,
-                fontWeight: FontWeight.w600,
-                height: 1.2,
+    return Semantics(
+      button: true,
+      selected: widget.selected,
+      label: widget.name,
+      excludeSemantics: true,
+      child: MouseRegion(
+        cursor: SystemMouseCursors.click,
+        onEnter: (_) => setState(() => _hovered = true),
+        onExit: (_) => setState(() => _hovered = false),
+        child: GestureDetector(
+          onTap: widget.onTap,
+          child: AnimatedContainer(
+            duration: AppDuration.fast,
+            height: 76,
+            padding: const EdgeInsets.all(AppSpacing.sm),
+            decoration: BoxDecoration(
+              color: lit
+                  ? colors.primary.withValues(alpha: 0.14)
+                  : colors.surface.withValues(alpha: 0.7),
+              border: Border.all(
+                color: lit ? colors.primary : colors.border,
+                width: lit ? 1.5 : 1,
               ),
             ),
-          ],
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    PixelText(
+                      'P${widget.slot}',
+                      color: lit
+                          ? colors.primary
+                          : colors.onSurfaceMuted.withValues(alpha: 0.6),
+                      pixelSize: 1.5,
+                    ),
+                    const Spacer(),
+                    if (lit)
+                      PixelText('>', color: colors.primary, pixelSize: 2),
+                  ],
+                ),
+                const Spacer(),
+                Text(
+                  widget.name,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: tt.labelLarge?.copyWith(
+                    color: colors.onSurface,
+                    fontWeight: FontWeight.w600,
+                    height: 1.2,
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );
@@ -328,7 +406,7 @@ class PocoGallerySection extends StatelessWidget {
 }
 
 class _Shot extends StatefulWidget {
-  const _Shot({required this.asset, required this.caption});
+  const _Shot({required this.asset, required this.caption, super.key});
 
   final String asset;
   final String caption;

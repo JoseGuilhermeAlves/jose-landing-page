@@ -22,8 +22,8 @@ class GameSection extends StatelessWidget {
   final VoidCallback onExplore;
   final VoidCallback onDownload;
 
-  /// GIF de gameplay (Meteoro da maga) — a vitrine animada do jogo na home.
-  static const String _gifAsset = 'assets/images/poco_meteor.gif';
+  /// GIF de gameplay (Chuva de Brasas do Piromante contra um demonio) — a vitrine animada do jogo na home.
+  static const String _gifAsset = 'assets/images/poco_ember_rain.gif';
 
   @override
   Widget build(BuildContext context) {

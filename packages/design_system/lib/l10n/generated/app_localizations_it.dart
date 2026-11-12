@@ -979,10 +979,13 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get game_gifAlt =>
-      'Gameplay di Poço: la maga lancia Meteora sulla linea nemica';
+      'Gameplay di Poço: il Piromante fa piovere braci su un demone del vulcano';
 
   @override
   String get game_trailerTitle => 'Trailer';
+
+  @override
+  String get poco_gameplayTrailerTitle => 'Trailer di gameplay';
 
   @override
   String get game_trailerPlay => 'Guarda il trailer';
@@ -1112,7 +1115,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get poco_shotDungeon =>
-      'Esplorazione: il gruppo attraversa la Foresta Nera; i mostri vedono e inseguono';
+      'Esplorazione: il gruppo scende nell\'Abisso; i mostri vedono e inseguono';
 
   @override
   String get poco_shotLevelUp =>
@@ -1202,11 +1205,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get poco_shotBattleCommand =>
-      'Combattimento: il turno del Ladro, con la coda d\'iniziativa in alto';
+      'Combattimento nell\'Abisso: il turno del Guerriero, con la coda d\'iniziativa in alto';
 
   @override
   String get poco_shotBattleStrike =>
-      'Colpo Pesante del Guerriero nella Foresta Nera';
+      'La Sfera Ignea del Piromante esplode nell\'Abisso: 109 danni sulla debolezza';
 
   @override
   String get about_statSectorsLabel => 'settori serviti';

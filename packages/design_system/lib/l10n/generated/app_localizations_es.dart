@@ -966,7 +966,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'En $version: se restauraron y sincronizaron todos los subtítulos de la introducción cinematográfica, manteniendo la corrección de reproducción.';
+    return 'En $version: se reescribió la historia de los cinco mundos, cada subclase ganó su propio disparador, tres criaturas reaccionan al tipo de golpe que reciben y el bestiario del códice ahora muestra las criaturas que enfrentas.';
   }
 
   @override

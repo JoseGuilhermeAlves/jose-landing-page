@@ -318,7 +318,7 @@
   "game_factStackBody": "Engine-agnostic C# domain, 435 headless tests and full-run simulation for balancing.",
   "game_demoTitle": "Playable demo",
   "game_demoBody": "MVP test build for Windows and Android. Keyboard, gamepad and touch are supported.",
-  "game_demoUpdate": "In {version}: restored the full localized subtitles in the cinematic intro while keeping the playback fix.",
+  "game_demoUpdate": "In {version}: the story of all five worlds was rewritten, every subclass gained its own trigger, three creatures react to the kind of blow they take, and the codex bestiary now shows the creatures you face.",
   "game_ctaWindows": "Windows .exe - 187 MB",
   "game_ctaAndroid": "Android .apk - 234 MB",
   "game_demoNote": "Windows: open the .exe installer, choose a folder and follow the steps. Android: install the .apk.",

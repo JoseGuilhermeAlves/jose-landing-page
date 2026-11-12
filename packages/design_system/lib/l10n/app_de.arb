@@ -318,7 +318,7 @@
   "game_factStackBody": "Engine-unabhängige C#-Domäne, 435 Headless-Tests und Simulation kompletter Durchläufe für das Balancing.",
   "game_demoTitle": "Spielbare Demo",
   "game_demoBody": "MVP-Testbuild für Windows und Android. Tastatur, Gamepad und Touch werden unterstützt.",
-  "game_demoUpdate": "In {version}: vollständige Untertitel im filmischen Intro wiederhergestellt und synchronisiert; die Wiedergabekorrektur bleibt erhalten.",
+  "game_demoUpdate": "In {version}: Die Geschichte aller fünf Welten wurde neu geschrieben, jede Unterklasse hat einen eigenen Auslöser, drei Kreaturen reagieren auf die Art des Treffers, und das Bestiarium im Kodex zeigt jetzt die Kreaturen, denen du begegnest.",
   "game_ctaWindows": "Windows .exe - 187 MB",
   "game_ctaAndroid": "Android .apk - 234 MB",
   "game_demoNote": "Windows: Den .exe-Installer öffnen, einen Ordner wählen und den Schritten folgen. Android: Die .apk installieren.",

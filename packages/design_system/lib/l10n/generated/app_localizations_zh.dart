@@ -919,7 +919,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return '$version：恢复并同步了开场动画的完整字幕，同时保留了播放修复。';
+    return '$version：重写了五个世界的剧情，每个子职业都有了专属触发条件，三种生物会对所受攻击的类型作出反应，图鉴现在会显示你实际遇到的生物。';
   }
 
   @override

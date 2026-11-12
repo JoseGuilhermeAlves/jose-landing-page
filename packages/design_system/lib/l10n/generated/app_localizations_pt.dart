@@ -963,7 +963,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Nesta $version: legendas completas restauradas e sincronizadas na intro cinematográfica, mantendo a correção da reprodução.';
+    return 'Nesta $version: a história dos cinco mundos foi reescrita, cada subclasse ganhou um gatilho próprio, três criaturas reagem ao tipo de golpe que levam e o bestiário do códice agora mostra as criaturas que você enfrenta.';
   }
 
   @override

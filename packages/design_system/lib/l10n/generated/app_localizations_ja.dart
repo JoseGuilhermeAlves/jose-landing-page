@@ -931,7 +931,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return '$version：オープニング映像の字幕を完全に復元して同期し、再生の修正も維持しました。';
+    return '$version：5つの世界の物語を書き直し、すべてのサブクラスに固有の発動条件を追加し、3種のクリーチャーが受けた攻撃の種類に反応するようになり、コデックスの図鑑に実際に戦うクリーチャーが載るようになりました。';
   }
 
   @override

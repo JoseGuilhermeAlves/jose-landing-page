@@ -1879,7 +1879,7 @@ abstract class AppLocalizations {
   /// No description provided for @game_demoUpdate.
   ///
   /// In pt, this message translates to:
-  /// **'Nesta {version}: legendas completas restauradas e sincronizadas na intro cinematográfica, mantendo a correção da reprodução.'**
+  /// **'Nesta {version}: a história dos cinco mundos foi reescrita, cada subclasse ganhou um gatilho próprio, três criaturas reagem ao tipo de golpe que levam e o bestiário do códice agora mostra as criaturas que você enfrenta.'**
   String game_demoUpdate(String version);
 
   /// No description provided for @game_ctaWindows.

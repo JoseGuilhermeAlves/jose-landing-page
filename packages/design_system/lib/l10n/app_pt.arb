@@ -318,7 +318,7 @@
   "game_factStackBody": "Domínio em C# isolado da engine, 435 testes headless e simulação de partidas completas para balanceamento.",
   "game_demoTitle": "Demo jogável",
   "game_demoBody": "Build de testes do MVP para Windows e Android. Teclado, gamepad e toque são suportados.",
-  "game_demoUpdate": "Nesta {version}: legendas completas restauradas e sincronizadas na intro cinematográfica, mantendo a correção da reprodução.",
+  "game_demoUpdate": "Nesta {version}: a história dos cinco mundos foi reescrita, cada subclasse ganhou um gatilho próprio, três criaturas reagem ao tipo de golpe que levam e o bestiário do códice agora mostra as criaturas que você enfrenta.",
   "@game_demoUpdate": {
     "placeholders": {
       "version": {

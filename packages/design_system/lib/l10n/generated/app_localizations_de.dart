@@ -966,7 +966,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'In $version: vollständige Untertitel im filmischen Intro wiederhergestellt und synchronisiert; die Wiedergabekorrektur bleibt erhalten.';
+    return 'In $version: Die Geschichte aller fünf Welten wurde neu geschrieben, jede Unterklasse hat einen eigenen Auslöser, drei Kreaturen reagieren auf die Art des Treffers, und das Bestiarium im Kodex zeigt jetzt die Kreaturen, denen du begegnest.';
   }
 
   @override

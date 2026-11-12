@@ -318,7 +318,7 @@
   "game_factStackBody": "Domaine C# indépendant du moteur, 435 tests headless et simulation de parties complètes pour l'équilibrage.",
   "game_demoTitle": "Démo jouable",
   "game_demoBody": "Build de test du MVP pour Windows et Android. Clavier, manette et tactile sont pris en charge.",
-  "game_demoUpdate": "Dans {version} : sous-titres complets rétablis et synchronisés dans l’introduction cinématique, avec la correction de lecture conservée.",
+  "game_demoUpdate": "Dans {version} : l’histoire des cinq mondes a été réécrite, chaque sous-classe a gagné son propre déclencheur, trois créatures réagissent au type de coup reçu et le bestiaire du codex montre désormais les créatures que vous affrontez.",
   "game_ctaWindows": "Windows .exe - 187 Mo",
   "game_ctaAndroid": "Android .apk - 234 Mo",
   "game_demoNote": "Windows : ouvrez le programme d’installation .exe, choisissez un dossier et suivez les étapes. Android : installez le .apk.",

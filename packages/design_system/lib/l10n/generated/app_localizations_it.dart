@@ -963,7 +963,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'In $version: ripristinati e sincronizzati tutti i sottotitoli dell\'introduzione cinematografica, mantenendo la correzione della riproduzione.';
+    return 'In $version: la storia dei cinque mondi è stata riscritta, ogni sottoclasse ha un proprio innesco, tre creature reagiscono al tipo di colpo che ricevono e il bestiario del codice ora mostra le creature che affronti.';
   }
 
   @override

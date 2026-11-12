@@ -318,7 +318,7 @@
   "game_factStackBody": "エンジンに依存しない C# ドメイン、435件のヘッドレステスト、バランス調整のためのフルラン・シミュレーション。",
   "game_demoTitle": "プレイアブルデモ",
   "game_demoBody": "Windows と Android 向けの MVP テストビルド。キーボード、ゲームパッド、タッチ操作に対応しています。",
-  "game_demoUpdate": "{version}：オープニング映像の字幕を完全に復元して同期し、再生の修正も維持しました。",
+  "game_demoUpdate": "{version}：5つの世界の物語を書き直し、すべてのサブクラスに固有の発動条件を追加し、3種のクリーチャーが受けた攻撃の種類に反応するようになり、コデックスの図鑑に実際に戦うクリーチャーが載るようになりました。",
   "game_ctaWindows": "Windows .exe - 187 MB",
   "game_ctaAndroid": "Android .apk - 234 MB",
   "game_demoNote": "Windows：.exe インストーラーを開き、フォルダーを選んで手順に従ってください。Android：.apk をインストールしてください。",

@@ -963,7 +963,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'In $version: restored the full localized subtitles in the cinematic intro while keeping the playback fix.';
+    return 'In $version: the story of all five worlds was rewritten, every subclass gained its own trigger, three creatures react to the kind of blow they take, and the codex bestiary now shows the creatures you face.';
   }
 
   @override

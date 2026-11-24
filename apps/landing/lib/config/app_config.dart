@@ -66,7 +66,7 @@ abstract final class AppConfig {
 
   /// Trailer de gameplay (combate, mundos, classes) — abaixo do cinematico.
   static const String pocoGameplayTrailerUrl =
-      'trailer/poco-gameplay-trailer.mp4?v=0.30.0';
+      'trailer/poco-gameplay-trailer.mp4?v=0.30.1';
 
   static const String pocoGameplayTrailerPosterAsset =
       'assets/images/poco_gameplay_trailer_poster.jpg';

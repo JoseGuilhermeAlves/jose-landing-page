@@ -106538,7 +106538,7 @@ o=A.a9(new A.b5(p,new A.aFs(),e),e.h("J.E"))
 e=h?0:232
 d=A.ZK()
 s=t.p
-d=A.a([new A.dD(new A.xC("hero",new A.NT(g,new A.aFt(n),new A.aFu(n),m),m),m),new A.dD(new A.hE(new A.q7(l,new A.Yt(new A.aFv(a),m),f,m),n.f),m),new A.dD(new A.hE(new A.q7("about",B.Ly,f,m),n.x),m),new A.dD(new A.hE(new A.q7("engineering",new A.RR(k,new A.aFw(n),m),f,m),n.r),m),new A.dD(new A.hE(new A.q7("game",new A.Sd("v0.28.1",new A.aFx(a),new A.aFl(a),m),f,m),n.w),m),new A.dD(new A.hE(new A.q7("contact",new A.BC("contato.joseguilhermealves@gmail.com","5514991163009",j,k,d.ak(a.aE(t.Gk).r.f.gdv()==="pt"?"cv/jose-guilherme-alves-pt.pdf":"cv/jose-guilherme-alves-en.pdf").k(0),n.gaob(),m),f,m),n.y),m),B.agu],s)
+d=A.a([new A.dD(new A.xC("hero",new A.NT(g,new A.aFt(n),new A.aFu(n),m),m),m),new A.dD(new A.hE(new A.q7(l,new A.Yt(new A.aFv(a),m),f,m),n.f),m),new A.dD(new A.hE(new A.q7("about",B.Ly,f,m),n.x),m),new A.dD(new A.hE(new A.q7("engineering",new A.RR(k,new A.aFw(n),m),f,m),n.r),m),new A.dD(new A.hE(new A.q7("game",new A.Sd("v0.30.0",new A.aFx(a),new A.aFl(a),m),f,m),n.w),m),new A.dD(new A.hE(new A.q7("contact",new A.BC("contato.joseguilhermealves@gmail.com","5514991163009",j,k,d.ak(a.aE(t.Gk).r.f.gdv()==="pt"?"cv/jose-guilherme-alves-pt.pdf":"cv/jose-guilherme-alves-en.pdf").k(0),n.gaob(),m),f,m),n.y),m),B.agu],s)
 if(h)d.push(new A.dD(new A.aB(m,64+A.a2(a,B.co,i).w.r.d,m,m),m))
 i=A.a([new A.aK(new A.a0(e,0,0,0),A.Ra(n.d,d),m)],s)
 if(!h)i.push(A.fU(0,new A.AS(p,n.e,n.gYv(),k,j,new A.aFm(n),m),m,m,0,m,0,m))
@@ -106650,7 +106650,7 @@ s.kN(null)
 r.aCT(s.d)}else{s.toString
 A.wi(s).BR("/",null)}},
 p(a){var s=this,r=null,q=t.S.a(A.k(a).c.i(0,A.S(t.V))).a,p=t.w,o=A.aU(A.a2(a,B.v,p).w.a.a),n=A.aU(A.a2(a,B.v,p).w.a.a)===B.A?24:64,m=new A.aIc(n,A.aU(A.a2(a,B.v,p).w.a.a)===B.A?72:128),l=s.gadt(),k=t.p
-k=A.a([A.Ra(s.d,A.a([new A.dD(new A.Wx("v0.28.1",new A.aI9(s),new A.aIa(s),r),r),new A.dD(m.$2$key(B.acV,s.e),r),new A.dD(m.$1(B.acS),r),new A.dD(m.$1(B.acU),r),new A.dD(m.$1(B.acT),r),new A.dD(m.$1(B.acQ),r),new A.dD(m.$2$key(B.acR,s.f),r),new A.dD(new A.Wu("contato.joseguilhermealves@gmail.com",A.bgq(),l,r),r)],k)),A.fU(r,new A.Wy("v0.28.1",l,new A.aIb(s),r),r,r,0,0,0,r)],k)
+k=A.a([A.Ra(s.d,A.a([new A.dD(new A.Wx("v0.30.0",new A.aI9(s),new A.aIa(s),r),r),new A.dD(m.$2$key(B.acV,s.e),r),new A.dD(m.$1(B.acS),r),new A.dD(m.$1(B.acU),r),new A.dD(m.$1(B.acT),r),new A.dD(m.$1(B.acQ),r),new A.dD(m.$2$key(B.acR,s.f),r),new A.dD(new A.Wu("contato.joseguilhermealves@gmail.com",A.bgq(),l,r),r)],k)),A.fU(r,new A.Wy("v0.30.0",l,new A.aIb(s),r),r,r,0,0,0,r)],k)
 if(o!==B.A)k.push(A.pf(0,A.Eu(new A.BG(q.y,r),0.6)))
 return A.eY(r,B.D,A.dE(B.aH,k,B.M,B.bi),r)}}
 A.aId.prototype={
@@ -106907,7 +106907,7 @@ p(a){var s=null,r=t.S.a(A.k(a).c.i(0,A.S(t.V))).a,q=r.x,p=r.z.G(0.5),o=A.k(a).ok
 o=o==null?s:o.cr(r.y,B.y)
 return A.az(s,A.q(this.c,s,s,s,s,s,o,s,s),B.k,s,s,new A.ac(r.f,s,new A.c9(new A.aD(q,1,B.x,-1),new A.aD(q,1,B.x,-1),new A.aD(p,3,B.x,-1),new A.aD(q,1,B.x,-1)),s,s,s,B.p),s,s,s,s,B.TA,s,s,s)}}
 A.Ws.prototype={
-p(a6){var s,r,q,p,o,n,m,l,k,j,i,h,g,f,e,d,c,b,a,a0,a1,a2,a3=null,a4="v0.28.1",a5=A.aS(a6,B.I,t.J)
+p(a6){var s,r,q,p,o,n,m,l,k,j,i,h,g,f,e,d,c,b,a,a0,a1,a2,a3=null,a4="v0.30.0",a5=A.aS(a6,B.I,t.J)
 a5.toString
 s=t.S.a(A.k(a6).c.i(0,A.S(t.V))).a
 r=A.k(a6).ok

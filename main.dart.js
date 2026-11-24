@@ -106728,7 +106728,7 @@ p(a){var s,r,q=null,p=A.aS(a,B.I,t.J)
 p.toString
 s=t.p
 r=A.a([new A.nA(1,p.gkW(),p.gmk(),p.gkU(),q),B.an,new A.x7("trailer/poco-trailer.mp4?v=0.27.1","assets/images/poco_trailer_poster.jpg",q)],s)
-B.b.M(r,A.a([B.p2,A.er(p.gqn().toUpperCase(),B.ay,t.S.a(A.k(a).c.i(0,A.S(t.V))).a.a,6,q,2,2),B.a3,new A.x7("trailer/poco-gameplay-trailer.mp4?v=0.30.0","assets/images/poco_gameplay_trailer_poster.jpg",q)],s))
+B.b.M(r,A.a([B.p2,A.er(p.gqn().toUpperCase(),B.ay,t.S.a(A.k(a).c.i(0,A.S(t.V))).a.a,6,q,2,2),B.a3,new A.x7("trailer/poco-gameplay-trailer.mp4?v=0.30.1","assets/images/poco_gameplay_trailer_poster.jpg",q)],s))
 return A.a8(r,B.q,B.f,B.i)}}
 A.Wt.prototype={
 p(a){var s,r,q,p,o,n,m,l=null,k=A.aS(a,B.I,t.J)

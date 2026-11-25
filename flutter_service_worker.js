@@ -105,7 +105,7 @@ const RESOURCES = {"assets/AssetManifest.bin": "1fad382790d406b6f3650e803196768c
 "cv/jose-guilherme-alves-pt.pdf": "d87de278d3fcc7da1dc0fdfcd8bb7fd5",
 "favicon.png": "cac024e03f95350dea15bc58f70ae2d1",
 "flutter.js": "24bc71911b75b5f8135c949e27a2984e",
-"flutter_bootstrap.js": "7ee8482fd9209594f4395960b2be8eb0",
+"flutter_bootstrap.js": "9ababad00f1171a281c963f0f7d8db77",
 "icons/Icon-192.png": "41dec78c643c22305ee1043bde3b81fa",
 "icons/Icon-512.png": "ea4e893cfb09dde03685f5f01e249e45",
 "icons/Icon-maskable-192.png": "41dec78c643c22305ee1043bde3b81fa",
@@ -113,14 +113,15 @@ const RESOURCES = {"assets/AssetManifest.bin": "1fad382790d406b6f3650e803196768c
 "index.html": "e7df4e27646a1e6b54fd50b36993274a",
 "/": "e7df4e27646a1e6b54fd50b36993274a",
 "jose-landing-page/index.html": "c729fde7d2a77281cca10b2e96cd8ee4",
-"main.dart.js": "a96d0ce5a808dec38a443aefc3d66877",
+"main.dart.js": "db3a9897877168a0d5935e0e4c224cd5",
 "main.dart.mjs": "8d22302787d7b97d276db644e90285db",
-"main.dart.wasm": "a41d58051c0063f530bee979a37d3137",
+"main.dart.wasm": "5a535d7f7959735b49b3f883f4563b3b",
 "manifest.json": "c1d1acd5821da9f29987c988951d8c5a",
+"poco/index.html": "f1488f1dba4c8cffd2df5a718c84772c",
 "robots.txt": "307d0d2ea54047ee7eff1c2c42c51655",
 "sitemap.xml": "76c0623925bf2a4f1f96f36b184db5d8",
-"trailer/poco-gameplay-trailer.mp4": "4f0bb2442c887961ce2685fe00d0b1dc",
-"trailer/poco-trailer.mp4": "74b58636e9e8faa3abe3f2c05548d8fd",
+"trailer/poco-gameplay-trailer.mp4": "0a1fd782a2fa72234126e0ac0ce490fa",
+"trailer/poco-trailer.mp4": "9099667863e0adacf328a90fbeacde9a",
 "version.json": "85c151ddf57e6e3d7929177dd1a665c5"};
 // The application shell files that are downloaded before a service worker can
 // start.

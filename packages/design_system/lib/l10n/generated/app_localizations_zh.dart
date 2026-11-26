@@ -919,7 +919,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return '$version：打断敌人的技能后，该敌人会进入“破绽”状态直到其下一回合，受到后续攻击的伤害提高25%。';
+    return '$version：修复楼层出口，调整地图上首领的大小，让森林入口的路径更清晰，探索更流畅。';
   }
 
   @override

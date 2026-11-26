@@ -963,7 +963,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'Nesta $version: interromper a técnica de um inimigo agora o deixa Exposto até o próximo turno dele, levando 25% a mais de dano dos golpes seguintes.';
+    return 'Na $version: passagens entre andares restauradas, chefes proporcionais no mapa, entrada da Floresta com trilha clara e exploração mais fluida.';
   }
 
   @override

@@ -1879,7 +1879,7 @@ abstract class AppLocalizations {
   /// No description provided for @game_demoUpdate.
   ///
   /// In pt, this message translates to:
-  /// **'Nesta {version}: interromper a técnica de um inimigo agora o deixa Exposto até o próximo turno dele, levando 25% a mais de dano dos golpes seguintes.'**
+  /// **'Na {version}: passagens entre andares restauradas, chefes proporcionais no mapa, entrada da Floresta com trilha clara e exploração mais fluida.'**
   String game_demoUpdate(String version);
 
   /// No description provided for @game_ctaWindows.

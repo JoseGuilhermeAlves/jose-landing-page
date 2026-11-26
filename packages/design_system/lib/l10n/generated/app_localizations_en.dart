@@ -963,7 +963,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'In $version: interrupting an enemy\'s technique now leaves it Exposed until its next turn, taking 25% more damage from the blows that follow.';
+    return 'In $version: restored floor exits, correctly sized overworld bosses, a clearer Forest entrance and smoother exploration.';
   }
 
   @override

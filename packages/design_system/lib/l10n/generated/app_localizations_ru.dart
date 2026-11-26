@@ -968,7 +968,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'В $version: прерывание техники врага теперь делает его Уязвимым до его следующего хода, и он получает на 25% больше урона от последующих ударов.';
+    return 'В $version: восстановлены переходы между этажами, исправлен размер боссов на карте, вход в Лес стал понятнее, а исследование — плавнее.';
   }
 
   @override

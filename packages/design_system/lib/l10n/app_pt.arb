@@ -318,7 +318,7 @@
   "game_factStackBody": "Domínio em C# isolado da engine, 650+ testes headless e simulação de partidas completas para balanceamento.",
   "game_demoTitle": "Demo jogável",
   "game_demoBody": "Build de testes do MVP para Windows e Android. Teclado, gamepad e toque são suportados.",
-  "game_demoUpdate": "Nesta {version}: interromper a técnica de um inimigo agora o deixa Exposto até o próximo turno dele, levando 25% a mais de dano dos golpes seguintes.",
+  "game_demoUpdate": "Na {version}: passagens entre andares restauradas, chefes proporcionais no mapa, entrada da Floresta com trilha clara e exploração mais fluida.",
   "@game_demoUpdate": {
     "placeholders": {
       "version": {

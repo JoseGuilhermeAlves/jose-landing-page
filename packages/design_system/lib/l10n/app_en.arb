@@ -318,7 +318,7 @@
   "game_factStackBody": "Engine-agnostic C# domain, 650+ headless tests and full-run simulation for balancing.",
   "game_demoTitle": "Playable demo",
   "game_demoBody": "MVP test build for Windows and Android. Keyboard, gamepad and touch are supported.",
-  "game_demoUpdate": "In {version}: interrupting an enemy's technique now leaves it Exposed until its next turn, taking 25% more damage from the blows that follow.",
+  "game_demoUpdate": "In {version}: restored floor exits, correctly sized overworld bosses, a clearer Forest entrance and smoother exploration.",
   "game_ctaWindows": "Windows .exe - 187 MB",
   "game_ctaAndroid": "Android .apk - 234 MB",
   "game_demoNote": "Windows: open the .exe installer, choose a folder and follow the steps. Android: install the .apk.",

@@ -931,7 +931,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return '$version：敵の技を中断すると、その敵は次のターンまで「隙あり」状態になり、続く攻撃から25%多くダメージを受けるようになりました。';
+    return '$version：階層間の出口を修正。マップ上のボスの大きさを調整し、森の入口の道を分かりやすくして、探索をより滑らかにしました。';
   }
 
   @override

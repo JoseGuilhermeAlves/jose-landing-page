@@ -318,7 +318,7 @@
   "game_factStackBody": "エンジンに依存しない C# ドメイン、650+件のヘッドレステスト、バランス調整のためのフルラン・シミュレーション。",
   "game_demoTitle": "プレイアブルデモ",
   "game_demoBody": "Windows と Android 向けの MVP テストビルド。キーボード、ゲームパッド、タッチ操作に対応しています。",
-  "game_demoUpdate": "{version}：敵の技を中断すると、その敵は次のターンまで「隙あり」状態になり、続く攻撃から25%多くダメージを受けるようになりました。",
+  "game_demoUpdate": "{version}：階層間の出口を修正。マップ上のボスの大きさを調整し、森の入口の道を分かりやすくして、探索をより滑らかにしました。",
   "game_ctaWindows": "Windows .exe - 187 MB",
   "game_ctaAndroid": "Android .apk - 234 MB",
   "game_demoNote": "Windows：.exe インストーラーを開き、フォルダーを選んで手順に従ってください。Android：.apk をインストールしてください。",

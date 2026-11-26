@@ -967,7 +967,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'In $version: Wer die Technik eines Gegners unterbricht, macht ihn bis zu seinem nächsten Zug Ungeschützt; er erleidet 25 % mehr Schaden durch die folgenden Treffer.';
+    return 'In $version: wiederhergestellte Ausgänge, passend große Bosse auf der Karte, ein klarerer Waldeingang und flüssigere Erkundung.';
   }
 
   @override

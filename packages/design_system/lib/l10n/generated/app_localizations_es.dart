@@ -967,7 +967,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String game_demoUpdate(String version) {
-    return 'En $version: interrumpir la técnica de un enemigo ahora lo deja Expuesto hasta su siguiente turno y recibe un 25% más de daño de los golpes siguientes.';
+    return 'En $version: salidas entre pisos restauradas, jefes con una escala adecuada en el mapa, entrada al Bosque más clara y exploración más fluida.';
   }
 
   @override

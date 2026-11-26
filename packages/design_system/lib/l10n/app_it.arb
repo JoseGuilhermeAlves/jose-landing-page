@@ -318,7 +318,7 @@
   "game_factStackBody": "Dominio C# indipendente dal motore, 650+ test headless e simulazione di partite complete per il bilanciamento.",
   "game_demoTitle": "Demo giocabile",
   "game_demoBody": "Build di test dell'MVP per Windows e Android. Supporta tastiera, gamepad e touch.",
-  "game_demoUpdate": "In {version}: interrompere la tecnica di un nemico ora lo lascia Esposto fino al suo turno successivo, e subisce il 25% di danni in più dai colpi seguenti.",
+  "game_demoUpdate": "Nella {version}: passaggi tra i piani ripristinati, boss proporzionati sulla mappa, ingresso alla Foresta più chiaro ed esplorazione più fluida.",
   "game_ctaWindows": "Windows .exe - 187 MB",
   "game_ctaAndroid": "Android .apk - 234 MB",
   "game_demoNote": "Windows: apri il programma di installazione .exe, scegli una cartella e segui i passaggi. Android: installa il file .apk.",

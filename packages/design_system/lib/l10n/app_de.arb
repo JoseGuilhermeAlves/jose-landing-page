@@ -318,7 +318,7 @@
   "game_factStackBody": "Engine-unabhängige C#-Domäne, 650+ Headless-Tests und Simulation kompletter Durchläufe für das Balancing.",
   "game_demoTitle": "Spielbare Demo",
   "game_demoBody": "MVP-Testbuild für Windows und Android. Tastatur, Gamepad und Touch werden unterstützt.",
-  "game_demoUpdate": "In {version}: Wer die Technik eines Gegners unterbricht, macht ihn bis zu seinem nächsten Zug Ungeschützt; er erleidet 25 % mehr Schaden durch die folgenden Treffer.",
+  "game_demoUpdate": "In {version}: wiederhergestellte Ausgänge, passend große Bosse auf der Karte, ein klarerer Waldeingang und flüssigere Erkundung.",
   "game_ctaWindows": "Windows .exe - 187 MB",
   "game_ctaAndroid": "Android .apk - 234 MB",
   "game_demoNote": "Windows: Den .exe-Installer öffnen, einen Ordner wählen und den Schritten folgen. Android: Die .apk installieren.",

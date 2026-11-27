@@ -1807,7 +1807,7 @@ abstract class AppLocalizations {
   /// No description provided for @game_title.
   ///
   /// In pt, this message translates to:
-  /// **'Poço —'**
+  /// **'Pick\'s Wish —'**
   String get game_title;
 
   /// No description provided for @game_titleAccent.
@@ -1903,7 +1903,7 @@ abstract class AppLocalizations {
   /// No description provided for @game_gifAlt.
   ///
   /// In pt, this message translates to:
-  /// **'Gameplay do Poço: o Piromante faz chover brasas sobre um demônio do vulcão'**
+  /// **'Gameplay do Pick\'s Wish: o Piromante faz chover brasas sobre um demônio do vulcão'**
   String get game_gifAlt;
 
   /// No description provided for @game_trailerTitle.
@@ -1927,7 +1927,7 @@ abstract class AppLocalizations {
   /// No description provided for @game_trailerAlt.
   ///
   /// In pt, this message translates to:
-  /// **'Trailer do Poço'**
+  /// **'Trailer do Pick\'s Wish'**
   String get game_trailerAlt;
 
   /// No description provided for @showcase_openDemo.
@@ -2323,7 +2323,7 @@ abstract class AppLocalizations {
   /// No description provided for @poco_subtitle.
   ///
   /// In pt, this message translates to:
-  /// **'O desejo de Pick'**
+  /// **'Pick\'s Wish'**
   String get poco_subtitle;
 
   /// No description provided for @poco_shotBattleCommand.

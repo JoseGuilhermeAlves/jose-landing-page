@@ -920,7 +920,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get game_eyebrow => 'Personal project';
 
   @override
-  String get game_title => 'Poço —';
+  String get game_title => 'Pick\'s Wish —';
 
   @override
   String get game_titleAccent => 'in development.';
@@ -978,7 +978,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get game_gifAlt =>
-      'Poço gameplay: the Pyromancer rains embers down on a volcano demon';
+      'Pick\'s Wish gameplay: the Pyromancer rains embers down on a volcano demon';
 
   @override
   String get game_trailerTitle => 'Trailer';
@@ -990,7 +990,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get game_trailerPlay => 'Watch trailer';
 
   @override
-  String get game_trailerAlt => 'Poço trailer';
+  String get game_trailerAlt => 'Pick\'s Wish trailer';
 
   @override
   String get showcase_openDemo => 'Open demo';

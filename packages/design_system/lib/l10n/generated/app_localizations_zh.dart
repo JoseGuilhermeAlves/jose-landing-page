@@ -879,7 +879,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get game_eyebrow => '个人项目';
 
   @override
-  String get game_title => 'Poço —';
+  String get game_title => 'Pick\'s Wish —';
 
   @override
   String get game_titleAccent => '开发中。';
@@ -933,7 +933,7 @@ class AppLocalizationsZh extends AppLocalizations {
       'Windows：打开 .exe 安装程序，选择文件夹并按步骤操作。Android：安装 .apk。';
 
   @override
-  String get game_gifAlt => 'Poço 实机画面:炎术师向火山恶魔降下余烬之雨';
+  String get game_gifAlt => 'Pick\'s Wish 实机画面:炎术师向火山恶魔降下余烬之雨';
 
   @override
   String get game_trailerTitle => '预告片';
@@ -945,7 +945,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get game_trailerPlay => '观看预告片';
 
   @override
-  String get game_trailerAlt => 'Poço 预告片';
+  String get game_trailerAlt => 'Pick\'s Wish 预告片';
 
   @override
   String get showcase_openDemo => '打开演示';
@@ -1146,7 +1146,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get poco_madeBy => 'José Guilherme Alves 的个人项目。';
 
   @override
-  String get poco_subtitle => '皮克的愿望';
+  String get poco_subtitle => 'Pick\'s Wish';
 
   @override
   String get poco_shotBattleCommand => '深渊中的战斗:战士的回合,顶部为行动顺序';

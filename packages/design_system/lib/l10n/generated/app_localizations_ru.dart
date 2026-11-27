@@ -925,7 +925,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get game_eyebrow => 'Авторский проект';
 
   @override
-  String get game_title => 'Poço —';
+  String get game_title => 'Pick\'s Wish —';
 
   @override
   String get game_titleAccent => 'в разработке.';
@@ -983,7 +983,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get game_gifAlt =>
-      'Геймплей Poço: Пиромант обрушивает дождь углей на вулканического демона';
+      'Геймплей Pick\'s Wish: Пиромант обрушивает дождь углей на вулканического демона';
 
   @override
   String get game_trailerTitle => 'Трейлер';
@@ -995,7 +995,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get game_trailerPlay => 'Смотреть трейлер';
 
   @override
-  String get game_trailerAlt => 'Трейлер Poço';
+  String get game_trailerAlt => 'Трейлер Pick\'s Wish';
 
   @override
   String get showcase_openDemo => 'Открыть демо';
@@ -1204,7 +1204,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get poco_madeBy => 'Авторский проект Жозе Гильерме Алвеса.';
 
   @override
-  String get poco_subtitle => 'Желание Пика';
+  String get poco_subtitle => 'Pick\'s Wish';
 
   @override
   String get poco_shotBattleCommand =>

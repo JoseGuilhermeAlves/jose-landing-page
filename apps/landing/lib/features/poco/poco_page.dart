@@ -1,5 +1,3 @@
-import 'dart:ui' as ui;
-
 import 'package:design_system/design_system.dart';
 import 'package:feature_hero/feature_hero.dart';
 import 'package:flutter/material.dart';
@@ -272,9 +270,7 @@ class PocoTopBar extends StatelessWidget {
   }
 }
 
-/// "Title screen" do jogo: arte de titulo do Poço escurecida ao fundo, logo
-/// em pixel neon, subtitulo oficial ("O desejo de Pick"), CTAs e chao
-/// Outrun.
+/// Approved key art, kept intact at every screen width.
 class PocoTitleScreen extends StatelessWidget {
   const PocoTitleScreen({
     required this.version,
@@ -282,147 +278,103 @@ class PocoTitleScreen extends StatelessWidget {
     required this.onTrailer,
     super.key,
   });
-
   final String version;
   final VoidCallback onDownload;
   final VoidCallback onTrailer;
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.colors;
     final tt = Theme.of(context).textTheme;
     final l10n = context.l10n;
-    final isMobile = context.isMobile;
-    final h = MediaQuery.sizeOf(context).height.clamp(620.0, 900.0);
-
-    return SizedBox(
-      height: h,
-      child: Stack(
-        fit: StackFit.expand,
-        children: [
-          // Arte de titulo do jogo, apagada e tingida pra servir de cenario.
-          ShaderMask(
-            blendMode: BlendMode.dstIn,
-            shaderCallback: const LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [Colors.white, Colors.white, Colors.transparent],
-              stops: [0, 0.6, 1],
-            ).createShader,
-            child: Opacity(
-              opacity: 0.3,
-              // Blur forte: a arte vira atmosfera e o logo/menu originais do
-              // jogo nao competem com o logo neon.
-              child: ImageFiltered(
-                imageFilter: ui.ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                child: Image.asset(
-                  'assets/images/poco/title-art.jpg',
-                  fit: BoxFit.cover,
-                  alignment: const Alignment(0, -0.3),
-                  excludeFromSemantics: true,
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final compact = constraints.maxWidth < 760;
+        final art = ConstrainedBox(
+          constraints: BoxConstraints(maxWidth: compact ? 350 : 390),
+          child: Image.asset(
+            'assets/images/poco/picks-wish-cover.png',
+            fit: BoxFit.contain,
+            semanticLabel: "Pick's Wish",
+          ),
+        );
+        final copy = Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: compact
+              ? CrossAxisAlignment.center
+              : CrossAxisAlignment.start,
+          children: [
+            Text(
+              l10n.poco_status.toUpperCase(),
+              style: tt.labelMedium?.copyWith(
+                color: const Color(0xffb49b62),
+                letterSpacing: 2,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            const SizedBox(height: AppSpacing.xl),
+            Text(
+              l10n.game_subtitle,
+              textAlign: compact ? TextAlign.center : TextAlign.start,
+              style: tt.headlineSmall?.copyWith(
+                color: const Color(0xffded9c6),
+                height: 1.4,
+              ),
+            ),
+            const SizedBox(height: AppSpacing.xl),
+            Wrap(
+              alignment: compact ? WrapAlignment.center : WrapAlignment.start,
+              spacing: AppSpacing.md,
+              runSpacing: AppSpacing.md,
+              children: [
+                NeonButton(
+                  label: l10n.poco_ctaDownload,
+                  filled: true,
+                  pixel: true,
+                  color: const Color(0xffb49b62),
+                  onPressed: onDownload,
                 ),
-              ),
+                NeonButton(
+                  label: l10n.poco_ctaTrailer,
+                  pixel: true,
+                  color: const Color(0xff8b9a88),
+                  onPressed: onTrailer,
+                ),
+              ],
             ),
-          ),
-          DecoratedBox(
-            decoration: BoxDecoration(
-              gradient: RadialGradient(
-                radius: 0.9,
-                colors: [
-                  colors.background.withValues(alpha: 0.2),
-                  colors.background.withValues(alpha: 0.9),
-                ],
-              ),
+            const SizedBox(height: AppSpacing.lg),
+            Text(
+              l10n.game_metaLine(version),
+              textAlign: compact ? TextAlign.center : TextAlign.start,
+              style: tt.bodySmall?.copyWith(color: const Color(0xffb5b7ab)),
             ),
-          ),
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: 0,
-            height: isMobile ? 120 : 190,
-            child: HorizonFloor(near: colors.primary, far: colors.accent),
-          ),
-          Padding(
+          ],
+        );
+        return ColoredBox(
+          color: const Color(0xff111315),
+          child: Padding(
             padding: EdgeInsets.fromLTRB(
-              AppSpacing.lg,
-              kPocoTopBarHeight + AppSpacing.xl,
-              AppSpacing.lg,
-              isMobile ? 120 : 170,
+              compact ? 24 : 48,
+              kPocoTopBarHeight + 32,
+              compact ? 24 : 48,
+              72,
             ),
             child: Center(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    l10n.poco_status.toUpperCase(),
-                    textAlign: TextAlign.center,
-                    style: tt.labelMedium?.copyWith(
-                      color: colors.accent,
-                      letterSpacing: 2.4,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  const SizedBox(height: AppSpacing.xl),
-                  PocoLogo(pixelSize: isMobile ? 11 : 20),
-                  const SizedBox(height: AppSpacing.md),
-                  Text(
-                    l10n.poco_subtitle.toUpperCase(),
-                    textAlign: TextAlign.center,
-                    style: (isMobile ? tt.titleSmall : tt.titleMedium)
-                        ?.copyWith(
-                          color: colors.onSurface,
-                          letterSpacing: isMobile ? 4 : 7,
-                          fontWeight: FontWeight.w500,
-                        ),
-                  ),
-                  const SizedBox(height: AppSpacing.xl),
-                  ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 600),
-                    child: Text(
-                      l10n.game_subtitle,
-                      textAlign: TextAlign.center,
-                      style: (isMobile ? tt.bodyLarge : tt.titleLarge)
-                          ?.copyWith(
-                            color: colors.onSurface,
-                            height: 1.5,
-                            fontWeight: FontWeight.w500,
-                          ),
-                    ),
-                  ),
-                  const SizedBox(height: AppSpacing.xl),
-                  Wrap(
-                    alignment: WrapAlignment.center,
-                    spacing: AppSpacing.md,
-                    runSpacing: AppSpacing.md,
-                    children: [
-                      NeonButton(
-                        label: l10n.poco_ctaDownload,
-                        filled: true,
-                        pixel: true,
-                        onPressed: onDownload,
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 1050),
+                child: compact
+                    ? Column(children: [art, const SizedBox(height: 32), copy])
+                    : Row(
+                        children: [
+                          Expanded(flex: 5, child: art),
+                          const SizedBox(width: 64),
+                          Expanded(flex: 6, child: copy),
+                        ],
                       ),
-                      NeonButton(
-                        label: l10n.poco_ctaTrailer,
-                        color: colors.accent,
-                        pixel: true,
-                        onPressed: onTrailer,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: AppSpacing.lg),
-                  Text(
-                    l10n.game_metaLine(version),
-                    style: tt.bodySmall?.copyWith(
-                      color: colors.onSurfaceMuted,
-                      letterSpacing: 0.5,
-                    ),
-                  ),
-                ],
               ),
             ),
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

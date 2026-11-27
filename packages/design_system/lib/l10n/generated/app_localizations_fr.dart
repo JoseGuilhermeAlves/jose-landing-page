@@ -926,7 +926,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get game_eyebrow => 'Projet personnel';
 
   @override
-  String get game_title => 'Poço —';
+  String get game_title => 'Pick\'s Wish —';
 
   @override
   String get game_titleAccent => 'en développement.';
@@ -984,7 +984,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get game_gifAlt =>
-      'Gameplay de Poço : le Pyromancien fait pleuvoir des braises sur un démon du volcan';
+      'Gameplay de Pick\'s Wish : le Pyromancien fait pleuvoir des braises sur un démon du volcan';
 
   @override
   String get game_trailerTitle => 'Bande-annonce';
@@ -996,7 +996,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get game_trailerPlay => 'Voir la bande-annonce';
 
   @override
-  String get game_trailerAlt => 'Bande-annonce de Poço';
+  String get game_trailerAlt => 'Bande-annonce de Pick\'s Wish';
 
   @override
   String get showcase_openDemo => 'Ouvrir la démo';
@@ -1205,7 +1205,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get poco_madeBy => 'Un projet personnel de José Guilherme Alves.';
 
   @override
-  String get poco_subtitle => 'Le vœu de Pick';
+  String get poco_subtitle => 'Pick\'s Wish';
 
   @override
   String get poco_shotBattleCommand =>

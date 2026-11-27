@@ -908,7 +908,7 @@ class PocoFooter extends StatelessWidget {
                 cursor: SystemMouseCursors.click,
                 child: GestureDetector(
                   onTap: () => onOpenUri(
-                    Uri(scheme: 'mailto', path: email, query: 'subject=Poço'),
+                    Uri(scheme: 'mailto', path: email, query: 'subject=Pick%27s%20Wish'),
                   ),
                   child: Text(
                     email,

@@ -56,7 +56,7 @@ abstract final class AppConfig {
   /// Trailer cinematografico do Poço em versao web (1080p) servido do
   /// proprio Pages a partir de `apps/landing/web/trailer/` — a Release
   /// `poco-demo` tambem oferece o MP4 como download.
-  static const String pocoTrailerUrl = 'trailer/poco-trailer.mp4?v=0.31.0';
+  static const String pocoTrailerUrl = 'trailer/poco-trailer.mp4?v=0.31.4-brand1';
 
   /// Poster do trailer — asset Flutter (o widget usa `Image.asset`; o
   /// `<video>` aponta pro mesmo arquivo pela URL publicada do asset).
@@ -65,7 +65,7 @@ abstract final class AppConfig {
 
   /// Trailer de gameplay (combate, mundos, classes) — abaixo do cinematico.
   static const String pocoGameplayTrailerUrl =
-      'trailer/poco-gameplay-trailer.mp4?v=0.31.0';
+      'trailer/poco-gameplay-trailer.mp4?v=0.31.4-brand1';
 
   static const String pocoGameplayTrailerPosterAsset =
       'assets/images/poco_gameplay_trailer_poster.jpg';

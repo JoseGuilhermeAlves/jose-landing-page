@@ -888,7 +888,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get game_eyebrow => '個人プロジェクト';
 
   @override
-  String get game_title => 'Poço —';
+  String get game_title => 'Pick\'s Wish —';
 
   @override
   String get game_titleAccent => '開発中。';
@@ -945,7 +945,7 @@ class AppLocalizationsJa extends AppLocalizations {
       'Windows：.exe インストーラーを開き、フォルダーを選んで手順に従ってください。Android：.apk をインストールしてください。';
 
   @override
-  String get game_gifAlt => 'Poço のゲームプレイ:パイロマンサーが火山の悪魔に残り火の雨を降らせる';
+  String get game_gifAlt => 'Pick\'s Wish のゲームプレイ:パイロマンサーが火山の悪魔に残り火の雨を降らせる';
 
   @override
   String get game_trailerTitle => 'トレーラー';
@@ -957,7 +957,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get game_trailerPlay => 'トレーラーを見る';
 
   @override
-  String get game_trailerAlt => 'Poço のトレーラー';
+  String get game_trailerAlt => 'Pick\'s Wish のトレーラー';
 
   @override
   String get showcase_openDemo => 'デモを開く';
@@ -1164,7 +1164,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get poco_madeBy => 'José Guilherme Alves による個人プロジェクト。';
 
   @override
-  String get poco_subtitle => 'ピックの願い';
+  String get poco_subtitle => 'Pick\'s Wish';
 
   @override
   String get poco_shotBattleCommand => '深淵での戦闘:戦士のターン、上部に行動順キュー';

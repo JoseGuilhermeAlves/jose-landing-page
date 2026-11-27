@@ -7,99 +7,31 @@ import 'package:landing/widgets/trailer/trailer_video_view.dart'
 /// pelo teaser da home: logo, moldura neon, painel HUD, cabecalho de "stage",
 /// player do trailer.
 
-/// Logo "POÇO" em pixel-art desenhado no Canvas a partir da `PixelFont`
-/// (5x7) — com a cedilha pintada a mao embaixo do C, que a fonte bitmap
-/// nao comporta. Glow neon em duas passadas + nucleo solido.
+/// Pick's Wish wordmark for compact navigation and gameplay captions.
 class PocoLogo extends StatelessWidget {
   const PocoLogo({required this.pixelSize, this.color, this.glow, super.key});
-
   final double pixelSize;
   final Color? color;
   final Color? glow;
 
-  static const String _word = 'POCO';
-
-  /// Avanco de cada letra em pixels-fonte (5 de glifo + 1 de espaco).
-  static const int _advance = PixelFont.glyphWidth + 1;
-
   @override
-  Widget build(BuildContext context) {
-    final colors = context.colors;
-    final w = (_word.length * _advance - 1) * pixelSize;
-    // 7 linhas do glifo + 3 da cedilha.
-    final h = (PixelFont.glyphHeight + 3) * pixelSize;
-    return Semantics(
-      label: 'Poço',
-      header: true,
-      child: CustomPaint(
-        size: Size(w, h),
-        painter: _PocoLogoPainter(
-          pixelSize: pixelSize,
-          color: color ?? colors.primary,
-          glow: glow ?? colors.primary,
+  Widget build(BuildContext context) => Semantics(
+    label: "Pick's Wish",
+    image: true,
+    child: FittedBox(
+      fit: BoxFit.scaleDown,
+      child: Text(
+        "Pick’s Wish",
+        style: TextStyle(
+          fontFamily: 'Georgia',
+          fontSize: pixelSize * 7,
+          fontWeight: FontWeight.w500,
+          letterSpacing: -0.5,
+          color: color ?? const Color(0xffded9c6),
         ),
       ),
-    );
-  }
-}
-
-class _PocoLogoPainter extends CustomPainter {
-  _PocoLogoPainter({
-    required this.pixelSize,
-    required this.color,
-    required this.glow,
-  });
-
-  final double pixelSize;
-  final Color color;
-  final Color glow;
-
-  Path _path() {
-    final path = Path();
-    void px(int col, int row) => path.addRect(
-      Rect.fromLTWH(col * pixelSize, row * pixelSize, pixelSize, pixelSize),
-    );
-
-    for (var i = 0; i < PocoLogo._word.length; i++) {
-      final rows = PixelFont.rowsFor(PocoLogo._word[i]);
-      for (var r = 0; r < rows.length; r++) {
-        for (var c = 0; c < PixelFont.glyphWidth; c++) {
-          if (rows[r] & (1 << (PixelFont.glyphWidth - 1 - c)) != 0) {
-            px(i * PocoLogo._advance + c, r);
-          }
-        }
-      }
-    }
-    // Cedilha sob o C (3a letra): gancho curto de 3 pixels.
-    const cx = 2 * PocoLogo._advance;
-    px(cx + 2, 7);
-    px(cx + 2, 8);
-    px(cx + 1, 9);
-    return path;
-  }
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final path = _path();
-    canvas
-      ..drawPath(
-        path,
-        Paint()
-          ..color = glow.withValues(alpha: 0.55)
-          ..maskFilter = MaskFilter.blur(BlurStyle.normal, pixelSize * 2.2),
-      )
-      ..drawPath(
-        path,
-        Paint()
-          ..color = glow.withValues(alpha: 0.8)
-          ..maskFilter = MaskFilter.blur(BlurStyle.normal, pixelSize * 0.6),
-      )
-      ..drawPath(path, Paint()..color = color);
-  }
-
-  @override
-  bool shouldRepaint(_PocoLogoPainter old) =>
-      old.pixelSize != pixelSize || old.color != color || old.glow != glow;
+    ),
+  );
 }
 
 /// Moldura 16:9 neon de cantos retos — GIF, trailer, capturas.

@@ -46,7 +46,7 @@ abstract final class AppConfig {
   );
 
   /// Versao do build publicado na release — trocar junto com o upload.
-  static const String pocoDemoVersion = 'v0.31.4';
+  static const String pocoDemoVersion = 'v0.31.5';
 
   static const String pocoDemoWindowsUrl =
       '${pocoDemoBase}Poco-setup-windows.exe';
@@ -56,7 +56,7 @@ abstract final class AppConfig {
   /// Trailer cinematografico do Poço em versao web (1080p) servido do
   /// proprio Pages a partir de `apps/landing/web/trailer/` — a Release
   /// `poco-demo` tambem oferece o MP4 como download.
-  static const String pocoTrailerUrl = 'trailer/poco-trailer.mp4?v=0.31.4-brand1';
+  static const String pocoTrailerUrl = 'trailer/poco-trailer.mp4?v=0.31.5-en1';
 
   /// Poster do trailer — asset Flutter (o widget usa `Image.asset`; o
   /// `<video>` aponta pro mesmo arquivo pela URL publicada do asset).

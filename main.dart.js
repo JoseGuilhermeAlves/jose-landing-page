@@ -48157,7 +48157,7 @@ gkU(){return"Stelle eine Gruppe aus drei Helden zusammen und steige in den Schac
 gme(){return"Engineering"},
 gmd(){return"Engine-unabh\xe4ngige C#-Dom\xe4ne, 650+ Headless-Tests und Simulation kompletter Durchl\xe4ufe f\xfcr das Balancing."},
 gma(){return"MVP-Testbuild f\xfcr Windows und Android. Tastatur, Gamepad und Touch werden unterst\xfctzt."},
-mc(a){return"In "+a+": Wer die Technik eines Gegners unterbricht, macht ihn bis zu seinem n\xe4chsten Zug Ungesch\xfctzt; er erleidet 25 % mehr Schaden durch die folgenden Treffer."},
+mc(a){return"In "+a+": wiederhergestellte Ausg\xe4nge, passend gro\xdfe Bosse auf der Karte, ein klarerer Waldeingang und fl\xfcssigere Erkundung."},
 gm9(){return"Windows .exe - 187 MB"},
 gm7(){return"Android .apk - 234 MB"},
 gmb(){return"Windows: Den .exe-Installer \xf6ffnen, einen Ordner w\xe4hlen und den Schritten folgen. Android: Die .apk installieren."},
@@ -48400,7 +48400,7 @@ gkU(){return"Assemble a party of three heroes and descend into the Pit: five flo
 gme(){return"Engineering"},
 gmd(){return"Engine-agnostic C# domain, 650+ headless tests and full-run simulation for balancing."},
 gma(){return"MVP test build for Windows and Android. Keyboard, gamepad and touch are supported."},
-mc(a){return"In "+a+": interrupting an enemy's technique now leaves it Exposed until its next turn, taking 25% more damage from the blows that follow."},
+mc(a){return"In "+a+": restored floor exits, correctly sized overworld bosses, a clearer Forest entrance and smoother exploration."},
 gm9(){return"Windows .exe - 187 MB"},
 gm7(){return"Android .apk - 234 MB"},
 gmb(){return"Windows: open the .exe installer, choose a folder and follow the steps. Android: install the .apk."},
@@ -48643,7 +48643,7 @@ gkU(){return"Forma un grupo de tres h\xe9roes y desciende al Pozo: cinco pisos h
 gme(){return"Ingenier\xeda"},
 gmd(){return"Dominio en C# independiente del motor, 650+ pruebas headless y simulaci\xf3n de partidas completas para el balance."},
 gma(){return"Build de pruebas del MVP para Windows y Android. Compatible con teclado, gamepad y pantalla t\xe1ctil."},
-mc(a){return"En "+a+": interrumpir la t\xe9cnica de un enemigo ahora lo deja Expuesto hasta su siguiente turno y recibe un 25% m\xe1s de da\xf1o de los golpes siguientes."},
+mc(a){return"En "+a+": salidas entre pisos restauradas, jefes con una escala adecuada en el mapa, entrada al Bosque m\xe1s clara y exploraci\xf3n m\xe1s fluida."},
 gm9(){return"Windows .exe - 187 MB"},
 gm7(){return"Android .apk - 234 MB"},
 gmb(){return"Windows: abre el instalador .exe, elige una carpeta y sigue los pasos. Android: instala el .apk."},
@@ -48886,7 +48886,7 @@ gkU(){return"Formez un groupe de trois h\xe9ros et descendez dans le Puits : cin
 gme(){return"Ing\xe9nierie"},
 gmd(){return"Domaine C# ind\xe9pendant du moteur, 650+ tests headless et simulation de parties compl\xe8tes pour l'\xe9quilibrage."},
 gma(){return"Build de test du MVP pour Windows et Android. Clavier, manette et tactile sont pris en charge."},
-mc(a){return"Dans "+a+" : interrompre la technique d\u2019un ennemi le laisse d\xe9sormais Expos\xe9 jusqu\u2019\xe0 son prochain tour, et il subit 25 % de d\xe9g\xe2ts en plus des coups suivants."},
+mc(a){return"Dans "+a+" : passages entre \xe9tages r\xe9tablis, boss \xe0 la bonne \xe9chelle sur la carte, entr\xe9e de la For\xeat plus claire et exploration plus fluide."},
 gm9(){return"Windows .exe - 187 Mo"},
 gm7(){return"Android .apk - 234 Mo"},
 gmb(){return"Windows : ouvrez le programme d\u2019installation .exe, choisissez un dossier et suivez les \xe9tapes. Android : installez le .apk."},
@@ -49129,7 +49129,7 @@ gkU(){return"Componi un gruppo di tre eroi e scendi nel Pozzo: cinque piani fino
 gme(){return"Ingegneria"},
 gmd(){return"Dominio C# indipendente dal motore, 650+ test headless e simulazione di partite complete per il bilanciamento."},
 gma(){return"Build di test dell'MVP per Windows e Android. Supporta tastiera, gamepad e touch."},
-mc(a){return"In "+a+": interrompere la tecnica di un nemico ora lo lascia Esposto fino al suo turno successivo, e subisce il 25% di danni in pi\xf9 dai colpi seguenti."},
+mc(a){return"Nella "+a+": passaggi tra i piani ripristinati, boss proporzionati sulla mappa, ingresso alla Foresta pi\xf9 chiaro ed esplorazione pi\xf9 fluida."},
 gm9(){return"Windows .exe - 187 MB"},
 gm7(){return"Android .apk - 234 MB"},
 gmb(){return"Windows: apri il programma di installazione .exe, scegli una cartella e segui i passaggi. Android: installa il file .apk."},
@@ -49372,7 +49372,7 @@ gkU(){return"3\u4eba\u306e\u82f1\u96c4\u3067\u30d1\u30fc\u30c6\u30a3\u3092\u7d44
 gme(){return"\u30a8\u30f3\u30b8\u30cb\u30a2\u30ea\u30f3\u30b0"},
 gmd(){return"\u30a8\u30f3\u30b8\u30f3\u306b\u4f9d\u5b58\u3057\u306a\u3044 C# \u30c9\u30e1\u30a4\u30f3\u3001650+\u4ef6\u306e\u30d8\u30c3\u30c9\u30ec\u30b9\u30c6\u30b9\u30c8\u3001\u30d0\u30e9\u30f3\u30b9\u8abf\u6574\u306e\u305f\u3081\u306e\u30d5\u30eb\u30e9\u30f3\u30fb\u30b7\u30df\u30e5\u30ec\u30fc\u30b7\u30e7\u30f3\u3002"},
 gma(){return"Windows \u3068 Android \u5411\u3051\u306e MVP \u30c6\u30b9\u30c8\u30d3\u30eb\u30c9\u3002\u30ad\u30fc\u30dc\u30fc\u30c9\u3001\u30b2\u30fc\u30e0\u30d1\u30c3\u30c9\u3001\u30bf\u30c3\u30c1\u64cd\u4f5c\u306b\u5bfe\u5fdc\u3057\u3066\u3044\u307e\u3059\u3002"},
-mc(a){return a+"\uff1a\u6575\u306e\u6280\u3092\u4e2d\u65ad\u3059\u308b\u3068\u3001\u305d\u306e\u6575\u306f\u6b21\u306e\u30bf\u30fc\u30f3\u307e\u3067\u300c\u9699\u3042\u308a\u300d\u72b6\u614b\u306b\u306a\u308a\u3001\u7d9a\u304f\u653b\u6483\u304b\u308925%\u591a\u304f\u30c0\u30e1\u30fc\u30b8\u3092\u53d7\u3051\u308b\u3088\u3046\u306b\u306a\u308a\u307e\u3057\u305f\u3002"},
+mc(a){return a+"\uff1a\u968e\u5c64\u9593\u306e\u51fa\u53e3\u3092\u4fee\u6b63\u3002\u30de\u30c3\u30d7\u4e0a\u306e\u30dc\u30b9\u306e\u5927\u304d\u3055\u3092\u8abf\u6574\u3057\u3001\u68ee\u306e\u5165\u53e3\u306e\u9053\u3092\u5206\u304b\u308a\u3084\u3059\u304f\u3057\u3066\u3001\u63a2\u7d22\u3092\u3088\u308a\u6ed1\u3089\u304b\u306b\u3057\u307e\u3057\u305f\u3002"},
 gm9(){return"Windows .exe - 187 MB"},
 gm7(){return"Android .apk - 234 MB"},
 gmb(){return"Windows\uff1a.exe \u30a4\u30f3\u30b9\u30c8\u30fc\u30e9\u30fc\u3092\u958b\u304d\u3001\u30d5\u30a9\u30eb\u30c0\u30fc\u3092\u9078\u3093\u3067\u624b\u9806\u306b\u5f93\u3063\u3066\u304f\u3060\u3055\u3044\u3002Android\uff1a.apk \u3092\u30a4\u30f3\u30b9\u30c8\u30fc\u30eb\u3057\u3066\u304f\u3060\u3055\u3044\u3002"},
@@ -49615,7 +49615,7 @@ gkU(){return"Monte um grupo de tr\xeas her\xf3is e des\xe7a ao Po\xe7o: cinco an
 gme(){return"Engenharia"},
 gmd(){return"Dom\xednio em C# isolado da engine, 650+ testes headless e simula\xe7\xe3o de partidas completas para balanceamento."},
 gma(){return"Build de testes do MVP para Windows e Android. Teclado, gamepad e toque s\xe3o suportados."},
-mc(a){return"Nesta "+a+": interromper a t\xe9cnica de um inimigo agora o deixa Exposto at\xe9 o pr\xf3ximo turno dele, levando 25% a mais de dano dos golpes seguintes."},
+mc(a){return"Na "+a+": passagens entre andares restauradas, chefes proporcionais no mapa, entrada da Floresta com trilha clara e explora\xe7\xe3o mais fluida."},
 gm9(){return"Windows .exe - 187 MB"},
 gm7(){return"Android .apk - 234 MB"},
 gmb(){return"Windows: abra o instalador .exe, escolha a pasta e siga as etapas. Android: instale o .apk."},
@@ -49858,7 +49858,7 @@ gkU(){return"\u0421\u043e\u0431\u0435\u0440\u0438\u0442\u0435 \u043e\u0442\u0440
 gme(){return"\u0418\u043d\u0436\u0435\u043d\u0435\u0440\u0438\u044f"},
 gmd(){return"\u041d\u0435\u0437\u0430\u0432\u0438\u0441\u0438\u043c\u044b\u0439 \u043e\u0442 \u0434\u0432\u0438\u0436\u043a\u0430 C#-\u0434\u043e\u043c\u0435\u043d, 650+ headless-\u0442\u0435\u0441\u0442\u043e\u0432 \u0438 \u0441\u0438\u043c\u0443\u043b\u044f\u0446\u0438\u044f \u043f\u043e\u043b\u043d\u044b\u0445 \u0437\u0430\u0431\u0435\u0433\u043e\u0432 \u0434\u043b\u044f \u0431\u0430\u043b\u0430\u043d\u0441\u0430."},
 gma(){return"\u0422\u0435\u0441\u0442\u043e\u0432\u0430\u044f \u0441\u0431\u043e\u0440\u043a\u0430 MVP \u0434\u043b\u044f Windows \u0438 Android. \u041f\u043e\u0434\u0434\u0435\u0440\u0436\u0438\u0432\u0430\u044e\u0442\u0441\u044f \u043a\u043b\u0430\u0432\u0438\u0430\u0442\u0443\u0440\u0430, \u0433\u0435\u0439\u043c\u043f\u0430\u0434 \u0438 \u0441\u0435\u043d\u0441\u043e\u0440\u043d\u043e\u0435 \u0443\u043f\u0440\u0430\u0432\u043b\u0435\u043d\u0438\u0435."},
-mc(a){return"\u0412 "+a+": \u043f\u0440\u0435\u0440\u044b\u0432\u0430\u043d\u0438\u0435 \u0442\u0435\u0445\u043d\u0438\u043a\u0438 \u0432\u0440\u0430\u0433\u0430 \u0442\u0435\u043f\u0435\u0440\u044c \u0434\u0435\u043b\u0430\u0435\u0442 \u0435\u0433\u043e \u0423\u044f\u0437\u0432\u0438\u043c\u044b\u043c \u0434\u043e \u0435\u0433\u043e \u0441\u043b\u0435\u0434\u0443\u044e\u0449\u0435\u0433\u043e \u0445\u043e\u0434\u0430, \u0438 \u043e\u043d \u043f\u043e\u043b\u0443\u0447\u0430\u0435\u0442 \u043d\u0430 25% \u0431\u043e\u043b\u044c\u0448\u0435 \u0443\u0440\u043e\u043d\u0430 \u043e\u0442 \u043f\u043e\u0441\u043b\u0435\u0434\u0443\u044e\u0449\u0438\u0445 \u0443\u0434\u0430\u0440\u043e\u0432."},
+mc(a){return"\u0412 "+a+": \u0432\u043e\u0441\u0441\u0442\u0430\u043d\u043e\u0432\u043b\u0435\u043d\u044b \u043f\u0435\u0440\u0435\u0445\u043e\u0434\u044b \u043c\u0435\u0436\u0434\u0443 \u044d\u0442\u0430\u0436\u0430\u043c\u0438, \u0438\u0441\u043f\u0440\u0430\u0432\u043b\u0435\u043d \u0440\u0430\u0437\u043c\u0435\u0440 \u0431\u043e\u0441\u0441\u043e\u0432 \u043d\u0430 \u043a\u0430\u0440\u0442\u0435, \u0432\u0445\u043e\u0434 \u0432 \u041b\u0435\u0441 \u0441\u0442\u0430\u043b \u043f\u043e\u043d\u044f\u0442\u043d\u0435\u0435, \u0430 \u0438\u0441\u0441\u043b\u0435\u0434\u043e\u0432\u0430\u043d\u0438\u0435 \u2014 \u043f\u043b\u0430\u0432\u043d\u0435\u0435."},
 gm9(){return"Windows .exe - 187 \u041c\u0411"},
 gm7(){return"Android .apk - 234 \u041c\u0411"},
 gmb(){return"Windows: \u043e\u0442\u043a\u0440\u043e\u0439\u0442\u0435 \u0443\u0441\u0442\u0430\u043d\u043e\u0432\u0449\u0438\u043a .exe, \u0432\u044b\u0431\u0435\u0440\u0438\u0442\u0435 \u043f\u0430\u043f\u043a\u0443 \u0438 \u0441\u043b\u0435\u0434\u0443\u0439\u0442\u0435 \u0438\u043d\u0441\u0442\u0440\u0443\u043a\u0446\u0438\u044f\u043c. Android: \u0443\u0441\u0442\u0430\u043d\u043e\u0432\u0438\u0442\u0435 .apk."},
@@ -50101,7 +50101,7 @@ gkU(){return"\u7ec4\u5efa\u4e09\u540d\u82f1\u96c4\u7684\u5c0f\u961f,\u6df1\u5165
 gme(){return"\u5de5\u7a0b"},
 gmd(){return"\u4e0e\u5f15\u64ce\u89e3\u8026\u7684 C# \u9886\u57df\u5c42\u3001650+ \u4e2a\u65e0\u5934\u6d4b\u8bd5,\u4ee5\u53ca\u7528\u4e8e\u5e73\u8861\u7684\u5b8c\u6574\u5bf9\u5c40\u6a21\u62df\u3002"},
 gma(){return"\u9002\u7528\u4e8e Windows \u548c Android \u7684 MVP \u6d4b\u8bd5\u7248\u672c\u3002\u652f\u6301\u952e\u76d8\u3001\u624b\u67c4\u548c\u89e6\u5c4f\u3002"},
-mc(a){return a+"\uff1a\u6253\u65ad\u654c\u4eba\u7684\u6280\u80fd\u540e\uff0c\u8be5\u654c\u4eba\u4f1a\u8fdb\u5165\u201c\u7834\u7efd\u201d\u72b6\u6001\u76f4\u5230\u5176\u4e0b\u4e00\u56de\u5408\uff0c\u53d7\u5230\u540e\u7eed\u653b\u51fb\u7684\u4f24\u5bb3\u63d0\u9ad825%\u3002"},
+mc(a){return a+"\uff1a\u4fee\u590d\u697c\u5c42\u51fa\u53e3\uff0c\u8c03\u6574\u5730\u56fe\u4e0a\u9996\u9886\u7684\u5927\u5c0f\uff0c\u8ba9\u68ee\u6797\u5165\u53e3\u7684\u8def\u5f84\u66f4\u6e05\u6670\uff0c\u63a2\u7d22\u66f4\u6d41\u7545\u3002"},
 gm9(){return"Windows .exe - 187 MB"},
 gm7(){return"Android .apk - 234 MB"},
 gmb(){return"Windows\uff1a\u6253\u5f00 .exe \u5b89\u88c5\u7a0b\u5e8f\uff0c\u9009\u62e9\u6587\u4ef6\u5939\u5e76\u6309\u6b65\u9aa4\u64cd\u4f5c\u3002Android\uff1a\u5b89\u88c5 .apk\u3002"},
@@ -106538,7 +106538,7 @@ o=A.a9(new A.b5(p,new A.aFs(),e),e.h("J.E"))
 e=h?0:232
 d=A.ZK()
 s=t.p
-d=A.a([new A.dD(new A.xC("hero",new A.NT(g,new A.aFt(n),new A.aFu(n),m),m),m),new A.dD(new A.hE(new A.q7(l,new A.Yt(new A.aFv(a),m),f,m),n.f),m),new A.dD(new A.hE(new A.q7("about",B.Ly,f,m),n.x),m),new A.dD(new A.hE(new A.q7("engineering",new A.RR(k,new A.aFw(n),m),f,m),n.r),m),new A.dD(new A.hE(new A.q7("game",new A.Sd("v0.31.0",new A.aFx(a),new A.aFl(a),m),f,m),n.w),m),new A.dD(new A.hE(new A.q7("contact",new A.BC("contato.joseguilhermealves@gmail.com","5514991163009",j,k,d.ak(a.aE(t.Gk).r.f.gdv()==="pt"?"cv/jose-guilherme-alves-pt.pdf":"cv/jose-guilherme-alves-en.pdf").k(0),n.gaob(),m),f,m),n.y),m),B.agu],s)
+d=A.a([new A.dD(new A.xC("hero",new A.NT(g,new A.aFt(n),new A.aFu(n),m),m),m),new A.dD(new A.hE(new A.q7(l,new A.Yt(new A.aFv(a),m),f,m),n.f),m),new A.dD(new A.hE(new A.q7("about",B.Ly,f,m),n.x),m),new A.dD(new A.hE(new A.q7("engineering",new A.RR(k,new A.aFw(n),m),f,m),n.r),m),new A.dD(new A.hE(new A.q7("game",new A.Sd("v0.31.4",new A.aFx(a),new A.aFl(a),m),f,m),n.w),m),new A.dD(new A.hE(new A.q7("contact",new A.BC("contato.joseguilhermealves@gmail.com","5514991163009",j,k,d.ak(a.aE(t.Gk).r.f.gdv()==="pt"?"cv/jose-guilherme-alves-pt.pdf":"cv/jose-guilherme-alves-en.pdf").k(0),n.gaob(),m),f,m),n.y),m),B.agu],s)
 if(h)d.push(new A.dD(new A.aB(m,64+A.a2(a,B.co,i).w.r.d,m,m),m))
 i=A.a([new A.aK(new A.a0(e,0,0,0),A.Ra(n.d,d),m)],s)
 if(!h)i.push(A.fU(0,new A.AS(p,n.e,n.gYv(),k,j,new A.aFm(n),m),m,m,0,m,0,m))
@@ -106650,7 +106650,7 @@ s.kN(null)
 r.aCT(s.d)}else{s.toString
 A.wi(s).BR("/",null)}},
 p(a){var s=this,r=null,q=t.S.a(A.k(a).c.i(0,A.S(t.V))).a,p=t.w,o=A.aU(A.a2(a,B.v,p).w.a.a),n=A.aU(A.a2(a,B.v,p).w.a.a)===B.A?24:64,m=new A.aIc(n,A.aU(A.a2(a,B.v,p).w.a.a)===B.A?72:128),l=s.gadt(),k=t.p
-k=A.a([A.Ra(s.d,A.a([new A.dD(new A.Wx("v0.31.0",new A.aI9(s),new A.aIa(s),r),r),new A.dD(m.$2$key(B.acV,s.e),r),new A.dD(m.$1(B.acS),r),new A.dD(m.$1(B.acU),r),new A.dD(m.$1(B.acT),r),new A.dD(m.$1(B.acQ),r),new A.dD(m.$2$key(B.acR,s.f),r),new A.dD(new A.Wu("contato.joseguilhermealves@gmail.com",A.bgq(),l,r),r)],k)),A.fU(r,new A.Wy("v0.31.0",l,new A.aIb(s),r),r,r,0,0,0,r)],k)
+k=A.a([A.Ra(s.d,A.a([new A.dD(new A.Wx("v0.31.4",new A.aI9(s),new A.aIa(s),r),r),new A.dD(m.$2$key(B.acV,s.e),r),new A.dD(m.$1(B.acS),r),new A.dD(m.$1(B.acU),r),new A.dD(m.$1(B.acT),r),new A.dD(m.$1(B.acQ),r),new A.dD(m.$2$key(B.acR,s.f),r),new A.dD(new A.Wu("contato.joseguilhermealves@gmail.com",A.bgq(),l,r),r)],k)),A.fU(r,new A.Wy("v0.31.4",l,new A.aIb(s),r),r,r,0,0,0,r)],k)
 if(o!==B.A)k.push(A.pf(0,A.Eu(new A.BG(q.y,r),0.6)))
 return A.eY(r,B.D,A.dE(B.aH,k,B.M,B.bi),r)}}
 A.aId.prototype={
@@ -106907,7 +106907,7 @@ p(a){var s=null,r=t.S.a(A.k(a).c.i(0,A.S(t.V))).a,q=r.x,p=r.z.G(0.5),o=A.k(a).ok
 o=o==null?s:o.cr(r.y,B.y)
 return A.az(s,A.q(this.c,s,s,s,s,s,o,s,s),B.k,s,s,new A.ac(r.f,s,new A.c9(new A.aD(q,1,B.x,-1),new A.aD(q,1,B.x,-1),new A.aD(p,3,B.x,-1),new A.aD(q,1,B.x,-1)),s,s,s,B.p),s,s,s,s,B.TA,s,s,s)}}
 A.Ws.prototype={
-p(a6){var s,r,q,p,o,n,m,l,k,j,i,h,g,f,e,d,c,b,a,a0,a1,a2,a3=null,a4="v0.31.0",a5=A.aS(a6,B.I,t.J)
+p(a6){var s,r,q,p,o,n,m,l,k,j,i,h,g,f,e,d,c,b,a,a0,a1,a2,a3=null,a4="v0.31.4",a5=A.aS(a6,B.I,t.J)
 a5.toString
 s=t.S.a(A.k(a6).c.i(0,A.S(t.V))).a
 r=A.k(a6).ok

@@ -106523,7 +106523,7 @@ o=A.a9(new A.b5(p,new A.aFs(),e),e.h("J.E"))
 e=h?0:232
 d=A.ZK()
 s=t.p
-d=A.a([new A.dB(new A.xB("hero",new A.NS(g,new A.aFt(n),new A.aFu(n),m),m),m),new A.dB(new A.hE(new A.q7(l,new A.Yt(new A.aFv(a),m),f,m),n.f),m),new A.dB(new A.hE(new A.q7("about",B.LA,f,m),n.x),m),new A.dB(new A.hE(new A.q7("engineering",new A.RQ(k,new A.aFw(n),m),f,m),n.r),m),new A.dB(new A.hE(new A.q7("game",new A.Sc("v0.31.4",new A.aFx(a),new A.aFl(a),m),f,m),n.w),m),new A.dB(new A.hE(new A.q7("contact",new A.BB("contato.joseguilhermealves@gmail.com","5514991163009",j,k,d.ak(a.aE(t.Gk).r.f.gdv()==="pt"?"cv/jose-guilherme-alves-pt.pdf":"cv/jose-guilherme-alves-en.pdf").k(0),n.gao9(),m),f,m),n.y),m),B.agw],s)
+d=A.a([new A.dB(new A.xB("hero",new A.NS(g,new A.aFt(n),new A.aFu(n),m),m),m),new A.dB(new A.hE(new A.q7(l,new A.Yt(new A.aFv(a),m),f,m),n.f),m),new A.dB(new A.hE(new A.q7("about",B.LA,f,m),n.x),m),new A.dB(new A.hE(new A.q7("engineering",new A.RQ(k,new A.aFw(n),m),f,m),n.r),m),new A.dB(new A.hE(new A.q7("game",new A.Sc("v0.31.5",new A.aFx(a),new A.aFl(a),m),f,m),n.w),m),new A.dB(new A.hE(new A.q7("contact",new A.BB("contato.joseguilhermealves@gmail.com","5514991163009",j,k,d.ak(a.aE(t.Gk).r.f.gdv()==="pt"?"cv/jose-guilherme-alves-pt.pdf":"cv/jose-guilherme-alves-en.pdf").k(0),n.gao9(),m),f,m),n.y),m),B.agw],s)
 if(h)d.push(new A.dB(new A.aC(m,64+A.a2(a,B.co,i).w.r.d,m,m),m))
 i=A.a([new A.aK(new A.a0(e,0,0,0),A.R9(n.d,d),m)],s)
 if(!h)i.push(A.hh(0,new A.AR(p,n.e,n.gYu(),k,j,new A.aFm(n),m),m,m,0,m,0,m))
@@ -106635,7 +106635,7 @@ s.kN(null)
 r.aCR(s.d)}else{s.toString
 A.wi(s).BQ("/",null)}},
 p(a){var s=this,r=null,q=t.S.a(A.m(a).c.i(0,A.S(t.V))).a,p=t.w,o=A.aV(A.a2(a,B.v,p).w.a.a),n=A.aV(A.a2(a,B.v,p).w.a.a)===B.A?24:64,m=new A.aIb(n,A.aV(A.a2(a,B.v,p).w.a.a)===B.A?72:128),l=s.gadr(),k=t.p
-k=A.a([A.R9(s.d,A.a([new A.dB(new A.Wx("v0.31.4",new A.aI8(s),new A.aI9(s),r),r),new A.dB(m.$2$key(B.acY,s.e),r),new A.dB(m.$1(B.acV),r),new A.dB(m.$1(B.acX),r),new A.dB(m.$1(B.acW),r),new A.dB(m.$1(B.acT),r),new A.dB(m.$2$key(B.acU,s.f),r),new A.dB(new A.Wu("contato.joseguilhermealves@gmail.com",A.bgl(),l,r),r)],k)),A.hh(r,new A.Wy("v0.31.4",l,new A.aIa(s),r),r,r,0,0,0,r)],k)
+k=A.a([A.R9(s.d,A.a([new A.dB(new A.Wx("v0.31.5",new A.aI8(s),new A.aI9(s),r),r),new A.dB(m.$2$key(B.acY,s.e),r),new A.dB(m.$1(B.acV),r),new A.dB(m.$1(B.acX),r),new A.dB(m.$1(B.acW),r),new A.dB(m.$1(B.acT),r),new A.dB(m.$2$key(B.acU,s.f),r),new A.dB(new A.Wu("contato.joseguilhermealves@gmail.com",A.bgl(),l,r),r)],k)),A.hh(r,new A.Wy("v0.31.5",l,new A.aIa(s),r),r,r,0,0,0,r)],k)
 if(o!==B.A)k.push(A.pe(0,A.VZ(new A.BF(q.y,r),0.6)))
 return A.eY(r,B.D,A.dL(B.aK,k,B.O,B.bi),r)}}
 A.aIc.prototype={
@@ -106708,7 +106708,7 @@ A.Wz.prototype={
 p(a){var s,r,q=null,p=A.aS(a,B.I,t.J)
 p.toString
 s=t.p
-r=A.a([new A.nA(1,p.gkW(),p.gmk(),p.gkU(),q),B.an,new A.x6("trailer/poco-trailer.mp4?v=0.31.4-brand1","assets/images/poco_trailer_poster.jpg",q)],s)
+r=A.a([new A.nA(1,p.gkW(),p.gmk(),p.gkU(),q),B.an,new A.x6("trailer/poco-trailer.mp4?v=0.31.5-en1","assets/images/poco_trailer_poster.jpg",q)],s)
 B.b.M(r,A.a([B.p2,A.er(p.gqn().toUpperCase(),B.ay,t.S.a(A.m(a).c.i(0,A.S(t.V))).a.a,6,q,2,2),B.a3,new A.x6("trailer/poco-gameplay-trailer.mp4?v=0.31.4-brand1","assets/images/poco_gameplay_trailer_poster.jpg",q)],s))
 return A.a8(r,B.q,B.f,B.h)}}
 A.Wt.prototype={
@@ -106888,7 +106888,7 @@ p(a){var s=null,r=t.S.a(A.m(a).c.i(0,A.S(t.V))).a,q=r.x,p=r.z.G(0.5),o=A.m(a).ok
 o=o==null?s:o.cr(r.y,B.w)
 return A.az(s,A.q(this.c,s,s,s,s,s,o,s,s),B.k,s,s,new A.ac(r.f,s,new A.c9(new A.aD(q,1,B.y,-1),new A.aD(q,1,B.y,-1),new A.aD(p,3,B.y,-1),new A.aD(q,1,B.y,-1)),s,s,s,B.p),s,s,s,s,B.TE,s,s,s)}}
 A.Ws.prototype={
-p(a6){var s,r,q,p,o,n,m,l,k,j,i,h,g,f,e,d,c,b,a,a0,a1,a2,a3=null,a4="v0.31.4",a5=A.aS(a6,B.I,t.J)
+p(a6){var s,r,q,p,o,n,m,l,k,j,i,h,g,f,e,d,c,b,a,a0,a1,a2,a3=null,a4="v0.31.5",a5=A.aS(a6,B.I,t.J)
 a5.toString
 s=t.S.a(A.m(a6).c.i(0,A.S(t.V))).a
 r=A.m(a6).ok
